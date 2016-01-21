@@ -1,0 +1,24 @@
+{
+    "name": "litepie/trans",
+    "description": "The Litepie translation package",
+    "homepage": "http://lavalite.org",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Renfos Technologies",
+            "email": "info@renfos.com"
+        }
+    ],
+    "require": {
+        "php": ">=5.5.9"
+    },
+    "autoload": {
+        "classmap": [
+            "src"
+        ],
+        "psr-0": {
+            "Litepie\\Trans\\": "src/"
+        }
+    },
+    "minimum-stability": "stable"
+}

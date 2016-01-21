@@ -1,0 +1,39 @@
+{
+    "name": "lavalite/framework",
+    "description": "The lavalite framework",
+    "keywords": ["framework", "lavalite"],
+    "license": "MIT",
+    "homepage": "http://lavalite.com",
+    "authors": [
+        {
+            "name": "Renfos Technologies",
+            "email": "info@renfos.com"
+        }
+    ],
+    "require": {
+        "php": ">=5.5.9",
+        "laravel/framework": "5.2.*",
+        "laravel/socialite": "2.0.*"
+    },
+    "replace": {
+        "litepie/database": "self.version",
+        "litepie/filer": "self.version",
+        "litepie/form": "self.version",
+        "litepie/hashids": "self.version",
+        "litepie/html": "self.version",
+        "litepie/revision": "self.version",
+        "litepie/theme": "self.version",
+        "litepie/trans": "self.version",
+        "litepie/tree": "self.version"
+    },
+    "autoload": {
+        "classmap": [
+        ],
+        "psr-0": {
+            "Litepie\\": "src/Litepie"
+        },
+        "files": [
+        ]
+    },
+    "minimum-stability": "dev"
+}

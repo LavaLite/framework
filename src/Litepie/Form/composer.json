@@ -1,0 +1,25 @@
+{
+    "name": "litepie/form",
+    "description": "The Litepie form package",
+    "homepage": "http://lavalite.org",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Renfos Technologies",
+            "email": "info@renfos.com"
+        }
+    ],
+    "require": {
+        "php": ">=5.5.9",
+        "anahkiasen/former": "4.0.*"
+    },
+    "autoload": {
+        "classmap": [
+            "src"
+        ],
+        "psr-0": {
+            "Litepie\\Form\\": "src/"
+        }
+    },
+    "minimum-stability": "stable"
+}

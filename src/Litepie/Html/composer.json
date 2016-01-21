@@ -1,0 +1,24 @@
+{
+    "name": "litepie/html",
+    "description": "The Litepie html package",
+    "homepage": "http://lavalite.org",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Renfos Technologies",
+            "email": "info@renfos.com"
+        }
+    ],
+    "require": {
+        "php": ">=5.5.9"
+    },
+    "autoload": {
+        "classmap": [
+            "src"
+        ],
+        "psr-0": {
+            "Litepie\\Html\\": "src/"
+        }
+    },
+    "minimum-stability": "stable"
+}

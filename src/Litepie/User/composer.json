@@ -1,0 +1,25 @@
+{
+    "name": "lavalite/user",
+    "description": "User management package for Litepie framework",
+    "keywords": ["lavalite", "user", "laravel", "auth"],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Lava Lite",
+            "email": "info@lavalite.org"
+        }
+    ],
+    "require": {
+        "php": ">=5.5.9",
+        "laravel/socialite": "^3.0@dev"
+    },
+    "autoload": {
+        "classmap": [
+            "src"
+        ],
+        "psr-0": {
+            "Litepie\\User\\": "src/"
+        }
+    },
+    "minimum-stability": "stable"
+}

@@ -1,0 +1,25 @@
+{
+    "name": "litepie/filer",
+    "description": "The Litepie file management package",
+    "homepage": "http://lavalite.org",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Renfos Technologies",
+            "email": "info@renfos.com"
+        }
+    ],
+    "require": {
+        "php": ">=5.5.9",
+        "intervention/imagecache": "2.2.*"
+    },
+    "autoload": {
+        "classmap": [
+            "src"
+        ],
+        "psr-0": {
+            "Litepie\\Filer\\": "src/"
+        }
+    },
+    "minimum-stability": "stable"
+}

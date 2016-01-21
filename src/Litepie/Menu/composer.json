@@ -1,0 +1,24 @@
+{
+    "name": "lavalite/menu",
+    "description": "Menu package for Lavalite framework",
+    "keywords": ["lavalite",  "menu", "dropdown", "dropdown-menu", "laravel"],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Lava Lite",
+            "email": "info@lavalite.org"
+        }
+    ],
+    "require": {
+        "php": ">=5.5.9"
+    },
+    "autoload": {
+        "classmap": [
+            "src"
+        ],
+        "psr-0": {
+            "Lavalite\\Menu\\": "src/"
+        }
+    },
+    "minimum-stability": "stable"
+}
