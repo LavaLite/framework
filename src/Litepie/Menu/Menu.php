@@ -17,14 +17,14 @@ class Menu
         return $this->model->getModel();
     }
 
-    public function menu($key, $view)
+    public function menu($key, $view = 'menu::menu.default')
     {
         $menu = $this->model->getAllSubMenus($key);
 
         return view($view, compact('menu'));
     }
 
-    public function select($key, $view = 'default')
+    public function select($key, $view = 'menu.default')
     {
         $menu = $this->model->getAllSubMenus($key);
 

@@ -29,6 +29,9 @@
     "autoload": {
         "classmap": [
         ],
+        "files": [
+            "src/Litepie/Foundation/helpers.php",
+        ],
         "psr-0": {
             "Litepie\\": "src/Litepie"
         },

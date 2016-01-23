@@ -1,17 +1,17 @@
 <?php
 
-namespace Litepie\Trees\Traits;
+namespace Litepie\Node\Traits;
 
 use Illuminate\Database\Eloquent\Collection;
-use October\Rain\Database\TreeCollection;
+use Litepie\Node\NodeCollection;
 
 /**
- * Simple Tree model trait.
+ * Simple Node model trait.
  *
  * Simple tree implementation, for advanced implementation see:
- * October\Rain\Database\Traits\NestedTree
+ * October\Rain\Database\Traits\NestedNode
  *
- * SimpleTree is the bare minimum needed for tree functionality, the
+ * SimpleNode is the bare minimum needed for tree functionality, the
  * methods defined here should be implemented by all "tree" traits.
  *
  * Usage:
@@ -19,7 +19,7 @@ use October\Rain\Database\TreeCollection;
  * Model table must have parent_id table column.
  * In the model class definition:
  *
- *   use \October\Rain\Database\Traits\SimpleTree;
+ *   use \October\Rain\Database\Traits\SimpleNode;
  *
  * General access methods:
  *
@@ -37,28 +37,23 @@ use October\Rain\Database\TreeCollection;
  *
  *   const PARENT_ID = 'my_parent_column';
  */
-trait SimpleTree
+trait SimpleNode
 {
-    /*
-     * Constructor
+
+    /**
+     * Get the parent that owns the node.
      */
-
-    public static function bootSimpleTree()
+    public function parent()
     {
-        static::extend(function ($model) {
-            /*
-             * Define relationships
-             */
-            $model->hasMany['children'] = [
-                get_class($model),
-                'key' => $model->getParentColumnName(),
-            ];
+            return $this->belongsTo(get_class($model), $this->getParentColumnName());
+    }
 
-            $model->belongsTo['parent'] = [
-                get_class($model),
-                'key' => $model->getParentColumnName(),
-            ];
-        });
+    /**
+     * Get the children belongs to the parent node.
+     */
+    public function children()
+    {
+            return $this->hasMany(get_class($this), $this->getParentColumnName());
     }
 
     /**
@@ -211,10 +206,10 @@ trait SimpleTree
     }
 
     /**
-     * Return a custom TreeCollection collection.
+     * Return a custom NodeCollection collection.
      */
     public function newCollection(array $models = [])
     {
-        return new TreeCollection($models);
+        return new NodeCollection($models);
     }
 }

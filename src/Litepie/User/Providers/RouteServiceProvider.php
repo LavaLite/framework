@@ -5,7 +5,7 @@ namespace Litepie\User\Providers;
 use Request;
 use Illuminate\Routing\Router;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
-use Litepie\User\Interfaces\UserRepositoryInterface;
+use Litepie\Contract\User\UserRepository;
 
 class RouteServiceProvider extends ServiceProvider
 {
@@ -28,18 +28,18 @@ class RouteServiceProvider extends ServiceProvider
     {
         if (Request::is('*admin/user/*')) {
             $router->bind('user', function ($id) {
-                $page = new \App\User();
-                return $page->firstOrFail($id);
+                $user = $this->app->make('\Litepie\Contracts\User\UserRepository');
+                return $user->find($id);
             });
 
             $router->bind('role', function ($id) {
-                $page = new \Litepie\User\Models\Role();
-                return $page->firstOrFail($id);
+                $role = $this->app->make('\Litepie\Contracts\User\RoleRepository');
+                return $role->find($id);
             });
 
             $router->bind('permission', function ($id) {
-                $page = new \Litepie\User\Models\Permission();
-                return $page->firstOrFail($id);
+                $permission = $this->app->make('\Litepie\Contracts\User\PermissionRepository');
+                return $permission->find($id);
             });
         }
 

@@ -2,14 +2,14 @@
 namespace Litepie\Database\Criteria;
 
 use Illuminate\Http\Request;
-use Litepie\Database\Contracts\CriteriaInterface;
-use Litepie\Database\Contracts\RepositoryInterface;
+use Litepie\Contracts\Database\Criteria;
+use Litepie\Contracts\Database\Repository;
 
 /**
  * Class RequestCriteria
  * @package Litepie\Database\Criteria
  */
-class RequestCriteria implements CriteriaInterface
+class RequestCriteria implements Criteria
 {
     /**
      * @var \Illuminate\Http\Request
@@ -26,10 +26,10 @@ class RequestCriteria implements CriteriaInterface
      * Apply criteria in query repository
      *
      * @param $model
-     * @param RepositoryInterface $repository
+     * @param Repository $repository
      * @return mixed
      */
-    public function apply($model, RepositoryInterface $repository)
+    public function apply($model, Repository $repository)
     {
         $fieldsSearchable   = $repository->getFieldsSearchable();
         $search             = $this->request->get( config('database.criteria.params.search','search') , null);

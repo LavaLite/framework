@@ -3,7 +3,7 @@
 namespace Litepie\Database\Traits;
 
 use Illuminate\Contracts\Cache\Repository as CacheRepository;
-use Litepie\Database\Contracts\CriteriaInterface;
+use Litepie\Contracts\Database\Criteria;
 use Litepie\Database\Helpers\CacheKeys;
 
 /**
@@ -248,10 +248,10 @@ trait CacheableRepository {
     /**
      * Find data by Criteria
      *
-     * @param CriteriaInterface $criteria
+     * @param Criteria $criteria
      * @return mixed
      */
-    public function getByCriteria(CriteriaInterface $criteria)
+    public function getByCriteria(Criteria $criteria)
     {
         if ( !$this->allowedCache('getByCriteria') || $this->isSkippedCache() ){
             return parent::getByCriteria($criteria);

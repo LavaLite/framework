@@ -6,7 +6,7 @@ use Response;
 use App\Http\Controllers\AdminController;
 use Litepie\User\Models\Permission;
 use Litepie\User\Http\Requests\PermissionAdminRequest;
-use Litepie\User\Interfaces\PermissionRepositoryInterface;
+use Litepie\Contracts\User\PermissionRepository;
 
 /**
  *
@@ -17,10 +17,10 @@ class PermissionAdminController extends AdminController
 {
     /**
      * Initialize permission controller
-     * @param type PermissionRepositoryInterface $permission
+     * @param type PermissionRepository $permission
      * @return type
      */
-    public function __construct(PermissionRepositoryInterface $permission)
+    public function __construct(PermissionRepository $permission)
     {
         $this->model = $permission;
         parent::__construct();
@@ -34,12 +34,12 @@ class PermissionAdminController extends AdminController
     public function index(PermissionAdminRequest $request)
     {
         if ($request->wantsJson()) {
-            $array = $this->model->toArray(['*'], config('user.permission.listfields'));
+            $roles = $this->model->setPresenter('\\Lavalite\\User\\Repositories\\Presenter\\PermissionListPresenter')->all();
 
-            return ['data' => $array];
+            return $roles;
         }
 
-        $this->theme->prependTitle(trans('user::permission.names').' :: ');
+        $this->theme->prependTitle(trans('user.permission.names').' :: ');
 
         return $this->theme->of('user::admin.permission.index')->render();
     }
@@ -95,7 +95,7 @@ class PermissionAdminController extends AdminController
         try {
             $attributes         = $request->all();
             $permission       = $this->model->create($attributes);
-            return $this->success(trans('messages.success.created', ['Module' => trans('user::permission.name')]));
+            return $this->success(trans('messages.success.created', ['Module' => trans('user.permission.name')]));
         } catch (Exception $e) {
             return $this->error($e->getMessage());
         }
@@ -127,7 +127,7 @@ class PermissionAdminController extends AdminController
         try {
             $attributes         = $request->all();
             $permission->update($attributes);
-            return $this->success(trans('messages.success.updated', ['Module' => trans('user::permission.name')]));
+            return $this->success(trans('messages.success.updated', ['Module' => trans('user.permission.name')]));
         } catch (Exception $e) {
             return $this->error($e->getMessage());
         }
@@ -143,7 +143,7 @@ class PermissionAdminController extends AdminController
     {
         try {
             $permission->delete();
-            return $this->success(trans('message.success.deleted', ['Module' => trans('user::permission.name')]), 200);
+            return $this->success(trans('message.success.deleted', ['Module' => trans('user.permission.name')]), 200);
         } catch (Exception $e) {
             return $this->error($e->getMessage());
         }

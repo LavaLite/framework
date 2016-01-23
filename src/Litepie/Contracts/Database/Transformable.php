@@ -1,9 +1,9 @@
 <?php
-namespace Litepie\Database\Contracts;
+namespace Litepie\Contracts\Database;
 
 /**
- * Interface Transformable
- * @package Litepie\Database\Contracts
+ *  Transformable
+ * @package Litepie\Contracts\Database
  */
 interface Transformable
 {

@@ -1,6 +1,6 @@
 <?php
 
-namespace Litepie\Trees\Traits;
+namespace Litepie\Node\Traits;
 
 use Exception;
 use Illuminate\Database\Eloquent\Collection;
@@ -11,7 +11,7 @@ use Illuminate\Database\Eloquent\Collection;
  * Model table must have parent_id, nest_left, nest_right and nest_depth table columns.
  * In the model class definition:
  *
- *   use \October\Rain\Database\Traits\NestedTree;
+ *   use \October\Rain\Database\Traits\NestedNode;
  *
  *   $table->integer('parent_id')->nullable();
  *   $table->integer('nest_left')->nullable();
@@ -65,7 +65,7 @@ use Illuminate\Database\Eloquent\Collection;
  *   $model->getEagerRoot(); // Returns a list of all root nodes, with ->children eager loaded.
  *   $model->getEagerChildren(); // Returns direct child nodes, with ->children eager loaded.
  */
-trait NestedTree
+trait NestedNode
 {
     /**
      * @var int Indicates if the model should be aligned to new parent.
@@ -75,7 +75,7 @@ trait NestedTree
      * Constructor
      */
 
-    public static function bootNestedTree()
+    public static function bootNestedNode()
     {
         static::creating(function ($model) {
             $model->setDefaultLeftAndRight();

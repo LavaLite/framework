@@ -7,9 +7,9 @@ use Illuminate\Http\Request;
 use App\User;
 use App\Http\Controllers\AdminController;
 use Litepie\User\Http\Requests\UserAdminRequest;
-use Litepie\User\Interfaces\UserRepositoryInterface;
-use Litepie\User\Interfaces\RoleRepositoryInterface;
-use Litepie\User\Interfaces\PermissionRepositoryInterface;
+use Litepie\Contracts\User\UserRepository;
+use Litepie\Contracts\User\RoleRepository;
+use Litepie\Contracts\User\PermissionRepository;
 use Illuminate\Contracts\Auth\Authenticatable;
 
 /**
@@ -33,12 +33,12 @@ class UserAdminController extends AdminController
 
     /**
      * Initialize user controller
-     * @param type UserRepositoryInterface $user
+     * @param type UserRepository $user
      * @return type
      */
-    public function __construct(UserRepositoryInterface $user,
-                                PermissionRepositoryInterface $permission,
-                                RoleRepositoryInterface $roles)
+    public function __construct(UserRepository $user,
+                                PermissionRepository $permission,
+                                RoleRepository $roles)
     {
         $this->model = $user;
         $this->permission = $permission;
@@ -54,15 +54,15 @@ class UserAdminController extends AdminController
     public function index(UserAdminRequest $request, $role = null)
     {
         if ($request->wantsJson()) {
-            if (!$request->has('role')) {
-                $array = $this->model->toArray(['*'], config('user.user.listfields'));
-                return ['data' => $array];
+            if ($request->has('role')) {
+                $users = $this->roles->with(['users'])->findByField('name', $request->get('role'));
+                return $users;
             }
-            $array = $this->roles->users($request->get('role'), config('user.role.listfields'));
-            return ['data' => $array];
+            $users = $this->model->setPresenter('\\Lavalite\\User\\Repositories\\Presenter\\UserListPresenter')->all();
+            return $users;
         }
 
-        $this->theme->prependTitle(trans('user::user.names').' :: ');
+        $this->theme->prependTitle(trans('user.user.names').' :: ');
 
         return $this->theme->of('user::admin.user.index')->render();
     }
@@ -126,7 +126,7 @@ class UserAdminController extends AdminController
             $attributes         = $request->all();
             $user       = $this->model->create($attributes);
             $user->syncRoles($request->get('roles'));
-            return $this->success(trans('messages.success.created', ['Module' => trans('user::user.name')]));
+            return $this->success(trans('messages.success.created', ['Module' => trans('user.user.name')]));
         } catch (Exception $e) {
             return $this->error($e->getMessage());
         }
@@ -161,7 +161,7 @@ class UserAdminController extends AdminController
             $attributes         = $request->all();
             $user->update($attributes);
             $user->syncRoles($request->get('roles'));
-            return $this->success(trans('messages.success.updated', ['Module' => trans('user::user.name')]));
+            return $this->success(trans('messages.success.updated', ['Module' => trans('user.user.name')]));
         } catch (Exception $e) {
             return $this->error($e->getMessage());
         }
@@ -177,7 +177,7 @@ class UserAdminController extends AdminController
     {
         try {
             $user->delete();
-            return $this->success(trans('message.success.deleted', ['Module' => trans('user::user.name')]), 200);
+            return $this->success(trans('message.success.deleted', ['Module' => trans('user.user.name')]), 200);
         } catch (Exception $e) {
             return $this->error($e->getMessage());
         }

@@ -1,11 +1,12 @@
 <?php
-namespace Litepie\Database\Contracts;
+
+namespace Litepie\Contracts\Database;
 
 /**
- * Interface PresenterInterface
- * @package Litepie\Database\Contracts
+ *  Presenter
+ * @package Litepie\Contracts\Database
  */
-interface PresenterInterface
+interface Presenter
 {
     /**
      * Prepare data to present

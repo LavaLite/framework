@@ -1,6 +1,6 @@
 {
-    "name": "litepie/tree",
-    "description": "The Litepie category tree package",
+    "name": "litepie/node",
+    "description": "The Litepie category node package",
     "homepage": "http://lavalite.org",
     "license": "MIT",
     "authors": [
@@ -17,7 +17,7 @@
             "src"
         ],
         "psr-0": {
-            "Litepie\\Tree\\": "src/"
+            "Litepie\\Node\\": "src/"
         }
     },
     "minimum-stability": "stable"

@@ -6,7 +6,7 @@ use Illuminate\Contracts\Cache\Repository as CacheRepository;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
-use Litepie\Database\Contracts\RepositoryInterface;
+use Litepie\Contracts\Database\Repository;
 use Litepie\Database\Events\RepositoryEventBase;
 use Litepie\Database\Helpers\CacheKeys;
 
@@ -22,7 +22,7 @@ class CleanCacheRepository {
     protected $cache = null;
 
     /**
-     * @var RepositoryInterface
+     * @var Repository
      */
     protected $repository = null;
 

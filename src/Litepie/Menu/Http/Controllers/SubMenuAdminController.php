@@ -14,34 +14,33 @@ class SubMenuAdminController extends AdminController
     public function __construct(\Litepie\Contracts\Menu\MenuRepository $menu)
     {
         $this->model = $menu;
-        $this->view = config('menu.view');
         parent::__construct();
     }
 
     public function show(MenuRequest $request, $id)
     {
-        $menu = $this->model->findOrNew($id);
+        $menu = $this->model->find($id);
         Form::populate($menu);
 
-        return view($this->view.'sub.show', compact('parent', 'menu'));
+        return view('menu::admin.sub.show', compact('parent', 'menu'));
     }
 
     public function create(MenuRequest $request)
     {
-        $menu = $this->model->findOrNew(0);
+        $menu = $this->model->find(0);
         $menu->parent_id = $request->get('parent_id', 0);
 
         Form::populate($menu);
 
-        return view($this->view.'sub.create', compact('menu'));
+        return view('menu::admin.sub.create', compact('menu'));
     }
 
     public function edit(MenuRequest $request, $id)
     {
-        $menu = $this->model->findOrNew($id);
+        $menu = $this->model->find($id);
 
         Form::populate($menu);
 
-        return view($this->view.'sub.edit', compact('menu'));
+        return view('menu::admin.sub.edit', compact('menu'));
     }
 }

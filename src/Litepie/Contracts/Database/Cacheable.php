@@ -1,13 +1,13 @@
 <?php
-namespace Litepie\Database\Contracts;
+namespace Litepie\Contracts\Database;
 
 use Illuminate\Contracts\Cache\Repository as CacheRepository;
 
 /**
- * Interface CacheableInterface
- * @package Litepie\Database\Contracts
+ *  Cacheable
+ * @package Litepie\Contracts\Database
  */
-interface CacheableInterface
+interface Cacheable
 {
     /**
      * Set Cache Repository

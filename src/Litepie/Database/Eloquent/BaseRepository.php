@@ -3,16 +3,15 @@ namespace Litepie\Database\Eloquent;
 
 use Closure;
 use Exception;
-use Litepie\Database\Contracts\CriteriaInterface;
-use Litepie\Database\Contracts\Presentable;
-use Litepie\Database\Contracts\PresentableInterface;
-use Litepie\Database\Contracts\PresenterInterface;
-use Litepie\Database\Contracts\RepositoryCriteriaInterface;
+use Litepie\Contracts\Database\Criteria;
+use Litepie\Contracts\Database\Presentable;
+use Litepie\Contracts\Database\Presenter;
+use Litepie\Contracts\Database\RepositoryCriteria;
 use Litepie\Database\Events\RepositoryEntityCreated;
 use Litepie\Database\Events\RepositoryEntityDeleted;
 use Litepie\Database\Events\RepositoryEntityUpdated;
 use Litepie\Database\Exceptions\RepositoryException;
-use Litepie\Database\Contracts\RepositoryInterface;
+use Litepie\Contracts\Database\Repository;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Container\Container as Application;
 use Illuminate\Support\Collection;
@@ -22,7 +21,7 @@ use Illuminate\Contracts\Pagination\LengthAwarePaginator;
  * Class BaseRepository
  * @package Litepie\Database\Eloquent
  */
-abstract class BaseRepository implements RepositoryInterface, RepositoryCriteriaInterface
+abstract class BaseRepository implements Repository, RepositoryCriteria
 {
 
     /**
@@ -41,7 +40,7 @@ abstract class BaseRepository implements RepositoryInterface, RepositoryCriteria
     protected $fieldSearchable = array();
 
     /**
-     * @var PresenterInterface
+     * @var Presenter
      */
     protected $presenter;
 
@@ -148,7 +147,7 @@ abstract class BaseRepository implements RepositoryInterface, RepositoryCriteria
 
     /**
      * @param null $presenter
-     * @return PresenterInterface
+     * @return Presenter
      * @throws RepositoryException
      */
     public function makePresenter($presenter = null)
@@ -158,8 +157,8 @@ abstract class BaseRepository implements RepositoryInterface, RepositoryCriteria
         if ( !is_null($presenter) ) {
             $this->presenter = is_string($presenter) ? $this->app->make($presenter) : $presenter;
 
-            if (!$this->presenter instanceof PresenterInterface ) {
-                throw new RepositoryException("Class {$presenter} must be an instance of Litepie\\Repository\\Contracts\\PresenterInterface");
+            if (!$this->presenter instanceof Presenter ) {
+                throw new RepositoryException("Class {$presenter} must be an instance of Litepie\\Contracts\\Database\\Presenter");
             }
 
             return $this->presenter;
@@ -483,10 +482,10 @@ abstract class BaseRepository implements RepositoryInterface, RepositoryCriteria
     /**
      * Push Criteria for filter the query
      *
-     * @param CriteriaInterface $criteria
+     * @param Criteria $criteria
      * @return $this
      */
-    public function pushCriteria(CriteriaInterface $criteria)
+    public function pushCriteria(Criteria $criteria)
     {
         $this->criteria->push($criteria);
         return $this;
@@ -505,10 +504,10 @@ abstract class BaseRepository implements RepositoryInterface, RepositoryCriteria
     /**
      * Find data by Criteria
      *
-     * @param CriteriaInterface $criteria
+     * @param Criteria $criteria
      * @return mixed
      */
-    public function getByCriteria(CriteriaInterface $criteria)
+    public function getByCriteria(Criteria $criteria)
     {
         $this->model = $criteria->apply($this->model, $this);
         $results = $this->model->get();
@@ -559,7 +558,7 @@ abstract class BaseRepository implements RepositoryInterface, RepositoryCriteria
 
         if ( $criteria ) {
             foreach ($criteria as $c) {
-                if ( $c instanceof CriteriaInterface ) {
+                if ( $c instanceof Criteria ) {
                     $this->model = $c->apply($this->model, $this);
                 }
             }
@@ -588,7 +587,7 @@ abstract class BaseRepository implements RepositoryInterface, RepositoryCriteria
      */
     public function parserResult($result)
     {
-        if ( $this->presenter instanceof PresenterInterface ) {
+        if ( $this->presenter instanceof Presenter ) {
 
             if( $result instanceof Collection || $result instanceof LengthAwarePaginator){
                 $result->each(function($model){

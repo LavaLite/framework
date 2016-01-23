@@ -23,40 +23,41 @@ class MenuAdminController extends AdminController
 
     public function index(MenuRequest $request, $parent = 1)
     {
-        $parent = $this->model->find($parent);
+        $parent = $this->model->find(hashids_encode($parent));
         $rootMenu = $this->model->rootMenues();
+
         $this->theme->prependTitle(trans('menu::menu.names').' :: ');
 
         $this->theme->asset()->container('footer')->add('nestable', 'packages/nestable/jquery.nestable.js');
 
-        return $this->theme->of($this->view.'index', compact('rootMenu', 'parent'))->render();
+        return $this->theme->of('menu::admin.index', compact('rootMenu', 'parent'))->render();
     }
 
     public function show(MenuRequest $request, $id)
     {
         if ($request->ajax()) {
-            $menu = $this->model->findOrNew($id);
+            $menu = $this->model->find($id);
+
             Form::populate($menu);
 
-            return view($this->view.'show', compact('menu'));
+            return view('menu::admin.show', compact('menu'));
         }
         $parent = $this->model->find($id);
         $rootMenu = $this->model->rootMenues();
-
         $this->theme->asset()->container('footer')->add('nestable', 'packages/nestable/jquery.nestable.js');
 
         $this->theme->prependTitle(trans('menu::menu.names').' :: ');
 
-        return $this->theme->of($this->view.'index', compact('rootMenu', 'parent'))->render();
+        return $this->theme->of('menu::admin.index', compact('rootMenu', 'parent'))->render();
     }
 
     public function create(MenuRequest $request)
     {
-        $menu = $this->model->findOrNew(0);
+        $menu = $this->model->newInstance();
 
         Form::populate($menu);
 
-        return  view($this->view.'create', compact('menu'));
+        return  view('menu::admin.create', compact('menu'));
     }
 
     public function store(MenuRequest $request)
@@ -75,7 +76,7 @@ class MenuAdminController extends AdminController
         $data['menu'] = $this->model->find($id);
         Form::populate($data['menu']);
 
-        return  view($this->view.'edit', $data);
+        return  view('menu::admin.edit', $data);
     }
 
     public function update(MenuRequest $request, $id)

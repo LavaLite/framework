@@ -1,5 +1,42 @@
 <?php
 
+use Litepie\Support\Facades\Hashids;
+
+if (! function_exists('hashids_encode')) {
+    /**
+     * Throw an HttpException with the given data.
+     *
+     * @param  int     $id
+     *
+     * @return void
+     */
+    function hashids_encode($idorarray)
+    {
+        return Hashids::encode($idorarray);
+    }
+}
+
+if (! function_exists('hashids_decode')) {
+    /**
+     * Decode the given value.
+     *
+     * @param  string  $value
+     *
+     * @return array or int
+     */
+    function hashids_decode($value)
+    {
+        $return =  Hashids::decode($value);
+
+        if (count($return) == 1){
+            return $return[0];
+        }
+
+        return $return;
+    }
+}
+
+
 if (!function_exists('folder_new')) {
     /**
      * Get new upload folder pathes.
@@ -36,7 +73,7 @@ if (!function_exists('folder_encode')) {
     function folder_encode($folder)
     {
         $arr        = explode('/', $folder);
-        return Hashids::encode($arr);
+        return hashids_encode($arr);
     }
 }
 
@@ -59,16 +96,16 @@ if (!function_exists('folder_decode')) {
 
         $arr        = explode('/', $folder);
         if (count($arr) == 1) {
-            $folder     = Hashids::decode($arr[0]);
+            $folder     = hashids_decode($arr[0]);
             return    $formatFolder($folder);
         }
 
         if (count($arr) == 2) {
-            $folder     = Hashids::decode($arr[1]);
+            $folder     = hashids_decode($arr[1]);
             return  $arr[0] . '/' . $formatFolder($folder);
         }
 
-        $folder     = Hashids::decode($arr[1]);
+        $folder     = hashids_decode($arr[1]);
         return $arr[0] . '/' . $formatFolder($folder) . '/' . $arr[2];
     }
 }

@@ -3,7 +3,7 @@
 namespace Litepie\Database\Transformer;
 
 use League\Fractal\TransformerAbstract;
-use Litepie\Database\Contracts\Transformable;
+use Litepie\Contracts\Database\Transformable;
 
 /**
  * Class ModelTransformer

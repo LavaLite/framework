@@ -1,6 +1,6 @@
 <?php
 
-Route::group(['prefix' => 'admin/menu'], function () {
+Route::group(['prefix' =>  Trans::setLocale().'/admin/menu'], function () {
     Route::post('menu/{id}/tree', 'Litepie\Menu\Http\Controllers\MenuAdminController@tree');
     Route::get('menu/{id}/test', 'Litepie\Menu\Http\Controllers\MenuAdminController@test');
 

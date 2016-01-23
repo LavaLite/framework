@@ -24,9 +24,8 @@ trait Hashids
      */
     public function findByEid($eid)
     {
-
         if ($eid != '0') {
-            $eid = \Hashids::decode($eid)[0];
+            $eid = hashids_decode($eid);
         }
         return $this->findOrNew($eid);
     }
@@ -49,7 +48,7 @@ trait Hashids
      */
     public function getRouteKey()
     {
-        return \Hashids::encode($this->getOriginal($this->getKeyName()));
+        return hashids_encode($this->getOriginal($this->getKeyName()));
     }
 
 }

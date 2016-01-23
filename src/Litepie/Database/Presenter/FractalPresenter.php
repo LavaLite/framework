@@ -2,7 +2,7 @@
 namespace Litepie\Database\Presenter;
 
 use Exception;
-use Litepie\Database\Contracts\PresenterInterface;
+use Litepie\Contracts\Database\Presenter;
 use League\Fractal\Pagination\IlluminatePaginatorAdapter;
 use Illuminate\Pagination\AbstractPaginator;
 use Illuminate\Pagination\LengthAwarePaginator;
@@ -17,7 +17,7 @@ use League\Fractal\Serializer\SerializerAbstract;
  * Class FractalPresenter
  * @package Litepie\Database\Presenter
  */
-abstract class FractalPresenter implements PresenterInterface
+abstract class FractalPresenter implements Presenter
 {
     /**
      * @var string

@@ -6,8 +6,8 @@ use Response;
 use Litepie\User\Models\Role;
 use App\Http\Controllers\AdminController as AdminController;
 use Litepie\User\Http\Requests\RoleAdminRequest;
-use Litepie\User\Interfaces\RoleRepositoryInterface;
-use Litepie\User\Interfaces\PermissionRepositoryInterface;
+use Litepie\Contracts\User\RoleRepository;
+use Litepie\Contracts\User\PermissionRepository;
 
 /**
  *
@@ -24,11 +24,11 @@ class RoleAdminController extends AdminController
 
     /**
      * Initialize role controller
-     * @param type RoleRepositoryInterface $role
+     * @param type RoleRepository $role
      * @return type
      */
-    public function __construct(RoleRepositoryInterface $role,
-                                PermissionRepositoryInterface $permission)
+    public function __construct(RoleRepository $role,
+                                PermissionRepository $permission)
     {
         $this->permission = $permission;
         $this->model = $role;
@@ -43,12 +43,12 @@ class RoleAdminController extends AdminController
     public function index(RoleAdminRequest $request)
     {
         if ($request->wantsJson()) {
-            $array = $this->model->toArray(['*'], config('user.role.listfields'));
+            $roles = $this->model->setPresenter('\\Lavalite\\User\\Repositories\\Presenter\\RoleListPresenter')->all();
 
-            return ['data' => $array];
+            return $roles;
         }
 
-        $this->theme->prependTitle(trans('user::role.names').' :: ');
+        $this->theme->prependTitle(trans('user.role.names').' :: ');
 
         return $this->theme->of('user::admin.role.index')->render();
     }
@@ -107,7 +107,7 @@ class RoleAdminController extends AdminController
         try {
             $attributes         = $request->all();
             $role       = $this->model->create($attributes);
-            return $this->success(trans('messages.success.created', ['Module' => trans('user::role.name')]));
+            return $this->success(trans('messages.success.created', ['Module' => trans('user.role.name')]));
         } catch (Exception $e) {
             return $this->error($e->getMessage());
         }
@@ -141,7 +141,7 @@ class RoleAdminController extends AdminController
         try {
             $attributes         = $request->all();
             $role->update($attributes);
-            return $this->success(trans('messages.success.updated', ['Module' => trans('user::role.name')]));
+            return $this->success(trans('messages.success.updated', ['Module' => trans('user.role.name')]));
         } catch (Exception $e) {
             return $this->error($e->getMessage());
         }
@@ -157,7 +157,7 @@ class RoleAdminController extends AdminController
     {
         try {
             $role->delete();
-            return $this->success(trans('message.success.deleted', ['Module' => trans('user::role.name')]), 200);
+            return $this->success(trans('message.success.deleted', ['Module' => trans('user.role.name')]), 200);
         } catch (Exception $e) {
             return $this->error($e->getMessage());
         }

@@ -212,7 +212,6 @@ class Trans
         if ($locale === null) {
             $locale = $this->getCurrentTrans();
         }
-
         if (!$this->checkTransInSupportedTrans($locale)) {
             throw new UnsupportedTransException('Trans \''.$locale.'\' is not in the list of supported locales.');
         }
@@ -228,7 +227,6 @@ class Trans
 
             $url = $this->request->fullUrl();
         }
-
         if ($locale && $translatedRoute = $this->findTranslatedRouteByUrl($url, $attributes, $this->currentTrans)) {
             return $this->getURLFromRouteNameTranslated($locale, $translatedRoute, $attributes);
         }
@@ -266,7 +264,7 @@ class Trans
         if (!empty($locale) && ($locale != $this->defaultTrans || !$this->hideDefaultTransInURL())) {
             $parsed_url[ 'path' ] = $locale.'/'.ltrim($parsed_url[ 'path' ], '/');
         }
-        $parsed_url[ 'path' ] = ltrim(ltrim($base_path, '/').'/'.$parsed_url[ 'path' ], '/');
+        $parsed_url[ 'path' ] = ltrim($parsed_url[ 'path' ], '/');
 
         //Make sure that the pass path is returned with a leading slash only if it come in with one.
         if (starts_with($path, '/') === true) {
@@ -275,7 +273,6 @@ class Trans
         $parsed_url[ 'path' ] = rtrim($parsed_url[ 'path' ], '/');
 
         $url = $this->unparseUrl($parsed_url);
-
         if ($this->checkUrl($url)) {
             return $url;
         }
@@ -692,6 +689,7 @@ class Trans
         $uri = ltrim($uri, '/');
 
         if (empty($this->baseUrl)) {
+
             return app('url')->to($uri);
         }
 

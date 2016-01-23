@@ -3,7 +3,7 @@
 namespace Litepie\Database\Traits;
 
 use Illuminate\Support\Arr;
-use Litepie\Database\Contracts\PresenterInterface;
+use Litepie\Contracts\Database\Presenter;
 
 /**
  * Class PresentableTrait
@@ -12,15 +12,15 @@ use Litepie\Database\Contracts\PresenterInterface;
 trait PresentableTrait {
 
     /**
-     * @var PresenterInterface
+     * @var Presenter
      */
     protected $presenter = null;
 
     /**
-     * @param \Litepie\Database\Contracts\PresenterInterface $presenter
+     * @param \Litepie\Contracts\Database\Presenter $presenter
      * @return $this
      */
-    public function setPresenter(PresenterInterface $presenter){
+    public function setPresenter(Presenter $presenter){
         $this->presenter = $presenter;
         return $this;
     }
@@ -59,6 +59,6 @@ trait PresentableTrait {
      */
     protected function hasPresenter()
     {
-        return isset($this->presenter) && $this->presenter instanceof PresenterInterface;
+        return isset($this->presenter) && $this->presenter instanceof Presenter;
     }
 }
