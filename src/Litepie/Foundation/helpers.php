@@ -1,14 +1,15 @@
 <?php
 
 use Litepie\Support\Facades\Hashids;
+use Litepie\Support\Facades\Trans;
 
 if (! function_exists('hashids_encode')) {
     /**
-     * Throw an HttpException with the given data.
+     * Encode the given id.
      *
-     * @param  int     $id
+     * @param  int/array $id
      *
-     * @return void
+     * @return string
      */
     function hashids_encode($idorarray)
     {
@@ -79,9 +80,9 @@ if (!function_exists('folder_encode')) {
 
 if (!function_exists('folder_decode')) {
     /**
-     * Get upload folder.
+     * Get decoded folder.
      *
-     * @param string $folder
+     * @param array $folder
      *
      * @return string
      */
@@ -97,15 +98,79 @@ if (!function_exists('folder_decode')) {
         $arr        = explode('/', $folder);
         if (count($arr) == 1) {
             $folder     = hashids_decode($arr[0]);
-            return    $formatFolder($folder);
+            return $formatFolder($folder);
         }
 
         if (count($arr) == 2) {
             $folder     = hashids_decode($arr[1]);
-            return  $arr[0] . '/' . $formatFolder($folder);
+            return $arr[0] . '/' . $formatFolder($folder);
         }
 
         $folder     = hashids_decode($arr[1]);
         return $arr[0] . '/' . $formatFolder($folder) . '/' . $arr[2];
+    }
+}
+
+
+if (!function_exists('trans_url')) {
+    /**
+     * Get translated url.
+     *
+     * @param string $url
+     *
+     * @return string
+     */
+    function trans_url($url)
+    {
+        return Trans::to($url);
+    }
+}
+
+if (!function_exists('trans_setlocale')) {
+    /**
+     * Get upload folder.
+     *
+     * @param string $folder
+     *
+     * @return string
+     */
+    function trans_setlocale($locale = null)
+    {
+        return Trans::setLocale($locale);
+    }
+}
+
+if (!function_exists('user_id')) {
+    /**
+     * Get user id.
+     *
+     * @param string $guard
+     *
+     * @return int
+     */
+    function user_id($guard = 'web')
+    {
+        if (Auth::guard($guard)->check()) {
+            return Auth::guard($guard)->user()->id;
+        }
+        return null;
+    }
+}
+
+if (!function_exists('get_users')) {
+    /**
+     * Get upload folder.
+     *
+     * @param string $folder
+     *
+     * @return string
+     */
+    function get_users($property, $guard = 'web')
+    {
+        if (Auth::guard($guard)->check()) {
+            return Auth::guard($guard)->user()->$property;
+        }
+
+        return null;
     }
 }

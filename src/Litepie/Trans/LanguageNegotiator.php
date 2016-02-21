@@ -3,7 +3,7 @@
 namespace Litepie\Trans;
 
 use Illuminate\Http\Request;
-use Trans;
+use Trans as Translator;
 
 class LanguageNegotiator
 {
@@ -65,8 +65,8 @@ class LanguageNegotiator
             return key($this->supportedLanguages);
         }
 
-        if (class_exists('Trans') && !empty($_SERVER[ 'HTTP_ACCEPT_LANGUAGE' ])) {
-            $http_accept_language = Trans::acceptFromHttp($_SERVER[ 'HTTP_ACCEPT_LANGUAGE' ]);
+        if (class_exists('Translator') && !empty($_SERVER[ 'HTTP_ACCEPT_LANGUAGE' ])) {
+            $http_accept_language = Translator::acceptFromHttp($_SERVER[ 'HTTP_ACCEPT_LANGUAGE' ]);
 
             if (!empty($this->supportedLanguages[ $http_accept_language ])) {
                 return $http_accept_language;

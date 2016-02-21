@@ -24,12 +24,28 @@ interface Repository
     public function all($columns = array('*'));
 
     /**
+     * Retrieve first data of repository
+     *
+     * @param array $columns
+     * @return mixed
+     */
+    public function first($columns = array('*'));
+
+    /**
      * Retrieve all data of repository, paginated
      * @param null $limit
      * @param array $columns
      * @return mixed
      */
     public function paginate($limit = null, $columns = array('*'));
+
+    /**
+     * Retrieve all data of repository, simple paginated
+     * @param null $limit
+     * @param array $columns
+     * @return mixed
+     */
+    public function simplePaginate($limit = null, $columns = array('*'));
 
     /**
      * Find data by id

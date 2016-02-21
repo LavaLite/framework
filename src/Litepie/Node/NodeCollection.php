@@ -21,13 +21,14 @@ class NodeCollection extends CollectionBase
      * @param bool $removeOrphans Remove nodes that exist without their parents.
      * @return Illuminate\Database\Eloquent\Collection
      */
-    public function toNested($removeOrphans = true)
+    public function toNested($removeOrphans = true, $rootKey = null)
     {
         /*
          * Set new collection for "children" relations
          */
         $collection = $this->getDictionary();
-        foreach ($collection as $key => $model) {
+        foreach ($collection as $key => $model)
+        {
             $model->setRelation('children', new CollectionBase);
         }
 
@@ -35,15 +36,18 @@ class NodeCollection extends CollectionBase
          * Assign all child nodes to their parents
          */
         $nestedKeys = [];
-        foreach ($collection as $key => $model) {
+        foreach ($collection as $key => $model)
+        {
             if (!$parentKey = $model->getParentId())
                 continue;
 
-            if (array_key_exists($parentKey, $collection)) {
+            if (array_key_exists($parentKey, $collection))
+            {
                 $collection[$parentKey]->children[] = $model;
                 $nestedKeys[] = $model->getKey();
             }
-            elseif ($removeOrphans) {
+            elseif ($removeOrphans)
+            {
                 $nestedKeys[] = $model->getKey();
             }
         }
@@ -51,7 +55,8 @@ class NodeCollection extends CollectionBase
         /*
          * Remove processed nodes
          */
-        foreach ($nestedKeys as $key) {
+        foreach ($nestedKeys as $key)
+        {
             unset($collection[$key]);
         }
 
@@ -65,7 +70,7 @@ class NodeCollection extends CollectionBase
      * @param  string $indent Character to indent depth
      * @return array
      */
-    public function listsNested($value, $key = null, $indent = '&nbsp;&nbsp;&nbsp;')
+    public function listsNested($value, $key = null, $indent = '   ')
     {
         /*
          * Recursive helper function
@@ -75,8 +80,10 @@ class NodeCollection extends CollectionBase
 
             $indentString = str_repeat($indent, $depth);
 
-            foreach ($items as $item) {
-                if ($key !== null) {
+            foreach ($items as $item)
+            {
+                if ($key !== null)
+                {
                     $result[$item->{$key}] = $indentString . $item->{$value};
                 }
                 else {
@@ -87,8 +94,14 @@ class NodeCollection extends CollectionBase
                  * Add the children
                  */
                 $childItems = $item->getChildren();
-                if ($childItems->count() > 0) {
-                    $result = $result + $buildCollection($childItems, $depth + 1);
+                if ($childItems->count() > 0)
+                {
+                    if ($key === null)
+                    {
+                        $result = array_merge($result, $buildCollection($childItems, $depth + 1));
+                    } else {
+                        $result = $result + $buildCollection($childItems, $depth + 1);
+                    }
                 }
             }
 
@@ -101,6 +114,56 @@ class NodeCollection extends CollectionBase
         $rootItems = $this->toNested();
         $result = $buildCollection($rootItems);
         return $result;
+    }
+
+    /**
+     * Gets an array with values of a given column. Values are indented according to their depth.
+     * @param  string $value  Array values
+     * @param  string $key    Array keys
+     * @param  string $indent Character to indent depth
+     * @return array
+     */
+    public function toMenu($key)
+    {
+        /*
+         * Recursive helper function
+         */
+        $buildCollection = function($items, $depth) use (&$buildCollection) {
+            $result = [];
+
+            foreach ($items as $key => $item)
+            {
+                $key = $depth . '.' . $key;
+                $result[$key] = $item;
+                /*
+                 * Add the children
+                 */
+                $childItems = $item->getChildren();
+                if ($childItems->count() > 0)
+                {
+                    $result = $result + $buildCollection($childItems, $key);
+                }
+                unset($result[$key]->children);
+            }
+
+            return $result;
+        };
+
+        /*
+         * Build a nested collection
+         */
+        $rootItems = $this->toNested();
+
+        //return menu as array
+        foreach ($rootItems as $rootItem)
+        {
+            if ($rootItem->key == $key) {
+                $result = $buildCollection($rootItem->getChildren(), '0');
+                return $result;
+            }
+        }
+
+        return null;
     }
 
 }

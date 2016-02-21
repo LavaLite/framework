@@ -50,9 +50,7 @@ trait HasRoles
      */
     public function is($role)
     {
-        return $this->roles
-            ->where('name', $role)
-            ->first() != null;
+        return $this->hasRole($role);
     }
 
     /**
@@ -77,8 +75,7 @@ trait HasRoles
         $roleModel = config('user.role.model', 'Litepie\User\Role');
         $roleUserTable = config('user.role_user.table', 'role_user');
         $roleKey = config('user.role.key', 'role_id');
-
-        return $this->belongsToMany($roleModel, $roleUserTable, 'user_id', $roleKey);
+        return $this->belongsToMany($roleModel, $roleUserTable,'user_id', $roleKey);
     }
 
     /**

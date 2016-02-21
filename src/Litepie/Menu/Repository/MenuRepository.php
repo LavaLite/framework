@@ -9,7 +9,6 @@ use Litepie\Database\Eloquent\BaseRepository;
 
 class MenuRepository extends BaseRepository implements MenuRepositoryInterface
 {
-    use CategoryRepository;
 
     public $tempHolder;
 
@@ -54,33 +53,6 @@ class MenuRepository extends BaseRepository implements MenuRepositoryInterface
         $this->_breadscrump($id);
 
         return array_reverse($this->tempHolder);
-    }
-
-    /**
-     * Recrusive function for breadcrumb.
-     *
-     * @param int $id
-     *
-     * @return null
-     */
-    public function _breadscrump($id)
-    {
-        $menu = $this->model
-                        ->whereId($id)
-                        ->first();
-        $this->resetModel();
-
-        if (!count($menu)) {
-            return;
-        }
-
-        $this->tempHolder[$menu->id] = $menu;
-
-        if ($menu->parent_id == 0) {
-            return;
-        }
-
-        return $this->_breadscrump($menu->parent_id);
     }
 
     /**
@@ -270,6 +242,7 @@ class MenuRepository extends BaseRepository implements MenuRepositoryInterface
     public function updateTree($id, $json)
     {
         $tree = json_decode($json, true);
+        print_r($tree);
         $this->tempHolder = [];
         $this->getParentChild($id, $tree);
         foreach ($this->tempHolder as $key => $val) {
@@ -294,10 +267,35 @@ class MenuRepository extends BaseRepository implements MenuRepositoryInterface
      */
     public function updateParent($parent, $children)
     {
-        print_r($parent);
-        print_r($children);
         foreach ($children as $key => $val) {
-            $this->update(['parent_id' => $parent, 'order' => $key], $val);
+            $this->update(['parent_id' => hashids_decode($parent), 'order' => $key], hashids_decode($val));
         }
+    }
+
+    /**
+     * Delete a entity in repository by id
+     *
+     * @param $id
+     * @return int
+     */
+    public function delete($id)
+    {
+        $this->applyScope();
+
+        $_skipPresenter = $this->skipPresenter;
+        $this->skipPresenter(true);
+
+        $model = $this->find($id);
+        $originalModel = clone $model;
+
+        $this->skipPresenter($_skipPresenter);
+        $this->resetModel();
+echo $id;
+dd($model);
+        $deleted = $model->delete();
+
+        event(new RepositoryEntityDeleted($this, $originalModel));
+
+        return $deleted;
     }
 }

@@ -9,11 +9,11 @@ use Litepie\User\Http\Requests\RoleAdminRequest;
 use Litepie\Contracts\User\RoleRepository;
 use Litepie\Contracts\User\PermissionRepository;
 
+
 /**
  *
  * @package Role
  */
-
 class RoleAdminController extends AdminController
 {
     /**
@@ -31,7 +31,7 @@ class RoleAdminController extends AdminController
                                 PermissionRepository $permission)
     {
         $this->permission = $permission;
-        $this->model = $role;
+        $this->repository = $role;
         parent::__construct();
     }
 
@@ -42,15 +42,18 @@ class RoleAdminController extends AdminController
      */
     public function index(RoleAdminRequest $request)
     {
-        if ($request->wantsJson()) {
-            $roles = $this->model->setPresenter('\\Lavalite\\User\\Repositories\\Presenter\\RoleListPresenter')->all();
 
-            return $roles;
-        }
+        $roles  = $this->repository->setPresenter('\\Lavalite\\User\\Repositories\\Presenter\\RoleListPresenter')->paginate(NULL, ['*']);
+        $this   ->theme->prependTitle(trans('user.role.names').' :: ');
+        $view   = $this->theme->of('user::admin.role.index')->render();
 
-        $this->theme->prependTitle(trans('user.role.names').' :: ');
-
-        return $this->theme->of('user::admin.role.index')->render();
+        $this->responseCode = 200;
+        $this->responseMessage = trans('messages.success.loaded', ['Module' => 'Role']);
+        $this->responseData = $roles['data'];
+        $this->responseMeta = $roles['meta'];
+        $this->responseView = $view;
+        $this->responseRedirect = '';
+        return $this->respond($request);
     }
 
     /**
@@ -63,23 +66,24 @@ class RoleAdminController extends AdminController
      */
     public function show(RoleAdminRequest $request, Role $role)
     {
-        if (!$role->exists) {
-            if ($request->wantsJson()) {
-                return [];
-            }
 
-            return view('user::admin.role.new');
+         if (!$role->exists) {
+            $this->responseCode = 404;
+            $this->responseMessage = trans('messages.success.notfound', ['Module' => 'Role']);
+            $this->responseData = $role;
+            $this->responseView = view('user::admin.role.new');
+            return $this -> respond($request);
         }
-
-        if ($request->wantsJson()) {
-            return $role;
-        }
-
         $permissions        = $this->permission->groupedPermissions(true);
         $rolePermissions    = [];
         Form::populate($role);
+        $this->responseCode = 200;
+        $this->responseMessage = trans('messages.success.loaded', ['Module' => 'Role']);
+        $this->responseData = $role;
+        $this->responseView = view('user::admin.role.show', compact('role', 'permissions', 'rolePermissions'));
 
-        return view('user::admin.role.show', compact('role', 'permissions', 'rolePermissions'));
+        return $this -> respond($request);
+
     }
 
     /**
@@ -90,10 +94,16 @@ class RoleAdminController extends AdminController
      */
     public function create(RoleAdminRequest $request)
     {
-        $role = $this->model->findOrNew(0);
+
+        $role = $this->repository->newInstance([]);
         Form::populate($role);
         $permissions  = $this->permission->groupedPermissions(true);
-        return view('user::admin.role.create', compact('role', 'permissions'));
+        $this->responseCode = 200;
+        $this->responseMessage = trans('messages.success.loaded', ['Module' => 'Role']);
+        $this->responseData = $role;
+        $this->responseView = view('user::admin.role.create', compact('role', 'permissions'));
+        return $this -> respond($request);
+
     }
 
     /**
@@ -104,13 +114,23 @@ class RoleAdminController extends AdminController
      */
     public function store(RoleAdminRequest $request)
     {
-        try {
-            $attributes         = $request->all();
-            $role       = $this->model->create($attributes);
-            return $this->success(trans('messages.success.created', ['Module' => trans('user.role.name')]));
+
+         try {
+
+            $attributes = $request->all();
+            $role = $this->repository->create($attributes);
+            $this->responseCode = 201;
+            $this->responseMessage = trans('messages.success.created', ['Module' => 'Role']);
+            $this->responseData = $role;
+            $this->responseRedirect = trans_url('/admin/user/role/'.$role->getRouteKey());
+            return $this -> respond($request);
+
         } catch (Exception $e) {
-            return $this->error($e->getMessage());
+            $this->responseCode = 400;
+            $this->responseMessage = $e->getMessage();
+            return $this -> respond($request);
         }
+
     }
 
     /**
@@ -122,11 +142,16 @@ class RoleAdminController extends AdminController
      */
     public function edit(RoleAdminRequest $request, Role $role)
     {
-        $permissions  = $this->permission->groupedPermissions(true);
 
+        $permissions  = $this->permission->groupedPermissions(true);
         Form::populate($role);
         $rolePermissions    = [];
-        return view('user::admin.role.edit', compact('role', 'permissions', 'rolePermissions'));
+        $this->responseCode = 200;
+        $this->responseMessage = trans('messages.success.loaded', ['Module' => 'Role']);
+        $this->responseData = $role;
+        $this->responseView = view('user::admin.role.edit', compact('role', 'permissions', 'rolePermissions'));
+
+        return $this -> respond($request);
     }
 
     /**
@@ -138,12 +163,22 @@ class RoleAdminController extends AdminController
      */
     public function update(RoleAdminRequest $request, Role $role)
     {
-        try {
-            $attributes         = $request->all();
-            $role->update($attributes);
-            return $this->success(trans('messages.success.updated', ['Module' => trans('user.role.name')]));
+         try {
+
+            $attributes = $request->all();
+            $this->repository->update($attributes, $role->getRouteKey());
+            $this->responseCode = 204;
+            $this->responseMessage = trans('messages.success.updated', ['Module' => 'Role']);
+            $this->responseRedirect = trans_url('/admin/user/role/'.$role->getRouteKey());
+            return $this -> respond($request);
+
         } catch (Exception $e) {
-            return $this->error($e->getMessage());
+
+            $this->responseCode = 400;
+            $this->responseMessage = $e->getMessage();
+            $this->responseRedirect = trans_url('/admin/user/role/'.$role->getRouteKey());
+
+            return $this -> respond($request);
         }
     }
 
@@ -156,10 +191,23 @@ class RoleAdminController extends AdminController
     public function destroy(RoleAdminRequest $request, Role $role)
     {
         try {
-            $role->delete();
-            return $this->success(trans('message.success.deleted', ['Module' => trans('user.role.name')]), 200);
+
+            $t = $role->delete();
+            $this->responseCode = 202;
+            $this->responseMessage = trans('messages.success.deleted', ['Module' => 'Role']);
+            $this->responseData = $role;
+            $this->responseRedirect = trans_url('/admin/user/role/0');
+
+            return $this -> respond($request);
+
         } catch (Exception $e) {
-            return $this->error($e->getMessage());
+
+            $this->responseCode = 400;
+            $this->responseMessage = $e->getMessage();
+            $this->responseRedirect = trans_url('/admin/user/role/'.$role->getRouteKey());
+
+            return $this -> respond($request);
+
         }
     }
 }

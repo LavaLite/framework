@@ -11,7 +11,8 @@
     ],
     "require": {
         "php": ">=5.5.9",
-        "laravel/socialite": "^3.0@dev"
+        "laravel/socialite": "^3.0@dev",
+        "guzzlehttp/guzzle": "~4.0"
     },
     "autoload": {
         "classmap": [

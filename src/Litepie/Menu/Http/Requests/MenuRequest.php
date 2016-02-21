@@ -56,7 +56,6 @@ class MenuRequest extends Request
         // Validation rule for update request.
         if ($request->isMethod('PUT') || $request->isMethod('PATCH')) {
             return [
-                'name' => 'required',
             ];
         }
 

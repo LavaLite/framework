@@ -5,7 +5,7 @@ use Form;
 use Response;
 use Illuminate\Http\Request;
 use App\User;
-use App\Http\Controllers\AdminController;
+use App\Http\Controllers\AdminController as AdminController;
 use Litepie\User\Http\Requests\UserAdminRequest;
 use Litepie\Contracts\User\UserRepository;
 use Litepie\Contracts\User\RoleRepository;
@@ -40,7 +40,7 @@ class UserAdminController extends AdminController
                                 PermissionRepository $permission,
                                 RoleRepository $roles)
     {
-        $this->model = $user;
+        $this->repository = $user;
         $this->permission = $permission;
         $this->roles = $roles;
         parent::__construct();
@@ -53,18 +53,34 @@ class UserAdminController extends AdminController
      */
     public function index(UserAdminRequest $request, $role = null)
     {
-        if ($request->wantsJson()) {
+/*        if ($request->wantsJson()) {
             if ($request->has('role')) {
                 $users = $this->roles->with(['users'])->findByField('name', $request->get('role'));
                 return $users;
             }
-            $users = $this->model->setPresenter('\\Lavalite\\User\\Repositories\\Presenter\\UserListPresenter')->all();
+            $users = $this->repository->setPresenter('\\Lavalite\\User\\Repositories\\Presenter\\UserListPresenter')->all();
             return $users;
         }
 
         $this->theme->prependTitle(trans('user.user.names').' :: ');
 
         return $this->theme->of('user::admin.user.index')->render();
+*/
+            if ($request->has('role')) {
+                $users = $this->roles->with(['users'])->findByField('name', $request->get('role'));
+                return $users;
+            }
+            $users  = $this->repository->setPresenter('\\Lavalite\\User\\Repositories\\Presenter\\UserListPresenter')->paginate(NULL, ['*']);
+            $this   ->theme->prependTitle(trans('user::user.names').' :: ');
+            $view   = $this->theme->of('user::admin.user.index')->render();
+            $this->responseCode = 200;
+            $this->responseMessage = trans('messages.success.loaded', ['Module' => 'User']);
+            $this->responseData = $users['data'];
+            $this->responseMeta = $users['meta'];
+            $this->responseView = $view;
+            $this->responseRedirect = '';
+            return $this->respond($request);
+
     }
 
 
@@ -78,7 +94,7 @@ class UserAdminController extends AdminController
      */
     public function show(UserAdminRequest $request, User $user)
     {
-        if (!$user->exists) {
+ /*       if (!$user->exists) {
             if ($request->wantsJson()) {
                 return [];
             }
@@ -95,7 +111,25 @@ class UserAdminController extends AdminController
 
         Form::populate($user);
 
-        return view('user::admin.user.show', compact('user', 'roles', 'permissions'));
+        return view('user::admin.user.show', compact('user', 'roles', 'permissions'));*/
+
+        if (!$user->exists) {
+
+            $this->responseCode = 404;
+            $this->responseMessage = trans('messages.success.notfound', ['Module' => 'User']);
+            $this->responseData = $user;
+            $this->responseView = view('user::admin.user.new');
+            return $this -> respond($request);
+        }
+
+        $permissions  = $this->permission->groupedPermissions(true);
+        $roles  = $this->roles->all();
+        Form::populate($user);
+        $this->responseCode = 200;
+        $this->responseMessage = trans('messages.success.loaded', ['Module' => 'User']);
+        $this->responseData = $user;
+        $this->responseView = view('user::admin.user.show', compact('user', 'roles', 'permissions'));
+        return $this -> respond($request);
     }
 
     /**
@@ -106,12 +140,17 @@ class UserAdminController extends AdminController
      */
     public function create(UserAdminRequest $request)
     {
-        $user = $this->model->findOrNew(0);
+        $user = $this->repository->newInstance([]);
         $permissions  = $this->permission->groupedPermissions(true);
         $roles  = $this->roles->all();
         Form::populate($user);
 
-        return view('user::admin.user.create', compact('user', 'roles', 'permissions'));
+        $this->responseCode = 200;
+        $this->responseMessage = trans('messages.success.loaded', ['Module' => 'User']);
+        $this->responseData = $user;
+        $this->responseView = view('user::admin.user.create', compact('user','roles', 'permissions'));
+        return $this -> respond($request);
+
     }
 
     /**
@@ -122,14 +161,25 @@ class UserAdminController extends AdminController
      */
     public function store(UserAdminRequest $request)
     {
-        try {
-            $attributes         = $request->all();
-            $user       = $this->model->create($attributes);
+
+         try {
+            $attributes = $request->all();
+            $user       = $this->repository->create($attributes);
             $user->syncRoles($request->get('roles'));
-            return $this->success(trans('messages.success.created', ['Module' => trans('user.user.name')]));
+            $this->responseCode = 201;
+            $this->responseMessage = trans('messages.success.created', ['Module' => 'User']);
+            $this->responseData = $user;
+            $this->responseMeta = '';
+            $this->responseRedirect = trans_url('/admin/user/user/'.$user->getRouteKey());
+            $this->responseView = view('user::admin.user.create', compact('user'));
+            return $this -> respond($request);
+
         } catch (Exception $e) {
-            return $this->error($e->getMessage());
+            $this->responseCode = 400;
+            $this->responseMessage = $e->getMessage();
+            return $this -> respond($request);
         }
+
     }
 
     /**
@@ -141,11 +191,16 @@ class UserAdminController extends AdminController
      */
     public function edit(UserAdminRequest $request, User $user)
     {
+
         $permissions  = $this->permission->groupedPermissions(true);
         $roles  = $this->roles->all();
         Form::populate($user);
+        $this->responseCode = 200;
+        $this->responseMessage = trans('messages.success.loaded', ['Module' => 'User']);
+        $this->responseData = $user;
+        $this->responseView = view('user::admin.user.edit', compact('user', 'roles', 'permissions'));
 
-        return view('user::admin.user.edit', compact('user', 'roles', 'permissions'));
+        return $this->respond($request);
     }
 
     /**
@@ -157,13 +212,24 @@ class UserAdminController extends AdminController
      */
     public function update(UserAdminRequest $request, User $user)
     {
-        try {
-            $attributes         = $request->all();
+
+          try {
+            $attributes = $request->all();
             $user->update($attributes);
             $user->syncRoles($request->get('roles'));
-            return $this->success(trans('messages.success.updated', ['Module' => trans('user.user.name')]));
+            $this->responseCode = 204;
+            $this->responseMessage = trans('messages.success.updated', ['Module' => 'User']);
+            $this->responseData = $user;
+            $this->responseRedirect = trans_url('/admin/user/user/'.$user->getRouteKey());
+            return $this -> respond($request);
+
         } catch (Exception $e) {
-            return $this->error($e->getMessage());
+
+            $this->responseCode = 400;
+            $this->responseMessage = $e->getMessage();
+            $this->responseRedirect = trans_url('/admin/user/user/'.$user->getRouteKey());
+
+            return $this -> respond($request);
         }
     }
 
@@ -175,11 +241,27 @@ class UserAdminController extends AdminController
      */
     public function destroy(UserAdminRequest $request, User $user)
     {
-        try {
-            $user->delete();
-            return $this->success(trans('message.success.deleted', ['Module' => trans('user.user.name')]), 200);
+
+         try {
+
+            $t = $user->delete();
+
+            $this->responseCode = 202;
+            $this->responseMessage = trans('messages.success.deleted', ['Module' => 'User']);
+            $this->responseData = $user;
+            $this->responseMeta = '';
+            $this->responseRedirect = trans_url('/admin/user/user/0');
+
+            return $this -> respond($request);
+
         } catch (Exception $e) {
-            return $this->error($e->getMessage());
+
+            $this->responseCode = 400;
+            $this->responseMessage = $e->getMessage();
+            $this->responseRedirect = trans_url('/admin/user/user/'.$user->getRouteKey());
+
+            return $this -> respond($request);
+
         }
     }
 

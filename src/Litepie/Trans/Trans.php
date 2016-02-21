@@ -14,19 +14,7 @@ use Litepie\Trans\Exceptions\UnsupportedTransException;
 
 class Trans
 {
-    /**
-     * Config repository.
-     *
-     * @var \Illuminate\Config\Repository
-     */
-    protected $configRepository;
 
-    /**
-     * Illuminate view Factory.
-     *
-     * @var \Illuminate\View\Factory
-     */
-    protected $view;
 
     /**
      * Illuminate translator class.
@@ -106,14 +94,13 @@ class Trans
     public function __construct()
     {
         $this->app = app();
-        $this->configRepository = $this->app[ 'config' ];
-        $this->view = $this->app[ 'view' ];
         $this->translator = $this->app[ 'translator' ];
         $this->router = $this->app[ 'router' ];
         $this->request = $this->app[ 'request' ];
 
         // set default locale
-        $this->defaultTrans = $this->configRepository->get('app.locale');
+        $this->defaultTrans = config('app.locale');
+
         $supportedTrans = $this->getSupportedTrans();
 
         if (empty($supportedTrans[ $this->defaultTrans ])) {
@@ -261,11 +248,11 @@ class Trans
             return $this->getURLFromRouteNameTranslated($locale, $translatedRoute, $attributes);
         }
 
-        if (!empty($locale) && ($locale != $this->defaultTrans || !$this->hideDefaultTransInURL())) {
+       if (!empty($locale) && ($locale != $this->defaultTrans || !$this->hideDefaultTransInURL())) {
             $parsed_url[ 'path' ] = $locale.'/'.ltrim($parsed_url[ 'path' ], '/');
         }
-        $parsed_url[ 'path' ] = ltrim($parsed_url[ 'path' ], '/');
 
+        $parsed_url[ 'path' ] = ltrim($parsed_url[ 'path' ], '/');
         //Make sure that the pass path is returned with a leading slash only if it come in with one.
         if (starts_with($path, '/') === true) {
             $parsed_url[ 'path' ] = '/'.$parsed_url[ 'path' ];
@@ -359,7 +346,7 @@ class Trans
             return $this->supportedTrans;
         }
 
-        $locales = $this->configRepository->get('trans.locales');
+        $locales = config('trans.locales');
 
         if (empty($locales) || !is_array($locales)) {
             throw new SupportedTransNotDefined();
@@ -452,7 +439,7 @@ class Trans
         }
 
         // or get application default language
-        return $this->configRepository->get('app.locale');
+        return config('app.locale');
     }
 
     /**
@@ -664,7 +651,7 @@ class Trans
      */
     protected function useAcceptLanguageHeader()
     {
-        return $this->configRepository->get('locale.useAcceptLanguageHeader');
+        return config('trans.useAcceptLanguageHeader');
     }
 
     /**
@@ -674,7 +661,7 @@ class Trans
      */
     public function hideDefaultTransInURL()
     {
-        return $this->configRepository->get('locale.hideDefaultTransInURL');
+        return config('trans.hideDefaultLocaleInURL');
     }
 
     /**

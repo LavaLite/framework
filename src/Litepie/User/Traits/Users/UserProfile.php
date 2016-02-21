@@ -22,10 +22,10 @@ trait UserProfile
         }
 
         if ($this->sex == 'Female') {
-            return URL::to('images/avatar/female.png');
+            return URL::to('img/avatar/female.png');
         }
 
-        return URL::to('images/avatar/male.png');
+        return URL::to('img/avatar/male.png');
     }
 
     /**

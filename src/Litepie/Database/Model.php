@@ -40,6 +40,17 @@ class Model extends Eloquent
     }
 
     /**
+     * Adds a manipulator to the setter.
+     *
+     * @param $callback  \Closure
+     */
+    public function getPublickKey()
+    {
+        return $this->getAttribute('slug');
+    }
+
+
+    /**
      * Adds a manipulator to the getter.
      *
      * @param $callback  \Closure
@@ -120,4 +131,24 @@ class Model extends Eloquent
             }
         }
     }
+
+    /**
+     * Returns an array of attributes that will be used in traits.
+     *
+     * @return array
+     */
+    public function checkGetSetAttribute($variable, $field, $table)
+    {
+        if (!property_exists(get_called_class(), $variable) && empty($this->$variable))
+            return false;
+
+        $array[$table] = array_flip($this->$variable);
+        $array = array_dot($array);
+
+        if (array_key_exists($table . '.' . $field, $array))
+            return true;
+
+        return false;
+    }
+
 }

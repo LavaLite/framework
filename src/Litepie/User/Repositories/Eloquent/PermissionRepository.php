@@ -40,25 +40,25 @@ class PermissionRepository extends BaseRepository implements PermissionRepositor
     /**
      * Create a new permission using the given name.
      *
-     * @param string $permissionName
-     * @param string $readableName
+     * @param string $name
+     * @param string $slug
      *
      * @throws PermissionExistsException
      *
      * @return Permission
      */
-    public function createPermission($permissionName, $readableName = null)
+    public function createPermission($name, $slug = null)
     {
-        if (! is_null($this->findByName($permissionName))) {
-            throw new PermissionExistsException('The permission '.$permissionName.' already exists'); // TODO: add translation support
+        if (! is_null($this->findByName($name))) {
+            throw new PermissionExistsException('The permission '.$name.' already exists'); // TODO: add translation support
         }
 
         // Do we have a display_name set?
-        $readableName = is_null($readableName) ? $permissionName : $readableName;
+        $slug = is_null($slug) ? $name : $slug;
 
         return $permission = $this->model->create([
-            'name'          => $permissionName,
-            'readable_name' => $readableName,
+            'name'      => $name,
+            'slug'      => $slug,
         ]);
     }
 

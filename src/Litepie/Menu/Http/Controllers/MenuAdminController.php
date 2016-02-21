@@ -12,6 +12,13 @@ class MenuAdminController extends AdminController
 {
     private $view;
 
+    /**
+     * Initialize page controller.
+     *
+     * @param type PageRepositoryInterface $page
+     *
+     * @return type
+     */
     public function __construct(\Litepie\Contracts\Menu\MenuRepository $menu)
     {
         $this->model = $menu;
@@ -21,6 +28,11 @@ class MenuAdminController extends AdminController
         parent::__construct();
     }
 
+    /**
+     * Display a listing of the resource.
+     *
+     * @return Response
+     */
     public function index(MenuRequest $request, $parent = 1)
     {
         $parent = $this->model->find(hashids_encode($parent));
@@ -33,6 +45,25 @@ class MenuAdminController extends AdminController
         return $this->theme->of('menu::admin.index', compact('rootMenu', 'parent'))->render();
     }
 
+    /**
+     * Display a listing of the resource.
+     *
+     * @return Response
+     */
+    public function nested(MenuRequest $request, $parent = 1)
+    {
+        $parent = $this->model->all();
+        print_r($parent->toMenu('admin'));
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param Request $request
+     * @param int     $id
+     *
+     * @return Response
+     */
     public function show(MenuRequest $request, $id)
     {
         if ($request->ajax()) {
@@ -51,6 +82,13 @@ class MenuAdminController extends AdminController
         return $this->theme->of('menu::admin.index', compact('rootMenu', 'parent'))->render();
     }
 
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @param Request $request
+     *
+     * @return Response
+     */
     public function create(MenuRequest $request)
     {
         $menu = $this->model->newInstance();
@@ -60,6 +98,13 @@ class MenuAdminController extends AdminController
         return  view('menu::admin.create', compact('menu'));
     }
 
+    /**
+     * Create the specified resource.
+     *
+     * @param Request $request
+     *
+     * @return Response
+     */
     public function store(MenuRequest $request)
     {
         try {
@@ -71,6 +116,14 @@ class MenuAdminController extends AdminController
         }
     }
 
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param Request $request
+     * @param int     $id
+     *
+     * @return Response
+     */
     public function edit(MenuRequest $request, $id)
     {
         $data['menu'] = $this->model->find($id);
@@ -79,6 +132,14 @@ class MenuAdminController extends AdminController
         return  view('menu::admin.edit', $data);
     }
 
+    /**
+     * Update the specified resource.
+     *
+     * @param Request $request
+     * @param int     $id
+     *
+     * @return Response
+     */
     public function update(MenuRequest $request, $id)
     {
         try {
@@ -90,14 +151,23 @@ class MenuAdminController extends AdminController
         }
     }
 
+    /**
+     * Remove the specified resource.
+     *
+     * @param int $id
+     *
+     * @return Response
+     */
     public function destroy(MenuRequest $request, $id)
     {
-        if ($this->model->where('parent_id', '=', $id)->exists()) {
+        $cid = hashids_decode($id);
+        if ($this->model->findByField('parent_id', $cid)->count() > 0) {
             return Response::json(['message' => 'Child menu exists.', 'type' => 'warning', 'title' => 'Warning'], 400);
         }
 
         try {
-            $this->model->delete($id);
+            $menu = $this->model->find($id);
+            $menu->delete();
 
             return Response::json(['message' => 'Menu deleted sucessfully', 'type' => 'success', 'title' => 'Success'], 201);
         } catch (Exception $e) {

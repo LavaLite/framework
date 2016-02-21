@@ -233,6 +233,21 @@ abstract class BaseRepository implements Repository, RepositoryCriteria
     }
 
     /**
+     * Retrieve first data of repository
+     *
+     * @param array $columns
+     * @return mixed
+     */
+    public function first($columns = array('*'))
+    {
+        $this->applyCriteria();
+        $this->applyScope();
+        $results = $this->model->first($columns);
+        $this->resetModel();
+        return $this->parserResult($results);
+    }
+
+    /**
      * Retrieve all data of repository, paginated
      * @param null $limit
      * @param array $columns
@@ -244,6 +259,23 @@ abstract class BaseRepository implements Repository, RepositoryCriteria
         $this->applyScope();
         $limit = is_null($limit) ? config('database.pagination.limit', 15) : $limit;
         $results = $this->model->paginate($limit, $columns);
+        $this->resetModel();
+        return $this->parserResult($results);
+    }
+
+
+    /**
+     * Retrieve all data of repository, simple paginated
+     * @param null $limit
+     * @param array $columns
+     * @return mixed
+     */
+    public function simplePaginate($limit = null, $columns = array('*'))
+    {
+        $this->applyCriteria();
+        $this->applyScope();
+        $limit = is_null($limit) ? config('repository.pagination.limit', 15) : $limit;
+        $results = $this->model->simplePaginate($limit, $columns);
         $this->resetModel();
         return $this->parserResult($results);
     }
@@ -260,6 +292,26 @@ abstract class BaseRepository implements Repository, RepositoryCriteria
         $this->applyCriteria();
         $this->applyScope();
         $model = $this->model->findOrFail($id, $columns);
+        $this->resetModel();
+        return $this->parserResult($model);
+    }
+
+    /**
+     * Find data by id or return new if not exists
+     *
+     * @param $id
+     * @param array $columns
+     * @return mixed
+     */
+    public function findOrNew($id, $columns = array('*'))
+    {
+        $this->applyCriteria();
+        $this->applyScope();
+        try {
+            $model = $this->model->findOrFail($id, $columns);
+        } catch (Exception $e) {
+            $model = $this->model->newInstance([]);
+        }
         $this->resetModel();
         return $this->parserResult($model);
     }
@@ -400,7 +452,6 @@ abstract class BaseRepository implements Repository, RepositoryCriteria
     public function update(array $attributes, $id)
     {
         $this->applyScope();
-
         $_skipPresenter = $this->skipPresenter;
 
         $this->skipPresenter(true);

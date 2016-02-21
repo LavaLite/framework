@@ -30,6 +30,7 @@ class UserMailer extends Mailer
         $data['email']          = $email;
         return $this->sendTo($email, $subject, $view, $data);
     }
+
     /**
      * Email Password Reset info to a user.
      * @param  string $email
@@ -37,8 +38,10 @@ class UserMailer extends Mailer
      * @param  string $resetCode
      * @return bool
      */
+
     public function forgotPassword($email, $userId, $resetCode)
     {
+        
         $subject            = 'Password Reset Confirmation | ' . trans('cms.name');
         $view               = 'user::emails.auth.reset';
         $data['userId']     = $userId;

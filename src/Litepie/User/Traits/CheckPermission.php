@@ -35,7 +35,6 @@ trait CheckPermission
     public function hasPermission($permission, $force = false)
     {
         $permissions = $this->getAllPermissions($force);
-
         return array_key_exists($permission, $permissions);
     }
 
@@ -120,11 +119,12 @@ trait CheckPermission
     protected function getFreshRolesPermissions()
     {
         $roles = $this->roles()->get(['permissions']);
-
         $permissions    = [];
 
         foreach ($roles as $role) {
-            $permissions = array_merge($permissions, $role->permissions);
+            if(!empty($role->permissions)){
+                $permissions = array_merge($permissions, $role->permissions);
+            }
         }
 
         return $permissions;

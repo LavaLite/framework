@@ -8,7 +8,4 @@ interface MenuRepository
 
     public function rootMenues();
 
-    public function breadscrump($id);
-
-    public function _breadscrump($id);
 }

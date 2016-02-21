@@ -2,7 +2,6 @@
 
 namespace Litepie\User\Providers;
 
-use Litepie\User\Models\User;
 use Illuminate\Contracts\Auth\Access\Gate as GateContract;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 
@@ -15,6 +14,8 @@ class AuthServiceProvider extends ServiceProvider
      */
     protected $policies = [
         \Litepie\User\Models\User::class => \Litepie\User\Policies\UserPolicy::class,
+        \Litepie\User\Models\Role::class => \Litepie\User\Policies\RolePolicy::class,
+        \Litepie\User\Models\Permission::class => \Litepie\User\Policies\PermissionPolicy::class,
     ];
 
     /**

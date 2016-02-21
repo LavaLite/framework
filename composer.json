@@ -3,7 +3,7 @@
     "description": "The lavalite framework",
     "keywords": ["framework", "lavalite"],
     "license": "MIT",
-    "homepage": "http://lavalite.com",
+    "homepage": "http://lavalite.org",
     "authors": [
         {
             "name": "Renfos Technologies",
@@ -21,10 +21,12 @@
         "litepie/form": "self.version",
         "litepie/hashids": "self.version",
         "litepie/html": "self.version",
+        "litepie/menu": "self.version",
+        "litepie/node": "self.version",
         "litepie/revision": "self.version",
         "litepie/theme": "self.version",
         "litepie/trans": "self.version",
-        "litepie/tree": "self.version"
+        "litepie/user": "self.version"
     },
     "autoload": {
         "classmap": [

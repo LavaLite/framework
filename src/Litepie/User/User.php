@@ -275,8 +275,8 @@ class User
      * @return bool
      */
     public function roleExists($roleName)
-    {
-        return $this->role->findByName($roleName) !== null;
+    {       
+        return $this->role->findByField('name',$roleName) !== null;
     }
 
     /**
@@ -288,7 +288,7 @@ class User
      */
     public function permissionExists($permissionName)
     {
-        return $this->permission->findByName($permissionName) !== null;
+        return $this->permission->findByField('name',$permissionName) !== null;
     }
 
     /**
@@ -300,7 +300,7 @@ class User
      */
     public function findRole($roleName)
     {
-        return $this->role->findByName($roleName);
+        return $this->role->findByField('name',$roleName);
     }
 
     /**
@@ -324,8 +324,15 @@ class User
      */
     public function findPermission($permissionName)
     {
-        return $this->permission->findByName($permissionName);
+        return $this->permission->findByField('name',$permissionName);
     }
+
+    public function findUser($id)
+    {
+       
+        return $this->user->findUser($id);
+    }
+
 
     /**
      * Find a permission by its id.
@@ -449,6 +456,7 @@ class User
     }
 
 
+
     /**
      * Return the count of records.
      *
@@ -458,4 +466,6 @@ class User
     {
         return 0;
     }
+
+    
 }

@@ -21,8 +21,7 @@ trait Trans
     public static function bootTrans()
     {
         static::addSetterManipulator(function ($model, $key, $value) {
-            $table = $model->table;
-            if (method_exists($model, 'getTransAttributes') && array_key_exists($table . '.' .$key, $model->getTransAttributes())) {
+            if ($model->checkGetSetAttribute('translate', $key,  $model->table)) {
                 return $model->setTranslation($key, $value);
             }
 
@@ -30,8 +29,7 @@ trait Trans
         });
 
         static::addGetterManipulator(function ($model, $key, $value) {
-            $table = $model->table;
-            if (method_exists($model, 'getTransAttributes') && array_key_exists($table . '.' .$key, $model->getTransAttributes())) {
+            if ($model->checkGetSetAttribute('translate', $key,  $model->table)) {
                 return $model->getTranslation($value);
             }
 

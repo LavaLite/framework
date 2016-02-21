@@ -4,6 +4,7 @@ namespace Litepie\User\Repositories\Eloquent;
 
 use Litepie\Contracts\User\UserRepository as UserRepositoryContract;
 use Litepie\Database\Eloquent\BaseRepository;
+use User;
 
 class UserRepository extends BaseRepository implements UserRepositoryContract
 {
@@ -47,13 +48,24 @@ class UserRepository extends BaseRepository implements UserRepositoryContract
      */
     public function create(array $attributes)
     {
+
         $model = $this->model->newInstance();
         $attributes['user_id']  = User::users('id');
         $model->fill($attributes);
         $model->password    = bcrypt($attributes['password']);
         $model->save();
         $this->resetModel();
-
         return $model;
     }
+
+    public function findUser($id)
+    {
+       
+        return $this->model->whereId($id)->first();
+    }
+
+
+   
+
+
 }

@@ -48,7 +48,7 @@ class RoleRepository extends BaseRepository implements RoleRepositoryContract
      */
     public function createRole($roleName)
     {
-        if (! is_null($this->findByName($roleName))) {
+        if (! is_null($this->findByField('name',$roleName))) {
             // TODO: add translation support
             throw new RoleExistsException('A role with the given name already exists');
         }
