@@ -1,6 +1,6 @@
 {
-    "name": "lavalite/menu",
-    "description": "Menu package for Litepie framework",
+    "name": "litepie/menu",
+    "description": "Menu package for Lavalite framework",
     "keywords": ["lavalite",  "menu", "dropdown", "dropdown-menu", "laravel"],
     "license": "MIT",
     "authors": [
