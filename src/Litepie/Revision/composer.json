@@ -17,7 +17,7 @@
             "src"
         ],
         "psr-0": {
-            "Litepie\\Rivision\\": "src/"
+            "Litepie\\Rivision\\": ""
         }
     },
     "minimum-stability": "stable"

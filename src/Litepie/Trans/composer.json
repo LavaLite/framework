@@ -17,7 +17,7 @@
             "src"
         ],
         "psr-0": {
-            "Litepie\\Trans\\": "src/"
+            "Litepie\\Trans\\": ""
         }
     },
     "minimum-stability": "stable"

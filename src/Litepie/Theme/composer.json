@@ -17,7 +17,7 @@
             "src"
         ],
         "psr-0": {
-            "Litepie\\Theme\\": "src/"
+            "Litepie\\Theme\\": ""
         }
     },
     "minimum-stability": "stable"

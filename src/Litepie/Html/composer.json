@@ -17,7 +17,7 @@
             "src"
         ],
         "psr-0": {
-            "Litepie\\Html\\": "src/"
+            "Litepie\\Html\\": ""
         }
     },
     "minimum-stability": "stable"

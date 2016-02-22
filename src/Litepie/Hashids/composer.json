@@ -18,7 +18,7 @@
             "src"
         ],
         "psr-0": {
-            "Litepie\\Hashids\\": "src/"
+            "Litepie\\Hashids\\": ""
         }
     },
     "minimum-stability": "stable"

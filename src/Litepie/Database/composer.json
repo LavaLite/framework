@@ -18,7 +18,7 @@
             "src"
         ],
         "psr-0": {
-            "Litepie\\Database\\": "src/"
+            "Litepie\\Database\\": ""
         }
     },
     "minimum-stability": "stable"

@@ -17,7 +17,7 @@
             "src"
         ],
         "psr-0": {
-            "Litepie\\Menu\\": "src/"
+            "Litepie\\Menu\\": ""
         }
     },
     "minimum-stability": "stable"

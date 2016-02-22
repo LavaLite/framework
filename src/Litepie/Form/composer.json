@@ -18,7 +18,7 @@
             "src"
         ],
         "psr-0": {
-            "Litepie\\Form\\": "src/"
+            "Litepie\\Form\\": ""
         }
     },
     "minimum-stability": "stable"

@@ -19,7 +19,7 @@
             "src"
         ],
         "psr-0": {
-            "Litepie\\User\\": "src/"
+            "Litepie\\User\\": ""
         }
     },
     "minimum-stability": "stable"
