@@ -7,6 +7,10 @@
         {
             "name": "Renfos Technologies",
             "email": "info@renfos.com"
+        },
+        {
+            "name": "George John",
+            "email": "george@renfos.com"
         }
     ],
     "require": {
@@ -14,12 +18,9 @@
         "intervention/imagecache": "2.2.*"
     },
     "autoload": {
-        "classmap": [
-            "src"
-        ],
-        "psr-0": {
+        "psr-4": {
             "Litepie\\Filer\\": ""
         }
     },
-    "minimum-stability": "stable"
+    "minimum-stability": "dev"
 }

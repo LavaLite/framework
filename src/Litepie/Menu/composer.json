@@ -13,12 +13,9 @@
         "php": ">=5.5.9"
     },
     "autoload": {
-        "classmap": [
-            "src"
-        ],
-        "psr-0": {
+        "psr-4": {
             "Litepie\\Menu\\": ""
         }
     },
-    "minimum-stability": "stable"
+    "minimum-stability": "dev"
 }

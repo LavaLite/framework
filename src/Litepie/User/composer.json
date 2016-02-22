@@ -15,12 +15,9 @@
         "guzzlehttp/guzzle": "~4.0"
     },
     "autoload": {
-        "classmap": [
-            "src"
-        ],
-        "psr-0": {
+        "psr-4": {
             "Litepie\\User\\": ""
         }
     },
-    "minimum-stability": "stable"
+    "minimum-stability": "dev"
 }

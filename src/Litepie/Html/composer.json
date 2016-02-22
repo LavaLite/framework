@@ -7,18 +7,19 @@
         {
             "name": "Renfos Technologies",
             "email": "info@renfos.com"
+        },
+        {
+            "name": "George John",
+            "email": "george@renfos.com"
         }
     ],
     "require": {
         "php": ">=5.5.9"
     },
     "autoload": {
-        "classmap": [
-            "src"
-        ],
-        "psr-0": {
+        "psr-4": {
             "Litepie\\Html\\": ""
         }
     },
-    "minimum-stability": "stable"
+    "minimum-stability": "dev"
 }
