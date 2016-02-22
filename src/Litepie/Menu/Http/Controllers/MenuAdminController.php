@@ -23,8 +23,6 @@ class MenuAdminController extends AdminController
     {
         $this->model = $menu;
 
-        $this->view = config('menu.menu.view.admin');
-
         parent::__construct();
     }
 
@@ -38,11 +36,11 @@ class MenuAdminController extends AdminController
         $parent = $this->model->find(hashids_encode($parent));
         $rootMenu = $this->model->rootMenues();
 
-        $this->theme->prependTitle(trans('menu::menu.names').' :: ');
+        $this->theme->prependTitle(trans('Menu::menu.names').' :: ');
 
         $this->theme->asset()->container('footer')->add('nestable', 'packages/nestable/jquery.nestable.js');
 
-        return $this->theme->of('menu::admin.index', compact('rootMenu', 'parent'))->render();
+        return $this->theme->of('Menu::index', compact('rootMenu', 'parent'))->render();
     }
 
     /**
@@ -71,15 +69,15 @@ class MenuAdminController extends AdminController
 
             Form::populate($menu);
 
-            return view('menu::admin.show', compact('menu'));
+            return view('Menu::show', compact('menu'));
         }
         $parent = $this->model->find($id);
         $rootMenu = $this->model->rootMenues();
         $this->theme->asset()->container('footer')->add('nestable', 'packages/nestable/jquery.nestable.js');
 
-        $this->theme->prependTitle(trans('menu::menu.names').' :: ');
+        $this->theme->prependTitle(trans('Menu::menu.names').' :: ');
 
-        return $this->theme->of('menu::admin.index', compact('rootMenu', 'parent'))->render();
+        return $this->theme->of('Menu::index', compact('rootMenu', 'parent'))->render();
     }
 
     /**
@@ -95,7 +93,7 @@ class MenuAdminController extends AdminController
 
         Form::populate($menu);
 
-        return  view('menu::admin.create', compact('menu'));
+        return  view('Menu::create', compact('menu'));
     }
 
     /**
@@ -129,7 +127,7 @@ class MenuAdminController extends AdminController
         $data['menu'] = $this->model->find($id);
         Form::populate($data['menu']);
 
-        return  view('menu::admin.edit', $data);
+        return  view('Menu::edit', $data);
     }
 
     /**

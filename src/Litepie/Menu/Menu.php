@@ -17,7 +17,7 @@ class Menu
         return $this->model->getModel();
     }
 
-    public function menu($key, $view = 'menu::menu.default')
+    public function menu($key, $view = 'menu.default')
     {
         $menu = $this->model->getAllSubMenus($key);
 
@@ -28,6 +28,6 @@ class Menu
     {
         $menu = $this->model->getAllSubMenus($key);
 
-        return view("menu.menu.$view", compact('menu'));
+        return view("menu.$view", compact('menu'));
     }
 }

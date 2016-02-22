@@ -45,7 +45,7 @@ class RoleAdminController extends AdminController
 
         $roles  = $this->repository->setPresenter('\\Lavalite\\User\\Repositories\\Presenter\\RoleListPresenter')->paginate(NULL, ['*']);
         $this   ->theme->prependTitle(trans('user.role.names').' :: ');
-        $view   = $this->theme->of('user::admin.role.index')->render();
+        $view   = $this->theme->of('User::role.index')->render();
 
         $this->responseCode = 200;
         $this->responseMessage = trans('messages.success.loaded', ['Module' => 'Role']);
@@ -71,7 +71,7 @@ class RoleAdminController extends AdminController
             $this->responseCode = 404;
             $this->responseMessage = trans('messages.success.notfound', ['Module' => 'Role']);
             $this->responseData = $role;
-            $this->responseView = view('user::admin.role.new');
+            $this->responseView = view('User::role.new');
             return $this -> respond($request);
         }
         $permissions        = $this->permission->groupedPermissions(true);
@@ -80,7 +80,7 @@ class RoleAdminController extends AdminController
         $this->responseCode = 200;
         $this->responseMessage = trans('messages.success.loaded', ['Module' => 'Role']);
         $this->responseData = $role;
-        $this->responseView = view('user::admin.role.show', compact('role', 'permissions', 'rolePermissions'));
+        $this->responseView = view('User::role.show', compact('role', 'permissions', 'rolePermissions'));
 
         return $this -> respond($request);
 
@@ -101,7 +101,7 @@ class RoleAdminController extends AdminController
         $this->responseCode = 200;
         $this->responseMessage = trans('messages.success.loaded', ['Module' => 'Role']);
         $this->responseData = $role;
-        $this->responseView = view('user::admin.role.create', compact('role', 'permissions'));
+        $this->responseView = view('User::role.create', compact('role', 'permissions'));
         return $this -> respond($request);
 
     }
@@ -149,7 +149,7 @@ class RoleAdminController extends AdminController
         $this->responseCode = 200;
         $this->responseMessage = trans('messages.success.loaded', ['Module' => 'Role']);
         $this->responseData = $role;
-        $this->responseView = view('user::admin.role.edit', compact('role', 'permissions', 'rolePermissions'));
+        $this->responseView = view('User::role.edit', compact('role', 'permissions', 'rolePermissions'));
 
         return $this -> respond($request);
     }

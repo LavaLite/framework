@@ -20,10 +20,7 @@ class UserServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        $this->loadViewsFrom(config('user.view'), 'user');
-        $this->loadTranslationsFrom(__DIR__.'/../../../../resources/lang', 'user');
-
-
+        $this->loadViewsFrom(__DIR__.'/views', 'User');
     }
 
     /**

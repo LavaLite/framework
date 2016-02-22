@@ -21,8 +21,8 @@ class MenuServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        $this->loadViewsFrom(config('menu.view'), 'menu');
-        $this->loadTranslationsFrom(__DIR__.'/../../../../resources/lang', 'menu');
+        $this->loadViewsFrom(__DIR__.'/views', 'Menu');
+        $this->loadTranslationsFrom(__DIR__.'/../../../../resources/lang', 'Menu');
 
         include __DIR__.'/Http/routes.php';
     }

@@ -36,7 +36,7 @@ class PermissionAdminController extends AdminController
     {
         $permissions  = $this->model->setPresenter('\\Lavalite\\User\\Repositories\\Presenter\\PermissionListPresenter')->paginate(NULL, ['*']);
         $this   ->theme->prependTitle(trans('user.permission.names').' :: ');
-        $view   = $this->theme->of('user::admin.permission.index')->render();
+        $view   = $this->theme->of('User::permission.index')->render();
 
         $this->responseCode = 200;
         $this->responseMessage = trans('messages.success.loaded', ['Module' => 'Permission']);
@@ -61,13 +61,13 @@ class PermissionAdminController extends AdminController
         if (!$permission->exists) {
             $this->responseCode = 404;
             $this->responseMessage = trans('messages.success.notfound', ['Module' => 'Permission']);
-            $this->responseView = view('user::admin.permission.new');
+            $this->responseView = view('User::permission.new');
             return $this -> respond($request);
         }
         Form::populate($permission);
         $this->responseCode = 200;
         $this->responseMessage = trans('messages.success.loaded', ['Module' => 'Permission']);
-        $this->responseView = view('user::admin.permission.show', compact('permission'));
+        $this->responseView = view('User::permission.show', compact('permission'));
 
         return $this -> respond($request);
     }
@@ -89,7 +89,7 @@ class PermissionAdminController extends AdminController
         $this->responseCode = 200;
         $this->responseMessage = trans('messages.success.loaded', ['Module' => 'Permission']);
         $this->responseData = $permission;
-        $this->responseView = view('user::admin.permission.create', compact('permission'));
+        $this->responseView = view('User::permission.create', compact('permission'));
         return $this -> respond($request);
 
     }
@@ -134,7 +134,7 @@ class PermissionAdminController extends AdminController
         $this->responseCode = 200;
         $this->responseMessage = trans('messages.success.loaded', ['Module' => 'Permission']);
         $this->responseData = $permission;
-        $this->responseView = view('user::admin.permission.edit', compact('permission'));
+        $this->responseView = view('User::permission.edit', compact('permission'));
 
         return $this -> respond($request);
     }

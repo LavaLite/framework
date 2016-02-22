@@ -64,7 +64,7 @@ class UserAdminController extends AdminController
 
         $this->theme->prependTitle(trans('user.user.names').' :: ');
 
-        return $this->theme->of('user::admin.user.index')->render();
+        return $this->theme->of('User::user.index')->render();
 */
             if ($request->has('role')) {
                 $users = $this->roles->with(['users'])->findByField('name', $request->get('role'));
@@ -72,7 +72,7 @@ class UserAdminController extends AdminController
             }
             $users  = $this->repository->setPresenter('\\Lavalite\\User\\Repositories\\Presenter\\UserListPresenter')->paginate(NULL, ['*']);
             $this   ->theme->prependTitle(trans('user::user.names').' :: ');
-            $view   = $this->theme->of('user::admin.user.index')->render();
+            $view   = $this->theme->of('User::user.index')->render();
             $this->responseCode = 200;
             $this->responseMessage = trans('messages.success.loaded', ['Module' => 'User']);
             $this->responseData = $users['data'];
@@ -99,7 +99,7 @@ class UserAdminController extends AdminController
                 return [];
             }
 
-            return view('user::admin.user.new');
+            return view('User::user.new');
         }
 
         if ($request->wantsJson()) {
@@ -111,14 +111,14 @@ class UserAdminController extends AdminController
 
         Form::populate($user);
 
-        return view('user::admin.user.show', compact('user', 'roles', 'permissions'));*/
+        return view('User::user.show', compact('user', 'roles', 'permissions'));*/
 
         if (!$user->exists) {
 
             $this->responseCode = 404;
             $this->responseMessage = trans('messages.success.notfound', ['Module' => 'User']);
             $this->responseData = $user;
-            $this->responseView = view('user::admin.user.new');
+            $this->responseView = view('User::user.new');
             return $this -> respond($request);
         }
 
@@ -128,7 +128,7 @@ class UserAdminController extends AdminController
         $this->responseCode = 200;
         $this->responseMessage = trans('messages.success.loaded', ['Module' => 'User']);
         $this->responseData = $user;
-        $this->responseView = view('user::admin.user.show', compact('user', 'roles', 'permissions'));
+        $this->responseView = view('User::user.show', compact('user', 'roles', 'permissions'));
         return $this -> respond($request);
     }
 
@@ -148,7 +148,7 @@ class UserAdminController extends AdminController
         $this->responseCode = 200;
         $this->responseMessage = trans('messages.success.loaded', ['Module' => 'User']);
         $this->responseData = $user;
-        $this->responseView = view('user::admin.user.create', compact('user','roles', 'permissions'));
+        $this->responseView = view('User::user.create', compact('user','roles', 'permissions'));
         return $this -> respond($request);
 
     }
@@ -171,7 +171,7 @@ class UserAdminController extends AdminController
             $this->responseData = $user;
             $this->responseMeta = '';
             $this->responseRedirect = trans_url('/admin/user/user/'.$user->getRouteKey());
-            $this->responseView = view('user::admin.user.create', compact('user'));
+            $this->responseView = view('User::user.create', compact('user'));
             return $this -> respond($request);
 
         } catch (Exception $e) {
@@ -198,7 +198,7 @@ class UserAdminController extends AdminController
         $this->responseCode = 200;
         $this->responseMessage = trans('messages.success.loaded', ['Module' => 'User']);
         $this->responseData = $user;
-        $this->responseView = view('user::admin.user.edit', compact('user', 'roles', 'permissions'));
+        $this->responseView = view('User::user.edit', compact('user', 'roles', 'permissions'));
 
         return $this->respond($request);
     }

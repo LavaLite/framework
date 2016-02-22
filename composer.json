@@ -11,9 +11,7 @@
         }
     ],
     "require": {
-        "php": ">=5.5.9",
-        "laravel/framework": "5.2.*",
-        "laravel/socialite": "2.0.*"
+        "php": ">=5.5.9"
     },
     "replace": {
         "litepie/database": "self.version",
@@ -32,7 +30,7 @@
         "classmap": [
         ],
         "files": [
-            "src/Litepie/Foundation/helpers.php",
+            "src/Litepie/Foundation/helpers.php"
         ],
         "psr-0": {
             "Litepie\\": "src/Litepie"

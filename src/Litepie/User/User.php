@@ -441,7 +441,7 @@ class User
     {
         $user = $this->getUser();
         Form::populate($user);
-        return view('user::admin.user.profile', compact('user'));
+        return view('User::user.profile', compact('user'));
     }
 
     /**
@@ -452,7 +452,7 @@ class User
     public function password($mode)
     {
         $user = $this->getUser();
-        return view('user::admin.user.password', compact('user'));
+        return view('User::user.password', compact('user'));
     }
 
 

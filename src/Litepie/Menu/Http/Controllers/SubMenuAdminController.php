@@ -22,7 +22,7 @@ class SubMenuAdminController extends AdminController
         $menu = $this->model->find($id);
         Form::populate($menu);
 
-        return view('menu::admin.sub.show', compact('parent', 'menu'));
+        return view('Menu::sub.show', compact('parent', 'menu'));
     }
 
     public function create(MenuRequest $request)
@@ -32,7 +32,7 @@ class SubMenuAdminController extends AdminController
 
         Form::populate($menu);
 
-        return view('menu::admin.sub.create', compact('menu'));
+        return view('Menu::sub.create', compact('menu'));
     }
 
     public function edit(MenuRequest $request, $id)
@@ -41,6 +41,6 @@ class SubMenuAdminController extends AdminController
 
         Form::populate($menu);
 
-        return view('menu::admin.sub.edit', compact('menu'));
+        return view('Menu::sub.edit', compact('menu'));
     }
 }
