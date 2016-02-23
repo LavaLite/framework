@@ -2,8 +2,8 @@
 
 namespace Litepie\User\Models;
 
-use Litepie\Database\Traits\Slugger;
 use Litepie\Database\Model;
+use Litepie\Database\Traits\Slugger;
 use Litepie\Filer\Traits\Filer;
 use Litepie\Hashids\Traits\Hashids;
 use Litepie\Trans\Traits\Trans;
@@ -12,11 +12,11 @@ class Permission extends Model
 {
     use Filer, Hashids, Slugger, Trans;
 
-    /**
-     * Configuartion for the model.
-     *
-     * @var array
-     */
+     /**
+      * Configuartion for the model.
+      *
+      * @var array
+      */
      protected $config = 'user.permission';
 
     /**

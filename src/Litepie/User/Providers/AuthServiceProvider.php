@@ -13,15 +13,16 @@ class AuthServiceProvider extends ServiceProvider
      * @var array
      */
     protected $policies = [
-        \Litepie\User\Models\User::class => \Litepie\User\Policies\UserPolicy::class,
-        \Litepie\User\Models\Role::class => \Litepie\User\Policies\RolePolicy::class,
+        \Litepie\User\Models\User::class       => \Litepie\User\Policies\UserPolicy::class,
+        \Litepie\User\Models\Role::class       => \Litepie\User\Policies\RolePolicy::class,
         \Litepie\User\Models\Permission::class => \Litepie\User\Policies\PermissionPolicy::class,
     ];
 
     /**
      * Register any package authentication / authorization services.
      *
-     * @param  \Illuminate\Contracts\Auth\Access\Gate  $gate
+     * @param \Illuminate\Contracts\Auth\Access\Gate $gate
+     *
      * @return void
      */
     public function boot(GateContract $gate)

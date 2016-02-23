@@ -8,14 +8,11 @@ use Illuminate\Http\Request;
 use Illuminate\Routing\Router;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Translation\Translator;
-use Illuminate\View\Factory;
 use Litepie\Trans\Exceptions\SupportedTransNotDefined;
 use Litepie\Trans\Exceptions\UnsupportedTransException;
 
 class Trans
 {
-
-
     /**
      * Illuminate translator class.
      *
@@ -248,7 +245,7 @@ class Trans
             return $this->getURLFromRouteNameTranslated($locale, $translatedRoute, $attributes);
         }
 
-       if (!empty($locale) && ($locale != $this->defaultTrans || !$this->hideDefaultTransInURL())) {
+        if (!empty($locale) && ($locale != $this->defaultTrans || !$this->hideDefaultTransInURL())) {
             $parsed_url[ 'path' ] = $locale.'/'.ltrim($parsed_url[ 'path' ], '/');
         }
 
@@ -676,7 +673,6 @@ class Trans
         $uri = ltrim($uri, '/');
 
         if (empty($this->baseUrl)) {
-
             return app('url')->to($uri);
         }
 

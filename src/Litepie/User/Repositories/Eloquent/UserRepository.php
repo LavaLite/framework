@@ -9,7 +9,7 @@ use User;
 class UserRepository extends BaseRepository implements UserRepositoryContract
 {
     /**
-     * Specify Model class name
+     * Specify Model class name.
      *
      * @return string
      */
@@ -19,8 +19,10 @@ class UserRepository extends BaseRepository implements UserRepositoryContract
     }
 
     /**
-     * Attach role to user
+     * Attach role to user.
+     *
      * @param type $roleName
+     *
      * @return type
      */
     public function attachRole($roleName)
@@ -29,9 +31,11 @@ class UserRepository extends BaseRepository implements UserRepositoryContract
     }
 
     /**
-     * Attach permission to user
+     * Attach permission to user.
+     *
      * @param string $permissionName
-     * @param array $options
+     * @param array  $options
+     *
      * @return type
      */
     public function attachPermission($permissionName, array $options = [])
@@ -40,32 +44,28 @@ class UserRepository extends BaseRepository implements UserRepositoryContract
     }
 
     /**
-     * Save a new entity in modal
+     * Save a new entity in modal.
+     *
+     * @param array $attributes
      *
      * @throws ValidatorException
-     * @param array $attributes
+     *
      * @return mixed
      */
     public function create(array $attributes)
     {
-
         $model = $this->model->newInstance();
-        $attributes['user_id']  = User::users('id');
+        $attributes['user_id'] = User::users('id');
         $model->fill($attributes);
-        $model->password    = bcrypt($attributes['password']);
+        $model->password = bcrypt($attributes['password']);
         $model->save();
         $this->resetModel();
+
         return $model;
     }
 
     public function findUser($id)
     {
-       
         return $this->model->whereId($id)->first();
     }
-
-
-   
-
-
 }

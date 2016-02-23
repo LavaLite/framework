@@ -1,13 +1,14 @@
-<?php namespace Litepie\User;
+<?php
 
-/**
+namespace Litepie\User;
+
+/*
  * Part of the Litepie package.
  *
  *
  * @package    Litepie
  * @version    5.1
  */
-
 
 use Illuminate\Support\ServiceProvider;
 
@@ -30,7 +31,6 @@ class UserServiceProvider extends ServiceProvider
      */
     public function register()
     {
-
         $this->app->bind('user', function ($app) {
             return $app->make('Litepie\User\User');
         });
@@ -77,5 +77,4 @@ class UserServiceProvider extends ServiceProvider
     {
         return ['user', 'user.role', 'user.permission'];
     }
-
 }

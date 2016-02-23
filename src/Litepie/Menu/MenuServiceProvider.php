@@ -51,5 +51,4 @@ class MenuServiceProvider extends ServiceProvider
     {
         return ['menu'];
     }
-
 }

@@ -13,7 +13,7 @@ class PermissionPolicy
     /**
      * Determine if the given user can view the permission.
      *
-     * @param User $user
+     * @param User       $user
      * @param Permission $permission
      *
      * @return bool
@@ -30,7 +30,7 @@ class PermissionPolicy
     /**
      * Determine if the given user can create a permission.
      *
-     * @param User $user
+     * @param User       $user
      * @param Permission $permission
      *
      * @return bool
@@ -43,7 +43,7 @@ class PermissionPolicy
     /**
      * Determine if the given user can update the given permission.
      *
-     * @param User $user
+     * @param User       $user
      * @param Permission $permission
      *
      * @return bool
@@ -60,7 +60,7 @@ class PermissionPolicy
     /**
      * Determine if the given user can delete the given permission.
      *
-     * @param User $user
+     * @param User       $user
      * @param Permission $permission
      *
      * @return bool

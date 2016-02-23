@@ -1,4 +1,6 @@
-<?php namespace Litepie\Contracts\User;
+<?php
+
+namespace Litepie\Contracts\User;
 
 interface UserRepository
 {

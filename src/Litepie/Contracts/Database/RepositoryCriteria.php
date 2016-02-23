@@ -1,45 +1,45 @@
 <?php
+
 namespace Litepie\Contracts\Database;
 
 use Illuminate\Support\Collection;
 
-
 /**
- *  RepositoryCriteria
- * @package Litepie\Contracts\Database
+ *  RepositoryCriteria.
  */
 interface RepositoryCriteria
 {
-
     /**
-     * Push Criteria for filter the query
+     * Push Criteria for filter the query.
      *
      * @param Criteria $criteria
+     *
      * @return $this
      */
     public function pushCriteria(Criteria $criteria);
 
     /**
-     * Get Collection of Criteria
+     * Get Collection of Criteria.
      *
      * @return Collection
      */
     public function getCriteria();
 
     /**
-     * Find data by Criteria
+     * Find data by Criteria.
      *
      * @param Criteria $criteria
+     *
      * @return mixed
      */
     public function getByCriteria(Criteria $criteria);
 
     /**
-     * Skip Criteria
+     * Skip Criteria.
      *
      * @param bool $status
+     *
      * @return $this
      */
     public function skipCriteria($status = true);
-
 }

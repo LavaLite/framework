@@ -49,7 +49,6 @@ class Model extends Eloquent
         return $this->getAttribute('slug');
     }
 
-
     /**
      * Adds a manipulator to the getter.
      *
@@ -139,16 +138,17 @@ class Model extends Eloquent
      */
     public function checkGetSetAttribute($variable, $field, $table)
     {
-        if (!property_exists(get_called_class(), $variable) && empty($this->$variable))
+        if (!property_exists(get_called_class(), $variable) && empty($this->$variable)) {
             return false;
+        }
 
         $array[$table] = array_flip($this->$variable);
         $array = array_dot($array);
 
-        if (array_key_exists($table . '.' . $field, $array))
+        if (array_key_exists($table.'.'.$field, $array)) {
             return true;
+        }
 
         return false;
     }
-
 }

@@ -39,13 +39,12 @@ use Litepie\Node\NodeCollection;
  */
 trait SimpleNode
 {
-
     /**
      * Get the parent that owns the node.
      */
     public function parent()
     {
-            return $this->belongsTo(get_class($model), $this->getParentColumnName());
+        return $this->belongsTo(get_class($model), $this->getParentColumnName());
     }
 
     /**
@@ -53,7 +52,7 @@ trait SimpleNode
      */
     public function children()
     {
-            return $this->hasMany(get_class($this), $this->getParentColumnName());
+        return $this->hasMany(get_class($this), $this->getParentColumnName());
     }
 
     /**

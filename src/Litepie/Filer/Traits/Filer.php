@@ -2,12 +2,10 @@
 
 namespace Litepie\Filer\Traits;
 
-use Crypt;
 use Request;
 use Session;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use URL;
-use Hashids;
 
 trait Filer
 {
@@ -53,7 +51,7 @@ trait Filer
             if (Request::hasFile($field)) {
                 $upfile = Request::file($field);
                 if ($upfile instanceof  UploadedFile) {
-                    $file = Filer::upload($upfile, $this->upload_folder.'/'.$field);
+                    $file = self::upload($upfile, $this->upload_folder.'/'.$field);
                 }
             }
             $this->setFileSingle($field, $file);
@@ -67,7 +65,7 @@ trait Filer
             if (is_array(Request::file($field))) {
                 foreach (Request::file($field) as $file) {
                     if ($file instanceof  UploadedFile) {
-                        $files[] = Filer::upload($file, $this->upload_folder.'/'.$field);
+                        $files[] = self::upload($file, $this->upload_folder.'/'.$field);
                     }
                 }
             }
@@ -113,7 +111,7 @@ trait Filer
      */
     public function getUploadURL($field, $file = 'file')
     {
-        return URL::to('upload/'.$this->upload_folder . '/' . $field .'/' . $file);
+        return URL::to('upload/'.$this->upload_folder.'/'.$field.'/'.$file);
     }
 
     public function setFileSingle($field, $value)

@@ -1,4 +1,5 @@
 <?php
+
 Route::group(['middleware' => ['web']], function () {
     // File upload routes
     Route::post('upload/{table}/{folder}/{field}/{file}', 'UploadController@upload');

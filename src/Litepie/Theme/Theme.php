@@ -533,10 +533,10 @@ class Theme implements ThemeContract
         // If region not found, create a new region.
         if (isset($this->regions[$region])) {
             switch ($type) {
-                case 'prepend' :
+                case 'prepend':
                     $this->regions[$region] = $value.$this->regions[$region];
                     break;
-                case 'append' :
+                case 'append':
                     $this->regions[$region] .= $value;
                     break;
             }
@@ -849,7 +849,7 @@ class Theme implements ThemeContract
      */
     public function has($region)
     {
-        return (boolean) isset($this->regions[$region]);
+        return (bool) isset($this->regions[$region]);
     }
 
     /**
@@ -940,13 +940,13 @@ class Theme implements ThemeContract
 
         // Compile string blade, string twig, or from file path.
         switch ($type) {
-            case 'blade' :
+            case 'blade':
                 $content = $this->bladerWithOutServerScript($view, $args);
                 break;
-            case 'twig' :
+            case 'twig':
                 $content = $this->twigy($view, $args);
                 break;
-            default :
+            default:
                 $content = $this->view->make($view, $args)->render();
                 break;
         }

@@ -29,6 +29,7 @@ class UploadController extends Controller
             $array = Filer::upload(Request::file($file), "{$table}/{$dfolder}/{$field}");
             $array['efolder'] = "{$table}/{$folder}/{$field}";
             Session::push("upload.{$table}.{$field}", $array);
+
             return $array;
         }
     }

@@ -1,12 +1,12 @@
 <?php
+
 namespace Litepie\Database\Events;
 
 use Illuminate\Database\Eloquent\Model;
 use Litepie\Contracts\Database\Repository;
 
 /**
- * Class RepositoryEventBase
- * @package Litepie\Database\Events
+ * Class RepositoryEventBase.
  */
 abstract class RepositoryEventBase
 {
@@ -27,12 +27,12 @@ abstract class RepositoryEventBase
 
     /**
      * @param Repository $repository
-     * @param Model $model
+     * @param Model      $model
      */
     public function __construct(Repository $repository, Model $model)
     {
-        $this->repository   = $repository;
-        $this->model        = $model;
+        $this->repository = $repository;
+        $this->model = $model;
     }
 
     /**

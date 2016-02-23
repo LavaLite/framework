@@ -50,7 +50,7 @@ class RoleAdminRequest extends Request
         // validation rule for create request.
         if ($request->isMethod('POST')) {
             return [
-                'name' => 'required|max:50|unique:roles'
+                'name' => 'required|max:50|unique:roles',
             ];
         }
 

@@ -6,11 +6,10 @@ use Illuminate\Support\Arr;
 use Litepie\Contracts\Database\Presenter;
 
 /**
- * Class PresentableTrait
- * @package Litepie\Database\Traits
+ * Class PresentableTrait.
  */
-trait PresentableTrait {
-
+trait PresentableTrait
+{
     /**
      * @var Presenter
      */
@@ -18,10 +17,13 @@ trait PresentableTrait {
 
     /**
      * @param \Litepie\Contracts\Database\Presenter $presenter
+     *
      * @return $this
      */
-    public function setPresenter(Presenter $presenter){
+    public function setPresenter(Presenter $presenter)
+    {
         $this->presenter = $presenter;
+
         return $this;
     }
 
@@ -30,8 +32,7 @@ trait PresentableTrait {
      */
     public function presenter()
     {
-        if( $this->hasPresenter() )
-        {
+        if ($this->hasPresenter()) {
             return $this->presenter->present($this);
         }
 
@@ -41,13 +42,14 @@ trait PresentableTrait {
     /**
      * @param $key
      * @param null $default
+     *
      * @return mixed|null
      */
     public function present($key, $default = null)
     {
-        if ( $this->hasPresenter() )
-        {
+        if ($this->hasPresenter()) {
             $data = $this->presenter()['data'];
+
             return Arr::get($data, $key, $default);
         }
 

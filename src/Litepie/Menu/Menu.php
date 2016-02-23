@@ -2,7 +2,6 @@
 
 namespace Litepie\Menu;
 
-
 class Menu
 {
     protected $model;

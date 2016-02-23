@@ -4,10 +4,10 @@ namespace Litepie\User\Repositories\Presenter;
 
 use Litepie\Database\Presenter\FractalPresenter;
 
-class RoleItemPresenter extends FractalPresenter {
-
+class RoleItemPresenter extends FractalPresenter
+{
     /**
-     * Prepare data to present
+     * Prepare data to present.
      *
      * @return \League\Fractal\TransformerAbstract
      */

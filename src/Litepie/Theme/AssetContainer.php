@@ -369,7 +369,7 @@ class AssetContainer
      */
     public function isUsePath()
     {
-        return (boolean) $this->usePath;
+        return (bool) $this->usePath;
     }
 
     /**
@@ -493,11 +493,11 @@ class AssetContainer
     public function html($group, $source, $attributes)
     {
         switch ($group) {
-            case 'script' :
+            case 'script':
                 $attributes['src'] = $source;
 
                 return '<script'.$this->attributes($attributes).'></script>'.PHP_EOL;
-            case 'style' :
+            case 'style':
 
                 $defaults = ['media' => 'all', 'type' => 'text/css', 'rel' => 'stylesheet'];
 

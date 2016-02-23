@@ -2,7 +2,7 @@
 
 namespace Litepie\User;
 
-/**
+/*
  *
  * Part of the Litepie package.
  *
@@ -13,9 +13,9 @@ namespace Litepie\User;
 
 use Form;
 use Illuminate\Contracts\Foundation\Application;
-use Litepie\Contracts\User\UserRepository;
-use Litepie\Contracts\User\RoleRepository;
 use Litepie\Contracts\User\PermissionRepository;
+use Litepie\Contracts\User\RoleRepository;
+use Litepie\Contracts\User\UserRepository;
 
 /**
  * User wrapper class.
@@ -23,7 +23,7 @@ use Litepie\Contracts\User\PermissionRepository;
 class User
 {
     /**
-     * @var Application  variable
+     * @var Application variable
      */
     protected $app;
 
@@ -43,36 +43,36 @@ class User
     protected $role;
 
     /**
-     *  Initialize User
+     *  Initialize User.
      *
-     * @param \Litepie\Contracts\User\User $user
-     * @param \Litepie\Contracts\User\Role $role
+     * @param \Litepie\Contracts\User\User                 $user
+     * @param \Litepie\Contracts\User\Role                 $role
      * @param \Litepie\Contracts\User\PermissionRepository $permission
-     *
      */
-
     public function __construct(Application $app,
                                 UserRepository $user,
                                 RoleRepository $role,
                                 PermissionRepository $permission)
     {
-        $this->app          = $app;
-        $this->user         = $user;
-        $this->role         = $role;
-        $this->permission   = $permission;
+        $this->app = $app;
+        $this->user = $user;
+        $this->role = $role;
+        $this->permission = $permission;
     }
 
     /**
      * Registers a user by giving the required credentials
      * and an optional flag for whether to activate the user.
      *
-     * @param  array  $credentials
-     * @param  bool   $activate
+     * @param array $credentials
+     * @param bool  $activate
+     *
      * @return \Litepie\Contracts\User\User
      */
     public function create(array $credentials, $active = false)
     {
         $credentials = $credentials + ['active' => $active];
+
         return $this->user->create($credentials);
     }
 
@@ -80,8 +80,9 @@ class User
      * Attempts to authenticate the given user
      * according to the passed credentials.
      *
-     * @param  array  $credentials
-     * @param  bool   $remember
+     * @param array $credentials
+     * @param bool  $remember
+     *
      * @return bool
      */
     public function attempt(array $credentials, $remember = false)
@@ -92,7 +93,8 @@ class User
     /**
      * Alias for authenticating with the remember flag checked.
      *
-     * @param  array  $credentials
+     * @param array $credentials
+     *
      * @return bool
      */
     public function attemptAndRemember(array $credentials)
@@ -114,8 +116,9 @@ class User
      * Logs in the given user and sets properties
      * in the session.
      *
-     * @param  array $credentials
-     * @param  bool  $remember
+     * @param array $credentials
+     * @param bool  $remember
+     *
      * @return void
      */
     public function login(Authenticatable $user, $remember = false)
@@ -128,7 +131,8 @@ class User
      * Logs in user for a single request
      * in the session.
      *
-     * @param  array $credentials
+     * @param array $credentials
+     *
      * @return bool
      */
     public function once(array $user)
@@ -177,7 +181,7 @@ class User
      */
     public function hasPermission($permission, $force = false)
     {
-        if (! is_null($this->getUser())) {
+        if (!is_null($this->getUser())) {
             return $this->getUser()->hasPermission($permission, $force);
         }
 
@@ -194,7 +198,7 @@ class User
      */
     public function can($permission, $force = false)
     {
-        if (! is_null($this->getUser())) {
+        if (!is_null($this->getUser())) {
             return $this->getUser()->canDo($permission, $force);
         }
 
@@ -212,7 +216,7 @@ class User
      */
     public function roleHasPermission($permission, $force = false)
     {
-        if (! is_null($this->getUser())) {
+        if (!is_null($this->getUser())) {
             return $this->getUser()->roleHasPermission($permission, $force);
         }
 
@@ -228,7 +232,7 @@ class User
      */
     public function hasRole($roleName)
     {
-        if (! is_null($this->getUser())) {
+        if (!is_null($this->getUser())) {
             return $this->getUser()->hasRole($roleName);
         }
 
@@ -244,7 +248,7 @@ class User
      */
     public function hasRoles($roles)
     {
-        if (! is_null($this->getUser())) {
+        if (!is_null($this->getUser())) {
             return $this->getUser()->hasRoles($roles);
         }
 
@@ -275,8 +279,8 @@ class User
      * @return bool
      */
     public function roleExists($roleName)
-    {       
-        return $this->role->findByField('name',$roleName) !== null;
+    {
+        return $this->role->findByField('name', $roleName) !== null;
     }
 
     /**
@@ -288,7 +292,7 @@ class User
      */
     public function permissionExists($permissionName)
     {
-        return $this->permission->findByField('name',$permissionName) !== null;
+        return $this->permission->findByField('name', $permissionName) !== null;
     }
 
     /**
@@ -300,7 +304,7 @@ class User
      */
     public function findRole($roleName)
     {
-        return $this->role->findByField('name',$roleName);
+        return $this->role->findByField('name', $roleName);
     }
 
     /**
@@ -324,15 +328,13 @@ class User
      */
     public function findPermission($permissionName)
     {
-        return $this->permission->findByField('name',$permissionName);
+        return $this->permission->findByField('name', $permissionName);
     }
 
     public function findUser($id)
     {
-       
         return $this->user->findUser($id);
     }
-
 
     /**
      * Find a permission by its id.
@@ -391,7 +393,7 @@ class User
      */
     public function javascript()
     {
-        if (! $this->javascript) {
+        if (!$this->javascript) {
             $this->javascript = new Javascript($this);
         }
 
@@ -409,7 +411,7 @@ class User
             return  $this->getUser()->$field;
         }
 
-        return ;
+        return;
     }
 
     /**
@@ -441,6 +443,7 @@ class User
     {
         $user = $this->getUser();
         Form::populate($user);
+
         return view('User::user.profile', compact('user'));
     }
 
@@ -452,10 +455,9 @@ class User
     public function password($mode)
     {
         $user = $this->getUser();
+
         return view('User::user.password', compact('user'));
     }
-
-
 
     /**
      * Return the count of records.
@@ -466,6 +468,4 @@ class User
     {
         return 0;
     }
-
-    
 }

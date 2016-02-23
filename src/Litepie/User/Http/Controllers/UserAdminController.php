@@ -1,39 +1,38 @@
 <?php
+
 namespace Litepie\User\Http\Controllers;
 
-use Form;
-use Response;
-use Illuminate\Http\Request;
-use App\User;
 use App\Http\Controllers\AdminController as AdminController;
-use Litepie\User\Http\Requests\UserAdminRequest;
-use Litepie\Contracts\User\UserRepository;
-use Litepie\Contracts\User\RoleRepository;
-use Litepie\Contracts\User\PermissionRepository;
+use App\User;
+use Form;
 use Illuminate\Contracts\Auth\Authenticatable;
+use Illuminate\Http\Request;
+use Litepie\Contracts\User\PermissionRepository;
+use Litepie\Contracts\User\RoleRepository;
+use Litepie\Contracts\User\UserRepository;
+use Litepie\User\Http\Requests\UserAdminRequest;
+use Response;
 
 /**
  *
- * @package User
  */
-
 class UserAdminController extends AdminController
 {
     /**
      * @var Permissions
-     *
      */
     protected $permission;
 
     /**
      * @var roles
-     *
      */
     protected $roles;
 
     /**
-     * Initialize user controller
+     * Initialize user controller.
+     *
      * @param type UserRepository $user
+     *
      * @return type
      */
     public function __construct(UserRepository $user,
@@ -53,7 +52,7 @@ class UserAdminController extends AdminController
      */
     public function index(UserAdminRequest $request, $role = null)
     {
-/*        if ($request->wantsJson()) {
+        /*        if ($request->wantsJson()) {
             if ($request->has('role')) {
                 $users = $this->roles->with(['users'])->findByField('name', $request->get('role'));
                 return $users;
@@ -68,33 +67,33 @@ class UserAdminController extends AdminController
 */
             if ($request->has('role')) {
                 $users = $this->roles->with(['users'])->findByField('name', $request->get('role'));
+
                 return $users;
             }
-            $users  = $this->repository->setPresenter('\\Litepie\\User\\Repositories\\Presenter\\UserListPresenter')->paginate(NULL, ['*']);
-            $this   ->theme->prependTitle(trans('user::user.names').' :: ');
-            $view   = $this->theme->of('User::user.index')->render();
-            $this->responseCode = 200;
-            $this->responseMessage = trans('messages.success.loaded', ['Module' => 'User']);
-            $this->responseData = $users['data'];
-            $this->responseMeta = $users['meta'];
-            $this->responseView = $view;
-            $this->responseRedirect = '';
-            return $this->respond($request);
+        $users = $this->repository->setPresenter('\\Litepie\\User\\Repositories\\Presenter\\UserListPresenter')->paginate(null, ['*']);
+        $this->theme->prependTitle(trans('user::user.names').' :: ');
+        $view = $this->theme->of('User::user.index')->render();
+        $this->responseCode = 200;
+        $this->responseMessage = trans('messages.success.loaded', ['Module' => 'User']);
+        $this->responseData = $users['data'];
+        $this->responseMeta = $users['meta'];
+        $this->responseView = $view;
+        $this->responseRedirect = '';
 
+        return $this->respond($request);
     }
-
 
     /**
      * Display the specified resource.
      *
-     * @param  Request  $request
-     * @param  int  $id
+     * @param Request $request
+     * @param int     $id
      *
      * @return Response
      */
     public function show(UserAdminRequest $request, User $user)
     {
- /*       if (!$user->exists) {
+        /*       if (!$user->exists) {
             if ($request->wantsJson()) {
                 return [];
             }
@@ -114,57 +113,59 @@ class UserAdminController extends AdminController
         return view('User::user.show', compact('user', 'roles', 'permissions'));*/
 
         if (!$user->exists) {
-
             $this->responseCode = 404;
             $this->responseMessage = trans('messages.success.notfound', ['Module' => 'User']);
             $this->responseData = $user;
             $this->responseView = view('User::user.new');
-            return $this -> respond($request);
+
+            return $this->respond($request);
         }
 
-        $permissions  = $this->permission->groupedPermissions(true);
-        $roles  = $this->roles->all();
+        $permissions = $this->permission->groupedPermissions(true);
+        $roles = $this->roles->all();
         Form::populate($user);
         $this->responseCode = 200;
         $this->responseMessage = trans('messages.success.loaded', ['Module' => 'User']);
         $this->responseData = $user;
         $this->responseView = view('User::user.show', compact('user', 'roles', 'permissions'));
-        return $this -> respond($request);
+
+        return $this->respond($request);
     }
 
     /**
      * Show the form for creating a new resource.
      *
-     * @param  Request  $request
+     * @param Request $request
+     *
      * @return Response
      */
     public function create(UserAdminRequest $request)
     {
         $user = $this->repository->newInstance([]);
-        $permissions  = $this->permission->groupedPermissions(true);
-        $roles  = $this->roles->all();
+        $permissions = $this->permission->groupedPermissions(true);
+        $roles = $this->roles->all();
         Form::populate($user);
 
         $this->responseCode = 200;
         $this->responseMessage = trans('messages.success.loaded', ['Module' => 'User']);
         $this->responseData = $user;
-        $this->responseView = view('User::user.create', compact('user','roles', 'permissions'));
-        return $this -> respond($request);
+        $this->responseView = view('User::user.create', compact('user', 'roles', 'permissions'));
 
+        return $this->respond($request);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  Request  $request
+     * @param Request $request
+     *
      * @return Response
      */
     public function store(UserAdminRequest $request)
     {
-
-         try {
+        try {
             $attributes = $request->all();
-            $user       = $this->repository->create($attributes);
+            $user = $this->repository->create($attributes);
             $user->syncRoles($request->get('roles'));
             $this->responseCode = 201;
             $this->responseMessage = trans('messages.success.created', ['Module' => 'User']);
@@ -172,28 +173,28 @@ class UserAdminController extends AdminController
             $this->responseMeta = '';
             $this->responseRedirect = trans_url('/admin/user/user/'.$user->getRouteKey());
             $this->responseView = view('User::user.create', compact('user'));
-            return $this -> respond($request);
 
+            return $this->respond($request);
         } catch (Exception $e) {
             $this->responseCode = 400;
             $this->responseMessage = $e->getMessage();
-            return $this -> respond($request);
-        }
 
+            return $this->respond($request);
+        }
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  Request  $request
-     * @param  int  $id
+     * @param Request $request
+     * @param int     $id
+     *
      * @return Response
      */
     public function edit(UserAdminRequest $request, User $user)
     {
-
-        $permissions  = $this->permission->groupedPermissions(true);
-        $roles  = $this->roles->all();
+        $permissions = $this->permission->groupedPermissions(true);
+        $roles = $this->roles->all();
         Form::populate($user);
         $this->responseCode = 200;
         $this->responseMessage = trans('messages.success.loaded', ['Module' => 'User']);
@@ -206,14 +207,14 @@ class UserAdminController extends AdminController
     /**
      * Update the specified resource.
      *
-     * @param  Request  $request
-     * @param  int  $id
+     * @param Request $request
+     * @param int     $id
+     *
      * @return Response
      */
     public function update(UserAdminRequest $request, User $user)
     {
-
-          try {
+        try {
             $attributes = $request->all();
             $user->update($attributes);
             $user->syncRoles($request->get('roles'));
@@ -221,29 +222,27 @@ class UserAdminController extends AdminController
             $this->responseMessage = trans('messages.success.updated', ['Module' => 'User']);
             $this->responseData = $user;
             $this->responseRedirect = trans_url('/admin/user/user/'.$user->getRouteKey());
-            return $this -> respond($request);
 
+            return $this->respond($request);
         } catch (Exception $e) {
-
             $this->responseCode = 400;
             $this->responseMessage = $e->getMessage();
             $this->responseRedirect = trans_url('/admin/user/user/'.$user->getRouteKey());
 
-            return $this -> respond($request);
+            return $this->respond($request);
         }
     }
 
     /**
      * Remove the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
+     *
      * @return Response
      */
     public function destroy(UserAdminRequest $request, User $user)
     {
-
-         try {
-
+        try {
             $t = $user->delete();
 
             $this->responseCode = 202;
@@ -252,16 +251,13 @@ class UserAdminController extends AdminController
             $this->responseMeta = '';
             $this->responseRedirect = trans_url('/admin/user/user/0');
 
-            return $this -> respond($request);
-
+            return $this->respond($request);
         } catch (Exception $e) {
-
             $this->responseCode = 400;
             $this->responseMessage = $e->getMessage();
             $this->responseRedirect = trans_url('/admin/user/user/'.$user->getRouteKey());
 
-            return $this -> respond($request);
-
+            return $this->respond($request);
         }
     }
 
@@ -282,7 +278,8 @@ class UserAdminController extends AdminController
     /**
      * Reset the given user's password.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
+     *
      * @return \Illuminate\Http\Response
      */
     public function changePassword(Authenticatable $user, Request $request)
@@ -291,7 +288,7 @@ class UserAdminController extends AdminController
             'password' => 'required|confirmed|min:6',
         ]);
 
-        $password   = $request->get('password');
+        $password = $request->get('password');
 
         $user->password = bcrypt($password);
 
@@ -299,6 +296,7 @@ class UserAdminController extends AdminController
             return Response::json(['message' => 'Password changed sucessfully', 'type' => 'success', 'title' => 'Success'], 201);
         } else {
             return Response::json(['message' => $e->getMessage(), 'type' => 'error', 'title' => 'Error'], 400);
+
             return $this->error($e->getMessage());
         }
     }

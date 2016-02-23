@@ -17,6 +17,7 @@ class VerifyPermission
      * Create a new filter instance.
      *
      * @param \Illuminate\Contracts\Auth\Guard $auth
+     *
      * @return void
      */
     public function __construct(Guard $auth)
@@ -28,10 +29,12 @@ class VerifyPermission
      * Handle an incoming request.
      *
      * @param \Illuminate\Http\Request $request
-     * @param \Closure $next
-     * @param int|string $permission
-     * @return mixed
+     * @param \Closure                 $next
+     * @param int|string               $permission
+     *
      * @throws \Litepie\User\Exceptions\PermissionDeniedException
+     *
+     * @return mixed
      */
     public function handle($request, Closure $next, $permission)
     {

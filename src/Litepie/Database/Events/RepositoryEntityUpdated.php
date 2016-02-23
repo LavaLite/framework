@@ -1,14 +1,14 @@
 <?php
+
 namespace Litepie\Database\Events;
 
 /**
- * Class RepositoryEntityUpdated
- * @package Litepie\Database\Events
+ * Class RepositoryEntityUpdated.
  */
 class RepositoryEntityUpdated extends RepositoryEventBase
 {
     /**
      * @var string
      */
-    protected $action = "updated";
+    protected $action = 'updated';
 }
