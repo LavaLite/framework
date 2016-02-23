@@ -37,16 +37,12 @@
         "litepie/user": "self.version"
     },
     "autoload": {
-        "classmap": [
-        ],
         "files": [
             "src/Litepie/Foundation/helpers.php"
         ],
-        "psr-0": {
+        "psr-4": {
             "Litepie\\": "src/Litepie"
-        },
-        "files": [
-        ]
+        }
     },
     "minimum-stability": "dev"
 }

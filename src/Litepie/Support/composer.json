@@ -1,0 +1,25 @@
+{
+    "name": "litepie/support",
+    "description": "The Litepie support package",
+    "homepage": "http://lavalite.org",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Renfos Technologies",
+            "email": "info@renfos.com"
+        },
+        {
+            "name": "George John",
+            "email": "george@renfos.com"
+        }
+    ],
+    "require": {
+        "php": ">=5.5.9"
+    },
+    "autoload": {
+        "psr-4": {
+            "Litepie\\Support\\": ""
+        }
+    },
+    "minimum-stability": "dev"
+}
