@@ -39,7 +39,7 @@ class MenuServiceProvider extends ServiceProvider
         });
 
         $this->app->bind('Litepie\\Contracts\\Menu\\MenuRepository',
-            'Litepie\\Menu\\Repositories\\Eloquent\\MenuRepository');
+            'Litepie\\Menu\\Repository\\MenuRepository');
     }
 
     /**

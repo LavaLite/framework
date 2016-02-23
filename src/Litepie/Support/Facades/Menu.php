@@ -1,6 +1,6 @@
 <?php
 
-namespace Lavalite\Menu\Facades;
+namespace Litepie\Support\Facades;
 
 use Illuminate\Support\Facades\Facade;
 

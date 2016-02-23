@@ -1,6 +1,6 @@
 <?php
 
-namespace Litepie\Menu\Repositories\Eloquent;
+namespace Litepie\Menu\Repository;
 
 use Litepie\Contracts\Menu\MenuRepository as MenuRepositoryInterface;
 use Request;
