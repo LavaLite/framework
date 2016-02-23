@@ -1,13 +1,12 @@
 <?php
+
 namespace Litepie\Database\Exceptions;
 
-use \Exception;
+use Exception;
 
 /**
- * Class RepositoryException
- * @package Litepie\Database\Exceptions
+ * Class RepositoryException.
  */
 class RepositoryException extends Exception
 {
-
 }

@@ -6,8 +6,7 @@ use League\Fractal\TransformerAbstract;
 use Litepie\Contracts\Database\Transformable;
 
 /**
- * Class ModelTransformer
- * @package Litepie\Database\Transformer
+ * Class ModelTransformer.
  */
 class ModelTransformer extends TransformerAbstract
 {

@@ -11,11 +11,11 @@ trait InteractsWithPermissions
      * Attach the given permission.
      *
      * @param array|\Litepie\User\Permission $permission
-     * @param array                               $options
+     * @param array                          $options
      */
     public function attachPermission($permission, array $options = [])
     {
-        if (! is_array($permission)) {
+        if (!is_array($permission)) {
             if ($this->existPermission($permission->name)) {
                 return;
             }
@@ -37,10 +37,10 @@ trait InteractsWithPermissions
     public function existPermission($permissionName)
     {
         $permission = $this->permissions->first(function ($key, $value) use ($permissionName) {
-            return ($value->name == $permissionName);
+            return $value->name == $permissionName;
         });
 
-        if (! empty($permission)) {
+        if (!empty($permission)) {
             $active = (is_null($permission->pivot->expires) or $permission->pivot->expires->isFuture());
 
             if ($active) {

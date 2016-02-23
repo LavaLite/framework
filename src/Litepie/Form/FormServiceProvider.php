@@ -1,4 +1,5 @@
 <?php
+
 namespace Litepie\Form;
 
 use Illuminate\Config\Repository;
@@ -11,7 +12,7 @@ use Illuminate\Translation\Translator;
 use Symfony\Component\Finder\Finder;
 
 /**
- * Register the Former package with the Laravel framework
+ * Register the Former package with the Laravel framework.
  */
 class FormServiceProvider extends ServiceProvider
 {
@@ -23,7 +24,7 @@ class FormServiceProvider extends ServiceProvider
     protected $defer = true;
 
     /**
-     * Register Former's package with Laravel
+     * Register Former's package with Laravel.
      *
      * @return void
      */
@@ -39,7 +40,7 @@ class FormServiceProvider extends ServiceProvider
      */
     public function provides()
     {
-        return array('form', 'former', 'Former\Former');
+        return ['form', 'former', 'Former\Former'];
     }
 
     ////////////////////////////////////////////////////////////////////
@@ -47,9 +48,9 @@ class FormServiceProvider extends ServiceProvider
     ////////////////////////////////////////////////////////////////////
 
     /**
-     * Create a Former container
+     * Create a Former container.
      *
-     * @param  Container $app
+     * @param Container $app
      *
      * @return Container
      */
@@ -61,16 +62,16 @@ class FormServiceProvider extends ServiceProvider
 
         // Bind classes to container
         $provider = new static($app);
-        $app      = $provider->bindCoreClasses($app);
-        $app      = $provider->bindFormer($app);
+        $app = $provider->bindCoreClasses($app);
+        $app = $provider->bindFormer($app);
 
         return $app;
     }
 
     /**
-     * Bind the core classes to the Container
+     * Bind the core classes to the Container.
      *
-     * @param  Container $app
+     * @param Container $app
      *
      * @return Container
      */
@@ -113,12 +114,13 @@ class FormServiceProvider extends ServiceProvider
         //////////////////////////////////////////////////////////////////
 
         $app->bindIf('path.config', function ($app) {
-            return __DIR__ . '/../config/';
+            return __DIR__.'/../config/';
         }, true);
 
         $app->bindIf('config', function ($app) {
-            $config = new Repository;
+            $config = new Repository();
             $this->loadConfigurationFiles($app, $config);
+
             return $config;
         }, true);
 
@@ -141,14 +143,14 @@ class FormServiceProvider extends ServiceProvider
     /**
      * Load the configuration items from all of the files.
      *
-     * @param  Container $app
-     * @param  Repository  $config
+     * @param Container  $app
+     * @param Repository $config
+     *
      * @return void
      */
     protected function loadConfigurationFiles($app, Repository $config)
     {
-        foreach ($this->getConfigurationFiles($app) as $key => $path)
-        {
+        foreach ($this->getConfigurationFiles($app) as $key => $path) {
             $config->set($key, require $path);
         }
     }
@@ -157,14 +159,14 @@ class FormServiceProvider extends ServiceProvider
      * Get all of the configuration files for the application.
      *
      * @param  $app
+     *
      * @return array
      */
     protected function getConfigurationFiles($app)
     {
-        $files = array();
+        $files = [];
 
-        foreach (Finder::create()->files()->name('*.php')->in($app['path.config']) as $file)
-        {
+        foreach (Finder::create()->files()->name('*.php')->in($app['path.config']) as $file) {
             $files[basename($file->getRealPath(), '.php')] = $file->getRealPath();
         }
 
@@ -172,15 +174,14 @@ class FormServiceProvider extends ServiceProvider
     }
 
     /**
-     * Bind Former classes to the container
+     * Bind Former classes to the container.
      *
-     * @param  Container $app
+     * @param Container $app
      *
      * @return Container
      */
     public function bindFormer(Container $app)
     {
-
         $framework = $app['config']->get('former.framework');
 
         $app->bind('former.framework', function ($app) {

@@ -1,11 +1,11 @@
 <?php
+
 namespace Litepie\Repository\Providers;
 
 use Illuminate\Support\ServiceProvider;
 
 /**
- * Class LumenRepositoryServiceProvider
- * @package Litepie\Repository\Providers
+ * Class LumenRepositoryServiceProvider.
  */
 class LumenRepositoryServiceProvider extends ServiceProvider
 {

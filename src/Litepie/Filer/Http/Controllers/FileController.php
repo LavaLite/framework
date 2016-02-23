@@ -3,11 +3,11 @@
 namespace Litepie\Filer\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-use Filer;
 use File;
+use Filer;
+use Illuminate\Filesystem\FileNotFoundException;
 use Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
-use Illuminate\Filesystem\FileNotFoundException;
 
 class FileController extends Controller
 {
@@ -21,14 +21,13 @@ class FileController extends Controller
 
     public function image($size, $table, $folder, $field, $file)
     {
-        $size   = $this->getSize($size);
-        $folder = config('files.folder', 'uploads') . '/' . $table . '/' . folder_decode($folder) .'/' . $field;
+        $size = $this->getSize($size);
+        $folder = config('files.folder', 'uploads').'/'.$table.'/'.folder_decode($folder).'/'.$field;
 
-        if (!is_file(public_path($folder . '/' . $file))) {
+        if (!is_file(public_path($folder.'/'.$file))) {
             $image = Filer::image($size['default'], $size);
         } else {
             $image = Filer::$size['action']($folder, $file, $size);
-
         }
         $header = [
             'Content-Type'  => 'image/jpg',
@@ -43,24 +42,23 @@ class FileController extends Controller
     {
         $size = config($size, config('files.size.'.$size));
 
-        if (empty($size))
-            throw new NotFoundHttpException;
+        if (empty($size)) {
+            throw new NotFoundHttpException();
+        }
 
         $size['action'] = (isset($size['action']) && in_array($size['action'], ['fit', 'resize'])) ? $size['action'] : 'fit';
+
         return $size;
     }
 
     public function file($table, $folder, $field, $file)
     {
-        $folder = config('files.folder', 'uploads') . '/' . $table . '/' . folder_decode($folder) .'/' . $field;
+        $folder = config('files.folder', 'uploads').'/'.$table.'/'.folder_decode($folder).'/'.$field;
 
-        try
-        {
-            $contents = File::get(public_path($folder . '/' . $file));
-        }
-        catch (FileNotFoundException $exception)
-        {
-            throw new FileNotFoundException;
+        try {
+            $contents = File::get(public_path($folder.'/'.$file));
+        } catch (FileNotFoundException $exception) {
+            throw new FileNotFoundException();
         }
 
         $header = [
@@ -71,5 +69,4 @@ class FileController extends Controller
 
         return Response::make($contents, 200, $header);
     }
-
 }

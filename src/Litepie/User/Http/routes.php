@@ -3,7 +3,7 @@
 // Admin routes for user
 Route::group(
 [
-'prefix' => Trans::setLocale().'/admin/user'
+'prefix' => Trans::setLocale().'/admin/user',
 ],
 function () {
     Route::resource('user', 'UserAdminController');

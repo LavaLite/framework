@@ -7,5 +7,4 @@ interface MenuRepository
     public function getSubmenu($parent);
 
     public function rootMenues();
-
 }

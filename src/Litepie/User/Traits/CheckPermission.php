@@ -2,8 +2,8 @@
 
 namespace Litepie\User\Traits;
 
-use Litepie\User\Traits\Users\HasRoles;
 use Litepie\User\Traits\Permissions\InteractsWithPermissions;
+use Litepie\User\Traits\Users\HasRoles;
 
 /**
  * Trait HasPermission.
@@ -23,7 +23,6 @@ trait CheckPermission
     private $cachedRolePermissions;
 
     /**
-     *
      * Returns if the current user has the given permission.
      * User permissions override role permissions.
      *
@@ -35,6 +34,7 @@ trait CheckPermission
     public function hasPermission($permission, $force = false)
     {
         $permissions = $this->getAllPermissions($force);
+
         return array_key_exists($permission, $permissions);
     }
 
@@ -119,10 +119,10 @@ trait CheckPermission
     protected function getFreshRolesPermissions()
     {
         $roles = $this->roles()->get(['permissions']);
-        $permissions    = [];
+        $permissions = [];
 
         foreach ($roles as $role) {
-            if(!empty($role->permissions)){
+            if (!empty($role->permissions)) {
                 $permissions = array_merge($permissions, $role->permissions);
             }
         }
@@ -139,8 +139,9 @@ trait CheckPermission
     {
         $permissionsRoles = $this->getRolesPermissions(true);
 
-        $permissions =  empty($this->permissions) ? [] : $this->permissions;
+        $permissions = empty($this->permissions) ? [] : $this->permissions;
         $permissions = array_merge($permissions, $permissionsRoles);
+
         return $permissions;
     }
 

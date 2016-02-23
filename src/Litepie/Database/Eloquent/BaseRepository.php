@@ -1,29 +1,27 @@
 <?php
+
 namespace Litepie\Database\Eloquent;
 
-use Closure;
 use Exception;
+use Illuminate\Container\Container as Application;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Collection;
 use Litepie\Contracts\Database\Criteria;
 use Litepie\Contracts\Database\Presentable;
 use Litepie\Contracts\Database\Presenter;
+use Litepie\Contracts\Database\Repository;
 use Litepie\Contracts\Database\RepositoryCriteria;
 use Litepie\Database\Events\RepositoryEntityCreated;
 use Litepie\Database\Events\RepositoryEntityDeleted;
 use Litepie\Database\Events\RepositoryEntityUpdated;
 use Litepie\Database\Exceptions\RepositoryException;
-use Litepie\Contracts\Database\Repository;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Container\Container as Application;
-use Illuminate\Support\Collection;
-use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 
 /**
- * Class BaseRepository
- * @package Litepie\Database\Eloquent
+ * Class BaseRepository.
  */
 abstract class BaseRepository implements Repository, RepositoryCriteria
 {
-
     /**
      * @var Application
      */
@@ -37,7 +35,7 @@ abstract class BaseRepository implements Repository, RepositoryCriteria
     /**
      * @var array
      */
-    protected $fieldSearchable = array();
+    protected $fieldSearchable = [];
 
     /**
      * @var Presenter
@@ -45,14 +43,14 @@ abstract class BaseRepository implements Repository, RepositoryCriteria
     protected $presenter;
 
     /**
-     * Validation Rules
+     * Validation Rules.
      *
      * @var array
      */
     protected $rules = null;
 
     /**
-     * Collection of Criteria
+     * Collection of Criteria.
      *
      * @var Collection
      */
@@ -90,7 +88,6 @@ abstract class BaseRepository implements Repository, RepositoryCriteria
      */
     public function boot()
     {
-
     }
 
     /**
@@ -102,37 +99,40 @@ abstract class BaseRepository implements Repository, RepositoryCriteria
     }
 
     /**
-     * Specify Model class name
+     * Specify Model class name.
      *
      * @return string
      */
     abstract public function model();
 
     /**
-     * Specify Presenter class name
+     * Specify Presenter class name.
      *
      * @return string
      */
     public function presenter()
     {
-        return null;
+        return;
     }
 
     /**
-     * Set Presenter
+     * Set Presenter.
      *
      * @param $presenter
+     *
      * @return $this
      */
     public function setPresenter($presenter)
     {
         $this->makePresenter($presenter);
+
         return $this;
     }
 
     /**
-     * @return Model
      * @throws RepositoryException
+     *
+     * @return Model
      */
     public function makeModel()
     {
@@ -147,28 +147,30 @@ abstract class BaseRepository implements Repository, RepositoryCriteria
 
     /**
      * @param null $presenter
-     * @return Presenter
+     *
      * @throws RepositoryException
+     *
+     * @return Presenter
      */
     public function makePresenter($presenter = null)
     {
         $presenter = !is_null($presenter) ? $presenter : $this->presenter();
 
-        if ( !is_null($presenter) ) {
+        if (!is_null($presenter)) {
             $this->presenter = is_string($presenter) ? $this->app->make($presenter) : $presenter;
 
-            if (!$this->presenter instanceof Presenter ) {
+            if (!$this->presenter instanceof Presenter) {
                 throw new RepositoryException("Class {$presenter} must be an instance of Litepie\\Contracts\\Database\\Presenter");
             }
 
             return $this->presenter;
         }
 
-        return null;
+        return;
     }
 
     /**
-     * Get Searchable Fields
+     * Get Searchable Fields.
      *
      * @return array
      */
@@ -178,13 +180,16 @@ abstract class BaseRepository implements Repository, RepositoryCriteria
     }
 
     /**
-     * Query Scope
+     * Query Scope.
      *
      * @param \Closure $scope
+     *
      * @return $this
      */
-    public function scopeQuery(\Closure $scope){
+    public function scopeQuery(\Closure $scope)
+    {
         $this->scopeQuery = $scope;
+
         return $this;
     }
 
@@ -192,6 +197,7 @@ abstract class BaseRepository implements Repository, RepositoryCriteria
      * Retrieve count of records.
      *
      * @param array $columns
+     *
      * @return mixed
      */
     public function count()
@@ -199,7 +205,7 @@ abstract class BaseRepository implements Repository, RepositoryCriteria
         $this->applyCriteria();
         $this->applyScope();
 
-        if ( $this->model instanceof \Illuminate\Database\Eloquent\Builder ){
+        if ($this->model instanceof \Illuminate\Database\Eloquent\Builder) {
             $results = $this->model->count();
         } else {
             $results = $this->model->count();
@@ -211,17 +217,18 @@ abstract class BaseRepository implements Repository, RepositoryCriteria
     }
 
     /**
-     * Retrieve all data of repository
+     * Retrieve all data of repository.
      *
      * @param array $columns
+     *
      * @return mixed
      */
-    public function all($columns = array('*'))
+    public function all($columns = ['*'])
     {
         $this->applyCriteria();
         $this->applyScope();
 
-        if ( $this->model instanceof \Illuminate\Database\Eloquent\Builder ){
+        if ($this->model instanceof \Illuminate\Database\Eloquent\Builder) {
             $results = $this->model->get($columns);
         } else {
             $results = $this->model->all($columns);
@@ -233,77 +240,87 @@ abstract class BaseRepository implements Repository, RepositoryCriteria
     }
 
     /**
-     * Retrieve first data of repository
+     * Retrieve first data of repository.
      *
      * @param array $columns
+     *
      * @return mixed
      */
-    public function first($columns = array('*'))
+    public function first($columns = ['*'])
     {
         $this->applyCriteria();
         $this->applyScope();
         $results = $this->model->first($columns);
         $this->resetModel();
+
         return $this->parserResult($results);
     }
 
     /**
-     * Retrieve all data of repository, paginated
-     * @param null $limit
+     * Retrieve all data of repository, paginated.
+     *
+     * @param null  $limit
      * @param array $columns
+     *
      * @return mixed
      */
-    public function paginate($limit = null, $columns = array('*'))
+    public function paginate($limit = null, $columns = ['*'])
     {
         $this->applyCriteria();
         $this->applyScope();
         $limit = is_null($limit) ? config('database.pagination.limit', 15) : $limit;
         $results = $this->model->paginate($limit, $columns);
         $this->resetModel();
+
         return $this->parserResult($results);
     }
 
-
     /**
-     * Retrieve all data of repository, simple paginated
-     * @param null $limit
+     * Retrieve all data of repository, simple paginated.
+     *
+     * @param null  $limit
      * @param array $columns
+     *
      * @return mixed
      */
-    public function simplePaginate($limit = null, $columns = array('*'))
+    public function simplePaginate($limit = null, $columns = ['*'])
     {
         $this->applyCriteria();
         $this->applyScope();
         $limit = is_null($limit) ? config('repository.pagination.limit', 15) : $limit;
         $results = $this->model->simplePaginate($limit, $columns);
         $this->resetModel();
+
         return $this->parserResult($results);
     }
 
     /**
-     * Find data by id
+     * Find data by id.
      *
      * @param $id
      * @param array $columns
+     *
      * @return mixed
      */
-    public function find($id, $columns = array('*'))
+    public function find($id, $columns = ['*'])
     {
         $this->applyCriteria();
         $this->applyScope();
         $model = $this->model->findOrFail($id, $columns);
         $this->resetModel();
+
         return $this->parserResult($model);
     }
 
     /**
-     * Find data by id or return new if not exists
+     * Find data by id or return new if not exists.
      *
      * @param $id
      * @param array $columns
+     *
      * @return mixed
      */
-    public function findOrNew($id, $columns = array('*'))
+    public function findOrNew($id, $columns = ['*'])
     {
         $this->applyCriteria();
         $this->applyScope();
@@ -313,60 +330,66 @@ abstract class BaseRepository implements Repository, RepositoryCriteria
             $model = $this->model->newInstance([]);
         }
         $this->resetModel();
+
         return $this->parserResult($model);
     }
 
     /**
-     * Find data by field and value
+     * Find data by field and value.
      *
      * @param $field
      * @param $value
      * @param array $columns
+     *
      * @return mixed
      */
-    public function findByField($field, $value = null, $columns = array('*'))
+    public function findByField($field, $value = null, $columns = ['*'])
     {
         $this->applyCriteria();
         $this->applyScope();
-        $model = $this->model->where($field,'=',$value)->get($columns);
+        $model = $this->model->where($field, '=', $value)->get($columns);
         $this->resetModel();
+
         return $this->parserResult($model);
     }
 
     /**
-     * Find data by slug
+     * Find data by slug.
      *
      * @param $value
      * @param array $columns
+     *
      * @return mixed
      */
-    public function findBySlug($value = null, $columns = array('*'))
+    public function findBySlug($value = null, $columns = ['*'])
     {
         $this->applyCriteria();
         $this->applyScope();
         $model = $this->model->whereSlug($value)->get($columns);
         $this->resetModel();
+
         return $this->parserResult($model);
     }
 
     /**
-     * Find data by multiple fields
+     * Find data by multiple fields.
      *
      * @param array $where
      * @param array $columns
+     *
      * @return mixed
      */
-    public function findWhere( array $where , $columns = array('*'))
+    public function findWhere(array $where, $columns = ['*'])
     {
         $this->applyCriteria();
         $this->applyScope();
 
         foreach ($where as $field => $value) {
-            if ( is_array($value) ) {
+            if (is_array($value)) {
                 list($field, $condition, $val) = $value;
-                $this->model = $this->model->where($field,$condition,$val);
+                $this->model = $this->model->where($field, $condition, $val);
             } else {
-                $this->model = $this->model->where($field,'=',$value);
+                $this->model = $this->model->where($field, '=', $value);
             }
         }
 
@@ -377,46 +400,50 @@ abstract class BaseRepository implements Repository, RepositoryCriteria
     }
 
     /**
-     * Find data by multiple values in one field
+     * Find data by multiple values in one field.
      *
      * @param $field
      * @param array $values
      * @param array $columns
+     *
      * @return mixed
      */
-    public function findWhereIn( $field, array $values, $columns = array('*'))
+    public function findWhereIn($field, array $values, $columns = ['*'])
     {
         $this->applyCriteria();
         $model = $this->model->whereIn($field, $values)->get($columns);
         $this->resetModel();
+
         return $this->parserResult($model);
     }
 
     /**
-     * Find data by excluding multiple values in one field
+     * Find data by excluding multiple values in one field.
      *
      * @param $field
      * @param array $values
      * @param array $columns
+     *
      * @return mixed
      */
-    public function findWhereNotIn( $field, array $values, $columns = array('*'))
+    public function findWhereNotIn($field, array $values, $columns = ['*'])
     {
         $this->applyCriteria();
         $model = $this->model->whereNotIn($field, $values)->get($columns);
         $this->resetModel();
+
         return $this->parserResult($model);
     }
 
     /**
-     * Create a new instance in repository
+     * Create a new instance in repository.
      *
      * @param array $attributes
+     *
      * @return mixed
      */
     public function newInstance(array $attributes)
     {
-
         $model = $this->model->newInstance($attributes);
 
         $this->resetModel();
@@ -425,14 +452,14 @@ abstract class BaseRepository implements Repository, RepositoryCriteria
     }
 
     /**
-     * Save a new entity in repository
+     * Save a new entity in repository.
      *
      * @param array $attributes
+     *
      * @return mixed
      */
     public function create(array $attributes)
     {
-
         $model = $this->model->newInstance($attributes);
         $model->save();
         $this->resetModel();
@@ -443,10 +470,11 @@ abstract class BaseRepository implements Repository, RepositoryCriteria
     }
 
     /**
-     * Update a entity in repository by id
+     * Update a entity in repository by id.
      *
      * @param array $attributes
      * @param $id
+     *
      * @return mixed
      */
     public function update(array $attributes, $id)
@@ -469,9 +497,10 @@ abstract class BaseRepository implements Repository, RepositoryCriteria
     }
 
     /**
-     * Delete a entity in repository by id
+     * Delete a entity in repository by id.
      *
      * @param $id
+     *
      * @return int
      */
     public function delete($id)
@@ -495,55 +524,63 @@ abstract class BaseRepository implements Repository, RepositoryCriteria
     }
 
     /**
-     * Load relations
+     * Load relations.
      *
      * @param array|string $relations
+     *
      * @return $this
      */
     public function with($relations)
     {
         $this->model = $this->model->with($relations);
+
         return $this;
     }
 
     /**
-     * Set hidden fields
+     * Set hidden fields.
      *
      * @param array $fields
+     *
      * @return $this
      */
     public function hidden(array $fields)
     {
         $this->model->setHidden($fields);
+
         return $this;
     }
 
     /**
-     * Set visible fields
+     * Set visible fields.
      *
      * @param array $fields
+     *
      * @return $this
      */
     public function visible(array $fields)
     {
         $this->model->setVisible($fields);
+
         return $this;
     }
 
     /**
-     * Push Criteria for filter the query
+     * Push Criteria for filter the query.
      *
      * @param Criteria $criteria
+     *
      * @return $this
      */
     public function pushCriteria(Criteria $criteria)
     {
         $this->criteria->push($criteria);
+
         return $this;
     }
 
     /**
-     * Get Collection of Criteria
+     * Get Collection of Criteria.
      *
      * @return Collection
      */
@@ -553,9 +590,10 @@ abstract class BaseRepository implements Repository, RepositoryCriteria
     }
 
     /**
-     * Find data by Criteria
+     * Find data by Criteria.
      *
      * @param Criteria $criteria
+     *
      * @return mixed
      */
     public function getByCriteria(Criteria $criteria)
@@ -563,29 +601,32 @@ abstract class BaseRepository implements Repository, RepositoryCriteria
         $this->model = $criteria->apply($this->model, $this);
         $results = $this->model->get();
         $this->resetModel();
-        return $this->parserResult( $results );
+
+        return $this->parserResult($results);
     }
 
     /**
-     * Skip Criteria
+     * Skip Criteria.
      *
      * @param bool $status
+     *
      * @return $this
      */
     public function skipCriteria($status = true)
     {
         $this->skipCriteria = $status;
+
         return $this;
     }
 
     /**
-     * Apply scope in current Query
+     * Apply scope in current Query.
      *
      * @return $this
      */
     protected function applyScope()
     {
-        if ( isset($this->scopeQuery) && is_callable($this->scopeQuery) ) {
+        if (isset($this->scopeQuery) && is_callable($this->scopeQuery)) {
             $callback = $this->scopeQuery;
             $this->model = $callback($this->model);
         }
@@ -594,22 +635,21 @@ abstract class BaseRepository implements Repository, RepositoryCriteria
     }
 
     /**
-     * Apply criteria in current Query
+     * Apply criteria in current Query.
      *
      * @return $this
      */
     protected function applyCriteria()
     {
-
-        if ( $this->skipCriteria === true ) {
+        if ($this->skipCriteria === true) {
             return  $this;
         }
 
         $criteria = $this->getCriteria();
 
-        if ( $criteria ) {
+        if ($criteria) {
             foreach ($criteria as $c) {
-                if ( $c instanceof Criteria ) {
+                if ($c instanceof Criteria) {
                     $this->model = $c->apply($this->model, $this);
                 }
             }
@@ -619,39 +659,42 @@ abstract class BaseRepository implements Repository, RepositoryCriteria
     }
 
     /**
-     * Skip Presenter Wrapper
+     * Skip Presenter Wrapper.
      *
      * @param bool $status
+     *
      * @return $this
      */
     public function skipPresenter($status = true)
     {
         $this->skipPresenter = $status;
+
         return $this;
     }
 
     /**
-     * Wrapper result data
+     * Wrapper result data.
      *
      * @param mixed $result
+     *
      * @return mixed
      */
     public function parserResult($result)
     {
-        if ( $this->presenter instanceof Presenter ) {
-
-            if( $result instanceof Collection || $result instanceof LengthAwarePaginator){
-                $result->each(function($model){
-                    if( $model instanceof Presentable ){
+        if ($this->presenter instanceof Presenter) {
+            if ($result instanceof Collection || $result instanceof LengthAwarePaginator) {
+                $result->each(function ($model) {
+                    if ($model instanceof Presentable) {
                         $model->setPresenter($this->presenter);
                     }
+
                     return $model;
                 });
-            } elseif ( $result instanceof Presentable ) {
+            } elseif ($result instanceof Presentable) {
                 $result = $result->setPresenter($this->presenter);
             }
 
-            if( !$this->skipPresenter){
+            if (!$this->skipPresenter) {
                 return $this->presenter->present($result);
             }
         }

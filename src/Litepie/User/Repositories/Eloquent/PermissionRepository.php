@@ -2,20 +2,20 @@
 
 namespace Litepie\User\Repositories\Eloquent;
 
+use Carbon\Carbon;
 use Litepie\Contracts\User\PermissionRepository as PermissionRepositoryContract;
 use Litepie\Database\Eloquent\BaseRepository;
-use Carbon\Carbon;
 
 class PermissionRepository extends BaseRepository implements PermissionRepositoryContract
 {
     /**
-     * Specify Model class name
+     * Specify Model class name.
      *
      * @return string
      */
     public function model()
     {
-        return "Litepie\\User\\Models\\Permission";
+        return 'Litepie\\User\\Models\\Permission';
     }
 
     /**
@@ -25,7 +25,7 @@ class PermissionRepository extends BaseRepository implements PermissionRepositor
      */
     public function groupedPermissions($grouped = false)
     {
-        $result =  $this->model->orderBy('name')->lists('name', 'slug')->toArray();
+        $result = $this->model->orderBy('name')->lists('name', 'slug')->toArray();
 
         $array = [];
 
@@ -33,9 +33,9 @@ class PermissionRepository extends BaseRepository implements PermissionRepositor
             $key = explode('.', $key, 2);
             @$array[$key[0]][$key[1]] = $value;
         }
+
         return $array;
     }
-
 
     /**
      * Create a new permission using the given name.
@@ -49,7 +49,7 @@ class PermissionRepository extends BaseRepository implements PermissionRepositor
      */
     public function createPermission($name, $slug = null)
     {
-        if (! is_null($this->findByName($name))) {
+        if (!is_null($this->findByName($name))) {
             throw new PermissionExistsException('The permission '.$name.' already exists'); // TODO: add translation support
         }
 

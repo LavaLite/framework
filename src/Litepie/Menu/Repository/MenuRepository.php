@@ -3,13 +3,11 @@
 namespace Litepie\Menu\Repository;
 
 use Litepie\Contracts\Menu\MenuRepository as MenuRepositoryInterface;
-use Request;
-use Litepie\Menu\Traits\CategoryRepository;
 use Litepie\Database\Eloquent\BaseRepository;
+use Request;
 
 class MenuRepository extends BaseRepository implements MenuRepositoryInterface
 {
-
     public $tempHolder;
 
     /**
@@ -96,7 +94,7 @@ class MenuRepository extends BaseRepository implements MenuRepositoryInterface
                         ->get();
         $this->resetModel();
 
-        return($menu);
+        return $menu;
     }
 
     /**
@@ -273,9 +271,10 @@ class MenuRepository extends BaseRepository implements MenuRepositoryInterface
     }
 
     /**
-     * Delete a entity in repository by id
+     * Delete a entity in repository by id.
      *
      * @param $id
+     *
      * @return int
      */
     public function delete($id)

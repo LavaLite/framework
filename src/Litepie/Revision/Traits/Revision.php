@@ -5,21 +5,16 @@ namespace Litepie\Revision\Traits;
 use DateTime;
 use DB;
 use Exception;
-use Illuminate\Database\Eloquent\Model as EloquentModel;
 
 trait Revision
 {
     /**
      * @var array List of attributes to monitor for changes and store revisions for.
-     *
-    */
+     */
     public $revision = [];
-
 
     /**
      * @var int Maximum number of revision records to keep.
-     *
-     *
      */
     public $revisionLimit = 500;
 
@@ -162,16 +157,17 @@ trait Revision
     }
 
     /**
-     * Attempt to find the user id of the currently logged in user
+     * Attempt to find the user id of the currently logged in user.
      **/
     public function getUserId()
     {
         try {
             return \Auth::user()->getAuthIdentifier();
         } catch (\Exception $e) {
-            return null;
+            return;
         }
-        return null;
+
+        return;
     }
 
     /**

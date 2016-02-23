@@ -60,7 +60,7 @@ trait HasRoles
      */
     public function attachRole($role)
     {
-        if (! $this->hasRole($role)) {
+        if (!$this->hasRole($role)) {
             $this->roles()->attach($role);
         }
     }
@@ -75,7 +75,8 @@ trait HasRoles
         $roleModel = config('user.role.model', 'Litepie\User\Role');
         $roleUserTable = config('user.role_user.table', 'role_user');
         $roleKey = config('user.role.key', 'role_id');
-        return $this->belongsToMany($roleModel, $roleUserTable,'user_id', $roleKey);
+
+        return $this->belongsToMany($roleModel, $roleUserTable, 'user_id', $roleKey);
     }
 
     /**
@@ -110,7 +111,7 @@ trait HasRoles
      * Take user by roles.
      *
      * @param \Illuminate\Database\Query\Builder $query
-     * @param string|array $roles
+     * @param string|array                       $roles
      *
      * @return \Illuminate\Database\Query\Builder
      */

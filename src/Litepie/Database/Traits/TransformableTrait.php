@@ -1,11 +1,12 @@
-<?php namespace Litepie\Database\Traits;
+<?php
+
+namespace Litepie\Database\Traits;
 
 /**
- * Class TransformableTrait
- * @package Litepie\Database\Traits
+ * Class TransformableTrait.
  */
-trait TransformableTrait {
-
+trait TransformableTrait
+{
     /**
      * @return array
      */
@@ -13,5 +14,4 @@ trait TransformableTrait {
     {
         return $this->toArray();
     }
-
 }

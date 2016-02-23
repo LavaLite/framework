@@ -8,20 +8,21 @@ use Litepie\Database\Eloquent\BaseRepository;
 class RoleRepository extends BaseRepository implements RoleRepositoryContract
 {
     /**
-     * Specify Model class name
+     * Specify Model class name.
      *
      * @return string
      */
     public function model()
     {
-        return "Litepie\\User\\Models\\Role";
+        return 'Litepie\\User\\Models\\Role';
     }
 
     /**
-     * Retrive users list based on role
+     * Retrive users list based on role.
      *
      * @param string $role
-     * @param array $columns
+     * @param array  $columns
+     *
      * @return mixed
      */
     public function users($role = null, $columns = ['*'])
@@ -48,10 +49,11 @@ class RoleRepository extends BaseRepository implements RoleRepositoryContract
      */
     public function createRole($roleName)
     {
-        if (! is_null($this->findByField('name',$roleName))) {
+        if (!is_null($this->findByField('name', $roleName))) {
             // TODO: add translation support
             throw new RoleExistsException('A role with the given name already exists');
         }
+
         return $role = $this->model->create(['name' => $roleName]);
     }
 }

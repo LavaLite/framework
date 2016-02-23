@@ -1,24 +1,25 @@
 <?php
+
 namespace Litepie\Database\Presenter;
 
 use Exception;
 use Litepie\Database\Transformer\ModelTransformer;
 
 /**
- * Class ModelFractalPresenter
- * @package Litepie\Database\Presenter
+ * Class ModelFractalPresenter.
  */
-class ModelFractalPresenter extends FractalPresenter {
-
+class ModelFractalPresenter extends FractalPresenter
+{
     /**
-     * Transformer
+     * Transformer.
+     *
+     * @throws Exception
      *
      * @return ModelTransformer
-     * @throws Exception
      */
     public function getTransformer()
     {
-        if ( !class_exists('League\Fractal\Manager') ){
+        if (!class_exists('League\Fractal\Manager')) {
             throw new Exception("Package required. Please install: 'composer require league/fractal' (0.12.*)");
         }
 

@@ -43,14 +43,14 @@ class PermissionAdminRequest extends Request
         // validation rule for create request.
         if ($request->isMethod('POST')) {
             return [
-                'name' => 'required'
+                'name' => 'required',
             ];
         }
 
         // Validation rule for update request.
         if ($request->isMethod('PUT') || $request->isMethod('PATCH')) {
             return [
-                'name' => 'required'
+                'name' => 'required',
             ];
         }
 

@@ -2,11 +2,8 @@
 
 namespace Litepie\Hashids\Traits;
 
-use Illuminate\Contracts\Encryption\DecryptException;
-
 trait Hashids
 {
-
     /**
      * Get the route key for the model.
      *
@@ -27,6 +24,7 @@ trait Hashids
         if ($eid != '0') {
             $eid = hashids_decode($eid);
         }
+
         return $this->findOrNew($eid);
     }
 
@@ -37,7 +35,6 @@ trait Hashids
      */
     public function findOrFail($eid)
     {
-
         return $this->findByEid($eid);
     }
 
@@ -50,5 +47,4 @@ trait Hashids
     {
         return hashids_encode($this->getOriginal($this->getKeyName()));
     }
-
 }

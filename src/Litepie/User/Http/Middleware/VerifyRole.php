@@ -17,6 +17,7 @@ class VerifyRole
      * Create a new filter instance.
      *
      * @param \Illuminate\Contracts\Auth\Guard $auth
+     *
      * @return void
      */
     public function __construct(Guard $auth)
@@ -28,10 +29,12 @@ class VerifyRole
      * Handle an incoming request.
      *
      * @param \Illuminate\Http\Request $request
-     * @param \Closure $next
-     * @param int|string $role
-     * @return mixed
+     * @param \Closure                 $next
+     * @param int|string               $role
+     *
      * @throws \Litepie\User\Exceptions\RoleDeniedException
+     *
+     * @return mixed
      */
     public function handle($request, Closure $next, $role)
     {

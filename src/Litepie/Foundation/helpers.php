@@ -3,11 +3,11 @@
 use Litepie\Support\Facades\Hashids;
 use Litepie\Support\Facades\Trans;
 
-if (! function_exists('hashids_encode')) {
+if (!function_exists('hashids_encode')) {
     /**
      * Encode the given id.
      *
-     * @param  int/array $id
+     * @param int/array $id
      *
      * @return string
      */
@@ -17,26 +17,25 @@ if (! function_exists('hashids_encode')) {
     }
 }
 
-if (! function_exists('hashids_decode')) {
+if (!function_exists('hashids_decode')) {
     /**
      * Decode the given value.
      *
-     * @param  string  $value
+     * @param string $value
      *
      * @return array or int
      */
     function hashids_decode($value)
     {
-        $return =  Hashids::decode($value);
+        $return = Hashids::decode($value);
 
-        if (count($return) == 1){
+        if (count($return) == 1) {
             return $return[0];
         }
 
         return $return;
     }
 }
-
 
 if (!function_exists('folder_new')) {
     /**
@@ -47,17 +46,17 @@ if (!function_exists('folder_new')) {
      *
      * @return array
      */
-    function folder_new($prefix = NULL, $sufix = NULL)
+    function folder_new($prefix = null, $sufix = null)
     {
-        $arr    = [];
+        $arr = [];
 
-        $prefix = empty($prefix) ? NULL : $prefix . '/';
-        $sufix  = empty($sufix) ? NULL : '/' . $sufix;
-        $folder         = date('Y/m/d/His') . rand(100, 999);
-        $arr['folder']  = $prefix . $folder . $sufix;
+        $prefix = empty($prefix) ? null : $prefix.'/';
+        $sufix = empty($sufix) ? null : '/'.$sufix;
+        $folder = date('Y/m/d/His').rand(100, 999);
+        $arr['folder'] = $prefix.$folder.$sufix;
 
-        $folder         = folder_encode($folder);
-        $arr['encrypted'] = $prefix . $folder . $sufix;
+        $folder = folder_encode($folder);
+        $arr['encrypted'] = $prefix.$folder.$sufix;
 
         return $arr;
     }
@@ -73,7 +72,8 @@ if (!function_exists('folder_encode')) {
      */
     function folder_encode($folder)
     {
-        $arr        = explode('/', $folder);
+        $arr = explode('/', $folder);
+
         return hashids_encode($arr);
     }
 }
@@ -88,29 +88,31 @@ if (!function_exists('folder_decode')) {
      */
     function folder_decode($folder)
     {
-        $formatFolder = function($folder){
-                    return str_pad($folder[0], 4, '0', STR_PAD_LEFT) . '/'
-                    . str_pad($folder[1], 2, '0', STR_PAD_LEFT) . '/'
-                    . str_pad($folder[2], 2, '0', STR_PAD_LEFT) . '/'
-                    . str_pad($folder[3], 9, '0', STR_PAD_LEFT);
+        $formatFolder = function ($folder) {
+                    return str_pad($folder[0], 4, '0', STR_PAD_LEFT).'/'
+                    .str_pad($folder[1], 2, '0', STR_PAD_LEFT).'/'
+                    .str_pad($folder[2], 2, '0', STR_PAD_LEFT).'/'
+                    .str_pad($folder[3], 9, '0', STR_PAD_LEFT);
         };
 
-        $arr        = explode('/', $folder);
+        $arr = explode('/', $folder);
         if (count($arr) == 1) {
-            $folder     = hashids_decode($arr[0]);
+            $folder = hashids_decode($arr[0]);
+
             return $formatFolder($folder);
         }
 
         if (count($arr) == 2) {
-            $folder     = hashids_decode($arr[1]);
-            return $arr[0] . '/' . $formatFolder($folder);
+            $folder = hashids_decode($arr[1]);
+
+            return $arr[0].'/'.$formatFolder($folder);
         }
 
-        $folder     = hashids_decode($arr[1]);
-        return $arr[0] . '/' . $formatFolder($folder) . '/' . $arr[2];
+        $folder = hashids_decode($arr[1]);
+
+        return $arr[0].'/'.$formatFolder($folder).'/'.$arr[2];
     }
 }
-
 
 if (!function_exists('trans_url')) {
     /**
@@ -153,7 +155,8 @@ if (!function_exists('user_id')) {
         if (Auth::guard($guard)->check()) {
             return Auth::guard($guard)->user()->id;
         }
-        return null;
+
+        return;
     }
 }
 
@@ -171,6 +174,6 @@ if (!function_exists('get_users')) {
             return Auth::guard($guard)->user()->$property;
         }
 
-        return null;
+        return;
     }
 }

@@ -5,10 +5,9 @@ namespace Litepie\Database;
 use Illuminate\Support\ServiceProvider;
 
 /**
- * Class RepositoryServiceProvider
- * @package Litepie\Database\Providers
+ * Class RepositoryServiceProvider.
  */
-class RepositoryServiceProvider extends ServiceProvider
+class DatabaseServiceProvider extends ServiceProvider
 {
     /**
      * Indicates if loading of the provider is deferred.
@@ -16,13 +15,12 @@ class RepositoryServiceProvider extends ServiceProvider
      * @var bool
      */
     protected $defer = false;
+
     /**
-     *
      * @return void
      */
     public function boot()
     {
-
     }
 
     /**

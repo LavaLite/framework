@@ -3,6 +3,7 @@
 namespace Litepie\User\Traits\Users;
 
 use URL;
+
 /**
  * Trait UserProfile.
  */

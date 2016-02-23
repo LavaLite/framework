@@ -1,14 +1,14 @@
 <?php
+
 namespace Litepie\Database\Events;
 
 /**
- * Class RepositoryEntityDeleted
- * @package Litepie\Database\Events
+ * Class RepositoryEntityDeleted.
  */
 class RepositoryEntityDeleted extends RepositoryEventBase
 {
     /**
      * @var string
      */
-    protected $action = "deleted";
+    protected $action = 'deleted';
 }

@@ -3,7 +3,6 @@
 namespace Litepie\Filer;
 
 use App;
-use Hashids;
 use File;
 use Intervention\Image\Facades\Image as Intervention;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
@@ -129,7 +128,7 @@ class Filer
      */
     public function checkUploadFolder($folder)
     {
-        $folder = public_path(config('files.folder', 'uploads') . '/' . $folder);
+        $folder = public_path(config('files.folder', 'uploads').'/'.$folder);
         $folder .= (substr($folder, -1) != '/') ? '/' : '';
 
         // Check to see if the upload folder exists
