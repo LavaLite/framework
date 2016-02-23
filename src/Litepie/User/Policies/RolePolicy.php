@@ -4,7 +4,7 @@ namespace Litepie\User\Policies;
 
 use App\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
-use Litepie\Package\Models\Role;
+use Litepie\User\Models\Role;
 
 class RolePolicy
 {
@@ -20,11 +20,7 @@ class RolePolicy
      */
     public function view(User $user, Role $role)
     {
-        if ($user->canDo('package.role.view')) {
-            return true;
-        }
-
-        return $user->id === $role->user_id;
+        return false;
     }
 
     /**
@@ -37,7 +33,7 @@ class RolePolicy
      */
     public function create(User $user)
     {
-        return  $user->canDo('package.role.create');
+        return false;
     }
 
     /**
@@ -50,11 +46,7 @@ class RolePolicy
      */
     public function update(User $user, Role $role)
     {
-        if ($user->canDo('package.role.update')) {
-            return true;
-        }
-
-        return $user->id === $role->user_id;
+        return false;
     }
 
     /**
@@ -67,11 +59,7 @@ class RolePolicy
      */
     public function destroy(User $user, Role $role)
     {
-        if ($user->canDo('package.role.delete')) {
-            return true;
-        }
-
-        return $user->id === $role->user_id;
+        return false;
     }
 
     /**

@@ -4,7 +4,7 @@ namespace Litepie\User\Policies;
 
 use App\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
-use Litepie\Package\Models\Permission;
+use Litepie\User\Models\Permission;
 
 class PermissionPolicy
 {
@@ -20,11 +20,7 @@ class PermissionPolicy
      */
     public function view(User $user, Permission $permission)
     {
-        if ($user->canDo('package.permission.view')) {
-            return true;
-        }
-
-        return $user->id === $permission->user_id;
+        return false;
     }
 
     /**
@@ -37,7 +33,7 @@ class PermissionPolicy
      */
     public function create(User $user)
     {
-        return  $user->canDo('package.permission.create');
+        return false;
     }
 
     /**
@@ -50,11 +46,7 @@ class PermissionPolicy
      */
     public function update(User $user, Permission $permission)
     {
-        if ($user->canDo('package.permission.update')) {
-            return true;
-        }
-
-        return $user->id === $permission->user_id;
+        return false;
     }
 
     /**
@@ -67,11 +59,7 @@ class PermissionPolicy
      */
     public function destroy(User $user, Permission $permission)
     {
-        if ($user->canDo('package.permission.delete')) {
-            return true;
-        }
-
-        return $user->id === $permission->user_id;
+        return false;
     }
 
     /**

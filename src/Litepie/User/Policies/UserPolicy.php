@@ -4,6 +4,7 @@ namespace Litepie\User\Policies;
 
 use App\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
+use App\User as UserModal;
 
 class UserPolicy
 {
@@ -17,13 +18,9 @@ class UserPolicy
      *
      * @return bool
      */
-    public function view(User $user, User $user)
+    public function view(User $user, UserModal $usermodal)
     {
-        if ($user->canDo('package.user.view')) {
-            return true;
-        }
-
-        return $user->id === $user->user_id;
+        return false;
     }
 
     /**
@@ -36,7 +33,7 @@ class UserPolicy
      */
     public function create(User $user)
     {
-        return  $user->canDo('package.user.create');
+        return false;
     }
 
     /**
@@ -47,13 +44,9 @@ class UserPolicy
      *
      * @return bool
      */
-    public function update(User $user, User $user)
+    public function update(User $user, UserModal $usermodal)
     {
-        if ($user->canDo('package.user.update')) {
-            return true;
-        }
-
-        return $user->id === $user->user_id;
+        return false;
     }
 
     /**
@@ -64,13 +57,9 @@ class UserPolicy
      *
      * @return bool
      */
-    public function destroy(User $user, User $user)
+    public function destroy(User $user, UserModal $usermodal)
     {
-        if ($user->canDo('package.user.delete')) {
-            return true;
-        }
-
-        return $user->id === $user->user_id;
+        return false;
     }
 
     /**
