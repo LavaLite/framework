@@ -3,8 +3,8 @@
 namespace Litepie\User\Policies;
 
 use App\User;
-use Illuminate\Auth\Access\HandlesAuthorization;
 use App\User as UserModal;
+use Illuminate\Auth\Access\HandlesAuthorization;
 
 class UserPolicy
 {
