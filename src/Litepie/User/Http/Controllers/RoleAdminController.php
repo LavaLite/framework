@@ -43,7 +43,7 @@ class RoleAdminController extends AdminController
     public function index(RoleAdminRequest $request)
     {
 
-        $roles  = $this->repository->setPresenter('\\Lavalite\\User\\Repositories\\Presenter\\RoleListPresenter')->paginate(NULL, ['*']);
+        $roles  = $this->repository->setPresenter('\\Litepie\\User\\Repositories\\Presenter\\RoleListPresenter')->paginate(NULL, ['*']);
         $this   ->theme->prependTitle(trans('user.role.names').' :: ');
         $view   = $this->theme->of('User::role.index')->render();
 

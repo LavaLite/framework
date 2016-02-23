@@ -58,7 +58,7 @@ class UserAdminController extends AdminController
                 $users = $this->roles->with(['users'])->findByField('name', $request->get('role'));
                 return $users;
             }
-            $users = $this->repository->setPresenter('\\Lavalite\\User\\Repositories\\Presenter\\UserListPresenter')->all();
+            $users = $this->repository->setPresenter('\\Litepie\\User\\Repositories\\Presenter\\UserListPresenter')->all();
             return $users;
         }
 
@@ -70,7 +70,7 @@ class UserAdminController extends AdminController
                 $users = $this->roles->with(['users'])->findByField('name', $request->get('role'));
                 return $users;
             }
-            $users  = $this->repository->setPresenter('\\Lavalite\\User\\Repositories\\Presenter\\UserListPresenter')->paginate(NULL, ['*']);
+            $users  = $this->repository->setPresenter('\\Litepie\\User\\Repositories\\Presenter\\UserListPresenter')->paginate(NULL, ['*']);
             $this   ->theme->prependTitle(trans('user::user.names').' :: ');
             $view   = $this->theme->of('User::user.index')->render();
             $this->responseCode = 200;

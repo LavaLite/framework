@@ -1,6 +1,6 @@
 {
     "name": "litepie/user",
-    "description": "User management package for Lavalite framework",
+    "description": "User management package for Litepie framework",
     "keywords": ["lavalite", "user", "laravel", "auth"],
     "license": "MIT",
     "authors": [

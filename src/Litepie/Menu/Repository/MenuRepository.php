@@ -290,8 +290,7 @@ class MenuRepository extends BaseRepository implements MenuRepositoryInterface
 
         $this->skipPresenter($_skipPresenter);
         $this->resetModel();
-echo $id;
-dd($model);
+
         $deleted = $model->delete();
 
         event(new RepositoryEntityDeleted($this, $originalModel));

@@ -1,6 +1,6 @@
 <?php
 
-namespace Lavalite\User\Repositories\Presenter;
+namespace Litepie\User\Repositories\Presenter;
 
 use League\Fractal\TransformerAbstract;
 use Hashids;

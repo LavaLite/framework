@@ -13,35 +13,35 @@ Next, update Composer from the Terminal:
 Once this operation completes execute below cammnds in command line to finalize installation.
 
 ```php
-Lavalite\User\Providers\UserServiceProvider::class,
+Litepie\User\Providers\UserServiceProvider::class,
 
 ```
 
 And also add it to alias
 
 ```php
-'User'  => Lavalite\User\Facades\User::class,
+'User'  => Litepie\User\Facades\User::class,
 ```
 
 Use the below commands for publishing
 
 Migration and seeds
 
-    php artisan vendor:publish --provider="Lavalite\User\Providers\UserServiceProvider" --tag="migrations"
-    php artisan vendor:publish --provider="Lavalite\User\Providers\UserServiceProvider" --tag="seeds"
+    php artisan vendor:publish --provider="Litepie\User\Providers\UserServiceProvider" --tag="migrations"
+    php artisan vendor:publish --provider="Litepie\User\Providers\UserServiceProvider" --tag="seeds"
 
 Configuration
 
-    php artisan vendor:publish --provider="Lavalite\User\Providers\UserServiceProvider" --tag="config"
+    php artisan vendor:publish --provider="Litepie\User\Providers\UserServiceProvider" --tag="config"
 
 Language
 
-    php artisan vendor:publish --provider="Lavalite\User\Providers\UserServiceProvider" --tag="lang"
+    php artisan vendor:publish --provider="Litepie\User\Providers\UserServiceProvider" --tag="lang"
 
 Views public and admin
 
-    php artisan vendor:publish --provider="Lavalite\User\Providers\UserServiceProvider" --tag="view-public"
-    php artisan vendor:publish --provider="Lavalite\User\Providers\UserServiceProvider" --tag="view-admin"
+    php artisan vendor:publish --provider="Litepie\User\Providers\UserServiceProvider" --tag="view-public"
+    php artisan vendor:publish --provider="Litepie\User\Providers\UserServiceProvider" --tag="view-admin"
 
 Publish admin views only if it is necessary.
 

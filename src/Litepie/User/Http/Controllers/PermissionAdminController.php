@@ -34,7 +34,7 @@ class PermissionAdminController extends AdminController
 
     public function index(PermissionAdminRequest $request)
     {
-        $permissions  = $this->model->setPresenter('\\Lavalite\\User\\Repositories\\Presenter\\PermissionListPresenter')->paginate(NULL, ['*']);
+        $permissions  = $this->model->setPresenter('\\Litepie\\User\\Repositories\\Presenter\\PermissionListPresenter')->paginate(NULL, ['*']);
         $this   ->theme->prependTitle(trans('user.permission.names').' :: ');
         $view   = $this->theme->of('User::permission.index')->render();
 

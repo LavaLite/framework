@@ -4,7 +4,7 @@ namespace Litepie\User\Policies;
 
 use App\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
-use Lavalite\Package\Models\User;
+use Litepie\Package\Models\User;
 
 class UserPolicy
 {
