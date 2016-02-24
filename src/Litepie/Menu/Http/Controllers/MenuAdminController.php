@@ -36,7 +36,7 @@ class MenuAdminController extends AdminController
         $parent = $this->model->find(hashids_encode($parent));
         $rootMenu = $this->model->rootMenues();
 
-        $this->theme->prependTitle(trans('Menu::menu.names').' :: ');
+        $this->theme->prependTitle(trans('menu.names').' :: ');
 
         $this->theme->asset()->container('footer')->add('nestable', 'packages/nestable/jquery.nestable.js');
 

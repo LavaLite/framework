@@ -1,17 +1,17 @@
 @extends('admin::curd.index')
 @section('heading')
 <h1>
-{!! trans('Menu::package.name') !!}
-<small> {!! trans('cms.manage') !!} {!! trans('Menu::package.names') !!}</small>
+{!! trans('menu.name') !!}
+<small> {!! trans('cms.manage') !!} {!! trans('menu.names') !!}</small>
 </h1>
 @stop
 @section('title')
-{!! trans('Menu::menu.names') !!}
+{!! trans('menu.names') !!}
 @stop
 @section('breadcrumb')
 <ol class="breadcrumb">
     <li><a href="{!! URL::to('admin') !!}"><i class="fa fa-dashboard"></i> {!! trans('cms.home') !!} </a></li>
-    <li class="active">{!! trans('Menu::menu.names') !!}</li>
+    <li class="active">{!! trans('menu.names') !!}</li>
 </ol>
 @stop
 @section('entry')

@@ -16,7 +16,7 @@
             <li class="active"><a href="#details" data-toggle="tab">Menu</a></li>
         </ul>
         {!!Form::vertical_open()
-        ->id('show-menu')
+        ->id('show-menu-show')
         ->method('PUT')
         ->action(Trans::to('admin/menu/menu'. $menu->getRouteKey()))!!}
         <div class="tab-content">

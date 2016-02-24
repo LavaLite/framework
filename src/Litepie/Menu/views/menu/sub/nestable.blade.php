@@ -4,7 +4,7 @@
 <li class="dd-item dd3-item" data-id="{!!$menu[$key . '.' . $i]->eid!!}">
     <div class="dd-handle dd3-handle">Drag</div>
     <div class="dd3-content">
-        <a href="{{URL::to('admin/menu/submenu')}}/{!!$menu[$key . '.' . $i]->eid!!}" data-target='menu-entry'>
+        <a href='' data-href="{{URL::to('admin/menu/submenu')}}/{!!$menu[$key . '.' . $i]->eid!!}" data-action="LOAD" data-load-to='#menu-entry' >
             <i class="{!! !empty($menu[$key . '.' . $i]->icon) ?  $menu[$key . '.' . $i]->icon : '' !!}"></i> {!!$menu[$key . '.' . $i]->name!!}
             <span class="pull-right"><i class="fa fa-angle-double-right"></i></span>
         </a>
@@ -17,7 +17,7 @@
 <li class="dd-item dd3-item" data-id="{!!$menu[$key . '.' . $i]->eid!!}">
     <div class="dd-handle dd3-handle">Drag</div>
     <div class="dd3-content">
-        <a href="{{URL::to('admin/menu/submenu')}}/{!!$menu[$key . '.' . $i]->eid!!}"  data-target='menu-entry'>
+        <a href='' data-href="{{URL::to('admin/menu/submenu')}}/{!!$menu[$key . '.' . $i]->eid!!}" data-action="LOAD" data-load-to='#menu-entry' >
             <i class="{!! !empty($menu[$key . '.' . $i]->icon) ?  $menu[$key . '.' . $i]->icon : '' !!}"></i> {!!$menu[$key . '.' . $i]->name!!}
             <span class="pull-right"><i class="fa fa-angle-double-right"></i></span>
         </a>
