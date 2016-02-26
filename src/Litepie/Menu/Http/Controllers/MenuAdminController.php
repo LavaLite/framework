@@ -21,7 +21,7 @@ class MenuAdminController extends AdminController
      */
     public function __construct(\Litepie\Contracts\Menu\MenuRepository $menu)
     {
-        $this->model = $menu;
+        $this->repository = $menu;
 
         parent::__construct();
     }
@@ -33,8 +33,8 @@ class MenuAdminController extends AdminController
      */
     public function index(MenuRequest $request, $parent = 1)
     {
-        $parent = $this->model->find(hashids_encode($parent));
-        $rootMenu = $this->model->rootMenues();
+        $parent = $this->repository->find(hashids_encode($parent));
+        $rootMenu = $this->repository->rootMenues();
 
         $this->theme->prependTitle(trans('menu.names').' :: ');
 
@@ -50,7 +50,7 @@ class MenuAdminController extends AdminController
      */
     public function nested(MenuRequest $request, $parent = 1)
     {
-        $parent = $this->model->all();
+        $parent = $this->repository->all();
         print_r($parent->toMenu('admin'));
     }
 
@@ -65,14 +65,14 @@ class MenuAdminController extends AdminController
     public function show(MenuRequest $request, $id)
     {
         if ($request->ajax()) {
-            $menu = $this->model->find($id);
+            $menu = $this->repository->find($id);
 
             Form::populate($menu);
 
             return view('Menu::show', compact('menu'));
         }
-        $parent = $this->model->find($id);
-        $rootMenu = $this->model->rootMenues();
+        $parent = $this->repository->find($id);
+        $rootMenu = $this->repository->rootMenues();
         $this->theme->asset()->container('footer')->add('nestable', 'packages/nestable/jquery.nestable.js');
 
         $this->theme->prependTitle(trans('Menu::menu.names').' :: ');
@@ -89,7 +89,7 @@ class MenuAdminController extends AdminController
      */
     public function create(MenuRequest $request)
     {
-        $menu = $this->model->newInstance();
+        $menu = $this->repository->newInstance();
 
         Form::populate($menu);
 
@@ -106,11 +106,22 @@ class MenuAdminController extends AdminController
     public function store(MenuRequest $request)
     {
         try {
-            $row = $this->model->create($request->all());
+            $attributes = $request->all();
+            $attributes['user_id'] = user_id();
+            $menu = $this->repository->create($attributes);
 
-            return Response::json(['message' => 'Menu created sucessfully', 'type' => 'success', 'title' => 'Success'], 201);
+            $this->responseCode = 201;
+            $this->responseMessage = trans('messages.success.created', ['Module' => trans('menu::menu.name')]);
+            $this->responseData = $menu;
+            $this->responseRedirect = trans_url('/admin/menu/menu/'.$menu->getRouteKey());
+            $this->responseView = view('menu::admin.menu.create', compact('menu'));
+
+            return $this -> respond($request);
+
         } catch (Exception $e) {
-            return Response::json(['message' => $e->getMessage(), 'type' => 'error', 'title' => 'Error'], 400);
+            $this->responseCode = 400;
+            $this->responseMessage = $e->getMessage();
+            return $this -> respond($request);
         }
     }
 
@@ -124,7 +135,7 @@ class MenuAdminController extends AdminController
      */
     public function edit(MenuRequest $request, $id)
     {
-        $data['menu'] = $this->model->find($id);
+        $data['menu'] = $this->repository->find($id);
         Form::populate($data['menu']);
 
         return  view('Menu::edit', $data);
@@ -141,11 +152,23 @@ class MenuAdminController extends AdminController
     public function update(MenuRequest $request, $id)
     {
         try {
-            $row = $this->model->update($request->all(), $id);
 
-            return Response::json(['message' => 'Menu updated sucessfully', 'type' => 'success', 'title' => 'Success'], 201);
+            $menu = $this->repository->update($request->all(), $id);
+
+            $this->responseCode = 204;
+            $this->responseMessage = trans('messages.success.updated', ['Module' => trans('menu::menu.name')]);
+            $this->responseData = $menu;
+            $this->responseRedirect = trans_url('/admin/menu/menu/'.$menu->getRouteKey());
+
+            return $this -> respond($request);
+
         } catch (Exception $e) {
-            return Response::json(['message' => $e->getMessage(), 'type' => 'error', 'title' => 'Error'], 400);
+
+            $this->responseCode = 400;
+            $this->responseMessage = $e->getMessage();
+            $this->responseRedirect = trans_url('/admin/menu/menu/'.$menu->getRouteKey());
+
+            return $this -> respond($request);
         }
     }
 
@@ -159,12 +182,12 @@ class MenuAdminController extends AdminController
     public function destroy(MenuRequest $request, $id)
     {
         $cid = hashids_decode($id);
-        if ($this->model->findByField('parent_id', $cid)->count() > 0) {
-            return Response::json(['message' => 'Child menu exists.', 'type' => 'warning', 'title' => 'Warning'], 400);
+        if ($this->repository->findByField('parent_id', $cid)->count() > 0) {
+            return Response::json(['message' => 'Child menu exists.', 'type' => 'warning', 'title' => 'Warning'], 409);
         }
 
         try {
-            $menu = $this->model->find($id);
+            $menu = $this->repository->find($id);
             $menu->delete();
 
             return Response::json(['message' => 'Menu deleted sucessfully', 'type' => 'success', 'title' => 'Success'], 201);
@@ -175,6 +198,6 @@ class MenuAdminController extends AdminController
 
     public function tree(MenuRequest $request, $id)
     {
-        $this->model->updateTree($id, $request->get('tree'));
+        $this->repository->updateTree($id, $request->get('tree'));
     }
 }

@@ -6,6 +6,5 @@ Route::group(['prefix' =>  Trans::setLocale().'/admin/menu'], function () {
     Route::get('menu/{id}/nested', 'Litepie\Menu\Http\Controllers\MenuAdminController@nested');
 
     Route::resource('menu', 'Litepie\Menu\Http\Controllers\MenuAdminController');
-    Route::resource('submenu', 'Litepie\Menu\Http\Controllers\SubMenuAdminController',
-                                ['only' => ['show', 'create', 'edit']]);
+    Route::resource('submenu', 'Litepie\Menu\Http\Controllers\SubMenuAdminController');
 });

@@ -10,7 +10,7 @@
 @stop
 @section('breadcrumb')
 <ol class="breadcrumb">
-    <li><a href="{!! URL::to('admin') !!}"><i class="fa fa-dashboard"></i> {!! trans('cms.home') !!} </a></li>
+    <li><a href="{!! trans_url('admin') !!}"><i class="fa fa-dashboard"></i> {!! trans('cms.home') !!} </a></li>
     <li class="active">{!! trans('menu.names') !!}</li>
 </ol>
 @stop
@@ -56,7 +56,7 @@ $(document).ready(function(){
         var formData = new FormData();
         formData.append('tree', out);
 
-        var url  = '{!! URL::to('admin/menu/menu/'. $parent->getRouteKey() . '/tree') !!}';
+        var url  = '{!! trans_url('admin/menu/menu/'. $parent->getRouteKey() . '/tree') !!}';
 
         $.ajax( {
             url: url,
@@ -77,7 +77,7 @@ $(document).ready(function(){
     $('.dd').nestable().on('change', updateMenu);
 
 
-    $('#menu-entry').load('{{URL::to('admin/menu/menu')}}/{{$parent->getRouteKey()}}');
+    $('#menu-entry').load('{{trans_url('admin/menu/menu')}}/{{$parent->getRouteKey()}}');
 
 
 });

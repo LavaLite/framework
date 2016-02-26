@@ -1,8 +1,8 @@
 <div class="box-header with-border">
     <h3 class="box-title"> New Menu </h3>
     <div class="box-tools pull-right">
-        <button type="button" class="btn btn-primary btn-sm" data-action='CREATE' data-form='#create-menu' data-load-to='#menu-entry' data-href='{!!Trans::to('admin/menu/menu/0')!!}'><i class="fa fa-floppy-o"></i> {{ trans('cms.save') }}</button>
-        <button type="button" class="btn btn-default btn-sm" data-action='CANCEL' data-load-to='#menu-entry' data-href='{!!Trans::to('admin/menu/menu/0')!!}'><i class="fa fa-times-circle"></i> {{ trans('cms.cancel') }}</button>
+        <button type="button" class="btn btn-primary btn-sm" data-action='CREATE' data-form='#create-menu' data-load-to='#menu-entry'><i class="fa fa-floppy-o"></i> {{ trans('cms.save') }}</button>
+        <button type="button" class="btn btn-default btn-sm" data-action='CANCEL' data-load-to='#menu-entry'><i class="fa fa-times-circle"></i> {{ trans('cms.cancel') }}</button>
         <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
     </div>
 </div>
