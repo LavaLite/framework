@@ -9,9 +9,6 @@ use Litepie\User\Http\Requests\PermissionAdminRequest;
 use Litepie\User\Models\Permission;
 use Response;
 
-/**
- *
- */
 class PermissionAdminController extends AdminController
 {
     /**

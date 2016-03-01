@@ -13,9 +13,6 @@ use Litepie\Contracts\User\UserRepository;
 use Litepie\User\Http\Requests\UserAdminRequest;
 use Response;
 
-/**
- *
- */
 class UserAdminController extends AdminController
 {
     /**

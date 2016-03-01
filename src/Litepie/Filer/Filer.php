@@ -8,9 +8,6 @@ use Intervention\Image\Facades\Image as Intervention;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
-/**
- *
- */
 class Filer
 {
     /**

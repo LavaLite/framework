@@ -1,6 +1,5 @@
 <?php
 
-
 namespace Litepie\User\Models;
 
 use Litepie\Database\Model;
