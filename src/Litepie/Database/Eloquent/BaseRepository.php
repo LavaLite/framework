@@ -365,7 +365,7 @@ abstract class BaseRepository implements Repository, RepositoryCriteria
     {
         $this->applyCriteria();
         $this->applyScope();
-        $model = $this->model->whereSlug($value)->get($columns);
+        $model = $this->model->whereSlug($value)->first($columns);
         $this->resetModel();
 
         return $this->parserResult($model);
