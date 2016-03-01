@@ -152,8 +152,6 @@ trait Revision
         if (in_array($attribute, $this->getDates())) {
             return 'date';
         }
-
-        return;
     }
 
     /**
@@ -166,8 +164,6 @@ trait Revision
         } catch (\Exception $e) {
             return;
         }
-
-        return;
     }
 
     /**

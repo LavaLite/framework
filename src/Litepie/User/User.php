@@ -410,8 +410,6 @@ class User
         if (!is_null($this->getUser())) {
             return  $this->getUser()->$field;
         }
-
-        return;
     }
 
     /**
