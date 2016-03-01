@@ -83,9 +83,6 @@ abstract class BaseRepository implements Repository, RepositoryCriteria
         $this->boot();
     }
 
-    /**
-     *
-     */
     public function boot()
     {
     }
@@ -112,7 +109,6 @@ abstract class BaseRepository implements Repository, RepositoryCriteria
      */
     public function presenter()
     {
-        return;
     }
 
     /**
@@ -165,8 +161,6 @@ abstract class BaseRepository implements Repository, RepositoryCriteria
 
             return $this->presenter;
         }
-
-        return;
     }
 
     /**

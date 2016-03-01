@@ -68,8 +68,6 @@ trait Trans
         if (isset($langs[$locale])) {
             return $langs[$locale];
         }
-
-        return;
     }
 
     /**

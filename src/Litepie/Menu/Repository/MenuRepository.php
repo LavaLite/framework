@@ -166,8 +166,6 @@ class MenuRepository extends BaseRepository implements MenuRepositoryInterface
 
             $this->_getMenu($menu->id, $array, $key.'.'.$i);
         }
-
-        return;
     }
 
     public function getAdminMenu($id)
@@ -198,8 +196,6 @@ class MenuRepository extends BaseRepository implements MenuRepositoryInterface
 //                continue;
             $this->_getAdminMenu($menu['id'], $level + 1);
         }
-
-        return;
     }
 
     public function setNodes(&$array)

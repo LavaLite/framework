@@ -33,9 +33,6 @@ class CleanCacheRepository
      */
     protected $action = null;
 
-    /**
-     *
-     */
     public function __construct()
     {
         $this->cache = app(config('database.cache.repository', 'cache'));

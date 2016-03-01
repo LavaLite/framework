@@ -116,12 +116,12 @@ class MenuAdminController extends AdminController
             $this->responseRedirect = trans_url('/admin/menu/menu/'.$menu->getRouteKey());
             $this->responseView = view('menu::admin.menu.create', compact('menu'));
 
-            return $this -> respond($request);
-
+            return $this->respond($request);
         } catch (Exception $e) {
             $this->responseCode = 400;
             $this->responseMessage = $e->getMessage();
-            return $this -> respond($request);
+
+            return $this->respond($request);
         }
     }
 
@@ -152,7 +152,6 @@ class MenuAdminController extends AdminController
     public function update(MenuRequest $request, $id)
     {
         try {
-
             $menu = $this->repository->update($request->all(), $id);
 
             $this->responseCode = 204;
@@ -160,15 +159,13 @@ class MenuAdminController extends AdminController
             $this->responseData = $menu;
             $this->responseRedirect = trans_url('/admin/menu/menu/'.$menu->getRouteKey());
 
-            return $this -> respond($request);
-
+            return $this->respond($request);
         } catch (Exception $e) {
-
             $this->responseCode = 400;
             $this->responseMessage = $e->getMessage();
             $this->responseRedirect = trans_url('/admin/menu/menu/'.$menu->getRouteKey());
 
-            return $this -> respond($request);
+            return $this->respond($request);
         }
     }
 

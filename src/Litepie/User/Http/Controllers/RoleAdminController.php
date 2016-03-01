@@ -10,9 +10,6 @@ use Litepie\User\Http\Requests\RoleAdminRequest;
 use Litepie\User\Models\Role;
 use Response;
 
-/**
- *
- */
 class RoleAdminController extends AdminController
 {
     /**

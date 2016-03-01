@@ -61,20 +61,20 @@ class SubMenuAdminController extends AdminController
     {
         try {
             $attributes = $request->all();
-            $attributes['user_id']      = user_id();
-            $attributes['parent_id']    = hashids_decode($attributes['parent_id']);
+            $attributes['user_id'] = user_id();
+            $attributes['parent_id'] = hashids_decode($attributes['parent_id']);
             $menu = $this->repository->create($attributes);
 
             $this->responseCode = 201;
             $this->responseMessage = trans('messages.success.created', ['Module' => trans('menu::menu.name')]);
             $this->responseRedirect = trans_url('/admin/menu/submenu/'.$menu->getRouteKey());
 
-            return $this -> respond($request);
-
+            return $this->respond($request);
         } catch (Exception $e) {
             $this->responseCode = 400;
             $this->responseMessage = $e->getMessage();
-            return $this -> respond($request);
+
+            return $this->respond($request);
         }
     }
 
@@ -106,23 +106,19 @@ class SubMenuAdminController extends AdminController
     public function update(MenuRequest $request, $id)
     {
         try {
-
             $menu = $this->repository->update($request->all(), $id);
 
             $this->responseCode = 204;
             $this->responseMessage = trans('messages.success.updated', ['Module' => trans('menu::menu.name')]);
             $this->responseRedirect = trans_url('/admin/menu/submenu/'.$menu->getRouteKey());
 
-            return $this -> respond($request);
-
+            return $this->respond($request);
         } catch (Exception $e) {
-
             $this->responseCode = 400;
             $this->responseMessage = $e->getMessage();
             $this->responseRedirect = trans_url('/admin/menu/submenu/'.$menu->getRouteKey());
 
-            return $this -> respond($request);
+            return $this->respond($request);
         }
     }
-
 }

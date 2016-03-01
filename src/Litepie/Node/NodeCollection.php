@@ -155,7 +155,5 @@ class NodeCollection extends CollectionBase
                 return $result;
             }
         }
-
-        return;
     }
 }

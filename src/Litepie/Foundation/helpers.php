@@ -155,8 +155,6 @@ if (!function_exists('user_id')) {
         if (Auth::guard($guard)->check()) {
             return Auth::guard($guard)->user()->id;
         }
-
-        return;
     }
 }
 
@@ -173,7 +171,5 @@ if (!function_exists('get_users')) {
         if (Auth::guard($guard)->check()) {
             return Auth::guard($guard)->user()->$property;
         }
-
-        return;
     }
 }
