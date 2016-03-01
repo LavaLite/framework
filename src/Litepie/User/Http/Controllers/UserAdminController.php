@@ -52,20 +52,8 @@ class UserAdminController extends AdminController
      */
     public function index(UserAdminRequest $request, $role = null)
     {
-        /*        if ($request->wantsJson()) {
-            if ($request->has('role')) {
-                $users = $this->roles->with(['users'])->findByField('name', $request->get('role'));
-                return $users;
-            }
-            $users = $this->repository->setPresenter('\\Litepie\\User\\Repositories\\Presenter\\UserListPresenter')->all();
-            return $users;
-        }
 
-        $this->theme->prependTitle(trans('user.user.names').' :: ');
-
-        return $this->theme->of('User::user.index')->render();
-*/
-            if ($request->has('role')) {
+        if ($request->has('role')) {
                 $users = $this->roles->with(['users'])->findByField('name', $request->get('role'));
 
                 return $users;
@@ -93,24 +81,6 @@ class UserAdminController extends AdminController
      */
     public function show(UserAdminRequest $request, User $user)
     {
-        /*       if (!$user->exists) {
-            if ($request->wantsJson()) {
-                return [];
-            }
-
-            return view('User::user.new');
-        }
-
-        if ($request->wantsJson()) {
-            return $user;
-        }
-
-        $permissions  = $this->permission->groupedPermissions(true);
-        $roles  = $this->roles->all();
-
-        Form::populate($user);
-
-        return view('User::user.show', compact('user', 'roles', 'permissions'));*/
 
         if (!$user->exists) {
             $this->responseCode = 404;
