@@ -11,7 +11,8 @@
     ],
     "require": {
         "php": ">=5.5.9",
-        "laravel/socialite": "^3.0@dev"
+        "laravel/socialite": "^3.0@dev",
+        "greggilbert/recaptcha": "dev-master"
     },
     "autoload": {
         "psr-4": {

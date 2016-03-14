@@ -66,6 +66,7 @@ class UserServiceProvider extends ServiceProvider
         $this->app->register(\Litepie\User\Providers\AuthServiceProvider::class);
         $this->app->register(\Litepie\User\Providers\EventServiceProvider::class);
         $this->app->register(\Litepie\User\Providers\RouteServiceProvider::class);
+        $this->app->register(\Greggilbert\Recaptcha\RecaptchaServiceProvider::class);
     }
 
     /**
