@@ -37,7 +37,7 @@ class VerifyLogin
         }
 
         if (!user()->active) {
-            return throw new InvalidAccountException('Account is not active.');
+            throw new InvalidAccountException('Account is not active.');
         }
 
         return $next($request);
