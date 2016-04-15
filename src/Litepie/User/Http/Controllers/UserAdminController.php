@@ -33,12 +33,11 @@ class UserAdminController extends AdminController
      * @return type
      */
     public function __construct(UserRepository $user,
-                                PermissionRepository $permission,
-                                RoleRepository $roles)
-    {
+        PermissionRepository                       $permission,
+        RoleRepository                             $roles) {
         $this->repository = $user;
         $this->permission = $permission;
-        $this->roles = $roles;
+        $this->roles      = $roles;
         parent::__construct();
     }
 
@@ -51,18 +50,23 @@ class UserAdminController extends AdminController
     {
 
         if ($request->has('role')) {
-                $users = $this->roles->with(['users'])->findByField('name', $request->get('role'));
+            $role  = $request->get('role');
+            $users = $this->roles->scopeQuery(function ($model) use ($role) {
+                return $model->whereName($role);
+            })->first();
+            $this->responseData     = $users->users;
+            $this->responseRedirect = '';
 
-                return $users;
-            }
-        $users = $this->repository->setPresenter('\\Litepie\\User\\Repositories\\Presenter\\UserListPresenter')->paginate(null, ['*']);
-        $this->theme->prependTitle(trans('user::user.names').' :: ');
-        $view = $this->theme->of('User::user.index')->render();
-        $this->responseCode = 200;
-        $this->responseMessage = trans('messages.success.loaded', ['Module' => 'User']);
-        $this->responseData = $users['data'];
-        $this->responseMeta = $users['meta'];
-        $this->responseView = $view;
+            return $this->respond($request);
+        }
+
+        $users = $this->repository->setPresenter('\\Litepie\\User\\Repositories\\Presenter\\UserListPresenter')->all(['*']);
+        $this->theme->prependTitle(trans('user.names') . ' :: ');
+        $view                   = $this->theme->of('user::admin.user.index')->render();
+        $this->responseCode     = 200;
+        $this->responseMessage  = trans('messages.success.loaded', ['Module' => 'User']);
+        $this->responseData     = $users['data'];
+        $this->responseView     = $view;
         $this->responseRedirect = '';
 
         return $this->respond($request);
@@ -80,21 +84,21 @@ class UserAdminController extends AdminController
     {
 
         if (!$user->exists) {
-            $this->responseCode = 404;
+            $this->responseCode    = 404;
             $this->responseMessage = trans('messages.success.notfound', ['Module' => 'User']);
-            $this->responseData = $user;
-            $this->responseView = view('User::user.new');
+            $this->responseData    = $user;
+            $this->responseView    = view('user::admin.user.new');
 
             return $this->respond($request);
         }
 
         $permissions = $this->permission->groupedPermissions(true);
-        $roles = $this->roles->all();
+        $roles       = $this->roles->all();
         Form::populate($user);
-        $this->responseCode = 200;
+        $this->responseCode    = 200;
         $this->responseMessage = trans('messages.success.loaded', ['Module' => 'User']);
-        $this->responseData = $user;
-        $this->responseView = view('User::user.show', compact('user', 'roles', 'permissions'));
+        $this->responseData    = $user;
+        $this->responseView    = view('user::admin.user.show', compact('user', 'roles', 'permissions'));
 
         return $this->respond($request);
     }
@@ -108,15 +112,15 @@ class UserAdminController extends AdminController
      */
     public function create(UserAdminRequest $request)
     {
-        $user = $this->repository->newInstance([]);
+        $user        = $this->repository->newInstance([]);
         $permissions = $this->permission->groupedPermissions(true);
-        $roles = $this->roles->all();
+        $roles       = $this->roles->all();
         Form::populate($user);
 
-        $this->responseCode = 200;
+        $this->responseCode    = 200;
         $this->responseMessage = trans('messages.success.loaded', ['Module' => 'User']);
-        $this->responseData = $user;
-        $this->responseView = view('User::user.create', compact('user', 'roles', 'permissions'));
+        $this->responseData    = $user;
+        $this->responseView    = view('user::admin.user.create', compact('user', 'roles', 'permissions'));
 
         return $this->respond($request);
     }
@@ -132,22 +136,23 @@ class UserAdminController extends AdminController
     {
         try {
             $attributes = $request->all();
-            $user = $this->repository->create($attributes);
+            $user       = $this->repository->create($attributes);
             $user->syncRoles($request->get('roles'));
-            $this->responseCode = 201;
-            $this->responseMessage = trans('messages.success.created', ['Module' => 'User']);
-            $this->responseData = $user;
-            $this->responseMeta = '';
-            $this->responseRedirect = trans_url('/admin/user/user/'.$user->getRouteKey());
-            $this->responseView = view('User::user.create', compact('user'));
+            $this->responseCode     = 201;
+            $this->responseMessage  = trans('messages.success.created', ['Module' => 'User']);
+            $this->responseData     = $user;
+            $this->responseMeta     = '';
+            $this->responseRedirect = trans_url('/admin/user/user/' . $user->getRouteKey());
+            $this->responseView     = view('user::admin.user.create', compact('user'));
 
             return $this->respond($request);
         } catch (Exception $e) {
-            $this->responseCode = 400;
+            $this->responseCode    = 400;
             $this->responseMessage = $e->getMessage();
 
             return $this->respond($request);
         }
+
     }
 
     /**
@@ -161,12 +166,12 @@ class UserAdminController extends AdminController
     public function edit(UserAdminRequest $request, User $user)
     {
         $permissions = $this->permission->groupedPermissions(true);
-        $roles = $this->roles->all();
+        $roles       = $this->roles->all();
         Form::populate($user);
-        $this->responseCode = 200;
+        $this->responseCode    = 200;
         $this->responseMessage = trans('messages.success.loaded', ['Module' => 'User']);
-        $this->responseData = $user;
-        $this->responseView = view('User::user.edit', compact('user', 'roles', 'permissions'));
+        $this->responseData    = $user;
+        $this->responseView    = view('user::admin.user.edit', compact('user', 'roles', 'permissions'));
 
         return $this->respond($request);
     }
@@ -185,19 +190,20 @@ class UserAdminController extends AdminController
             $attributes = $request->all();
             $user->update($attributes);
             $user->syncRoles($request->get('roles'));
-            $this->responseCode = 204;
-            $this->responseMessage = trans('messages.success.updated', ['Module' => 'User']);
-            $this->responseData = $user;
-            $this->responseRedirect = trans_url('/admin/user/user/'.$user->getRouteKey());
+            $this->responseCode     = 204;
+            $this->responseMessage  = trans('messages.success.updated', ['Module' => 'User']);
+            $this->responseData     = $user;
+            $this->responseRedirect = trans_url('/admin/user/user/' . $user->getRouteKey());
 
             return $this->respond($request);
         } catch (Exception $e) {
-            $this->responseCode = 400;
-            $this->responseMessage = $e->getMessage();
-            $this->responseRedirect = trans_url('/admin/user/user/'.$user->getRouteKey());
+            $this->responseCode     = 400;
+            $this->responseMessage  = $e->getMessage();
+            $this->responseRedirect = trans_url('/admin/user/user/' . $user->getRouteKey());
 
             return $this->respond($request);
         }
+
     }
 
     /**
@@ -212,20 +218,21 @@ class UserAdminController extends AdminController
         try {
             $t = $user->delete();
 
-            $this->responseCode = 202;
-            $this->responseMessage = trans('messages.success.deleted', ['Module' => 'User']);
-            $this->responseData = $user;
-            $this->responseMeta = '';
+            $this->responseCode     = 202;
+            $this->responseMessage  = trans('messages.success.deleted', ['Module' => 'User']);
+            $this->responseData     = $user;
+            $this->responseMeta     = '';
             $this->responseRedirect = trans_url('/admin/user/user/0');
 
             return $this->respond($request);
         } catch (Exception $e) {
-            $this->responseCode = 400;
-            $this->responseMessage = $e->getMessage();
-            $this->responseRedirect = trans_url('/admin/user/user/'.$user->getRouteKey());
+            $this->responseCode     = 400;
+            $this->responseMessage  = $e->getMessage();
+            $this->responseRedirect = trans_url('/admin/user/user/' . $user->getRouteKey());
 
             return $this->respond($request);
         }
+
     }
 
     /**
@@ -235,11 +242,13 @@ class UserAdminController extends AdminController
      */
     public function updateProfile(Authenticatable $user, Request $request)
     {
+
         if ($user->update($request->all())) {
             return Response::json(['message' => 'Profile updated sucessfully', 'type' => 'success', 'title' => 'Success'], 201);
         } else {
             return Response::json(['message' => $e->getMessage(), 'type' => 'error', 'title' => 'Error'], 400);
         }
+
     }
 
     /**
@@ -266,5 +275,7 @@ class UserAdminController extends AdminController
 
             return $this->error($e->getMessage());
         }
+
     }
+
 }

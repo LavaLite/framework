@@ -39,7 +39,7 @@ class Filer
         // Check the upload type is valid by extension and mimetype
         $this->verifyUploadType($file);
 
-        // Check file size
+// Check file size
         if ($file->getSize() > config('files.max_upload_size', 2048)) {
             throw new FileException('File is too big.');
         }
@@ -57,11 +57,11 @@ class Filer
 
         // If it returns an array it's a successful upload. Otherwise an exception will be thrown.
         $array = [
-                    'folder'  => $this->relativePath($folder),
-                    'file'    => $file->fileSystemName,
-                    'caption' => $this->getName($file),
-                    'time'    => date('Y-m-d H:i:s'),
-                    ];
+            'folder'  => $this->relativePath($folder),
+            'file'    => $file->fileSystemName,
+            'caption' => $this->getName($file),
+            'time'    => date('Y-m-d H:i:s'),
+        ];
 
         return $array;
     }
@@ -77,35 +77,37 @@ class Filer
      */
     public function resolveFileName($folder, UploadedFile $file, $enableObfuscation = true)
     {
+
         if (!isset($file->fileSystemName)) {
-            $file->fileSystemName = str_slug(basename($file->getClientOriginalName(), $file->getClientOriginalExtension())).'.'.strtolower($file->getClientOriginalExtension());
+            $file->fileSystemName = str_slug(basename($file->getClientOriginalName(), $file->getClientOriginalExtension())) . '.' . strtolower($file->getClientOriginalExtension());
         }
 
         if (config('files.obfuscate_filenames') && $enableObfuscation) {
-            $fileName = basename($file->fileSystemName, $file->getClientOriginalExtension()).'_'.md5(uniqid(mt_rand(), true)).'.'.$file->getClientOriginalExtension();
+            $fileName = basename($file->fileSystemName, $file->getClientOriginalExtension()) . '_' . md5(uniqid(mt_rand(), true)) . '.' . $file->getClientOriginalExtension();
         } else {
             $fileName = $file->fileSystemName;
         }
 
-        if (File::isFile($folder.$fileName)) {
+        if (File::isFile($folder . $fileName)) {
             $basename = $this->getBasename($file);
-            $pose = strrpos($basename, '_');
+            $pose     = strrpos($basename, '_');
 
             if ($pose) {
                 $f = substr($basename, 0, $pose);
                 $s = substr($basename, $pose + 1);
 
                 if (is_numeric($s)) {
-                    $s++;
+                    ++$s;
                     $basename = $f;
                 } else {
                     $s = 1;
                 }
+
             } else {
                 $s = 1;
             }
 
-            $file->fileSystemName = $basename.'_'.$s.'.'.$file->getClientOriginalExtension();
+            $file->fileSystemName = $basename . '_' . $s . '.' . $file->getClientOriginalExtension();
 
             return $this->resolveFileName($folder, $file, false);
         }
@@ -125,15 +127,17 @@ class Filer
      */
     public function checkUploadFolder($folder)
     {
-        $folder = public_path(config('files.folder', 'uploads').'/'.$folder);
+        $folder = public_path(config('files.folder', 'uploads') . '/' . $folder);
         $folder .= (substr($folder, -1) != '/') ? '/' : '';
 
-        // Check to see if the upload folder exists
+// Check to see if the upload folder exists
         if (!File::exists($folder)) {
-            // Try and create it
+
+// Try and create it
             if (!File::makeDirectory($folder, config('files.folder_permission'), true)) {
                 throw new FileException('Directory is not writable. Please make upload folder writable.');
             }
+
         }
 
         return $folder;
@@ -153,6 +157,7 @@ class Filer
         } elseif (!in_array(strtolower($file->getClientOriginalExtension()), config('files.allowed_extensions')) && config('files.allowed_extensions_check')) {
             throw new FileException('Invalid upload type.');
         }
+
     }
 
     /**
@@ -171,6 +176,7 @@ class Filer
         } else {
             return false;
         }
+
     }
 
     public function getBasename($file)
@@ -184,7 +190,7 @@ class Filer
     public function getName($file)
     {
         // Get the file bits
-        $basename = basename($file->getClientOriginalName(), '.'.$file->getClientOriginalExtension());
+        $basename = basename($file->getClientOriginalName(), '.' . $file->getClientOriginalExtension());
         // Remove trailing period
         $name = ucfirst(strtolower(preg_replace('/[^A-Za-z0-9]/', ' ', $basename)));
 
@@ -193,35 +199,44 @@ class Filer
 
     public function resizeImage($folder, $file)
     {
+
         if (!config('files.image_resize_on_upload')) {
             return;
         }
 
         if (is_string($file)) {
-            $uFile = new UploadedFile($folder.$file, $file);
+            $uFile = new UploadedFile($folder . $file, $file);
         }
-        // Check the image type is valid by extension and mimetype
+
+        /**
+         * Check the image type is valid by extension and mimetype
+         */
+
         if ($this->verifyImageType($uFile)) {
-            $image = $this->image->make($folder.$file);
+            $image = $this->image->make($folder . $file);
+
             if ($image->width() > config('files.image_max_size.w') || $image->height() > config('files.image_max_size.h')) {
                 $image->resize(config('files.image_max_size.w'), config('files.image_max_size.h'), function ($constraint) {
                     $constraint->aspectRatio();
                     $constraint->upsize();
                 });
-                $image->save($folder.$file);
+                $image->save($folder . $file);
             }
+
         }
+
     }
 
     public function relativePath($path)
     {
         $path = str_replace(public_path(), '', $path);
-        // Check to see if it begins in a slash
+
+// Check to see if it begins in a slash
         if (substr($path, 0, 1) != '/') {
-            $path = '/'.$path;
+            $path = '/' . $path;
         }
 
-        // Check to see if it ends in a slash
+// Check to see if it ends in a slash
         if (substr($path, -1) != '/') {
             $path .= '/';
         }
@@ -233,8 +248,9 @@ class Filer
 
     /*==========  File display functions  ==========*/
 
-    public function show($files, $count = -1, $view = 'filer.show')
+    public function show($files, $count = -1, $view = 'show')
     {
+
         if (!is_array($files) && !is_object($files)) {
             $files = json_decode($files, true);
         }
@@ -247,34 +263,35 @@ class Filer
             $files = (array) $files;
         }
 
-        return view($view, compact('files', 'field', 'count'));
+        return view('filer::' . $view, compact('files', 'field', 'count'));
     }
 
-    public function editor($field, $files, $count = -1, $view = 'filer.editor')
+    public function editor($field, $files, $count = -1, $view = 'editor')
     {
+
         if (!is_array($files) && !is_object($files)) {
             $files = json_decode($files, true);
         }
 
         if (empty($files)) {
-            $files = [];
+            return 'No files uploaded';
         }
 
         if (is_object($files)) {
             $files = (array) $files;
         }
 
-        return view($view, compact('files', 'field', 'count'));
+        return view('filer::' . $view, compact('files', 'field', 'count'));
     }
 
-    public function uploader($field, $path, $files = 10, $view = 'filer.upload', $mime = 'image/*')
+    public function uploader($field, $path, $files = 10, $view = 'upload', $mime = 'image/*')
     {
-        return view($view, compact('path', 'field', 'files', 'mime'));
+        $view = is_null($view) ? 'upload' : $view;
+        return view('filer::' . $view, compact('path', 'field', 'files', 'mime'));
     }
 
-    /*==========  Image Resize Functions  ==========*/
-
-    /**
+    /* Resize an image.
+     *
      * @param $folder
      * @param $file
      * @param $size
@@ -285,7 +302,7 @@ class Filer
     {
         // pass calls to picture cache
         return $this->image->cache(function ($picture) use ($folder, $file, $size) {
-            $file = public_path().'/'.$folder.'/'.$file;
+            $file = public_path() . '/' . $folder . '/' . $file;
 
             return $picture->make($file)->resize($size['width'], $size['height'], function ($constraint) {
                 $constraint->aspectRatio();
@@ -328,7 +345,7 @@ class Filer
         // pass calls to picture cache
         return $this->image->cache(function ($picture) use ($folder, $file, $size) {
 
-            $file = public_path().'/'.$folder.'/'.$file;
+            $file = public_path() . '/' . $folder . '/' . $file;
 
             return $picture->make($file)->fit($size['width'], $size['height']);
 
@@ -348,10 +365,11 @@ class Filer
         // pass calls to picture cache
         return $this->image->cache(function ($picture) use ($folder, $file, $size) {
 
-            $file = public_path().'/'.$folder.'/'.$file;
+            $file = public_path() . '/' . $folder . '/' . $file;
 
             return $picture->make($file)->resize($size['width'], $size['height']);
 
         });
     }
+
 }

@@ -19,9 +19,11 @@ trait HasRoles
         $roles = is_array($roles) ? $roles : func_get_args();
 
         foreach ($roles as $role) {
+
             if ($this->hasRole($role)) {
                 return true;
             }
+
         }
 
         return false;
@@ -60,9 +62,11 @@ trait HasRoles
      */
     public function attachRole($role)
     {
+
         if (!$this->hasRole($role)) {
             $this->roles()->attach($role);
         }
+
     }
 
     /**
@@ -100,6 +104,7 @@ trait HasRoles
      */
     public function syncRoles($roles)
     {
+
         if (is_array($roles)) {
             return $this->roles()->sync($roles);
         }
@@ -123,4 +128,5 @@ trait HasRoles
             $query->whereIn('name', $roles);
         });
     }
+
 }

@@ -5,10 +5,9 @@ namespace Litepie\User\Http\Controllers;
 use App\Http\Controllers\UserController as UserController;
 use App\User;
 use Form;
+use Hash;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Http\Request;
-use Litepie\Contracts\User\PermissionRepository;
-use Litepie\Contracts\User\RoleRepository;
 use Litepie\Contracts\User\UserRepository;
 use Response;
 
@@ -47,7 +46,7 @@ class UserUserController extends UserController
      */
     public function getPassword(Request $request, $role = null)
     {
-        return $this->theme->of('public::user.changepassword')->render();
+        return $this->theme->of('user::user.changepassword')->render();
     }
 
     /**
@@ -58,8 +57,27 @@ class UserUserController extends UserController
      *
      * @return Response
      */
-    public function postPassword(Request $request, User $user)
+    public function postPassword(Request $request, Authenticatable $user)
     {
+        $this->validate($request, [
+            'password'     => 'required|confirmed|min:6',
+            'old_password' => 'required',
+        ]);
+
+        if (!Hash::check($request->get('old_password'), $user->password)) {
+            return redirect()->back()->withMessage('Invalid old password')->withCode(300);
+        }
+
+        $password = $request->get('password');
+
+        $user->password = bcrypt($password);
+
+        if ($user->save()) {
+            return redirect('home')->withMessage('Password updated successfully.')->withCode(201);
+        } else {
+            return redirect()->back()->withMessage('Error while resetting password.')->withCode(400);
+        }
+
     }
 
     /**
@@ -71,7 +89,8 @@ class UserUserController extends UserController
      */
     public function getProfile(Request $request)
     {
-        return $this->theme->of('public::user.updateprofile')->render();
+        Form::populate($request->user());
+        return $this->theme->of('user::user.profile')->render();
     }
 
     /**
@@ -81,9 +100,20 @@ class UserUserController extends UserController
      *
      * @return Response
      */
-    public function postProfile(Request $request)
+    public function postProfile(Request $request, Authenticatable $user)
     {
-        print_r($request->all());
+        $this->validate($request, [
+            'name' => 'required|min:3',
+        ]);
+
+        $user->fill($request->all());
+
+        if ($user->save()) {
+            return redirect('home')->withMessage('Profile updated successfully.')->withCode(201);
+        } else {
+            return redirect()->back()->withMessage('Error while updating profile.')->withCode(400);
+        }
+
     }
 
 }

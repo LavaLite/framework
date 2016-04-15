@@ -11,8 +11,13 @@
                 -> label(trans('user.user.label.email'))
                 -> placeholder(trans('user.user.placeholder.email')) !!}
             </div>
+            <div class='col-md-12 col-sm-12'>
+                {!! Form::password('password')
+                -> label(trans('user.user.label.password'))
+                -> placeholder(trans('user.user.placeholder.password')) !!}
+            </div>
         </div>
-        <div class='col-md-3 col-sm-3'>
+        <div class='col-md-2 col-sm-2'>
             <table class="table">
                 <thead>
                     <th>Role</th>
@@ -30,7 +35,7 @@
                 </tbody>
             </table>
         </div>
-        <div class='col-md-6 col-sm-6' style="height:250px;overflow: scroll;">
+        <div class='col-md-7 col-sm-7' style="height:250px;overflow: scroll;">
             <table class="table">
                 <thead>
                     <th>Modules</th>
@@ -96,11 +101,6 @@
                 {!! Form::tel('phone')
                 -> label(trans('user.user.label.phone'))
                 -> placeholder(trans('user.user.placeholder.phone')) !!}
-            </div>
-            <div class='col-md-12 col-sm-12'>
-                {!! Form::password('password')
-                -> label(trans('user.user.label.password'))
-                -> placeholder(trans('user.user.placeholder.password')) !!}
             </div>
         </div>
         <div class='col-md-3 col-sm-4'>

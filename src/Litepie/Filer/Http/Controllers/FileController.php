@@ -19,28 +19,47 @@ class FileController extends Controller
         $this->middleware('web');
     }
 
+    /**
+     * Resize/Fix the image according to the specification in the size array.
+     *
+     * @param string $size
+     * @param string $table
+     * @param string $folder
+     * @param string $field
+     * @param string $file
+     *
+     * @return Response
+     */
     public function image($size, $table, $folder, $field, $file)
     {
-        $size = $this->getSize($size);
-        $folder = config('files.folder', 'uploads').'/'.$table.'/'.folder_decode($folder).'/'.$field;
+        $size   = $this->getSize($size);
+        $folder = config('files.folder', 'uploads') . '/' . $table . '/' . folder_decode($folder) . '/' . $field;
 
-        if (!is_file(public_path($folder.'/'.$file))) {
+        if (!is_file(public_path($folder . '/' . $file))) {
             $image = Filer::image($size['default'], $size);
         } else {
             $image = Filer::$size['action']($folder, $file, $size);
         }
+
         $header = [
             'Content-Type'  => 'image/jpg',
             'Cache-Control' => 'max-age=864000, public',
             'Expires'       => gmdate('D, d M Y H:i:s \G\M\T', time() + 864000),
-            'Pragma'        => 'public', ];
+            'Pragma'        => 'public'];
 
         return Response::make($image, 200, $header);
     }
 
+    /**
+     * Get the resize array for the given size.
+     *
+     * @param type $size
+     *
+     * @return array
+     */
     public function getSize($size)
     {
-        $size = config($size, config('files.size.'.$size));
+        $size = config($size, config('files.size.' . $size));
 
         if (empty($size)) {
             throw new NotFoundHttpException();
@@ -51,22 +70,33 @@ class FileController extends Controller
         return $size;
     }
 
+    /**
+     * Download the given file.
+     *
+     * @param string $table
+     * @param string $folder
+     * @param string $field
+     * @param string $file
+     *
+     * @return file
+     */
     public function file($table, $folder, $field, $file)
     {
-        $folder = config('files.folder', 'uploads').'/'.$table.'/'.folder_decode($folder).'/'.$field;
+        $folder = config('files.folder', 'uploads') . '/' . $table . '/' . folder_decode($folder) . '/' . $field;
 
         try {
-            $contents = File::get(public_path($folder.'/'.$file));
+            $contents = File::get(public_path($folder . '/' . $file));
         } catch (FileNotFoundException $exception) {
             throw new FileNotFoundException();
         }
 
         $header = [
-            'Content-Type'  => 'image/jpg',
+            'Content-Type'  => 'application/*',
             'Cache-Control' => 'max-age=864000, public',
             'Expires'       => gmdate('D, d M Y H:i:s \G\M\T', time() + 864000),
-            'Pragma'        => 'public', ];
+            'Pragma'        => 'public'];
 
         return Response::make($contents, 200, $header);
     }
+
 }

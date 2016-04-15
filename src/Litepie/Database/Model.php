@@ -44,7 +44,7 @@ class Model extends Eloquent
      *
      * @param $callback  \Closure
      */
-    public function getPublickKey()
+    public function getPublicKey()
     {
         return $this->getAttribute('slug');
     }
@@ -97,6 +97,7 @@ class Model extends Eloquent
      */
     public function setAttribute($key, $value)
     {
+
         foreach (static::$setter_manipulators as $manipulator) {
             $value = $manipulator($this, $key, $value);
         }
@@ -124,11 +125,15 @@ class Model extends Eloquent
     public function initialize()
     {
         $config = config($this->config);
+
         foreach ($config as $key => $val) {
+
             if (property_exists(get_called_class(), $key)) {
                 $this->$key = $val;
             }
+
         }
+
     }
 
     /**
@@ -138,17 +143,19 @@ class Model extends Eloquent
      */
     public function checkGetSetAttribute($variable, $field, $table)
     {
+
         if (!property_exists(get_called_class(), $variable) && empty($this->$variable)) {
             return false;
         }
 
         $array[$table] = array_flip($this->$variable);
-        $array = array_dot($array);
+        $array         = array_dot($array);
 
-        if (array_key_exists($table.'.'.$field, $array)) {
+        if (array_key_exists($table . '.' . $field, $array)) {
             return true;
         }
 
         return false;
     }
+
 }

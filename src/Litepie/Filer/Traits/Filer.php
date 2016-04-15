@@ -31,55 +31,95 @@ trait Filer
         });
     }
 
+    /**
+     * Upload files and save to the table.
+     *
+     * @param Eloquent $model
+     *
+     * @return null
+     */
     public function upload($model)
     {
+
         if (empty($model->uploads)) {
             return;
         }
+
         if (isset($model->uploads['single'])) {
             $model->uploadSingle();
         }
+
         if (isset($model->uploads['multiple'])) {
             $model->uploadMultiple();
         }
-    }
 
-    public function uploadSingle()
-    {
-        foreach ($this->uploads['single'] as $field) {
-            $file = [];
-            if (Request::hasFile($field)) {
-                $upfile = Request::file($field);
-                if ($upfile instanceof  UploadedFile) {
-                    $file = self::upload($upfile, $this->upload_folder.'/'.$field);
-                }
-            }
-            $this->setFileSingle($field, $file);
-        }
-    }
-
-    public function uploadMultiple()
-    {
-        foreach ($this->uploads['multiple'] as $field) {
-            $files = [];
-            if (is_array(Request::file($field))) {
-                foreach (Request::file($field) as $file) {
-                    if ($file instanceof  UploadedFile) {
-                        $files[] = self::upload($file, $this->upload_folder.'/'.$field);
-                    }
-                }
-            }
-            $this->setFileMultiple($field, $files);
-        }
     }
 
     /**
-     * @param $value
+     * Upload single file save as single diamentional array.
      *
-     * @return string - path to the upload folder
+     * @return null
+     *
+     */
+    public function uploadSingle()
+    {
+
+        foreach ($this->uploads['single'] as $field) {
+            $file = [];
+
+            if (Request::hasFile($field)) {
+                $upfile = Request::file($field);
+
+                if ($upfile instanceof UploadedFile) {
+                    $file = self::upload($upfile, $this->upload_folder . '/' . $field);
+                }
+
+            }
+
+            $this->setFileSingle($field, $file);
+        }
+
+    }
+
+    /**
+     * Upload multiple files and save as multidiamentional array.
+     *
+     * @return null
+     *
+     */
+    public function uploadMultiple()
+    {
+
+        foreach ($this->uploads['multiple'] as $field) {
+            $files = [];
+
+            if (is_array(Request::file($field))) {
+
+                foreach (Request::file($field) as $file) {
+
+                    if ($file instanceof UploadedFile) {
+                        $files[] = self::upload($file, $this->upload_folder . '/' . $field);
+                    }
+
+                }
+
+            }
+
+            $this->setFileMultiple($field, $files);
+        }
+
+    }
+
+    /**
+     * Return upload_folder attribute for the model.
+     *
+     * @param string $value
+     *
+     * @return string
      */
     public function getUploadFolderAttribute($value)
     {
+
         if (!empty($value)) {
             $folder = json_decode($value, true);
 
@@ -90,12 +130,15 @@ trait Filer
 
             return $folder['encrypted'];
         }
+
     }
 
     /**
-     * @param $value
+     * Set upload_folder attribute for the model.
      *
-     * @return string - path to the upload folder
+     * @param string $value
+     *
+     * @return string
      */
     public function setUploadFolderAttribute($value)
     {
@@ -105,19 +148,31 @@ trait Filer
     }
 
     /**
-     * @param $value
+     * Return url to upload the file.
      *
-     * @return string - path to the upload folder
+     * @param srting $field
+     * @param srting|string $file
+     *
+     * @return null
      */
     public function getUploadURL($field, $file = 'file')
     {
-        return URL::to('upload/'.$this->upload_folder.'/'.$field.'/'.$file);
+        return URL::to('upload/' . $this->upload_folder . '/' . $field . '/' . $file);
     }
 
+    /**
+     * Set single file field after upload.
+     *
+     * @param srting $field
+     * @param srting $value
+     *
+     * @return null
+     */
     public function setFileSingle($field, $value)
     {
-        if (Session::has('upload.'.$this->table.'.'.$field)) {
-            $value = Session::pull('upload.'.$this->table.'.'.$field);
+
+        if (Session::has('upload.' . $this->table . '.' . $field)) {
+            $value = Session::pull('upload.' . $this->table . '.' . $field);
             $value = end($value);
         } elseif (!empty($value)) {
             $value = $value;
@@ -134,15 +189,25 @@ trait Filer
         $this->setAttribute($field, $value);
     }
 
+    /**
+     * Set single file field after upload.
+     *
+     * @param srting $field
+     * @param srting $value
+     *
+     * @return null
+     */
     public function setFileMultiple($field, $current)
     {
+
         if (empty($current)) {
             $current = [];
         }
 
         $session = [];
-        if (Session::has('upload.'.$this->table.'.'.$field)) {
-            $session = Session::pull('upload.'.$this->table.'.'.$field);
+
+        if (Session::has('upload.' . $this->table . '.' . $field)) {
+            $session = Session::pull('upload.' . $this->table . '.' . $field);
         }
 
         if (empty($current) && empty($session) && !Request::has($field)) {
@@ -164,10 +229,18 @@ trait Filer
         $this->setAttribute($field, $value);
     }
 
+    /**
+     * Get the original value of file field.
+     *
+     * @param string $field
+     *
+     * @return array
+     */
     public function getOriginalFile($field)
     {
         $original = parent::getOriginal($field);
 
         return json_decode($original);
     }
+
 }

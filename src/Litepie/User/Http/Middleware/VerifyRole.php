@@ -3,45 +3,50 @@
 namespace Litepie\User\Http\Middleware;
 
 use Closure;
-use Illuminate\Contracts\Auth\Guard;
-use Litepie\User\Exceptions\RoleDeniedException;
+use Illuminate\Support\Facades\Auth;
+use Litepie\User\Exceptions\InvalidAccountException;
+use Litepie\User\Exceptions\RolesDeniedException;
 
 class VerifyRole
 {
-    /**
-     * @var \Illuminate\Contracts\Auth\Guard
-     */
-    protected $auth;
-
-    /**
-     * Create a new filter instance.
-     *
-     * @param \Illuminate\Contracts\Auth\Guard $auth
-     *
-     * @return void
-     */
-    public function __construct(Guard $auth)
-    {
-        $this->auth = $auth;
-    }
-
     /**
      * Handle an incoming request.
      *
      * @param \Illuminate\Http\Request $request
      * @param \Closure                 $next
-     * @param int|string               $role
-     *
-     * @throws \Litepie\User\Exceptions\RoleDeniedException
      *
      * @return mixed
      */
-    public function handle($request, Closure $next, $role)
+    public function handle($request, Closure $next, $role, $guard = null)
     {
-        if ($this->auth->check() && $this->auth->user()->is($role)) {
-            return $next($request);
+
+        if (Auth::guard($guard)->guest()) {
+
+            if ($request->ajax()) {
+                return response('Unauthorized.', 401);
+            } else {
+                return redirect()->guest('login');
+            }
+
         }
 
-        throw new RoleDeniedException($role);
+        if (user()->new && config('user.verify_email')) {
+            return redirect('verify');
+        }
+
+        if (!user()->active) {
+            throw new InvalidAccountException('Account is not active.');
+        }
+
+        $roles = explode('|', $role);
+
+        if (!user()->hasRoles($roles)) {
+
+            throw new RolesDeniedException($roles);
+
+        }
+
+        return $next($request);
     }
+
 }

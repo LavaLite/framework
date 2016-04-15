@@ -10,12 +10,12 @@ class Role extends Model
 {
     use Hashids, Slugger;
 
-     /**
-      * Configuartion for the model.
-      *
-      * @var array
-      */
-     protected $config = 'user.role';
+    /**
+     * Configuartion for the model.
+     *
+     * @var array
+     */
+    protected $config = 'user.role';
 
     /**
      * The users that belong to the role.

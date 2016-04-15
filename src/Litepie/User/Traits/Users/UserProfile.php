@@ -16,10 +16,11 @@ trait UserProfile
      */
     public function getPictureAttribute($value)
     {
+
         if (!empty($value)) {
             $photo = json_encode($value);
 
-            return URL::to($photo['folder'].'/'.$photo['file']);
+            return URL::to($photo['folder'] . '/' . $photo['file']);
         }
 
         if ($this->sex == 'Female') {
@@ -38,4 +39,25 @@ trait UserProfile
     {
         return $this->created_at->format(config('cms.format.date'));
     }
+
+    /**
+     * Returns the whrether auser is active or not.
+     *
+     * @return string date
+     */
+    public function getActiveAttribute()
+    {
+        return $this->status == 'Active';
+    }
+
+    /**
+     * Returns the whrether auser is active or not.
+     *
+     * @return string date
+     */
+    public function getNewAttribute()
+    {
+        return $this->status == 'New';
+    }
+
 }

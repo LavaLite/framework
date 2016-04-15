@@ -10,6 +10,7 @@ namespace Litepie\User;
  * @version    5.1
  */
 
+use Blade;
 use Illuminate\Support\ServiceProvider;
 
 class UserServiceProvider extends ServiceProvider
@@ -21,7 +22,8 @@ class UserServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        $this->loadViewsFrom(__DIR__.'/views', 'User');
+        $this->loadViewsFrom(__DIR__ . '/views', 'user');
+        $this->registerBladeExtensions();
     }
 
     /**
@@ -70,6 +72,37 @@ class UserServiceProvider extends ServiceProvider
     }
 
     /**
+     * Register new blade extensions.
+     */
+    protected function registerBladeExtensions()
+    {
+
+        if (false === $this->app['config']->get('user.template_helpers', true)) {
+            return;
+        }
+
+        /*
+         * add @shield and @endshield to blade compiler
+         */
+        Blade::directive('shield', function ($expression) {
+            return "<?php if(app('user')->canDo{$expression}): ?>";
+        });
+        Blade::directive('endshield', function ($expression) {
+            return '<?php endif; ?>';
+        });
+
+        /*
+         * add @is and @endis to blade compiler
+         */
+        Blade::directive('is', function ($expression) {
+            return "<?php if(app('user')->hasRoles{$expression}): ?>";
+        });
+        Blade::directive('endis', function ($expression) {
+            return '<?php endif; ?>';
+        });
+    }
+
+    /**
      * Get the services provided by the provider.
      *
      * @return array
@@ -78,4 +111,5 @@ class UserServiceProvider extends ServiceProvider
     {
         return ['user', 'user.role', 'user.permission'];
     }
+
 }

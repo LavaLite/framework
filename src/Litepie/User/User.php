@@ -50,13 +50,12 @@ class User
      * @param \Litepie\Contracts\User\PermissionRepository $permission
      */
     public function __construct(Application $app,
-                                UserRepository $user,
-                                RoleRepository $role,
-                                PermissionRepository $permission)
-    {
-        $this->app = $app;
-        $this->user = $user;
-        $this->role = $role;
+        UserRepository                          $user,
+        RoleRepository                          $role,
+        PermissionRepository                    $permission) {
+        $this->app        = $app;
+        $this->user       = $user;
+        $this->role       = $role;
         $this->permission = $permission;
     }
 
@@ -181,6 +180,7 @@ class User
      */
     public function hasPermission($permission, $force = false)
     {
+
         if (!is_null($this->getUser())) {
             return $this->getUser()->hasPermission($permission, $force);
         }
@@ -198,6 +198,7 @@ class User
      */
     public function can($permission, $force = false)
     {
+
         if (!is_null($this->getUser())) {
             return $this->getUser()->canDo($permission, $force);
         }
@@ -216,6 +217,7 @@ class User
      */
     public function roleHasPermission($permission, $force = false)
     {
+
         if (!is_null($this->getUser())) {
             return $this->getUser()->roleHasPermission($permission, $force);
         }
@@ -232,6 +234,7 @@ class User
      */
     public function hasRole($roleName)
     {
+
         if (!is_null($this->getUser())) {
             return $this->getUser()->hasRole($roleName);
         }
@@ -248,6 +251,7 @@ class User
      */
     public function hasRoles($roles)
     {
+
         if (!is_null($this->getUser())) {
             return $this->getUser()->hasRoles($roles);
         }
@@ -264,6 +268,7 @@ class User
      */
     public function is($roleName)
     {
+
         if (is_array($roleName)) {
             return $this->hasRoles($roleName);
         }
@@ -393,6 +398,7 @@ class User
      */
     public function javascript()
     {
+
         if (!$this->javascript) {
             $this->javascript = new Javascript($this);
         }
@@ -407,9 +413,11 @@ class User
      */
     public function users($field)
     {
+
         if (!is_null($this->getUser())) {
-            return  $this->getUser()->$field;
+            return $this->getUser()->$field;
         }
+
     }
 
     /**
@@ -419,7 +427,7 @@ class User
      */
     public function roles()
     {
-        return  $this->role->all(['id', 'name']);
+        return $this->role->all(['id', 'name']);
     }
 
     /**
@@ -429,7 +437,7 @@ class User
      */
     public function usersWithRole($role)
     {
-        return  $this->role->users($role);
+        return $this->role->users($role);
     }
 
     /**
@@ -442,7 +450,7 @@ class User
         $user = $this->getUser();
         Form::populate($user);
 
-        return view('User::user.profile', compact('user'));
+        return view('user::user.profile', compact('user'));
     }
 
     /**
@@ -454,7 +462,17 @@ class User
     {
         $user = $this->getUser();
 
-        return view('User::user.password', compact('user'));
+        return view('user::user.password', compact('user'));
+    }
+
+    /**
+     * Activate a user with given id.
+     *
+     * @return bool
+     */
+    public function activate($id)
+    {
+        return $this->user->activate($id);
     }
 
     /**
@@ -466,4 +484,5 @@ class User
     {
         return 0;
     }
+
 }

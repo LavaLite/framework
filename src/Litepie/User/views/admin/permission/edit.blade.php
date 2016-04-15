@@ -19,7 +19,7 @@
         ->action(URL::to('admin/user/permission/'.$permission->getRouteKey()))!!}
         <div class="tab-content">
             <div class="tab-pane active" id="permission">
-                @include('User::permission.partial.entry')
+                @include('user::admin.permission.partial.entry')
             </div>
         </div>
         {!!Form::close()!!}

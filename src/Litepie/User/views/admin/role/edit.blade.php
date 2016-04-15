@@ -20,7 +20,7 @@
         ->action(URL::to('admin/user/role/'. $role->getRouteKey()))!!}
         <div class="tab-content">
             <div class="tab-pane active" id="role">
-                @include('User::role.partial.entry')
+                @include('user::admin.role.partial.entry')
             </div>
         </div>
         {!!Form::close()!!}

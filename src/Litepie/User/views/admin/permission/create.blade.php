@@ -19,7 +19,7 @@
         ->action(URL::to('admin/user/permission'))!!}
         <div class="tab-content">
             <div class="tab-pane active" id="details">
-                @include('User::permission.partial.entry')
+                @include('user::admin.permission.partial.entry')
             </div>
         </div>
         {!! Form::close() !!}

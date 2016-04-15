@@ -49,7 +49,8 @@ trait CheckPermission
      */
     public function canDo($permission, $force = false)
     {
-        // If has superuser role
+
+// If has superuser role
         if ($this->isSuperUser()) {
             return true;
         }
@@ -125,6 +126,7 @@ trait CheckPermission
             if (!empty($role->permissions)) {
                 $permissions = array_merge($permissions, $role->permissions);
             }
+
         }
 
         return $permissions;
@@ -156,4 +158,5 @@ trait CheckPermission
     {
         return $this->find($id);
     }
+
 }

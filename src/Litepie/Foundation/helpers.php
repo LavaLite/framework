@@ -1,7 +1,9 @@
 <?php
 
+use Illuminate\Support\Facades\Request;
 use Litepie\Support\Facades\Hashids;
 use Litepie\Support\Facades\Trans;
+
 
 if (!function_exists('hashids_encode')) {
     /**
@@ -128,6 +130,46 @@ if (!function_exists('trans_url')) {
     }
 }
 
+if (!function_exists('checkbox_array')) {
+    /**
+     * Get translated url.
+     *
+     * @param string $url
+     *
+     * @return string
+     */
+    function checkbox_array(array $array, $name, $options = [])
+    {
+        $return = [];
+        foreach($array as $key => $val){
+            $return[$val] = array_merge(['name' => "{$name}[{$key}]"], $options);
+        }
+        return $return;
+    }
+}
+
+if (!function_exists('pager_array')) {
+    /**
+     * Get translated url.
+     *
+     * @param string $url
+     *
+     * @return string
+     */
+    function pager_array()
+    {
+
+        return Request::only(
+            config('database.criteria.params.search', 'search'), 
+            config('database.criteria.params.searchFields', 'searchFields'), 
+            config('database.criteria.params.columns', 'columns'), 
+            config('database.criteria.params.sortBy', 'sortBy'), 
+            config('database.criteria.params.orderBy', 'orderBy'),
+            config('database.criteria.params.with', 'with')
+        );
+    }
+}
+
 if (!function_exists('trans_setlocale')) {
     /**
      * Get upload folder.
@@ -171,5 +213,23 @@ if (!function_exists('get_users')) {
         if (Auth::guard($guard)->check()) {
             return Auth::guard($guard)->user()->$property;
         }
+    }
+}
+
+if (!function_exists('user')) {
+    /**
+     * Get upload folder.
+     *
+     * @param string $folder
+     *
+     * @return string
+     */
+    function user($guard = 'web')
+    {
+        if (Auth::guard($guard)->check()) {
+            return Auth::guard($guard)->user();
+        }
+
+        return NULL;
     }
 }

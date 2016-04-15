@@ -103,19 +103,23 @@ trait NestedNode
     public function storeNewParent()
     {
         $parentColumn = $this->getParentColumnName();
-        $isDirty = $this->isDirty($parentColumn);
-        // Parent is not set or unchanged
+        $isDirty      = $this->isDirty($parentColumn);
+
+// Parent is not set or unchanged
         if (!$isDirty) {
             $this->moveToNewParentId = false;
         }
+
         // Created as a root node
         elseif (!$this->exists && !$this->getParentId()) {
             $this->moveToNewParentId = false;
         }
+
         // Parent has been set
         else {
             $this->moveToNewParentId = $this->getParentId();
         }
+
     }
 
     /**
@@ -126,11 +130,13 @@ trait NestedNode
     public function moveToNewParent()
     {
         $parentId = $this->moveToNewParentId;
+
         if ($parentId === null) {
             $this->makeRoot();
         } elseif ($parentId !== false) {
             $this->makeChildOf($parentId);
         }
+
     }
 
     /**
@@ -141,15 +147,17 @@ trait NestedNode
      */
     public function deleteDescendants()
     {
+
         if ($this->getRight() === null || $this->getLeft() === null) {
             return;
         }
+
         $this->getConnection()->transaction(function () {
             //$this->reload();
-            $leftCol = $this->getLeftColumnName();
+            $leftCol  = $this->getLeftColumnName();
             $rightCol = $this->getRightColumnName();
-            $left = $this->getLeft();
-            $right = $this->getRight();
+            $left     = $this->getLeft();
+            $right    = $this->getRight();
             /*
              * Delete children
              */
@@ -170,9 +178,11 @@ trait NestedNode
         });
     }
 
-    //
-    // Alignment
-    //
+//
+
+// Alignment
+
+//
 
     /**
      * Make this model a root node.
@@ -234,9 +244,11 @@ trait NestedNode
         return $this->moveTo($node, 'right');
     }
 
-    //
-    // Checkers
-    //
+//
+
+// Checkers
+
+//
 
     /**
      * Returns true if this is a root node.
@@ -278,10 +290,10 @@ trait NestedNode
     public function isInsideSubtree($node)
     {
         return
-            $this->getLeft() >= $node->getLeft() &&
-            $this->getLeft() <= $node->getRight() &&
-            $this->getRight() >= $node->getLeft() &&
-            $this->getRight() <= $node->getRight();
+        $this->getLeft() >= $node->getLeft() &&
+        $this->getLeft() <= $node->getRight() &&
+        $this->getRight() >= $node->getLeft() &&
+        $this->getRight() <= $node->getRight();
     }
 
     /**
@@ -296,9 +308,11 @@ trait NestedNode
         return $this->getLeft() > $other->getLeft() && $this->getLeft() < $other->getRight();
     }
 
-    //
-    // Scopes
-    //
+//
+
+// Scopes
+
+//
 
     /**
      * Query scope which extracts a certain node object from the current query expression.
@@ -345,6 +359,7 @@ trait NestedNode
         } else {
             return $query->withoutSelf();
         }
+
     }
 
     /**
@@ -362,6 +377,7 @@ trait NestedNode
         } else {
             return $query->withoutSelf();
         }
+
     }
 
     /**
@@ -377,6 +393,7 @@ trait NestedNode
         } else {
             return $query->withoutSelf();
         }
+
     }
 
     /**
@@ -386,13 +403,13 @@ trait NestedNode
      */
     public function scopeLeaves($query)
     {
-        $grammar = $this->getConnection()->getQueryGrammar();
+        $grammar  = $this->getConnection()->getQueryGrammar();
         $rightCol = $grammar->wrap($this->getQualifiedRightColumnName());
-        $leftCol = $grammar->wrap($this->getQualifiedLeftColumnName());
+        $leftCol  = $grammar->wrap($this->getQualifiedLeftColumnName());
 
         return $query
             ->allChildren()
-            ->whereRaw($rightCol.' - '.$leftCol.' = 1');
+            ->whereRaw($rightCol . ' - ' . $leftCol . ' = 1');
     }
 
     /**
@@ -421,12 +438,14 @@ trait NestedNode
         if ($key !== null) {
             $columns[] = $key;
         }
-        $results = new Collection($query->getQuery()->get($columns));
-        $values = $results->fetch($columns[1])->all();
+
+        $results     = new Collection($query->getQuery()->get($columns));
+        $values      = $results->fetch($columns[1])->all();
         $indentation = $results->fetch($columns[0])->all();
         foreach ($values as $_key => $value) {
-            $values[$_key] = str_repeat($indent, $indentation[$_key]).$value;
+            $values[$_key] = str_repeat($indent, $indentation[$_key]) . $value;
         }
+
         if ($key !== null && count($results) > 0) {
             $keys = $results->fetch($key)->all();
 
@@ -436,9 +455,11 @@ trait NestedNode
         return $values;
     }
 
-    //
-    // Getters
-    //
+//
+
+// Getters
+
+//
 
     /**
      * Returns all nodes and children.
@@ -471,7 +492,9 @@ trait NestedNode
             } else {
                 return $this;
             }
+
         }
+
     }
 
     /**
@@ -634,9 +657,11 @@ trait NestedNode
         return ($this->getRight() - $this->getLeft() - 1) / 2;
     }
 
-    //
-    // Setters
-    //
+//
+
+// Setters
+
+//
 
     /**
      * Sets the depth attribute.
@@ -670,16 +695,20 @@ trait NestedNode
             ->limit(1)
             ->first();
         $maxRight = 0;
+
         if ($highRight !== null) {
             $maxRight = $highRight->getRight();
         }
+
         $this->setAttribute($this->getLeftColumnName(), $maxRight + 1);
         $this->setAttribute($this->getRightColumnName(), $maxRight + 2);
     }
 
-    //
-    // Column getters
-    //
+//
+
+// Column getters
+
+//
 
     /**
      * Get parent column name.
@@ -698,7 +727,7 @@ trait NestedNode
      */
     public function getQualifiedParentColumnName()
     {
-        return $this->getTable().'.'.$this->getParentColumnName();
+        return $this->getTable() . '.' . $this->getParentColumnName();
     }
 
     /**
@@ -728,7 +757,7 @@ trait NestedNode
      */
     public function getQualifiedLeftColumnName()
     {
-        return $this->getTable().'.'.$this->getLeftColumnName();
+        return $this->getTable() . '.' . $this->getLeftColumnName();
     }
 
     /**
@@ -758,7 +787,7 @@ trait NestedNode
      */
     public function getQualifiedRightColumnName()
     {
-        return $this->getTable().'.'.$this->getRightColumnName();
+        return $this->getTable() . '.' . $this->getRightColumnName();
     }
 
     /**
@@ -788,7 +817,7 @@ trait NestedNode
      */
     public function getQualifiedDepthColumnName()
     {
-        return $this->getTable().'.'.$this->getDepthColumnName();
+        return $this->getTable() . '.' . $this->getDepthColumnName();
     }
 
     /**
@@ -801,9 +830,11 @@ trait NestedNode
         return $this->getAttribute($this->getDepthColumnName());
     }
 
-    //
-    // Moving
-    //
+//
+
+// Moving
+
+//
 
     /**
      * Handler for all node alignments.
@@ -815,7 +846,8 @@ trait NestedNode
      */
     protected function moveTo($target, $position)
     {
-        /*
+
+/*
          * Validate target
          */
         if ($target instanceof \October\Rain\Database\Model) {
@@ -823,12 +855,14 @@ trait NestedNode
         } else {
             $target = $this->newQuery()->find($target);
         }
-        /*
+
+/*
          * Validate move
          */
         if (!$this->validateMove($this, $target, $position)) {
             return $this;
         }
+
         /*
          * Perform move
          */
@@ -840,9 +874,11 @@ trait NestedNode
          */
         $target->reload();
         $this->setDepth();
+
         foreach ($this->newQuery()->allChildren()->get() as $descendant) {
             $descendant->save();
         }
+
         //$this->reload();
         return $this;
     }
@@ -856,36 +892,38 @@ trait NestedNode
     protected function performMove($node, $target, $position)
     {
         list($a, $b, $c, $d) = $this->getSortedBoundaries($node, $target, $position);
-        $connection = $node->getConnection();
-        $grammar = $connection->getQueryGrammar();
-        $parentId = ($position == 'child')
-            ? $target->getKey()
-            : $target->getParentId();
+        $connection          = $node->getConnection();
+        $grammar             = $connection->getQueryGrammar();
+        $parentId            = ($position == 'child')
+        ? $target->getKey()
+        : $target->getParentId();
+
         if ($parentId === null) {
             $parentId = 'NULL';
         }
-        $currentId = $node->getKey();
-        $leftColumn = $node->getLeftColumnName();
-        $rightColumn = $node->getRightColumnName();
-        $parentColumn = $node->getParentColumnName();
-        $wrappedLeft = $grammar->wrap($leftColumn);
-        $wrappedRight = $grammar->wrap($rightColumn);
+
+        $currentId     = $node->getKey();
+        $leftColumn    = $node->getLeftColumnName();
+        $rightColumn   = $node->getRightColumnName();
+        $parentColumn  = $node->getParentColumnName();
+        $wrappedLeft   = $grammar->wrap($leftColumn);
+        $wrappedRight  = $grammar->wrap($rightColumn);
         $wrappedParent = $grammar->wrap($parentColumn);
-        $wrappedId = $grammar->wrap($node->getKeyName());
-        $leftSql = "CASE
+        $wrappedId     = $grammar->wrap($node->getKeyName());
+        $leftSql       = "CASE
             WHEN $wrappedLeft BETWEEN $a AND $b THEN $wrappedLeft + $d - $b
             WHEN $wrappedLeft BETWEEN $c AND $d THEN $wrappedLeft + $a - $c
             ELSE $wrappedLeft
-            END CASE";
+            END";
         $rightSql = "CASE
             WHEN $wrappedRight BETWEEN $a AND $b THEN $wrappedRight + $d - $b
             WHEN $wrappedRight BETWEEN $c AND $d THEN $wrappedRight + $a - $c
             ELSE $wrappedRight
-            END CASE";
+            END";
         $parentSql = "CASE
             WHEN $wrappedId = $currentId THEN $parentId
             ELSE $wrappedParent
-            END CASE";
+            END";
         $result = $node->newQuery()
             ->where(function ($query) use ($leftColumn, $rightColumn, $a, $d) {
                 $query
@@ -908,22 +946,29 @@ trait NestedNode
      */
     protected function validateMove($node, $target, $position)
     {
+
         if (!$node->exists) {
             throw new Exception('A new node cannot be moved.');
         }
+
         if (!in_array($position, ['child', 'left', 'right'])) {
             throw new Exception(sprintf('Position should be either child, left, right. Supplied position is "%s".', $position));
         }
+
         if ($target === null) {
+
             if ($position == 'left' || $position == 'right') {
                 throw new Exception(sprintf('Cannot resolve target node. This node cannot move any further to the %s.', $position));
             } else {
                 throw new Exception('Cannot resolve target node.');
             }
+
         }
+
         if ($node == $target) {
             throw new Exception('A node cannot be moved to itself.');
         }
+
         if ($target->isInsideSubtree($node)) {
             throw new Exception('A node cannot be moved to a descendant of itself.');
         }
@@ -942,6 +987,7 @@ trait NestedNode
     protected function getPrimaryBoundary($node, $target, $position)
     {
         $primaryBoundary = null;
+
         switch ($position) {
             case 'child':
                 $primaryBoundary = $target->getRight();
@@ -955,8 +1001,8 @@ trait NestedNode
         }
 
         return ($primaryBoundary > $node->getRight())
-            ? $primaryBoundary - 1
-            : $primaryBoundary;
+        ? $primaryBoundary - 1
+        : $primaryBoundary;
     }
 
     /**
@@ -967,8 +1013,8 @@ trait NestedNode
     protected function getOtherBoundary($node, $target, $position)
     {
         return ($this->getPrimaryBoundary($node, $target, $position) > $node->getRight())
-            ? $node->getRight() + 1
-            : $node->getLeft() - 1;
+        ? $node->getRight() + 1
+        : $node->getLeft() - 1;
     }
 
     /**
@@ -996,6 +1042,7 @@ trait NestedNode
      */
     public function reload()
     {
+
         if (!$this->exists) {
             $this->syncOriginal();
         } elseif ($fresh = static::find($this->getKey())) {
@@ -1004,4 +1051,5 @@ trait NestedNode
 
         return $this;
     }
+
 }

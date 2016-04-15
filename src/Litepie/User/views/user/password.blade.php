@@ -1,8 +1,33 @@
-{!! Form::open_vertical()
--> action ('admin/user/change-password')
--> method ('POST')
-->id('form-change-password') !!}
-{!! csrf_field(); !!}
-{!! Form::password('password')->minlength(6)->required() !!}
-{!! Form::password('password_confirmation')->setAttribute('equalTo', '#password')->required() !!}
-{!! Form::close() !!}
+<div class="container">
+    <div class="row profile">
+        <div class="col-md-6  col-md-offset-3">
+            <div class="panel panel-default">
+                <div class="panel-heading">Reset <small>Password</small></div>
+                <div class="panel-body">
+                    {!!Form::vertical_open()
+                    ->method('POST')
+                    ->action('password/email')!!}
+                    {!! csrf_field() !!}
+                    @if (Session::has('status'))
+                    <div class="alert alert-info">
+                        <strong>Info!</strong> {!!  Session::pull('status'); !!}
+                    </div>
+                    @else
+                    If you have forgotten your password - reset it.
+                    @endif
+                    {!!Form::text('email')!!}
+                    <div class="row">
+                        <!-- /.col -->
+                        <div class="col-xs-6">
+                            <button type="submit" class="btn btn-primary btn-block btn-flat">Send password</button>
+                        </div>
+                        <!-- /.col -->
+                    </div>
+                    {!!Form::Close()!!}
+                    <br>
+                    <a href="{{trans_url('/login')}}">Back to login</a><br>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

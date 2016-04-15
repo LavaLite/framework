@@ -31,15 +31,14 @@ class PermissionAdminController extends AdminController
      */
     public function index(PermissionAdminRequest $request)
     {
-        $permissions = $this->model->setPresenter('\\Litepie\\User\\Repositories\\Presenter\\PermissionListPresenter')->paginate(null, ['*']);
-        $this->theme->prependTitle(trans('user.permission.names').' :: ');
-        $view = $this->theme->of('User::permission.index')->render();
+        $permissions = $this->model->setPresenter('\\Litepie\\User\\Repositories\\Presenter\\PermissionListPresenter')->all(['*']);
+        $this->theme->prependTitle(trans('user.permission.names') . ' :: ');
+        $view = $this->theme->of('user::admin.permission.index')->render();
 
-        $this->responseCode = 200;
-        $this->responseMessage = trans('messages.success.loaded', ['Module' => 'Permission']);
-        $this->responseData = $permissions['data'];
-        $this->responseMeta = $permissions['meta'];
-        $this->responseView = $view;
+        $this->responseCode     = 200;
+        $this->responseMessage  = trans('messages.success.loaded', ['Module' => 'Permission']);
+        $this->responseData     = $permissions['data'];
+        $this->responseView     = $view;
         $this->responseRedirect = '';
 
         return $this->respond($request);
@@ -55,17 +54,19 @@ class PermissionAdminController extends AdminController
      */
     public function show(PermissionAdminRequest $request, Permission $permission)
     {
+
         if (!$permission->exists) {
-            $this->responseCode = 404;
+            $this->responseCode    = 404;
             $this->responseMessage = trans('messages.success.notfound', ['Module' => 'Permission']);
-            $this->responseView = view('User::permission.new');
+            $this->responseView    = view('user::admin.permission.new');
 
             return $this->respond($request);
         }
+
         Form::populate($permission);
-        $this->responseCode = 200;
+        $this->responseCode    = 200;
         $this->responseMessage = trans('messages.success.loaded', ['Module' => 'Permission']);
-        $this->responseView = view('User::permission.show', compact('permission'));
+        $this->responseView    = view('user::admin.permission.show', compact('permission'));
 
         return $this->respond($request);
     }
@@ -83,10 +84,10 @@ class PermissionAdminController extends AdminController
 
         Form::populate($permission);
 
-        $this->responseCode = 200;
+        $this->responseCode    = 200;
         $this->responseMessage = trans('messages.success.loaded', ['Module' => 'Permission']);
-        $this->responseData = $permission;
-        $this->responseView = view('User::permission.create', compact('permission'));
+        $this->responseData    = $permission;
+        $this->responseView    = view('user::admin.permission.create', compact('permission'));
 
         return $this->respond($request);
     }
@@ -104,17 +105,18 @@ class PermissionAdminController extends AdminController
             $attributes = $request->all();
             $permission = $this->model->create($attributes);
 
-            $this->responseCode = 201;
-            $this->responseMessage = trans('messages.success.created', ['Module' => 'Permission']);
-            $this->responseRedirect = trans_url('/admin/user/permission/'.$permission->getRouteKey());
+            $this->responseCode     = 201;
+            $this->responseMessage  = trans('messages.success.created', ['Module' => 'Permission']);
+            $this->responseRedirect = trans_url('/admin/user/permission/' . $permission->getRouteKey());
 
             return $this->respond($request);
         } catch (Exception $e) {
-            $this->responseCode = 400;
+            $this->responseCode    = 400;
             $this->responseMessage = $e->getMessage();
 
             return $this->respond($request);
         }
+
     }
 
     /**
@@ -128,10 +130,10 @@ class PermissionAdminController extends AdminController
     public function edit(PermissionAdminRequest $request, Permission $permission)
     {
         Form::populate($permission);
-        $this->responseCode = 200;
+        $this->responseCode    = 200;
         $this->responseMessage = trans('messages.success.loaded', ['Module' => 'Permission']);
-        $this->responseData = $permission;
-        $this->responseView = view('User::permission.edit', compact('permission'));
+        $this->responseData    = $permission;
+        $this->responseView    = view('user::admin.permission.edit', compact('permission'));
 
         return $this->respond($request);
     }
@@ -151,18 +153,19 @@ class PermissionAdminController extends AdminController
 
             $permission->update($attributes);
 
-            $this->responseCode = 204;
-            $this->responseMessage = trans('messages.success.updated', ['Module' => 'Permission']);
-            $this->responseRedirect = trans_url('/admin/user/permission/'.$permission->getRouteKey());
+            $this->responseCode     = 204;
+            $this->responseMessage  = trans('messages.success.updated', ['Module' => 'Permission']);
+            $this->responseRedirect = trans_url('/admin/user/permission/' . $permission->getRouteKey());
 
             return $this->respond($request);
         } catch (Exception $e) {
-            $this->responseCode = 400;
-            $this->responseMessage = $e->getMessage();
-            $this->responseRedirect = trans_url('/admin/user/permission/'.$permission->getRouteKey());
+            $this->responseCode     = 400;
+            $this->responseMessage  = $e->getMessage();
+            $this->responseRedirect = trans_url('/admin/user/permission/' . $permission->getRouteKey());
 
             return $this->respond($request);
         }
+
     }
 
     /**
@@ -177,17 +180,19 @@ class PermissionAdminController extends AdminController
         try {
             $t = $permission->delete();
 
-            $this->responseCode = 202;
-            $this->responseMessage = trans('messages.success.deleted', ['Module' => 'Permission']);
+            $this->responseCode     = 202;
+            $this->responseMessage  = trans('messages.success.deleted', ['Module' => 'Permission']);
             $this->responseRedirect = trans_url('/admin/user/permission/0');
 
             return $this->respond($request);
         } catch (Exception $e) {
-            $this->responseCode = 400;
-            $this->responseMessage = $e->getMessage();
-            $this->responseRedirect = trans_url('/admin/user/permission/'.$permission->getRouteKey());
+            $this->responseCode     = 400;
+            $this->responseMessage  = $e->getMessage();
+            $this->responseRedirect = trans_url('/admin/user/permission/' . $permission->getRouteKey());
 
             return $this->respond($request);
         }
+
     }
+
 }

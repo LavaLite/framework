@@ -30,11 +30,11 @@ class UserMailer extends Mailer
      */
     public function welcome($email, $userId, $activationCode)
     {
-        $subject = 'Welcome to | '.trans('cms.name');
-        $view = 'user::emails.auth.welcome';
-        $data['userId'] = $userId;
+        $subject                = 'Welcome to | ' . trans('cms.name');
+        $view                   = 'user::emails.auth.welcome';
+        $data['userId']         = $userId;
         $data['activationCode'] = $activationCode;
-        $data['email'] = $email;
+        $data['email']          = $email;
 
         return $this->sendTo($email, $subject, $view, $data);
     }
@@ -50,11 +50,11 @@ class UserMailer extends Mailer
      */
     public function forgotPassword($email, $userId, $resetCode)
     {
-        $subject = 'Password Reset Confirmation | '.trans('cms.name');
-        $view = 'user::emails.auth.reset';
-        $data['userId'] = $userId;
+        $subject           = 'Password Reset Confirmation | ' . trans('cms.name');
+        $view              = 'user::emails.auth.reset';
+        $data['userId']    = $userId;
         $data['resetCode'] = $resetCode;
-        $data['email'] = $email;
+        $data['email']     = $email;
 
         return $this->sendTo($email, $subject, $view, $data);
     }
@@ -70,10 +70,29 @@ class UserMailer extends Mailer
      */
     public function newPassword($email, $newPassword)
     {
-        $subject = 'New Password Information | '.trans('cms.name');
-        $view = 'user::emails.auth.newpassword';
+        $subject             = 'New Password Information | ' . trans('cms.name');
+        $view                = 'user::emails.auth.newpassword';
         $data['newPassword'] = $newPassword;
-        $data['email'] = $email;
+        $data['email']       = $email;
+
+        return $this->sendTo($email, $subject, $view, $data);
+    }
+
+    /**
+     * Email New Password info to user.
+     *
+     * @param string $email
+     * @param int    $userId
+     * @param string $resetCode
+     *
+     * @return bool
+     */
+    public function verificationMail($email, $activation)
+    {
+        $subject             = 'New Password Information | ' . trans('cms.name');
+        $view                = 'user::emails.auth.newpassword';
+        $data['newPassword'] = $newPassword;
+        $data['email']       = $email;
 
         return $this->sendTo($email, $subject, $view, $data);
     }

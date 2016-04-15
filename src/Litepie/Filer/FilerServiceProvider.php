@@ -20,6 +20,7 @@ class FilerServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        $this->loadViewsFrom(__DIR__ . '/views', 'filer');
         $this->app->register('\Intervention\Image\ImageServiceProvider');
     }
 

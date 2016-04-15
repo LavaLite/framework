@@ -54,7 +54,7 @@ class UserRepository extends BaseRepository implements UserRepositoryContract
      */
     public function create(array $attributes)
     {
-        $model = $this->model->newInstance();
+        $model                 = $this->model->newInstance();
         $attributes['user_id'] = User::users('id');
         $model->fill($attributes);
         $model->password = bcrypt($attributes['password']);
@@ -64,8 +64,38 @@ class UserRepository extends BaseRepository implements UserRepositoryContract
         return $model;
     }
 
+    /**
+     * Find a user by its id.
+     *
+     * @param type $id
+     *
+     * @return type
+     */
     public function findUser($id)
     {
         return $this->model->whereId($id)->first();
     }
+
+    /**
+     * Activate user with the given id.
+     *
+     * @param type $id
+     *
+     * @return type
+     */
+    public function activate($id)
+    {
+        $user = $this->model->whereId($id)->whereStatus('New')->first();
+
+        if (is_null($user)) {
+            return false;
+        }
+
+        if ($user->update(['status' => 'Active'])) {
+            return true;
+        }
+
+        return false;
+    }
+
 }

@@ -19,7 +19,7 @@
         ->action(URL::to('admin/user/role'))!!}
         <div class="tab-content">
             <div class="tab-pane active" id="details">
-                @include('User::role.partial.entry')
+                @include('user::admin.role.partial.entry')
             </div>
         </div>
         {!! Form::close() !!}
