@@ -18,7 +18,7 @@
         ->action(Trans::to('admin/menu/menu'))!!}
         {!! Form::token() !!}
             <div class="tab-content">
-                @include('Menu::partial.menu')
+                @include('menu::partial.menu')
             </div>
         {!! Form::close() !!}
     </div>

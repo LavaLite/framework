@@ -5,11 +5,12 @@ namespace Litepie\Menu\Http\Controllers;
 use App\Http\Controllers\AdminController as AdminController;
 use Form;
 use Litepie\Menu\Http\Requests\MenuRequest;
-use Litepie\Menu\Models\Menu as Menu;
+use Litepie\Menu\Models\Menu;
 use Response;
 
 class MenuAdminController extends AdminController
 {
+
     private $view;
 
     /**
@@ -33,25 +34,14 @@ class MenuAdminController extends AdminController
      */
     public function index(MenuRequest $request, $parent = 1)
     {
-        $parent = $this->repository->find(hashids_encode($parent));
+        $parent   = $this->repository->find(hashids_encode($parent));
         $rootMenu = $this->repository->rootMenues();
 
-        $this->theme->prependTitle(trans('menu.names').' :: ');
+        $this->theme->prependTitle(trans('menu.names') . ' :: ');
 
         $this->theme->asset()->container('footer')->add('nestable', 'packages/nestable/jquery.nestable.js');
 
-        return $this->theme->of('Menu::index', compact('rootMenu', 'parent'))->render();
-    }
-
-    /**
-     * Display a listing of the resource.
-     *
-     * @return Response
-     */
-    public function nested(MenuRequest $request, $parent = 1)
-    {
-        $parent = $this->repository->all();
-        print_r($parent->toMenu('admin'));
+        return $this->theme->of('menu::index', compact('rootMenu', 'parent'))->render();
     }
 
     /**
@@ -64,20 +54,22 @@ class MenuAdminController extends AdminController
      */
     public function show(MenuRequest $request, $id)
     {
+
         if ($request->ajax()) {
             $menu = $this->repository->find($id);
 
             Form::populate($menu);
 
-            return view('Menu::show', compact('menu'));
+            return view('menu::show', compact('menu'));
         }
-        $parent = $this->repository->find($id);
+
+        $parent   = $this->repository->find($id);
         $rootMenu = $this->repository->rootMenues();
         $this->theme->asset()->container('footer')->add('nestable', 'packages/nestable/jquery.nestable.js');
 
-        $this->theme->prependTitle(trans('Menu::menu.names').' :: ');
+        $this->theme->prependTitle(trans('menu::menu.names') . ' :: ');
 
-        return $this->theme->of('Menu::index', compact('rootMenu', 'parent'))->render();
+        return $this->theme->of('menu::index', compact('rootMenu', 'parent'))->render();
     }
 
     /**
@@ -87,13 +79,13 @@ class MenuAdminController extends AdminController
      *
      * @return Response
      */
-    public function create(MenuRequest $request)
+    public function create(MenuRequest $request, Menu $menu)
     {
-        $menu = $this->repository->newInstance();
+        $menu = $this->repository->newInstance([]);
 
         Form::populate($menu);
 
-        return  view('Menu::create', compact('menu'));
+        return view('menu::create', compact('menu'));
     }
 
     /**
@@ -106,23 +98,24 @@ class MenuAdminController extends AdminController
     public function store(MenuRequest $request)
     {
         try {
-            $attributes = $request->all();
+            $attributes            = $request->all();
             $attributes['user_id'] = user_id();
-            $menu = $this->repository->create($attributes);
+            $menu                  = $this->repository->create($attributes);
 
-            $this->responseCode = 201;
-            $this->responseMessage = trans('messages.success.created', ['Module' => trans('menu::menu.name')]);
-            $this->responseData = $menu;
-            $this->responseRedirect = trans_url('/admin/menu/menu/'.$menu->getRouteKey());
-            $this->responseView = view('menu::admin.menu.create', compact('menu'));
+            $this->responseCode     = 201;
+            $this->responseMessage  = trans('messages.success.created', ['Module' => trans('menu::menu.name')]);
+            $this->responseData     = $menu;
+            $this->responseRedirect = trans_url('/admin/menu/menu/' . $menu->getRouteKey());
+            $this->responseView     = view('menu::admin.menu.create', compact('menu'));
 
             return $this->respond($request);
         } catch (Exception $e) {
-            $this->responseCode = 400;
+            $this->responseCode    = 400;
             $this->responseMessage = $e->getMessage();
 
             return $this->respond($request);
         }
+
     }
 
     /**
@@ -138,7 +131,7 @@ class MenuAdminController extends AdminController
         $data['menu'] = $this->repository->find($id);
         Form::populate($data['menu']);
 
-        return  view('Menu::edit', $data);
+        return view('menu::edit', $data);
     }
 
     /**
@@ -154,19 +147,20 @@ class MenuAdminController extends AdminController
         try {
             $menu = $this->repository->update($request->all(), $id);
 
-            $this->responseCode = 204;
-            $this->responseMessage = trans('messages.success.updated', ['Module' => trans('menu::menu.name')]);
-            $this->responseData = $menu;
-            $this->responseRedirect = trans_url('/admin/menu/menu/'.$menu->getRouteKey());
+            $this->responseCode     = 204;
+            $this->responseMessage  = trans('messages.success.updated', ['Module' => trans('menu::menu.name')]);
+            $this->responseData     = $menu;
+            $this->responseRedirect = trans_url('/admin/menu/menu/' . $menu->getRouteKey());
 
             return $this->respond($request);
         } catch (Exception $e) {
-            $this->responseCode = 400;
-            $this->responseMessage = $e->getMessage();
-            $this->responseRedirect = trans_url('/admin/menu/menu/'.$menu->getRouteKey());
+            $this->responseCode     = 400;
+            $this->responseMessage  = $e->getMessage();
+            $this->responseRedirect = trans_url('/admin/menu/menu/' . $menu->getRouteKey());
 
             return $this->respond($request);
         }
+
     }
 
     /**
@@ -179,6 +173,7 @@ class MenuAdminController extends AdminController
     public function destroy(MenuRequest $request, $id)
     {
         $cid = hashids_decode($id);
+
         if ($this->repository->findByField('parent_id', $cid)->count() > 0) {
             return Response::json(['message' => 'Child menu exists.', 'type' => 'warning', 'title' => 'Warning'], 409);
         }
@@ -191,10 +186,30 @@ class MenuAdminController extends AdminController
         } catch (Exception $e) {
             return Response::json(['message' => $e->getMessage(), 'type' => 'error', 'title' => 'Error'], 400);
         }
+
     }
 
+    /**
+     * Update tree structure  of the menu.
+     *
+     * @param MenuRequest $request
+     * @param type $id
+     *
+     * @return type
+     */
     public function tree(MenuRequest $request, $id)
     {
         $this->repository->updateTree($id, $request->get('tree'));
     }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return Response
+     */
+    public function nested(MenuRequest $request, $parent = 1)
+    {
+        $parent = $this->repository->all();
+    }
+
 }

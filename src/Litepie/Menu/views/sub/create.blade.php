@@ -18,7 +18,7 @@
         ->action(trans_url('admin/menu/submenu'))!!}
         {!! Form::token() !!}
             <div class="tab-content">
-                @include('Menu::partial.submenu')
+                @include('menu::partial.submenu')
             </div>
         {!! Form::close() !!}
     </div>

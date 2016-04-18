@@ -27,12 +27,12 @@
             @foreach($rootMenu as $menu)
             <li {{($parent->getRouteKey() == $menu->getRouteKey()) ? ' class=active ' : ''}}><a href="{{ Trans::to('/admin/menu/menu') }}/{{$menu->getRouteKey()}}">{{$menu->name}}</a></li>
             @endforeach
-            <li ><a href="{{ Trans::to('/admin/menu/menu/create') }}" data-target='menu-entry'><i class="fa fa-plus-circle"></i></a></li>
+            <li ><a href="#" data-href="{{ Trans::to('/admin/menu/menu/create') }}"  data-action="LOAD" data-load-to="#menu-entry"><i class="fa fa-plus-circle"></i></a></li>
         </ul>
 
         <div class="tab-content">
             <div class="tab-pane active" id="details">
-                {!!Menu::menu($parent->key, 'Menu::menu.nestable')!!}
+                {!!Menu::menu($parent->key, 'menu::menu.nestable')!!}
             </div>
         </div>
     </div>

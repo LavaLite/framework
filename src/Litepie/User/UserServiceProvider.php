@@ -24,6 +24,7 @@ class UserServiceProvider extends ServiceProvider
     {
         $this->loadViewsFrom(__DIR__ . '/views', 'user');
         $this->registerBladeExtensions();
+        $this->publishResources();
     }
 
     /**
@@ -110,6 +111,24 @@ class UserServiceProvider extends ServiceProvider
     public function provides()
     {
         return ['user', 'user.role', 'user.permission'];
+    }
+
+    /**
+     * Publish resources.
+     *
+     * @return void
+     */
+    private function publishResources()
+    {
+        // Publish configuration file
+        $this->publishes([__DIR__ . '/config.php' => config_path('user.php')], 'config');
+
+        // Publish public view
+        $this->publishes([__DIR__ . '/views/public' => base_path('resources/views/vendor/user/public')], 'view-public');
+
+        // Publish admin view
+        $this->publishes([__DIR__ . '/../../../../resources/views/admin' => base_path('resources/views/vendor/user/admin')], 'view-admin');
+
     }
 
 }

@@ -30,8 +30,8 @@ class MenuRepository extends BaseRepository implements MenuRepositoryInterface
     public function getSubmenu($parent)
     {
         $menu = $this->model
-                        ->whereParentId($parent)
-                        ->get();
+            ->whereParentId($parent)
+            ->get();
         $this->resetModel();
 
         return $menu;
@@ -61,8 +61,8 @@ class MenuRepository extends BaseRepository implements MenuRepositoryInterface
     public function rootMenues()
     {
         $menu = $this->model
-                        ->whereParentId(0)
-                        ->get();
+            ->whereParentId(0)
+            ->get();
         $this->resetModel();
 
         return $menu;
@@ -90,8 +90,8 @@ class MenuRepository extends BaseRepository implements MenuRepositoryInterface
     public function getSubMenus($id)
     {
         $menu = $this->model
-                        ->whereParentId($key)
-                        ->get();
+            ->whereParentId($key)
+            ->get();
         $this->resetModel();
 
         return $menu;
@@ -119,8 +119,8 @@ class MenuRepository extends BaseRepository implements MenuRepositoryInterface
     public function getMenuByKey($key)
     {
         $menu = $this->model
-                        ->whereKey($key)
-                        ->first();
+            ->whereKey($key)
+            ->first();
         $this->resetModel();
 
         return $this->getMenu($menu->id);
@@ -129,8 +129,8 @@ class MenuRepository extends BaseRepository implements MenuRepositoryInterface
     public function getMenuId($key)
     {
         $menu = $this->model
-                        ->whereKey($key)
-                        ->first();
+            ->whereKey($key)
+            ->first();
         $this->resetModel();
 
         return $menu->id;
@@ -148,9 +148,9 @@ class MenuRepository extends BaseRepository implements MenuRepositoryInterface
     public function _getMenu($id, &$array, $key = 0)
     {
         $menus = $this->model
-                        ->whereParentId($id)
-                        ->orderBy('order', 'ASC')
-                        ->get();
+            ->whereParentId($id)
+            ->orderBy('order', 'ASC')
+            ->get();
         $this->resetModel();
 
         if ($menus->count() == 0) {
@@ -158,14 +158,16 @@ class MenuRepository extends BaseRepository implements MenuRepositoryInterface
         }
 
         $i = 0;
+
         foreach ($menus as $menu) {
-            $array[$key.'.'.++$i] = $menu;
+            $array[$key . '.' . ++$i] = $menu;
 
 //            if(!$menu->has_sub)
-//                continue;
+            //                continue;
 
-            $this->_getMenu($menu->id, $array, $key.'.'.$i);
+            $this->_getMenu($menu->id, $array, $key . '.' . $i);
         }
+
     }
 
     public function getAdminMenu($id)
@@ -180,29 +182,33 @@ class MenuRepository extends BaseRepository implements MenuRepositoryInterface
     public function _getAdminMenu($id, $level)
     {
         $menus = $this->model
-                        ->whereParentId($id)
-                        ->orderBy('order', 'ASC')
-                        ->get()
-                        ->toArray();
+            ->whereParentId($id)
+            ->orderBy('order', 'ASC')
+            ->get()
+            ->toArray();
         $this->resetModel();
+
         if (empty($menus)) {
             return;
         }
 
         foreach ($menus as $menu) {
-            $this->tempHolder[$menu['id']] = $menu;
+            $this->tempHolder[$menu['id']]          = $menu;
             $this->tempHolder[$menu['id']]['level'] = $level;
+
 //            if(!$menu['has_sub'])
-//                continue;
+            //                continue;
             $this->_getAdminMenu($menu['id'], $level + 1);
         }
+
     }
 
     public function setNodes(&$array)
     {
         $node = $this->getActiveNode($array);
+
         foreach ($array as $k => $v) {
-            $array[$k]->root = false;
+            $array[$k]->root   = false;
             $array[$k]->parent = false;
             $array[$k]->active = false;
 
@@ -210,24 +216,29 @@ class MenuRepository extends BaseRepository implements MenuRepositoryInterface
                 $array[$k]->root = true;
             }
 
-            if (array_key_exists($k.'.1', $array)) {
+            if (array_key_exists($k . '.1', $array)) {
                 $array[$k]->parent = true;
             }
 
-            if ((strrpos($node, $k.'.') !== false) || ($node === $k)) {
+            if ((strrpos($node, $k . '.') !== false) || ($node === $k)) {
                 $array[$k]->active = true;
             }
+
         }
+
     }
 
     public function getActiveNode($array)
     {
         $array = array_reverse($array);
+
         foreach ($array as $k => $v) {
             $url = url($v->url);
+
             if (strrpos(Request::url(), $url) !== false) {
                 return $k;
             }
+
         }
 
         return 0;
@@ -235,23 +246,32 @@ class MenuRepository extends BaseRepository implements MenuRepositoryInterface
 
     public function updateTree($id, $json)
     {
-        $tree = json_decode($json, true);
-        print_r($tree);
+        $tree             = json_decode($json, true);
         $this->tempHolder = [];
         $this->getParentChild($id, $tree);
-        foreach ($this->tempHolder as $key => $val) {
-            $this->updateParent($key, $val);
+
+        foreach ($this->tempHolder as $parent => $children) {
+
+            foreach ($children as $key => $val) {
+                $this->update(['parent_id' => $parent, 'order' => $key], $val);
+            }
+
         }
+
     }
 
     public function getParentChild($id, $array)
     {
+
         foreach ($array as $node) {
-            $this->tempHolder[$id][] = array_get($node, 'id');
+            $this->tempHolder[hashids_decode($id)][] = array_get($node, 'id');
+
             if (isset($node['children'])) {
                 $this->getParentChild(array_get($node, 'id'), $node['children']);
             }
+
         }
+
     }
 
     /**
@@ -261,9 +281,7 @@ class MenuRepository extends BaseRepository implements MenuRepositoryInterface
      */
     public function updateParent($parent, $children)
     {
-        foreach ($children as $key => $val) {
-            $this->update(['parent_id' => hashids_decode($parent), 'order' => $key], hashids_decode($val));
-        }
+
     }
 
     /**
@@ -280,7 +298,7 @@ class MenuRepository extends BaseRepository implements MenuRepositoryInterface
         $_skipPresenter = $this->skipPresenter;
         $this->skipPresenter(true);
 
-        $model = $this->find($id);
+        $model         = $this->find($id);
         $originalModel = clone $model;
 
         $this->skipPresenter($_skipPresenter);
@@ -292,4 +310,5 @@ class MenuRepository extends BaseRepository implements MenuRepositoryInterface
 
         return $deleted;
     }
+
 }

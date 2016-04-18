@@ -37,9 +37,9 @@ class RequestCriteria implements Criteria
         $searchFields       = $this->request->get(config('database.criteria.params.searchFields', 'searchFields'), null);
         $columns            = $this->request->get(config('database.criteria.params.columns', 'columns'), null);
         $sortBy             = $this->request->get(config('database.criteria.params.sortBy', 'sortBy'), null);
-        $orderBy            = $this->request->get(config('database.criteria.params.orderBy', 'orderBy'), 'asc');
+        $sortOrder          = $this->request->get(config('database.criteria.params.sortOrder', 'sortOrder'), 'asc');
         $with               = $this->request->get(config('database.criteria.params.with', 'with'), null);
-        $orderBy            = !empty($orderBy) ? $orderBy : 'asc';
+        $sortOrder          = !empty($sortOrder) ? $sortOrder : 'asc';
         $modelForceAndWhere = is_array($search);
 
         if ($search && is_array($fieldsSearchable) && count($fieldsSearchable)) {
@@ -131,7 +131,7 @@ class RequestCriteria implements Criteria
         }
 
         if (isset($sortBy) && !empty($sortBy)) {
-            $model = $model->orderBy($sortBy, $orderBy);
+            $model = $model->sortOrder($sortBy, $sortOrder);
         }
 
         if (isset($columns) && !empty($columns)) {
@@ -227,7 +227,7 @@ class RequestCriteria implements Criteria
     {
 
         if (!is_null($searchFields) && count($searchFields)) {
-            $acceptedConditions = config('database.criteria.acceptedConditions', ['=', 'like', 'between']);
+            $acceptedConditions = config('database.criteria.acceptedConditions', ['=', '>', '>=', '<', '<=', '!=', '<>', 'like', 'not like', 'between', 'not between', 'in', 'not in', 'null', 'not null']);
             $originalFields     = $fields;
             $fields             = [];
 

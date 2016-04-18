@@ -20,6 +20,7 @@ class ThemeServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        $this->publishResources();
     }
 
     /**
@@ -72,5 +73,16 @@ class ThemeServiceProvider extends ServiceProvider
     public function provides()
     {
         return ['asset', 'theme'];
+    }
+
+    /**
+     * Publish resources.
+     *
+     * @return void
+     */
+    private function publishResources()
+    {
+        // Publish configuration file
+        $this->publishes([__DIR__ . '/config.php' => config_path('theme.php')], 'config');
     }
 }

@@ -40,7 +40,7 @@ class Filer
         $this->verifyUploadType($file);
 
 // Check file size
-        if ($file->getSize() > config('files.max_upload_size', 2048)) {
+        if ($file->getSize() > config('filer.max_upload_size', 2048)) {
             throw new FileException('File is too big.');
         }
 
@@ -82,7 +82,7 @@ class Filer
             $file->fileSystemName = str_slug(basename($file->getClientOriginalName(), $file->getClientOriginalExtension())) . '.' . strtolower($file->getClientOriginalExtension());
         }
 
-        if (config('files.obfuscate_filenames') && $enableObfuscation) {
+        if (config('filer.obfuscate_filenames') && $enableObfuscation) {
             $fileName = basename($file->fileSystemName, $file->getClientOriginalExtension()) . '_' . md5(uniqid(mt_rand(), true)) . '.' . $file->getClientOriginalExtension();
         } else {
             $fileName = $file->fileSystemName;
@@ -127,14 +127,14 @@ class Filer
      */
     public function checkUploadFolder($folder)
     {
-        $folder = public_path(config('files.folder', 'uploads') . '/' . $folder);
+        $folder = public_path(config('filer.folder', 'uploads') . '/' . $folder);
         $folder .= (substr($folder, -1) != '/') ? '/' : '';
 
 // Check to see if the upload folder exists
         if (!File::exists($folder)) {
 
 // Try and create it
-            if (!File::makeDirectory($folder, config('files.folder_permission'), true)) {
+            if (!File::makeDirectory($folder, config('filer.folder_permission'), true)) {
                 throw new FileException('Directory is not writable. Please make upload folder writable.');
             }
 
@@ -152,9 +152,9 @@ class Filer
      */
     public function verifyUploadType(UploadedFile $file)
     {
-        if (!in_array($file->getMimeType(), config('files.allowed_types')) && config('files.allowed_types_check')) {
+        if (!in_array($file->getMimeType(), config('filer.allowed_types')) && config('filer.allowed_types_check')) {
             throw new FileException('Invalid upload type.');
-        } elseif (!in_array(strtolower($file->getClientOriginalExtension()), config('files.allowed_extensions')) && config('files.allowed_extensions_check')) {
+        } elseif (!in_array(strtolower($file->getClientOriginalExtension()), config('filer.allowed_extensions')) && config('filer.allowed_extensions_check')) {
             throw new FileException('Invalid upload type.');
         }
 
@@ -169,8 +169,8 @@ class Filer
      */
     public function verifyImageType($file)
     {
-        if (in_array($file->getMimeType(), config('files.image_types')) ||
-            in_array(strtolower($file->getClientOriginalExtension()), config('files.image_extensions'))
+        if (in_array($file->getMimeType(), config('filer.image_types')) ||
+            in_array(strtolower($file->getClientOriginalExtension()), config('filer.image_extensions'))
         ) {
             return true;
         } else {
@@ -200,7 +200,7 @@ class Filer
     public function resizeImage($folder, $file)
     {
 
-        if (!config('files.image_resize_on_upload')) {
+        if (!config('filer.image_resize_on_upload')) {
             return;
         }
 
@@ -215,8 +215,8 @@ class Filer
         if ($this->verifyImageType($uFile)) {
             $image = $this->image->make($folder . $file);
 
-            if ($image->width() > config('files.image_max_size.w') || $image->height() > config('files.image_max_size.h')) {
-                $image->resize(config('files.image_max_size.w'), config('files.image_max_size.h'), function ($constraint) {
+            if ($image->width() > config('filer.image_max_size.w') || $image->height() > config('filer.image_max_size.h')) {
+                $image->resize(config('filer.image_max_size.w'), config('filer.image_max_size.h'), function ($constraint) {
                     $constraint->aspectRatio();
                     $constraint->upsize();
                 });
@@ -370,6 +370,26 @@ class Filer
             return $picture->make($file)->resize($size['width'], $size['height']);
 
         });
+    }
+
+    /**
+     * Allowed extensions.
+     *
+     * @param $folder
+     * @param $file
+     * @param $size
+     *
+     * @return Intervention
+     */
+    public function allowedExtensions($type = 'image')
+    {
+
+        if ($type == 'image') {
+            return '.' . implode(',.', config('filer.image_extensions'));
+        }
+
+        return '.' . implode(',.', config('filer.allowed_extensions'));
+
     }
 
 }

@@ -2,7 +2,7 @@
 
 <script type="text/javascript">
 $(function () {
-    var drop = $("div#{!!$field!!}").dropzone({
+    $("div#{!!$field!!}").dropzone({
         url: "{!! $path !!}",
         maxFiles: {!!$files!!},
         acceptedFiles: "{{$mime}}",

@@ -19,7 +19,7 @@
         ->enctype('multipart/form-data')
         ->action(trans_url('admin/menu/submenu/'. $menu->getRouteKey()))!!}
         <div class="tab-content">
-            @include('Menu::partial.submenu')
+            @include('menu::partial.submenu')
         </div>
         {!!Form::close()!!}
     </div>

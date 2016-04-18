@@ -76,7 +76,7 @@ abstract class BaseRepository implements Repository, RepositoryCriteria
      */
     public function __construct(Application $app)
     {
-        $this->app = $app;
+        $this->app      = $app;
         $this->criteria = new Collection();
         $this->makeModel();
         $this->makePresenter();
@@ -161,6 +161,7 @@ abstract class BaseRepository implements Repository, RepositoryCriteria
 
             return $this->presenter;
         }
+
     }
 
     /**
@@ -262,7 +263,7 @@ abstract class BaseRepository implements Repository, RepositoryCriteria
     {
         $this->applyCriteria();
         $this->applyScope();
-        $limit = is_null($limit) ? config('database.pagination.limit', 15) : $limit;
+        $limit   = is_null($limit) ? config('database.pagination.limit', 15) : $limit;
         $results = $this->model->paginate($limit, $columns);
         $this->resetModel();
 
@@ -281,7 +282,7 @@ abstract class BaseRepository implements Repository, RepositoryCriteria
     {
         $this->applyCriteria();
         $this->applyScope();
-        $limit = is_null($limit) ? config('repository.pagination.limit', 15) : $limit;
+        $limit   = is_null($limit) ? config('repository.pagination.limit', 15) : $limit;
         $results = $this->model->simplePaginate($limit, $columns);
         $this->resetModel();
 
@@ -323,6 +324,7 @@ abstract class BaseRepository implements Repository, RepositoryCriteria
         } catch (Exception $e) {
             $model = $this->model->newInstance([]);
         }
+
         $this->resetModel();
 
         return $this->parserResult($model);
@@ -379,12 +381,14 @@ abstract class BaseRepository implements Repository, RepositoryCriteria
         $this->applyScope();
 
         foreach ($where as $field => $value) {
+
             if (is_array($value)) {
                 list($field, $condition, $val) = $value;
-                $this->model = $this->model->where($field, $condition, $val);
+                $this->model                   = $this->model->where($field, $condition, $val);
             } else {
                 $this->model = $this->model->where($field, '=', $value);
             }
+
         }
 
         $model = $this->model->get($columns);
@@ -504,7 +508,7 @@ abstract class BaseRepository implements Repository, RepositoryCriteria
         $_skipPresenter = $this->skipPresenter;
         $this->skipPresenter(true);
 
-        $model = $this->find($id);
+        $model         = $this->find($id);
         $originalModel = clone $model;
 
         $this->skipPresenter($_skipPresenter);
@@ -593,7 +597,7 @@ abstract class BaseRepository implements Repository, RepositoryCriteria
     public function getByCriteria(Criteria $criteria)
     {
         $this->model = $criteria->apply($this->model, $this);
-        $results = $this->model->get();
+        $results     = $this->model->get();
         $this->resetModel();
 
         return $this->parserResult($results);
@@ -620,12 +624,13 @@ abstract class BaseRepository implements Repository, RepositoryCriteria
      */
     protected function applyScope()
     {
+
         if (isset($this->scopeQuery) && is_callable($this->scopeQuery)) {
-            $callback = $this->scopeQuery;
+            $callback    = $this->scopeQuery;
             $this->model = $callback($this->model);
         }
 
-        return  $this;
+        return $this;
     }
 
     /**
@@ -635,18 +640,23 @@ abstract class BaseRepository implements Repository, RepositoryCriteria
      */
     protected function applyCriteria()
     {
+
         if ($this->skipCriteria === true) {
-            return  $this;
+            return $this;
         }
 
         $criteria = $this->getCriteria();
 
         if ($criteria) {
+
             foreach ($criteria as $c) {
+
                 if ($c instanceof Criteria) {
                     $this->model = $c->apply($this->model, $this);
                 }
+
             }
+
         }
 
         return $this;
@@ -675,9 +685,12 @@ abstract class BaseRepository implements Repository, RepositoryCriteria
      */
     public function parserResult($result)
     {
+
         if ($this->presenter instanceof Presenter) {
+
             if ($result instanceof Collection || $result instanceof LengthAwarePaginator) {
                 $result->each(function ($model) {
+
                     if ($model instanceof Presentable) {
                         $model->setPresenter($this->presenter);
                     }
@@ -691,8 +704,10 @@ abstract class BaseRepository implements Repository, RepositoryCriteria
             if (!$this->skipPresenter) {
                 return $this->presenter->present($result);
             }
+
         }
 
         return $result;
     }
+
 }

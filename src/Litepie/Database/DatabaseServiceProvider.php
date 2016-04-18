@@ -21,6 +21,7 @@ class DatabaseServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        $this->publishResources();
     }
 
     /**
@@ -41,5 +42,16 @@ class DatabaseServiceProvider extends ServiceProvider
     public function provides()
     {
         return [];
+    }
+
+    /**
+     * Publish resources.
+     *
+     * @return void
+     */
+    private function publishResources()
+    {
+        // Merge configuration file
+        $this->mergeConfigFrom([__DIR__ . '/config.php', 'database');
     }
 }

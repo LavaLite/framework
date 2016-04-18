@@ -33,7 +33,7 @@ class FileController extends Controller
     public function image($size, $table, $folder, $field, $file)
     {
         $size   = $this->getSize($size);
-        $folder = config('files.folder', 'uploads') . '/' . $table . '/' . folder_decode($folder) . '/' . $field;
+        $folder = config('filer.folder', 'uploads') . '/' . $table . '/' . folder_decode($folder) . '/' . $field;
 
         if (!is_file(public_path($folder . '/' . $file))) {
             $image = Filer::image($size['default'], $size);
@@ -59,7 +59,7 @@ class FileController extends Controller
      */
     public function getSize($size)
     {
-        $size = config($size, config('files.size.' . $size));
+        $size = config($size, config('filer.size.' . $size));
 
         if (empty($size)) {
             throw new NotFoundHttpException();
@@ -82,7 +82,7 @@ class FileController extends Controller
      */
     public function file($table, $folder, $field, $file)
     {
-        $folder = config('files.folder', 'uploads') . '/' . $table . '/' . folder_decode($folder) . '/' . $field;
+        $folder = config('filer.folder', 'uploads') . '/' . $table . '/' . folder_decode($folder) . '/' . $field;
 
         try {
             $contents = File::get(public_path($folder . '/' . $file));
