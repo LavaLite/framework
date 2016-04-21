@@ -57,21 +57,9 @@ class FilerServiceProvider extends ServiceProvider
     private function publishResources()
     {
         // Publish configuration file
-        $this->publishes([__DIR__ . '/../../../../config/config.php' => config_path('package/package.php')], 'config');
+        $this->publishes([__DIR__ . '/config.php' => config_path('filer.php')], 'config');
 
         // Publish public view
-        $this->publishes([__DIR__ . '/../../../../resources/views/public' => base_path('resources/views/vendor/package/public')], 'view-public');
-
-        // Publish admin view
-        $this->publishes([__DIR__ . '/../../../../resources/views/admin' => base_path('resources/views/vendor/package/admin')], 'view-admin');
-
-        // Publish language files
-        $this->publishes([__DIR__ . '/../../../../resources/lang' => base_path('resources/lang/vendor/package')], 'lang');
-
-        // Publish migrations
-        $this->publishes([__DIR__ . '/../../../../database/migrations/' => base_path('database/migrations')], 'migrations');
-
-        // Publish seeds
-        $this->publishes([__DIR__ . '/../../../../database/seeds/' => base_path('database/seeds')], 'seeds');
+        $this->publishes([__DIR__ . 'views' => base_path('resources/views/vendor/filer')], 'view');
     }
 }
