@@ -19,12 +19,12 @@ class VerifyLogin
      * @throws \Litepie\User\Exceptions\PermissionDeniedException
      * @return mixed
      */
-    public function handle($request, Closure $next, $guard)
+    public function handle($request, Closure $next, $guard = null)
     {
 
         if (Auth::guard($guard)->guest()) {
 
-            if ($request->ajax()) {
+            if ($request->ajax() || $request->wantsJson()) {
                 return response('Unauthorized.', 401);
             } else {
                 return redirect()->guest('login');

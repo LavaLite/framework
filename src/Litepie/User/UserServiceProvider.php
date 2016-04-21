@@ -124,10 +124,10 @@ class UserServiceProvider extends ServiceProvider
         $this->publishes([__DIR__ . '/config.php' => config_path('user.php')], 'config');
 
         // Publish public view
-        $this->publishes([__DIR__ . '/views/public' => base_path('resources/views/vendor/user/public')], 'view-public');
+        $this->publishes([__DIR__ . '/views/user' => base_path('resources/views/vendor/user/user')], 'view-user');
 
         // Publish admin view
-        $this->publishes([__DIR__ . '/../../../../resources/views/admin' => base_path('resources/views/vendor/user/admin')], 'view-admin');
+        $this->publishes([__DIR__ . '/views/admin' => base_path('resources/views/vendor/user/admin')], 'view-admin');
 
     }
 
