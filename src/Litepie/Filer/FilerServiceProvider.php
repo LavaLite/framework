@@ -60,6 +60,6 @@ class FilerServiceProvider extends ServiceProvider
         $this->publishes([__DIR__ . '/config.php' => config_path('filer.php')], 'config');
 
         // Publish public view
-        $this->publishes([__DIR__ . 'views' => base_path('resources/views/vendor/filer')], 'view');
+        $this->publishes([__DIR__ . '/views' => base_path('resources/views/vendor/filer')], 'view');
     }
 }
