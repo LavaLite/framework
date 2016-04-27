@@ -1,42 +1,28 @@
 <?php
 
-namespace Litepie\User\Http\Controllers;
+namespace Litepie\User\Traits\Auth;
 
-use App\Http\Controllers\UserController as UserController;
-use App\User;
+use Auth;
 use Form;
 use Hash;
-use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Http\Request;
-use Litepie\Contracts\User\UserRepository;
+use Litepie\User\Traits\Auth\Common;
 use Response;
-
 /**
- *
+ * Trait for managing user profile.
  */
-class UserUserController extends UserController
+trait UserManager
 {
-    /**
-     * @var Permissions
-     */
-    protected $permission;
+    use Common;
 
     /**
-     * @var roles
-     */
-    protected $roles;
-
-    /**
-     * Initialize user controller.
+     * Display a listing of the resource.
      *
-     * @param type UserRepository $user
-     *
-     * @return type
+     * @return Response
      */
-    public function __construct(UserRepository $user)
+    public function home()
     {
-        $this->repository = $user;
-        parent::__construct();
+        return $this->theme->of($this->getView('home'))->render();
     }
 
     /**
@@ -46,7 +32,7 @@ class UserUserController extends UserController
      */
     public function getPassword(Request $request, $role = null)
     {
-        return $this->theme->of('user::user.changepassword')->render();
+        return $this->theme->of($this->getView('changepassword'))->render();
     }
 
     /**
@@ -57,15 +43,17 @@ class UserUserController extends UserController
      *
      * @return Response
      */
-    public function postPassword(Request $request, Authenticatable $user)
+    public function postPassword(Request $request, $role = null)
     {
+        $user = $request->user($this->getGuard());
+
         $this->validate($request, [
             'password'     => 'required|confirmed|min:6',
             'old_password' => 'required',
         ]);
 
         if (!Hash::check($request->get('old_password'), $user->password)) {
-            return redirect()->back()->withMessage('Invalid old password')->withCode(300);
+            return redirect()->back()->withMessage('Invalid old password')->withCode(400);
         }
 
         $password = $request->get('password');
@@ -73,7 +61,7 @@ class UserUserController extends UserController
         $user->password = bcrypt($password);
 
         if ($user->save()) {
-            return redirect('home')->withMessage('Password updated successfully.')->withCode(201);
+            return redirect()->back()->withMessage('Password updated successfully.')->withCode(201);
         } else {
             return redirect()->back()->withMessage('Error while resetting password.')->withCode(400);
         }
@@ -89,8 +77,9 @@ class UserUserController extends UserController
      */
     public function getProfile(Request $request)
     {
-        Form::populate($request->user());
-        return $this->theme->of('user::user.profile')->render();
+        $user = $request->user($this->getGuard());
+        Form::populate($user);
+        return $this->theme->of($this->getView('profile'), compact('user'))->render();
     }
 
     /**
@@ -100,8 +89,10 @@ class UserUserController extends UserController
      *
      * @return Response
      */
-    public function postProfile(Request $request, Authenticatable $user)
+    public function postProfile(Request $request)
     {
+        $user = $request->user($this->getGuard());
+
         $this->validate($request, [
             'name' => 'required|min:3',
         ]);
@@ -109,7 +100,7 @@ class UserUserController extends UserController
         $user->fill($request->all());
 
         if ($user->save()) {
-            return redirect('home')->withMessage('Profile updated successfully.')->withCode(201);
+            return redirect()->back()->withMessage('Profile updated successfully.')->withCode(201);
         } else {
             return redirect()->back()->withMessage('Error while updating profile.')->withCode(400);
         }

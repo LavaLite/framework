@@ -13,6 +13,7 @@ namespace Litepie\User;
 
 use Form;
 use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Support\Facades\Auth;
 use Litepie\Contracts\User\PermissionRepository;
 use Litepie\Contracts\User\RoleRepository;
 use Litepie\Contracts\User\UserRepository;
@@ -84,9 +85,9 @@ class User
      *
      * @return bool
      */
-    public function attempt(array $credentials, $remember = false)
+    public function attempt(array $credentials, $remember = false, $guard = null)
     {
-        return $this->app['auth']->attempt($credentials, $remember);
+        return $this->app['auth']->guard($guard)->attempt($credentials, $remember);
     }
 
     /**
@@ -96,9 +97,9 @@ class User
      *
      * @return bool
      */
-    public function attemptAndRemember(array $credentials)
+    public function attemptAndRemember(array $credentials, $guard = null)
     {
-        return $this->app['auth']->attempt($credentials, true);
+        return $this->app['auth']->guard($guard)->attempt($credentials, true);
     }
 
     /**
@@ -106,9 +107,9 @@ class User
      *
      * @return bool
      */
-    public function check()
+    public function check($guard = null)
     {
-        return $this->app['auth']->check();
+        return $this->app['auth']->guard($guard)->check();
     }
 
     /**
@@ -120,10 +121,10 @@ class User
      *
      * @return void
      */
-    public function login(Authenticatable $user, $remember = false)
+    public function login(Authenticatable $user, $remember = false, $guard = null)
     {
         // Authentication attempt usng laravel native auth class
-        return $this->app['auth']->attempt($user, $remember);
+        return $this->app['auth']->guard($guard)->attempt($user, $remember);
     }
 
     /**
@@ -134,9 +135,9 @@ class User
      *
      * @return bool
      */
-    public function once(array $user)
+    public function once(array $user, $guard = null)
     {
-        return $this->app['auth']->once($user);
+        return $this->app['auth']->guard($guard)->once($user);
     }
 
     /**
@@ -144,9 +145,9 @@ class User
      *
      * @return void
      */
-    public function logout()
+    public function logout($guard = null)
     {
-        $this->app['auth']->logout();
+        $this->app['auth']->guard($guard)->logout();
     }
 
     /**
@@ -154,10 +155,10 @@ class User
      *
      * @return Laravel user object
      */
-    public function user()
+    public function user($guard = null)
     {
         // We will lazily attempt to load our user
-        return $this->app['auth']->user();
+        return $this->app['auth']->guard($guard)->user();
     }
 
     /**
@@ -165,9 +166,9 @@ class User
      *
      * @return \Illuminate\Contracts\Auth\Authenticatable|null
      */
-    public function getUser()
+    public function getUser($guard = null)
     {
-        return $this->app['auth']->user();
+        return $this->app['auth']->guard($guard)->user();
     }
 
     /**
@@ -450,7 +451,7 @@ class User
         $user = $this->getUser();
         Form::populate($user);
 
-        return view('user::user.profile', compact('user'));
+        return view('user::public.admin.profile', compact('user'));
     }
 
     /**
@@ -462,7 +463,7 @@ class User
     {
         $user = $this->getUser();
 
-        return view('user::user.password', compact('user'));
+        return view('user::public.admin.password', compact('user'));
     }
 
     /**

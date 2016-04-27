@@ -1,4 +1,5 @@
 <!-- resources/views/auth/register.blade.php -->
+{{$guard}}
 <div class="container">
     <div class="row">
         <div class="col-md-6  col-md-offset-3">
@@ -24,7 +25,7 @@
                     -> label(trans('user.user.label.password'))
                     -> placeholder(trans('user.user.placeholder.password'))!!}
 
-                    {!! Form::hidden('role')->value($role)!!}
+                    {!! Form::hidden('guard')->forceValue($guard)!!}
 
                     {!! Captcha::render() !!}
                     <br />

@@ -111,7 +111,7 @@
     <div class="col-lg-4">
         <div class="card-box widget-user">
             <div>
-                <img src="http://lorempixel.com/100/100/people/1" class="img-responsive img-circle" alt="user">
+                <img src="{{asset('img/avatar/avatar-1.jpg')}}" class="img-responsive img-circle" alt="user">
                 <div class="wid-u-info">
                     <h4 class="m-t-0 m-b-5">Chadengle</h4>
                     <p class="text-muted m-b-5 font-13">coderthemes@gmail.com</p>
@@ -122,7 +122,7 @@
 
         <div class="card-box widget-user">
             <div>
-                <img src="http://lorempixel.com/100/100/people/6" class="img-responsive img-circle" alt="user">
+                <img src="{{asset('img/avatar/avatar-2.jpg')}}" class="img-responsive img-circle" alt="user">
                 <div class="wid-u-info">
                     <h4 class="m-t-0 m-b-5">Tomaslau</h4>
                     <p class="text-muted m-b-5 font-13">coderthemes@gmail.com</p>
@@ -133,7 +133,7 @@
 
         <div class="card-box widget-user">
             <div>
-                <img src="http://lorempixel.com/100/100/people/9" class="img-responsive img-circle" alt="user">
+                <img src="{{asset('img/avatar/avatar-3.jpg')}}" class="img-responsive img-circle" alt="user">
                 <div class="wid-u-info">
                     <h4 class="m-t-0 m-b-5">Ok</h4>
                     <p class="text-muted m-b-5 font-13">coderthemes@gmail.com</p>

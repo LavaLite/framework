@@ -30,17 +30,23 @@ class VerifyRole
 
         }
 
-        if (user()->new && config('user.verify_email')) {
-            return redirect('verify');
+        if (user($guard)->new && config('user.verify_email')) {
+
+            if ($request->ajax() || $request->wantsJson()) {
+                return response('Unauthorized.', 401);
+            } else {
+                return redirect('verify');
+            }
+
         }
 
-        if (!user()->active) {
+        if (!user($guard)->active && config('user.verify_email')) {
             throw new InvalidAccountException('Account is not active.');
         }
 
         $roles = explode('|', $role);
 
-        if (!user()->hasRoles($roles)) {
+        if (!user($guard)->hasRoles($roles)) {
 
             throw new RolesDeniedException($roles);
 
