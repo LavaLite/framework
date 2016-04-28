@@ -25,7 +25,7 @@
                     -> label(trans('user.user.label.password'))
                     -> placeholder(trans('user.user.placeholder.password'))!!}
 
-                    {!! Form::hidden('guard')->forceValue($guard)!!}
+                    {!! Form::hidden(config('user.params.type' ,'r'))->forceValue($guard)!!}
 
                     {!! Captcha::render() !!}
                     <br />

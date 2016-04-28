@@ -31,8 +31,8 @@
                         </div>
                     </div>
                     {!! Form::close() !!}
-                    <font style="color:#333;">Forgot password?</font> <a href="{{trans_url($guard . '/password/reset')}}"> Click to reset </a> <br>
-                    <font style="color:#333;">Don't have an account yet?</font> <a href="{{trans_url($guard . '/register')}}"> Click to create one </a>
+                    <font style="color:#333;">Forgot password?</font> <a href="{{trans_url("/password/reset?role=$guard")}}"> Click to reset </a> <br>
+                    <font style="color:#333;">Don't have an account yet?</font> <a href="{{trans_url("/register?role=$guard")}}"> Click to create one </a>
                 </div>
             </div>
         </div>

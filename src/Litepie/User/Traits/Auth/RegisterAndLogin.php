@@ -10,7 +10,6 @@ use InvalidArgumentException;
 use Litepie\User\Traits\Auth\Common;
 use Mail;
 use Socialite;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use User;
 use Validator;
 
@@ -56,7 +55,7 @@ trait RegisterAndLogin
      */
     function validator(array $data)
     {
-        $table = $this->getGuardTable();
+        $table = $this->getTable($this->getGuard());
 
         return Validator::make($data, [
             'name'                 => 'required|max:255',
@@ -75,28 +74,27 @@ trait RegisterAndLogin
      */
     function create(array $data)
     {
-        $this->redirectTo = $this->getGuard();
-
-        if (!$this->isValidRole($guard)) {
-            throw new NotFoundHttpException();
-        }
+        $guard            = $this->getGuard();
+        $this->redirectTo = $this->getUserHome();
+        $this->check($guard);
 
         $data = [
-            'name'     => $data['name'],
-            'email'    => $data['email'],
-            'password' => $data['password'],
+            'name'      => $data['name'],
+            'email'     => $data['email'],
+            'password'  => bcrypt($data['password']),
+            'api_token' => str_random(60),
         ];
 
         if (!config('user.verify_email')) {
             $data['status'] = 'Active';
         }
 
-        $model = $this->getGuardModel();
+        $model = $this->getModel($this->getGuard());
 
         $user = $model::create($data);
 
-        if (!config('user.verify_email')) {
-            $this->sendVerificationMail($guard, $user);
+        if (config('user.verify_email')) {
+            $this->sendVerificationMail($user);
         }
 
         return $user;
@@ -107,11 +105,10 @@ trait RegisterAndLogin
      *
      * @return Response
      */
-    function getGuardModel()
+    function getModel($guard)
     {
-        $guard    = $this->getGuard();
-        $provider = config("auth.guards.$guard.web.provider", 'users');
-        $table    = config("auth.providers.$provider.model", App\User::class);
+        $provider = config("auth.guards.$guard.provider", 'users');
+        return config("auth.providers.$provider.model", App\User::class);
     }
 
     /**
@@ -119,11 +116,11 @@ trait RegisterAndLogin
      *
      * @return Response
      */
-    function getGuardTable()
+    function getTable($guard)
     {
-        $guard    = $this->getGuard();
-        $provider = config("auth.guards.$guard.web.provider", 'users');
-        $table    = config("auth.providers.$provider.table", 'users');
+        $provider = config("auth.guards.$guard.provider", 'users');
+
+        return config("auth.providers.$provider.table", 'users');
     }
 
     /**
@@ -133,10 +130,10 @@ trait RegisterAndLogin
      */
     function sendVerificationMail($user)
     {
-        $guard                     = $this->getGrard();
+        $guard                     = $this->getGuard();
         $data['confirmation_code'] = Crypt::encrypt($user->id);
 
-        Mail::send($this->getView('email.verify', $guard), $data, function ($message) use ($user) {
+        Mail::send($this->getView('email.verify'), $data, function ($message) use ($user) {
             $message->to($user->email, $user->name)
                 ->subject('Verify your email address');
         });

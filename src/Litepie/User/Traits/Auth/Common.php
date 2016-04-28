@@ -67,4 +67,21 @@ trait Common
         return property_exists($this, 'guard') ? $this->guard : null;
     }
 
+    /**
+     * return homepage for the user.
+     *
+     * @return Response
+     */
+    public function getUserHome()
+    {
+
+        if (property_exists($this, 'home')) {
+            return $this->home;
+        }
+
+        $guard = $this->getGuard();
+        return current(explode(".", $guard));
+
+    }
+
 }
