@@ -16,23 +16,23 @@ class UserAdminRequest extends Request
     {
         $user = $this->route('user');
 
-        // Determine if the user is authorized to create an entry,
         if ($request->isMethod('POST') || $request->is('*/create')) {
-            return User::can('user.user.create');
+            // Determine if the user is authorized to create an entry.
+            return $request->user('admin.web')->canDo('user.user.create');
         }
 
-        // Determine if the user is authorized to update an entry,
         if ($request->isMethod('PUT') || $request->isMethod('PATCH') || $request->is('*/edit')) {
-            return User::can('user.user.edit');
+            // Determine if the user is authorized to update an entry.
+            return $request->user('admin.web')->canDo('user.user.edit');
         }
 
-        // Determine if the user is authorized to delete an entry,
         if ($request->isMethod('DELETE')) {
-            return User::can('user.user.delete');
+            // Determine if the user is authorized to delete an entry.
+            return $request->user('admin.web')->canDo('user.user.delete');
         }
 
         // Determine if the user is authorized to view the module.
-        return User::can('user.user.view');
+        return $request->user('admin.web')->canDo('user.user.view');
     }
 
     /**
@@ -43,8 +43,9 @@ class UserAdminRequest extends Request
     public function rules(\Illuminate\Http\Request $request)
     {
         $user = $this->route('user');
-        // validation rule for create request.
+
         if ($request->isMethod('POST')) {
+            // validation rule for create request.
             return [
                 'name'     => 'required|max:255',
                 'email'    => 'required|email|max:255|unique:users',
@@ -52,11 +53,11 @@ class UserAdminRequest extends Request
             ];
         }
 
-        // Validation rule for update request.
         if ($request->isMethod('PUT') || $request->isMethod('PATCH')) {
+            // Validation rule for update request.
             return [
                 'name'  => 'required|max:255',
-                'email' => 'required|email|max:255|unique:users,email,'.$user->id,
+                'email' => 'required|email|max:255|unique:users,email,' . $user->id,
             ];
         }
 
@@ -65,4 +66,5 @@ class UserAdminRequest extends Request
 
         ];
     }
+
 }

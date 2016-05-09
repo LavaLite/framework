@@ -4,7 +4,11 @@
     </div>
     <!-- /.login-logo -->
     <div class="login-box-body">
-        {!!Form::vertical_open()!!}
+        @include('public::notifications')
+        {!!
+        Form::vertical_open()
+        -> action('password/email')
+        !!}
         {!! csrf_field() !!}
         @if (Session::has('status'))
         <div class="alert alert-info">
@@ -17,17 +21,18 @@
         @endif
         <div class="form-group has-feedback">
             {!!Form::text('email', '')!!}
-            <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+            <span class="fa fa-envelope form-control-feedback"></span>
         </div>
         <div class="row">
             <!-- /.col -->
             <div class="col-xs-6">
+              {!! Form::hidden(config('user.params.type'))!!}
                 <button type="submit" class="btn btn-primary btn-block btn-flat">Send password</button>
             </div>
             <!-- /.col -->
         </div>
         {!!Form::Close()!!}
-        <a href="{!! URL::to('/auth/admin/login') !!}">Back to login</a><br>
+        <a href="{{trans_url("/login?role=$guard")}}">Back to login</a><br>
     </div>
     <!-- /.login-box-body -->
 </div>

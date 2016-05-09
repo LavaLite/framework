@@ -3,6 +3,7 @@
 namespace Litepie\User\Traits\Auth;
 
 use Auth;
+use Theme;
 
 /**
  * Trait for managing user profile.
@@ -20,12 +21,6 @@ trait Common
     public function getView($view)
     {
         $guard = $this->getViewFolder();
-
-        if (is_null($guard)) {
-            return "user::public.default.$view";
-        }
-
-        $guard = current(explode(".", $guard));
 
         if (view()->exists("user::public.$guard.$view")) {
             return "user::public.$guard.$view";
@@ -48,13 +43,41 @@ trait Common
     }
 
     /**
+     * Set guard for the auth controller.
+     *
+     * @return response
+     */
+    public function setPasswordBroker()
+    {
+        $guard = $this->getGuard();
+
+        if (!empty($guard)) {
+            return $this->broker = current(explode(".", $guard));
+        }
+
+    }
+
+    /**
+     * Set guard for the auth controller.
+     *
+     * @return response
+     */
+    public function setTheme()
+    {
+        $view        = $this->getViewFolder('public');
+        $theme       = Theme::exists($view) ? $view : config('theme.default.theme');
+        $this->theme = Theme::uses($theme);
+        $this->theme->layout(config("theme.$theme.blank", 'blank'));
+    }
+
+    /**
      * Get the guard used for the controller.
      *
      * @return string|null
      */
     protected function getGuard()
     {
-        return property_exists($this, 'guard') && !in_array($this->guard, config('auth.defaults.guards')) ? $this->guard : null;
+        return property_exists($this, 'guard') ? $this->guard : config('auth.defaults.guard');
     }
 
     /**
@@ -62,26 +85,36 @@ trait Common
      *
      * @return string|null
      */
-    protected function getViewFolder()
+    protected function getViewFolder($default = 'default')
     {
-        return property_exists($this, 'guard') ? $this->guard : null;
+        $guard = $this->getGuard();
+
+        if (is_null($guard)) {
+            return $default;
+        }
+
+        return str_singular(current(explode(".", $guard)));
     }
 
     /**
-     * return homepage for the user.
+     * Return homepage for the user.
      *
      * @return Response
      */
-    public function getUserHome()
+    public function setRedirectTo()
     {
 
-        if (property_exists($this, 'home')) {
-            return $this->home;
+        $guard = $this->getGuard();
+
+        if (!empty($guard)) {
+            return $this->redirectTo = current(explode(".", $guard));
         }
 
-        $guard = $this->getGuard();
-        return current(explode(".", $guard));
+        if (property_exists($this, 'home')) {
+            return $this->redirectTo = $this->home;
+        }
 
+        return;
     }
 
 }

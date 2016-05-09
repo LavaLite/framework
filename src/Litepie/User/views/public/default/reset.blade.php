@@ -11,6 +11,7 @@
                     ->action('/password/reset')!!}
                     {!! csrf_field() !!}
                     {!! Form::hidden('token')->value($token) !!}
+                    {!! Form::hidden(config('user.params.type'))!!}
 
                     {!! Form::email('email')
                     -> label(trans('user.user.label.email'))

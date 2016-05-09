@@ -192,7 +192,7 @@ if (!function_exists('user_id')) {
      *
      * @return int
      */
-    function user_id($guard = 'web')
+    function user_id($guard = null)
     {
         if (Auth::guard($guard)->check()) {
             return Auth::guard($guard)->user()->id;
@@ -208,7 +208,7 @@ if (!function_exists('get_users')) {
      *
      * @return string
      */
-    function get_users($property, $guard = 'web')
+    function get_users($property, $guard = null)
     {
         if (Auth::guard($guard)->check()) {
             return Auth::guard($guard)->user()->$property;
@@ -224,12 +224,40 @@ if (!function_exists('user')) {
      *
      * @return string
      */
-    function user($guard = 'web')
+    function user($guard = null)
     {
         if (Auth::guard($guard)->check()) {
             return Auth::guard($guard)->user();
         }
 
         return NULL;
+    }
+}
+
+if (!function_exists('format_date')) {
+    /**
+     * Get upload folder.
+     *
+     * @param string $folder
+     *
+     * @return string
+     */
+    function format_date($date, $format = 'd M, Y')
+    {
+        return date($format, strtotime($date));
+    }
+}
+
+if (!function_exists('format_datetime')) {
+    /**
+     * Get upload folder.
+     *
+     * @param string $folder
+     *
+     * @return string
+     */
+    function format_datetime($date, $format = 'd M, Y h:i A')
+    {
+        return date($format, strtotime($date));
     }
 }

@@ -22,9 +22,9 @@
                 <!-- Profile Image -->
                 <div class="box box-warning">
                     <div class="box-body box-profile">
-                        <img class="profile-user-img img-responsive img-circle" src="{!!User::users('picture')!!}" alt="User profile picture">
-                        <h3 class="profile-username text-center">{!!User::users('name')!!}</h3>
-                        <p class="text-muted text-center">{!!User::users('designation')!!} - Member Since {!!User::users('joined')!!}</p>
+                        <img class="profile-user-img img-responsive img-circle" src="{!!user('admin.web')->picture!!}" alt="User profile picture">
+                        <h3 class="profile-username text-center">{!!user('admin.web')->name!!}</h3>
+                        <p class="text-muted text-center">{!!user('admin.web')->designation!!} - Member Since {!!user('admin.web')->joined!!}</p>
                         <button  class="btn btn-primary btn-block" data-toggle="modal" data-target="#update-profile"><b>Update Profile</b></button>
                         <button  class="btn btn-warning btn-block" data-toggle="modal" data-target="#change-password"><b>Change Password</b></button>
                     </div>
@@ -104,7 +104,7 @@
         <h4 class="modal-title" id="update-profile-label">Update Profile</h4>
       </div>
       <div class="modal-body">
-        {!! User::profile('edit') !!}
+        {!! User::profile('edit', 'admin.web') !!}
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-primary" id="btn-update-profile">Save changes</button>
@@ -123,7 +123,7 @@
         <h4 class="modal-title" id="change-password-label">Change Password</h4>
       </div>
       <div class="modal-body">
-        {!! User::password('change') !!}
+        {!! User::password('change', 'admin.web') !!}
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-primary" id="btn-change-password">Save changes</button>

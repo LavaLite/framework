@@ -19,13 +19,14 @@
                     <div class="row">
                         <!-- /.col -->
                         <div class="col-xs-6">
+                            {!! Form::hidden(config('user.params.type'))!!}
                             <button type="submit" class="btn btn-primary btn-block btn-flat">Send password</button>
                         </div>
                         <!-- /.col -->
                     </div>
                     {!!Form::Close()!!}
                     <br>
-                    <a href="{{trans_url('/login')}}">Back to login</a><br>
+                    <a href="{{trans_url("/login?role=$guard")}}">Back to login</a><br>
                 </div>
             </div>
         </div>

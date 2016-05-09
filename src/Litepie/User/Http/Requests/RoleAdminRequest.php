@@ -3,7 +3,6 @@
 namespace Litepie\User\Http\Requests;
 
 use App\Http\Requests\Request;
-use Gate;
 
 class RoleAdminRequest extends Request
 {
@@ -15,28 +14,29 @@ class RoleAdminRequest extends Request
     public function authorize(\Illuminate\Http\Request $request)
     {
         $role = $this->route('role');
-        // Determine if the user is authorized to access role role,
+
+// Determine if the user is authorized to access role role,
         if (is_null($role)) {
-            return $request->user()->canDo('package.role.view');
+            return $request->user('admin.web')->canDo('package.role.view');
         }
 
-        // Determine if the user is authorized to create an entry,
+// Determine if the user is authorized to create an entry.
         if ($request->isMethod('POST') || $request->is('*/create')) {
-            return Gate::allows('create', $role);
+            return $request->user('admin.web')->can('create', $role);
         }
 
-        // Determine if the user is authorized to update an entry,
+// Determine if the user is authorized to update an entry.
         if ($request->isMethod('PUT') || $request->isMethod('PATCH') || $request->is('*/edit')) {
-            return Gate::allows('update', $role);
+            return $request->user('admin.web')->can('update', $role);
         }
 
-        // Determine if the user is authorized to delete an entry,
+// Determine if the user is authorized to delete an entry.
         if ($request->isMethod('DELETE')) {
-            return Gate::allows('delete', $role);
+            return $request->user('admin.web')->can('delete', $role);
         }
 
         // Determine if the user is authorized to view the role.
-        return Gate::allows('view', $role);
+        return $request->user('admin.web')->can('view', $role);
     }
 
     /**
@@ -47,14 +47,15 @@ class RoleAdminRequest extends Request
     public function rules(\Illuminate\Http\Request $request)
     {
         $role = $this->route('role');
-        // validation rule for create request.
+
+// validation rule for create request.
         if ($request->isMethod('POST')) {
             return [
                 'name' => 'required|max:50|unique:roles',
             ];
         }
 
-        // Validation rule for update request.
+// Validation rule for update request.
         if ($request->isMethod('PUT') || $request->isMethod('PATCH')) {
             return [
                 //'name' => 'required|max:50|unique:roles,id,'.$role->getRouteKey()
@@ -66,4 +67,5 @@ class RoleAdminRequest extends Request
 
         ];
     }
+
 }

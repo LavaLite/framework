@@ -74,8 +74,7 @@ trait RegisterAndLogin
      */
     function create(array $data)
     {
-        $guard            = $this->getGuard();
-        $this->redirectTo = $this->getUserHome();
+        $guard = $this->getGuard();
         $this->check($guard);
 
         $data = [

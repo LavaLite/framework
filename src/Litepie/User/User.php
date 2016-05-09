@@ -446,12 +446,12 @@ class User
      *
      * @return Response
      */
-    public function profile($mode)
+    public function profile($mode, $guard = null)
     {
-        $user = $this->getUser();
+        $user = $this->getUser($guard);
         Form::populate($user);
 
-        return view('user::public.admin.profile', compact('user'));
+        return view('user::public.admin.edit', compact('user'));
     }
 
     /**
@@ -459,11 +459,11 @@ class User
      *
      * @return Response
      */
-    public function password($mode)
+    public function password($mode, $guard = null)
     {
-        $user = $this->getUser();
+        $user = $this->getUser($guard);
 
-        return view('user::public.admin.password', compact('user'));
+        return view('user::public.admin.changepassword', compact('user'));
     }
 
     /**

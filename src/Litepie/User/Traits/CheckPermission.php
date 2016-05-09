@@ -50,8 +50,8 @@ trait CheckPermission
     public function canDo($permission, $force = false)
     {
 
-// If has superuser role
         if ($this->isSuperUser()) {
+            // If has superuser role
             return true;
         }
 
@@ -93,6 +93,7 @@ trait CheckPermission
      */
     public function getAllPermissions($force = false)
     {
+
         if (empty($this->cachedPermissions) or $force) {
             $this->cachedPermissions = $this->getFreshAllPermissions();
         }
@@ -107,6 +108,7 @@ trait CheckPermission
      */
     public function getRolesPermissions($force = false)
     {
+
         if (empty($this->cachedRolePermissions) or $force) {
             $this->cachedRolePermissions = $this->getFreshRolesPermissions();
         }
@@ -119,10 +121,11 @@ trait CheckPermission
      */
     protected function getFreshRolesPermissions()
     {
-        $roles = $this->roles()->get(['permissions']);
+        $roles       = $this->roles()->get(['permissions']);
         $permissions = [];
 
         foreach ($roles as $role) {
+
             if (!empty($role->permissions)) {
                 $permissions = array_merge($permissions, $role->permissions);
             }

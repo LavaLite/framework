@@ -18,25 +18,25 @@
             ->class('white-row')!!}
       <div class="form-group has-feedback">
         {!!Form::text('email')->raw()!!}
-        <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+        <span class="fa fa-envelope form-control-feedback"></span>
       </div>
       <div class="form-group has-feedback">
         {!!Form::password('password')->raw()!!}
-        <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+        <span class="fa fa-lock form-control-feedback"></span>
       </div>
       <div class="row">
         <div class="col-xs-8">
 
-              {!! Form::checkbox('rememberme', 'Remember me ')->inline()!!}
+              {!! Form::checkbox('rememberme', 'Remember me &nbsp;')->inline()!!}
 
         </div><!-- /.col -->
         <div class="col-xs-4">
           <button type="submit" class="btn btn-primary btn-block btn-flat">Sign In</button>
         </div><!-- /.col -->
       </div>
-    {!!Form::Close()!!}
-
-    <a href="{!! URL::to('password/admin/email') !!}">I forgot my password</a><br>
+      {!! Form::hidden(config('user.params.type'))!!}
+      {!!Form::Close()!!}
+    <a href="{{trans_url("/password/reset?role=$guard")}}"> I forgot my password </a>
   </div><!-- /.login-box-body -->
 </div><!-- /.login-box -->
 <script>

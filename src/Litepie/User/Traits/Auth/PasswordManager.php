@@ -8,7 +8,9 @@ use Illuminate\Support\Facades\Request;
 trait PasswordManager
 {
 
-    use ResetsPasswords;
+    use ResetsPasswords, Common {
+        Common::getGuard insteadof ResetsPasswords;
+    }
 
     /**
      * Display the password reset view for the given token.
@@ -18,16 +20,16 @@ trait PasswordManager
      * @param  string|null                 $token
      * @return \Illuminate\Http\Response
      */
-    public function showResetForm($token = null)
+    function showResetForm($token = null)
     {
 
-        $guard = Request::input(config('user.params.type'), 'user');
+        $guard = Request::input(config('user.params.type'), 'role');
 
         if (is_null($token)) {
             return $this->getEmail();
         }
 
-        return $this->theme->of($this->getView('reset', $guard), compact('token'))
+        return $this->theme->of($this->getView('reset'), compact('token'))
             ->render();
     }
 
@@ -36,40 +38,23 @@ trait PasswordManager
      *
      * @return \Illuminate\Http\Response
      */
-    public function showLinkRequestForm()
+    function showLinkRequestForm()
     {
-        $guard = Request::input(config('user.params.type'), 'user');
+        $guard = Request::input(config('user.params.type'), 'role');
 
-        return $this->theme->of($this->getView('password', $guard))->render();
+        return $this->theme->of($this->getView('password'), compact('guard'))->render();
     }
 
     /**
      * Display the form to request a password reset link.
      * @return \Illuminate\Http\Response
      */
-    public function getEmail()
+    function getEmail()
     {
 
-        $guard = Request::input(config('user.params.type'), 'user');
+        $guard = Request::input(config('user.params.type'), 'role');
 
-        return $this->theme->of($this->getView('password', $guard))->render();
-    }
-
-    /**
-     * Check whether the view exists for the role, else return defaut role.
-     *
-     * @param type $view
-     * @param type $guard
-     * @return type
-     */
-    public function getView($view, $guard)
-    {
-
-        if (view()->exists("user::public.$guard.$view")) {
-            return "user::public.$guard.$view";
-        }
-
-        return "user::public.default.$view";
+        return $this->theme->of($this->getView('password'), compact('guard'))->render();
     }
 
 }

@@ -1,7 +1,6 @@
-@include('public::notifications')
-<div class="panel panel-default">
-    <div class="panel-heading">Change password  <small>{{ get_users('name') }}</small></div>
-    <div class="panel-body">
+
+
+      @include('public::notifications')
       {!!Form::vertical_open()
       ->id('contact')
       ->method('POST')
@@ -20,10 +19,4 @@
       -> label(trans('user.user.label.new_password_confirmation'))
       -> placeholder(trans('user.user.placeholder.new_password_confirmation'))!!}
 
-      {!! Form::submit(trans('user.changepword'))->class('btn btn-primary')!!}
-      <br>
-      <br>
-
       {!! Form::close() !!}
-    </div>
-</div>
