@@ -13,7 +13,7 @@ class AuthServiceProvider extends ServiceProvider
      * @var array
      */
     protected $policies = [
-        \Litepie\User\Models\User::class       => \Litepie\User\Policies\UserPolicy::class,
+        \App\User::class                       => \Litepie\User\Policies\UserPolicy::class,
         \Litepie\User\Models\Role::class       => \Litepie\User\Policies\RolePolicy::class,
         \Litepie\User\Models\Permission::class => \Litepie\User\Policies\PermissionPolicy::class,
     ];

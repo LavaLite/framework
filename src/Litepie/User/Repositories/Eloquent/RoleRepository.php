@@ -3,7 +3,7 @@
 namespace Litepie\User\Repositories\Eloquent;
 
 use Litepie\Contracts\User\RoleRepository as RoleRepositoryContract;
-use Litepie\Database\Eloquent\BaseRepository;
+use Litepie\Repository\Eloquent\BaseRepository;
 
 class RoleRepository extends BaseRepository implements RoleRepositoryContract
 {
@@ -49,6 +49,7 @@ class RoleRepository extends BaseRepository implements RoleRepositoryContract
      */
     public function createRole($roleName)
     {
+
         if (!is_null($this->findByField('name', $roleName))) {
             // TODO: add translation support
             throw new RoleExistsException('A role with the given name already exists');
@@ -56,4 +57,5 @@ class RoleRepository extends BaseRepository implements RoleRepositoryContract
 
         return $role = $this->model->create(['name' => $roleName]);
     }
+
 }

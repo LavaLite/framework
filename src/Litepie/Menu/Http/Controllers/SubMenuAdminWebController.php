@@ -1,0 +1,138 @@
+<?php
+
+namespace Litepie\Menu\Http\Controllers;
+
+use App\Http\Controllers\AdminWebController as AdminController;
+use Form;
+use Litepie\Menu\Http\Requests\AdminMenuWebRequest;
+use Litepie\Menu\Models\Menu as Menu;
+
+class SubMenuAdminWebController extends AdminController
+{
+    private $view;
+
+    public function __construct(\Litepie\Contracts\Menu\MenuRepository $menu)
+    {
+        $this->repository = $menu;
+        parent::__construct();
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param Request $request
+     * @param int     $id
+     *
+     * @return Response
+     */
+    public function show(AdminMenuWebRequest $request, $id)
+    {
+        $menu = $this->repository->find($id);
+        Form::populate($menu);
+
+        return view('menu::sub.show', compact('parent', 'menu'));
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @param Request $request
+     *
+     * @return Response
+     */
+    public function create(AdminMenuWebRequest $request)
+    {
+        $menu            = $this->repository->newInstance([]);
+        $menu->parent_id = $request->get('parent_id', 0);
+
+        Form::populate($menu);
+
+        return view('menu::sub.create', compact('menu'));
+    }
+
+    /**
+     * Create the specified resource.
+     *
+     * @param Request $request
+     *
+     * @return Response
+     */
+    public function store(AdminMenuWebRequest $request)
+    {
+        try {
+            $attributes              = $request->all();
+            $attributes['user_id']   = user_id('admin.web');
+            $attributes['parent_id'] = hashids_decode($attributes['parent_id']);
+            $menu                    = $this->repository->create($attributes);
+
+            return response()->json(
+                [
+                    'message'  => trans('messages.success.updated', ['Module' => trans('menu::menu.name')]),
+                    'code'     => 204,
+                    'redirect' => trans_url('/admin/menu/menu/' . $menu->getRouteKey()),
+                ],
+                201);
+
+        } catch (Exception $e) {
+            return response()->json(
+                [
+                    'message' => $e->getMessage(),
+                    'code'    => 400,
+                ],
+                400);
+        }
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param Request $request
+     * @param int     $id
+     *
+     * @return Response
+     */
+    public function edit(AdminMenuWebRequest $request, $id)
+    {
+        $menu = $this->repository->find($id);
+
+        Form::populate($menu);
+
+        return view('menu::sub.edit', compact('menu'));
+    }
+
+    /**
+     * Update the specified resource.
+     *
+     * @param Request $request
+     * @param int     $id
+     *
+     * @return Response
+     */
+    public function update(AdminMenuWebRequest $request, $id)
+    {
+        try {
+
+            $attributes = $request->all();
+
+            $menu = $this->repository->update($attributes, $id);
+
+            return response()->json([
+                'message'  => trans('messages.success.updated', ['Module' => trans('menu::menu.name')]),
+                'code'     => 204,
+                'redirect' => trans_url('/admin/menu/menu/' . $menu->getRouteKey()),
+            ], 201);
+
+        } catch (Exception $e) {
+
+            return response()->json(
+                [
+                    'message'  => $e->getMessage(),
+                    'code'     => 400,
+                    'redirect' => trans_url('/admin/menu/menu/' . $menu->getRouteKey()),
+                ],
+                400);
+
+        }
+
+    }
+}

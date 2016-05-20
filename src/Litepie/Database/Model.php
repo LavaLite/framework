@@ -126,6 +126,11 @@ class Model extends Eloquent
     {
         $config = config($this->config);
 
+        if (isset($config['presenter'])) {
+            $this->setPresenter(new $config['presenter']);
+            unset($config['presenter']);
+        }
+
         foreach ($config as $key => $val) {
 
             if (property_exists(get_called_class(), $key)) {

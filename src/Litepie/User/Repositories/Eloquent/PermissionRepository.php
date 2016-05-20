@@ -4,7 +4,7 @@ namespace Litepie\User\Repositories\Eloquent;
 
 use Carbon\Carbon;
 use Litepie\Contracts\User\PermissionRepository as PermissionRepositoryContract;
-use Litepie\Database\Eloquent\BaseRepository;
+use Litepie\Repository\Eloquent\BaseRepository;
 
 class PermissionRepository extends BaseRepository implements PermissionRepositoryContract
 {
@@ -30,7 +30,7 @@ class PermissionRepository extends BaseRepository implements PermissionRepositor
         $array = [];
 
         foreach ($result as $key => $value) {
-            $key = explode('.', $key, 2);
+            $key                      = explode('.', $key, 2);
             @$array[$key[0]][$key[1]] = $value;
         }
 
@@ -49,16 +49,17 @@ class PermissionRepository extends BaseRepository implements PermissionRepositor
      */
     public function createPermission($name, $slug = null)
     {
+
         if (!is_null($this->findByName($name))) {
-            throw new PermissionExistsException('The permission '.$name.' already exists'); // TODO: add translation support
+            throw new PermissionExistsException('The permission ' . $name . ' already exists'); // TODO: add translation support
         }
 
         // Do we have a display_name set?
         $slug = is_null($slug) ? $name : $slug;
 
         return $permission = $this->model->create([
-            'name'      => $name,
-            'slug'      => $slug,
+            'name' => $name,
+            'slug' => $slug,
         ]);
     }
 
@@ -84,11 +85,12 @@ class PermissionRepository extends BaseRepository implements PermissionRepositor
         $table = $user->permissions()->getTable();
 
         return $user->permissions()
-            ->where($table.'.value', true)
+            ->where($table . '.value', true)
             ->where(function ($q) use ($table) {
-                $q->where($table.'.expires', '>=', Carbon::now());
-                $q->orWhereNull($table.'.expires');
+                $q->where($table . '.expires', '>=', Carbon::now());
+                $q->orWhereNull($table . '.expires');
             })
             ->get();
     }
+
 }

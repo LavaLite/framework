@@ -24,6 +24,7 @@ class UserServiceProvider extends ServiceProvider
     {
         $this->loadViewsFrom(__DIR__ . '/views', 'user');
         $this->registerBladeExtensions();
+        $this->registerJwtExtensions();
         $this->publishResources();
     }
 
@@ -70,6 +71,7 @@ class UserServiceProvider extends ServiceProvider
         $this->app->register(\Litepie\User\Providers\EventServiceProvider::class);
         $this->app->register(\Litepie\User\Providers\RouteServiceProvider::class);
         $this->app->register(\Greggilbert\Recaptcha\RecaptchaServiceProvider::class);
+        $this->app->register(\Tymon\JWTAuth\Providers\LaravelServiceProvider::class);
     }
 
     /**
@@ -100,6 +102,22 @@ class UserServiceProvider extends ServiceProvider
         });
         Blade::directive('endis', function ($expression) {
             return '<?php endif; ?>';
+        });
+    }
+
+    /**
+     * Implements jwt extension.
+     */
+    protected function registerJwtExtensions()
+    {
+        $this->app['auth']->extend('jwt-auth', function ($app, $name, array $config) {
+            $guard = new Jwt\JwtAuthGuard(
+                $app['tymon.jwt'],
+                $app['auth']->createUserProvider($config['provider']),
+                $app['request']
+            );
+            $app->refresh('request', $guard, 'setRequest');
+            return $guard;
         });
     }
 

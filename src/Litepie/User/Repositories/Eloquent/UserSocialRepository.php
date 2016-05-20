@@ -2,7 +2,7 @@
 
 namespace Litepie\User\Repositories\Eloquent;
 
-use Litepie\Database\Eloquent\BaseRepository;
+use Litepie\Repository\Eloquent\BaseRepository;
 use User;
 
 class UserSocialRepository extends BaseRepository
@@ -35,6 +35,7 @@ class UserSocialRepository extends BaseRepository
                 'user_id'     => $new_user['id'],
             ]);
         }
+
         $user = User::findUser($user_social['user_id']);
         $this->checkIfUserNeedsUpdating($userData, $user);
 
@@ -56,5 +57,7 @@ class UserSocialRepository extends BaseRepository
             $user->name = $userData->name;
             $user->save();
         }
+
     }
+
 }

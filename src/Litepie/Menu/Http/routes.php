@@ -3,10 +3,10 @@
 Route::group([
     'namespace' => 'Litepie\Menu\Http\Controllers',
     'prefix'    => trans_setlocale() . '/admin/menu'], function () {
-    Route::post('menu/{id}/tree', 'MenuAdminController@tree');
-    Route::get('menu/{id}/test', 'MenuAdminController@test');
-    Route::get('menu/{id}/nested', 'MenuAdminController@nested');
+    Route::post('menu/{id}/tree', 'MenuAdminWebController@tree');
+    Route::get('menu/{id}/test', 'MenuAdminWebController@test');
+    Route::get('menu/{id}/nested', 'MenuAdminWebController@nested');
 
-    Route::resource('menu', 'MenuAdminController');
-    Route::resource('submenu', 'SubMenuAdminController');
+    Route::resource('menu', 'MenuAdminWebController');
+    Route::resource('submenu', 'SubMenuAdminWebController');
 });

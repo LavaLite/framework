@@ -2,7 +2,7 @@
 
 namespace Litepie\User\Repositories\Presenter;
 
-use Litepie\Database\Presenter\FractalPresenter;
+use Litepie\Repository\Presenter\FractalPresenter;
 
 class RoleItemPresenter extends FractalPresenter
 {

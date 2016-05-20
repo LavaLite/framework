@@ -2,7 +2,7 @@
 
 namespace Litepie\Menu\Repositories\Presenter;
 
-use Litepie\Database\Presenter\FractalPresenter;
+use Litepie\Repository\Presenter\FractalPresenter;
 
 class MenuShowPresenter extends FractalPresenter
 {

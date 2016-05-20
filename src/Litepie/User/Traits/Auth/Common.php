@@ -71,13 +71,29 @@ trait Common
     }
 
     /**
-     * Get the guard used for the controller.
+     * Get the guard to be used during authentication.
      *
      * @return string|null
      */
     protected function getGuard()
     {
         return property_exists($this, 'guard') ? $this->guard : config('auth.defaults.guard');
+    }
+
+    /**
+     * Get the guard to be used during authentication.
+     *
+     * @return string|null
+     */
+    protected function getApiGuard()
+    {
+        $guard = $this->getGuard();
+
+        if (empty($guard)) {
+            return config('auth.defaults.api');
+        }
+
+        return str_replace('web', 'api', $guard);
     }
 
     /**

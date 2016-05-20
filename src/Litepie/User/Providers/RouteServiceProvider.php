@@ -19,15 +19,14 @@ class RouteServiceProvider extends ServiceProvider
     public function boot(Router $router)
     {
 
-        if (Request::is('*admin/user/user/*')) {
+        if (Request::is('*admin/user/user*')) {
             $router->bind('user', function ($id) {
                 $user = $this->app->make('\Litepie\Contracts\User\UserRepository');
-
                 return $user->findOrNew($id);
             });
         }
 
-        if (Request::is('*admin/user/role/*')) {
+        if (Request::is('*admin/user/role*')) {
             $router->bind('role', function ($id) {
                 $role = $this->app->make('\Litepie\Contracts\User\RoleRepository');
 
@@ -35,7 +34,7 @@ class RouteServiceProvider extends ServiceProvider
             });
         }
 
-        if (Request::is('*admin/user/permission/*')) {
+        if (Request::is('*admin/user/permission*')) {
             $router->bind('permission', function ($id) {
                 $permission = $this->app->make('\Litepie\Contracts\User\PermissionRepository');
 

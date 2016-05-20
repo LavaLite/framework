@@ -2,10 +2,11 @@
 
 namespace Litepie\User\Traits\Auth;
 
+use Auth;
 use Crypt;
 use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
-use Illuminate\Support\Facades\Request;
+use Illuminate\Http\Request;
 use InvalidArgumentException;
 use Litepie\User\Traits\Auth\Common;
 use Mail;
@@ -30,6 +31,49 @@ trait RegisterAndLogin
         $guard = $this->getGuard();
         $this->check($guard);
         return $this->theme->of($this->getView('login'), compact('guard'))->render();
+    }
+
+    /**
+     * Authenticate using api request.
+     *
+     * @param Request $request
+     * @return string $token
+     */
+    function apiLogin(Request $request)
+    {
+        $this->validateLogin($request);
+
+        /**
+         * If the class is using the ThrottlesLogins trait, we can automatically throttle
+         * the login attempts for this application. We'll key this by the username and
+         * the IP address of the client making these requests into this application.
+         */
+        $throttles = $this->isUsingThrottlesLoginsTrait();
+
+        if ($throttles && $lockedOut = $this->hasTooManyLoginAttempts($request)) {
+            $this->fireLockoutEvent($request);
+
+            return $this->sendLockoutResponse($request);
+        }
+
+        $credentials = $this->getCredentials($request);
+
+        if ($token = Auth::guard($this->getApiGuard())->attempt($credentials)) {
+            return $this->handleUserWasAuthenticated($request, $throttles, $token);
+        }
+
+        /**
+         * sIf the login attempt was unsuccessful we will increment the number of attempts
+         * to login and redirect the user back to the login form. Of course, when this
+         * user surpasses their maximum number of attempts they will get locked out.
+         */
+
+        if ($throttles && !$lockedOut) {
+            $this->incrementLoginAttempts($request);
+        }
+
+        return $this->sendFailedLoginResponse($request);
+
     }
 
     /**
@@ -243,6 +287,37 @@ trait RegisterAndLogin
     {
         return $this->theme->of($this->getView('locked'))->render();
 
+    }
+
+    /**
+     * Send the response after the user was authenticated.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  bool  $throttles
+     * @return \Illuminate\Http\Response
+     */
+
+    function handleUserWasAuthenticated(Request $request, $throttles, $token = null)
+    {
+
+        if ($throttles) {
+            $this->clearLoginAttempts($request);
+        }
+
+        if (method_exists($this, 'authenticated') && !is_null($token)) {
+            return $this->authenticated($request, Auth::guard($this->getApiGuard())->user(), $token);
+        }
+
+        return redirect()->intended($this->redirectPath());
+    }
+
+    function authenticated($request, $user, $token)
+    {
+        return response()->json([
+            'user'    => $user,
+            'request' => $request->all(),
+            'token'   => $token,
+        ]);
     }
 
 }

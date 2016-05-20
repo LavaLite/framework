@@ -3,7 +3,7 @@
 namespace Litepie\Menu\Repository;
 
 use Litepie\Contracts\Menu\MenuRepository as MenuRepositoryInterface;
-use Litepie\Database\Eloquent\BaseRepository;
+use Litepie\Repository\Eloquent\BaseRepository;
 use Request;
 
 class MenuRepository extends BaseRepository implements MenuRepositoryInterface

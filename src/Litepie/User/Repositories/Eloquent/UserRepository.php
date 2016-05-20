@@ -3,7 +3,7 @@
 namespace Litepie\User\Repositories\Eloquent;
 
 use Litepie\Contracts\User\UserRepository as UserRepositoryContract;
-use Litepie\Database\Eloquent\BaseRepository;
+use Litepie\Repository\Eloquent\BaseRepository;
 use User;
 
 class UserRepository extends BaseRepository implements UserRepositoryContract

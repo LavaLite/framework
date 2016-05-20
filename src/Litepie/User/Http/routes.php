@@ -5,9 +5,9 @@ Route::group([
     'namespace' => 'Litepie\User\Http\Controllers',
     'prefix'    => trans_setlocale() . '/admin/user',
 ], function () {
-    Route::resource('user', 'UserAdminController');
-    Route::resource('role', 'RoleAdminController');
-    Route::resource('permission', 'PermissionAdminController');
+    Route::resource('user', 'UserAdminWebController');
+    Route::resource('role', 'RoleAdminWebController');
+    Route::resource('permission', 'PermissionAdminWebController');
 });
 
 Route::group([
@@ -16,25 +16,26 @@ Route::group([
 ], function () {
 
     Route::group(['prefix' => 'admin'], function () {
-        Route::get('/', 'AdminController@home');
-        Route::get('profile', 'AdminController@profile');
-        Route::get('locked', 'AdminController@locked');
-        Route::get('masters', 'AdminController@masters');
-        Route::get('reports', 'AdminController@reports');
-        Route::get('profile', 'AdminController@getProfile');
-        Route::get('password', 'AdminController@getPassword');
+        Route::get('/', 'AdminWebController@home');
+        Route::get('profile', 'AdminWebController@profile');
+        Route::get('locked', 'AdminWebController@locked');
+        Route::get('masters', 'AdminWebController@masters');
+        Route::get('reports', 'AdminWebController@reports');
+        Route::get('profile', 'AdminWebController@getProfile');
+        Route::get('password', 'AdminWebController@getPassword');
 
-        Route::post('profile', 'AdminController@postProfile');
-        Route::post('password', 'AdminController@postPassword');
+        Route::post('profile', 'AdminWebController@postProfile');
+        Route::post('password', 'AdminWebController@postPassword');
     });
 
-    Route::get('profile', 'UserController@getProfile');
-    Route::get('password', 'UserController@getPassword');
-    Route::get('locked', 'UserController@locked');
+    Route::get('profile', 'UserWebController@getProfile');
+    Route::get('password', 'UserWebController@getPassword');
+    Route::get('locked', 'UserWebController@locked');
 
-    Route::post('profile', 'UserController@postProfile');
-    Route::post('password', 'UserController@postPassword');
+    Route::post('profile', 'UserWebController@postProfile');
+    Route::post('password', 'UserWebController@postPassword');
 
+    Route::get('api/v1/login', 'Auth\AuthController@apiLogin');
     Route::get('login/{provider}', 'Auth\AuthController@redirectToProvider');
     Route::get('login/{provider}/callback', 'Auth\AuthController@handleProviderCallback');
 
