@@ -3,6 +3,7 @@
 namespace Litepie\Node;
 
 use Illuminate\Database\Eloquent\Collection as CollectionBase;
+use Request;
 
 /**
  * Custom collection used by NestedNode trait.
@@ -27,6 +28,7 @@ class NodeCollection extends CollectionBase
          * Set new collection for "children" relations
          */
         $collection = $this->getDictionary();
+
         foreach ($collection as $key => $model) {
             $model->setRelation('children', new CollectionBase());
         }
@@ -35,22 +37,25 @@ class NodeCollection extends CollectionBase
          * Assign all child nodes to their parents
          */
         $nestedKeys = [];
+
         foreach ($collection as $key => $model) {
+
             if (!$parentKey = $model->getParentId()) {
                 continue;
             }
 
             if (array_key_exists($parentKey, $collection)) {
                 $collection[$parentKey]->children[] = $model;
-                $nestedKeys[] = $model->getKey();
+                $nestedKeys[]                       = $model->getKey();
             } elseif ($removeOrphans) {
                 $nestedKeys[] = $model->getKey();
             }
+
         }
 
-        /*
-         * Remove processed nodes
-         */
+/*
+ * Remove processed nodes
+ */
         foreach ($nestedKeys as $key) {
             unset($collection[$key]);
         }
@@ -78,23 +83,30 @@ class NodeCollection extends CollectionBase
             $indentString = str_repeat($indent, $depth);
 
             foreach ($items as $item) {
+
                 if ($key !== null) {
-                    $result[$item->{$key}] = $indentString.$item->{$value};
+                    $result[$item->{$key}
+
+                    ] = $indentString . $item->{$value};
                 } else {
-                    $result[] = $indentString.$item->{$value};
+                    $result[] = $indentString . $item->{$value};
                 }
 
                 /*
                  * Add the children
                  */
                 $childItems = $item->getChildren();
+
                 if ($childItems->count() > 0) {
+
                     if ($key === null) {
                         $result = array_merge($result, $buildCollection($childItems, $depth + 1));
                     } else {
                         $result = $result + $buildCollection($childItems, $depth + 1);
                     }
+
                 }
+
             }
 
             return $result;
@@ -104,7 +116,7 @@ class NodeCollection extends CollectionBase
          * Build a nested collection
          */
         $rootItems = $this->toNested();
-        $result = $buildCollection($rootItems);
+        $result    = $buildCollection($rootItems);
 
         return $result;
     }
@@ -118,42 +130,59 @@ class NodeCollection extends CollectionBase
      *
      * @return array
      */
-    public function toMenu($key)
+    public function toMenu($menu_key)
     {
         /*
-         * Recursive helper function
+         * Set new collection for "children" relations
          */
-        $buildCollection = function ($items, $depth) use (&$buildCollection) {
-            $result = [];
+        $collection = collect($this->getDictionary());
+        $menu       = null;
 
-            foreach ($items as $key => $item) {
-                $key = $depth.'.'.$key;
-                $result[$key] = $item;
-                /*
-                 * Add the children
-                 */
-                $childItems = $item->getChildren();
-                if ($childItems->count() > 0) {
-                    $result = $result + $buildCollection($childItems, $key);
-                }
-                unset($result[$key]->children);
+        foreach ($collection as $item) {
+
+            if ($item->url == Request::path()) {
+                $menu = $item;
+                break;
             }
 
-            return $result;
-        };
+        }
+
+        if ($menu) {
+
+            $menu_id = $menu->id;
+
+            while ($menu_id) {
+                $collection[$menu_id]->active = 'active';
+                $menu_id                      = $collection[$menu_id]->getParentId();
+            }
+
+        }
+
+        foreach ($collection as $key => $model) {
+            $model->setRelation('children', new CollectionBase());
+        }
 
         /*
-         * Build a nested collection
+         * Assign all child nodes to their parents
          */
-        $rootItems = $this->toNested();
+        $nestedKeys = [];
 
-        //return menu as array
-        foreach ($rootItems as $rootItem) {
-            if ($rootItem->key == $key) {
-                $result = $buildCollection($rootItem->getChildren(), '0');
+        foreach ($collection as $key => $model) {
 
-                return $result;
+            if (!$parentKey = $model->getParentId()) {
+                continue;
             }
+
+            if ($collection->get($parentKey)) {
+                $collection[$parentKey]->children[] = $model;
+                $nestedKeys[]                       = $model->getKey();
+            } else {
+                $nestedKeys[] = $model->getKey();
+            }
+
         }
+
+        return new CollectionBase($collection->where('key', $menu_key)->first()->getChildren());
     }
+
 }

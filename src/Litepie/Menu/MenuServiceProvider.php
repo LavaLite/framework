@@ -21,8 +21,11 @@ class MenuServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        $this->loadViewsFrom(__DIR__ . '/views', 'menu');
+        $this->loadViewsFrom(__DIR__ . '/resources/views', 'menu');
+        $this->loadTranslationsFrom(__DIR__ . '/resources/lang', 'menu');
 
+        // Call pblish redources function
+        $this->publishResources();
         include __DIR__ . '/Http/routes.php';
     }
 
@@ -49,5 +52,28 @@ class MenuServiceProvider extends ServiceProvider
     public function provides()
     {
         return ['menu'];
+    }
+
+    /**
+     * Publish resources.
+     *
+     * @return void
+     */
+    private function publishResources()
+    {
+        // Publish configuration file
+        $this->publishes([__DIR__ . '/config/config.php' => config_path('menu.php')], 'config');
+
+        // Publish public view
+        $this->publishes([__DIR__ . '/resources/views' => base_path('resources/views/vendor/menu')], 'view');
+
+        // Publish language files
+        $this->publishes([__DIR__ . '/resources/lang' => base_path('resources/lang/vendor/menu')], 'lang');
+
+        // Publish migrations
+        $this->publishes([__DIR__ . '/database/migrations/' => base_path('database/migrations')], 'migrations');
+
+        // Publish seeds
+        $this->publishes([__DIR__ . '/database/seeds/' => base_path('database/seeds')], 'seeds');
     }
 }

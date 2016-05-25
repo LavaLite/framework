@@ -63,9 +63,10 @@ trait SimpleNode
     public function getAll()
     {
         $collection = [];
+
         foreach ($this->getAllRoot() as $rootNode) {
             $collection[] = $rootNode;
-            $collection = $collection + $rootNode->getAllChildren()->getDictionary();
+            $collection   = $collection + $rootNode->getAllChildren()->getDictionary();
         }
 
         return new Collection($collection);
@@ -88,16 +89,18 @@ trait SimpleNode
      */
     public function getAllChildren()
     {
-        $result = [];
+        $result   = [];
         $children = $this->getChildren();
 
         foreach ($children as $child) {
             $result[] = $child;
 
             $childResult = $child->getAllChildren();
+
             foreach ($childResult as $subChild) {
                 $result[] = $subChild;
             }
+
         }
 
         return new Collection($result);
@@ -111,6 +114,16 @@ trait SimpleNode
     public function getChildren()
     {
         return $this->children;
+    }
+
+    /**
+     * Returns direct child nodes.
+     *
+     * @return Illuminate\Database\Eloquent\Collection
+     */
+    public function hasChildren()
+    {
+        return count($this->getAllChildren()) > 0;
     }
 
     /**
@@ -143,19 +156,24 @@ trait SimpleNode
             $indentString = str_repeat($indent, $depth);
 
             foreach ($items as $item) {
+
                 if ($key !== null) {
-                    $result[$item->{$key}] = $indentString.$item->{$column};
+                    $result[$item->{$key}
+
+                    ] = $indentString . $item->{$column};
                 } else {
-                    $result[] = $indentString.$item->{$column};
+                    $result[] = $indentString . $item->{$column};
                 }
 
                 /*
                  * Add the children
                  */
                 $childItems = $item->getChildren();
+
                 if ($childItems->count() > 0) {
                     $result = $result + $buildCollection($childItems, $depth + 1);
                 }
+
             }
 
             return $result;
@@ -165,14 +183,16 @@ trait SimpleNode
          * Build a nested collection
          */
         $rootItems = $query->get()->toNested();
-        $result = $buildCollection($rootItems);
+        $result    = $buildCollection($rootItems);
 
         return $result;
     }
 
-    //
-    // Column getters
-    //
+//
+
+// Column getters
+
+//
 
     /**
      * Get parent column name.
@@ -191,7 +211,7 @@ trait SimpleNode
      */
     public function getQualifiedParentColumnName()
     {
-        return $this->getTable().'.'.$this->getParentColumnName();
+        return $this->getTable() . '.' . $this->getParentColumnName();
     }
 
     /**
@@ -211,4 +231,5 @@ trait SimpleNode
     {
         return new NodeCollection($models);
     }
+
 }

@@ -16,14 +16,16 @@ class Menu
         return $this->model->getModel();
     }
 
-    public function menu($key, $view = 'menu.default')
+    public function menu($key, $view = 'menu::menu.default')
     {
-        $menu = $this->model->getAllSubMenus($key);
+        $menus = $this->model->scopeQuery(function ($query) {
+            return $query->orderBy('order', 'ASC');
+        })->all()->toMenu($key);
 
-        return view($view, compact('menu'));
+        return view($view, compact('menus'));
     }
 
-    public function select($key, $view = 'menu.default')
+    public function select($key, $view = 'menu::menu.default')
     {
         $menu = $this->model->getAllSubMenus($key);
 

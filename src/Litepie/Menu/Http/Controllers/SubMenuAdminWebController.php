@@ -30,7 +30,7 @@ class SubMenuAdminWebController extends AdminController
         $menu = $this->repository->find($id);
         Form::populate($menu);
 
-        return view('menu::sub.show', compact('parent', 'menu'));
+        return view('menu::admin.sub.show', compact('parent', 'menu'));
     }
 
     /**
@@ -47,7 +47,7 @@ class SubMenuAdminWebController extends AdminController
 
         Form::populate($menu);
 
-        return view('menu::sub.create', compact('menu'));
+        return view('menu::admin.sub.create', compact('menu'));
     }
 
     /**
@@ -69,7 +69,7 @@ class SubMenuAdminWebController extends AdminController
                 [
                     'message'  => trans('messages.success.updated', ['Module' => trans('menu::menu.name')]),
                     'code'     => 204,
-                    'redirect' => trans_url('/admin/menu/menu/' . $menu->getRouteKey()),
+                    'redirect' => trans_url('/admin/menu/submenu/' . $menu->getRouteKey()),
                 ],
                 201);
 
@@ -97,7 +97,7 @@ class SubMenuAdminWebController extends AdminController
 
         Form::populate($menu);
 
-        return view('menu::sub.edit', compact('menu'));
+        return view('menu::admin.sub.edit', compact('menu'));
     }
 
     /**
@@ -119,7 +119,7 @@ class SubMenuAdminWebController extends AdminController
             return response()->json([
                 'message'  => trans('messages.success.updated', ['Module' => trans('menu::menu.name')]),
                 'code'     => 204,
-                'redirect' => trans_url('/admin/menu/menu/' . $menu->getRouteKey()),
+                'redirect' => trans_url('/admin/menu/submenu/' . $menu->getRouteKey()),
             ], 201);
 
         } catch (Exception $e) {
@@ -128,7 +128,7 @@ class SubMenuAdminWebController extends AdminController
                 [
                     'message'  => $e->getMessage(),
                     'code'     => 400,
-                    'redirect' => trans_url('/admin/menu/menu/' . $menu->getRouteKey()),
+                    'redirect' => trans_url('/admin/menu/submenu/' . $menu->getRouteKey()),
                 ],
                 400);
 

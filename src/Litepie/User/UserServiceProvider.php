@@ -22,7 +22,8 @@ class UserServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        $this->loadViewsFrom(__DIR__ . '/views', 'user');
+        $this->loadViewsFrom(__DIR__ . '/resources/views', 'user');
+        $this->loadTranslationsFrom(__DIR__ . '/resources/lang', 'user');
         $this->registerBladeExtensions();
         $this->registerJwtExtensions();
         $this->publishResources();
@@ -142,10 +143,16 @@ class UserServiceProvider extends ServiceProvider
         $this->publishes([__DIR__ . '/config.php' => config_path('user.php')], 'config');
 
         // Publish public view
-        $this->publishes([__DIR__ . '/views/public' => base_path('resources/views/vendor/user/public')], 'view-public');
+        $this->publishes([__DIR__ . '/views/public' => base_path('resources/views/vendor/user')], 'view');
 
-        // Publish admin view
-        $this->publishes([__DIR__ . '/views/admin' => base_path('resources/views/vendor/user/admin')], 'view-admin');
+        // Publish language files
+        $this->publishes([__DIR__ . '/resources/lang' => base_path('resources/lang/vendor/user')], 'lang');
+
+        // Publish migrations
+        $this->publishes([__DIR__ . '/database/migrations/' => base_path('database/migrations')], 'migrations');
+
+        // Publish seeds
+        $this->publishes([__DIR__ . '/database/seeds/' => base_path('database/seeds')], 'seeds');
 
     }
 
