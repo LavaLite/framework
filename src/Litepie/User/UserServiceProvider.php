@@ -143,7 +143,7 @@ class UserServiceProvider extends ServiceProvider
         $this->publishes([__DIR__ . '/config.php' => config_path('user.php')], 'config');
 
         // Publish public view
-        $this->publishes([__DIR__ . '/views/public' => base_path('resources/views/vendor/user')], 'view');
+        $this->publishes([__DIR__ . '/resources/views' => base_path('resources/views/vendor/user')], 'view');
 
         // Publish language files
         $this->publishes([__DIR__ . '/resources/lang' => base_path('resources/lang/vendor/user')], 'lang');
