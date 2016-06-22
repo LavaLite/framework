@@ -1,14 +1,8 @@
 <?php
 namespace Litepie\Filer\Traits;
 
-class Form
+trait UploadForm
 {
-    public $view;
-
-    public function __construct($view = null)
-    {
-        $this->view = $view;
-    }
 
     /**
      * Description

@@ -4,14 +4,15 @@ namespace Litepie\Hashids\Traits;
 
 trait Hashids
 {
+
     /**
      * Get the route key for the model.
      *
      * @return string
      */
-    public function getEidAttribute($value)
+    public function findOrFail($id, $columns = ['*'])
     {
-        return $this->getRouteKey();
+        return parent::findOrFail(hashids_decode($id), $columns);
     }
 
     /**
@@ -19,23 +20,9 @@ trait Hashids
      *
      * @return string
      */
-    public function findByEid($eid)
+    public function findOrNew($id, $columns = ['*'])
     {
-        if ($eid != '0') {
-            $eid = hashids_decode($eid);
-        }
-
-        return $this->findOrNew($eid);
-    }
-
-    /**
-     * Get the route key for the model.
-     *
-     * @return string
-     */
-    public function findOrFail($eid)
-    {
-        return $this->findByEid($eid);
+        return parent::findOrNew(hashids_decode($id), $columns);
     }
 
     /**
@@ -45,6 +32,6 @@ trait Hashids
      */
     public function getRouteKey()
     {
-        return hashids_encode($this->getOriginal($this->getKeyName()));
+        return hashids_encode($this->getKey());
     }
 }

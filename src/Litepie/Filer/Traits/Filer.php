@@ -125,7 +125,7 @@ trait Filer
 
             return $folder['encrypted'];
         } else {
-            $folder = folder_new($this->table, null);
+            $folder                            = folder_new($this->table, null);
             $this->attributes['upload_folder'] = json_encode($folder);
 
             return $folder['encrypted'];
@@ -142,8 +142,8 @@ trait Filer
      */
     public function setUploadFolderAttribute($value)
     {
-        $folder['folder'] = folder_decode($value);
-        $folder['encrypted'] = $value;
+        $folder['folder']                  = folder_decode($value);
+        $folder['encrypted']               = $value;
         $this->attributes['upload_folder'] = json_encode($folder);
     }
 
