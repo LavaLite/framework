@@ -2,6 +2,7 @@
 
 namespace Litepie\Filer\Traits;
 
+use Filer;
 use Request;
 use Session;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
@@ -71,7 +72,7 @@ trait Filer
                 $upfile = Request::file($field);
 
                 if ($upfile instanceof UploadedFile) {
-                    $file = self::upload($upfile, $this->upload_folder . '/' . $field);
+                    $file = Filer::upload($upfile, $this->upload_folder . '/' . $field);
                 }
 
             }
@@ -98,7 +99,7 @@ trait Filer
                 foreach (Request::file($field) as $file) {
 
                     if ($file instanceof UploadedFile) {
-                        $files[] = self::upload($file, $this->upload_folder . '/' . $field);
+                        $files[] = Filer::upload($file, $this->upload_folder . '/' . $field);
                     }
 
                 }
@@ -172,8 +173,9 @@ trait Filer
     {
 
         if (Session::has('upload.' . $this->table . '.' . $field)) {
-            $value = Session::pull('upload.' . $this->table . '.' . $field);
+            $value = Request::session()->pull('upload.' . $this->table . '.' . $field);
             $value = end($value);
+            Request::session()->save();
         } elseif (!empty($value)) {
             $value = $value;
         } elseif (Request::has($field)) {
@@ -207,7 +209,9 @@ trait Filer
         $session = [];
 
         if (Session::has('upload.' . $this->table . '.' . $field)) {
-            $session = Session::pull('upload.' . $this->table . '.' . $field);
+            $session = Request::session()->pull('upload.' . $this->table . '.' . $field);
+            Request::session()->save();
+
         }
 
         if (empty($current) && empty($session) && !Request::has($field)) {
