@@ -22,7 +22,9 @@ trait Hashids
      */
     public function findOrNew($id, $columns = ['*'])
     {
-        return parent::findOrNew(hashids_decode($id), $columns);
+        $id = hashids_decode($id);
+        $id = empty($id) ? 0 : $id;
+        return parent::findOrNew($id, $columns);
     }
 
     /**
