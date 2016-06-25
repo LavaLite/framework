@@ -2,7 +2,7 @@
 
 namespace Litepie\Filer\Traits;
 
-use Filer;
+use Filer as Uploader;
 use Request;
 use Session;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
@@ -72,7 +72,7 @@ trait Filer
                 $upfile = Request::file($field);
 
                 if ($upfile instanceof UploadedFile) {
-                    $file = Filer::upload($upfile, $this->upload_folder . '/' . $field);
+                    $file = Uploader::upload($upfile, $this->upload_folder . '/' . $field);
                 }
 
             }
@@ -99,7 +99,7 @@ trait Filer
                 foreach (Request::file($field) as $file) {
 
                     if ($file instanceof UploadedFile) {
-                        $files[] = Filer::upload($file, $this->upload_folder . '/' . $field);
+                        $files[] = Uploader::upload($file, $this->upload_folder . '/' . $field);
                     }
 
                 }
