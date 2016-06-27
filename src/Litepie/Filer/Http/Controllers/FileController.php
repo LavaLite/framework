@@ -38,7 +38,8 @@ class FileController extends Controller
         if (!is_file(public_path($folder . '/' . $file))) {
             $image = Filer::image($size['default'], $size);
         } else {
-            $image = Filer::$size['action']($folder, $file, $size);
+            $action_name = $size['action'];
+            $image = Filer::$action_name($folder, $file, $size);
         }
 
         $header = [
