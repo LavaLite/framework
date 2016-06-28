@@ -1,6 +1,6 @@
 @include('public::notifications')
 <div class="panel panel-default">
-    <div class="panel-heading">Update profile  <small>{{ get_users('name') }}</small></div>
+    <div class="panel-heading">Update profile  <small>{{ users('name') }}</small></div>
     <div class="panel-body">
 
     {!!Form::vertical_open()
