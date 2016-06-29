@@ -62,7 +62,7 @@ if (!function_exists('folder_new')) {
         $folder        = date('Y/m/d/His') . rand(100, 999);
         $arr['folder'] = $prefix . $folder . $sufix;
 
-        $folder           = folderEncode($folder);
+        $folder           = folder_encode($folder);
         $arr['encrypted'] = $prefix . $folder . $sufix;
 
         return $arr;
@@ -82,7 +82,7 @@ if (!function_exists('folder_encode')) {
     {
         $arr = explode('/', $folder);
 
-        return hashidsEncode($arr);
+        return hashids_encode($arr);
     }
 
 }
@@ -107,18 +107,18 @@ if (!function_exists('folder_decode')) {
         $arr = explode('/', $folder);
 
         if (count($arr) == 1) {
-            $folder = hashidsDecode($arr[0]);
+            $folder = hashids_decode($arr[0]);
 
             return $formatFolder($folder);
         }
 
         if (count($arr) == 2) {
-            $folder = hashidsDecode($arr[1]);
+            $folder = hashids_decode($arr[1]);
 
             return $arr[0] . '/' . $formatFolder($folder);
         }
 
-        $folder = hashidsDecode($arr[1]);
+        $folder = hashids_decode($arr[1]);
 
         return $arr[0] . '/' . $formatFolder($folder) . '/' . $arr[2];
     }
