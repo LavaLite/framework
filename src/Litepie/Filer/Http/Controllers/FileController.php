@@ -34,12 +34,7 @@ class FileController extends Controller
     {
         $size   = $this->getSize($size);
         $folder = config('filer.folder', 'uploads') . '/' . $table . '/' . folder_decode($folder) . '/' . $field;
-
-        if (!is_file(public_path($folder . '/' . $file))) {
-            $image = Filer::image($size['default'], $size);
-        } else {
-            $image = Filer::$size['action']($folder, $file, $size);
-        }
+        $image  = Filer::image($folder, $file, $size);
 
         $header = [
             'Content-Type'  => 'image/jpg',

@@ -319,11 +319,7 @@ abstract class BaseRepository implements Repository, RepositoryCriteria
     {
         $this->applyCriteria();
         $this->applyScope();
-        try {
-            $model = $this->model->findOrFail($id, $columns);
-        } catch (Exception $e) {
-            $model = $this->model->newInstance([]);
-        }
+        $model = $this->model->findOrNew($id, $columns);
 
         $this->resetModel();
 

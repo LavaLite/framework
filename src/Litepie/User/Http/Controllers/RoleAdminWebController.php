@@ -45,7 +45,7 @@ class RoleAdminWebController extends AdminController
 
         }
 
-        $this->theme->prependTitle(trans('user::role.names') . ' :: ');
+        $this->theme->prependTitle(trans('user::user.role.names') . ' :: ');
         return $this->theme->of('user::admin.role.index')->render();
     }
 

@@ -66,7 +66,7 @@ class UserAdminWebController extends AdminController
 
         }
 
-        $this->theme->prependTitle(trans('user::user.names') . ' :: ');
+        $this->theme->prependTitle(trans('user::user.user.names') . ' :: ');
         return $this->theme->of('user::admin.user.index')->render();
     }
 

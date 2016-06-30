@@ -9,7 +9,7 @@ class MenuShowTransformer extends TransformerAbstract
     public function transform(\Litepie\Menu\Models\Menu $page)
     {
         return [
-            'id'            => $page->eid,
+            'id'            => $page->getRouteKey(),
             'slug'          => $page->slug,
             'url'           => $page->slug.'.html',
             'name'          => $page->name,

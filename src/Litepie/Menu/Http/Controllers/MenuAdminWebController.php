@@ -37,11 +37,11 @@ class MenuAdminWebController extends AdminController
         $parent   = $this->repository->find(hashids_encode($parent));
         $rootMenu = $this->repository->rootMenues();
 
-        $this->theme->prependTitle(trans('menu.names') . ' :: ');
+        $this->theme->prependTitle(trans('menu::menu.names') . ' :: ');
 
         $this->theme->asset()->container('footer')->add('nestable', 'packages/nestable/jquery.nestable.js');
 
-        return $this->theme->of('menu::index', compact('rootMenu', 'parent'))->render();
+        return $this->theme->of('menu::admin.index', compact('rootMenu', 'parent'))->render();
     }
 
     /**
@@ -60,7 +60,7 @@ class MenuAdminWebController extends AdminController
 
             Form::populate($menu);
 
-            return view('menu::show', compact('menu'));
+            return view('menu::admin.show', compact('menu'));
         }
 
         $parent   = $this->repository->find($id);
@@ -69,7 +69,7 @@ class MenuAdminWebController extends AdminController
 
         $this->theme->prependTitle(trans('menu::menu.names') . ' :: ');
 
-        return $this->theme->of('menu::index', compact('rootMenu', 'parent'))->render();
+        return $this->theme->of('menu::admin.index', compact('rootMenu', 'parent'))->render();
     }
 
     /**
@@ -85,7 +85,7 @@ class MenuAdminWebController extends AdminController
 
         Form::populate($menu);
 
-        return view('menu::create', compact('menu'));
+        return view('menu::admin.create', compact('menu'));
     }
 
     /**
@@ -134,7 +134,7 @@ class MenuAdminWebController extends AdminController
         $data['menu'] = $this->repository->find($id);
         Form::populate($data['menu']);
 
-        return view('menu::edit', $data);
+        return view('menu::admin.edit', $data);
     }
 
     /**

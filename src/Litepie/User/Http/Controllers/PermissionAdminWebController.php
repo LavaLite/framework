@@ -43,7 +43,7 @@ class PermissionAdminWebController extends AdminController
 
         }
 
-        $this->theme->prependTitle(trans('user::permission.names') . ' :: ');
+        $this->theme->prependTitle(trans('user::user.permission.names') . ' :: ');
         return $this->theme->of('user::admin.permission.index')->render();
     }
 
