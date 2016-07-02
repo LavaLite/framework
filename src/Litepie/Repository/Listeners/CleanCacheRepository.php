@@ -35,7 +35,7 @@ class CleanCacheRepository
 
     public function __construct()
     {
-        $this->cache = app(config('database.cache.repository', 'cache'));
+        $this->cache = app(config('repository.cache.repository', 'cache'));
     }
 
     /**

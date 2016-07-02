@@ -18,11 +18,11 @@ trait Revision
      */
     public $revisionLimit = 500;
 
-    /*
-     * You can change the relation name used to store revisions:
-     *
-     * const REVISION_HISTORY = 'revision_history';
-     */
+/*
+ * You can change the relation name used to store revisions:
+ *
+ * const REVISION_HISTORY = 'revision_history';
+ */
 
     /**
      * @var bool Flag for arbitrarily disabling revision history.
@@ -56,30 +56,31 @@ trait Revision
         }
 
         $relationObject = $this->revisionHistory();
-        $revisionModel = $relationObject->getRelated();
+        $revisionModel  = $relationObject->getRelated();
 
         $toSave = [];
-        $dirty = $this->getDirty();
+        $dirty  = $this->getDirty();
         foreach ($dirty as $attribute => $value) {
             if (!in_array($attribute, $this->revision)) {
                 continue;
             }
 
             $toSave[] = [
-                'field'           => $attribute,
-                'old_value'       => array_get($this->original, $attribute),
-                'new_value'       => $value,
-                'revision_type'   => $relationObject->getMorphClass(),
-                'revision_id'     => $this->getKey(),
-                'user_id'         => $this->getUserId(),
-                'cast'            => $this->revisionGetCastType($attribute),
-                'created_at'      => new DateTime(),
-                'updated_at'      => new DateTime(),
+                'field'         => $attribute,
+                'old_value'     => array_get($this->original, $attribute),
+                'new_value'     => $value,
+                'revision_type' => $relationObject->getMorphClass(),
+                'revision_id'   => $this->getKey(),
+                'user_id'       => $this->getUserId(),
+                'user_type'     => $this->getUserType(),
+                'cast'          => $this->revisionGetCastType($attribute),
+                'created_at'    => new DateTime(),
+                'updated_at'    => new DateTime(),
             ];
         }
 
-        // Nothing to do
         if (!count($toSave)) {
+            // Nothing to do
             return;
         }
 
@@ -89,6 +90,7 @@ trait Revision
 
     public function revisionAfterDelete()
     {
+
         if (!$this->revisionsEnabled) {
             return;
         }
@@ -107,17 +109,18 @@ trait Revision
         }
 
         $relationObject = $this->revisionHistory();
-        $revisionModel = $relationObject->getRelated();
+        $revisionModel  = $relationObject->getRelated();
 
         $toSave = [
-            'field'           => 'deleted_at',
-            'old_value'       => null,
-            'new_value'       => $this->deleted_at,
-            'revision_type'   => $relationObject->getMorphClass(),
-            'revision_id'     => $this->getKey(),
-            'user_id'         => $this->getUserId(),
-            'created_at'      => new DateTime(),
-            'updated_at'      => new DateTime(),
+            'field'         => 'deleted_at',
+            'old_value'     => null,
+            'new_value'     => $this->deleted_at,
+            'revision_type' => $relationObject->getMorphClass(),
+            'revision_id'   => $this->getKey(),
+            'user_id'       => $this->getUserId(),
+            'user_type'     => $this->getUserType(),
+            'created_at'    => new DateTime(),
+            'updated_at'    => new DateTime(),
         ];
 
         DB::table($revisionModel->getTable())->insert($toSave);
@@ -133,8 +136,8 @@ trait Revision
         $relationObject = $this->revisionHistory();
 
         $revisionLimit = property_exists($this, 'revisionLimit')
-            ? (int) $this->revisionLimit
-            : 500;
+        ? (int) $this->revisionLimit
+        : 500;
 
         $toDelete = $relationObject
             ->orderBy('id')
@@ -145,13 +148,16 @@ trait Revision
         foreach ($toDelete as $record) {
             $record->delete();
         }
+
     }
 
     protected function revisionGetCastType($attribute)
     {
+
         if (in_array($attribute, $this->getDates())) {
             return 'date';
         }
+
     }
 
     /**
@@ -160,10 +166,20 @@ trait Revision
     public function getUserId()
     {
         try {
-            return \Auth::user()->getAuthIdentifier();
+            return users('id', $this->getGuard());
         } catch (\Exception $e) {
             return;
         }
+
+    }
+
+    /**
+     * Attempt to find the user model.
+     **/
+    public function getUserType()
+    {
+        $user = user(config('auth.guard'));
+        return get_class($user);
     }
 
     /**
@@ -173,4 +189,15 @@ trait Revision
     {
         return $this->morphMany('\Litepie\Revision\Models\Revision', 'revision');
     }
+
+    /**
+     * Return the current guard.
+     *
+     * @return string
+     */
+    public function getGuard()
+    {
+        return config('auth.guard');
+    }
+
 }

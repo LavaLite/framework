@@ -74,7 +74,7 @@ abstract class FractalPresenter implements Presenter
     protected function parseIncludes()
     {
         $request       = app('Illuminate\Http\Request');
-        $paramIncludes = config('database.fractal.params.include', 'include');
+        $paramIncludes = config('repository.fractal.params.include', 'include');
 
         if ($request->has($paramIncludes)) {
             $this->fractal->parseIncludes($request->get($paramIncludes));
@@ -90,7 +90,7 @@ abstract class FractalPresenter implements Presenter
      */
     public function serializer()
     {
-        $serializer = config('database.fractal.serializer', 'League\\Fractal\\Serializer\\DataArraySerializer');
+        $serializer = config('repository.fractal.serializer', 'League\\Fractal\\Serializer\\DataArraySerializer');
 
         return new $serializer();
     }

@@ -175,6 +175,16 @@ abstract class BaseRepository implements Repository, RepositoryCriteria
     }
 
     /**
+     * Set guard for the model.
+     *
+     * @return null
+     */
+    public function setModelGuard($guard = null)
+    {
+        return $this->model->setGuard($guard);
+    }
+
+    /**
      * Query Scope.
      *
      * @param \Closure $scope
@@ -263,7 +273,7 @@ abstract class BaseRepository implements Repository, RepositoryCriteria
     {
         $this->applyCriteria();
         $this->applyScope();
-        $limit   = is_null($limit) ? config('database.pagination.limit', 15) : $limit;
+        $limit   = is_null($limit) ? config('repository.pagination.limit', 15) : $limit;
         $results = $this->model->paginate($limit, $columns);
         $this->resetModel();
 

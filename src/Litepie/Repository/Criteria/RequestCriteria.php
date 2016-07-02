@@ -33,12 +33,12 @@ class RequestCriteria implements Criteria
     {
 
         $fieldsSearchable   = $repository->getFieldsSearchable();
-        $search             = $this->request->get(config('database.criteria.params.search', 'search'), null);
-        $searchFields       = $this->request->get(config('database.criteria.params.searchFields', 'searchFields'), null);
-        $columns            = $this->request->get(config('database.criteria.params.columns', 'columns'), null);
-        $sortBy             = $this->request->get(config('database.criteria.params.sortBy', 'sortBy'), null);
-        $sortOrder          = $this->request->get(config('database.criteria.params.sortOrder', 'sortOrder'), 'asc');
-        $with               = $this->request->get(config('database.criteria.params.with', 'with'), null);
+        $search             = $this->request->get(config('repository.criteria.params.search', 'search'), null);
+        $searchFields       = $this->request->get(config('repository.criteria.params.searchFields', 'searchFields'), null);
+        $columns            = $this->request->get(config('repository.criteria.params.columns', 'columns'), null);
+        $sortBy             = $this->request->get(config('repository.criteria.params.sortBy', 'sortBy'), null);
+        $sortOrder          = $this->request->get(config('repository.criteria.params.sortOrder', 'sortOrder'), 'asc');
+        $with               = $this->request->get(config('repository.criteria.params.with', 'with'), null);
         $sortOrder          = !empty($sortOrder) ? $sortOrder : 'asc';
         $modelForceAndWhere = is_array($search);
 
@@ -131,7 +131,7 @@ class RequestCriteria implements Criteria
         }
 
         if (isset($sortBy) && !empty($sortBy)) {
-            $model = $model->sortOrder($sortBy, $sortOrder);
+            $model = $model->orderBy($sortBy, $sortOrder);
         }
 
         if (isset($columns) && !empty($columns)) {
@@ -227,7 +227,7 @@ class RequestCriteria implements Criteria
     {
 
         if (!is_null($searchFields) && count($searchFields)) {
-            $acceptedConditions = config('database.criteria.acceptedConditions', ['=', '>', '>=', '<', '<=', '!=', '<>', 'like', 'not like', 'between', 'not between', 'in', 'not in', 'null', 'not null']);
+            $acceptedConditions = config('repository.criteria.acceptedConditions', ['=', '>', '>=', '<', '<=', '!=', '<>', 'like', 'not like', 'between', 'not between', 'in', 'not in', 'null', 'not null']);
             $originalFields     = $fields;
             $fields             = [];
 

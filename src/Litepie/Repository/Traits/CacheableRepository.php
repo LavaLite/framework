@@ -39,7 +39,7 @@ trait CacheableRepository
     {
 
         if (is_null($this->cacheRepository)) {
-            $this->cacheRepository = app(config('database.cache.repository', 'cache'));
+            $this->cacheRepository = app(config('repository.cache.repository', 'cache'));
         }
 
         return $this->cacheRepository;
@@ -66,7 +66,7 @@ trait CacheableRepository
     {
         $skipped        = isset($this->cacheSkip) ? $this->cacheSkip : false;
         $request        = app('Illuminate\Http\Request');
-        $skipCacheParam = config('database.cache.params.skipCache', 'skipCache');
+        $skipCacheParam = config('repository.cache.params.skipCache', 'skipCache');
 
         if ($request->has($skipCacheParam) && $request->get($skipCacheParam)) {
             $skipped = true;
@@ -82,14 +82,14 @@ trait CacheableRepository
      */
     protected function allowedCache($method)
     {
-        $cacheEnabled = config('database.cache.enabled', true);
+        $cacheEnabled = config('repository.cache.enabled', true);
 
         if (!$cacheEnabled) {
             return false;
         }
 
-        $cacheOnly   = isset($this->cacheOnly) ? $this->cacheOnly : config('database.cache.allowed.only', null);
-        $cacheExcept = isset($this->cacheExcept) ? $this->cacheExcept : config('database.cache.allowed.except', null);
+        $cacheOnly   = isset($this->cacheOnly) ? $this->cacheOnly : config('repository.cache.allowed.only', null);
+        $cacheExcept = isset($this->cacheExcept) ? $this->cacheExcept : config('repository.cache.allowed.except', null);
 
         if (is_array($cacheOnly)) {
             return in_array($method, $cacheOnly);
@@ -136,7 +136,7 @@ trait CacheableRepository
      */
     public function getCacheMinutes()
     {
-        $cacheMinutes = isset($this->cacheMinutes) ? $this->cacheMinutes : config('database.cache.minutes', 30);
+        $cacheMinutes = isset($this->cacheMinutes) ? $this->cacheMinutes : config('repository.cache.minutes', 30);
 
         return $cacheMinutes;
     }

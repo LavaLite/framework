@@ -42,7 +42,7 @@ trait FileDisplay
         if ($size['action'] == 'resize') {
             return $this->resize($folder, $file, $size);
         } else {
-            return $this->resize($folder, $file, $size);
+            return $this->fit($folder, $file, $size);
         }
 
     }

@@ -23,6 +23,7 @@ class Revision extends Eloquent
      */
     public function getNewValueAttribute($value)
     {
+
         if ($this->cast == 'date') {
             return $this->asDateTime($value);
         }
@@ -37,10 +38,12 @@ class Revision extends Eloquent
      */
     public function getOldValueAttribute($value)
     {
+
         if ($this->cast == 'date') {
             return $this->asDateTime($value);
         }
 
         return $value;
     }
+
 }
