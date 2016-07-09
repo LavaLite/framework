@@ -3,8 +3,6 @@
 namespace Litepie\User\Http\Middleware;
 
 use Closure;
-use Illuminate\Contracts\Auth\Guard;
-use Litepie\User\Exceptions\InvalidAccountException;
 
 class VerifyLogin
 {
@@ -22,22 +20,12 @@ class VerifyLogin
     public function handle($request, Closure $next, $guard = null)
     {
 
-        if (Auth::guard($guard)->guest()) {
-
-            if ($request->ajax() || $request->wantsJson()) {
-                return response('Unauthorized.', 401);
-            } else {
-                return redirect()->guest('login');
-            }
-
-        }
-
-        if (user()->new && config('user.verify_email')) {
+        if (user($guard)->isNew && config('user.verify_email')) {
             return redirect('verify');
         }
 
-        if (!user()->active) {
-            throw new InvalidAccountException('Account is not active.');
+        if (user($guard)->isLocked) {
+            return redirect('locked');
         }
 
         return $next($request);

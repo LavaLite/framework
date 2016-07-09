@@ -2,8 +2,6 @@
 
 namespace Litepie\User\Traits\Users;
 
-use URL;
-
 /**
  * Trait UserProfile.
  */
@@ -20,14 +18,14 @@ trait UserProfile
         if (!empty($value)) {
             $photo = json_encode($value);
 
-            return URL::to($photo['folder'] . '/' . $photo['file']);
+            return trans_url($photo['folder'] . '/' . $photo['file']);
         }
 
         if ($this->sex == 'Female') {
-            return URL::to('img/avatar/female.png');
+            return trans_url('img/avatar/female.png');
         }
 
-        return URL::to('img/avatar/male.png');
+        return trans_url('img/avatar/male.png');
     }
 
     /**
@@ -45,7 +43,7 @@ trait UserProfile
      *
      * @return string date
      */
-    public function getActiveAttribute()
+    public function getIsActiveAttribute()
     {
         return $this->status == 'Active';
     }
@@ -55,9 +53,19 @@ trait UserProfile
      *
      * @return string date
      */
-    public function getNewAttribute()
+    public function getIsNewAttribute()
     {
         return $this->status == 'New';
+    }
+
+    /**
+     * Returns the whrether auser is active or not.
+     *
+     * @return string date
+     */
+    public function getIsLockedAttribute()
+    {
+        return $this->status != 'New' && $this->status != 'Active';
     }
 
 }

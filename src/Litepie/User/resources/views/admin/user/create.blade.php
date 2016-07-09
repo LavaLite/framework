@@ -17,7 +17,7 @@
         ->id('create-user-user')
         ->method('POST')
         ->files('true')
-        ->action(URL::to('admin/user/user'))!!}
+        ->action(trans_url('admin/user/user'))!!}
         <div class="tab-content">
             @include('user::admin.user.partial.entry')
         </div>

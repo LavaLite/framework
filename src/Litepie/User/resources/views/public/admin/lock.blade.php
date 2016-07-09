@@ -1,7 +1,7 @@
 <!-- Automatic element centering -->
 <div class="lockscreen-wrapper">
     <div class="lockscreen-logo">
-        <a href="{!! URL::to('/admin') !!}">{!! trans('cms.name.html') !!}</a>
+        <a href="{!! trans_url('/admin') !!}">{!! trans('cms.name.html') !!}</a>
     </div>
     <!-- User name -->
     <div class="lockscreen-name">{!! User::users('name') !!}</div>
@@ -28,7 +28,7 @@
         Enter your password to retrieve your session
     </div>
     <div class="text-center">
-        <a href="{!! URL::to('/admin/login') !!}">Or sign in as a different user</a>
+        <a href="{!! trans_url('/admin/login') !!}">Or sign in as a different user</a>
     </div>
 </div>
 <!-- /.center -->

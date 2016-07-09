@@ -60,22 +60,24 @@ trait Revision
 
         $toSave = [];
         $dirty  = $this->getDirty();
+        $data   = [
+            'revision_type' => $relationObject->getMorphClass(),
+            'revision_id'   => $this->getKey(),
+            'user_id'       => $this->getUserId(),
+            'user_type'     => $this->getUserType(),
+            'created_at'    => new DateTime(),
+            'updated_at'    => new DateTime(),
+        ];
         foreach ($dirty as $attribute => $value) {
             if (!in_array($attribute, $this->revision)) {
                 continue;
             }
 
-            $toSave[] = [
-                'field'         => $attribute,
-                'old_value'     => array_get($this->original, $attribute),
-                'new_value'     => $value,
-                'revision_type' => $relationObject->getMorphClass(),
-                'revision_id'   => $this->getKey(),
-                'user_id'       => $this->getUserId(),
-                'user_type'     => $this->getUserType(),
-                'cast'          => $this->revisionGetCastType($attribute),
-                'created_at'    => new DateTime(),
-                'updated_at'    => new DateTime(),
+            $toSave[] = $data + [
+                'field'     => $attribute,
+                'old_value' => array_get($this->original, $attribute),
+                'new_value' => $value,
+                'cast'      => $this->revisionGetCastType($attribute),
             ];
         }
 

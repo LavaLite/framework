@@ -100,13 +100,17 @@ trait RegisterAndLogin
     function validator(array $data)
     {
         $table = $this->getTable($this->getGuard());
+        $rules = [
+            'name'     => 'required|max:255',
+            'email'    => 'required|email|max:255|unique:' . $table,
+            'password' => 'required|min:6',
+        ];
 
-        return Validator::make($data, [
-            'name'                 => 'required|max:255',
-            'email'                => 'required|email|max:255|unique:' . $table,
-            'password'             => 'required|min:6',
-            'g-recaptcha-response' => 'required|recaptcha',
-        ]);
+        if (config('recaptcha.enable')) {
+            $rules['g-recaptcha-response'] = 'required|recaptcha';
+        }
+
+        return Validator::make($data, $rules);
     }
 
     /**
@@ -173,10 +177,10 @@ trait RegisterAndLogin
      */
     function sendVerificationMail($user)
     {
-        $guard                     = $this->getGuard();
         $data['confirmation_code'] = Crypt::encrypt($user->id);
+        $data['guard']             = $this->getGuard();
 
-        Mail::send($this->getView('email.verify'), $data, function ($message) use ($user) {
+        Mail::send($this->getView('emails.verify'), $data, function ($message) use ($user) {
             $message->to($user->email, $user->name)
                 ->subject('Verify your email address');
         });
@@ -318,6 +322,13 @@ trait RegisterAndLogin
             'request' => $request->all(),
             'token'   => $token,
         ]);
+    }
+
+    function sendVerification()
+    {
+        $this->sendVerificationMail(user());
+        return redirect()->back()->withCode(201)->withMessage('Verification link send to your email please check the mail for actvation mail.');
+
     }
 
 }

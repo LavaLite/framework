@@ -64,10 +64,10 @@ trait Common
      */
     public function setTheme()
     {
-        $view        = $this->getViewFolder('public');
+        $view        = $this->getViewFolder();
         $theme       = Theme::exists($view) ? $view : config('theme.default.theme');
         $this->theme = Theme::uses($theme);
-        $this->theme->layout(config("theme.$theme.blank", 'blank'));
+        $this->theme->layout(config("theme.$theme.auth", 'auth'));
     }
 
     /**
@@ -101,7 +101,7 @@ trait Common
      *
      * @return string|null
      */
-    protected function getViewFolder($default = 'default')
+    protected function getViewFolder($default = 'public')
     {
         $guard = $this->getGuard();
 

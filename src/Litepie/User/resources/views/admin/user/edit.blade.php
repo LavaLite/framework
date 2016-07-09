@@ -17,7 +17,7 @@
         ->id('edit-user')
         ->method('PUT')
         ->enctype('multipart/form-data')
-        ->action(URL::to('admin/user/user/'. $user->getRouteKey()))!!}
+        ->action(trans_url('admin/user/user/'. $user->getRouteKey()))!!}
         <div class="tab-content">
             @include('user::admin.user.partial.entry')
         </div>

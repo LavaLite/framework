@@ -27,7 +27,7 @@
 <script type="text/javascript">
 $(document).ready(function(){
     $('#btn-new-permission, #btn-new-permission-icn').click(function(){
-        $('#entry-permission').load('{{URL::to('admin/user/permission/create')}}');
+        $('#entry-permission').load('{{trans_url('admin/user/permission/create')}}');
     });
 });
 </script>

@@ -8,8 +8,8 @@
 
         <div>
             You registration is successful verify your email before proceeding by clicking the link below.
-            <a href="{{ URL::to($guard . '/verify/' . $confirmation_code) }}">
-            {{ URL::to($guard . '/verify/' . $confirmation_code) }}
+            <a href="{{ trans_url($guard . '/verify/' . $confirmation_code) }}">
+            {{ trans_url($guard . '/verify/' . $confirmation_code) }}
             </a>.<br/>
 
         </div>

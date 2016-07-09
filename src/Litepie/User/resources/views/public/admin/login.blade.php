@@ -1,6 +1,6 @@
 <div class="login-box">
   <div class="login-logo">
-        <a href="{!! URL::to('/admin') !!}">{!! trans('cms.name.html') !!}</a>
+        <a href="{!! trans_url('/admin') !!}">{!! trans('cms.name.html') !!}</a>
   </div><!-- /.login-logo -->
   <div class="login-box-body">
     <p class="login-box-msg">Sign in to start your session</p>

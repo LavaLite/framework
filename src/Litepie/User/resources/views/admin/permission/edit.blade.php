@@ -16,7 +16,7 @@
         ->id('edit-permission')
         ->method('PUT')
         ->enctype('multipart/form-data')
-        ->action(URL::to('admin/user/permission/'.$permission->getRouteKey()))!!}
+        ->action(trans_url('admin/user/permission/'.$permission->getRouteKey()))!!}
         <div class="tab-content">
             <div class="tab-pane active" id="permission">
                 @include('user::admin.permission.partial.entry')

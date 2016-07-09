@@ -27,7 +27,7 @@
 <script type="text/javascript">
 $(document).ready(function(){
     $('#btn-new-user, #btn-new-user-icn').click(function(){
-        $('#entry-user').load('{{URL::to('admin/user/user/create')}}');
+        $('#entry-user').load('{{trans_url('admin/user/user/create')}}');
     });
 });
 </script>

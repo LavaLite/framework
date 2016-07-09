@@ -16,7 +16,7 @@
         ->id('user-role-create')
         ->method('POST')
         ->files('true')
-        ->action(URL::to('admin/user/role'))!!}
+        ->action(trans_url('admin/user/role'))!!}
         <div class="tab-content">
             <div class="tab-pane active" id="details">
                 @include('user::admin.role.partial.entry')

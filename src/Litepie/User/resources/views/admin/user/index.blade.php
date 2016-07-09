@@ -7,7 +7,7 @@
 @stop
 @section('breadcrumb')
 <ol class="breadcrumb">
-    <li><a href="{!! URL::to('admin') !!}"><i class="fa fa-dashboard"></i> {!! trans('cms.home') !!} </a></li>
+    <li><a href="{!! trans_url('admin') !!}"><i class="fa fa-dashboard"></i> {!! trans('cms.home') !!} </a></li>
     <li class="active">{!! trans('user::user.user.names') !!}</li>
 </ol>
 @stop
@@ -37,9 +37,9 @@
 <script type="text/javascript">
 var oTable;
 $(document).ready(function(){
-    $('#entry-user').load('{{URL::to('admin/user/user/0')}}');
+    $('#entry-user').load('{{trans_url('admin/user/user/0')}}');
     oTable = $('#main-list').DataTable( {
-        "ajax": '{{ URL::to('/admin/user/user') }}',
+        "ajax": '{{ trans_url('/admin/user/user') }}',
         "columns": [
         { "data": "name" },
         { "data": "email" },
@@ -50,13 +50,13 @@ $(document).ready(function(){
     $('#main-list tbody').on( 'click', 'tr', function () {
         $(this).toggleClass("selected").siblings(".selected").removeClass("selected");
         var d = $('#main-list').DataTable().row( this ).data();
-        $('#entry-user').load('{{URL::to('admin/user/user')}}' + '/' + d.id);
+        $('#entry-user').load('{{trans_url('admin/user/user')}}' + '/' + d.id);
     });
 
     $('.filter-role').on( 'click', function (e) {
         role = $( this ).data( "role" );
 
-        oTable.ajax.url('{!! URL::to('/admin/user/user?role=') !!}' + role).load();
+        oTable.ajax.url('{!! trans_url('/admin/user/user?role=') !!}' + role).load();
         e.preventDefault();
     });
 });

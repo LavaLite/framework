@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Request;
 use Litepie\Support\Facades\Hashids;
 use Litepie\Support\Facades\Trans;
+use Litepie\Support\Facades\Theme;
 
 if (!function_exists('hashids_encode')) {
     /**
@@ -125,6 +126,20 @@ if (!function_exists('folder_decode')) {
 
 }
 
+if (!function_exists('theme_asset')) {
+    /**
+     * Get translated url.
+     *
+     * @param string $url
+     *
+     * @return string
+     */
+    function theme_asset($file)
+    {
+        return Theme::asset()->url($file);
+    }
+}
+
 if (!function_exists('trans_url')) {
     /**
      * Get translated url.
@@ -136,6 +151,20 @@ if (!function_exists('trans_url')) {
     function trans_url($url)
     {
         return Trans::to($url);
+    }
+
+}
+
+if (!function_exists('trans_dir')) {
+    /**
+     * Return the direction of current language.
+     *
+     * @return string (ltr|rtl)
+     * 
+     */
+    function trans_dir()
+    {
+        return Trans::getCurrentTransDirection();
     }
 
 }
@@ -251,6 +280,19 @@ if (!function_exists('user')) {
         }
 
         return null;
+    }
+
+}
+
+if (!function_exists('user_check')) {
+    /**
+     * Check whether user is logged in
+     * @param type|null $guard
+     * @return type
+     */
+    function user_check($guard = null)
+    {
+        return Auth::guard($guard)->check();
     }
 
 }

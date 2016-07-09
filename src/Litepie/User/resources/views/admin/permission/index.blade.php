@@ -9,7 +9,7 @@
 
 @section('breadcrumb')
 <ol class="breadcrumb">
-    <li><a href="{!! URL::to('admin') !!}"><i class="fa fa-dashboard"></i> {!! trans('cms.home') !!} </a></li>
+    <li><a href="{!! trans_url('admin') !!}"><i class="fa fa-dashboard"></i> {!! trans('cms.home') !!} </a></li>
     <li class="active">{!! trans('user::user.permission.names') !!}</li>
 </ol>
 @stop
@@ -34,9 +34,9 @@
 <script type="text/javascript">
 var oTable;
 $(document).ready(function(){
-    $('#entry-permission').load('{{URL::to('admin/user/permission/0')}}');
+    $('#entry-permission').load('{{trans_url('admin/user/permission/0')}}');
     oTable = $('#main-list').dataTable( {
-        "ajax": '{{ URL::to('/admin/user/permission') }}',
+        "ajax": '{{ trans_url('/admin/user/permission') }}',
         "columns": [
             {data :'slug'},
             {data :'name'},
@@ -50,7 +50,7 @@ $(document).ready(function(){
 
         var d = $('#main-list').DataTable().row( this ).data();
 
-        $('#entry-permission').load('{{URL::to('admin/user/permission')}}' + '/' + d.id);
+        $('#entry-permission').load('{{trans_url('admin/user/permission')}}' + '/' + d.id);
 
     });
 });
