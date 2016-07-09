@@ -1,7 +1,7 @@
 <div class="box-header with-border">
     <h3 class="box-title">  {{ trans('user::user.permission.names') }}</h3>
     <div class="box-tools pull-right">
-        <button type="button" class="btn btn-primary btn-sm" data-action='NEW' data-load-to='#entry-permission' data-href='{{Trans::to('admin/user/permission/create')}}'><i class="fa fa-times-circle"></i> {{ trans('cms.new') }}</button>
+        <button type="button" class="btn btn-primary btn-sm" data-action='NEW' data-load-to='#entry-permission' data-href='{{trans_url('admin/user/permission/create')}}'><i class="fa fa-times-circle"></i> {{ trans('cms.new') }}</button>
         <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
     </div>
 </div>

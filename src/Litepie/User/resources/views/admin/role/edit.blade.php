@@ -2,7 +2,7 @@
     <h3 class="box-title"> Edit  {!! trans('user::user.role.name') !!} [{!!$role->name!!}] </h3>
     <div class="box-tools pull-right">
         <button type="button" class="btn btn-primary btn-sm" data-action='UPDATE' data-form='#user-role-edit'  data-load-to='#user-role-entry' data-datatable='#user-role-list'><i class="fa fa-floppy-o"></i> Save</button>
-        <button type="button" class="btn btn-default btn-sm" data-action='CANCEL' data-load-to='#user-role-entry' data-href='{{Trans::to('admin/user/role')}}/{{$role->getRouteKey()}}'><i class="fa fa-times-circle"></i> cms.cancel</button>
+        <button type="button" class="btn btn-default btn-sm" data-action='CANCEL' data-load-to='#user-role-entry' data-href='{{trans_url('admin/user/role')}}/{{$role->getRouteKey()}}'><i class="fa fa-times-circle"></i> {{ trans('cms.cancel') }}</button>
         <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
 
     </div>

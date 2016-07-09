@@ -17,25 +17,18 @@
                 -> placeholder(trans('user::user.user.placeholder.password')) !!}
             </div>
         </div>
-        <div class='col-md-2 col-sm-2'>
-            <table class="table">
-                <thead>
-                    <th>Role</th>
-                    <th>Status</th>
-                </thead>
-                <tbody>
-                    @foreach ($roles as $role)
-                    <tr>
-                        <td>{{ ucfirst($role->name) }}</td>
-                        <td>
-                            <input name="roles[{{ $role->id }}]" type="checkbox" {{ ( $user-> hasRole($role->name)) ? 'checked' : '' }} value='{{ $role->id }}' >
-                        </td>
-                    </tr>
-                    @endforeach
-                </tbody>
-            </table>
+        <div  class='col-md-9 col-sm-9'>
+        <div class='col-md-12 col-sm-12'>
+        <strong>Roles</strong><br/>
+
+        @foreach ($roles as $role)
+            <div class="checkbox checkbox-danger" style="float:left;width:150px;">
+            <input name="roles[{{ $role->id }}]" id="roles.{{ $role->id }}" type="checkbox" {{ ( $user-> hasRole($role->name)) ? 'checked' : '' }} value='{{ $role->id }}' >
+            <label for="roles.{{ $role->id }}">{{ ucfirst($role->name) }}</label>
+            </div>
+        @endforeach
         </div>
-        <div class='col-md-7 col-sm-7' style="height:250px;overflow: scroll;">
+        <div class='col-md-12 col-sm-12' style="height:250px;overflow: scroll;">
             <table class="table">
                 <thead>
                     <th>Modules</th>
@@ -47,7 +40,10 @@
                         <td>{{ucfirst($keyPermission)}}</td>
                         <td>
                             @forelse($permission as $key => $val)
-                            &nbsp; <input name="permissions[{{ $keyPermission. '.' .$key }}]" type="checkbox" {{ (@array_key_exists($keyPermission. '.' .$key, $user->permissions)) ? 'checked' : '' }} value='1'> {{$val}}
+                            <div class="checkbox checkbox-danger" style="float:left;width:150px;">
+                            &nbsp; <input name="permissions[{{ $keyPermission. '.' .$key }}]"  id="permissions.{{ $keyPermission. '.' .$key }}" type="checkbox" {{ (@array_key_exists($keyPermission. '.' .$key, $user->permissions)) ? 'checked' : '' }} value='1'>
+                            <label for="permissions.{{ $keyPermission. '.' .$key }}">{{$val}}</label>
+                            </div>
                             @empty
                             No permissions assigned
                             @endforelse
@@ -56,6 +52,7 @@
                     @endforeach
                 </tbody>
             </table>
+        </div>
         </div>
     </div>
 
@@ -149,3 +146,8 @@
         </div>
     </div>
 </div>
+<style type="text/css">
+.checkbox+.checkbox, .radio+.radio {
+margin-top: 10px;
+}
+</style>
