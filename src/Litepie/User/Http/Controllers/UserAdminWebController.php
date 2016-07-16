@@ -170,6 +170,7 @@ class UserAdminWebController extends AdminController
         try {
 
             $attributes = $request->all();
+            $attributes['password'] = bcrypt($attributes['password']);
 
             $user->update($attributes);
             $user->syncRoles($request->get('roles'));
