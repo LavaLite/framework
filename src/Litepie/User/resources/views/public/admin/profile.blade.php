@@ -72,7 +72,7 @@
                     </ul>
                     <div class="tab-content">
                         <div class="tab-pane active" id="tasks">
-                            {!! Task::display('profile') !!}
+                            {! Task::display('profile') !!}
                         </div>
                         <!-- /.tab-pane -->
                         <div class="tab-pane" id="calendar">

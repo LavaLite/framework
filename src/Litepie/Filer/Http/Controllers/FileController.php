@@ -32,6 +32,7 @@ class FileController extends Controller
      */
     public function image($size, $table, $folder, $field, $file)
     {
+
         $size   = $this->getSize($size);
         $folder = config('filer.folder', 'uploads') . '/' . $table . '/' . folder_decode($folder) . '/' . $field;
         $image  = Filer::image($folder, $file, $size);

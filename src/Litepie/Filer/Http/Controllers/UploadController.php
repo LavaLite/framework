@@ -24,13 +24,16 @@ class UploadController extends Controller
      */
     public function upload($table, $folder, $field, $file = 'file')
     {
+
         if (Request::hasFile($file)) {
-            $dfolder = folder_decode($folder);
-            $array = Filer::upload(Request::file($file), "{$table}/{$dfolder}/{$field}");
-            $array['efolder'] = "{$table}/{$folder}/{$field}";
+            $dfolder         = folder_decode($folder);
+            $array           = Filer::upload(Request::file($file), "{$table}/{$dfolder}/{$field}");
+            $array['folder'] = "{$table}/{$dfolder}/{$field}";
             Session::push("upload.{$table}.{$field}", $array);
 
             return $array;
         }
+
     }
+
 }
