@@ -124,10 +124,10 @@ trait Filer
         if (!empty($value)) {
             return folder_encode($value, true, false);
         } else {
-            $folder                            = folder_new($this->table, null);
+            $folder = folder_new($this->table, null);
             $this->attributes['upload_folder'] = $folder;
 
-            return folder_decode($folder);
+            return folder_encode($folder, true, false);
         }
 
     }
@@ -141,7 +141,7 @@ trait Filer
      */
     public function setUploadFolderAttribute($value)
     {
-        $this->attributes['upload_folder'] = folder_decode($value);
+        $this->attributes['upload_folder'] = folder_decode($value, true, false);
     }
 
     /**
@@ -253,12 +253,45 @@ trait Filer
      */
     public function defaultImage($size = 'md', $field = 'image')
     {
+        $image = $this->$field;
 
-        if (!is_array($this->$field) || empty($this->$field)) {
+        if (!is_array($image) || empty($image)) {
             return 'img/default/' . $size . '.jpg';
         }
 
-        return 'image/' . $size . '/' . folder_encode($this->$field['folder']) . '/' . $this->$field['file'];
+        if (in_array($field, $this->uploads['single'])) {
+            return 'image/' . $size . '/' . folder_encode($image['folder']) . '/' . $image['file'];
+        }
+
+        $image = end($image);
+
+        return 'image/' . $size . '/' . folder_encode($image['folder']) . '/' . $image['file'];
     }
 
+    /**
+     * Return the main image for the record.
+     *
+     * @param type|string $size
+     * @param type|string $field
+     *
+     * @return string path
+     */
+    public function getImages($size = 'md', $field = 'image')
+    {
+        $image = $this->$field;
+
+        if (!is_array($image) || empty($image)) {
+            return ['img/default/' . $size . '.jpg'];
+        }
+
+        if (in_array($field, $this->uploads['single'])) {
+            return ['image/' . $size . '/' . folder_encode($image['folder']) . '/' . $image['file']];
+        }
+
+        foreach ($image as $key => $img) {
+            $image[$key] = 'image/' . $size . '/' . folder_encode($img['folder']) . '/' . $img['file'];
+        }
+
+        return $image;
+    }
 }
