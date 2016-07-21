@@ -55,7 +55,15 @@ class FileController extends Controller
      */
     public function getSize($size)
     {
-        $size = config($size, config('filer.size.' . $size));
+        $size = explode('.', $size);
+
+        if (count($size) == 1) {
+            $size = config('filer.size.' . $size[0]);
+        } elseif (count($size) == 2) {
+            $size = config('package.'. $size[0]. '.image.' . $size[1]);
+        } else {
+            $size = config(implode('.', $size));
+        }
 
         if (empty($size)) {
             throw new NotFoundHttpException();
