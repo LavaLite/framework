@@ -255,7 +255,7 @@ trait Filer
     {
 
         if (!is_array($this->$field) || empty($this->$field)) {
-            return 'test';
+            return 'img/default/' . $size . '.jpg';
         }
 
         return 'image/' . $size . '/' . folder_encode($this->$field['folder']) . '/' . $this->$field['file'];
