@@ -7,11 +7,11 @@
             $ext  = strtolower($info['extension']);
         ?>
         @if (in_array($ext, ['jpg','jpeg', 'png', 'gif']) )
-            <a href="{!! URL::to('/file/'.$files['efolder'])!!}/{!!$files['file']!!}" target="_blank">
-                <img src="{!! URL::to('/image/sm/'.$files['efolder'])!!}/{!! $files['file'] !!}" class="img-thumbnail image-responsive">
+            <a href="{!! url('/file/'.folder_encode($files['folder']))!!}/{!!$files['file']!!}" target="_blank">
+                <img src="{!! url('/image/sm/'.folder_encode($files['folder']))!!}/{!! $files['file'] !!}" class="img-thumbnail image-responsive">
             </a>
         @else
-            <a href="{!! URL::to('/image/sm/'.$files['efolder'])!!}/{!!$files['file']!!}" target="_blank">{!!$files['file']!!}</a>
+            <a href="{!! url('/image/sm/'.folder_encode($files['folder']))!!}/{!!$files['file']!!}" target="_blank">{!!$files['file']!!}</a>
         @endif
         <a href="#" class="remove-image-{!!$field!!}">
             <span class="fa-stack fa-xs">
@@ -20,7 +20,7 @@
             </span>
         </a>
         {!!Form::text($field."[caption]", 'Caption')->value($files['caption'])!!}
-        {!!Form::hidden($field."[efolder]")->value($files['efolder'])->raw()!!}
+        {!!Form::hidden($field."[folder]")->value($files['folder'])->raw()!!}
         {!!Form::hidden($field."[file]")->value($files['file'])->raw()!!}
     </div>
     <script type="text/javascript">
@@ -45,10 +45,10 @@
                     $ext  = strtolower($info['extension']);
                 ?>
                 @if (in_array($ext, ['jpg','jpeg', 'png', 'gif']) )
-                    <a href="{!! URL::to('/file/'.$file['efolder'])!!}/{!!$file['file']!!}" target="_blank"><img src="{!! URL::to('/image/sm/'.$file['efolder'])!!}/{!! $file['file'] !!}" class="img-thumbnail image-responsive"></a>
+                    <a href="{!! url('/file/'.folder_encode($file['folder']))!!}/{!!$file['file']!!}" target="_blank"><img src="{!! url('/image/sm/'.folder_encode($file['folder']))!!}/{!! $file['file'] !!}" class="img-thumbnail image-responsive"></a>
                 @else
                     <div id="file">
-                        <a href="{!! URL::to('/file/'.$file['efolder'])!!}/{!!$file['file']!!}" target="_blank">{!!$file['file']!!}</a>
+                        <a href="{!! url('/file/'.folder_encode($file['folder']))!!}/{!!$file['file']!!}" target="_blank">{!!$file['file']!!}</a>
                     </div>
                 @endif
                 <div class="btn_container">
@@ -75,12 +75,11 @@
                         </div>
                         <div class="modal-body">
                             @if (in_array($ext, ['jpg','jpeg', 'png', 'gif']) )
-                                <a href="{!! URL::to('/file/'.$file['efolder'])!!}/{!!$file['file']!!}" target="_blank"><img src="{!! URL::to('/image/sm/'.$file['efolder'])!!}/{!! $file['file'] !!}" class="img-thumbnail image-responsive"></a>
+                                <a href="{!! url('/file/'.$file['folder'])!!}/{!!$file['file']!!}" target="_blank"><img src="{!! url('/image/sm/'.folder_encode($file['folder']))!!}/{!! $file['file'] !!}" class="img-thumbnail image-responsive"></a>
                             @else
-                                <a href="{!! URL::to('/file/'.$file['efolder'])!!}/{!!$file['file']!!}" target="_blank">{!!$file['file']!!}</a>
+                                <a href="{!! url('/file/'.folder_encode($file['folder']))!!}/{!!$file['file']!!}" target="_blank">{!!$file['file']!!}</a>
                             @endif
                             {!!Form::text($field."[$key][caption]", 'Caption')->value(@$file['caption'])!!}
-                            {!!Form::hidden($field."[$key][efolder]")->value(@$file['efolder'])->raw()!!}
                             {!!Form::hidden($field."[$key][folder]")->value(@$file['folder'])->raw()!!}
                             {!!Form::hidden($field."[$key][time]")->value(@$file['time'])->raw()!!}
                             {!!Form::hidden($field."[$key][file]")->value(@$file['file'])->raw()!!}

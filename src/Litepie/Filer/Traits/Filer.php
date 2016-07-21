@@ -122,14 +122,12 @@ trait Filer
     {
 
         if (!empty($value)) {
-            $folder = json_decode($value, true);
-
-            return $folder['encrypted'];
+            return folder_encode($value, true, false);
         } else {
             $folder                            = folder_new($this->table, null);
-            $this->attributes['upload_folder'] = json_encode($folder);
+            $this->attributes['upload_folder'] = $folder;
 
-            return $folder['encrypted'];
+            return folder_decode($folder);
         }
 
     }
@@ -143,9 +141,7 @@ trait Filer
      */
     public function setUploadFolderAttribute($value)
     {
-        $folder['folder']                  = folder_decode($value);
-        $folder['encrypted']               = $value;
-        $this->attributes['upload_folder'] = json_encode($folder);
+        $this->attributes['upload_folder'] = folder_decode($value);
     }
 
     /**
@@ -245,6 +241,24 @@ trait Filer
         $original = parent::getOriginal($field);
 
         return json_decode($original);
+    }
+
+    /**
+     * Return the main image for the record.
+     *
+     * @param type|string $size
+     * @param type|string $field
+     *
+     * @return string path
+     */
+    public function defaultImage($size = 'md', $field = 'image')
+    {
+
+        if (!is_array($this->$field) || empty($this->$field)) {
+            return 'test';
+        }
+
+        return 'image/' . $size . '/' . folder_encode($this->$field['folder']) . '/' . $this->$field['file'];
     }
 
 }

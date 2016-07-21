@@ -61,12 +61,8 @@ if (!function_exists('folder_new')) {
         $prefix        = empty($prefix) ? null : $prefix . '/';
         $sufix         = empty($sufix) ? null : '/' . $sufix;
         $folder        = date('Y/m/d/His') . rand(100, 999);
-        $arr['folder'] = $prefix . $folder . $sufix;
+        return $prefix . $folder . $sufix;
 
-        $folder           = folder_encode($folder);
-        $arr['encrypted'] = $prefix . $folder . $sufix;
-
-        return $arr;
     }
 
 }
@@ -79,11 +75,27 @@ if (!function_exists('folder_encode')) {
      *
      * @return string
      */
-    function folder_encode($folder)
+    function folder_encode($folder, $prefix = true, $sufix = true)
     {
         $arr = explode('/', $folder);
 
-        return hashids_encode($arr);
+        if (!$prefix && !$sufix) {
+            return hashids_encode($arr);
+        }
+
+        $pref = $suf = '';
+
+        if($prefix){
+            $suf = $arr[0] . '/';
+            unset($arr[0]);
+        }
+
+        if ($sufix){
+            $pref = '/' . end($arr);
+            unset($arr[key($arr)]);
+        }
+
+        return $suf . hashids_encode(array_values($arr)) . $pref;
     }
 
 }
