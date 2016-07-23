@@ -124,7 +124,7 @@ trait Filer
         if (!empty($value)) {
             return folder_encode($value, true, false);
         } else {
-            $folder = folder_new($this->table, null);
+            $folder                            = folder_new($this->table, null);
             $this->attributes['upload_folder'] = $folder;
 
             return folder_encode($folder, true, false);
@@ -254,7 +254,6 @@ trait Filer
     public function defaultImage($size = 'md', $field = 'image')
     {
         $image = $this->$field;
-
         if (!is_array($image) || empty($image)) {
             return 'img/default/' . $size . '.jpg';
         }
@@ -294,4 +293,39 @@ trait Filer
 
         return $image;
     }
+
+    /**
+     * Return the main image for the record.
+     *
+     * @param type|string $size
+     * @param type|string $field
+     *
+     * @return string path
+     */
+    public function getFile($field, $download = false)
+    {
+        $file = $this->$field;
+
+        $prefix = ($download) ? 'file/' : 'download/';
+
+        if (!is_array($file) || empty($file)) {
+
+            if (in_array($field, $this->uploads['single'])) {
+                return '';
+            } else {
+                return [];
+            }
+
+        }
+
+        if (in_array($field, $this->uploads['single'])) {
+            return $prefix . folder_encode($file['folder']) . '/' . $file['file'];
+        }
+
+        foreach( $file as $key => $fil){
+            $file[$key] = $prefix . folder_encode($fil['folder']) . '/' . $fil['file'];
+        }
+        return $file;
+    }
+
 }

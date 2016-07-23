@@ -135,7 +135,7 @@ class MenuTableSeeder extends Seeder
                 'id'          => 13,
                 'parent_id'   => 3,
                 'key'         => null,
-                'url'         => '',
+                'url'         => '/',
                 'name'        => 'Home',
                 'description' => null,
                 'icon'        => null,

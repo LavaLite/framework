@@ -19,9 +19,9 @@
                 <i class="fa fa-times fa-stack-1x fa-inverse"></i>
             </span>
         </a>
-        {!!Form::text($field."[caption]", 'Caption')->value($files['caption'])!!}
-        {!!Form::hidden($field."[folder]")->value($files['folder'])->raw()!!}
-        {!!Form::hidden($field."[file]")->value($files['file'])->raw()!!}
+        {!!Form::text($field."[caption]", 'Caption')->value(@$files['caption'])!!}
+        {!!Form::hidden($field."[folder]")->value(@$files['folder'])->raw()!!}
+        {!!Form::hidden($field."[file]")->value(@$files['file'])->raw()!!}
     </div>
     <script type="text/javascript">
     $('document').ready(function(){
@@ -38,6 +38,11 @@
     {!!Form::hidden($field)->forceValue('0')!!}
     <div id="sortable_{!!$field!!}">
         @forelse($files as $key => $file)
+<?php
+if (is_object($file)) {
+    $file = (array) $file;
+}
+?>
         <div id="img_box_{!!$field!!}_{!!$key!!}" class="img_box col-md-3 col-sm-3 col-xs-6">
             <div class="img_container">
                 <?php
