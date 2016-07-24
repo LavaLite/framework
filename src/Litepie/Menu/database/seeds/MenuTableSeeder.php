@@ -179,7 +179,7 @@ class MenuTableSeeder extends Seeder
                 'description' => null,
                 'icon'        => 'fa fa-dashboard',
                 'target'      => null,
-                'order'       => 3,
+                'order'       => 1,
                 'status'      => 1,
             ],
 
@@ -192,7 +192,7 @@ class MenuTableSeeder extends Seeder
                 'description' => null,
                 'icon'        => 'fa fa-users',
                 'target'      => null,
-                'order'       => 11,
+                'order'       => 1200,
                 'status'      => 1,
             ],
 
@@ -205,7 +205,7 @@ class MenuTableSeeder extends Seeder
                 'description' => null,
                 'icon'        => 'fa fa-users',
                 'target'      => null,
-                'order'       => 12,
+                'order'       => 1200,
                 'status'      => 1,
             ],
 
@@ -218,7 +218,7 @@ class MenuTableSeeder extends Seeder
                 'description' => null,
                 'icon'        => 'fa fa-user-plus',
                 'target'      => null,
-                'order'       => 13,
+                'order'       => 1201,
                 'status'      => 1,
             ],
 
@@ -231,7 +231,7 @@ class MenuTableSeeder extends Seeder
                 'description' => null,
                 'icon'        => 'fa fa-check-circle-o',
                 'target'      => null,
-                'order'       => 14,
+                'order'       => 1202,
                 'status'      => 1,
             ],
             [
@@ -269,6 +269,19 @@ class MenuTableSeeder extends Seeder
                 'description' => null,
                 'icon'        => null,
                 'target'      => '_blank',
+                'order'       => 13,
+                'status'      => 1,
+            ],
+
+            [
+                'id'          => 100,
+                'parent_id'   => 99,
+                'key'         => null,
+                'url'         => '',
+                'name'        => 'Dummy entry',
+                'description' => null,
+                'icon'        => null,
+                'target'      => '',
                 'order'       => 13,
                 'status'      => 1,
             ],
