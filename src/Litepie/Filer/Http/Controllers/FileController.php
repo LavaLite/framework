@@ -30,12 +30,13 @@ class FileController extends Controller
      *
      * @return Response
      */
-    public function image($size, $table, $folder, $field, $file)
+    public function image($size, $config, $folder, $field, $file)
     {
 
         $size   = $this->getSize($size);
-        $folder = config('filer.folder', 'uploads') . '/' . $table . '/' . folder_decode($folder) . '/' . $field;
-        $image  = Filer::image($folder, $file, $size);
+        $folder = $this->getFolder($config, $folder, $field);
+
+        $image = Filer::image($folder, $file, $size);
 
         $header = [
             'Content-Type'  => 'image/jpg',
@@ -53,6 +54,27 @@ class FileController extends Controller
      *
      * @return array
      */
+    public function getFolder($config, $folder, $field)
+    {
+        $path = config($config . '.upload_folder', config('package.' . $config . '.upload_folder'));
+
+        if (empty($path)) {
+            throw new FileNotFoundException();
+        }
+
+        $folder = folder_decode($folder);
+
+        return config('filer.folder', 'uploads') . '/' . "{$path}/{$folder}/{$field}";
+
+    }
+
+    /**
+     * Get the resize array for the given size.
+     *
+     * @param type $size
+     *
+     * @return array
+     */
     public function getSize($size)
     {
         $size = explode('.', $size);
@@ -60,7 +82,7 @@ class FileController extends Controller
         if (count($size) == 1) {
             $size = config('filer.size.' . $size[0]);
         } elseif (count($size) == 2) {
-            $size = config('package.'. $size[0]. '.image.' . $size[1]);
+            $size = config('package.' . $size[0] . '.image.' . $size[1]);
         } else {
             $size = config(implode('.', $size));
         }
@@ -84,21 +106,27 @@ class FileController extends Controller
      *
      * @return file
      */
-    public function file($table, $folder, $field, $file)
+    public function file($config, $folder, $field, $file)
     {
-        $folder = config('filer.folder', 'uploads') . '/' . $table . '/' . folder_decode($folder) . '/' . $field;
+        $folder = $this->getFolder($config, $folder, $field);
+        $file   = public_path($folder . '/' . $file);
 
         try {
-            $contents = File::get(public_path($folder . '/' . $file));
+            $contents = File::get($file);
         } catch (FileNotFoundException $exception) {
             throw new FileNotFoundException();
         }
 
+        $finfo = finfo_open(FILEINFO_MIME_TYPE);
+        $mime  = finfo_file($finfo, $file);
+        finfo_close($finfo);
+
         $header = [
-            'Content-Type'  => 'application/*',
             'Cache-Control' => 'max-age=864000, public',
             'Expires'       => gmdate('D, d M Y H:i:s \G\M\T', time() + 864000),
             'Pragma'        => 'public'];
+
+        $header['Content-Type'] = $mime;
 
         return Response::make($contents, 200, $header);
     }

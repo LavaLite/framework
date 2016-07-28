@@ -149,10 +149,13 @@ class UserServiceProvider extends ServiceProvider
         $this->publishes([__DIR__ . '/resources/lang' => base_path('resources/lang/vendor/user')], 'lang');
 
         // Publish migrations
-        $this->publishes([__DIR__ . '/database/migrations/' => base_path('database/migrations')], 'migrations');
+        $this->publishes([__DIR__ . '/database/migrations' => base_path('database/migrations')], 'migrations');
 
         // Publish seeds
-        $this->publishes([__DIR__ . '/database/seeds/' => base_path('database/seeds')], 'seeds');
+        $this->publishes([__DIR__ . '/database/seeds' => base_path('database/seeds')], 'seeds');
+
+        // Publish public folder
+        $this->publishes([__DIR__ . '/public' => base_path('public')], 'public');
 
     }
 

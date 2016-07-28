@@ -5,12 +5,12 @@ namespace Litepie\Filer;
 use App;
 use Litepie\Filer\Traits\FileDisplay;
 use Litepie\Filer\Traits\Uploader;
-use Litepie\Filer\Traits\UploadForm;
+use Litepie\Filer\Form\Forms;
 
 class Filer
 {
 
-    use UploadForm, FileDisplay, Uploader;
+    use FileDisplay, Uploader;
 
     public function __construct()
     {
