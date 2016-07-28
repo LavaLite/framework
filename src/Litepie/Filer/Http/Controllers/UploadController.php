@@ -18,21 +18,52 @@ class UploadController extends Controller
     }
 
     /**
-     * @param $url
+     * Upload folder to the given path
      *
-     * @return string
+     * @param type $package
+     * @param type $module
+     * @param type $folder
+     * @param type $field
+     * @param type|string $file
+     *
+     * @return array|json
      */
-    public function upload($table, $folder, $field, $file = 'file')
+    public function upload($config, $folder, $field, $file = 'file')
     {
 
         if (Request::hasFile($file)) {
-            $dfolder         = folder_decode($folder);
-            $array           = Filer::upload(Request::file($file), "{$table}/{$dfolder}/{$field}");
-            $array['folder'] = "{$table}/{$dfolder}/{$field}";
-            Session::push("upload.{$table}.{$field}", $array);
+
+            $ufolder         = $this->uploadFolder($config, $folder, $field);
+            $array           = Filer::upload(Request::file($file), $ufolder);
+            $array['folder'] = folder_decode($folder)."/{$field}";
+            Session::push("upload.{$config}.{$field}", $array);
 
             return $array;
         }
+
+    }
+
+    /**
+     * Return the upload folder path.
+     *
+     * @param type $package
+     * @param type $module
+     * @param type $folder
+     * @param type $field
+     *
+     * @return string
+     */
+    public function uploadFolder($config, $folder, $field)
+    {
+        $path = config($config . '.upload_folder', config('package.' . $config . '.upload_folder'));
+
+        if (empty($path)) {
+            throw new FileNotFoundException();
+        }
+
+        $folder = folder_decode($folder);
+
+        return "{$path}/{$folder}/{$field}";
 
     }
 

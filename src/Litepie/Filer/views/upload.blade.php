@@ -3,8 +3,8 @@
 <script type="text/javascript">
 $(function () {
     $("div#{!!$field!!}").dropzone({
-        url: "{!! $path !!}",
-        maxFiles: {!!$files!!},
+        url: "{!! $url !!}",
+        maxFiles: {!!$count!!},
         acceptedFiles: "{{$mime}}",
         parallelUploads : 1,
         maxfilesexceeded: function(file) {

@@ -56,12 +56,8 @@ if (!function_exists('folder_new')) {
      */
     function folder_new($prefix = null, $sufix = null)
     {
-        $arr = [];
-
-        $prefix        = empty($prefix) ? null : $prefix . '/';
-        $sufix         = empty($sufix) ? null : '/' . $sufix;
         $folder        = date('Y/m/d/His') . rand(100, 999);
-        return $prefix . $folder . $sufix;
+        return $folder;
 
     }
 
@@ -75,29 +71,18 @@ if (!function_exists('folder_encode')) {
      *
      * @return string
      */
-    function folder_encode($folder, $prefix = true, $sufix = true)
+    function folder_encode($folder)
     {
         $arr = explode('/', $folder);
 
-        if (!$prefix && !$sufix) {
-            return hashids_encode($arr);
+        $suffix = '';
+        if (count($arr) > 4) {
+            $suffix = '/' . $arr[4];
+            unset($arr[4]);
         }
 
-        $pref = $suf = '';
-
-        if($prefix){
-            $suf = $arr[0] . '/';
-            unset($arr[0]);
-        }
-
-        if ($sufix){
-            $pref = '/' . end($arr);
-            unset($arr[key($arr)]);
-        }
-
-        return $suf . hashids_encode(array_values($arr)) . $pref;
+        return hashids_encode($arr) . $suffix;
     }
-
 }
 
 if (!function_exists('folder_decode')) {
@@ -124,16 +109,6 @@ if (!function_exists('folder_decode')) {
 
             return $formatFolder($folder);
         }
-
-        if (count($arr) == 2) {
-            $folder = hashids_decode($arr[1]);
-
-            return $arr[0] . '/' . $formatFolder($folder);
-        }
-
-        $folder = hashids_decode($arr[1]);
-
-        return $arr[0] . '/' . $formatFolder($folder) . '/' . $arr[2];
     }
 
 }

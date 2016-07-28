@@ -3,6 +3,7 @@
 namespace Litepie\Filer\Traits;
 
 use Filer as Uploader;
+use Litepie\Filer\Form\Forms;
 use Request;
 use Session;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
@@ -14,11 +15,6 @@ trait Filer
      * Upload field variable.
      **/
     protected $uploads = [];
-
-    /**
-     * Root folder for uploading files.
-     **/
-    protected $uploadfolder;
 
     /**
      * Boot the Sorter trait for this model.
@@ -122,12 +118,12 @@ trait Filer
     {
 
         if (!empty($value)) {
-            return folder_encode($value, true, false);
+            return folder_encode($value, false, false);
         } else {
-            $folder                            = folder_new($this->table, null);
+            $folder                            = folder_new(null, null);
             $this->attributes['upload_folder'] = $folder;
 
-            return folder_encode($folder, true, false);
+            return folder_encode($folder, false, false);
         }
 
     }
@@ -141,7 +137,7 @@ trait Filer
      */
     public function setUploadFolderAttribute($value)
     {
-        $this->attributes['upload_folder'] = folder_decode($value, true, false);
+        $this->attributes['upload_folder'] = folder_decode($value, false, false);
     }
 
     /**
@@ -154,7 +150,7 @@ trait Filer
      */
     public function getUploadURL($field, $file = 'file')
     {
-        return URL::to('upload/' . $this->upload_folder . '/' . $field . '/' . $file);
+        return URL::to('upload/' . $this->config . '/' . $this->upload_folder . '/' . $field . '/' . $file);
     }
 
     /**
@@ -168,8 +164,8 @@ trait Filer
     public function setFileSingle($field, $value)
     {
 
-        if (Session::has('upload.' . $this->table . '.' . $field)) {
-            $value = Request::session()->pull('upload.' . $this->table . '.' . $field);
+        if (Session::has('upload.' . $this->config . '.' . $field)) {
+            $value = Request::session()->pull('upload.' . $this->config . '.' . $field);
             $value = end($value);
             Request::session()->save();
         } elseif (!empty($value)) {
@@ -204,8 +200,8 @@ trait Filer
 
         $session = [];
 
-        if (Session::has('upload.' . $this->table . '.' . $field)) {
-            $session = Request::session()->pull('upload.' . $this->table . '.' . $field);
+        if (Session::has('upload.' . $this->config . '.' . $field)) {
+            $session = Request::session()->pull('upload.' . $this->config . '.' . $field);
             Request::session()->save();
 
         }
@@ -253,18 +249,20 @@ trait Filer
      */
     public function defaultImage($size = 'md', $field = 'image')
     {
-        $image = $this->$field;
+        $image  = $this->$field;
+        $config = $this->config;
+
         if (!is_array($image) || empty($image)) {
             return 'img/default/' . $size . '.jpg';
         }
 
         if (in_array($field, $this->uploads['single'])) {
-            return 'image/' . $size . '/' . folder_encode($image['folder']) . '/' . $image['file'];
+            return "image/{$size}/{$config}/" . folder_encode($image['folder']) . '/' . $image['file'];
         }
 
-        $image = end($image);
+        $image = $image[0];
 
-        return 'image/' . $size . '/' . folder_encode($image['folder']) . '/' . $image['file'];
+        return "image/{$size}/{$config}/" . folder_encode($image['folder']) . '/' . $image['file'];
     }
 
     /**
@@ -322,10 +320,53 @@ trait Filer
             return $prefix . folder_encode($file['folder']) . '/' . $file['file'];
         }
 
-        foreach( $file as $key => $fil){
+        foreach ($file as $key => $fil) {
             $file[$key] = $prefix . folder_encode($fil['folder']) . '/' . $fil['file'];
         }
+
         return $file;
+    }
+
+    /**
+     * Display file upload form.
+     *
+     * @param type|string $field
+     *
+     * @return string path
+     */
+    public function fileUpload($field, $count = null)
+    {
+        $form = new Forms($field, $this->config);
+
+        return $form->setCount($count)
+            ->setUrl($this->getUploadURL($field))
+            ->uploader();
+    }
+
+    /**
+     * Display files.
+     *
+     * @param type|string $field
+     *
+     * @return string path
+     */
+    public function fileShow($field)
+    {
+        $form = new Forms($field, $this->config, $this->$field);
+        return $form->show();
+    }
+
+    /**
+     * Display file editor window.
+     *
+     * @param type|string $field
+     *
+     * @return string path
+     */
+    public function fileEdit($field)
+    {
+        $form = new Forms($field, $this->config, $this->$field);
+        return $form->editor();
     }
 
 }
