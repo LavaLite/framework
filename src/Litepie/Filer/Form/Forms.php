@@ -138,7 +138,7 @@ class Forms
      *
      * @return self
      */
-    public function setCount($count)
+    public function count($count)
     {
 
         if (is_numeric($count) && $count > 0) {
@@ -192,7 +192,7 @@ class Forms
      *
      * @return self
      */
-    public function setConfig($config)
+    public function config($config)
     {
         $this->config = $config;
 
@@ -216,7 +216,7 @@ class Forms
      *
      * @return self
      */
-    public function setField($field)
+    public function field($field)
     {
         $this->field = $field;
 
@@ -240,7 +240,7 @@ class Forms
      *
      * @return self
      */
-    public function setFiles($files)
+    public function files($files)
     {
 
         if (!is_array($files) && !is_object($files)) {
@@ -277,7 +277,7 @@ class Forms
      *
      * @return self
      */
-    public function setMime($mime, $force = true)
+    public function mime($mime, $force = true)
     {
 
         if (is_null($this->mime) || $force) {
@@ -304,7 +304,7 @@ class Forms
      *
      * @return self
      */
-    public function setUrl($url, $force = true)
+    public function url($url, $force = true)
     {
 
         if (is_null($this->url) || $force) {
@@ -331,7 +331,7 @@ class Forms
      *
      * @return self
      */
-    public function setSize($size)
+    public function size($size)
     {
         $this->size = $size;
 
