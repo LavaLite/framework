@@ -68,7 +68,7 @@ class Forms
     public function show()
     {
         $this->view('filer::show', false);
-        return $this->render();
+        return $this;
     }
 
     /**
@@ -78,7 +78,7 @@ class Forms
     public function editor()
     {
         $this->view('filer::editor', false);
-        return $this->render();
+        return $this;
     }
 
     /**
@@ -90,7 +90,7 @@ class Forms
         $this->url($url, false);
         $this->view('filer::upload', false);
         $this->mime('image/*', false);
-        return $this->render();
+        return $this;
     }
 
     /**

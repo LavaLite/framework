@@ -1,6 +1,17 @@
 @include('public::notifications')
-<div class="panel panel-default">
-    <div class="panel-heading">Change password  <small>{{ users('name') }}</small></div>
+<div class="dashboard-content">
+<div class="panel panel-color panel-inverse">
+    <div class="panel-heading">
+        <h3 class="panel-title">
+            Change 
+            <span>
+                password
+            </span>
+        </h3>
+        <p class="panel-sub-title m-t-5 text-muted">
+            Change password for {{ users('name') }}
+        </p>
+    </div>
     <div class="panel-body">
       {!!Form::vertical_open()
       ->id('contact')
@@ -26,4 +37,5 @@
 
       {!! Form::close() !!}
     </div>
+</div>
 </div>
