@@ -276,17 +276,18 @@ trait Filer
     public function getImages($size = 'md', $field = 'image')
     {
         $image = $this->$field;
-
+        $config = $this->config;
+        
         if (!is_array($image) || empty($image)) {
             return ['img/default/' . $size . '.jpg'];
         }
 
         if (in_array($field, $this->uploads['single'])) {
-            return ['image/' . $size . '/' . folder_encode($image['folder']) . '/' . $image['file']];
+            return ["image/{$size}/{$config}/" . folder_encode($image['folder']) . '/' . $image['file']];
         }
 
         foreach ($image as $key => $img) {
-            $image[$key] = 'image/' . $size . '/' . folder_encode($img['folder']) . '/' . $img['file'];
+            $image[$key] = "image/{$size}/{$config}/" . folder_encode($img['folder']) . '/' . $img['file'];
         }
 
         return $image;
