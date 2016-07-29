@@ -339,8 +339,13 @@ trait Filer
     {
         $form = new Forms($field, $this->config);
 
-        return $form->count($count)
-            ->url($this->getUploadURL($field))
+        if (in_array($field, $this->uploads['single'])) {
+            $form->count(1, true);
+        } else {
+            $form->count($count);
+        }
+
+        return $form->url($this->getUploadURL($field))
             ->uploader();
     }
 
@@ -354,6 +359,9 @@ trait Filer
     public function fileShow($field)
     {
         $form = new Forms($field, $this->config, $this->$field);
+        if (in_array($field, $this->uploads['single'])) {
+            $form->count(1, true);
+        }
         return $form->show();
     }
 
@@ -367,6 +375,9 @@ trait Filer
     public function fileEdit($field)
     {
         $form = new Forms($field, $this->config, $this->$field);
+        if (in_array($field, $this->uploads['single'])) {
+            $form->count(1, true);
+        }
         return $form->editor();
     }
 
