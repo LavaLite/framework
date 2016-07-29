@@ -54,9 +54,9 @@ class Forms
      */
     public function __construct($field, $config, $files = [])
     {
-        $this->setField($field);
-        $this->setFiles($files);
-        $this->setConfig($config);
+        $this->field($field);
+        $this->files($files);
+        $this->config($config);
 
     }
 
@@ -67,7 +67,7 @@ class Forms
      */
     public function show()
     {
-        $this->setView('filer::show', false);
+        $this->view('filer::show', false);
         return $this->render();
     }
 
@@ -77,7 +77,7 @@ class Forms
      */
     public function editor()
     {
-        $this->setView('filer::editor', false);
+        $this->view('filer::editor', false);
         return $this->render();
     }
 
@@ -87,9 +87,9 @@ class Forms
      */
     public function uploader($url = null)
     {
-        $this->setUrl($url, false);
-        $this->setView('filer::upload', false);
-        $this->setMime('image/*', false);
+        $this->url($url, false);
+        $this->view('filer::upload', false);
+        $this->mime('image/*', false);
         return $this->render();
     }
 
@@ -165,7 +165,7 @@ class Forms
      *
      * @return self
      */
-    public function setView($view, $force = true)
+    public function view($view, $force = true)
     {
 
         if (is_null($this->view) || $force) {
