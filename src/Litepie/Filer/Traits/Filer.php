@@ -339,8 +339,8 @@ trait Filer
     {
         $form = new Forms($field, $this->config);
 
-        return $form->setCount($count)
-            ->setUrl($this->getUploadURL($field))
+        return $form->count($count)
+            ->url($this->getUploadURL($field))
             ->uploader();
     }
 
