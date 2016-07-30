@@ -215,6 +215,26 @@ if (!function_exists('pager_array')) {
 
 }
 
+if (!function_exists('user_type')) {
+    /**
+     * Get user id.
+     *
+     * @param string $guard
+     *
+     * @return int
+     */
+    function user_type($guard = null)
+    {
+        $guard = is_null($guard) ? config('auth.guard') : $guard;
+        if (Auth::guard($guard)->check()) {
+            $user = Auth::guard($guard)->user();
+            return get_class($user);
+        }
+        return null;
+    }
+
+}
+
 if (!function_exists('user_id')) {
     /**
      * Get user id.
@@ -226,13 +246,16 @@ if (!function_exists('user_id')) {
     function user_id($guard = null)
     {
 
+        $guard = is_null($guard) ? config('auth.guard') : $guard;
+
         if (Auth::guard($guard)->check()) {
             return Auth::guard($guard)->user()->id;
         }
-
+        return null;
     }
 
 }
+
 
 if (!function_exists('users')) {
     /**
@@ -245,10 +268,12 @@ if (!function_exists('users')) {
     function users($property, $guard = null)
     {
 
+        $guard = is_null($guard) ? config('auth.guard') : $guard;
+
         if (Auth::guard($guard)->check()) {
             return Auth::guard($guard)->user()->$property;
         }
-
+        return null;
     }
 
 }
