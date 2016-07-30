@@ -77,9 +77,9 @@ class RequestCriteria implements Criteria
                 $model = $model->where(function ($query) use ($fields, $searchData) {
 
                     $mergBetween = function ($array, $default) {
-                        $array   = array_filter($array);
-                        $default = array_filter($default);
-                        return array_merge($default, $array);
+                        $array   = array_values($array);
+                        $default = array_values($default);
+                        return $array+$default;
                     };
 
                     foreach ($fields as $field => $condition) {
