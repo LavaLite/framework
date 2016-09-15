@@ -1,6 +1,6 @@
 <?php
 
-namespace Litepie\User\Traits\Permissions;
+namespace Litepie\User\Traits\Acl;
 
 /**
  * Trait InteractsWithPermissions.

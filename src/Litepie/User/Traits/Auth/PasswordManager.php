@@ -20,13 +20,11 @@ trait PasswordManager
      * @param  string|null                 $token
      * @return \Illuminate\Http\Response
      */
-    function showResetForm($token = null)
+    function showResetForm($guard = null, $token = null)
     {
 
-        $guard = Request::input(config('user.params.type'), 'role');
-
         if (is_null($token)) {
-            return $this->getEmail();
+            return $this->getEmail($guard);
         }
 
         return $this->theme->of($this->getView('reset'), compact('token'))
@@ -34,13 +32,24 @@ trait PasswordManager
     }
 
     /**
+     * Reset the given user's password.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    function postReset($guard, Request $request)
+    {
+        dd('f');
+        return $this->reset($request);
+    }
+
+    /**
      * Display the form to request a password reset link.
      *
      * @return \Illuminate\Http\Response
      */
-    function showLinkRequestForm()
+    function showLinkRequestForm($guard = null)
     {
-        $guard = Request::input(config('user.params.type'), 'role');
 
         return $this->theme->of($this->getView('password'), compact('guard'))->render();
     }
@@ -49,12 +58,21 @@ trait PasswordManager
      * Display the form to request a password reset link.
      * @return \Illuminate\Http\Response
      */
-    function getEmail()
+    function getEmail($guard = null)
     {
 
-        $guard = Request::input(config('user.params.type'), 'role');
-
         return $this->theme->of($this->getView('password'), compact('guard'))->render();
+    }
+
+    /**
+     * Send a reset link to the given user.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    function postEmail($guard = null, Request $request)
+    {
+        return $this->sendResetLinkEmail($request);
     }
 
 }

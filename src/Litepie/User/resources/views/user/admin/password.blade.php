@@ -5,10 +5,7 @@
     <!-- /.login-logo -->
     <div class="login-box-body">
         @include('public::notifications')
-        {!!
-        Form::vertical_open()
-        -> action('password/email')
-        !!}
+        {!! Form::vertical_open() !!}
         {!! csrf_field() !!}
         @if (Session::has('status'))
         <div class="alert alert-info">
@@ -32,7 +29,7 @@
             <!-- /.col -->
         </div>
         {!!Form::Close()!!}
-        <a href="{{trans_url("/login?role=$guard")}}">Back to login</a><br>
+        <a href="{{trans_url("/{$guard}/login")}}">Back to login</a><br>
     </div>
     <!-- /.login-box-body -->
 </div>

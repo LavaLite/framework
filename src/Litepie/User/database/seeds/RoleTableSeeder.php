@@ -21,22 +21,46 @@ class RoleTableSeeder extends Seeder
             ],
         ]);
 
-        DB::table('role_user')->insert([
+        DB::table('roleables')->insert([
             [
-                'user_id' => 1,
-                'role_id' => 1,
+                'role_id'       => 1,
+                'roleable_id'   => 1,
+                'roleable_type' => 'App\\User',
             ],
             [
-                'user_id' => 1,
-                'role_id' => 2,
+                'role_id'       => 2,
+                'roleable_id'   => 1,
+                'roleable_type' => 'App\\User',
             ],
             [
-                'user_id' => 2,
-                'role_id' => 2,
+                'role_id'       => 2,
+                'roleable_id'   => 2,
+                'roleable_type' => 'App\\User',
             ],
             [
-                'user_id' => 3,
-                'role_id' => 3,
+                'role_id'       => 3,
+                'roleable_id'   => 3,
+                'roleable_type' => 'App\\User',
+            ],
+            [
+                'role_id'       => 1,
+                'roleable_id'   => 1,
+                'roleable_type' => 'App\\Client',
+            ],
+            [
+                'role_id'       => 2,
+                'roleable_id'   => 1,
+                'roleable_type' => 'App\\Client',
+            ],
+            [
+                'role_id'       => 2,
+                'roleable_id'   => 2,
+                'roleable_type' => 'App\\Client',
+            ],
+            [
+                'role_id'       => 3,
+                'roleable_id'   => 3,
+                'roleable_type' => 'App\\Client',
             ],
         ]);
     }

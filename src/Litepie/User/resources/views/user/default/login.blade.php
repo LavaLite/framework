@@ -6,13 +6,10 @@
     <div class="text-center">
         <h4 class="text-uppercase">Log In</h4>
     </div>
-            <!--
-@include('public::notifications')
--->
+            @include('public::notifications')
             {!!Form::vertical_open()
             ->id('login')
             ->method('POST')
-            ->action('login')
             ->class('white-row')!!}
         <div class="row">
             <div class="col-xs-12">
@@ -53,10 +50,10 @@
 
         <div class="form-group m-t-30">
             <div class="col-sm-7">
-                <a href="{{trans_url("/password/reset?role=$guard")}}" class="text-muted"><i class="fa fa-lock m-r-5"></i> Forgot your password?</a>
+                <a href="{{trans_url("$guard/password/reset")}}" class="text-muted"><i class="fa fa-lock m-r-5"></i> Forgot your password?</a>
             </div>
             <div class="col-sm-5 text-right">
-                <a href="{{trans_url("/register?role=$guard")}}" class="text-muted">Create an account</a>
+                <a href="{{trans_url("$guard/register")}}" class="text-muted">Create an account</a>
             </div>
         </div>
         </div>

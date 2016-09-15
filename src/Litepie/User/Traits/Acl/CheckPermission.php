@@ -1,9 +1,8 @@
 <?php
 
-namespace Litepie\User\Traits;
+namespace Litepie\User\Traits\Acl;
 
-use Litepie\User\Traits\Permissions\InteractsWithPermissions;
-use Litepie\User\Traits\Users\HasRoles;
+
 
 /**
  * Trait HasPermission.
@@ -122,6 +121,7 @@ trait CheckPermission
     protected function getFreshRolesPermissions()
     {
         $roles       = $this->roles()->get(['permissions']);
+        print_r($roles);
         $permissions = [];
 
         foreach ($roles as $role) {
@@ -143,6 +143,7 @@ trait CheckPermission
     protected function getFreshAllPermissions()
     {
         $permissionsRoles = $this->getRolesPermissions(true);
+print_r($permissionsRoles) ;
 
         $permissions = empty($this->permissions) ? [] : $this->permissions;
         $permissions = array_merge($permissions, $permissionsRoles);

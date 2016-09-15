@@ -14,12 +14,12 @@ if (is_object($file)) {
                 $ext  = strtolower($info['extension']);
             ?>
             @if (in_array($ext, ['jpg','jpeg', 'png', 'gif']) )
-                <a href='{!! url("/file/{$config}/".folder_encode($file["folder"]))!!}/{!!$file["file"]!!}' target="_blank">
+                <a href='{!!$file["url"]!!}' target="_blank">
                     <img src='{!! url("/image/{$size}/{$config}/ ". folder_encode($file["folder"]))!!}/{!! $file["file"] !!}' class="img-thumbnail image-responsive">
                 </a>
             @else
                 4<div id="file">
-                    <a href='{!! url("/file/{$config}/".folder_encode($file["folder"]))!!}/{!!$file["file"]!!}" target="_blank">{!!$file["file"]!!}</a>
+                    <a href='{!!$file["url"]!!}" target="_blank">{!!$file["file"]!!}</a>
                 </div>
             @endif
             <div class="btn_container">
@@ -46,7 +46,7 @@ if (is_object($file)) {
                     </div>
                     <div class="modal-body">
                         @if (in_array($ext, ['jpg','jpeg', 'png', 'gif']) )
-                            <a href='{!! url("/file/{$config}/".folder_encode($file["folder"]))!!}/{!!$file["file"]!!}' target="_blank"><img src='{!! url("/image/{$size}/{$config}/".folder_encode($file["folder"]))!!}/{!! $file["file"] !!}'' class="img-thumbnail image-responsive"></a>
+                            <a href='{!!$file["url"]!!}' target="_blank"><img src='{!! url("/image/{$size}/{$config}/".folder_encode($file["folder"]))!!}/{!! $file["file"] !!}'' class="img-thumbnail image-responsive"></a>
                         @else
                             <a href="{!! url("/file/{$config}".folder_encode($file["folder"]))!!}/{!!$file["file"]!!}" target="_blank">{!!$file["file"]!!}</a>
                         @endif

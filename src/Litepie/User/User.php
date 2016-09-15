@@ -200,8 +200,8 @@ class User
     public function can($permission, $force = false)
     {
 
-        if (!is_null($this->getUser())) {
-            return $this->getUser()->canDo($permission, $force);
+        if ($user = $this->getUser()) {
+            return $user->canDo($permission, $force);
         }
 
         return false;
@@ -452,6 +452,16 @@ class User
         Form::populate($user);
 
         return view('user::public.admin.edit', compact('user'));
+    }
+
+    /**
+     * Return the profile update page.
+     *
+     * @return Response
+     */
+    public function all()
+    {
+        return $this->user->all();
     }
 
     /**

@@ -3,6 +3,7 @@
 namespace Litepie\User\Traits\Auth;
 
 use Auth;
+use Request;
 use Theme;
 
 /**
@@ -22,11 +23,11 @@ trait Common
     {
         $guard = $this->getViewFolder();
 
-        if (view()->exists("user::public.$guard.$view")) {
-            return "user::public.$guard.$view";
+        if (view()->exists("user::user.$guard.$view")) {
+            return "user::user.$guard.$view";
         }
 
-        return "user::public.default.$view";
+        return "user::user.default.$view";
 
     }
 
@@ -77,7 +78,10 @@ trait Common
      */
     protected function getGuard()
     {
-        return property_exists($this, 'guard') ? $this->guard : config('auth.defaults.guard');
+
+        return property_exists($this, 'guard') && !is_null($this->guard) 
+        ? $this->guard : Request::route('guard');
+
     }
 
     /**
@@ -101,7 +105,7 @@ trait Common
      *
      * @return string|null
      */
-    protected function getViewFolder($default = 'public')
+    protected function getViewFolder($default = 'user')
     {
         $guard = $this->getGuard();
 

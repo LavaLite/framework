@@ -154,6 +154,19 @@ trait Filer
     }
 
     /**
+     * Return url to upload the file.
+     *
+     * @param srting $field
+     * @param srting|string $file
+     *
+     * @return null
+     */
+    public function getFileURL($field, $file = 'file')
+    {
+        return URL::to('file/' . $this->config . '/' . $this->upload_folder . '/' . $field . '/' . $file);
+    }
+
+    /**
      * Set single file field after upload.
      *
      * @param srting $field
@@ -318,11 +331,12 @@ trait Filer
         }
 
         if (in_array($field, $this->uploads['single'])) {
-            return $prefix . folder_encode($file['folder']) . '/' . $file['file'];
+            return $file['url'] = url($prefix . folder_encode($file['folder']) . '/' . $file['file']);
+            return $file;
         }
 
         foreach ($file as $key => $fil) {
-            $file[$key] = $prefix . folder_encode($fil['folder']) . '/' . $fil['file'];
+            $file[$key]['url'] = url($prefix . folder_encode($fil['folder']) . '/' . $fil['file']);
         }
 
         return $file;
@@ -358,7 +372,7 @@ trait Filer
      */
     public function fileShow($field)
     {
-        $form = new Forms($field, $this->config, $this->$field);
+        $form = new Forms($field, $this->config, $this->getFile($field));
         if (in_array($field, $this->uploads['single'])) {
             $form->count(1, true);
         }
@@ -374,7 +388,7 @@ trait Filer
      */
     public function fileEdit($field)
     {
-        $form = new Forms($field, $this->config, $this->$field);
+        $form = new Forms($field, $this->config,  $this->getFile($field));
         if (in_array($field, $this->uploads['single'])) {
             $form->count(1, true);
         }

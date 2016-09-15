@@ -1,6 +1,6 @@
 <?php
 
-namespace Litepie\User\Traits\Users;
+namespace Litepie\User\Traits\Acl;
 
 /**
  * Trait HasRoles.
@@ -77,10 +77,9 @@ trait HasRoles
     public function roles()
     {
         $roleModel = config('user.role.model', 'Litepie\User\Role');
-        $roleUserTable = config('user.role_user.table', 'role_user');
-        $roleKey = config('user.role.key', 'role_id');
+        $roleKey = config('user.role.key', 'roleable');
 
-        return $this->belongsToMany($roleModel, $roleUserTable, 'user_id', $roleKey);
+        return $this->morphToMany($roleModel, $roleKey);
     }
 
     /**

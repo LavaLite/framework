@@ -14,7 +14,6 @@
     {!!Form::vertical_open()
             ->id('login')
             ->method('POST')
-            ->action('/login')
             ->class('white-row')!!}
       <div class="form-group has-feedback">
         {!!Form::text('email')->raw()!!}
@@ -36,7 +35,7 @@
       </div>
       {!! Form::hidden(config('user.params.type'))!!}
       {!!Form::Close()!!}
-    <a href="{{trans_url("/password/reset?role=$guard")}}"> I forgot my password </a>
+    <a href="{{trans_url("/$guard/password/reset")}}"> I forgot my password </a>
   </div><!-- /.login-box-body -->
 </div><!-- /.login-box -->
 <script>

@@ -19,7 +19,7 @@
         </div>
         <div class="form-group m-t-30">
             <div class="col-sm-7">
-                <a href="{{trans_url("/login?role=$guard")}}" class="text-muted"><i class="fa fa-lock m-r-5"></i> Back to login</a>
+                <a href="{{trans_url("$guard/login")}}" class="text-muted"><i class="fa fa-lock m-r-5"></i> Back to login</a>
             </div>
         </div>
         {!! Form::close() !!}

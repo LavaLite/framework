@@ -28,19 +28,21 @@ Route::group([
         Route::post('password', 'AdminWebController@postPassword');
     });
 
-    Route::get('profile', 'UserWebController@getProfile');
-    Route::get('password', 'UserWebController@getPassword');
+    Route::group(['prefix' => '{guard?}'], function () {
+
+        Route::get('password', 'UserWebController@getPassword');
+        Route::post('password', 'UserWebController@postPassword');
+
+        Route::get('profile', 'UserWebController@getProfile');
+        Route::post('profile', 'UserWebController@postProfile');
+
+        Route::get('api/v1/login', 'Auth\AuthController@apiLogin');
+        Route::get('login/{provider}', 'Auth\AuthController@redirectToProvider');
+        Route::get('login/{provider}/callback', 'Auth\AuthController@handleProviderCallback');
+
+        Route::get('verify/send', 'Auth\AuthController@sendVerification');
+        Route::get('verify/{code?}', 'Auth\AuthController@verify');
+    });
+
     Route::get('locked', 'UserWebController@locked');
-
-    Route::post('profile', 'UserWebController@postProfile');
-    Route::post('password', 'UserWebController@postPassword');
-
-    Route::get('api/v1/login', 'Auth\AuthController@apiLogin');
-    Route::get('login/{provider}', 'Auth\AuthController@redirectToProvider');
-    Route::get('login/{provider}/callback', 'Auth\AuthController@handleProviderCallback');
-
-    Route::get('verify/send', 'Auth\AuthController@sendVerification');
-    Route::get('verify/{code?}', 'Auth\AuthController@verify');
-    Route::get('locked', 'Auth\AuthController@locked');
-
 });

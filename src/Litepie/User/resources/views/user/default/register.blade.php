@@ -14,7 +14,6 @@
 
     {!!Form::vertical_open()
     ->id('contact')
-    ->action('register')
     ->method('POST')
     ->class('white-row')!!}
     <div class="row">

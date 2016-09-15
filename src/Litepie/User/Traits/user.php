@@ -1,12 +1,21 @@
 <?php
 
-namespace Litepie\User\Traits\Users;
+namespace Litepie\User\Traits;
+
 
 /**
- * Trait UserProfile.
+ * Trait HasPermission.
  */
-trait UserProfile
+trait User
 {
+    /**
+     * User morph to meny relation.
+     */
+    public function user()
+    {
+        return $this->morphTo();
+    }
+
     /**
      * Returns the profile picture of the user.
      *
@@ -21,7 +30,7 @@ trait UserProfile
             return trans_url($photo['folder'] . '/' . $photo['file']);
         }
 
-        if ($this->sex == 'Female') {
+        if ($this->sex == 'female') {
             return trans_url('img/avatar/female.png');
         }
 
