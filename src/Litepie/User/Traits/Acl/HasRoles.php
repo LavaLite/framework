@@ -43,16 +43,15 @@ trait HasRoles
             ->first() != null;
     }
 
+
     /**
-     * Returns if the given user has an specific role.
-     *
-     * @param string $role
+     * check has superuser role.
      *
      * @return bool
      */
-    public function is($role)
+    public function isSuperUser()
     {
-        return $this->hasRole($role);
+        return $this->hasRole(config('litepie.user.superuser_role', 'superuser'));
     }
 
     /**
@@ -76,9 +75,8 @@ trait HasRoles
      */
     public function roles()
     {
-        $roleModel = config('user.role.model', 'Litepie\User\Role');
-        $roleKey = config('user.role.key', 'roleable');
-
+        $roleModel = config('litepie.user.role.model', 'Litepie\User\Models\Role');
+        $roleKey = config('litepie.user.role.key', 'roleable');       
         return $this->morphToMany($roleModel, $roleKey);
     }
 

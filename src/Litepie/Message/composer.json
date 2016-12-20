@@ -1,0 +1,21 @@
+{
+    "name": "litepie/message",
+    "description": "Message package for litepie.",
+    "keywords": ["litepie", "Message"],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Litepie",
+            "email": "info@litepie.org"
+        }
+    ],
+    "require": {
+        "php": ">=5.5.9"
+    },
+    "autoload": {
+        "psr-4": {
+            "Litepie\\Message\\": "src/Litepie/Message"
+        }
+    },
+    "minimum-stability": "dev"
+}

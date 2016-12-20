@@ -3,6 +3,7 @@
 namespace Litepie\User\Repositories\Presenter;
 
 use League\Fractal\TransformerAbstract;
+use Hashids;
 
 class UserListTransformer extends TransformerAbstract
 {
@@ -10,11 +11,10 @@ class UserListTransformer extends TransformerAbstract
     {
         return [
             'id'                => $user->getRouteKey(),
-            'reporting_to'      => $user->reporting_to,
             'name'              => $user->name,
             'email'             => $user->email,
-            'password'          => $user->password,
-            'active'            => $user->active,
+            'parent_id'         => $user->parent_id,
+            'api_token'         => $user->api_token,
             'remember_token'    => $user->remember_token,
             'sex'               => $user->sex,
             'dob'               => $user->dob,
@@ -29,7 +29,10 @@ class UserListTransformer extends TransformerAbstract
             'country'           => $user->country,
             'photo'             => $user->photo,
             'web'               => $user->web,
-            'social_login'      => $user->social_login,
+            'permissions'       => $user->permissions,
+            'status'            => trans('app.'.$user->status),
+            'created_at'        => format_date($user->created_at),
+            'updated_at'        => format_date($user->updated_at),
         ];
     }
 }

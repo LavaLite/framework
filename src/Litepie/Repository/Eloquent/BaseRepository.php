@@ -5,7 +5,7 @@ namespace Litepie\Repository\Eloquent;
 use Exception;
 use Illuminate\Container\Container as Application;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
-use Illuminate\Database\Eloquent\Model;
+use Litepie\Database\Model;
 use Illuminate\Support\Collection;
 use Litepie\Contracts\Repository\Criteria;
 use Litepie\Contracts\Repository\Presentable;
@@ -135,7 +135,7 @@ abstract class BaseRepository implements Repository, RepositoryCriteria
         $model = $this->app->make($this->model());
 
         if (!$model instanceof Model) {
-            throw new RepositoryException("Class {$this->model()} must be an instance of Illuminate\\Database\\Eloquent\\Model");
+            throw new RepositoryException("Class {$this->model()} must be an instance of Litepie\\Database\\Model");
         }
 
         return $this->model = $model;

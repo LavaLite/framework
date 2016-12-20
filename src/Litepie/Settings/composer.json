@@ -1,0 +1,21 @@
+{
+    "name": "litepie/settings",
+    "description": "Settings package for litepie.",
+    "keywords": ["lavalite", "Settings"],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Lavalite",
+            "email": "info@lavalite.org"
+        }
+    ],
+    "require": {
+        "php": ">=5.5.9"
+    },
+    "autoload": {
+        "psr-4": {
+            "Litepie\\Settings\\": "src/Litepie/Settings"
+        }
+    },
+    "minimum-stability": "dev"
+}

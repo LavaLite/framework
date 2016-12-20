@@ -1,0 +1,21 @@
+{
+    "name": "litepie/block",
+    "description": "Block package for litepie.",
+    "keywords": ["litepie","litepie", "Block"],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Litepie",
+            "email": "info@litepie.org"
+        }
+    ],
+    "require": {
+        "php": ">=5.5.9"
+    },
+    "autoload": {
+        "psr-4": {
+            "Litepie\\Block\\": "src/Litepie/Block"
+        }
+    },
+    "minimum-stability": "dev"
+}

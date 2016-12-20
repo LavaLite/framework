@@ -1,0 +1,22 @@
+{
+    "name": "litepie/page",
+    "description": "Page package for Litepie framework",
+    "keywords": ["litepie", "page", "laravel"],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Lava Lite",
+            "email": "info@litepie.org"
+        }
+    ],
+    "require": {
+        "php": ">=5.5.9"
+    },
+    "autoload": {
+
+        "psr-4": {
+            "Litepie\\Page\\": "src/Litepie/Page"
+        }
+    },
+    "minimum-stability": "dev"
+}

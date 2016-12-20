@@ -1,0 +1,21 @@
+{
+    "name": "litepie/task",
+    "description": "Task package for litepie.",
+    "keywords": ["litepie", "Task"],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Litepie",
+            "email": "info@litepie.org"
+        }
+    ],
+    "require": {
+        "php": ">=5.5.9"
+    },
+    "autoload": {
+        "psr-4": {
+            "Litepie\\Task\\": "src/Litepie/Task"
+        }
+    },
+    "minimum-stability": "dev"
+}

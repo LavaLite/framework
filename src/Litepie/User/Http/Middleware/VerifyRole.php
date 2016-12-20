@@ -30,7 +30,7 @@ class VerifyRole
 
         }
 
-        if (user($guard)->new && config('user.verify_email')) {
+        if (user($guard)->new && config('litepie.user.verify_email')) {
 
             if ($request->ajax() || $request->wantsJson()) {
                 return response('Unauthorized.', 401);
@@ -40,7 +40,7 @@ class VerifyRole
 
         }
 
-        if (!user($guard)->active && config('user.verify_email')) {
+        if (!user($guard)->active && config('litepie.user.verify_email')) {
             throw new InvalidAccountException('Account is not active.');
         }
 

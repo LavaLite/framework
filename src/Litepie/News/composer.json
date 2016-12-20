@@ -1,0 +1,21 @@
+{
+    "name": "litepie/news",
+    "description": "News package for litepie.",
+    "keywords": ["lavalite", "News"],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Lavalite",
+            "email": "info@lavalite.org"
+        }
+    ],
+    "require": {
+        "php": ">=5.5.9"
+    },
+    "autoload": {
+        "psr-4": {
+            "Litepie\\News\\": "src/Litepie/News"
+        }
+    },
+    "minimum-stability": "dev"
+}

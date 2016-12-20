@@ -1,7 +1,7 @@
 {
     "name": "litepie/hashids",
     "description": "The Litepie hashid package",
-    "keywords": ["lavalite", "hash", "hashid"],
+    "keywords": ["litepie", "hash", "hashid"],
     "license": "MIT",
     "authors": [
         {

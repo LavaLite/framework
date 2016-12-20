@@ -33,6 +33,7 @@ class RequestCriteria implements Criteria
     {
 
         $fieldsSearchable   = $repository->getFieldsSearchable();
+
         $search             = $this->request->get(config('repository.criteria.params.search', 'search'), null);
         $searchFields       = $this->request->get(config('repository.criteria.params.searchFields', 'searchFields'), null);
         $columns            = $this->request->get(config('repository.criteria.params.columns', 'columns'), null);

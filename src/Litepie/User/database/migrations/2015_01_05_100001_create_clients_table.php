@@ -20,7 +20,6 @@ class CreateClientsTable extends Migration
             $table->string('name', 100)->nullable();
             $table->string('email')->unique();
             $table->string('password', 100);
-            $table->enum('status', ['New', 'Active', 'Suspended'])->default('New');
             $table->string('api_token', 60)->unique();
             $table->string('remember_token', 255)->nullable();
             $table->enum('sex', ['', 'male', 'female'])->nullable();
@@ -37,9 +36,12 @@ class CreateClientsTable extends Migration
             $table->string('photo', 500)->nullable();
             $table->string('web', 100)->nullable();
             $table->longText('permissions')->nullable();
+            $table->enum('status', ['draft', 'complete', 'verify', 'approve', 'publish', 'unpublish', 'archive'])->default('draft')->nullable();
+            $table->integer('user_id')->nullable();
+            $table->string('user_type',50)->nullable();
+            $table->string('upload_folder', 100)->nullable();
             $table->softDeletes();
-            $table->nullableTimestamps();
-        });
+            $table->nullableTimestamps();        });
     }
 
     /**

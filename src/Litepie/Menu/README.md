@@ -1,10 +1,10 @@
-This is a Laravel 5 package that provides menu interface for lavalite framework.
+This is a Laravel 5 package that provides menu interface for litepie framework.
 
 ## Installation
 
-Begin by installing this package through Composer. Edit your project's `composer.json` file to require `lavalite/menu`.
+Begin by installing this package through Composer. Edit your project's `composer.json` file to require `litepie/menu`.
 
-    "lavalite/menu": "dev-master"
+    "litepie/menu": "dev-master"
 
 Next, update Composer from the Terminal:
 

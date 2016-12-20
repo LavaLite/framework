@@ -12,12 +12,13 @@ class CreateRolesTable extends Migration
     {
         Schema::create('roles', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('name')->unique();
+            $table->string('key')->unique();
+            $table->string('name');
             $table->longText('permissions')->nullable();
             $table->timestamps();
         });
         
-        Schema::create('roleable', function (Blueprint $table) {
+        Schema::create('roleables', function (Blueprint $table) {
             $table->integer('role_id')->unsigned()->index();
             $table->integer('roleable_id')->unsigned()->index();
             $table->string('roleable_type', 50)->nullable();
@@ -30,6 +31,6 @@ class CreateRolesTable extends Migration
     public function down()
     {
         Schema::drop('roles');
-        Schema::drop('roleable');
+        Schema::drop('roleables');
     }
 }

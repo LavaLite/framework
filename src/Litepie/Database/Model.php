@@ -34,9 +34,9 @@ class Model extends Eloquent
      *
      * @param $callback  \Closure
      */
-    protected static function addSetterManipulator(Closure $callback)
+    protected static function addSetterManipulator($key, Closure $callback)
     {
-        static::$setter_manipulators[] = $callback;
+        static::$setter_manipulators[$key] = $callback;
     }
 
     /**
@@ -54,9 +54,9 @@ class Model extends Eloquent
      *
      * @param $callback  \Closure
      */
-    protected static function addGetterManipulator(Closure $callback)
+    protected static function addGetterManipulator($key, Closure $callback)
     {
-        static::$getter_manipulators[] = $callback;
+        static::$getter_manipulators[$key] = $callback;
     }
 
     /**
@@ -69,7 +69,6 @@ class Model extends Eloquent
     public function getAttribute($key)
     {
         $value = parent::getAttribute($key);
-
         foreach (static::$getter_manipulators as $manipulator) {
             $value = $manipulator($this, $key, $value);
         }
@@ -132,7 +131,6 @@ class Model extends Eloquent
         }
 
         foreach ($config as $key => $val) {
-
             if (property_exists(get_called_class(), $key)) {
                 $this->$key = $val;
             }
@@ -146,17 +144,13 @@ class Model extends Eloquent
      *
      * @return array
      */
-    public function checkGetSetAttribute($variable, $field, $table)
+    public function checkGetSetAttribute($variable, $field)
     {
-
-        if (!property_exists(get_called_class(), $variable) && empty($this->$variable)) {
+        if (!property_exists($this, $variable) && empty($this->$variable)) {
             return false;
         }
 
-        $array[$table] = array_flip($this->$variable);
-        $array         = array_dot($array);
-
-        if (array_key_exists($table . '.' . $field, $array)) {
+        if (in_array($field, $this->$variable)) {
             return true;
         }
 

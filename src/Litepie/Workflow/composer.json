@@ -1,0 +1,43 @@
+{
+    "name": "lexik/workflow-bundle",
+    "type": "symfony-bundle",
+    "description": "Simple workflow bundle for Symfony2",
+    "keywords": ["Symfony2", "bundle", "workflow"],
+    "license": "MIT",
+    "homepage": "https://github.com/lexik/LexikWorkflowBundle",
+    "authors": [
+        {
+            "name": "Cedric Girard",
+            "email": "c.girard@lexik.fr"
+        },
+        {
+            "name": "Jeremy Barthe",
+            "email": "j.barthe@lexik.fr"
+        },
+        {
+            "name": "Gilles Gauthier",
+            "email": "g.gauthier@lexik.fr"
+        },
+        {
+            "name": "Dev Lexik",
+            "email": "dev@lexik.fr"
+        },
+        {
+            "name": "Jérémy Romey",
+            "email": "jeremy@free-agent.fr"
+        }
+    ],
+    "require": {
+        "php": ">=5.5.9",
+        "symfony/framework-bundle": "~2.7|~3.0",
+        "doctrine/orm": "~2.2"
+    },
+    "autoload": {
+        "psr-4": { "Lexik\\Bundle\\WorkflowBundle\\": "" }
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "0.5.x-dev"
+        }
+    }
+}

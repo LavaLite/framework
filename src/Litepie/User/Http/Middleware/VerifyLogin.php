@@ -20,7 +20,7 @@ class VerifyLogin
     public function handle($request, Closure $next, $guard = null)
     {
 
-        if (user($guard)->isNew && config('user.verify_email')) {
+        if (user($guard)->isNew && config('litepie.user.verify_email')) {
             return redirect('verify');
         }
 

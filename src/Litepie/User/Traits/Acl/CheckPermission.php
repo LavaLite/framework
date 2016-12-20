@@ -57,15 +57,6 @@ trait CheckPermission
         return $this->hasPermission($permission, $force);
     }
 
-    /**
-     * check has superuser role.
-     *
-     * @return bool
-     */
-    public function isSuperUser()
-    {
-        return $this->hasRole(config('user.superuser_role', 'superuser'));
-    }
 
     /**
      * Check if the user has the given permission using
@@ -121,7 +112,6 @@ trait CheckPermission
     protected function getFreshRolesPermissions()
     {
         $roles       = $this->roles()->get(['permissions']);
-        print_r($roles);
         $permissions = [];
 
         foreach ($roles as $role) {
@@ -143,7 +133,7 @@ trait CheckPermission
     protected function getFreshAllPermissions()
     {
         $permissionsRoles = $this->getRolesPermissions(true);
-print_r($permissionsRoles) ;
+
 
         $permissions = empty($this->permissions) ? [] : $this->permissions;
         $permissions = array_merge($permissions, $permissionsRoles);

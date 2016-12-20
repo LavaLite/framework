@@ -18,7 +18,7 @@ if (is_object($file)) {
                     <img src='{!! url("/image/{$size}/{$config}/ ". folder_encode($file["folder"]))!!}/{!! $file["file"] !!}' class="img-thumbnail image-responsive">
                 </a>
             @else
-                4<div id="file">
+                <div id="file">
                     <a href='{!!$file["url"]!!}" target="_blank">{!!$file["file"]!!}</a>
                 </div>
             @endif

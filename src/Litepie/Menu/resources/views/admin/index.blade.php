@@ -1,8 +1,8 @@
-@extends('admin::curd.index')
+@extends('admin::curd.blank')
 @section('heading')
 <h1>
 {!! trans('menu::menu.name') !!}
-<small> {!! trans('cms.manage') !!} {!! trans('menu::menu.names') !!}</small>
+<small> {!! trans('app.manage') !!} {!! trans('menu::menu.names') !!}</small>
 </h1>
 @stop
 @section('title')
@@ -10,16 +10,19 @@
 @stop
 @section('breadcrumb')
 <ol class="breadcrumb">
-    <li><a href="{!! trans_url('admin') !!}"><i class="fa fa-dashboard"></i> {!! trans('cms.home') !!} </a></li>
+    <li><a href="{!! trans_url('admin') !!}"><i class="fa fa-dashboard"></i> {!! trans('app.home') !!} </a></li>
     <li class="active">{!! trans('menu::menu.names') !!}</li>
 </ol>
 @stop
+
 @section('entry')
 @stop
+
 @section('tools')
 @stop
+
 @section('content')
-<div style="min-height:700px;">
+<div class='row' style="min-height:700px;">
 <div class="col-md-5">
     <div class="nav-tabs-custom">
         <!-- Nav tabs -->
@@ -38,11 +41,12 @@
     </div>
 </div>
 <div class="col-md-7">
-    <div class="box box-warning" id='menu-entry'>
+    <div id='menu-entry'>
     </div>
 </div>
 </div>
 @stop
+
 @section('script')
 <script type="text/javascript">
 var oTable;
@@ -83,6 +87,7 @@ $(document).ready(function(){
 });
 </script>
 @stop
+
 @section('style')
 <style type="text/css">
 .box-body{

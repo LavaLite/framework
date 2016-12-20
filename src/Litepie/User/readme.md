@@ -1,10 +1,10 @@
-This is a Laravel 5 package that provides user ACL facility for lavalite framework.
+This is a Laravel 5 package that provides user management facility for lavalite framework.
 
 ## Installation
 
-Begin by installing this package through Composer. Edit your project's `composer.json` file to require `lavalite/user`.
+Begin by installing this package through Composer. Edit your project's `composer.json` file to require `litepie/user`.
 
-    "lavalite/user": "dev-master"
+    "litepie/user": "dev-master"
 
 Next, update Composer from the Terminal:
 
@@ -40,9 +40,11 @@ Language
 
 Views public and admin
 
+    php artisan vendor:publish --provider="Litepie\User\Providers\UserServiceProvider" --tag="view-public"
     php artisan vendor:publish --provider="Litepie\User\Providers\UserServiceProvider" --tag="view-admin"
 
 Publish admin views only if it is necessary.
 
 ## Usage
+
 

@@ -1,0 +1,21 @@
+{
+    "name": "litepie/contact",
+    "description": "Contact litepie for litepie.",
+    "keywords": ["lavalite","litepie", "Contact"],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Litepie",
+            "email": "info@lavalite.org"
+        }
+    ],
+    "require": {
+        "php": ">=5.5.9"
+    },
+    "autoload": {
+        "psr-4": {
+            "Litepie\\Contact\\": "src/Litepie/Contact"
+        }
+    },
+    "minimum-stability": "dev"
+}

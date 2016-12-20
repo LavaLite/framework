@@ -93,34 +93,8 @@ class MenuTableSeeder extends Seeder
             ],
 
             [
-                'id'          => 10,
+                'id'          => null,
                 'parent_id'   => 1,
-                'key'         => 'content',
-                'url'         => 'admin/page/page',
-                'name'        => 'Content',
-                'description' => null,
-                'icon'        => 'fa fa-book',
-                'target'      => null,
-                'order'       => 4,
-                'status'      => 1,
-            ],
-
-            [
-                'id'          => 11,
-                'parent_id'   => 10,
-                'key'         => null,
-                'url'         => 'admin/page/page',
-                'name'        => 'Pages',
-                'description' => null,
-                'icon'        => 'fa fa-book',
-                'target'      => null,
-                'order'       => 5,
-                'status'      => 1,
-            ],
-
-            [
-                'id'          => 12,
-                'parent_id'   => 10,
                 'key'         => null,
                 'url'         => 'admin/menu/menu',
                 'name'        => 'Menu',
@@ -132,7 +106,7 @@ class MenuTableSeeder extends Seeder
             ],
 
             [
-                'id'          => 13,
+                'id'          => null,
                 'parent_id'   => 3,
                 'key'         => null,
                 'url'         => '/',
@@ -145,33 +119,7 @@ class MenuTableSeeder extends Seeder
             ],
 
             [
-                'id'          => 14,
-                'parent_id'   => 3,
-                'key'         => null,
-                'url'         => 'about-us.html',
-                'name'        => 'About Us',
-                'description' => null,
-                'icon'        => null,
-                'target'      => null,
-                'order'       => 8,
-                'status'      => 1,
-            ],
-
-            [
-                'id'          => 15,
-                'parent_id'   => 3,
-                'key'         => null,
-                'url'         => 'contact.html',
-                'name'        => 'Contact Us',
-                'description' => null,
-                'icon'        => null,
-                'target'      => null,
-                'order'       => 9,
-                'status'      => 1,
-            ],
-
-            [
-                'id'          => 16,
+                'id'          => null,
                 'parent_id'   => 1,
                 'key'         => null,
                 'url'         => 'admin',
@@ -184,58 +132,7 @@ class MenuTableSeeder extends Seeder
             ],
 
             [
-                'id'          => 17,
-                'parent_id'   => 1,
-                'key'         => null,
-                'url'         => 'admin/user/user',
-                'name'        => 'Users',
-                'description' => null,
-                'icon'        => 'fa fa-users',
-                'target'      => null,
-                'order'       => 1200,
-                'status'      => 1,
-            ],
-
-            [
-                'id'          => 18,
-                'parent_id'   => 17,
-                'key'         => null,
-                'url'         => 'admin/user/user',
-                'name'        => 'Users',
-                'description' => null,
-                'icon'        => 'fa fa-users',
-                'target'      => null,
-                'order'       => 1200,
-                'status'      => 1,
-            ],
-
-            [
-                'id'          => 19,
-                'parent_id'   => 17,
-                'key'         => null,
-                'url'         => 'admin/user/role',
-                'name'        => 'Roles',
-                'description' => null,
-                'icon'        => 'fa fa-user-plus',
-                'target'      => null,
-                'order'       => 1201,
-                'status'      => 1,
-            ],
-
-            [
-                'id'          => 20,
-                'parent_id'   => 17,
-                'key'         => null,
-                'url'         => 'admin/user/permission',
-                'name'        => 'Permissions',
-                'description' => null,
-                'icon'        => 'fa fa-check-circle-o',
-                'target'      => null,
-                'order'       => 1202,
-                'status'      => 1,
-            ],
-            [
-                'id'          => 21,
+                'id'          => null,
                 'parent_id'   => 5,
                 'key'         => null,
                 'url'         => 'https://twitter.com/lavalitecms',
@@ -248,7 +145,7 @@ class MenuTableSeeder extends Seeder
             ],
 
             [
-                'id'          => 22,
+                'id'          => null,
                 'parent_id'   => 5,
                 'key'         => null,
                 'url'         => 'https://github.com/LavaLite',
@@ -261,7 +158,7 @@ class MenuTableSeeder extends Seeder
             ],
 
             [
-                'id'          => 23,
+                'id'          => null,
                 'parent_id'   => 5,
                 'key'         => null,
                 'url'         => 'https://www.facebook.com/lavalite/',
@@ -269,19 +166,6 @@ class MenuTableSeeder extends Seeder
                 'description' => null,
                 'icon'        => null,
                 'target'      => '_blank',
-                'order'       => 13,
-                'status'      => 1,
-            ],
-
-            [
-                'id'          => 100,
-                'parent_id'   => 99,
-                'key'         => null,
-                'url'         => '',
-                'name'        => 'Dummy entry',
-                'description' => null,
-                'icon'        => null,
-                'target'      => '',
                 'order'       => 13,
                 'status'      => 1,
             ],

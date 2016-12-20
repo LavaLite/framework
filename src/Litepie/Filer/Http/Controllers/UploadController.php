@@ -30,9 +30,7 @@ class UploadController extends Controller
      */
     public function upload($config, $folder, $field, $file = 'file')
     {
-
         if (Request::hasFile($file)) {
-
             $ufolder         = $this->uploadFolder($config, $folder, $field);
             $array           = Filer::upload(Request::file($file), $ufolder);
             $array['folder'] = folder_decode($folder)."/{$field}";
@@ -55,7 +53,7 @@ class UploadController extends Controller
      */
     public function uploadFolder($config, $folder, $field)
     {
-        $path = config($config . '.upload_folder', config('package.' . $config . '.upload_folder'));
+        $path = config($config . '.upload_folder', config('litepie.' . $config . '.upload_folder'));
 
         if (empty($path)) {
             throw new FileNotFoundException();

@@ -20,7 +20,7 @@ class UserPolicy
      */
     public function view(User $user, UserModal $usermodal)
     {
-        return false;
+       return false;
     }
 
     /**
@@ -75,5 +75,7 @@ class UserPolicy
         if ($user->isSuperUser()) {
             return true;
         }
+
     }
+
 }

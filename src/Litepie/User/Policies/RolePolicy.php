@@ -3,12 +3,10 @@
 namespace Litepie\User\Policies;
 
 use App\User;
-use Illuminate\Auth\Access\HandlesAuthorization;
 use Litepie\User\Models\Role;
 
 class RolePolicy
 {
-    use HandlesAuthorization;
 
     /**
      * Determine if the given user can view the role.
@@ -59,6 +57,36 @@ class RolePolicy
      */
     public function destroy(User $user, Role $role)
     {
+        return false;
+    }
+
+    /**
+     * Determine if the given user can verify the given role.
+     *
+     * @param User $user
+     * @param Role $role
+     *
+     * @return bool
+     */
+    public function verify(User $user, Role $role)
+    {
+
+
+        return false;
+    }
+
+    /**
+     * Determine if the given user can approve the given role.
+     *
+     * @param User $user
+     * @param Role $role
+     *
+     * @return bool
+     */
+    public function approve(User $user, Role $role)
+    {
+
+
         return false;
     }
 

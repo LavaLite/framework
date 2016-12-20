@@ -2,30 +2,32 @@
 
 namespace Litepie\User\Models;
 
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Litepie\Database\Model;
 use Litepie\Database\Traits\Slugger;
 use Litepie\Filer\Traits\Filer;
 use Litepie\Hashids\Traits\Hashids;
-use Litepie\Trans\Traits\Trans;
+use Litepie\Repository\Traits\PresentableTrait;
+use Litepie\Revision\Traits\Revision;
+use Litepie\Trans\Traits\Translatable;
+// use Litepie\Workflow\Model\Workflow;
 
 class Permission extends Model
 {
-    use Filer, Hashids, Slugger, Trans;
-
-     /**
-      * Configuartion for the model.
-      *
-      * @var array
-      */
-     protected $config = 'user.permission';
+    use Hashids, Slugger, Translatable, Revision, PresentableTrait;
+    // use Workflow;
 
     /**
-     * Many-to-many permission-role relationship.
+     * Configuartion for the model.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     * @var array
      */
-    public function roles()
-    {
+     protected $config = 'litepie.user.permission';
+
+    /**
+     * The roles that belong to the permission.
+     */
+    public function roles(){
         return $this->belongsToMany('Litepie\User\Models\Role');
     }
 }

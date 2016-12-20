@@ -14,9 +14,9 @@ namespace Litepie\User;
 use Form;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Support\Facades\Auth;
-use Litepie\Contracts\User\PermissionRepository;
-use Litepie\Contracts\User\RoleRepository;
-use Litepie\Contracts\User\UserRepository;
+use Litepie\User\Interfaces\PermissionRepositoryInterface;
+use Litepie\User\Interfaces\RoleRepositoryInterface;
+use Litepie\User\Interfaces\UserRepositoryInterface;
 
 /**
  * User wrapper class.
@@ -51,9 +51,9 @@ class User
      * @param \Litepie\Contracts\User\PermissionRepository $permission
      */
     public function __construct(Application $app,
-        UserRepository                          $user,
-        RoleRepository                          $role,
-        PermissionRepository                    $permission) {
+        UserRepositoryInterface                          $user,
+        RoleRepositoryInterface                          $role,
+        PermissionRepositoryInterface                    $permission) {
         $this->app        = $app;
         $this->user       = $user;
         $this->role       = $role;
@@ -324,7 +324,17 @@ class User
     {
         return $this->role->find($roleId);
     }
-
+    /**
+     * * Find a role by its key.
+     *
+     * @param int $roleId
+     *
+     * @return mixed
+     */
+    public function findRoleByKey($roleKey)
+    {
+        return $this->role->findRoleByKey($roleKey);
+    }
     /**
      * Get the permission with the given name.
      *
@@ -449,9 +459,10 @@ class User
     public function profile($mode, $guard = null)
     {
         $user = $this->getUser($guard);
-        Form::populate($user);
 
-        return view('user::public.admin.edit', compact('user'));
+        Form::populate($user);
+        
+        return view('admin::auth.edit', compact('user'));
     }
 
     /**
@@ -473,7 +484,7 @@ class User
     {
         $user = $this->getUser($guard);
 
-        return view('user::public.admin.changepassword', compact('user'));
+        return view('admin::auth.changepassword', compact('user'));
     }
 
     /**
@@ -493,7 +504,7 @@ class User
      */
     public function count()
     {
-        return 0;
+        return $this->user->count();
     }
 
 }

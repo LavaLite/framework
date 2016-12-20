@@ -1,0 +1,21 @@
+{
+    "name": "litepie/calendar",
+    "description": "Calendar package for litepie.",
+    "keywords": ["litepie", "Calendar"],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Litepie",
+            "email": "info@litepie.org"
+        }
+    ],
+    "require": {
+        "php": ">=5.5.9"
+    },
+    "autoload": {
+        "psr-4": {
+            "Litepie\\Calendar\\": "src/Litepie/Calendar"
+        }
+    },
+    "minimum-stability": "dev"
+}
