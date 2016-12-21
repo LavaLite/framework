@@ -2,11 +2,19 @@
 
 namespace Litepie\User\Repositories\Eloquent;
 
-use Litepie\Contracts\User\RoleRepository as RoleRepositoryContract;
+use Litepie\User\Interfaces\RoleRepositoryInterface;
 use Litepie\Repository\Eloquent\BaseRepository;
 
-class RoleRepository extends BaseRepository implements RoleRepositoryContract
+class RoleRepository extends BaseRepository implements RoleRepositoryInterface
 {
+    /**
+     * @var array
+     */
+    public function boot()
+    {
+
+    }
+
     /**
      * Specify Model class name.
      *
@@ -14,48 +22,19 @@ class RoleRepository extends BaseRepository implements RoleRepositoryContract
      */
     public function model()
     {
-        return 'Litepie\\User\\Models\\Role';
+        $this->fieldSearchable = config('litepie.user.role.search');
+        return config('litepie.user.role.model');
     }
 
     /**
-     * Retrive users list based on role.
+     * Find a user by its key.
      *
-     * @param string $role
-     * @param array  $columns
+     * @param type $key
      *
-     * @return mixed
+     * @return type
      */
-    public function users($role = null, $columns = ['*'])
+    public function findRoleByKey($key)
     {
-        $results = $this->model->with('users')->where('name', $role)->first($columns);
-
-        $this->resetModel();
-
-        if (isset($results->users)) {
-            return $results->users;
-        }
-
-        return [];
+        return $this->model->whereKey($key)->first();
     }
-
-    /**
-     * Create a new role with the given name.
-     *
-     * @param $roleName
-     *
-     * @throws \Exception
-     *
-     * @return Role
-     */
-    public function createRole($roleName)
-    {
-
-        if (!is_null($this->findByField('name', $roleName))) {
-            // TODO: add translation support
-            throw new RoleExistsException('A role with the given name already exists');
-        }
-
-        return $role = $this->model->create(['name' => $roleName]);
-    }
-
 }

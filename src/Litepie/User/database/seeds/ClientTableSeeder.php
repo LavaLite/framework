@@ -18,7 +18,7 @@ class ClientTableSeeder extends Seeder
                 'dob'         => '2014-05-15',
                 'api_token'   => str_random(60),
                 'designation' => 'Super User',
-                'web'         => 'http://lavalite.org',
+                'web'         => 'http://litepie.org',
                 'created_at'  => '2015-09-15',
             ],
             [
@@ -31,7 +31,7 @@ class ClientTableSeeder extends Seeder
                 'dob'         => '20-05-15',
                 'api_token'   => str_random(60),
                 'designation' => 'Admin',
-                'web'         => 'http://lavalite.org',
+                'web'         => 'http://litepie.org',
                 'created_at'  => '2015-09-15',
             ],
             [
@@ -44,7 +44,7 @@ class ClientTableSeeder extends Seeder
                 'dob'         => '2014-05-15',
                 'api_token'   => str_random(60),
                 'designation' => 'User',
-                'web'         => 'http://lavalite.org',
+                'web'         => 'http://litepie.org',
                 'created_at'  => '2015-09-15',
             ],
         ]);

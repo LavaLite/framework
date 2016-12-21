@@ -35,7 +35,6 @@ class FileController extends Controller
 
         $size   = $this->getSize($size);
         $folder = $this->getFolder($config, $folder, $field);
-
         $image = Filer::image($folder, $file, $size);
 
         $header = [
@@ -56,7 +55,7 @@ class FileController extends Controller
      */
     public function getFolder($config, $folder, $field)
     {
-        $path = config($config . '.upload_folder', config('package.' . $config . '.upload_folder'));
+        $path = config($config . '.upload_folder', config('litepie.' . $config . '.upload_folder'));
 
         if (empty($path)) {
             throw new FileNotFoundException();
@@ -82,7 +81,7 @@ class FileController extends Controller
         if (count($size) == 1) {
             $size = config('filer.size.' . $size[0]);
         } elseif (count($size) == 2) {
-            $size = config('package.' . $size[0] . '.image.' . $size[1]);
+            $size = config('litepie.' . $size[0] . '.image.' . $size[1]);
         } else {
             $size = config(implode('.', $size));
         }

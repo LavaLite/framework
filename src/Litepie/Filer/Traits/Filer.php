@@ -263,11 +263,12 @@ trait Filer
     public function defaultImage($size = 'md', $field = 'image')
     {
         $image  = $this->$field;
-        $config = $this->config;
 
         if (!is_array($image) || empty($image)) {
             return 'img/default/' . $size . '.jpg';
         }
+
+        $config = $this->config;
 
         if (in_array($field, $this->uploads['single'])) {
             return "image/{$size}/{$config}/" . folder_encode($image['folder']) . '/' . $image['file'];

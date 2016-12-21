@@ -1,6 +1,6 @@
 # Hashids for Laravel 5
 
-[![Latest Stable Version](https://poser.pugx.org/lavalite/hashids/v/stable.png)](https://packagist.org/packages/lavalite/hashids) [![Total Downloads](https://poser.pugx.org/lavalite/hashids/downloads.png)](https://packagist.org/packages/lavalite/hashids)
+[![Latest Stable Version](https://poser.pugx.org/litepie/hashids/v/stable.png)](https://packagist.org/packages/litepie/hashids) [![Total Downloads](https://poser.pugx.org/litepie/hashids/downloads.png)](https://packagist.org/packages/litepie/hashids)
 
 This package uses the classes created by [hashids.org](http://www.hashids.org/ "http://www.hashids.org/")
 
@@ -10,14 +10,14 @@ Generate hashes from numbers, like YouTube or Bitly. Use hashids when you do not
 
 ## Installation
 
-- [Hashids on Packagist](https://packagist.org/packages/lavalite/hashids)
-- [Hashids on GitHub](https://github.com/lavalite/laravel-hashids)
+- [Hashids on Packagist](https://packagist.org/packages/litepie/hashids)
+- [Hashids on GitHub](https://github.com/litepie/laravel-hashids)
 - [Laravel 4 Installation](#user-content-laravel-4-installation)
 
 To get the latest version of Hashids simply require it in your `composer.json` file.
 
 ~~~
-"lavalite/hashids": "2.0.*@dev"
+"litepie/hashids": "2.0.*@dev"
 ~~~
 
 You'll then need to run `composer install` to download it and have the autoloader updated.
@@ -48,7 +48,7 @@ A configuration file will be publish to `config/hashids.php`.
 Add verison 1.0 of Hashids in your `composer.json` file.
 
 ~~~
-"lavalite/hashids": "1.0.*"
+"litepie/hashids": "1.0.*"
 ~~~
 
 And following the directions in the [README](https://github.com/Litepie/laravel-hashids/tree/1.0.0) on version 1.0.

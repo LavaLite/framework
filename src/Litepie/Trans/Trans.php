@@ -5,7 +5,7 @@ namespace Litepie\Trans;
 use Illuminate\Config\Repository;
 use Illuminate\Foundation\Application;
 use Illuminate\Http\Request;
-use Illuminate\Routing\Router;
+use Route;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Translation\Translator;
 use Litepie\Trans\Exceptions\SupportedTransNotDefined;

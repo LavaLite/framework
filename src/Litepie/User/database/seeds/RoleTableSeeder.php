@@ -9,14 +9,17 @@ class RoleTableSeeder extends Seeder
         DB::table('roles')->insert([
             [
                 'id'   => 1,
+                'key'  => 'superuser',
                 'name' => 'superuser',
             ],
             [
                 'id'   => 2,
+                'key'  => 'admin',
                 'name' => 'admin',
             ],
             [
                 'id'   => 3,
+                'key'  => 'user',
                 'name' => 'user',
             ],
         ]);

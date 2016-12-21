@@ -1,0 +1,21 @@
+{
+    "name": "litepie/workflow",
+    "description": "Workflow bundle for Lavalite",
+    "keywords": ["lavalite", "workflow"],
+    "license": "MIT",
+    "homepage": "https://github.com/Litepie/Workflow",
+    "authors": [
+        {
+            "name": "Renfos Technologies Pvt. Ltd.",
+            "email": "info@renfos.com"
+        }
+    ],
+    "require": {
+        "php": ">=5.6.4"
+    },
+    "autoload": {
+        "psr-4": { 
+            "Litepie\\Workflow\\": "" 
+        }
+    }
+}

@@ -3,7 +3,7 @@
 namespace Litepie\Filer\Providers;
 
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
-use Illuminate\Routing\Router;
+use Route;
 
 class RouteServiceProvider extends ServiceProvider
 {
@@ -23,9 +23,9 @@ class RouteServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function map(Router $router)
+    public function map()
     {
-        $router->group(['namespace' => $this->namespace], function ($router) {
+        Route::group(['namespace' => $this->namespace], function () {
             require __DIR__.'/../Http/routes.php';
         });
     }

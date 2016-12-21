@@ -320,6 +320,7 @@ if (!function_exists('format_date')) {
      */
     function format_date($date, $format = 'd M, Y')
     {
+        if (empty($date)) return null;
         return date($format, strtotime($date));
     }
 

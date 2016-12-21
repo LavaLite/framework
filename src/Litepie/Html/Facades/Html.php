@@ -13,6 +13,6 @@ class Html extends Facade
      */
     protected static function getFacadeAccessor()
     {
-        return 'lavalite.locale';
+        return 'litepie.html';
     }
 }

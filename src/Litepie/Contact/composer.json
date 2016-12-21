@@ -1,0 +1,21 @@
+{
+    "name": "litepie/contact",
+    "description": "Contact bundle for Lavalite",
+    "keywords": ["lavalite", "contact"],
+    "license": "MIT",
+    "homepage": "https://github.com/Litepie/Contact",
+    "authors": [
+        {
+            "name": "Renfos Technologies Pvt. Ltd.",
+            "email": "info@renfos.com"
+        }
+    ],
+    "require": {
+        "php": ">=5.6.4"
+    },
+    "autoload": {
+        "psr-4": { 
+            "Litepie\\Contact\\": "" 
+        }
+    }
+}

@@ -1,0 +1,21 @@
+{
+    "name": "litepie/page",
+    "description": "Page bundle for Lavalite",
+    "keywords": ["lavalite", "page"],
+    "license": "MIT",
+    "homepage": "https://github.com/Litepie/Page",
+    "authors": [
+        {
+            "name": "Renfos Technologies Pvt. Ltd.",
+            "email": "info@renfos.com"
+        }
+    ],
+    "require": {
+        "php": ">=5.6.4"
+    },
+    "autoload": {
+        "psr-4": { 
+            "Litepie\\Page\\": "" 
+        }
+    }
+}

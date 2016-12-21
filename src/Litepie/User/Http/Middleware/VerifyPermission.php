@@ -29,7 +29,7 @@ class VerifyPermission
             return $next($request);
         }
 
-        if (user()->new && config('user.verify_email')) {
+        if (user()->new && config('litepie.user.verify_email')) {
             return redirect('verify');
         }
 

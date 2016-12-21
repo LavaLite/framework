@@ -26,7 +26,6 @@ class MenuServiceProvider extends ServiceProvider
 
         // Call pblish redources function
         $this->publishResources();
-        include __DIR__ . '/Http/routes.php';
     }
 
     /**
@@ -42,6 +41,10 @@ class MenuServiceProvider extends ServiceProvider
 
         $this->app->bind('Litepie\\Contracts\\Menu\\MenuRepository',
             'Litepie\\Menu\\Repository\\MenuRepository');
+
+        $this->app->register(\Litepie\Menu\Providers\AuthServiceProvider::class);
+        $this->app->register(\Litepie\Menu\Providers\EventServiceProvider::class);
+        $this->app->register(\Litepie\Menu\Providers\RouteServiceProvider::class);
     }
 
     /**

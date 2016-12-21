@@ -2,12 +2,21 @@
 
 namespace Litepie\User\Repositories\Eloquent;
 
-use Litepie\Contracts\User\UserRepository as UserRepositoryContract;
+use Litepie\User\Interfaces\UserRepositoryInterface;
 use Litepie\Repository\Eloquent\BaseRepository;
-use User;
 
-class UserRepository extends BaseRepository implements UserRepositoryContract
+class UserRepository extends BaseRepository implements UserRepositoryInterface
 {
+    /**
+     * @var array
+     */
+
+
+    public function boot()
+    {
+
+    }
+
     /**
      * Specify Model class name.
      *
@@ -15,55 +24,11 @@ class UserRepository extends BaseRepository implements UserRepositoryContract
      */
     public function model()
     {
-        return 'App\User';
+        $this->fieldSearchable = config('litepie.user.user.search');
+        return config('litepie.user.user.model');
     }
 
-    /**
-     * Attach role to user.
-     *
-     * @param type $roleName
-     *
-     * @return type
-     */
-    public function attachRole($roleName)
-    {
-        return $this->model->attachRole($roleName);
-    }
-
-    /**
-     * Attach permission to user.
-     *
-     * @param string $permissionName
-     * @param array  $options
-     *
-     * @return type
-     */
-    public function attachPermission($permissionName, array $options = [])
-    {
-        return $this->model->attachPermission($permissionName, $options);
-    }
-
-    /**
-     * Save a new entity in modal.
-     *
-     * @param array $attributes
-     *
-     * @throws ValidatorException
-     *
-     * @return mixed
-     */
-    public function create(array $attributes)
-    {
-        $model                 = $this->model->newInstance();
-        $attributes['user_id'] = User::users('id');
-        $model->fill($attributes);
-        $model->password = bcrypt($attributes['password']);
-        $model->save();
-        $this->resetModel();
-
-        return $model;
-    }
-
+    
     /**
      * Find a user by its id.
      *
@@ -75,27 +40,4 @@ class UserRepository extends BaseRepository implements UserRepositoryContract
     {
         return $this->model->whereId($id)->first();
     }
-
-    /**
-     * Activate user with the given id.
-     *
-     * @param type $id
-     *
-     * @return type
-     */
-    public function activate($id)
-    {
-        $user = $this->model->whereId($id)->whereStatus('New')->first();
-
-        if (is_null($user)) {
-            return false;
-        }
-
-        if ($user->update(['status' => 'Active'])) {
-            return true;
-        }
-
-        return false;
-    }
-
 }

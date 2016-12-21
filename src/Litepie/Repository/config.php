@@ -110,7 +110,7 @@ return [
              *--------------------------------------------------------------------------
              *
              *
-             * Ex: http://lavalite.local/?search=lorem&skipCache=true
+             * Ex: http://litepie.local/?search=lorem&skipCache=true
              *
              */
             'skipCache' => 'skipCache',
@@ -175,26 +175,26 @@ return [
          * Params :
          *
          * - search : Searched value
-         *   Ex: http://lavalite.local/?search=lorem
+         *   Ex: http://litepie.local/?search=lorem
          *
          * - searchFields : Fields in which research should be carried out
          *   Ex:
-         *    http://lavalite.local/?search=lorem&searchFields=name;email
-         *    http://lavalite.local/?search=lorem&searchFields=name:like;email
-         *    http://lavalite.local/?search=lorem&searchFields=name:like
+         *    http://litepie.local/?search=lorem&searchFields=name;email
+         *    http://litepie.local/?search=lorem&searchFields=name:like;email
+         *    http://litepie.local/?search=lorem&searchFields=name:like
          *
          * - filter : Fields that must be returned to the response object
          *   Ex:
-         *   http://lavalite.local/?search=lorem&columns=id,name
+         *   http://litepie.local/?search=lorem&columns=id,name
          *
          * - sortBy : Order By
          *   Ex:
-         *   http://lavalite.local/?search=lorem&sortBy=id
+         *   http://litepie.local/?search=lorem&sortBy=id
          *
          * - sortOrder : Sort
          *   Ex:
-         *   http://lavalite.local/?search=lorem&sortBy=id&sortOrder=asc
-         *   http://lavalite.local/?search=lorem&sortBy=id&sortOrder=desc
+         *   http://litepie.local/?search=lorem&sortBy=id&sortOrder=asc
+         *   http://litepie.local/?search=lorem&sortBy=id&sortOrder=desc
          *
          */
         'params'             => [

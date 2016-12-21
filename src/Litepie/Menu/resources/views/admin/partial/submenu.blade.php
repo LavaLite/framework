@@ -1,4 +1,5 @@
-<div class="tab-pane active" id="details">
+<div class="tab-pane active disabled" id="details">
+    <div class="tab-pan-title"> {{ trans('app.view') }} menu [{{$menu->name or 'New menu'}}]</div>
     <div class="row">
         <div class="col-md-6 ">
             {!! Form::text('name')

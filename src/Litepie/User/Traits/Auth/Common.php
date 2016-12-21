@@ -22,25 +22,33 @@ trait Common
     public function getView($view)
     {
         $guard = $this->getViewFolder();
-
-        if (view()->exists("user::user.$guard.$view")) {
-            return "user::user.$guard.$view";
+        if (view()->exists("$guard::auth.$view")) {
+            return "$guard::auth.$view";
         }
-
-        return "user::user.default.$view";
+        return "user::auth.$view";
 
     }
 
     /**
-     * Set guard for the auth controller.
+     * Get the guard to be used during authentication.
      *
-     * @return response
+     * @return string|null
      */
-    public function setGuard($guard)
+    protected function getGuard()
     {
-        $guard              = empty($guard) ? null : $guard;
-        return $this->guard = $guard;
+        return property_exists($this, 'guard') && !is_null($this->guard) 
+        ? $this->guard : Request::route('guard', null);
+    }
 
+    /**
+     * Get the guard to be used during authentication.
+     *
+     * @return string|null
+     */
+    protected function guard()
+    {
+        $guard = $this->getGuard();
+        return Auth::guard($guard);
     }
 
     /**
@@ -66,21 +74,53 @@ trait Common
     public function setTheme()
     {
         $view        = $this->getViewFolder();
-        $theme       = Theme::exists($view) ? $view : config('theme.default.theme');
+        $theme       = Theme::exists($view) ? $view : config('theme.themes.default.theme');
         $this->theme = Theme::uses($theme);
         $this->theme->layout(config("theme.$theme.auth", 'auth'));
     }
 
     /**
-     * Get the guard to be used during authentication.
+     * Get the model for the current guard.
      *
-     * @return string|null
+     * @return Response
      */
-    protected function getGuard()
+    function getModel($guard)
+    {
+        $provider = config("auth.guards.$guard.provider", 'users');
+        return config("auth.providers.$provider.model", App\User::class);
+    }
+
+    /**
+     * Get the model for the current guard.
+     *
+     * @return Response
+     */
+    function getTable($guard)
+    {
+        $provider = config("auth.guards.$guard.provider", 'users');
+
+        return config("auth.providers.$provider.table", 'users');
+    }
+
+
+    /**
+     * Check the given guard.
+     *
+     * @param  string  $name
+     * @return \Illuminate\Contracts\Auth\Guard|\Illuminate\Contracts\Auth\StatefulGuard
+     *
+     * @throws \InvalidArgumentException
+     */
+    function check($name)
     {
 
-        return property_exists($this, 'guard') && !is_null($this->guard) 
-        ? $this->guard : Request::route('guard');
+        $config = config("auth.guards.{$name}");
+
+        if (!is_null($name) && is_null($config)) {
+            throw new InvalidArgumentException("Auth guard [{$name}] is not defined.");
+        }
+
+        return;
 
     }
 
@@ -109,7 +149,7 @@ trait Common
     {
         $guard = $this->getGuard();
 
-        if (is_null($guard)) {
+        if (is_null($guard) || $guard == 'web') {
             return $default;
         }
 

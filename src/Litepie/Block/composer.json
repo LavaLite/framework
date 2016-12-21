@@ -1,0 +1,21 @@
+{
+    "name": "litepie/block",
+    "description": "Block bundle for Lavalite",
+    "keywords": ["lavalite", "block"],
+    "license": "MIT",
+    "homepage": "https://github.com/Litepie/Block",
+    "authors": [
+        {
+            "name": "Renfos Technologies Pvt. Ltd.",
+            "email": "info@renfos.com"
+        }
+    ],
+    "require": {
+        "php": ">=5.6.4"
+    },
+    "autoload": {
+        "psr-4": { 
+            "Litepie\\Block\\": "" 
+        }
+    }
+}

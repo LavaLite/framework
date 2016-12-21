@@ -267,6 +267,9 @@ class Forms
      */
     public function getMime()
     {
+        if (is_array($this->mime)) {
+            return implode(', ', $this->mime);
+        }
         return $this->mime;
     }
 
