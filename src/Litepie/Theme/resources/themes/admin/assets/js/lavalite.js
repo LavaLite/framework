@@ -7,41 +7,25 @@ $(function () {
         }
     });
 
-    $('.html-editor-mini').summernote({
-        height: "200px",
-        toolbar: [
-            ['style', ['bold', 'italic', 'underline', 'clear']],
-            ['font', ['strikethrough', 'superscript', 'subscript']],
-            ['fontsize', ['fontsize']],
-            ['color', ['color']],
-            ['para', ['ul', 'ol', 'paragraph']],
-            ['height', ['height']]
-          ]
-    });
-
     $('.html-editor').summernote({
         height: "200px",
         onImageUpload: function(files, editor, welEditable) {
-            app.sendFile(files[0], editor, welEditable);
+            sendFile(files[0], editor, welEditable);
         }
     });
 
-    $('input[type="date"]').pickadate({
-        format: 'dd mmm, yyyy',
-        formatSubmit: 'yyyy-mm-dd',
-        hiddenSuffix: '',
-        selectMonths: true,
-        selectYears: true
-
+    $('input[type="date"]').datetimepicker({
+        format: "yyyy-mm-dd",
+        viewMode: 'months'
     }).prop('type','text');
 
-    $('input[type="time"]').pickatime({
-        format: 'h:i A',
-        formatSubmit: 'HH:i:00',
-        hiddenSuffix: '',
-        interval: 10,
-        selectMonths: true,
-        selectYears: true
+    $('input[type="datetime"]').datetimepicker({
+        format: "yyyy-mm-dd hh:ii:00"
+    }).prop('type','text');
+
+    $('input[type="time"]').datetimepicker({
+            format: "hh:ii:00",
+            startView: 'day'
     }).prop('type','text');
 
     toastr.options = {
@@ -67,13 +51,13 @@ $(function () {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         }
     });
-/*
+
     $('input').iCheck({
       checkboxClass: 'icheckbox_square-blue',
       radioClass: 'iradio_square-blue',
       increaseArea: '20%' // optional
     });
-*/
+
     $('body').on('click', '[data-action]', function(e) {
         e.preventDefault();
 
@@ -86,7 +70,7 @@ $(function () {
             return app.update($tag.data('form'), $tag.data('load-to'), $tag.data('datatable'));
 
         if ($tag.data('action') == 'DELETE'){
-            return app.delete($tag.data('href'), $tag.data('load-to'), $tag.data('datatable'), $tag.data('remove'));
+            return app.delete($tag.data('href'), $tag.data('load-to'), $tag.data('datatable'));
         }
         if ($tag.data('action') == 'REQUEST')
             return app.makeRequest($tag.data('method'), $tag.data('href'));
@@ -104,53 +88,44 @@ $(function () {
 });
 
 $( document ).ajaxComplete(function() {
-    $("form[id$='-show'] :input").prop("disabled", true);
-
-    $('.html-editor-mini').summernote({
-        height: "200px",
-        toolbar: [
-            ['style', ['bold', 'italic', 'underline', 'clear']],
-            ['font', ['strikethrough', 'superscript', 'subscript']],
-            ['fontsize', ['fontsize']],
-            ['color', ['color']],
-            ['para', ['ul', 'ol', 'paragraph']],
-            ['height', ['height']]
-          ]
-    });
+    $("form[id^='show-'] :input").prop("disabled", true);
 
     $('.html-editor').summernote({
         height: "200px",
-        onImageUpload: function(files, editor, welEditable) {
-            app.sendFile(files[0], editor, welEditable);
+        onImageUpload: function(files) {
+            url = $(this).data('upload');
+            sendFile(files[0], url, $(this));
         }
     });
 
-    $('input[type="date"]').pickadate({
-        format: 'dd mmm, yyyy',
-        formatSubmit: 'yyyy-mm-dd',
-        selectMonths: true,
-        selectYears: true
+    $('input[type="date"]').datetimepicker({
+        format: "yyyy-mm-dd",
+        minView: 'month',
+        autoclose : true
     }).prop('type','text');
 
-    $('input[type="time"]').pickatime({
-        format: 'h:i A',
-        formatSubmit: 'HH:i:00',
-        interval: 10,
-        selectMonths: true,
-        selectYears: true
+    $('input[type="datetime"]').datetimepicker({
+        format: "yyyy-mm-dd hh:ii:00",
+        autoclose : true
+    }).prop('type','text');
+
+    $('input[type="time"]').datetimepicker({
+            format: "hh:ii:00",
+            startView: 'day',
+            autoclose : true
     }).prop('type','text');
 
     $.AdminLTE.boxWidget.activate()
-/*
+
     $('input').iCheck({
       checkboxClass: 'icheckbox_square-blue',
       radioClass: 'iradio_square-blue',
       increaseArea: '20%' // optional
     });
-*/
 });
 
 
+/*
 $( document ).ajaxError(function( event, jqxhr, settings, thrownError ) {
     app.message(jqxhr);
 });
@@ -158,7 +133,6 @@ $( document ).ajaxError(function( event, jqxhr, settings, thrownError ) {
 $( document ).ajaxSuccess(function( event, xhr, settings ) {
     app.message(xhr);
 });
-/*
 function sendFile(file, url, editor) {
     var data = new FormData();
     data.append("file", file);
@@ -255,7 +229,7 @@ var app = {
         });
     },
 
-    'delete' : function(target, tag, datatable, remove) {
+    'delete' : function(target, tag, datatable) {
         swal({
             title: "Are you sure?",
             text: "You will not be able to recover this data!",
@@ -277,7 +251,6 @@ var app = {
                     swal("Deleted!", data.message, "success");
                     app.load(tag, data.redirect);
                     $(datatable).DataTable().ajax.reload( null, false );
-                    $("#"+remove).hide();
                 },
             });
         });

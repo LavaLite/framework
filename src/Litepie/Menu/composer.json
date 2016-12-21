@@ -1,21 +1,21 @@
 {
     "name": "litepie/menu",
-    "description": "Menu package for Litepie framework",
-    "keywords": ["litepie",  "menu", "dropdown", "dropdown-menu", "laravel"],
+    "description": "Menu bundle for Lavalite",
+    "keywords": ["lavalite", "menu"],
     "license": "MIT",
+    "homepage": "https://github.com/Litepie/Menu",
     "authors": [
         {
-            "name": "Lava Lite",
-            "email": "info@litepie.org"
+            "name": "Renfos Technologies Pvt. Ltd.",
+            "email": "info@renfos.com"
         }
     ],
     "require": {
-        "php": ">=5.5.9"
+        "php": ">=5.6.4"
     },
     "autoload": {
-        "psr-4": {
-            "Litepie\\Menu\\": ""
+        "psr-4": { 
+            "Litepie\\Menu\\": "" 
         }
-    },
-    "minimum-stability": "dev"
+    }
 }

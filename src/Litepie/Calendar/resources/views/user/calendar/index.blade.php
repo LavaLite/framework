@@ -199,6 +199,7 @@ $(function () {
         editable: true,
         droppable: true, // this allows things to be dropped onto the calendar !!!
         selectable: true, // this allows things to be dropped onto the calendar !!!
+        eventLimit: true,
         eventClick: function(event, element) {
             $('#event-modal .modal-title').html('Edit ' + event.title);
             $('#event-modal .modal-body').load('{{URL::to($guard.'/calendar/calendar')}}/' + event.id + '/edit');
@@ -336,10 +337,3 @@ $(function () {
 
 });
 </script>
-<style type="text/css">
-    .external-event{
-    color: #fff;
-    }
-    .fc-time{display: none;}
-   
-</style>

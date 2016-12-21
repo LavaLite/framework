@@ -4,22 +4,18 @@
       <span style="font-size:18px;"><b>{!! $messages['caption'] !!}</b></span>
       <div class="btn-group dropdown">
 
-        <a href="#" class="btn btn-primary btn-simple dropdown-toggle" data-toggle="dropdown">
+        <a href="#" class="btn btn-danger btn-simple dropdown-toggle" data-toggle="dropdown">
           <i class="material-icons">done</i>
           <i class="caret"></i>
         </a>
         <ul class="dropdown-menu">
           <li><a href="#" class="checkAll">Select All</a></li>
-          <li><a href="#">Unselect All</a></li>
-          <li><a href="#">Another Action</a></li>
-          <li class="divider"></li>
-          <li><a href="#">Separated Link</a></li>
+
         </ul>
       </div>
 
       <div class="btn-group">
-        <a href="#" class="btn btn-danger btn-simple"><i class="ion-android-archive"></i></a>
-        <a href="#" class="btn btn-danger btn-simple"><i class="ion-android-folder"></i></a>
+
         @if(@$messages['caption'] == 'Trash')        
           <a href="#" class="btn btn-danger btn-simple btn-deleted"><i class="ion-android-delete"></i></a>
         @else
@@ -38,22 +34,22 @@
     @forelse($messages['data'] as $key => $value)
     <?php $class = ($value->read == 1)? '' : 'unread'; ?>
     <tr class="{!!$class!!}" id="{!!$value->id!!}" class="check-read" data-status="{!!@$value->read!!}">
+    
       <td class="inbox-msg-check" width="5%">
         <span class="checkbox pull-left mn">
           <label for="option111" class="pln">
-              <input type="checkbox" class="lavalite" id="option111" value="" name="ham">
+              <!-- <input type="checkbox" class="lavalite" id="option111" value="" name="ham"/> -->
+              <input type="checkbox" name="listMessageID" class="checkbox1" value="{!! (@$message['caption'] == 'Trash')? $value->id : $value->getRouteKey(); !!}" id="message_check_{!!$value->id!!}" />
           </label>
         </span>
       </td>
       <td class="inbox-msg-from hidden-xs hidden-sm single" width="20%"><div>{!!@$value->subject!!}</div></td>
-      <td class="inbox-msg-snip single">{!! substr(@$value->message,0,100) !!}</td>
-      <td class="inbox-msg-attach single"><!-- <i class="fa fa-paperclip" width="5%"></i> --> </td>
+      <td class="inbox-msg-snip single">{{ ($value->message != '') ? substr(@$value->message,0,100) : '&nbsp;' }}</td>
       <td class="inbox-msg-time single" width="12%">{!!format_date(@$value['created_at'])!!}</td>
     </tr>
     @empty
     <tr><td colspan="4">No messages</td></tr>
-    @endif
-    
+    @endif    
   </tbody>
 </table>
 <div class="inbox-mail-footer">
@@ -78,7 +74,7 @@ $(document).ready(function(){
     });
 
     $(".btn-refresh").click(function(){
-        var caption = '{{@$messages['caption']}}';
+        var caption = '{{@$message['caption']}}';
         $("#txt-search").val('');
         if (caption == ''){
             $('#entry-message').load('{{URL::to($guard.'/message/status/Inbox')}}');
@@ -108,23 +104,21 @@ $(document).ready(function(){
                 success:function(data, textStatus, jqXHR)
                 {
                     swal("Deleted!", data.message, "success");
-                        $('#entry-message').load('{{URL::to('admin/message/status/Trash')}}');
-                        $('#inbox_id').html(data.inbox_count);
-                        $('#trash_id').html(data.trash_count);
-                        $('#promotions_id').html(data.promotions_count);
-                        $('#draft_id').html(data.draft_count);
-                        $('#junk_id').html(data.junk_count);
-                        $('#social_id').html(data.social_count);
-                        $('#sent_id').html(data.sent_count);
-                        $('#starred_id').html(data.starred_count);
-                        $('#important_id').html(data.important_count);
-                        $('#trash_id').html(data.trash_count);
-
+                    $('#entry-message').load('{{URL::to('admin/message/status/Trash')}}');
+                    $('#inbox_id').html(data.inbox_count);
+                    $('#trash_id').html(data.trash_count);
+                    $('#promotions_id').html(data.promotions_count);
+                    $('#draft_id').html(data.draft_count);
+                    $('#junk_id').html(data.junk_count);
+                    $('#social_id').html(data.social_count);
+                    $('#sent_id').html(data.sent_count);
+                    $('#starred_id').html(data.starred_count);
+                    $('#important_id').html(data.important_count);
+                    $('#trash_id').html(data.trash_count);
                 },
             });
         });
     });
-
 
     $(".checkAll").click(function(){
         if ($(".checkAll").hasClass('all_checked')) {

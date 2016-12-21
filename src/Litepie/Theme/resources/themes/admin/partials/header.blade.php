@@ -24,8 +24,12 @@
                 {!! Message::display('drop') !!}
                 </li>
                 <!-- Notifications: style can be found in dropdown.less -->
-                <li class="dropdown notifications-menu">              
-                        {!! Calendar::display('drop',50) !!}
+                <li class="dropdown notifications-menu">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                  <i class="fa fa-calendar"></i>
+                  <span class="label label-warning">  {!!count(Calendar::latestEvents())!!}</span>
+                </a>
+                {!! Calendar::display('drop') !!}
                 </li>
                 <!-- Tasks: style can be found in dropdown.less -->
                 <li class="dropdown tasks-menu">
@@ -64,7 +68,7 @@
                                 <a href="{{ URL::to('admin/profile') }}" class="btn btn-default btn-flat">Profile</a>
                             </div>
                             <div class="pull-right">
-                                <a href="{{ URL::to('logout?role=admin.web') }}" class="btn btn-default btn-flat">Sign out</a>
+                                <a href="{{ URL::to('logout') }}?role=admin.web" class="btn btn-default btn-flat">Sign out</a>
                             </div>
                         </li>
                     </ul>

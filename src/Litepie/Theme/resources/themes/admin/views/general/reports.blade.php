@@ -3,7 +3,7 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
        <h1>
-            Reports  rere
+            Reports
             <small>Reports home</small>
           </h1>
         <ol class="breadcrumb">

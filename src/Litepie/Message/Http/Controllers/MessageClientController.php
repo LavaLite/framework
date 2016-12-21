@@ -177,8 +177,12 @@ class MessageClientController extends BaseController
             $guard = $this->getGuardRoute();
             $this->repository->update($request->all(), $message->getRouteKey());
             $inbox_count = $this->repository->userMsgCount('Inbox',$guard);
+            $sent_count = $this->repository->userMsgCount('Sent',$guard);
+            $draft_count = $this->repository->userMsgCount('Draft',$guard);
             return response()->json([              
                 'inbox_count' => $inbox_count,
+                'sent_count' => $sent_count,
+                'draft_count' => $draft_count,
                 'redirect' => trans_url('client/message/message'),
             ], 201);
         } catch (Exception $e) {

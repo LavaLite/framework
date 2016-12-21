@@ -1,25 +1,21 @@
 {
     "name": "litepie/theme",
-    "description": "The Litepie theme package",
-    "homepage": "http://litepie.org",
+    "description": "Theme bundle for Lavalite",
+    "keywords": ["lavalite", "theme"],
     "license": "MIT",
+    "homepage": "https://github.com/Litepie/Theme",
     "authors": [
         {
-            "name": "Renfos Technologies",
+            "name": "Renfos Technologies Pvt. Ltd.",
             "email": "info@renfos.com"
-        },
-        {
-            "name": "George John",
-            "email": "george@renfos.com"
         }
     ],
     "require": {
-        "php": ">=5.5.9"
+        "php": ">=5.6.4"
     },
     "autoload": {
-        "psr-4": {
-            "Litepie\\Theme\\": ""
+        "psr-4": { 
+            "Litepie\\Theme\\": "" 
         }
-    },
-    "minimum-stability": "dev"
+    }
 }

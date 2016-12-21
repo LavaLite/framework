@@ -1,21 +1,21 @@
 {
     "name": "litepie/calendar",
-    "description": "Calendar package for litepie.",
-    "keywords": ["litepie", "Calendar"],
+    "description": "Calendar bundle for Lavalite",
+    "keywords": ["lavalite", "calendar"],
     "license": "MIT",
+    "homepage": "https://github.com/Litepie/Calendar",
     "authors": [
         {
-            "name": "Litepie",
-            "email": "info@litepie.org"
+            "name": "Renfos Technologies Pvt. Ltd.",
+            "email": "info@renfos.com"
         }
     ],
     "require": {
-        "php": ">=5.5.9"
+        "php": ">=5.6.4"
     },
     "autoload": {
-        "psr-4": {
-            "Litepie\\Calendar\\": "src/Litepie/Calendar"
+        "psr-4": { 
+            "Litepie\\Calendar\\": "" 
         }
-    },
-    "minimum-stability": "dev"
+    }
 }

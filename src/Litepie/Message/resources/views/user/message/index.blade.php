@@ -20,9 +20,9 @@
                                 <li class="cur active">
                                     <a href="#" id="btn-inbox"><span class="icon"><i class="ion-arrow-down-a"></i></span><span class="text">Inbox</span><span class="badge badge-info" id="inbox_id">{!!Message::userMsgcount('Inbox',$guard)!!}</span></a>
                                 </li>
-                                <li class="cur">
+                                <!-- <li class="cur">
                                     <a href="#" id="btn-junk"><span class="icon"><i class="ion-close"></i></span><span class="text">Junk</span><span class="badge badge-warning" id="junk_id">{!!Message::userMsgcount('Junk',$guard)!!}</span></a>
-                                </li>
+                                </li> -->
                                 <li class="cur">
                                     <a href="#" id="btn-draft"><span class="icon"><i class="ion-android-create"></i></span><span class="text">Drafts</span><span class="badge badge-primary" id="draft_id">{!!Message::userMsgcount('draft',$guard)!!}</span></a>
                                 </li>

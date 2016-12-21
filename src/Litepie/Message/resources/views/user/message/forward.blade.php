@@ -19,8 +19,8 @@
                         -> required()!!}
                         </td>
                     </tr>
-                            {!! Form::hidden('subject')
-                            -> value("Fwd: ".$message['subject']) !!}
+                        {!! Form::hidden('subject')
+                        -> value("Fwd: ".$message['subject']) !!}
                     <tr>
                         <td colspan="4">
                             {!! Form::textarea ('message')
@@ -70,6 +70,8 @@
                         },
                         success:function(data, textStatus, jqXHR)
                         {
+                            $('#inbox_id').html(data.inbox_count);           
+                            $('#sent_id').html(data.sent_count);
                             $('#entry-message').load('{{URL::to($guard.'/message/status/Inbox')}}');
                         },
                         error: function(jqXHR, textStatus, errorThrown)

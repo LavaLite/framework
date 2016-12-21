@@ -158,7 +158,6 @@ class MessageUserController extends BaseController
     {
         $guard = $this->getGuardRoute();
         Form::populate($message);
-
         return $this->theme->of('message::user.message.edit', compact('message','guard'))->render();
     }
 
@@ -171,13 +170,18 @@ class MessageUserController extends BaseController
      * @return Response
      */
     public function update(MessageRequest $request, Message $message)
-    {  
+    { 
         try {
             $guard = $this->getGuardRoute();
             $this->repository->update($request->all(), $message->getRouteKey());
             $inbox_count = $this->repository->userMsgCount('Inbox',$guard);
+            $sent_count = $this->repository->userMsgCount('Sent',$guard);
+            $draft_count = $this->repository->userMsgCount('Draft',$guard);
+
             return response()->json([              
                 'inbox_count' => $inbox_count,
+                'sent_count' => $sent_count,
+                'draft_count' => $draft_count,                
                 'redirect' => trans_url('user/message/message'),
             ], 201);
 
@@ -293,10 +297,20 @@ class MessageUserController extends BaseController
 
     public function showMessage($status)
     {
-     
         $guard = $this->getGuardRoute();
-        $messages['data'] =  $this->repository->scopeQuery(function ($query) use ($status) {
-                return $query->with('user')->whereStatus($status)->orderBy('id', 'DESC');
+        $email = user('web')->email;
+        $messages['data'] =  $this->repository->scopeQuery(function ($query) use ($status,$guard,$email) {
+                return $query->with('user')
+                ->where(function($query) use($status,$email){
+                    if ($status == 'Inbox') {
+                        $query->whereTo($email);
+                    }else{
+                        $query->whereUserId(user_id('web'))
+                            ->whereUserType(user_type('web'));
+                    }
+                })
+                ->whereStatus($status)
+                ->orderBy('id', 'DESC');
             })->paginate(10);
         $messages['caption'] = $status;
         return view('message::user.message.show', compact('messages','guard'));

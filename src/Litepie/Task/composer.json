@@ -1,21 +1,21 @@
 {
     "name": "litepie/task",
-    "description": "Task package for litepie.",
-    "keywords": ["litepie", "Task"],
+    "description": "Task bundle for Lavalite",
+    "keywords": ["lavalite", "task"],
     "license": "MIT",
+    "homepage": "https://github.com/Litepie/Task",
     "authors": [
         {
-            "name": "Litepie",
-            "email": "info@litepie.org"
+            "name": "Renfos Technologies Pvt. Ltd.",
+            "email": "info@renfos.com"
         }
     ],
     "require": {
-        "php": ">=5.5.9"
+        "php": ">=5.6.4"
     },
     "autoload": {
-        "psr-4": {
-            "Litepie\\Task\\": "src/Litepie/Task"
+        "psr-4": { 
+            "Litepie\\Task\\": "" 
         }
-    },
-    "minimum-stability": "dev"
+    }
 }

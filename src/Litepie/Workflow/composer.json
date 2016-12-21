@@ -1,43 +1,21 @@
 {
-    "name": "lexik/workflow-bundle",
-    "type": "symfony-bundle",
-    "description": "Simple workflow bundle for Symfony2",
-    "keywords": ["Symfony2", "bundle", "workflow"],
+    "name": "litepie/workflow",
+    "description": "Workflow bundle for Lavalite",
+    "keywords": ["lavalite", "workflow"],
     "license": "MIT",
-    "homepage": "https://github.com/lexik/LexikWorkflowBundle",
+    "homepage": "https://github.com/Litepie/Workflow",
     "authors": [
         {
-            "name": "Cedric Girard",
-            "email": "c.girard@lexik.fr"
-        },
-        {
-            "name": "Jeremy Barthe",
-            "email": "j.barthe@lexik.fr"
-        },
-        {
-            "name": "Gilles Gauthier",
-            "email": "g.gauthier@lexik.fr"
-        },
-        {
-            "name": "Dev Lexik",
-            "email": "dev@lexik.fr"
-        },
-        {
-            "name": "Jérémy Romey",
-            "email": "jeremy@free-agent.fr"
+            "name": "Renfos Technologies Pvt. Ltd.",
+            "email": "info@renfos.com"
         }
     ],
     "require": {
-        "php": ">=5.5.9",
-        "symfony/framework-bundle": "~2.7|~3.0",
-        "doctrine/orm": "~2.2"
+        "php": ">=5.6.4"
     },
     "autoload": {
-        "psr-4": { "Lexik\\Bundle\\WorkflowBundle\\": "" }
-    },
-    "extra": {
-        "branch-alias": {
-            "dev-master": "0.5.x-dev"
+        "psr-4": { 
+            "Litepie\\Workflow\\": "" 
         }
     }
 }

@@ -11,17 +11,16 @@
         <ul class="media-list scroll-content mn">
         @forelse($tasks as $key => $value)
             <li class="media b-bl">
-                <a href="#">
-                    <div class="media-left">
-                        <span class="icon {!!@$color[$value['status']]!!}"><i class="{!!@$icon[$value['status']]!!}"></i></span>
-                    </div>
-                    <div class="media-body">
-                        <h4 class="title alt">{!!@$value['task']!!}</h4>
-                        <span class="name">{!!@$value->user['name']!!}</span>  assigned on {{format_date($value['created_at'])}}.
-                        <span class="time" datetime="{!!$value->created_at!!}" title="{!!$value->created_at!!}"> {!!$value->created_at!!}</span>
-                    </div>
-                </a>
-            </li>                       
+                            <a href="#">
+                                <div class="media-left">
+                                   <span class="icon {!!@$color[$value['status']]!!}"><i class="{!!@$icon[$value['status']]!!}"></i></span>
+                                </div>
+                                <div class="media-body">
+                                    <span class="name">{!!@$value->user['name']!!}</span>  assigned  a task {!!@$value['task']!!}
+                                      <span class="time" datetime="{!!$value->created_at!!}" title="{!!$value->created_at!!}"> {!!$value->created_at!!}</span>
+                                </div>
+                            </a>
+                        </li>                               
             @empty
             <li class="media b-bl">
                 <div class="media-content">

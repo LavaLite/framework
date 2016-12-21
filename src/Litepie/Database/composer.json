@@ -1,26 +1,21 @@
 {
     "name": "litepie/database",
-    "description": "The Litepie database package.",
-    "homepage": "http://litepie.org",
+    "description": "Database bundle for Lavalite",
+    "keywords": ["lavalite", "database"],
     "license": "MIT",
+    "homepage": "https://github.com/Litepie/Database",
     "authors": [
         {
-            "name": "Renfos Technologies",
+            "name": "Renfos Technologies Pvt. Ltd.",
             "email": "info@renfos.com"
-        },
-        {
-            "name": "George John",
-            "email": "george@renfos.com"
         }
     ],
     "require": {
-        "php": ">=5.5.9",
-        "league/fractal": "^0.13.0"
+        "php": ">=5.6.4"
     },
     "autoload": {
-        "psr-4": {
-            "Litepie\\Database\\": ""
+        "psr-4": { 
+            "Litepie\\Database\\": "" 
         }
-    },
-    "minimum-stability": "dev"
+    }
 }

@@ -1,0 +1,21 @@
+{
+    "name": "litepie/contracts",
+    "description": "Contracts bundle for Lavalite",
+    "keywords": ["lavalite", "contracts"],
+    "license": "MIT",
+    "homepage": "https://github.com/Litepie/Contracts",
+    "authors": [
+        {
+            "name": "Renfos Technologies Pvt. Ltd.",
+            "email": "info@renfos.com"
+        }
+    ],
+    "require": {
+        "php": ">=5.6.4"
+    },
+    "autoload": {
+        "psr-4": { 
+            "Litepie\\Contracts\\": "" 
+        }
+    }
+}

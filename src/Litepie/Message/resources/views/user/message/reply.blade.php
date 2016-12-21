@@ -65,8 +65,9 @@
                         },
                         success:function(data, textStatus, jqXHR)
                         {
-                            $('#entry-message').load('{{URL::to($guard.'/message/status/Inbox')}}');
-                            l
+                            $('#inbox_id').html(data.inbox_count);           
+                            $('#sent_id').html(data.sent_count);
+                            $('#entry-message').load('{{URL::to($guard.'/message/status/Inbox')}}');                            
                         },
                         error: function(jqXHR, textStatus, errorThrown)
                         {

@@ -1,25 +1,21 @@
 {
     "name": "litepie/revision",
-    "description": "The Litepie revision package",
-    "homepage": "http://litepie.org",
+    "description": "Revision bundle for Lavalite",
+    "keywords": ["lavalite", "revision"],
     "license": "MIT",
+    "homepage": "https://github.com/Litepie/Revision",
     "authors": [
         {
-            "name": "Renfos Technologies",
+            "name": "Renfos Technologies Pvt. Ltd.",
             "email": "info@renfos.com"
-        },
-        {
-            "name": "George John",
-            "email": "george@renfos.com"
         }
     ],
     "require": {
-        "php": ">=5.5.9"
+        "php": ">=5.6.4"
     },
     "autoload": {
-        "psr-4": {
-            "Litepie\\Rivision\\": ""
+        "psr-4": { 
+            "Litepie\\Revision\\": "" 
         }
-    },
-    "minimum-stability": "dev"
+    }
 }

@@ -1,25 +1,21 @@
 {
     "name": "litepie/node",
-    "description": "The Litepie category node package",
-    "homepage": "http://litepie.org",
+    "description": "Node bundle for Lavalite",
+    "keywords": ["lavalite", "node"],
     "license": "MIT",
+    "homepage": "https://github.com/Litepie/Node",
     "authors": [
         {
-            "name": "Renfos Technologies",
+            "name": "Renfos Technologies Pvt. Ltd.",
             "email": "info@renfos.com"
-        },
-        {
-            "name": "George John",
-            "email": "george@renfos.com"
         }
     ],
     "require": {
-        "php": ">=5.5.9"
+        "php": ">=5.6.4"
     },
     "autoload": {
-        "psr-4": {
-            "Litepie\\Node\\": ""
+        "psr-4": { 
+            "Litepie\\Node\\": "" 
         }
-    },
-    "minimum-stability": "dev"
+    }
 }

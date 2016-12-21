@@ -48,11 +48,9 @@ return [
             //You may use this event to set up your assets.
             $theme->asset()->usepath()->add('bootstrap', 'css/theme.css');
             $theme->asset()->usePath()->add('styles', 'css/styles.css');
-            $theme->asset()->usepath()->add('skin', 'css/skins/_all-skins.css');
+            $theme->asset()->usepath()->add('skin', 'css/skins/skin-red.css');
 
-            $theme->asset()->usepath()->add('jquerys', 'packages/jquery/js/jquery.min.js');
-            $theme->asset()->container('footer')->usepath()->add('slimScroll', 'packages/jQuery-slimScroll/jquery.slimscroll.min.js');
-
+            $theme->asset()->usepath()->add('jquery', 'packages/jquery/js/jquery.min.js');
             $theme->asset()->container('footer')->usepath()->add('scripts', 'js/main.js');
             $theme->asset()->container('footer')->usepath()->add('theme', 'js/theme.min.js');
         },

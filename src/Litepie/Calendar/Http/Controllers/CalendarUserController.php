@@ -93,8 +93,7 @@ class CalendarUserController extends BaseController
         $guard = $this->getGuardRoute();
         $calendar = $this->repository->newInstance([]);
         $calendar['start']=date('Y-m-d H:i',strtotime($request->get('start')));
-        $calendar['end']=date('Y-m-d 23:i',strtotime($request->get('end')));
-
+        $calendar['end']=date('Y-m-d 23:i',strtotime($request->get('end')));        
         Form::populate($calendar);
         return view('calendar::user.calendar.create', compact('calendar','guard'));
     }

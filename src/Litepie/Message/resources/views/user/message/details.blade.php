@@ -13,35 +13,13 @@
 <div class="inbox-mail-heading">
     <div class="clearfix">
         <div class="pull-left">
-            <a href="#" class="btn btn-danger btn-simple"><i class="ion-android-arrow-back"></i></a>
+            <a href="#" class="btn btn-danger btn-simple btn-back"><i class="ion-android-arrow-back"></i></a>
             <div class="btn-group">
-                <a href="#" class="btn btn-danger btn-simple"><i class="ion-android-archive"></i></a>
-                <a href="#" class="btn btn-danger btn-simple"><i class="ion-android-warning"></i></a>
                 <a href="#" class="btn btn-danger btn-simple btn-deleted1"><i class="ion-android-delete"></i></a>
             </div>
-            <div class="btn-group dropdown">
-                <a href="#" class="btn btn-danger btn-simple dropdown-toggle" data-toggle="dropdown"><i class="ion-android-folder"></i> <i class="caret"></i></a>
-                <ul class="dropdown-menu">
-                    <li><a href="#">Spam</a></li>
-                    <li><a href="#">Trash</a></li>
-                    <li class="divider"></li>
-                    <li><a href="#">Work</a></li>
-                    <li><a href="#">Personal</a></li>
-                    <li><a href="#">Others</a></li>
-                    <li class="divider"></li>
-                    <li><a href="#">Create New</a></li>
-                </ul>
-            </div>
+
             <div class="btn-group dropdown">
                 <a href="#" class="btn btn-danger btn-simple dropdown-toggle" data-toggle="dropdown">More <i class="caret"></i></a>
-                <ul class="dropdown-menu">
-                    <li><a href="#">Action</a></li>
-                    <li><a href="#">Another Action</a></li>
-                    <li><a href="#">More Action</a></li>
-                    <li><a href="#">Something Else</a></li>
-                    <li class="divider"></li>
-                    <li><a href="#">Separated Link</a></li>
-                </ul>
             </div>
         </div>
         <div class="pull-right hidden-xs">
@@ -55,7 +33,22 @@
 <div class="p15">
     <div class="clearfix">
         <h3 class="inbox-read-title pull-left">{!!$message['subject']!!}</h3>
-        <a href="#" class="btn btn-default btn-simple pull-right hidden-xs"><i class="ion-printer"></i></a>
+        <div class="btn-group dropdown pull-right">
+                <a href="#" class="btn btn-danger btn-raised "><i class="ion-reply visible-xs"></i><span class="hidden-xs">More</span></a>
+                <a href="#" class="btn btn-danger btn-raised dropdown-toggle" data-toggle="dropdown">
+                    <span class="caret m-n"></span>
+                    <span class="sr-only">Toggle Dropdown</span>
+                </a>
+                <ul class="dropdown-menu" style="left:auto;right: 0;" role="menu">
+                    <li><a href="#" class="btn-reply">Reply</a></li>
+                    <li><a href="#" class="btn-forward">Forward</a></li>
+                    <li><a href="#" class="btn-important">Make as important</a></li>
+                    <li><a href="#" class="btn-promotions">Move to promotions</a></li>
+                    <li><a href="#" class="btn-social">Make to social</a></li>
+                    <li class="divider"></li>
+                    <li><a href="#" class="btn-deleted">Delete this message</a></li>
+                </ul>
+            </div>
     </div>
     <hr class=" mb-md">
     <div class="inbox-read-details clearfix">
@@ -66,32 +59,13 @@
             <div class="media-body">
                 <div>
                     <span class="inbox-read-sender-name mr5">{!!$message['user']['name']!!}</span>
-                    <span class="inbox-read-sender-email mr5 hidden-xs">&lt;{!!$message['from']!!}&gt;</span>
+                    <span class="inbox-read-sender-email mr5 hidden-xs">&lt;{!!$message['user']['email']!!}&gt;</span>
                 </div>
-                <div><span class="inbox-read-sent-info">to <strong>me</strong>, <a href="#"><strong>{!!$message['user']['name']!!}</strong></a> {!!format_date($message['created_at'])!!}</span></div>
+                <div><span class="inbox-read-sent-info">to <a href="#"><strong>{!!$message['to']!!}</strong></a> {!!format_date($message['created_at'])!!}</span></div>
             </div>
         </div>
         <div class="pull-right">
-            <div class="btn-group dropdown">
-                <a href="#" class="btn btn-danger btn-raised btn-reply"><i class="ion-reply visible-xs"></i><span class="hidden-xs">Reply</span></a>
-                <a href="#" class="btn btn-danger btn-raised dropdown-toggle" data-toggle="dropdown">
-                    <span class="caret m-n"></span>
-                    <span class="sr-only">Toggle Dropdown</span>
-                </a>
-                <ul class="dropdown-menu" style="left:auto;right: 0;" role="menu">
-                    <li><a href="#" class="btn-reply">Reply</a></li>
-                    <li><a href="#">Reply To All</a></li>
-                    <li><a href="#" class="btn-forward">Forward</a></li>
-                    <li><a href="#" class="btn-important">Make as important</a></li>
-                    <li><a href="#" class="btn-promotions">Move to promotions</a></li>
-                    <li><a href="#" class="btn-social">Make to social</a></li>
-                    <li class="divider"></li>
-                    <li><a href="#">Print</a></li>
-                    <li><a href="#">Mark as spam</a></li>
-                    <li><a href="#">Mark as unread</a></li>
-                    <li><a href="#" class="btn-deleted">Delete this message</a></li>
-                </ul>
-            </div>
+            
         </div>
     </div>
     <hr class=" mt-md">
@@ -104,7 +78,6 @@
         
     </div>
 </div>
-
 <script type="text/javascript">
 $(document).ready(function(){
     
@@ -128,6 +101,9 @@ $(document).ready(function(){
             {
                 console.log(data.inbox_count);
                 $('#inbox_id').html(data.inbox_count); 
+                $('#sent_id').html(data.sent_count);
+                $('#draft_id').html(data.draft_count);
+
             }
         });
     @endif
@@ -206,13 +182,13 @@ $(document).ready(function(){
 
     $(".btn-refresh").click(function(){
         var msgid = $( this ).attr('id');
-        var caption = '{{@$message['caption']}}';
+        var caption = '{{@$message["caption"]}}';
         $('#entry-message').load('{{URL::to($guard.'/message/details/')}}'+'/'+caption+'/'+msgid);
     });
 
     $(".btn-back").click(function(){
-        var msgcaption = $( this ).attr('id');
-          $('#entry-message').load('{{Trans::to("user/message/status")}}'+'/'+msgcaption);
+        var msgcaption = '{{@$message["caption"]}}';
+        $('#entry-message').load('{{Trans::to($guard."/message/status")}}'+'/'+msgcaption);
 
     });
 
@@ -230,8 +206,8 @@ $(document).ready(function(){
         var to_uid = '{{@$message->getRouteKey()}}';
         var status = 'Important';
         var arrayIds = [];
-        var caption = '{{@$messages["caption"]}}';
-        arrayIds.push(to_uid);alert("{{URL::to($guard.'/message/message/status')}}"+"/"+status);
+        var caption = '{{@$message["caption"]}}';
+        arrayIds.push(to_uid);
         $.ajax({                    
             url: "{{URL::to($guard.'/message/message/status')}}"+"/"+status,
             type: 'GET',
@@ -240,7 +216,7 @@ $(document).ready(function(){
             {
                 $('#inbox_id').html(data.inbox_count);                  
                 $('#important_id').html(data.important_count);
-                /*$('#entry-message').load('{{URL::to($guard.'/message/status/')}}'+'/'+caption);*/
+                $('#entry-message').load('{{URL::to($guard.'/message/status/')}}'+'/'+caption);
             },
             error: function(jqXHR, textStatus, errorThrown)
             {
@@ -252,7 +228,7 @@ $(document).ready(function(){
         var to_uid = '{{@$message->getRouteKey()}}';
         var status = 'Promotions';
         var arrayIds = [];
-        var caption = '{{@$messages["caption"]}}';
+        var caption = '{{@$message["caption"]}}';
         arrayIds.push(to_uid);
         $.ajax({                    
             url: "{{URL::to($guard.'/message/message/status')}}"+"/"+status,
@@ -261,8 +237,8 @@ $(document).ready(function(){
             success:function(data, textStatus, jqXHR)
             {
                 $('#inbox_id').html(data.inbox_count);                  
-                $('#promotions_id').html(data.important_count);
-                /*$('#entry-message').load('{{URL::to($guard.'/message/status/')}}'+'/'+caption);*/
+                $('#promotions_id').html(data.promotions_count);
+                $('#entry-message').load('{{URL::to($guard.'/message/status/')}}'+'/'+caption);
             },
             error: function(jqXHR, textStatus, errorThrown)
             {
@@ -274,7 +250,7 @@ $(document).ready(function(){
         var to_uid = '{{@$message->getRouteKey()}}';
         var status = 'Social';
         var arrayIds = [];
-        var caption = '{{@$messages["caption"]}}';
+        var caption = '{{@$message["caption"]}}';
         arrayIds.push(to_uid);
         $.ajax({                    
             url: "{{URL::to($guard.'/message/message/status')}}"+"/"+status,
@@ -283,8 +259,8 @@ $(document).ready(function(){
             success:function(data, textStatus, jqXHR)
             {
                 $('#inbox_id').html(data.inbox_count);                  
-                $('#social_id').html(data.important_count);
-                /*$('#entry-message').load('{{URL::to($guard.'/message/status/')}}'+'/'+caption);*/
+                $('#social_id').html(data.social_count);
+                $('#entry-message').load('{{URL::to($guard.'/message/status/')}}'+'/'+caption);
             },
             error: function(jqXHR, textStatus, errorThrown)
             {

@@ -4,7 +4,26 @@
                 <div class="container">
                     <a class="navbar-brand" href="{{trans_url('/')}}"><img src="{{theme_asset('img/logo/white.svg')}}" alt="Lavalite" class="img-responsive"></a>
                     <ul class="nav navbar-nav  pull-right navbar-right">
-
+                        <li class="dropdown pages">
+                              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                                    <span class="hidden-xs">Pages <i class="ion ion-ios-arrow-down"></i></span>
+                                    <span class="hidden-sm hidden-md hidden-lg"><i class="fa fa-bars"></i></span>
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="blocks">Blocks</a></li>
+                                    <li><a href="blogs">Blog</a></li>
+                                    <li><a href="careers/job">Jobs</a></li>
+                                    <li><a href="contacts">Contacts</a></li>
+                                    <li><a href="faq">Faqs</a></li>
+                                    <li><a href="forums">Forum</a></li>
+                                    <li><a href="galleries">Gallery</a></li>
+                                    <li><a href="news">News</a></li>
+                                    <li><a href="portfolio">Portfolios</a></li>
+                                    <li><a href="pricelists">PriceLists</a></li>
+                                    <li><a href="teams">Team</a></li>
+                                    <li><a href="testimonials">Testimonial</a></li>
+                                </ul>
+                            </li>
                     @if(user_check())
                         <li>
                             <a href="{{ trans_url('home') }}" class="login">
@@ -19,12 +38,6 @@
                             </a>
                         </li>
                     @else
-                        <li>
-                            <a href="{{ trans_url('client') }}" class="login">
-                                <span class="hidden-xs">Client</span>
-                                <span class="hidden-sm hidden-md hidden-lg"><i class="fa fa-user"></i></span>
-                            </a>
-                        </li>
                         <li>
                             <a href="{{ trans_url('register') }}" class="login">
                                 <span class="hidden-xs">Register</span>
@@ -65,9 +78,35 @@
 
     <div class="features">
         <div class="container">
-
+            <div class="features-header">
+                <h2>Packed with features you can't live without.</h2>
+                <p> Visit our <a href="https://github.com/LavaLite/cms/wiki">documentation</a> for more information. </p>
+            </div>
             <div class="row">
-                {!!Block::display('features')!!}
+                <div class="col-md-4">
+                    <div class="feature">
+                        <i class="ion ion-social-github-outline"></i>
+                        <h6>Powered by Laravel 5.2</h6>
+                        <p>We have tried to make use of all features of Laravel 5.2 which help you to develop the website with all resources available online.​ ​ </p>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="feature">
+                        <i class="ion ion-ios-gear-outline"></i>
+                        <h6>Configure to your project</h6>
+                        <p>Lavalite helps you to configure your Laravel projects easily. It acts as a bootstrapper for your Laravel Content Management System.</p>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="feature">
+                        <i class="ion ion-ios-checkmark-outline"></i>
+                        <h6>Online package builder</h6>
+                        <p>The online package builder helps you to build Lavalite packages easily, The downloaded package with basic required files help you to finish your projects quickly.</p>
+                    </div>
+                </div>
+
             </div>
         </div>
     </div>

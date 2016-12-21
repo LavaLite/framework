@@ -1,5 +1,5 @@
 #
-# This will split up each Rain library to its own github repo
+# This will split up each Lavalite library to its own github repo
 #
 
 ./git-subsplit.sh init git@github.com:lavalite/framework.git

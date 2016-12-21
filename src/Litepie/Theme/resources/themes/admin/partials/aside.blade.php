@@ -14,21 +14,23 @@
       </div>
     </div>
     <!-- search form -->
-   
-     <ul class="sidebar-settings">
-        <li ><a href="{!!url('admin/settings/setting')!!}"><i class="fa fa-wrench "></i> Settings</a></li>
-        <li ><a href="{!!url('logout?role=admin.web')!!}"><i class="fa fa-power-off"></i> Logout</a></li>
-    </ul>
-    
+    <form action="#" method="get" class="sidebar-form">
+      <div class="input-group">
+        <input type="text" name="q" class="form-control" placeholder="Search..."/>
+        <span class="input-group-btn">
+          <button type='submit' name='search' id='search-btn' class="btn btn-flat"><i class="fa fa-search"></i></button>
+        </span>
+      </div>
+    </form>
     <!-- /.search form -->
     <!-- sidebar menu: : style can be found in sidebar.less -->
     <ul class="sidebar-menu">
-      <li class="header">MAIN NAVIGATION</li>
+      <li class="header">MAIN NAVIGATION<d/li>
       {!!Menu::menu('admin', 'menu::menu.admin')!!}
       <li class="header">Masters</li>
-      <li><a href="{{ URL::to('admin/settings/setting') }}"><i class="fa fa-sliders text-red"></i> <span>Settings</span></a></li>
+      <li><a href="{{ URL::to('admin/settings/setting') }}"><i class="fa fa-circle-o text-red"></i> <span>Settings</span></a></li>
       <li><a href="{{ URL::to('admin/masters') }}"><i class="fa fa-circle-o text-yellow"></i> <span>Masters</span></a></li>
-      <li><a href="{{ URL::to('admin/reports') }}"><i class="fa fa-bar-chart text-aqua"></i> <span>Reports</span></a></li>
+      <li><a href="{{ URL::to('admin/reports') }}"><i class="fa fa-circle-o text-aqua"></i> <span>Reports</span></a></li>
     </ul>
   </section>
   <!-- /.sidebar -->

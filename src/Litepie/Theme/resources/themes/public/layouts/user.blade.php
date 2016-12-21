@@ -8,7 +8,7 @@
         <meta name="description" content="The Lavalite Content Management System">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="apple-touch-icon" href="{{asset('apple-touch-icon.png')}}">
-        <link href="{{ theme_asset('css/vendor.css') }}" rel="stylesheet">
+        <link href="{{ asset('css/vendor_public.css') }}" rel="stylesheet">
 
         {!! Theme::asset()->styles() !!}
         {!! Theme::asset()->scripts() !!}
@@ -18,7 +18,8 @@
 
         {!! Theme::partial('header') !!}
         <div class="dashboard-wraper">
-        <div class=" content">
+        <div class="container-fluid content">
+            <div style="min-height:500px;">
                 <div class="row">
                     <div class="col-md-3 col-lg-3 menu">
                         {!! Theme::partial('aside') !!}
@@ -27,11 +28,12 @@
                         {!! Theme::content() !!}
                     </div>
                 </div>
+            </div>
         </div>
         </div>
         {!! Theme::partial('footer') !!}
-        <script src="{{ theme_asset('js/vendor.js') }}"></script>
-        <script src="{{ theme_asset('js/main.js') }}"></script>
+        <script src="{{ asset('js/vendor_public.js') }}"></script>
+        <script src="{{ asset('js/public.js') }}"></script>
         {!! Theme::asset()->container('footer')->scripts() !!}
         <script type="text/javascript">
             Waves.init();

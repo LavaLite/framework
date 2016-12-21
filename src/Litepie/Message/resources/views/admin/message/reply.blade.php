@@ -64,7 +64,9 @@
                             $('#reply-close').prop('disabled',true);
                         },
                         success:function(data, textStatus, jqXHR)
-                        {
+                        { 
+                            $('#inbox_id').html(data.inbox_count);           
+                            $('#sent_id').html(data.sent_count); 
                             $('#entry-message').load('{{URL::to('admin/message/status/Inbox')}}');
                             location.reload();
                         },

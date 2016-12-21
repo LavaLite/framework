@@ -56,7 +56,7 @@ class MessageAdminController extends BaseController
         $this->theme->asset()->add('select2-css', 'packages/select2/css/select2.min.css');
         $this->theme->asset()->container('extra')->add('select2-js', 'packages/select2/js/select2.full.js');
 
-        if ($request->wantsJson()) {
+        if ($request->wantsJson()) { 
             $messages = $this->repository
                 ->pushCriteria(new \Litepie\Message\Repositories\Criteria\MessageAdminCriteria())
                 ->setPresenter('\\Litepie\\Message\\Repositories\\Presenter\\MessageListPresenter')

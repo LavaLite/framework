@@ -1,25 +1,21 @@
 {
     "name": "litepie/html",
-    "description": "The Litepie html package",
-    "homepage": "http://litepie.org",
+    "description": "Html bundle for Lavalite",
+    "keywords": ["lavalite", "html"],
     "license": "MIT",
+    "homepage": "https://github.com/Litepie/Html",
     "authors": [
         {
-            "name": "Renfos Technologies",
+            "name": "Renfos Technologies Pvt. Ltd.",
             "email": "info@renfos.com"
-        },
-        {
-            "name": "George John",
-            "email": "george@renfos.com"
         }
     ],
     "require": {
-        "php": ">=5.5.9"
+        "php": ">=5.6.4"
     },
     "autoload": {
-        "psr-4": {
-            "Litepie\\Html\\": ""
+        "psr-4": { 
+            "Litepie\\Html\\": "" 
         }
-    },
-    "minimum-stability": "dev"
+    }
 }

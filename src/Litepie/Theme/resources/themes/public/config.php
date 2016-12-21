@@ -59,9 +59,8 @@ return [
 
             //You may use this event to set up your assets.
 
-            $theme->asset()->usepath()->add('normalize', 'css/normalize.css');
             $theme->asset()->usepath()->add('main', 'css/main.css');
-            $theme->asset()->usepath()->add('public', 'css/public.css');
+
             $theme->asset()->usepath()->add('jquery', 'packages/jquery/js/jquery.min.js');
         },
 
@@ -70,13 +69,12 @@ return [
         'beforeRenderLayout' => [
 
             'default' => function ($theme) {
-                /*$theme->asset()->usepath()->add('default', 'css/default.css');*/
+                $theme->asset()->usepath()->add('default', 'css/default.css');
             },
 
             'user'    => function ($theme) {
                 $theme->asset()->usepath()->add('user', 'css/user.css');
                 $theme->asset()->usepath()->add('fullcalendar-css', 'packages/fullcalendar/fullcalendar.min.css');
-                $theme->asset()->container('footer')->usepath()->add('fullcalendar-js-ui', 'packages/fullcalendar/jquery-ui.js');
                 $theme->asset()->container('footer')->usepath()->add('fullcalendar-js', 'packages/fullcalendar/fullcalendar.min.js');
             },
 

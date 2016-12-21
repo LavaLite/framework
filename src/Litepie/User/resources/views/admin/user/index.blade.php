@@ -27,26 +27,18 @@
     <thead class="list_head">
         <th>{!! trans('user::user.label.name')!!}</th>
         <th>{!! trans('user::user.label.email')!!}</th>
-        <th>{!! trans('user::user.label.sex')!!}</th>
-        <th>{!! trans('user::user.label.dob')!!}</th>
         <th>{!! trans('user::user.label.designation')!!}</th>
         <th>{!! trans('user::user.label.mobile')!!}</th>
-        <th>{!! trans('user::user.label.street')!!}</th>
         <th>{!! trans('user::user.label.status')!!}</th>
-        <th>{!! trans('user::user.label.created_at')!!}</th>
-        <th>{!! trans('user::user.label.updated_at')!!}</th>
+       
     </thead>
     <thead  class="search_bar">
         <th>{!! Form::text('search[name]')->raw()!!}</th>
         <th>{!! Form::text('search[email]')->raw()!!}</th>
-        <th>{!! Form::select('search[sex]')->options([''=>'All'] + trans('user::user.options.sex'))->raw()!!}</th>
-        <th>{!! Form::text('search[dob]')->id('dob')->raw()!!}</th>
         <th>{!! Form::text('search[designation]')->raw()!!}</th>
         <th>{!! Form::text('search[mobile]')->raw()!!}</th>
-        <th>{!! Form::text('search[street]')->raw()!!}</th>
         <th>{!! Form::select('search[status]')->options(trans('user::user.options.status'))->raw()!!}</th>
-        <th>{!! Form::text('search[created_at]')->id('created_at')->raw()!!}</th>
-        <th>{!! Form::text('search[updated_at]')->id('updated_at')->raw()!!}</th>
+       
     </thead>
 </table>
 @stop
@@ -94,15 +86,10 @@ $(document).ready(function(){
 
         "columns": [
             {data :'name'},
-            {data :'email'},
-            {data :'sex'},
-            {data :'dob'},
+            {data :'email'},          
             {data :'designation'},
-            {data :'mobile'},
-            {data :'street'},
+            {data :'mobile'},           
             {data :'status'},
-            {data :'created_at'},
-            {data :'updated_at'},
 
         ],
         "pageLength": 25

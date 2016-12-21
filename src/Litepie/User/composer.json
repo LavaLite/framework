@@ -1,21 +1,21 @@
 {
     "name": "litepie/user",
-    "description": "User package for litepie.",
-    "keywords": ["lavalite", "User"],
+    "description": "User bundle for Lavalite",
+    "keywords": ["lavalite", "user"],
     "license": "MIT",
+    "homepage": "https://github.com/Litepie/User",
     "authors": [
         {
-            "name": "Lavalite",
-            "email": "info@lavalite.org"
+            "name": "Renfos Technologies Pvt. Ltd.",
+            "email": "info@renfos.com"
         }
     ],
     "require": {
-        "php": ">=5.5.9"
+        "php": ">=5.6.4"
     },
     "autoload": {
-        "psr-4": {
-            "Litepie\\User\\": "src/Litepie/User"
+        "psr-4": { 
+            "Litepie\\User\\": "" 
         }
-    },
-    "minimum-stability": "dev"
+    }
 }

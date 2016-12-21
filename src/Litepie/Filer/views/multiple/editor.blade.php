@@ -14,12 +14,12 @@ if (is_object($file)) {
                 $ext  = strtolower($info['extension']);
             ?>
             @if (in_array($ext, ['jpg','jpeg', 'png', 'gif']) )
-                <a href='{!!$file["url"]!!}' target="_blank">
+                <a href='{!! url("/image/{$size}/{$config}/ ". folder_encode($file["folder"]))!!}/{!! $file["file"] !!}' target="_blank">
                     <img src='{!! url("/image/{$size}/{$config}/ ". folder_encode($file["folder"]))!!}/{!! $file["file"] !!}' class="img-thumbnail image-responsive">
                 </a>
             @else
                 <div id="file">
-                    <a href='{!!$file["url"]!!}" target="_blank">{!!$file["file"]!!}</a>
+                    <a href='{!!$file["url"]!!}' target="_blank">{!!$file["file"]!!}</a>
                 </div>
             @endif
             <div class="btn_container">

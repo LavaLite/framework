@@ -1,21 +1,21 @@
 {
     "name": "litepie/settings",
-    "description": "Settings package for litepie.",
-    "keywords": ["lavalite", "Settings"],
+    "description": "Settings bundle for Lavalite",
+    "keywords": ["lavalite", "settings"],
     "license": "MIT",
+    "homepage": "https://github.com/Litepie/Settings",
     "authors": [
         {
-            "name": "Lavalite",
-            "email": "info@lavalite.org"
+            "name": "Renfos Technologies Pvt. Ltd.",
+            "email": "info@renfos.com"
         }
     ],
     "require": {
-        "php": ">=5.5.9"
+        "php": ">=5.6.4"
     },
     "autoload": {
-        "psr-4": {
-            "Litepie\\Settings\\": "src/Litepie/Settings"
+        "psr-4": { 
+            "Litepie\\Settings\\": "" 
         }
-    },
-    "minimum-stability": "dev"
+    }
 }

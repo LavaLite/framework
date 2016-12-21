@@ -15,8 +15,8 @@
                 <p>© 2016 Lavalite </p>
             </div>
             <div class="col-sm-4 footer-navs">
-                <a href="{{trans_url('about-us.html')}}">About Us</a><!-- 
-                <a href="{{trans_url('blog')}}">Blog</a> -->
+                <a href="{{trans_url('about-us.html')}}">About Us</a>
+                <a href="{{trans_url('blog')}}">Blog</a>
                 <a href="{{trans_url('news')}}">News</a>
             </div>
         </div>

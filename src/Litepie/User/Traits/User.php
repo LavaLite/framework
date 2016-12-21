@@ -29,10 +29,10 @@ trait User
         }
 
         if ($this->sex == 'female') {
-            return trans_url('img/avatar/female.png');
+            return theme_asset('img/avatar/female.png');
         }
 
-        return trans_url('img/avatar/male.png');
+        return theme_asset('img/avatar/male.png');
     }
 
     /**

@@ -14,19 +14,14 @@
 <div class='col-md-6 col-sm-12'>
    <label>Start Date</label>
         {!! Form::datetime('start')
-        -> placeholder(trans('calendar::calendar.placeholder.start'))
-        -> label(trans('calendar::calendar.label.start'))
-        ->raw()!!}
+        -> placeholder(trans('calendar::calendar.placeholder.start')) !!}
       
 </div>
 
 <div class='col-md-6 col-sm-12'>  
    <label>End Date</label>
-
         {!! Form::datetime('end')
-        -> placeholder(trans('calendar::calendar.placeholder.end'))
-        ->raw()!!}
-  
+        -> placeholder(trans('calendar::calendar.placeholder.end')) !!}  
 </div>
 
 

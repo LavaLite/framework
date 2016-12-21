@@ -27,6 +27,7 @@ $(function () {
         editable: false,
         droppable: false, // this allows things to be dropped onto the calendar !!!
         resizable: false,
+        eventLimit: true,
     });
        
 });

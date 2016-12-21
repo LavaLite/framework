@@ -29,6 +29,7 @@
                         <div class='col-md-12 col-sm-12'>
                             {!! Form::radios('sex')
                             -> radios(trans('user::user.options.sex'))
+                            ->style('margin-left:-15px')
                             -> label(trans('user::user.label.sex'))
                             -> inline() !!}
                         </div>
@@ -95,9 +96,9 @@
                     </div>
                     <div class='col-md-3 col-sm-4'>
                         <div class='col-md-12 col-sm-12'>
-                            {!! Form::file('photo')
-                            -> label(trans('user::user.label.photo'))
-                            -> placeholder(trans('user::user.placeholder.photo')) !!}
+                           {!!@$user->fileShow('photo')!!}
+                        </div>
+                    </div>
                         </div>
                     </div>
                 </div>

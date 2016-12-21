@@ -1,21 +1,21 @@
 {
     "name": "litepie/contact",
-    "description": "Contact litepie for litepie.",
-    "keywords": ["lavalite","litepie", "Contact"],
+    "description": "Contact bundle for Lavalite",
+    "keywords": ["lavalite", "contact"],
     "license": "MIT",
+    "homepage": "https://github.com/Litepie/Contact",
     "authors": [
         {
-            "name": "Litepie",
-            "email": "info@lavalite.org"
+            "name": "Renfos Technologies Pvt. Ltd.",
+            "email": "info@renfos.com"
         }
     ],
     "require": {
-        "php": ">=5.5.9"
+        "php": ">=5.6.4"
     },
     "autoload": {
-        "psr-4": {
-            "Litepie\\Contact\\": "src/Litepie/Contact"
+        "psr-4": { 
+            "Litepie\\Contact\\": "" 
         }
-    },
-    "minimum-stability": "dev"
+    }
 }
