@@ -11,7 +11,6 @@ class CalendarTableSeeder extends Seeder
 
                 'user_type'     => 'App\\User',
                 'user_id'       => '1',
-                'category_id'   => null,
                 'status'        => 'Calendar',
                 'start'         => '2016-07-19 00:00:00',
                 'end'           => '2016-07-19 01:00:00',
@@ -29,7 +28,6 @@ class CalendarTableSeeder extends Seeder
             [
                 'user_type'     => 'App\\User',
                 'user_id'       => '1',
-                'category_id'   => null,
                 'status'        => 'Calendar',
                 'start'         => '2016-07-29 00:00:00',
                 'end'           => '2016-07-29 01:00:00',
@@ -47,7 +45,6 @@ class CalendarTableSeeder extends Seeder
             [
                 'user_type'     => 'App\\User',
                 'user_id'       => '1',
-                'category_id'   => null,
                 'status'        => 'Calendar',
                 'start'         => '2016-07-20 00:00:00',
                 'end'           => '2016-07-20 01:00:00',
