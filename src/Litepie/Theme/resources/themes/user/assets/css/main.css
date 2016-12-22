@@ -3484,6 +3484,9 @@ table input[type="text"] {
 .table-inbox .inbox-msg-time {
   text-align: right;
 }
+.table-inbox .inbox-msg-from {
+  text-transform: capitalize;
+}
 .table-inbox .unread .inbox-msg-from,
 .table-inbox .unread .inbox-msg-time {
   font-weight: 700;
@@ -5534,6 +5537,73 @@ fieldset[disabled] .btn.btn-rose.active {
     border-color: #f44336!important;
     box-shadow: 0 12px 20px -10px rgba(244, 67, 54, 0.28), 0 4px 20px 0px rgba(0, 0, 0, 0.12), 0 7px 8px -5px rgba(244, 67, 54, 0.2)!important;
 }
+
+.table-inbox .inbox-msg-check .checkbox input[type="checkbox"] {
+    cursor: pointer;
+    opacity: 0;
+    z-index: 1;
+    outline: none !important;
+    position: relative;
+    margin: 0;
+    width: 20px;
+    height: 20px;
+    pointer-events: auto;
+}
+.table-inbox .inbox-msg-check .checkbox label::before {
+    -o-transition: 0.3s ease-in-out;
+    -webkit-transition: 0.3s ease-in-out;
+    background-color: #ffffff;
+    border-radius: 2px;
+    border: 2px solid rgba(0,0,0, .54);
+    content: "";
+    display: inline-block;
+    height: 20px;
+    left: 0;
+    top: 3px;
+    margin-left: 0px;
+    position: absolute;
+    transition: 0.3s ease-in-out;
+    width: 20px;
+    outline: none !important;
+}
+.table-inbox .inbox-msg-check .checkbox input[type="checkbox"]:checked + label::after {
+    content: "\f383";
+    font-family: 'Ionicons';
+    color: #fff;
+}
+.table-inbox .inbox-msg-check .checkbox label::after {
+    color: #555555;
+    display: inline-block;
+    font-size: 14px;
+    height: 20px;
+    left: 0;
+    position: absolute;
+    text-align: center;
+    padding-top: 1px;
+    top: 3px;
+    width: 20px;
+}
+.table-inbox .inbox-msg-check .checkbox {
+  position: relative;
+  display: block;
+}
+.table-inbox .inbox-msg-check .checkbox input[type="checkbox"]:checked + label::before {
+    background-color: #f44336;
+    border-color: #f44336;
+}
+.table-inbox .inbox-msg-check
+.table-inbox .inbox-msg-check
+.table-inbox .inbox-msg-check
+.table-inbox .inbox-msg-check
+.table-inbox .inbox-msg-check
+.table-inbox .inbox-msg-check
+.table-inbox .inbox-msg-check
+.table-inbox .inbox-msg-check
+.table-inbox .inbox-msg-check
+.table-inbox .inbox-msg-check
+.table-inbox .inbox-msg-check
+.table-inbox .inbox-msg-check
+.table-inbox .inbox-msg-check
 /* ==========================================================================
    Helper classes
    ========================================================================== */
@@ -6587,4 +6657,10 @@ fieldset[disabled] .btn.btn-rose.active {
 .agile-detail {
  margin-top: 5px;
  font-size: 12px;
+}
+.external-event{
+ color: #fff;
+}
+.fc-time{
+ display: none !important;
 }

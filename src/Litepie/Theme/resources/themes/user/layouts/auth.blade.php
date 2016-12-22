@@ -15,7 +15,7 @@
     </head>
 
 
-    <body class="body-bg-full auth login" style="background-image: url({{trans_url('img/lock.jpg')}});">
+    <body class="body-bg-full auth login" style="background-image: url({{theme_asset('img/lock.jpg')}});">
     
         {!! Theme::partial('auth.header') !!}
         {!! Theme::content() !!}

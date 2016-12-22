@@ -6,6 +6,9 @@ $(function () {
             return true;
         }
     });
+  
+
+    $("form[id$='-show'] .disabled :input").prop("disabled", true);
 
     $('.html-editor-mini').summernote({
         height: "200px",
@@ -26,21 +29,22 @@ $(function () {
         }
     });
 
-    $('input .pickadate').pickadate({
-        format: 'dd mmm, yyyy',
-        formatSubmit: 'yyyy-mm-dd',
-        hiddenSuffix: '',
-        selectMonths: true,
-        selectYears: true
+    $('input[type="datetime"], .pickdatetime').datetimepicker({
+        format:'Y-m-d H:i',
     }).prop('type','text');
 
-    $('input .pickatime').pickatime({
-        format: 'h:i A',
-        formatSubmit: 'HH:i:00',
-        hiddenSuffix: '',
-        interval: 10,
-        selectMonths: true,
-        selectYears: true
+    $('input[type="date"], .pickdate').datetimepicker({
+        timepicker:false,
+        format:'Y-m-d',
+    }).prop('type','text');
+
+    $('input[type="time"], .picktime').datetimepicker({
+        datepicker:false,
+        format:'H:i',
+    }).prop('type','text');
+
+    $('input[type="period"], .pickperiod').datetimepicker({
+        format:'Y-m-d H:i',
     }).prop('type','text');
 
     toastr.options = {
@@ -106,7 +110,7 @@ $(function () {
 });
 
 $( document ).ajaxComplete(function() {
-    $("form[id$='-show'] :input").prop("disabled", true);
+    $("form[id$='-show'] .disabled :input").prop("disabled", true);
 
     $('.html-editor').summernote({
         height: "200px",
@@ -128,26 +132,25 @@ $( document ).ajaxComplete(function() {
           ]
     });
 
-    $('input .pickadate').pickadate({
-        format: 'dd mmm, yyyy',
-        formatSubmit: 'yyyy-mm-dd',
-        hiddenSuffix: '',
-        selectMonths: true,
-        selectYears: true
+    $('input[type="datetime"], .pickdatetime').datetimepicker({
+        format:'Y-m-d H:i',
     }).prop('type','text');
 
-    $('input .pickatime').pickatime({
-        format: 'h:i A',
-        formatSubmit: 'HH:i:00',
-        hiddenSuffix: '',
-        interval: 10,
-        selectMonths: true,
-        selectYears: true
+    $('input[type="date"], .pickdate').datetimepicker({
+        timepicker:false,
+        format:'Y-m-d',
+    }).prop('type','text');
+
+    $('input[type="time"], .picktime').datetimepicker({
+        datepicker:false,
+        format:'H:i',
+    }).prop('type','text');
+
+    $('input[type="period"], .pickperiod').datetimepicker({
+        format:'Y-m-d H:i',
     }).prop('type','text');
 
     $.AdminLTE.boxWidget.activate()
-
-
 });
 
 

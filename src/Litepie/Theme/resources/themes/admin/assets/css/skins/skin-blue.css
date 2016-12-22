@@ -5,9 +5,7 @@
 .skin-blue .main-header .navbar {
   background-color: #3c8dbc;
 }
-.skin-blue .main-header .navbar .nav > li > a {
-  color: #ffffff;
-}
+
 .skin-blue .main-header .navbar .nav > li > a:hover,
 .skin-blue .main-header .navbar .nav > li > a:active,
 .skin-blue .main-header .navbar .nav > li > a:focus,

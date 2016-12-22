@@ -1,23 +1,23 @@
                 @if(getenv('auth.guard') == 'user')
                     <div class="logo">
                         <a href="{!!url('home')!!}" class="logo-image">
-                            <img src="{!!url('img/logo-white.svg')!!}" alt="logo" title="Lavalite">
+                            <img src="{!!theme_asset('img/logo-white.svg')!!}" alt="logo" title="Lavalite">
                         </a>
                     </div>
                     <div class="logo logo-mini">
                         <a href="{!!url('home')!!}" class="logo-image">
-                            <img src="{!!url('img/logo.svg')!!}" alt="logo-mini" title="Lavalite">
+                            <img src="{!!theme_asset('img/logo.svg')!!}" alt="logo-mini" title="Lavalite">
                         </a>
                     </div>
                 @else
                     <div class="logo">
                         <a href="{!!url(getenv('auth.guard'))!!}" class="logo-image">
-                            <img src="{!!url('img/logo-white.svg')!!}" alt="logo" title="Lavalite">
+                            <img src="{!!theme_asset('img/logo-white.svg')!!}" alt="logo" title="Lavalite">
                         </a>
                     </div>
                     <div class="logo logo-mini">
                         <a href="{!!url(getenv('auth.guard'))!!}" class="logo-image">
-                            <img src="{!!url('img/logo.svg')!!}" alt="logo-mini" title="Lavalite">
+                            <img src="{!!theme_asset('img/logo.svg')!!}" alt="logo-mini" title="Lavalite">
                         </a>
                     </div>
                 @endif 

@@ -19,6 +19,9 @@ $(function () {
           ]
     });
 
+    
+
+
     $('.html-editor').summernote({
         height: "200px",
         onImageUpload: function(files, editor, welEditable) {
@@ -26,22 +29,22 @@ $(function () {
         }
     });
 
-    $('input[type="date"]').pickadate({
-        format: 'dd mmm, yyyy',
-        formatSubmit: 'yyyy-mm-dd',
-        hiddenSuffix: '',
-        selectMonths: true,
-        selectYears: true
-
+     $('input[type="datetime"], .pickdatetime').datetimepicker({
+        format:'Y-m-d H:i',
     }).prop('type','text');
 
-    $('input[type="time"]').pickatime({
-        format: 'h:i A',
-        formatSubmit: 'HH:i:00',
-        hiddenSuffix: '',
-        interval: 10,
-        selectMonths: true,
-        selectYears: true
+    $('input[type="date"], .pickdate').datetimepicker({
+        timepicker:false,
+        format:'Y-m-d',
+    }).prop('type','text');
+
+    $('input[type="time"], .picktime').datetimepicker({
+        datepicker:false,
+        format:'H:i',
+    }).prop('type','text');
+
+    $('input[type="period"], .pickperiod').datetimepicker({
+        format:'Y-m-d H:i',
     }).prop('type','text');
 
     toastr.options = {
@@ -125,22 +128,24 @@ $( document ).ajaxComplete(function() {
         }
     });
 
-    $('input[type="date"]').pickadate({
-        format: 'dd mmm, yyyy',
-        formatSubmit: 'yyyy-mm-dd',
-        selectMonths: true,
-        selectYears: true
+    $('input[type="datetime"], .pickdatetime').datetimepicker({
+        format:'Y-m-d H:i',
     }).prop('type','text');
 
-    $('input[type="time"]').pickatime({
-        format: 'h:i A',
-        formatSubmit: 'HH:i:00',
-        interval: 10,
-        selectMonths: true,
-        selectYears: true
+    $('input[type="date"], .pickdate').datetimepicker({
+        timepicker:false,
+        format:'Y-m-d',
     }).prop('type','text');
 
-    $.AdminLTE.boxWidget.activate()
+    $('input[type="time"], .picktime').datetimepicker({
+        datepicker:false,
+        format:'H:i',
+    }).prop('type','text');
+
+    $('input[type="period"], .pickperiod').datetimepicker({
+        format:'Y-m-d H:i',
+    }).prop('type','text');
+
 /*
     $('input').iCheck({
       checkboxClass: 'icheckbox_square-blue',
@@ -213,7 +218,7 @@ var app = {
             success:function(data, textStatus, jqXHR)
             {
                 app.load(tag, data.redirect);
-                $(datatable).DataTable().ajax.reload( null, false );
+                /*$(datatable).DataTable().ajax.reload( null, false );*/
             }
         });
     },
@@ -250,12 +255,13 @@ var app = {
             success:function(data, textStatus, jqXHR)
             {
                 app.load(tag, data.redirect);
-                $(datatable).DataTable().ajax.reload( null, false );
+                /*$(datatable).DataTable().ajax.reload( null, false );*/
             }
         });
     },
 
     'delete' : function(target, tag, datatable, remove) {
+
         swal({
             title: "Are you sure?",
             text: "You will not be able to recover this data!",
@@ -276,7 +282,8 @@ var app = {
                 {
                     swal("Deleted!", data.message, "success");
                     app.load(tag, data.redirect);
-                    $(datatable).DataTable().ajax.reload( null, false );
+                    /*$(datatable).DataTable().ajax.reload( null, false );*/
+                    location.reload();
                     $("#"+remove).hide();
                 },
             });

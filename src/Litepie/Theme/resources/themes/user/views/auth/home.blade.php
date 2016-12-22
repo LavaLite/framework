@@ -171,7 +171,7 @@
                     </ul>
                 </div>
                 <div class="footer">
-                    <a href="{{URL::to('user/task/task')}}" class="btn btn-danger btn-sm btn-raised">See more</a>
+                    <a href="{!!url(getenv('auth.guard').'/task/task')!!}" class="btn btn-danger btn-sm btn-raised">See more</a>
                 </div>
             </div>
         </div>
@@ -184,109 +184,116 @@
                     </div>
                 </div>
                 <div class="body pn" style="max-height: 235px;overflow-x: auto;">
-                    <ul class="media-list scroll-content mn">
-                        <li class="media b-bl">
-                            <div class="media-content">
-                                <div class="media-left">
-                                    <span class="input">
-                                        <input type="checkbox" name="ham" value="1" id="dashcheckbox1"  class="tectonic"/>
-                                        <label for="dashcheckbox1"></label>
-                                    </span>
-                                </div>
-                                <div class="media-body">
-                                    <span class="text">Create invoice mockup psd and convert to HTML/CSS</span> 
-                                    <span class="info text-muted">assigned to Patrick Kim</span> 
-                                </div>
-                            </div>
-                        </li>
-                        <li class="media b-bl">
-                            <div class="media-content">
-                                <div class="media-left">
-                                    <span class="input">
-                                        <input type="checkbox" name="ham" value="1" id="dashcheckbox2"  class="tectonic"/>
-                                        <label for="dashcheckbox2"></label>
-                                    </span>
-                                </div>
-                                <div class="media-body">
-                                    <span class="text">Add animation to interface elements and custom dropdowns</span>
-                                    <span class="info text-muted">assigned to Patrick Kim</span> 
-                                </div>
-                            </div>
-                        </li>
-                        <li class="media b-bl">
-                            <div class="media-content">
-                                <div class="media-left">
-                                    <span class="input">
-                                        <input type="checkbox" name="ham" value="1" id="dashcheckbox3"  class="tectonic"/>
-                                        <label for="dashcheckbox3"></label>
-                                    </span>
-                                </div>
-                                <div class="media-body">
-                                    <span class="text">Create invoice mockup psd and convert to HTML/CSS</span> 
-                                    <span class="info text-muted">assigned to Patrick Kim</span> 
-                                </div>
-                            </div>
-                        </li>
-                        <li class="media b-bl">
-                            <div class="media-content">
-                                <div class="media-left">
-                                    <span class="input">
-                                        <input type="checkbox" name="ham" value="1" id="dashcheckbox4"  class="tectonic"/>
-                                        <label for="dashcheckbox4"></label>
-                                    </span>
-                                </div>
-                                <div class="media-body">
-                                    <span class="text">Create invoice mockup psd and convert to HTML/CSS</span> 
-                                    <span class="info text-muted">assigned to Patrick Kim</span> 
-                                </div>
-                            </div>
-                        </li>
-                        <li class="media b-bl">
-                            <div class="media-content">
-                                <div class="media-left">
-                                    <span class="input">
-                                        <input type="checkbox" name="ham" value="1" id="dashcheckbox5"  class="tectonic" checked/>
-                                        <label for="dashcheckbox5"></label>
-                                    </span>
-                                </div>
-                                <div class="media-body">
-                                    <span class="text text-muted"><strike><em>Fix a bunch of angular bugs</em></strike></span> 
-                                    <span class="info text-muted"><strike><em>assigned to Patrick Kim</em></strike></span> 
-                                </div>
-                            </div>
-                        </li>
-                        <li class="media b-bl">
-                            <div class="media-content">
-                                <div class="media-left">
-                                    <span class="input">
-                                        <input type="checkbox" name="ham" value="1" id="dashcheckbox6"  class="tectonic" checked/>
-                                        <label for="dashcheckbox6"></label>
-                                    </span>
-                                </div>
-                                <div class="media-body">
-                                    <span class="text text-muted"><strike><em>Fix a bunch of angular bugs</em></strike></span> 
-                                    <span class="info text-muted"><strike><em>assigned to Patrick Kim</em></strike></span> 
-                                </div>
-                            </div>
-                        </li>
-                        <li class="media">
-                            <div class="media-content">
-                                <div class="media-left">
-                                    <span class="input">
-                                        <input type="checkbox" name="ham" value="1" id="dashcheckbox7"  class="tectonic" checked/>
-                                        <label for="dashcheckbox7"></label>
-                                    </span>
-                                </div>
-                                <div class="media-body">
-                                    <span class="text text-muted"><strike><em>Fix a bunch of angular bugs</em></strike></span> 
-                                    <span class="info text-muted"><strike><em>assigned to Patrick Kim</em></strike></span> 
-                                </div>
-                            </div>
-                        </li>
-                    </ul>
+                    <ul class="media-list scroll-content m-n">
+                                    <li class="media b-bl">
+                                        <div class="media-content">
+                                            <div class="media-left">
+                                                <span class="input checkbox">
+                                                    <label for="dashcheckbox1">
+                                                        <input type="checkbox" name="ham" value="1" id="dashcheckbox1"/>
+                                                    </label>
+                                                </span>
+                                            </div>
+                                            <div class="media-body">
+                                                <span class="text">Create invoice mockup psd and convert to HTML/CSS</span> 
+                                                <span class="info text-muted">assigned to Patrick Kim</span> 
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li class="media b-bl">
+                                        <div class="media-content">
+                                            <div class="media-left">
+                                                <span class="input checkbox">
+                                                    <label for="dashcheckbox2">
+                                                        <input type="checkbox" name="ham" value="1" id="dashcheckbox2"/>
+                                                    </label>
+                                                </span>
+                                            </div>
+                                            <div class="media-body">
+                                                <span class="text">Add animation to interface elements and custom dropdowns</span>
+                                                <span class="info text-muted">assigned to Patrick Kim</span> 
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li class="media b-bl">
+                                        <div class="media-content">
+                                            <div class="media-left">
+                                                <span class="input checkbox">
+                                                    <label for="dashcheckbox3">
+                                                       <input type="checkbox" name="ham" value="1" id="dashcheckbox3"/> 
+                                                    </label>
+                                                </span>
+                                            </div>
+                                            <div class="media-body">
+                                                <span class="text">Create invoice mockup psd and convert to HTML/CSS</span> 
+                                                <span class="info text-muted">assigned to Patrick Kim</span> 
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li class="media b-bl">
+                                        <div class="media-content">
+                                            <div class="media-left">
+                                                <span class="input checkbox">
+                                                    <label for="dashcheckbox4">
+                                                        <input type="checkbox" name="ham" value="1" id="dashcheckbox4"/>
+                                                    </label>
+                                                </span>
+                                            </div>
+                                            <div class="media-body">
+                                                <span class="text">Create invoice mockup psd and convert to HTML/CSS</span> 
+                                                <span class="info text-muted">assigned to Patrick Kim</span> 
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li class="media b-bl">
+                                        <div class="media-content">
+                                            <div class="media-left">
+                                                <span class="input checkbox">
+                                                    <label for="dashcheckbox5">
+                                                        <input type="checkbox" name="ham" value="1" id="dashcheckbox5" checked/>
+                                                    </label>
+                                                </span>
+                                            </div>
+                                            <div class="media-body">
+                                                <span class="text text-muted"><strike><em>Fix a bunch of angular bugs</em></strike></span> 
+                                                <span class="info text-muted"><strike><em>assigned to Patrick Kim</em></strike></span> 
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li class="media b-bl">
+                                        <div class="media-content">
+                                            <div class="media-left">
+                                                <span class="input checkbox">
+                                                    <label for="dashcheckbox6">
+                                                        <input type="checkbox" name="ham" value="1" id="dashcheckbox6" checked/>
+                                                    </label>
+                                                </span>
+                                            </div>
+                                            <div class="media-body">
+                                                <span class="text text-muted"><strike><em>Fix a bunch of angular bugs</em></strike></span> 
+                                                <span class="info text-muted"><strike><em>assigned to Patrick Kim</em></strike></span> 
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li class="media">
+                                        <div class="media-content">
+                                            <div class="media-left">
+                                                <span class="input checkbox">
+                                                    <label for="dashcheckbox7">
+                                                        <input type="checkbox" name="ham" value="1" id="dashcheckbox7" checked/>
+                                                    </label>
+                                                </span>
+                                            </div>
+                                            <div class="media-body">
+                                                <span class="text text-muted"><strike><em>Fix a bunch of angular bugs</em></strike></span> 
+                                                <span class="info text-muted"><strike><em>assigned to Patrick Kim</em></strike></span> 
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
                 </div>
                 <div class="footer">
-                    <a href="{{URL::to('user/task/task')}}" class="btn btn-success btn-raised btn-sm">Add New</a>
+                    <a href="{!!url(getenv('auth.guard').'/task/task')!!}" class="btn btn-success btn-raised btn-sm">Add New</a>
                 </div>
             </div>
         </div>
@@ -447,7 +454,3 @@
         </div>
     </div>   
 </div>
-
-<style type="text/css">
-    .fc-time{display: none;}
-</style>

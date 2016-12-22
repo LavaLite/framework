@@ -7,7 +7,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="{{trans_url("/")}}"><img src="{{trans_url("/img/logo-white.svg")}}" alt=""></a>
+            <a class="navbar-brand" href="{{trans_url('/')}}"><img src="{{theme_asset('img/logo-white.svg')}}" alt=""></a>
         </div>
         <div class="collapse navbar-collapse">       
             
