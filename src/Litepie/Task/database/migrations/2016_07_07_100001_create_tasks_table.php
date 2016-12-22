@@ -29,6 +29,7 @@ class CreateTasksTable extends Migration
             $table->string('status', 255)->nullable();
             $table->string('created_by', 255)->nullable();
             $table->string('slug', 200)->nullable();
+            $table->integer('assigned_to')->nullable();
             $table->integer('user_id')->nullable();
             $table->string('user_type', 100)->nullable();
             $table->string('upload_folder', 100)->nullable();

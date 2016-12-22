@@ -65,7 +65,6 @@ class CalendarTableSeeder extends Seeder
             [
                 'user_type'     => 'App\\User',
                 'user_id'       => '1',
-                'category_id'   => null,
                 'status'        => 'Calendar',
                 'start'         => '2016-07-08 00:00:00',
                 'end'           => '2016-07-08 01:00:00',
