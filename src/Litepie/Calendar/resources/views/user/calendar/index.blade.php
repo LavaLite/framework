@@ -210,7 +210,7 @@ $(function () {
         select: function(start, end) {
             $('#event-modal .modal-title').html('Create New Event');
              var startdate = start.format('YYYY-MM-DD');            
-             var enddate = end.format('YYYY-MM-DD');            
+             var enddate = end.format('YYYY-MM-DD');           
             $('#event-modal .modal-body').load('{{URL::to($guard.'/calendar/calendar/create')}}?start='+startdate+'&end='+enddate);         
             $('#event-modal').modal('show');
             var eventData;
@@ -276,13 +276,10 @@ $(function () {
        
         $("#add-new-event").click(function(e){   
                 e.preventDefault();
-                if($("#input-title").val() == '') {
-                    toastr.error('Please enter title.', 'Error');
-                    return false;
-                }           
+                         
                 var form=$('#create-calendar-calendar');
                 if(form.valid() == false) {
-                    toastr.warning('Please enter valid information.', 'Warning');
+                     toastr.error('Please enter title.', 'Error');
                     return false;
                 }              
                

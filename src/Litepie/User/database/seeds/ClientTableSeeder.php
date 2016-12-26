@@ -48,5 +48,17 @@ class ClientTableSeeder extends Seeder
                 'created_at'  => '2015-09-15',
             ],
         ]);
+
+        DB::table('menus')->insert([
+            'parent_id'   => 3,
+            'key'         => null,
+            'url'         => 'client',
+            'name'        => 'Dashborad',
+            'description' => null,
+            'icon'        => 'pe-7s-graph',
+            'target'      => null,
+            'status'      => 1,
+        ]);
+
     }
 }

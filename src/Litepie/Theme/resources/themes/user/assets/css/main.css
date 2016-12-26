@@ -19,6 +19,7 @@ body {
     line-height: 1.54;
     color: rgba(27, 34, 44, 0.72);
     background-color: #f0f1f2;
+    font-weight: 400;
 }
 
 h1, .h1, h2, .h2, h3, .h3, h4, .h4, h5, .h5, h6, .h6, p, .navbar, .brand, .btn-simple, .alert, a, .td-name, td, button.close {
@@ -924,9 +925,12 @@ label {
     line-height: 16px;
     display: inline-block;
     padding: 0px;
-    font-size: 24px;
+    font-size: 20px;
     text-align: center;
     float: left;
+}
+.navbar .nav.navbar-nav > li > a span.icon i {
+  font-weight: bold;
 }
 .nav>li>a:focus, .nav>li>a:hover {
     text-decoration: none;
@@ -935,7 +939,7 @@ label {
 .navbar .nav.navbar-nav > li > a span.text {
     display: inline-block;
     font-size: 12.5px;
-    line-height: 24px;
+    line-height: 20px;
     padding: 0 4px;
     float: left;
     font-weight: 400;
@@ -2244,6 +2248,8 @@ fieldset[disabled] .form-group.is-focused .togglebutton label {
     background-color: #fb404b;
     color: #FFFFFF;
     background-image: none;
+    text-shadow: none;
+    text-transform: capitalize;
     height: 2.5em;
 }
 .fc button:hover {
@@ -2264,15 +2270,19 @@ fieldset[disabled] .form-group.is-focused .togglebutton label {
 }
 .fc-icon {
   font-family: "Ionicons";
-  margin: 0;
+  margin: 0 !important;
+  top: 0 !important;
 }
 .fc td.fc-today {
     border-style: none;
 }
+.fc-prev-button {
+    padding: 0 7px;
+}
 .fc-icon-left-single-arrow:after {
     content: "\f3d2";
     font-weight: bold;
-    font-size: 18px;
+    font-size: 14px;
 }
 .fc-icon-right-single-arrow:after {
     content: "\f3d3";
@@ -3414,11 +3424,12 @@ table input[type="text"] {
 }
 .panel-inbox .panel-body .inbox-read-details .media-body .inbox-read-sender-name {
   float: left;
-  font-size: 10.5px;
+  font-size: 12px;
   line-height: 16px;
   display: inline-block;
   font-weight: 700;
   color: rgba(27, 34, 44, 0.88);
+  text-transform: capitalize;
 }
 .panel-inbox .panel-body .inbox-read-details .media-body .inbox-read-sender-email {
   float: left;
@@ -3453,6 +3464,13 @@ table input[type="text"] {
 .panel-inbox .note-editable {
   background: #F5F7F7;
 }
+.text-yellow {
+    color:#f39c12 !important;
+}
+.text-default{
+  color:#3e4a56 !important
+}
+
 @media (max-width: 767px) {
   .table-inbox .inbox-msg-attach,
   .table-inbox .inbox-msg-time {
@@ -3483,6 +3501,9 @@ table input[type="text"] {
 }
 .table-inbox .inbox-msg-time {
   text-align: right;
+}
+.table-inbox .inbox-msg-from {
+  text-transform: capitalize;
 }
 .table-inbox .unread .inbox-msg-from,
 .table-inbox .unread .inbox-msg-time {
@@ -5038,6 +5059,7 @@ fieldset[disabled] .btn.btn-rose.active {
     font-size: 1em;
     line-height: 1.3;
     border-radius: 2px;
+    cursor: move;
 }
 #external-events .external-event + .external-event {
   margin-top: 5px;
@@ -5533,6 +5555,75 @@ fieldset[disabled] .btn.btn-rose.active {
     background-color: #f44336!important;
     border-color: #f44336!important;
     box-shadow: 0 12px 20px -10px rgba(244, 67, 54, 0.28), 0 4px 20px 0px rgba(0, 0, 0, 0.12), 0 7px 8px -5px rgba(244, 67, 54, 0.2)!important;
+    background-image: none;
+}
+.datepicker table tr td span:hover, .datepicker table tr td span.focused {
+    background: #f44336 !important;
+    box-shadow: 0 12px 20px -10px rgba(244, 67, 54, 0.28), 0 4px 20px 0px rgba(0, 0, 0, 0.12), 0 7px 8px -5px rgba(244, 67, 54, 0.2)!important;
+    color: #fff;
+}
+
+.lavalite.checkbox input[type="checkbox"] {
+    cursor: pointer;
+    opacity: 0;
+    z-index: 1;
+    outline: none !important;
+    position: relative;
+    margin: 0;
+    width: 20px;
+    height: 20px;
+    pointer-events: auto;
+}
+.lavalite.checkbox label::before {
+    -o-transition: 0.3s ease-in-out;
+    -webkit-transition: 0.3s ease-in-out;
+    background-color: #ffffff;
+    border-radius: 2px;
+    border: 2px solid rgba(0,0,0, .54);
+    content: "";
+    display: inline-block;
+    height: 20px;
+    left: 0;
+    top: 3px;
+    margin-left: 0px;
+    position: absolute;
+    transition: 0.3s ease-in-out;
+    width: 20px;
+    outline: none !important;
+}
+.lavalite.checkbox input[type="checkbox"]:checked + label::after {
+    content: "\f383";
+    font-family: 'Ionicons';
+    color: #fff;
+}
+.lavalite.checkbox label::after {
+    color: #555555;
+    display: inline-block;
+    font-size: 14px;
+    height: 20px;
+    left: 0;
+    position: absolute;
+    text-align: center;
+    padding-top: 1px;
+    top: 3px;
+    width: 20px;
+}
+.lavalite.checkbox {
+  position: relative;
+  display: block;
+}
+.lavalite.checkbox input[type="checkbox"]:checked + label::before {
+    background-color: #f44336;
+    border-color: #f44336;
+}
+.lavalite-info-tile .tile-footer .add-icon {
+    font-size: 18px;
+    line-height: 16px;
+    float: right;
+    color: #fff;
+}
+.lavalite-info-tile .tile-footer .add-icon i {
+  font-weight: bold;
 }
 /* ==========================================================================
    Helper classes
@@ -5884,7 +5975,7 @@ fieldset[disabled] .btn.btn-rose.active {
 
   .sidebar,
   .bootstrap-navbar {
-    position: fixed;
+    position: absolute;
     display: block;
     top: 0;
     height: 100%;
@@ -6587,4 +6678,10 @@ fieldset[disabled] .btn.btn-rose.active {
 .agile-detail {
  margin-top: 5px;
  font-size: 12px;
+}
+.external-event{
+ color: #fff;
+}
+.fc-time{
+ display: none !important;
 }

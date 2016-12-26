@@ -2,7 +2,7 @@
     <div class="no-padding">
        <div id="mycalendar"></div>
     </div>
-@section('script')
+
 <script type="text/javascript">
 $(function () {
 
@@ -20,7 +20,6 @@ $(function () {
         },
         //Random default events
         eventSources: [
-        // your event source
         {
         url: '{!!Trans::to('admin/calendar/calendar/ajax/list')!!}', // use the `url` property
         }
@@ -31,9 +30,8 @@ $(function () {
     });
        
 });
+
 </script>
-@show
-@section('style')
 <style type="text/css">
     .external-event{
     color: #fff;
@@ -50,4 +48,4 @@ $(function () {
         border: none;
     }
 </style>
-@show
+

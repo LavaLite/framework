@@ -10,7 +10,7 @@
         {!! Theme::asset()->scripts() !!}
     </head>
     <body class="login-page">
-        {!! Theme::content() !!}
+      {!! Theme::content() !!}
     </body>
     {!! Theme::asset()->container('footer')->scripts() !!}
     <script src="{{ theme_asset('js/vendor.js') }}"></script>

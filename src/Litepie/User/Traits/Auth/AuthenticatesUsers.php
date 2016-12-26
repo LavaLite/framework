@@ -26,7 +26,6 @@ trait AuthenticatesUsers
     function showLoginForm()
     {
         $guard = $this->getGuard();
-        putenv("auth.guard=".$guard);
         $this->check($guard);
 
         $this->theme->prependTitle('Login');

@@ -1,5 +1,4 @@
 
-
 <div class='col-md-6 col-sm-12'>
        {!! Form::text('title')
        -> required()
@@ -12,19 +11,18 @@
        -> placeholder(trans('calendar::calendar.placeholder.location'))!!}
 </div>
 <div class='col-md-6 col-sm-12'>
-   <label>Start Date</label>
+  
         {!! Form::datetime('start')
+        ->label('Start Date')
         -> placeholder(trans('calendar::calendar.placeholder.start')) !!}
       
 </div>
-
 <div class='col-md-6 col-sm-12'>  
-   <label>End Date</label>
+   
         {!! Form::datetime('end')
+        ->label('End Date')
         -> placeholder(trans('calendar::calendar.placeholder.end')) !!}  
 </div>
-
-
 
 <div class='col-md-12 col-sm-12'>
     {!! Form::textarea ('details')

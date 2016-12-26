@@ -31,7 +31,7 @@ class MenuTableSeeder extends Seeder
                 'id'          => 1,
                 'parent_id'   => 0,
                 'key'         => 'admin',
-                'url'         => 'admin/',
+                'url'         => '/admin',
                 'name'        => 'Admin',
                 'description' => null,
                 'icon'        => null,
@@ -56,6 +56,19 @@ class MenuTableSeeder extends Seeder
             [
                 'id'          => 3,
                 'parent_id'   => 0,
+                'key'         => 'client',
+                'url'         => '/client',
+                'name'        => 'User',
+                'description' => null,
+                'icon'        => null,
+                'target'      => null,
+                'order'       => 1,
+                'status'      => 1,
+            ],
+
+            [
+                'id'          => 4,
+                'parent_id'   => 0,
                 'key'         => 'main',
                 'url'         => '',
                 'name'        => 'Main Menu',
@@ -67,7 +80,7 @@ class MenuTableSeeder extends Seeder
             ],
 
             [
-                'id'          => 4,
+                'id'          => 5,
                 'parent_id'   => 0,
                 'key'         => 'footer',
                 'url'         => '',
@@ -80,7 +93,7 @@ class MenuTableSeeder extends Seeder
             ],
 
             [
-                'id'          => 5,
+                'id'          => 6,
                 'parent_id'   => 0,
                 'key'         => 'social',
                 'url'         => '',
@@ -102,19 +115,6 @@ class MenuTableSeeder extends Seeder
                 'icon'        => 'fa fa-bars',
                 'target'      => null,
                 'order'       => 6,
-                'status'      => 1,
-            ],
-
-            [
-                'id'          => null,
-                'parent_id'   => 3,
-                'key'         => null,
-                'url'         => '/',
-                'name'        => 'Home',
-                'description' => null,
-                'icon'        => null,
-                'target'      => null,
-                'order'       => 7,
                 'status'      => 1,
             ],
 

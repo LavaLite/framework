@@ -117,9 +117,9 @@
                             <i class="fa fa-star text-red">
                             </i>
                             Starred
-                            <span class="label label-primary pull-right">
+                           <!--  <span class="label label-primary pull-right">
                                 {!!Message::adminSpecialcount('star')!!}
-                            </span>
+                            </span> -->
                         </a>
                     </li>                  
                     
@@ -128,9 +128,9 @@
                             <i class="fa fa-circle-o text-yellow">
                             </i>
                             Promotions
-                            <span class="label label-success pull-right" id="promotions_id">
+                            <!-- <span class="label label-success pull-right" id="promotions_id">
                                 {!!Message::adminMsgcount('Promotions')!!}
-                            </span>
+                            </span> -->
                         </a>
                     </li>
                     <li class="cur">
@@ -138,9 +138,9 @@
                             <i class="fa fa-circle-o text-light-blue">
                             </i>
                             Social
-                            <span class="label label-primary pull-right" id="social_id">
+                            <!-- <span class="label label-primary pull-right" id="social_id">
                                 {!!Message::adminMsgcount('Social')!!}
-                            </span>
+                            </span> -->
                         </a>
                     </li>
                     <li class="cur">
@@ -148,9 +148,9 @@
                             <i class="fa fa-circle-o text-red">
                             </i>
                             Important
-                            <span class="label label-danger pull-right" id="important_id">
+                            <!-- <span class="label label-danger pull-right" id="important_id">
                                 {!!Message::adminSpecialcount('important')!!}
-                            </span>
+                            </span> -->
                         </a>
                     </li>
                 </ul>

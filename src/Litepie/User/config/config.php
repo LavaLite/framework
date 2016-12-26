@@ -55,27 +55,36 @@ return [
         'hidden'        => [],
         'visible'       => [],
         'guarded'       => ['*'],
-        'slugs'         => ['slug' => 'name'],
+        'slugs'         => [],
         'dates'         => ['deleted_at'],
         'appends'       => [],
         'fillable'      => ['user_id', 'name', 'email', 'parent_id', 'password', 'api_token', 'remember_token', 'sex', 'dob', 'designation', 'mobile', 'phone', 'address', 'street', 'city', 'district', 'state', 'country', 'photo', 'web', 'permissions'],
         'translate'     => ['name', 'email', 'parent_id', 'password', 'api_token', 'remember_token', 'sex', 'dob', 'designation', 'mobile', 'phone', 'address', 'street', 'city', 'district', 'state', 'country', 'photo', 'web', 'permissions'],
 
-        'upload-folder' => 'user/user',
+        'upload_folder' => 'user/user',
         'uploads'       => [
-            'single'   => [],
+            'single'   => ['photo'],
             'multiple' => [],
         ],
         'casts'         => [
             'permissions' => 'array',
+            'photo' => 'array',
         ],
         'revision'      => [],
         'perPage'       => '20',
-        'search'        => [
+        'search'        => [            
             'name' => 'like',
-            'status',
+            'email' => 'like',
+            'sex' => 'like',
+            'dob' => 'like',
+            'designation' => 'like',
+            'mobile' => 'like',
+            'street' => 'like',
+            'status' => 'like',
+            'created_at' => 'like',
+            'updated_at' => 'like',
         ],
-
+    
         'workflow'      => [
             'points' => [
                 'start' => 'new',
@@ -104,6 +113,73 @@ return [
             ],
         ],
     ],
+
+    'client'       => [
+        'model'         => 'App\\Client',
+        'table'         => 'clients',
+        'presenter'     => \Litepie\User\Repositories\Presenter\UserItemPresenter::class,
+        'hidden'        => [],
+        'visible'       => [],
+        'guarded'       => ['*'],
+        'slugs'         => [],
+        'dates'         => ['deleted_at'],
+        'appends'       => [],
+        'fillable'      => ['user_id', 'name', 'email', 'parent_id', 'password', 'api_token', 'remember_token', 'sex', 'dob', 'designation', 'mobile', 'phone', 'address', 'street', 'city', 'district', 'state', 'country', 'photo', 'web', 'permissions'],
+        'translate'     => ['name', 'email', 'parent_id', 'password', 'api_token', 'remember_token', 'sex', 'dob', 'designation', 'mobile', 'phone', 'address', 'street', 'city', 'district', 'state', 'country', 'photo', 'web', 'permissions'],
+
+        'upload_folder' => 'client/client',
+        'uploads'       => [
+            'single'   => ['photo'],
+            'multiple' => [],
+        ],
+        'casts'         => [
+            'permissions' => 'array',
+            'photo' => 'array',
+        ],
+        'revision'      => [],
+        'perPage'       => '20',
+        'search'        => [            
+            'name' => 'like',
+            'email' => 'like',
+            'sex' => 'like',
+            'dob' => 'like',
+            'designation' => 'like',
+            'mobile' => 'like',
+            'street' => 'like',
+            'status' => 'like',
+            'created_at' => 'like',
+            'updated_at' => 'like',
+        ],
+        
+        'workflow'      => [
+            'points' => [
+                'start' => 'new',
+                'end'   => ['delete'],
+            ],
+            'steps'  => [
+                'new'     => [
+                    'label'  => "User created",
+                    'action' => ['setStatus', 'new'],
+                    'next'   => ['active', 'suspend', 'delete'],
+                ],
+                'active'  => [
+                    'label'  => "User Activated",
+                    'status' => ['setStatus', 'active'],
+                    'next'   => ['suspend', 'delete'],
+                ],
+                'suspend' => [
+                    'label'  => "User suspended",
+                    'action' => ['setStatus', 'suspend'],
+                    'next'   => ['active', 'delete'],
+                ],
+                'delete'  => [
+                    'label'  => "User deleted",
+                    'action' => ['delete'],
+                ],
+            ],
+        ],
+    ],
+
     'permission' => [
         'model'         => 'Litepie\User\Models\Permission',
         'table'         => 'permissions',
@@ -138,10 +214,10 @@ return [
         'hidden'        => [],
         'visible'       => [],
         'guarded'       => ['*'],
-        'slugs'         => ['slug' => 'name'],
+        'slugs'         => [],
         'dates'         => ['deleted_at'],
         'appends'       => [],
-        'fillable'      => ['user_id', 'name', 'permissions'],
+        'fillable'      => ['key', 'name', 'permissions'],
         'translate'     => ['key', 'name', 'permissions'],
 
         'upload-folder' => 'user/role',
@@ -155,8 +231,10 @@ return [
         'revision'      => [],
         'perPage'       => '20',
         'search'        => [
-            'name' => 'like',
-            'status',
+            'name' => 'like',            
+            'key' => 'like',
+            'created_at' => 'like',
+            'updated_at' => 'like',
         ],
 
     ],
@@ -184,7 +262,10 @@ return [
         'perPage'       => '20',
         'search'        => [
             'name' => 'like',
-            'status',
+            'description' => 'like',
+            'status' => 'like',
+            'created_at' => 'like',
+            'updated_at' => 'like',
         ],
 
     ],

@@ -83,7 +83,7 @@ class MessageUserController extends BaseController
      * @return Response
      */
     public function store(MessageRequest $request)
-    {
+    {   
         try {
             $guard = $this->getGuardRoute();
             $mail_to = $request->get('mails');
@@ -124,12 +124,12 @@ class MessageUserController extends BaseController
                 }               
             }
 
-            $sent_count = $this->repository->userMsgCount('Sent', $guard);
+            $sent_count = $this->repository->userUnreadCount('Sent', $guard);
             $inbox_count = $this->repository->userMsgCount('Inbox', $guard);
-            $draft_count = $this->repository->userMsgCount('Draft', $guard);
+            $draft_count = $this->repository->userUnreadCount('Draft', $guard);
 
            return response()->json([
-                'message'     => trans('messages.success.updated', ['Module' => trans('message::message.name')]),
+                'message'     => 'Your message has been sent',
                 'code'        => 204,
                 'redirect'    => trans_url('user/message/message'),
                 'sent_count'  => $sent_count,
@@ -175,8 +175,8 @@ class MessageUserController extends BaseController
             $guard = $this->getGuardRoute();
             $this->repository->update($request->all(), $message->getRouteKey());
             $inbox_count = $this->repository->userMsgCount('Inbox',$guard);
-            $sent_count = $this->repository->userMsgCount('Sent',$guard);
-            $draft_count = $this->repository->userMsgCount('Draft',$guard);
+            $sent_count = $this->repository->userUnreadCount('Sent',$guard);
+            $draft_count = $this->repository->userUnreadCount('Draft',$guard);
 
             return response()->json([              
                 'inbox_count' => $inbox_count,
@@ -201,7 +201,7 @@ class MessageUserController extends BaseController
     public function destroy(MessageRequest $request, Message $message)
     {
         try {
-
+            $guard = $this->getGuardRoute();
             if (!empty($request->get('arrayIds'))) {
                 $ids = $request->get('arrayIds');
                 $t = $this->repository->deleteMultiple($ids);
@@ -209,11 +209,12 @@ class MessageUserController extends BaseController
             } else {
                 $t = $message->delete();
             }
-
+            $trash_count = $this->repository->userUnreadCount('Trash',$guard);
             return response()->json([
                 'message'  => trans('messages.success.deleted', ['Module' => trans('message::message.name')]),
                 'code'     => 202,
                 'redirect' => trans_url('user/message/message/0'),
+                'trash_count' => $trash_count, 
             ], 202);
 
         } catch (Exception $e) {
@@ -241,52 +242,39 @@ class MessageUserController extends BaseController
 
     public function search(MessageRequest $request, $slug = 'none', $status = 'Inbox')
     {
-        $messages['data'] = $this->repository->search($status, $slug);
+        $messages['data'] = $this->repository->search($status, $slug);        
         $guard = $this->getGuardRoute();
-         $messages['caption'] = $status;
+        $messages['caption'] = $status;
         return view('message::user.message.show', compact('messages','guard'));
     }
 
     public function updateStatus(MessageRequest $request, Message $message, $status)
-    {
+    {     
         try {
             $guard = $this->getGuardRoute();
             $Ids = $request->get('data');
             $attributes['status'] = $status;
             $array['important'] = 'Yes';
-            if ($Ids != null) {
-                foreach ($Ids as $key => $id)
-                {   
-                    if($status  == 'Important')
-                    {  
+            if ($Ids != null){
+                foreach ($Ids as $key => $id){   
+                    if($status  == 'Important'){  
                         $this->repository->update($array, $id);
                     }
-                    else
-                    {
+                    else{
                         $this->repository->update($attributes, $id);
                     }
                 }
             }            
             $inbox_count = $this->repository->userMsgCount('Inbox',$guard);
-            $trash_count = $this->repository->userMsgCount('Trash',$guard);
-            $promotions_count = $this->repository->userMsgCount('Promotions',$guard);
-            $important_count = $this->repository->userSpecialCount('important',$guard);
-            $junk_count = $this->repository->userMsgCount('Junk',$guard);
-            $social_count = $this->repository->userMsgCount('Social',$guard);
-            $draft_count = $this->repository->userMsgCount('Draft',$guard);
-            $sent_count = $this->repository->userMsgCount('Sent',$guard);
-            $star_count = $this->repository->userSpecialCount('star',$guard);
+            $trash_count = $this->repository->userMsgCount('Trash',$guard);            
+            $draft_count = $this->repository->userUnreadCount('Draft',$guard);
+            $sent_count = $this->repository->userUnreadCount('Sent',$guard);
 
             return response()->json([ 
                 'inbox_count' => $inbox_count,
                 'trash_count' => $trash_count,
-                'promotions_count' => $promotions_count,
-                'important_count' =>  $important_count,
-                'junk_count' =>       $junk_count,
-                'social_count' =>     $social_count,
                 'draft_count' =>     $draft_count,
                 'sent_count' =>       $sent_count,
-                'star_count' =>       $star_count,
             ], 202);
         } catch (Exception $e) {
 
@@ -342,7 +330,7 @@ class MessageUserController extends BaseController
 
 
     public function importantSubStatus(MessageRequest $request, Message $message)
-    {
+    {  
         try {
             $id = $request->get('id');
             $sub = $request->get('important');
@@ -377,7 +365,7 @@ class MessageUserController extends BaseController
         $guard = $this->getGuardRoute();
         $this->repository->pushCriteria(new \Litepie\Message\Repositories\Criteria\MessageUserCriteria());
         $messages['data'] = $this->repository->scopeQuery(function ($query) {
-            return $query->with('user')->whereStar(1)->orderBy('id', 'DESC');
+            return $query->with('user')->whereStar(1)->where('status','<>','Trash')->orderBy('id', 'DESC');
         })->paginate();
         $messages['caption'] = "Starred";
         return view('message::user.message.show', compact('messages','guard'));
@@ -392,7 +380,7 @@ class MessageUserController extends BaseController
         $guard = $this->getGuardRoute();
         $this->repository->pushCriteria(new \Litepie\Message\Repositories\Criteria\MessageUserCriteria());
         $messages['data'] = $this->repository->scopeQuery(function ($query) {
-            return $query->with('user')->whereImportant(1)->orderBy('id', 'DESC');
+            return $query->with('user')->whereImportant(1)->where('status','<>','Trash')->orderBy('id', 'DESC');
         })->paginate();
         $messages['caption'] = "Important";
         return view('message::user.message.show', compact('messages','guard'));
@@ -420,11 +408,12 @@ class MessageUserController extends BaseController
 
                 return $t;
             }
-
+            $trash_count = $this->repository->userUnreadCount('Trash',$guard);
             return response()->json([
                 'message'  => trans('messages.success.deleted', ['Module' => trans('message::message.name')]),
                 'code'     => 202,
                 'redirect' => trans_url('user/message/message/0'),
+                'trash_count' => $trash_count, 
             ], 202);
 
         } catch (Exception $e) {

@@ -78,29 +78,19 @@ class UploadController extends Controller
      */
     public function crop($config, $folder, $field, $file = 'file')
     {      
-        $item = Request::all();
-        $file = $item['cropping'];
+        $item           = Request::all();
+        $file           = $item['cropping'];
         $ufolder        = $this->uploadFolder($config, $folder, $field);
-
+        $folder         = Filer::checkUploadFolder($ufolder);
         if(!empty($file)) {
             $file       = str_replace('data:image/jpeg;base64,', '',$file);
             $img        = str_replace(' ', '+', $file);
             $data       = base64_decode($img);
-            $path       = public_path()."/uploads/profile/test.jpeg";
+            $path       = $folder."/test.jpeg";
             if (file_put_contents($path, $data)) {
                 echo "success";
             }
         }    
-        /*if (Request::hasFile($file)) {
-
-            $ufolder         = $this->uploadFolder($config, $folder, $field);
-            $array           = Filer::upload(Request::file($file), $ufolder);
-            $array['folder'] = folder_decode($folder)."/{$field}";
-            Session::push("upload.{$config}.{$field}", $array);
-
-            return $array;
-        }*/
-
     }
 
 }

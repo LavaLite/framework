@@ -12,7 +12,6 @@ class CreateMessagesTable extends Migration
 
     public function up()
     {
-
         /*
          * Table: messages
          */
@@ -20,6 +19,7 @@ class CreateMessagesTable extends Migration
             $table->increments('id');
             $table->enum('status', ['Draft', 'Inbox', 'Sent', 'Trash', 'Junk', 'Important', 'Promosions', 'Social'])->nullable();
             $table->enum('star', ['Yes', 'No'])->nullable();
+            $table->enum('important', ['Yes', 'No'])->nullable();
             $table->integer('from')->nullable();
             $table->integer('to')->nullable();
             $table->string('subject', 255)->nullable();

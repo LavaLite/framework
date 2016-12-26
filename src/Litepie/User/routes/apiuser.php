@@ -2,7 +2,7 @@
 
 Route::group([
     'namespace' => '\\App\\Http\\Controllers\Auth\Api',
-    'prefix' => '{guard?}'
+    'prefix' => '{guard}'
 ], function () {
-        Route::post('login', 'LoginController@apiLogin');
+        Route::get('authenticate', 'LoginController@apiLogin');
 });

@@ -20,7 +20,7 @@
         <div class="tab-content clearfix">
             <div class="tab-pane active" id="details">                     
                <div class="tab-pan-title">  {!! trans('app.view') !!}  {!! trans('contact::contact.name') !!} [ {!!$contact->name!!} ] </div>
-               <div class="row">
+               <div class="row disabled">
                     @include('contact::admin.contact.partial.entry')
                 </div>
             </div>

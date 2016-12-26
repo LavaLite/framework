@@ -21,9 +21,7 @@
         "hashids/hashids": "1.0.5",
         "intervention/imagecache": "2.2.*",
         "laravel/socialite": "^3.0@dev",
-        "league/fractal": "^0.13.0",
-        "prettus/l5-repository":"2.5.*",
-        "tymon/jwt-auth":"^1.0@dev"
+        "league/fractal": "^0.13.0"
     },
     "replace": {
         "litepie/database": "self.version",

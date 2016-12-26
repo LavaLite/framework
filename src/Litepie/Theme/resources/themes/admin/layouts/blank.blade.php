@@ -19,7 +19,7 @@
     </head>
     <body class="login-page">
         <!-- Automatic element centering using js -->
-
+ 
              {!! Theme::content() !!}
         <!-- /.center -->
 

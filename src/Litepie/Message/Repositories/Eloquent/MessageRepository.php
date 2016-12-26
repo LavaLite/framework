@@ -77,7 +77,6 @@ class MessageRepository extends BaseRepository implements MessageRepositoryInter
 
     public function userMsgCount($slug,$guard)
     {
-        
         $email = user(getenv('guard'))->email;
         return  $this->model->with('user')
             ->where(function($query) use($slug,$email){
@@ -92,6 +91,18 @@ class MessageRepository extends BaseRepository implements MessageRepositoryInter
             ->orderBy('id', 'DESC')
             ->count();
     }
+
+    public function userUnreadCount($slug,$guard)
+    {
+        $email = user(getenv('guard'))->email;
+        return  $this->model->with('user')            
+            ->whereStatus($slug)
+            ->whereUserId(user_id(getenv('guard')))
+            ->whereUserType(user_type(getenv('guard')))
+            ->orderBy('id', 'DESC')
+            ->count();
+    }
+
 
     public function userSpecialCount($slug,$guard)
     {
@@ -116,6 +127,7 @@ class MessageRepository extends BaseRepository implements MessageRepositoryInter
         ->whereStatus($status)
         ->orderBy('id', 'DESC')
         ->paginate(10);
+
     }
 
     public function findByStatus($status)

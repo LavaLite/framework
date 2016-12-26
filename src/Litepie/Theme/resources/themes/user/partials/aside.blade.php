@@ -1,23 +1,23 @@
-                @if(getenv('auth.guard') == 'user')
+                @if(get_guard('url') == 'user')
                     <div class="logo">
                         <a href="{!!url('home')!!}" class="logo-image">
-                            <img src="{!!url('img/logo-white.svg')!!}" alt="logo" title="Lavalite">
+                            <img src="{!!theme_asset('img/logo-white.svg')!!}" alt="logo" title="Lavalite">
                         </a>
                     </div>
                     <div class="logo logo-mini">
                         <a href="{!!url('home')!!}" class="logo-image">
-                            <img src="{!!url('img/logo.svg')!!}" alt="logo-mini" title="Lavalite">
+                            <img src="{!!theme_asset('img/logo.svg')!!}" alt="logo-mini" title="Lavalite">
                         </a>
                     </div>
                 @else
                     <div class="logo">
-                        <a href="{!!url(getenv('auth.guard'))!!}" class="logo-image">
-                            <img src="{!!url('img/logo-white.svg')!!}" alt="logo" title="Lavalite">
+                        <a href="{!!url(get_guard('url'))!!}" class="logo-image">
+                            <img src="{!!theme_asset('img/logo-white.svg')!!}" alt="logo" title="Lavalite">
                         </a>
                     </div>
                     <div class="logo logo-mini">
-                        <a href="{!!url(getenv('auth.guard'))!!}" class="logo-image">
-                            <img src="{!!url('img/logo.svg')!!}" alt="logo-mini" title="Lavalite">
+                        <a href="{!!url(get_guard('url'))!!}" class="logo-image">
+                            <img src="{!!theme_asset('img/logo.svg')!!}" alt="logo-mini" title="Lavalite">
                         </a>
                     </div>
                 @endif 
@@ -38,10 +38,10 @@
                     </div>
 
                 
-                    @if(getenv('auth.guard') == 'user')
-                        {!!Menu::menu('user-aside')!!}
-                    @elseif(getenv('auth.guard') == 'client')
-                        {!!Menu::menu('client-aside')!!}
+                    @if(get_guard('url') == 'user')
+                        {!!Menu::menu('user')!!}
+                    @elseif(get_guard('url') == 'client')
+                        {!!Menu::menu('client','menu::menu.user')!!}
                     @endif    
                 </div>
                 <div class="sidebar-background" style="display: block;"></div>

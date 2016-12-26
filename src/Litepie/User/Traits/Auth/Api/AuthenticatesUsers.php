@@ -17,7 +17,6 @@ trait AuthenticatesUsers
     use IlluminateAuthenticatesUsers, Common {
         Common::guard insteadof IlluminateAuthenticatesUsers;
     }
-
     
 
     /**

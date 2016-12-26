@@ -24,7 +24,7 @@
                 @include('vuser::admin.user.partial.entry')
             </div>
             <div class="tab-pane " id="details">
-                <div class="row">
+                <div class="row disabled">
                     <div class='col-md-3 col-sm-4'>
                         <div class='col-md-12 col-sm-12'>
                             {!! Form::radios('sex')

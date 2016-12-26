@@ -1,4 +1,4 @@
-  <div class="row">
+  <div class="row disabled">
         <div class='col-md-4 col-sm-6'>
                {!! Form::text('title')
                -> label(trans('news::news.label.title'))

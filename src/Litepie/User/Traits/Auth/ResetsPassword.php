@@ -25,7 +25,6 @@ trait ResetsPassword
     function showResetForm(Request $request, $token = null)
     {
         $email = $request->email;
-        putenv("auth.guard=".$guard);
         
         $this->theme->prependTitle('Reset');
         return $this->theme->of($this->getView('reset'), compact('token','email'))->render();        

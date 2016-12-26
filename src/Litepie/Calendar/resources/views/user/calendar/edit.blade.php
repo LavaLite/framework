@@ -12,9 +12,9 @@
             <div class="tab-pane active mt30" id="details">
                 @include('calendar::user.calendar.partial.entry')
                 <div class='col-md-12 col-sm-12 mt20'>
-                    <button type="button" class="btn mr5 btn-sm btn-raised btn-info pull-right" data-dismiss="modal">Close</button>    
-                    <button type="button" data-dismiss="modal" id="update" class="btn  mr5 btn-raised btn-sm btn-success pull-right mr10"  >Update</button>
-                    <button type="button" class="btn delete-btn btn-danger btn-raised btn-sm mr5 pull-right mr10" >  Delete </button> 
+                    <button type="button" class="btn mr5 btn-sm btn-raised btn-info pull-right" data-dismiss="modal"><i class="fa fa-times-circle-o"></i>Close</button>    
+                    <button type="button" data-dismiss="modal" id="update" class="btn  mr5 btn-raised btn-sm btn-success pull-right "  ><i class="fa fa-floppy-o"></i>Update</button>
+                    <button type="button" class="btn delete-btn btn-danger btn-raised btn-sm  pull-right mr5" ><i class="fa fa-trash-o"></i>  Delete </button> 
                 </div>
             </div>
         </div>

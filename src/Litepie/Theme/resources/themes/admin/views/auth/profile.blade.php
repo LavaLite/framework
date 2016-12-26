@@ -11,7 +11,7 @@
         User Profile
         </h1>
         <ol class="breadcrumb">
-            <li><a href="/admin"><i class="fa fa-dashboard"></i> Home</a></li>
+            <li><a href="{!!url('admin')!!}"><i class="fa fa-dashboard"></i> Home</a></li>
             <li class="active">User Profile</li>
         </ol>
     </section>
@@ -66,12 +66,12 @@
             <div class="col-md-9">
                 <div class="nav-tabs-custom">
                     <ul class="nav nav-tabs">
-                        <li class="active"><a href="#taskss" data-toggle="tab" aria-expanded="false">Task</a></li>
+                        <li class="active"><a href="#tasks" data-toggle="tab" aria-expanded="false">Task</a></li>
                         <li class=""><a href="#calendars" data-toggle="tab" aria-expanded="false">Calendar</a></li>
                         <li class=""><a href="#settings" data-toggle="tab" aria-expanded="true">Settings</a></li>
                     </ul>
                     <div class="tab-content">
-                        <div class="tab-pane active" id="taskss">
+                        <div class="tab-pane active" id="tasks">
                             {!! @Task::display('profile') !!}
                         </div>
                         <!-- /.tab-pane -->

@@ -22,9 +22,9 @@
             <div class="tab-pane active" id="details">
                 @include('calendar::admin.calendar.partial.entry')
                   <div class='col-md-12 col-sm-12 '>                  
-                <button type="button" class="btn  btn-default btn-xs pull-right" data-dismiss="modal">Close</button>    
+                <button type="button" class="btn  btn-default btn-xs pull-right" style="margin-left: 5px" data-dismiss="modal"><i class="fa fa-times-circle-o"></i> Close</button>    
                   
-                  <button class="btn btn-primary btn-xs pull-right" type="submit">Save</button>
+                  <button class="btn btn-primary btn-xs pull-right" type="submit"><i class="fa fa-floppy-o"></i>Save</button>
                   </div>
             </div>
         </div>

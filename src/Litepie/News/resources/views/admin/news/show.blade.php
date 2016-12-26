@@ -20,7 +20,7 @@
     ->action(trans_url('admin/news/news'))!!}
        <div class="tab-content clearfix">
             <div class="tab-pane active" id="details">
-                <div class="tab-pan-title">  {!! trans('app.view') !!}  {!! trans('news::news.name') !!} [ {!!$news->title!!} ] </div>
+                <div class="tab-pan-title ">  {!! trans('app.view') !!}  {!! trans('news::news.name') !!} [ {!!$news->title!!} ] </div>
                 @include('news::admin.news.partial.entry')
             </div>
             <div class="tab-pane" id="images"> 

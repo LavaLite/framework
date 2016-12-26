@@ -98,7 +98,7 @@
 
         $('#create-message-message').submit( function( e ) {
             if($('#create-message-message').valid() == false) {
-                toastr.error('Unprocessable entry.', 'Warning');
+                toastr.warning('Please enter valid information', 'Warning');
                 return false;
             }
             var url  = $(this).attr('action');

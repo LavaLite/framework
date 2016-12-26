@@ -6,9 +6,9 @@
     </div>
 @empty
 @endif
-<div class="checkbox checkbox-inline mn pull-left pln">
-    <label for="drop-remove"><input id="drop-remove" class="lavalite" type="checkbox"><span class="ml10">Remove after drop</span></label>
-</div>                  
+ <div class="checkbox checkbox-inline mt20 lavalite pull-left pln">
+    <input id="drop-remove"  type="checkbox"><label for="drop-remove"><span class="ml10">Remove after drop</span></label>
+</div>                 
 <script type="text/javascript">
     $(function(){
             function ini_events(ele) {

@@ -85,7 +85,7 @@
                         </div>
                     </div>
                     <div class="box-body with-border">
-                        {!!Task::gadget('admin.task.gadget')!!}
+                        {!!Task::gadget('admin.task.gadget',5)!!}
                     </div>
                     <div class="box-footer clearfix">
                         <a href="{!! trans_url('admin/task/task') !!}" class="btn btn-sm btn-info btn-flat new-client pull-right">View All Tasks</a>
@@ -102,7 +102,7 @@
                         </div>
                     </div>
                     <div class="box-body with-border">
-                        {!!News::gadget('admin.news.gadget')!!}
+                        {!!News::gadget('admin.news.gadget', 4)!!}
                     </div>
                     <div class="box-footer clearfix">
                         <a href="{!! trans_url('admin/news/news') !!}" class="btn btn-sm btn-info btn-flat new-client pull-right">View All News</a>

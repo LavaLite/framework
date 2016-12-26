@@ -150,53 +150,23 @@
             {!! Form::close() !!}
             </div>
             <div class="col-md-6">
-                {!!Form::vertical_open()
-                ->id('change-picture')
-                ->method('POST')
-                ->class('change-password')
-                ->enctype('multipart/form-data')
-                ->action(url('/upload/litepie.user.user/'.@$user->getRouteKey().'/photo/file'))!!} 
-                <div class="card">
-                    <div class="header header-icon" data-background-color="orange">
-                        <i class="pe-7s-album"></i>
-                    </div>
-                    <div class="content">
-                        <h4 class="card-title">Change Picture</h4>
-                        <div class="col-md-4">
-                            
-                            <div class="card">
-            
-                                
-                                <label>
-                                    <input type="file" class="sr-only" id="inputImage" name="photo" accept="image/*">
-                                    <img src="{{url('img/female-upload-md.png')}}" class="img-responsive">
-                                </label>
-                            </div>
-                        </div>
-                        <div class="col-md-8">
-                            <div class="test1"></div>
-                                <div class="img-container">
-                                    <img id="image">
-                                    <div class="docs-buttons hide">
-                                        <div class="btn-group btn-group-crop pull-right">
-                                          <button type="button" class="btn-danger btn-raised btn btn-sm" data-method="getCroppedCanvas">
-                                            <span class="docs-tooltip" data-toggle="tooltip" title="$().cropper(&quot;getCroppedCanvas&quot;)">
-                                              Upload Image
-                                            </span>
-                                          </button>
-                                        </div>
-                                    </div>
-                                </div>
-                        </div>
-                    </div>
-                </div>
-                {!! Form::close() !!}
+            {!!Form::vertical_open()
+            ->id('change-picture')
+            ->method('POST')
+            ->class('change-password')
+            ->enctype('multipart/form-data')
+            ->action(url('/upload/litepie.user.user/'.@$user->getRouteKey().'/photo/file'))!!} 
+
+                {!! $user->fileCropper('photo')!!}
+
+            {!! Form::close() !!}
             </div>
             <div class="col-md-6">
                 {!!Form::vertical_open()
-                ->id('change-password')
+                ->id('contact')
                 ->method('POST')
-                ->class('change-password')!!} 
+                ->class('change-password')
+                ->action(getenv('guard').'/password')!!} 
                 <div class="card">
                     <div class="header header-icon" data-background-color="orange">
                         <i class="material-icons">lock</i>
@@ -225,7 +195,7 @@
                     <div class="footer">
                         <div class="row">
                             <div class="col-sm-12">
-                                <button class="btn-primary btn btn-raised">Update</button>
+                                <button type="submit" class="btn-primary btn btn-raised">Update</button>
                             </div>
                         </div>
                     </div>
