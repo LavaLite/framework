@@ -1,4 +1,4 @@
-ee
+
 @foreach ($menus as $menu)
     @if ($menu->hasChildren())
     <li class="{{ $menu->active or '' }}">

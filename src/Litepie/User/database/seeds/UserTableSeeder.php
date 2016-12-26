@@ -49,6 +49,17 @@ class UserTableSeeder extends Seeder
         ]);
 
 
+        DB::table('menus')->insert([
+            'parent_id'   => 2,
+            'key'         => null,
+            'url'         => 'home',
+            'name'        => 'Dashborad',
+            'description' => null,
+            'icon'        => 'pe-7s-graph',
+            'target'      => null,
+            'status'      => 1,
+        ]);
+
         $id = DB::table('menus')->insertGetId([
             'parent_id'   => 1,
             'key'         => null,
