@@ -8,25 +8,16 @@
 
 {!! Form::hidden('read')
     ->forceValue(1)!!}
-
 {!!Form::close()!!}
 <div class="inbox-mail-heading">
     <div class="clearfix">
         <div class="pull-left">
             <a href="#" class="btn btn-danger btn-simple btn-back"><i class="ion-android-arrow-back"></i></a>
+            @if(@$message['status'] == 'Trash')
             <div class="btn-group">
-                <a href="#" class="btn btn-danger btn-simple btn-deleted1"><i class="ion-android-delete"></i></a>
+                <a href="#" class="btn btn-danger btn-simple btn-deleted"><i class="ion-android-delete"></i></a>
             </div>
-
-            <div class="btn-group dropdown">
-                <a href="#" class="btn btn-danger btn-simple dropdown-toggle" data-toggle="dropdown">More <i class="caret"></i></a>
-            </div>
-        </div>
-        <div class="pull-right hidden-xs">
-            <div class="btn-group">
-                <a href="#" class="btn btn-danger btn-simple"><i class="ion-android-arrow-back"></i></a>
-                <a href="#" class="btn btn-danger btn-simple"><i class="ion-android-arrow-forward"></i></a>
-            </div>
+            @endif
         </div>
     </div>
 </div>
@@ -34,21 +25,19 @@
     <div class="clearfix">
         <h3 class="inbox-read-title pull-left">{!!$message['subject']!!}</h3>
         <div class="btn-group dropdown pull-right">
-                <a href="#" class="btn btn-danger btn-raised "><i class="ion-reply visible-xs"></i><span class="hidden-xs">More</span></a>
-                <a href="#" class="btn btn-danger btn-raised dropdown-toggle" data-toggle="dropdown">
-                    <span class="caret m-n"></span>
-                    <span class="sr-only">Toggle Dropdown</span>
-                </a>
-                <ul class="dropdown-menu" style="left:auto;right: 0;" role="menu">
-                    <li><a href="#" class="btn-reply">Reply</a></li>
-                    <li><a href="#" class="btn-forward">Forward</a></li>
-                    <li><a href="#" class="btn-important">Make as important</a></li>
-                    <li><a href="#" class="btn-promotions">Move to promotions</a></li>
-                    <li><a href="#" class="btn-social">Make to social</a></li>
-                    <li class="divider"></li>
-                    <li><a href="#" class="btn-deleted">Delete this message</a></li>
-                </ul>
-            </div>
+            <a href="#" class="btn btn-danger btn-raised "><i class="ion-reply visible-xs"></i><span class="hidden-xs">More</span></a>
+            <a href="#" class="btn btn-danger btn-raised dropdown-toggle" data-toggle="dropdown">
+                <span class="caret m-n"></span>
+                <span class="sr-only">Toggle Dropdown</span>
+            </a>
+            <ul class="dropdown-menu" style="left:auto;right: 0;" role="menu">
+                <li><a href="#" class="btn-reply">Reply</a></li>
+                <li><a href="#" class="btn-forward">Forward</a></li>
+                <li><a href="#" class="btn-important">Make as important</a></li>
+                <li><a href="#" class="btn-promotions">Move to promotions</a></li>
+                <li><a href="#" class="btn-social">Move to social</a></li>
+            </ul>
+        </div>
     </div>
     <hr class=" mb-md">
     <div class="inbox-read-details clearfix">
@@ -109,6 +98,7 @@ $(document).ready(function(){
     @endif
     
     $(".btn-deleted").click(function(){
+
         swal({
             title: "Are you sure?",
             text: "You will not be able to recover this data!",
@@ -128,36 +118,13 @@ $(document).ready(function(){
                 success:function(data, textStatus, jqXHR)
                 {
                     swal("Deleted!", data.message, "success");
+                    $('#trash_id').html(data.trash_count);
                     $('#entry-message').load('{{URL::to($guard.'/message/status/Trash')}}');
                 },
             });
         });
     });
-    $(".btn-deleted1").click(function(){
-        swal({
-            title: "Are you sure?",
-            text: "You will not be able to recover this data!",
-            type: "warning",
-            showCancelButton: true,
-            confirmButtonColor: "#DD6B55",
-            confirmButtonText: "Yes, delete it!",
-            closeOnConfirm: false
-        }, function(){
-            var data = new FormData();
-            $.ajax({
-                url: "{{trans_url($guard.'/message/message')}}/{{$message->getRouteKey()}}",
-                type: 'DELETE',
-                processData: false,
-                contentType: false,
-                dataType: 'json',
-                success:function(data, textStatus, jqXHR)
-                {
-                    swal("Deleted!", data.message, "success");
-                    $('#entry-message').load('{{URL::to($guard.'/message/status/Trash')}}');
-                },
-            });
-        });
-    }); 
+
       
     $('.btn-trashed').click(function(){
         var arrayIds = [];
@@ -172,7 +139,8 @@ $(document).ready(function(){
                 success:function(data, textStatus, jqXHR)
                 { 
                   var msgcaption = $(".btn-back").attr('id');
-                    $('#entry-message').load('{{Trans::to("user/message/status")}}'+'/'+msgcaption);
+                  $('#trash_id').html(data.trash_count);
+                  $('#entry-message').load('{{Trans::to($guard."/message/status")}}'+'/'+msgcaption);
                 },
                 error: function(jqXHR, textStatus, errorThrown)
                 {
@@ -214,8 +182,7 @@ $(document).ready(function(){
             data: {data:arrayIds},
             success:function(data, textStatus, jqXHR)
             {
-                $('#inbox_id').html(data.inbox_count);                  
-                $('#important_id').html(data.important_count);
+                $('#inbox_id').html(data.inbox_count);
                 $('#entry-message').load('{{URL::to($guard.'/message/status/')}}'+'/'+caption);
             },
             error: function(jqXHR, textStatus, errorThrown)
@@ -236,8 +203,7 @@ $(document).ready(function(){
             data: {data:arrayIds},
             success:function(data, textStatus, jqXHR)
             {
-                $('#inbox_id').html(data.inbox_count);                  
-                $('#promotions_id').html(data.promotions_count);
+                $('#inbox_id').html(data.inbox_count);
                 $('#entry-message').load('{{URL::to($guard.'/message/status/')}}'+'/'+caption);
             },
             error: function(jqXHR, textStatus, errorThrown)
@@ -258,8 +224,7 @@ $(document).ready(function(){
             data: {data:arrayIds},
             success:function(data, textStatus, jqXHR)
             {
-                $('#inbox_id').html(data.inbox_count);                  
-                $('#social_id').html(data.social_count);
+                $('#inbox_id').html(data.inbox_count);
                 $('#entry-message').load('{{URL::to($guard.'/message/status/')}}'+'/'+caption);
             },
             error: function(jqXHR, textStatus, errorThrown)

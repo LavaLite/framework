@@ -12,12 +12,12 @@
                     </span>
                 </h1>
                 <p>
-                    Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                    New information or a report about something that has happened recently.Information that is reported in a newspaper, magazine, television news program, etc. Someone or something that is exciting and in our news
                 </p>
             </div>
             <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 hidden-xs text-right">
 
-                <img alt="" src="img/news-side-icon.png">
+                <img alt="" src="{!!url('img/news-side-icon.png')!!}">
                 </img>
             </div>
         </div>
@@ -60,6 +60,16 @@
                     </img>
                 </div>
                 @empty
+                  <div class="news-list-item">
+                       <div class="blog-list-inner-desc">
+                            <h1 class="inner-title">
+                                <span>
+                                No News found!
+                                </span>
+                            </h1>
+                        </div>
+
+                  </div>
                 @endif
             </div>
             <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">

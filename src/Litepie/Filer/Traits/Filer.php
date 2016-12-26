@@ -396,4 +396,25 @@ trait Filer
         return $form->editor();
     }
 
+    /**
+     * Display file upload form.
+     *
+     * @param type|string $field
+     *
+     * @return string path
+     */
+    public function fileCropper($field, $count = null)
+    {
+        $form = new Forms($field, $this->config);
+
+        if (in_array($field, $this->uploads['single'])) {
+            $form->count(1, true);
+        } else {
+            $form->count($count);
+        }
+        
+        $url = $this->getUploadURL($field);
+
+        return view('filer::cropper',compact('url'))->render();
+    }
 }

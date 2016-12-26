@@ -29,8 +29,6 @@ trait RegistersUsers
     function showRegistrationForm()
     {
         $guard = $this->getGuard();
-        putenv("auth.guard=".$guard);
-
         $this->check($guard);
         
         $this->theme->prependTitle('Register');

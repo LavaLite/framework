@@ -99,11 +99,11 @@ $(function () {
     });
 
     $('a[data-toggle="tab"]').on('show.bs.tab', function (e) {
-        $('input').iCheck({
+        /*$('input').iCheck({
           checkboxClass: 'icheckbox_square-blue',
           radioClass: 'iradio_square-blue',
           increaseArea: '20%' // optional
-        });
+        });*/
     });
 
     jQuery("time.timeago").timeago();

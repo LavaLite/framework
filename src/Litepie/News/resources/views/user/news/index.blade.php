@@ -55,7 +55,7 @@
                                         {{$content['title']}}
                                     </td>
                                     <td>
-                                        {{substr($content['description'],0,100)}}
+                                        {{strip_tags(substr($content['description'],0,100))}}
                                     </td>
                                     <td class="td-number">{{format_date($content['created_at'])}}</td>
                                     <td class="td-actions">

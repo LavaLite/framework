@@ -55,19 +55,19 @@
             <table class="table table-hover " id="table">
                 <tbody id="search-results">
                     @forelse($messages['data'] as $key => $value)
-                    <tr id="{!!$value->id!!}" class="check-read" data-status="{!!@$value->read!!}" style="background-color: {!!($value->read ==1)? '#f9f9f9' : '#fff';!!}">
+                    <tr id="{!!$value->id!!}" class="check-read" data-status="{!!@$value->read!!}" style="background-color: {!!($value->read == 1)? '#f9f9f9' : '#fff';!!}">
                         <td>
                             <input type="checkbox" name="listMessageID" class="checkbox1" value="{!! (@$messages['caption'] == 'Trash')? $value->id : $value->getRouteKey(); !!}" id="message_check_{!!$value->id!!}" />
                         </td>
                         <td class="mailbox-star" >
                             <a class="btn-important" data-id="{!!$value->getRouteKey()!!}">
-                                <i class="fa fa-star @if($value->star == 1) text-yellow @endif">
+                                <i class="fa fa-star @if($value->star == 'Yes') text-yellow @endif">
                                 </i>
                             </a>
                         </td>
                         <td class="mailbox-name single">
                             <a href="#">
-                                {!!@$value->name!!}
+                               {{ ( @$messages['caption'] != 'Sent' ) ?  $value['user']['name'] : 'To: '.@$value['to'] }}
                             </a>
                         </td>
                         <td class="mailbox-subject single">
@@ -175,12 +175,12 @@ $(document).ready(function(){
         if ($(this).find('i').hasClass('text-yellow')){
             $(this).find('i').removeClass('text-yellow');
             //make sub status not important
-            star =0;
+            star = 'No' ;
         }
         else{
         $(this).find('i').addClass('text-yellow');
         //make sub status important
-            star =1;
+            star = 'Yes';
         }
             $.ajax( {
                 url: "{{URL::to('admin/message/important/substatus')}}",

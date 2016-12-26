@@ -112,7 +112,7 @@ class PageTableSeeder extends Seeder
             ],
 
             [
-                'parent_id'   => 3,
+                'parent_id'   => 4,
                 'key'         => null,
                 'url'         => 'about-us.html',
                 'name'        => 'About Us',

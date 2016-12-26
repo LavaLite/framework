@@ -1,4 +1,4 @@
-<div class='row'>
+<div class='row disabled'>
  {!! Form::hidden('upload_folder')!!}
   <div class='col-md-6 col-sm-6'>
          {!! Form::text('name')

@@ -56,7 +56,7 @@ class CalendarUserController extends BaseController
             ->scopeQuery(function ($query) {
                 return $query->orderBy('id', 'DESC')->where(function($q){              
                         return $q->where(function($qry){
-                          return  $qry->whereUserId(user_id('web'))->orWhere('assignee_id','=',user_id('web'));
+                          return  $qry->whereUserId(user_id('web'))->whereUserType(user_type('web'))->orWhere('assignee_id','=',user_id('web'));
                         });
                 }); 
             })->all();
@@ -160,6 +160,7 @@ class CalendarUserController extends BaseController
             }
             $status = $attributes['status'];
             $attributes['user_id'] = user_id('web');
+            $attributes['user_type'] = user_type('web');
             $attributes['status'] = 'Calendar';
             if ($status == 'Both') {
                 $calendars = $this->repository->newInstance([]);               

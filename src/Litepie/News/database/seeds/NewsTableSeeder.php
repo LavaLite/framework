@@ -107,14 +107,26 @@ class NewsTableSeeder extends Seeder
                 'url'         => 'user/news/news',
                 'name'        => 'News',
                 'description' => null,
-                'icon'        => 'icon-book-open',
+                'icon'        => 'pe-7s-news-paper',
                 'target'      => null,
                 'order'       => 190,
                 'status'      => 1,
             ],
 
             [
-                'parent_id'   => 3,
+                'parent_id'   => 23,
+                'key'         => null,
+                'url'         => 'user/news/news',
+                'name'        => 'News',
+                'description' => null,
+                'icon'        => 'pe-7s-news-paper',
+                'target'      => null,
+                'order'       => 190,
+                'status'      => 1,
+            ],
+
+            [
+                'parent_id'   => 4,
                 'key'         => null,
                 'url'         => 'news',
                 'name'        => 'News',

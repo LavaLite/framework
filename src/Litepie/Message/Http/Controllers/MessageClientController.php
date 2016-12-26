@@ -125,12 +125,12 @@ class MessageClientController extends BaseController
                
             }
 
-            $sent_count = $this->repository->userMsgCount('Sent', $guard);
+            $sent_count = $this->repository->userUnreadCount('Sent', $guard);
             $inbox_count = $this->repository->userMsgCount('Inbox', $guard);
-            $draft_count = $this->repository->userMsgCount('Draft', $guard);
+            $draft_count = $this->repository->userUnreadCount('Draft', $guard);
 
-           return response()->json([
-                'message'     => trans('messages.success.updated', ['Module' => trans('message::message.name')]),
+           return response()->json([/*
+                'message'     => trans('messages.success.updated', ['Module' => trans('message::message.name')]),*/
                 'code'        => 204,
                 'redirect'    => trans_url('client/message/message'),
                 'sent_count'  => $sent_count,
@@ -177,8 +177,8 @@ class MessageClientController extends BaseController
             $guard = $this->getGuardRoute();
             $this->repository->update($request->all(), $message->getRouteKey());
             $inbox_count = $this->repository->userMsgCount('Inbox',$guard);
-            $sent_count = $this->repository->userMsgCount('Sent',$guard);
-            $draft_count = $this->repository->userMsgCount('Draft',$guard);
+            $sent_count = $this->repository->userUnreadCount('Sent',$guard);
+            $draft_count = $this->repository->userUnreadCount('Draft',$guard);
             return response()->json([              
                 'inbox_count' => $inbox_count,
                 'sent_count' => $sent_count,
@@ -210,11 +210,12 @@ class MessageClientController extends BaseController
             } else {
                 $t = $message->delete();
             }
-
+            $trash_count = $this->repository->userUnreadCount('Trash',$guard);
             return response()->json([
                 'message'  => trans('messages.success.deleted', ['Module' => trans('message::message.name')]),
                 'code'     => 202,
                 'redirect' => trans_url('client/message/message/0'),
+                'trash_count' => $trash_count, 
             ], 202);
 
         } catch (Exception $e) {
@@ -271,25 +272,15 @@ class MessageClientController extends BaseController
             } 
 
             $inbox_count = $this->repository->userMsgCount('Inbox',$guard);
-            $trash_count = $this->repository->userMsgCount('Trash',$guard);
-            $promotions_count = $this->repository->userMsgCount('Promotions',$guard);
-            $important_count = $this->repository->userSpecialCount('important',$guard);
-            $junk_count = $this->repository->userMsgCount('Junk',$guard);
-            $social_count = $this->repository->userMsgCount('Social',$guard);
-            $draft_count = $this->repository->userMsgCount('Draft',$guard);
-            $sent_count = $this->repository->userMsgCount('Sent',$guard);
-            $star_count = $this->repository->userSpecialCount('star',$guard);
+            $trash_count = $this->repository->userUnreadCount('Trash',$guard);
+            $draft_count = $this->repository->userUnreadCount('Draft',$guard);
+            $sent_count = $this->repository->userUnreadCount('Sent',$guard);
 
             return response()->json([ 
                 'inbox_count' => $inbox_count,
                 'trash_count' => $trash_count,
-                'promotions_count' => $promotions_count,
-                'important_count' =>  $important_count,
-                'junk_count' =>       $junk_count,
-                'social_count' =>     $social_count,
                 'draft_count' =>     $draft_count,
                 'sent_count' =>       $sent_count,
-                'star_count' =>       $star_count,
             ], 202);
         } catch (Exception $e) {
 
@@ -382,6 +373,7 @@ class MessageClientController extends BaseController
         $messages['data'] = $this->repository->scopeQuery(function ($query) {
             return $query->with('user')->whereStar(1)->orderBy('id', 'DESC');
         })->paginate();
+        dd($messages['data']);
         $messages['caption'] = "Starred";
         return view('message::user.message.show', compact('messages','guard'));
     }
@@ -395,7 +387,7 @@ class MessageClientController extends BaseController
         $guard = $this->getGuardRoute();
         $this->repository->pushCriteria(new \Litepie\Message\Repositories\Criteria\MessageUserCriteria());
         $messages['data'] = $this->repository->scopeQuery(function ($query) {
-            return $query->with('user')->whereImportant(1)->orderBy('id', 'DESC');
+            return $query->with('user')->whereImportant(1)->where('status','<>','Trash')->orderBy('id', 'DESC');
         })->paginate();
         $messages['caption'] = "Important";
         return view('message::user.message.show', compact('messages','guard'));

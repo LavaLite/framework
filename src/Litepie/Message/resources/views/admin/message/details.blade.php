@@ -51,6 +51,12 @@
                 </i>
             </button> 
             </div>
+            <div class="pull-right">
+                {!! Form::select('group-status','')
+               ->id('msg-options')
+               -> options(['Important' => 'Important', 'Promotions' => 'Promotions', 'Social' => 'Social'])
+               -> placeholder('More')!!}
+            </div>
      
         </div>
         <div class="table-responsive mailbox-messages" style="min-height: 360px;">
@@ -202,8 +208,31 @@ $(document).ready(function(){
     $(".btn-forward").click(function(){
         var to_uid = $( this ).attr('id');
         $('#show-message').load('{{URL::to('admin/message/forward')}}'+'/'+to_uid);
-    });    
+    }); 
 
+    $("#msg-options").change(function(){
+        var status = $("#msg-options option:selected" ).val();
+        var to_uid = '{{@$message->getRouteKey()}}';
+        var status = status;
+        var arrayIds = [];
+        var caption = '{{@$message["caption"]}}';
+        arrayIds.push(to_uid);
+        $.ajax({                    
+            url: "{{URL::to('admin/message/message/status')}}"+"/"+status,
+            type: 'GET',
+            data: {data:arrayIds},
+            success:function(data, textStatus, jqXHR)
+            {
+                $('#inbox_id').html(data.inbox_count);
+                $('#entry-message').load('{{URL::to('admin/message/status/')}}'+'/'+caption);
+            },
+            error: function(jqXHR, textStatus, errorThrown)
+            {
+                
+            }
+        });
+
+    }); 
 });
 </script>
 <style type="text/css">

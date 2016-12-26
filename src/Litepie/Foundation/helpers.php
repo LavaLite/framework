@@ -256,6 +256,33 @@ if (!function_exists('user_id')) {
 
 }
 
+if (!function_exists('get_guard')) {
+    /**
+     * Return thr property of the guard for current request.
+     *
+     * @param string $property
+     *
+     * @return mixed
+     */
+    function get_guard($property = 'guard')
+    {
+        switch ($property) {
+            case 'url':
+                return getenv('auth.guard');
+                break;
+            case 'route':
+                return getenv('auth.guard');
+                break;
+            case 'model':
+                return getenv('auth.model');
+                break;
+            default:
+                return getenv('guard');
+        }
+    }
+
+}
+
 
 if (!function_exists('users')) {
     /**

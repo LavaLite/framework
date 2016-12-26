@@ -72,7 +72,10 @@ $(function () {
         });
         
         $('#create-message-message').submit( function( e ) {
-            
+            if($('#create-message-message').valid() == false) {
+                toastr.warning('Please enter valid information', 'Warning');
+                return false;
+            }
             var url  = $(this).attr('action');
             var formData = new FormData( this );
             var status = $("#status").val();

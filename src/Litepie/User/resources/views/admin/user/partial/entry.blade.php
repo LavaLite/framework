@@ -1,5 +1,5 @@
 
-<div class="row">
+<div class="row disabled">
     <div class='col-md-3 col-sm-3'>
         <div class='col-md-12 col-sm-12'>
             {!! Form::text('name')

@@ -17,8 +17,6 @@ trait SendsPasswordResetEmails
      */
     function showLinkRequestForm($guard = null)
     {
-        putenv("auth.guard=".$guard);
-
         $this->theme->prependTitle('Reset');
         return $this->theme->of($this->getView('password'), compact('guard'))->render();
     }

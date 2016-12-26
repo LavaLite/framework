@@ -24,26 +24,26 @@
                                     <a href="#" id="btn-junk"><span class="icon"><i class="ion-close"></i></span><span class="text">Junk</span><span class="badge badge-warning" id="junk_id">{!!Message::userMsgcount('Junk',$guard)!!}</span></a>
                                 </li> -->
                                 <li class="cur">
-                                    <a href="#" id="btn-draft"><span class="icon"><i class="ion-android-create"></i></span><span class="text">Drafts</span><span class="badge badge-primary" id="draft_id">{!!Message::userMsgcount('draft',$guard)!!}</span></a>
+                                    <a href="#" id="btn-draft"><span class="icon"><i class="ion-android-create"></i></span><span class="text">Drafts</span><span class="badge badge-primary" id="draft_id">{!!Message::userUnreadCount('draft',$guard)!!}</span></a>
                                 </li>
                                 <li class="cur">
-                                    <a href="#" id="btn-sent"><span class="icon"><i class="ion-forward"></i></span><span class="text">Sent</span><span class="badge badge-success" id="sent_id">{!!Message::userMsgcount('Sent',$guard)!!}</span></a>
+                                    <a href="#" id="btn-sent"><span class="icon"><i class="ion-forward"></i></span><span class="text">Sent</span><span class="badge badge-success" id="sent_id">{!!Message::userUnreadCount('Sent',$guard)!!}</span></a>
                                 </li>
                                 <li class="cur">
-                                    <a href="#" id="btn-trash"><span class="icon"><i class="ion-android-delete"></i></span><span class="text">Deleted</span><span class="badge badge-danger" id="trash_id">{!!Message::userMsgcount('Trash' ,$guard)!!}</span></a>
+                                    <a href="#" id="btn-trash"><span class="icon"><i class="ion-android-delete"></i></span><span class="text">Trash</span><span class="badge badge-danger" id="trash_id">{!!Message::userUnreadCount('Trash' ,$guard)!!}</span></a>
                                 </li>
                                 <li class="nav-separator">Quick Links</li>
                                 <li class="cur">
-                                    <a href="#" id="btn-starred"><span class="icon"><i class="ion-stop text-primary"></i></span><span class="text">Starred</span><span class="badge badge-primary" id="star_id">{!!Message::userSpecialCount('star',$guard)!!}</span></a>
+                                    <a href="#" id="btn-starred"><span class="icon"><i class="ion-stop text-warning"></i></span><span class="text">Starred</span><!-- <span class="badge badge-primary" id="star_id">{!!Message::userSpecialCount('star',$guard)!!}</span> --></a>
                                 </li>
                                 <li class="cur">
-                                    <a href="#" id="btn-Important"><span class="icon"><i class="ion-stop text-success"></i></span><span class="text">Important</span><span class="badge badge-primary" id="important_id">{!!Message::userSpecialCount('important' ,$guard)!!}</span></a>
+                                    <a href="#" id="btn-Important"><span class="icon"><i class="ion-stop text-danger"></i></span><span class="text">Important</span><!-- <span class="badge badge-primary" id="important_id">{!!Message::userSpecialCount('important' ,$guard)!!}</span -->></a>
                                 </li>
                                 <li class="cur">
-                                    <a href="#" id="btn-Promotions"><span class="icon"><i class="ion-stop text-warning"></i></span><span class="text">Promotions</span><span class="badge badge-primary" id="promotions_id">{!!Message::userMsgcount('Promotions',$guard)!!}</span></a>
+                                    <a href="#" id="btn-Promotions"><span class="icon"><i class="ion-stop text-success"></i></span><span class="text">Promotions</span><!-- <span class="badge badge-primary" id="promotions_id">{!!Message::userMsgcount('Promotions',$guard)!!}</span> --></a>
                                 </li>
                                 <li class="cur">
-                                    <a href="#" id="btn-Social"><span class="icon"><i class="ion-stop text-info"></i></span><span class="text">Social</span><span class="badge badge-primary" id="social_id">{!!Message::userMsgcount('Social',$guard)!!}</span></a>
+                                    <a href="#" id="btn-Social"><span class="icon"><i class="ion-stop text-info"></i></span><span class="text">Social</span><!-- <span class="badge badge-primary" id="social_id">{!!Message::userMsgcount('Social',$guard)!!}</span> --></a>
                                 </li>
                             </ul>
                         </div>

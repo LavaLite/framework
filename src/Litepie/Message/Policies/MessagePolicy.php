@@ -7,7 +7,6 @@ use Litepie\User\Contracts\UserPolicy;
 
 class MessagePolicy
 {
-
     /**
      * Determine if the given user can view the message.
      *
@@ -54,7 +53,7 @@ class MessagePolicy
      * @return bool
      */
     public function update(UserPolicy $user, Message $message)
-    {
+    {  
         if ($user->canDo('message.message.update') && $user->hasRole('admin')) {
             return true;
         }
@@ -78,7 +77,8 @@ class MessagePolicy
      * @return bool
      */
     public function destroy(UserPolicy $user, Message $message)
-    {
+    {    
+
         if ($user->canDo('message.message.delete') && $user->hasRole('admin')) {
             return true;
         }
@@ -145,5 +145,6 @@ class MessagePolicy
         if ($user->hasRole('superuser')) {
             return true;
         }
+        return true;
     }
 }

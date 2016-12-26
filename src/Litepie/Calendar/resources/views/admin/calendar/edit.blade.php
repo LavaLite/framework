@@ -9,14 +9,17 @@
         <div class="tab-pane active" id="details">
             @include('calendar::admin.calendar.partial.entry')
             <div class='col-md-12 col-sm-12 '>
-                <button type="button" class="btn  btn-default btn-xs pull-right" id="close" data-dismiss="modal">Close</button>    
-                <button type="button" data-dismiss="modal" id="update" class="btn btn-primary btn-xs pull-right" >Update</button>              
-                  <button type="button" class="btn btn-danger btn-xs pull-right delete-btn"   >  Delete </button> 
+                <button type="button" class="btn  btn-default btn-xs pull-right m-l-5" id="close" data-dismiss="modal"><i class="fa fa-times-circle-o"></i>Close</button>    
+                <button type="button" data-dismiss="modal" id="update" class="btn btn-primary btn-xs pull-right m-l-5" ><i class="fa fa-floppy-o"></i> Update</button>              
+                  <button type="button" class="btn btn-danger btn-xs pull-right delete-btn m-l-5"><i class="fa fa-trash-o"></i>  Delete </button> 
             </div>
         </div>
     </div>
     {!!Form::close()!!}
 </div>
+<style type="text/css">
+    .m-l-5{margin-left:5px}
+</style>
 <script type="text/javascript">
 $(function(){
     $('#update').click(function(){

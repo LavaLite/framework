@@ -13,7 +13,6 @@
 
         </ul>
       </div>
-
       <div class="btn-group">
 
         @if(@$messages['caption'] == 'Trash')        
@@ -30,37 +29,40 @@
   </div>
 </div>
 <table class="table table-hover table-inbox mbn table-vam">
-  <tbody>
-    @forelse($messages['data'] as $key => $value)
-    <?php $class = ($value->read == 1)? '' : 'unread'; ?>
-    <tr class="{!!$class!!}" id="{!!$value->id!!}" class="check-read" data-status="{!!@$value->read!!}">
-    
-      <td class="inbox-msg-check" width="5%">
-        <span class="checkbox pull-left mn">
-          <label for="option111" class="pln">
-              <!-- <input type="checkbox" class="lavalite" id="option111" value="" name="ham"/> -->
-              <input type="checkbox" name="listMessageID" class="checkbox1" value="{!! (@$message['caption'] == 'Trash')? $value->id : $value->getRouteKey(); !!}" id="message_check_{!!$value->id!!}" />
-          </label>
-        </span>
-      </td>
-      <td class="inbox-msg-from hidden-xs hidden-sm single" width="20%"><div>{!!@$value->subject!!}</div></td>
-      <td class="inbox-msg-snip single">{{ ($value->message != '') ? substr(@$value->message,0,100) : '&nbsp;' }}</td>
-      <td class="inbox-msg-time single" width="12%">{!!format_date(@$value['created_at'])!!}</td>
-    </tr>
-    @empty
-    <tr><td colspan="4">No messages</td></tr>
-    @endif    
-  </tbody>
+    <tbody>
+        @forelse($messages['data'] as $key => $value)       
+        <?php $class = ($value->read == 1)? '' : 'unread'; ?>   
+        <tr class="{!!$class!!}" id="{!!$value->id!!}" class="check-read" data-status="{!!@$value->read!!}">
+            <td class="inbox-msg-check" width="5%">
+                <span class="checkbox lavalite pull-left mn">
+                  <input type="checkbox" name="listMessageID" class="checkbox1" value="{!! (@$messages['caption'] == 'Trash')? $value->id : $value->getRouteKey(); !!}" id="message_check_{!!$value->id!!}"/>
+                  <label for="option111" class="pln">     </label>
+                </span>
+            </td>
+            <td class="mailbox-star" >
+                <a class="btn-starred " data-id="{!!$value->getRouteKey()!!}" style="color:#3e4a56">
+                    <i class="fa fa-star @if($value->star == 'Yes') text-yellow @else text-default @endif">
+                    </i>
+                </a>
+            </td>
+            <td class="inbox-msg-from hidden-xs hidden-sm single" width="20%"><div>{{ ( @$messages['caption'] != 'Sent' ) ?  $value['user']['name'] : 'To: '.@$value['to'] }}</div></td>
+            <td class="inbox-msg-snip single">{{ ($value->subject != '') ? substr(@$value->subject,0,100) : '&nbsp;' }}</td>
+            <td class="inbox-msg-time single" width="12%">{!!format_date(@$value['created_at'])!!}</td>
+        </tr>
+        @empty
+        <tr><td colspan="4">No messages</td></tr>
+        @endif    
+    </tbody>
 </table>
 <div class="inbox-mail-footer">
-  <div class="clearfix">
-    <div class="pull-right">
-      <span class="pull-left"></span>
-      <div class="btn-group pull-right">
-        @include('message::user.message.pagination',['paginator' => $messages['data']])
-      </div>
+    <div class="clearfix">
+        <div class="pull-right">
+            <span class="pull-left"></span>
+            <div class="btn-group pull-right">
+                @include('message::user.message.pagination', ['paginator' => $messages['data']])
+            </div>
+        </div>
     </div>
-  </div>
 </div>
 
 <script type="text/javascript">
@@ -74,7 +76,7 @@ $(document).ready(function(){
     });
 
     $(".btn-refresh").click(function(){
-        var caption = '{{@$message['caption']}}';
+        var caption = '{{@$messages['caption']}}';
         $("#txt-search").val('');
         if (caption == ''){
             $('#entry-message').load('{{URL::to($guard.'/message/status/Inbox')}}');
@@ -104,16 +106,13 @@ $(document).ready(function(){
                 success:function(data, textStatus, jqXHR)
                 {
                     swal("Deleted!", data.message, "success");
-                    $('#entry-message').load('{{URL::to('admin/message/status/Trash')}}');
+                    $('#entry-message').load('{{URL::to($guard.'/message/status/Trash')}}');
                     $('#inbox_id').html(data.inbox_count);
                     $('#trash_id').html(data.trash_count);
-                    $('#promotions_id').html(data.promotions_count);
                     $('#draft_id').html(data.draft_count);
                     $('#junk_id').html(data.junk_count);
-                    $('#social_id').html(data.social_count);
                     $('#sent_id').html(data.sent_count);
                     $('#starred_id').html(data.starred_count);
-                    $('#important_id').html(data.important_count);
                     $('#trash_id').html(data.trash_count);
                 },
             });
@@ -121,29 +120,33 @@ $(document).ready(function(){
     });
 
     $(".checkAll").click(function(){
-        if ($(".checkAll").hasClass('all_checked')) {
+        if ($(".checkAll").hasClass('all_checked')) {            
             $(".icheckbox_square-blue").removeClass('checked');
             $("input:checkbox").prop('checked', false);
             $(".checkAll").removeClass('all_checked');
+            $(".checkAll").html('Select All');            
             return;
         }
-
        $(".icheckbox_square-blue").addClass('checked');
        $("input:checkbox").prop('checked', true);
        $(".checkAll").addClass('all_checked');
+       $(".checkAll").html('Unselect');
     });
+    
     $('.btn-starred').click(function(){
         var msg_id = $(this).attr('data-id');
         var star;
         if ($(this).find('i').hasClass('text-yellow')){
             $(this).find('i').removeClass('text-yellow');
+            $(this).find('i').addClass('text-default');
             //make sub status not important
-            star =0;
+            star = 'No' ;
         }
         else{
         $(this).find('i').addClass('text-yellow');
+        $(this).find('i').removeClass('text-default');
         //make sub status important
-            star =1;
+            star = 'Yes' ;
         }
             $.ajax( {
                 url: "{{URL::to($guard.'/message/starred/substatus')}}",
@@ -167,15 +170,15 @@ $(document).ready(function(){
     $('.btn-important').click(function(){
         var msg_id = $(this).attr('data-id');
         var important;
-        if ($(this).find('i').hasClass('text-red')){
-            $(this).find('i').removeClass('text-red');
+        if ($(this).find('i').hasClass('text-yellow')){
+            $(this).find('i').removeClass('text-yellow');
             //make sub status not important
-            important =0;
+            important = 'No';
         }
         else{
-        $(this).find('i').addClass('text-red');
+        $(this).find('i').addClass('text-yellow');
         //make sub status important
-            important =1;
+            important = 'Yes' ;
         }
             $.ajax( {
                 url: "{{URL::to($guard.'/message/important/substatus')}}",
@@ -196,12 +199,15 @@ $(document).ready(function(){
 
     });
 
+
+
     $('.btn-trashed').click(function(){
-        var arrayIds = [];
+        var arrayIds = [];        
         $("input:checkbox[name=listMessageID]:checked").each(function(){
             arrayIds.push($(this).val());
-        });
-        $.ajax( {
+        });        
+        if(arrayIds.length != 0){
+            $.ajax( {
                 url: "{{URL::to($guard.'/message/message/status/Trash')}}",
                 type: 'GET',
                 data: {data:arrayIds},
@@ -216,6 +222,7 @@ $(document).ready(function(){
                 {
                 }
             });
+        }
     });
 
     $("#group-msg").change(function(){
@@ -234,10 +241,7 @@ $(document).ready(function(){
                     success:function(data, textStatus, jqXHR)
                     {
                         console.log("trashed");
-                        $('#promotions_id').html(data.promotions_count);  
-                         $('#inbox_id').html(data.inbox_count);         
-                        $('#social_id').html(data.social_count);                  
-                        $('#important_id').html(data.important_count);
+                         $('#inbox_id').html(data.inbox_count);
                         $('#entry-message').load('{{URL::to($guard.'/message/status/')}}'+'/'+caption);
                     },
                     error: function(jqXHR, textStatus, errorThrown)

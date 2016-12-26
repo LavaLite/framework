@@ -298,7 +298,6 @@ class MessageAdminController extends BaseController
 
     public function updateStatus(MessageRequest $request, Message $message, $status)
     {
-
         try {
             $Ids = $request->get('data');
             $attributes['status'] = $status;
@@ -316,7 +315,6 @@ class MessageAdminController extends BaseController
                     }
                 }
             } 
-
             $inbox_count = $this->repository->msgCount('Inbox');
             $trash_count = $this->repository->msgCount('Trash');
             $promotions_count = $this->repository->msgCount('Promotions');

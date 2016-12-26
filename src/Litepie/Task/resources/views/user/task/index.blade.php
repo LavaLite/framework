@@ -21,8 +21,8 @@
                             {!!Form::token()!!}
                             <div class="input-group">
                                 <input type="hidden" name="status" value="to_do" placeholder="Add new task." class="input input-sm form-control">
-                                <input type="text" name="task" placeholder="Add new task" class="input form-control" required="required">
-                                <span class="input-group-btn">
+                                <input type="text" name="task" placeholder="Add new task"  class="input form-control" required="required">
+                                <span class="input-group-btn"  id="new-task">
                                     <button type="button" class="btn-danger btn-raised btn btn-sm" data-action='CREATE' data-form='#task-task-create'  data-load-to='#to_do_list'>Add Task<div class="ripple-container"></button>
                                 </span>
                             </div>
@@ -76,11 +76,9 @@
 </div>
 <script>
     $(document).ready(function(){
-
         $("#to_do_list").load('{{URL::to($guard.'/task/status?search[status]=to_do')}}');
         $("#in_progress_list").load('{{URL::to($guard.'/task/status?search[status]=in_progress')}}');
-        $("#completed_list").load('{{URL::to($guard.'/task/status?search[status]=completed')}}');  
-        
+        $("#completed_list").load('{{URL::to($guard.'/task/status?search[status]=completed')}}');
     });
 </script>
 

@@ -16,7 +16,7 @@
     <!-- search form -->
    
      <ul class="sidebar-settings">
-        <li ><a href="{!!url('admin/settings/setting')!!}"><i class="fa fa-wrench "></i> Settings</a></li>
+        <li ><a href="{!!url('admin/profile')!!}"><i class="fa fa-user "></i> Profile</a></li>
         <li ><a href="{!!url('logout?role=admin.web')!!}"><i class="fa fa-power-off"></i> Logout</a></li>
     </ul>
     

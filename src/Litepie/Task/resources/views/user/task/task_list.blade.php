@@ -18,6 +18,7 @@
 </ul>
 
 <script type="text/javascript">  
+    $('input[name="task"]').val('');
     $(".task-edit").click(function(){
         var id = $(this).parent().parent().attr('id');
         $('#modal-task .modal-content').load('{{URL::to($guard.'/task/task')}}'+ '/' + id + '/' + 'edit');

@@ -165,9 +165,11 @@ class CalendarAdminController extends BaseController
                 $attributes=$request->all();
             }
             $status = $attributes['status'];
-            $attributes['user_id'] = user_id("admin.web");
+            
 
             if ($status == 'Both') {
+                $attributes['user_id'] = user_id("admin.web");
+                $attributes['user_type'] = user_type("admin.web");
                 $calendar->create($attributes);
             } else {
                 $calendar->update($attributes);

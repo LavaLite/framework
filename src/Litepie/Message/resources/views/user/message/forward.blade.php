@@ -11,7 +11,7 @@
                  	
                     <tr>
                         <td colspan="4">
-                        {!! Form::select('mails[]')
+                        {!! Form::select('mails[]','To')
                         -> options(Message::getUsers())
                         -> class('js-example-tags select2-hidden-accessible')
                         -> style('width:100%')

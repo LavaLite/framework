@@ -48,17 +48,6 @@ class UserTableSeeder extends Seeder
             ],
         ]);
 
-        DB::table('menus')->insert([
-            'parent_id'   => 2,
-            'key'         => null,
-            'url'         => 'user/api',
-            'name'        => 'Api',
-            'description' => null,
-            'icon'        => 'fa fa-exchange',
-            'target'      => null,
-            'order'       => 190,
-            'status'      => 1,
-        ]);
 
         $id = DB::table('menus')->insertGetId([
             'parent_id'   => 1,

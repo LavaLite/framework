@@ -68,6 +68,12 @@ class Message
         return $this->message->userMsgCount($slug , $guard);
     }
 
+    public function userUnreadCount($slug, $guard)
+    {
+        return $this->message->userUnreadCount($slug , $guard);
+    }
+
+
     public function userSpecialcount($slug, $guard)
     {
         return $this->message->userSpecialCount($slug , $guard);

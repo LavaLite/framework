@@ -35,7 +35,7 @@ class ContactTableSeeder extends Seeder
                 'status'      => 1,
             ],
             [
-                'parent_id'   => 3,
+                'parent_id'   => 4,
                 'key'         => null,
                 'url'         => 'contact.htm',
                 'name'        => 'Contact Us',
