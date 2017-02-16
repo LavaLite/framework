@@ -30,7 +30,7 @@ class UserListTransformer extends TransformerAbstract
             'photo'             => $user->photo,
             'web'               => $user->web,
             'permissions'       => $user->permissions,
-            'status'            => trans('app.'.$user->status),
+            'status'            => $user->status,
             'created_at'        => format_date($user->created_at),
             'updated_at'        => format_date($user->updated_at),
         ];

@@ -16,9 +16,9 @@ class NewsNotification
      *
      * @return void
      */
-    public function complete(News $news)
+    public function complete(News $news, $workflow)
     {
-        return Notification::send($news->user, new NewsNotifyer($news, 'complete'));;
+        return Notification::send($news->reporting, new NewsNotifyer($news, $workflow, 'complete'));;
     }
 
     /**
@@ -28,9 +28,9 @@ class NewsNotification
      *
      * @return void
      */
-    public function verify(News $news)
+    public function verify(News $news, $workflow)
     {
-        return Notification::send($news->user, new NewsNotifyer($news, 'verify'));;
+        return Notification::send($news->reporting, new NewsNotifyer($news, $workflow, 'verify'));;
     }
 
     /**
@@ -40,9 +40,9 @@ class NewsNotification
      *
      * @return void
      */
-    public function approve(News $news)
+    public function approve(News $news, $workflow)
     {
-        return Notification::send($news->user, new NewsNotifyer($news, 'approve'));;
+        return Notification::send($news->reporting, new NewsNotifyer($news, $workflow, 'approve'));;
 
     }
 
@@ -53,9 +53,9 @@ class NewsNotification
      *
      * @return void
      */
-    public function publish(News $news)
+    public function publish(News $news, $workflow)
     {
-        return Notification::send($news->user, new NewsNotifyer($news, 'publish'));;
+        return Notification::send($news->reporting, new NewsNotifyer($news, $workflow, 'publish'));;
     }
 
     /**
@@ -65,9 +65,9 @@ class NewsNotification
      *
      * @return void
      */
-    public function archive(News $news)
+    public function archive(News $news, $workflow)
     {
-        return Notification::send($news->user, new NewsNotifyer($news, 'archive'));;
+        return Notification::send($news->reporting, new NewsNotifyer($news, $workflow, 'archive'));;
 
     }
 
@@ -78,9 +78,21 @@ class NewsNotification
      *
      * @return void
      */
-    public function unpublish(News $news)
+    public function unpublish(News $news, $workflow)
     {
-        return Notification::send($news->user, new NewsNotifyer($news, 'unpublish'));;
+        return Notification::send($news->reporting, new NewsNotifyer($news, $workflow, 'unpublish'));;
+
+    }
+    /**
+     * Send the notification to the users after cancel.
+     *
+     * @param News $news
+     *
+     * @return void
+     */
+    public function cancel(News $news, $workflow)
+    {
+        return Notification::send($news->user, new NewsNotifyer($news, $workflow, 'cancel'));;
 
     }
 }

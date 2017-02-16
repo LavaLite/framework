@@ -7,10 +7,7 @@ Route::group(['prefix' => trans_setlocale() . '/admin/calendar'], function () {
     Route::resource('calendar', 'CalendarAdminController');
 });
 
-// Admin API routes  for calendar
-Route::group(['prefix' => trans_setlocale() . 'api/v1/admin/calendar'], function () {
-    Route::resource('calendar', 'CalendarAdminApiController');
-});
+
 
 // User web routes for calendar
 Route::group(['middleware'=>'web','prefix' => trans_setlocale() . '/user/calendar'], function () {
@@ -26,10 +23,7 @@ Route::group(['middleware'=>'web','prefix' => trans_setlocale() . '/client/calen
     Route::resource('/calendar', 'CalendarClientController');
 });
 
-// User API routes for calendar
-Route::group(['prefix' => trans_setlocale() . 'api/v1/user/calendar'], function () {
-    Route::resource('/calendar', 'CalendarUserApiController');
-});
+
 
 //  web routes for calendar
 Route::group(['prefix' => trans_setlocale() . '/calendar'], function () {
@@ -37,8 +31,4 @@ Route::group(['prefix' => trans_setlocale() . '/calendar'], function () {
     Route::get('/{slug?}', 'CalendarController@show');
 });
 
-//  API routes for calendar
-Route::group(['prefix' => trans_setlocale() . 'api/v1/calendar'], function () {
-    Route::get('/calendar', 'CalendarApiController@index');
-    Route::get('/{slug?}', 'CalendarApiController@show');
-});
+

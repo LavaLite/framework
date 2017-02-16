@@ -24,7 +24,7 @@
         <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
             <div class="blog-detail-side-search-wraper">
                 {!!Form::open()->method('GET')
-                     ->action(URL::to('news'))!!}
+                     ->action(trans_url('news'))!!}
                         {!!Form::text('search')->type('text')->class('form-control')->placeholder('Search News')->raw()!!}
                 <i class="icon-magnifier">
                 </i>

@@ -23,20 +23,20 @@
 @stop
 
 @section('content')
-<table id="contact-contact-list" class="table table-stripedLitepieSERTRAITSSER AS USERMODEL data-table">
-    <thead  class="list_head">
+<table id="contact-contact-list" class="table table-striped data-table">
+    <thead class="list_head">
         <th>{!! trans('contact::contact.label.name')!!}</th>
-        <th>{!! trans('contact::contact.label.phone')!!}</th>
-        <th>{!! trans('contact::contact.label.mobile')!!}</th>
-        <th>{!! trans('contact::contact.label.email')!!}</th>
-        <th>{!! trans('contact::contact.label.website')!!}</th>
+                    <th>{!! trans('contact::contact.label.phone')!!}</th>
+                    <th>{!! trans('contact::contact.label.mobile')!!}</th>
+                    <th>{!! trans('contact::contact.label.email')!!}</th>
+                    <th>{!! trans('contact::contact.label.city')!!}</th>
     </thead>
     <thead  class="search_bar">
         <th>{!! Form::text('search[name]')->raw()!!}</th>
-        <th>{!! Form::text('search[phone]')->raw()!!}</th>
-        <th>{!! Form::text('search[mobile]')->raw()!!}</th>
-        <th>{!! Form::text('search[email]')->raw()!!}</th>
-        <th>{!! Form::text('search[website]')->raw()!!}</th>
+                    <th>{!! Form::text('search[phone]')->raw()!!}</th>
+                    <th>{!! Form::text('search[mobile]')->raw()!!}</th>
+                    <th>{!! Form::text('search[email]')->raw()!!}</th>
+                    <th>{!! Form::text('search[city]')->raw()!!}</th>
     </thead>
 </table>
 @stop
@@ -74,7 +74,7 @@ $(document).ready(function(){
                     {data :'phone'},
                     {data :'mobile'},
                     {data :'email'},
-                    {data :'website'},
+                    {data :'city'},
         ],
         "pageLength": 25
     });
@@ -102,3 +102,4 @@ $(document).ready(function(){
 
 @section('style')
 @stop
+

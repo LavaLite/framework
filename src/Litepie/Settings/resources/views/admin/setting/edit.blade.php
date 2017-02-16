@@ -12,7 +12,7 @@
         ->id('settings-setting-edit')
         ->method('PUT')
         ->enctype('multipart/form-data')
-        ->action(URL::to('admin/settings/setting/'. $setting->getRouteKey()))!!}
+        ->action(trans_url('admin/settings/setting/'. $setting->getRouteKey()))!!}
         <div class="tab-content clearfix">
             <div class="tab-pane active" id="setting">
                 <div class="tab-pan-title">  {{ trans('app.edit') }}  {!! trans('settings::setting.name') !!} [{!!$setting->name!!}] </div>

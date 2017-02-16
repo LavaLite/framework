@@ -76,9 +76,10 @@ class NewsAdminController extends BaseController
         if (!$news->exists) {
             return response()->view('news::admin.news.new', compact('news'));
         }
+        $fields = @$news->workflow['comments'];
 
         Form::populate($news);
-        return response()->view('news::admin.news.show', compact('news'));
+        return response()->view('news::admin.news.show', compact('news','fields'));
     }
 
     /**
@@ -109,8 +110,10 @@ class NewsAdminController extends BaseController
     public function store(NewsRequest $request)
     {
         try {
-            $attributes             = $request->all();
-            $attributes['user_id']  = user_id('admin.web');
+            $attributes                 = $request->all();
+            $attributes['user_id']      = user_id();
+            $attributes['user_type']    = user_type();
+            $attributes['team_id']      = (isset(user('admin.web')->team_id))? user('admin.web')->team_id : 0;
             $news          = $this->repository->create($attributes);
 
             return response()->json([

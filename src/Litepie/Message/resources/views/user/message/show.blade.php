@@ -33,21 +33,21 @@
         @forelse($messages['data'] as $key => $value)       
         <?php $class = ($value->read == 1)? '' : 'unread'; ?>   
         <tr class="{!!$class!!}" id="{!!$value->id!!}" class="check-read" data-status="{!!@$value->read!!}">
-            <td class="inbox-msg-check" width="5%">
+            <td class="inbox-msg-check" width="60">
                 <span class="checkbox lavalite pull-left mn">
                   <input type="checkbox" name="listMessageID" class="checkbox1" value="{!! (@$messages['caption'] == 'Trash')? $value->id : $value->getRouteKey(); !!}" id="message_check_{!!$value->id!!}"/>
                   <label for="option111" class="pln">     </label>
                 </span>
             </td>
-            <td class="mailbox-star" >
+            <td class="mailbox-star" width="30">
                 <a class="btn-starred " data-id="{!!$value->getRouteKey()!!}" style="color:#3e4a56">
                     <i class="fa fa-star @if($value->star == 'Yes') text-yellow @else text-default @endif">
                     </i>
                 </a>
             </td>
-            <td class="inbox-msg-from hidden-xs hidden-sm single" width="20%"><div>{{ ( @$messages['caption'] != 'Sent' ) ?  $value['user']['name'] : 'To: '.@$value['to'] }}</div></td>
+            <td class="inbox-msg-from hidden-xs hidden-sm single" width="20%"><div>{{ ( @$value['status'] == 'Inbox' )||( @$value['status'] == 'Draft' ) ?  $value['user']['name'] : 'To : '.@$value['to'] }}</div></td>
             <td class="inbox-msg-snip single">{{ ($value->subject != '') ? substr(@$value->subject,0,100) : '&nbsp;' }}</td>
-            <td class="inbox-msg-time single" width="12%">{!!format_date(@$value['created_at'])!!}</td>
+            <td class="inbox-msg-time single " width="12%"><time class="timeago" datetime="{!!$value['created_at']!!}" >{!!format_date(@$value['created_at'])!!}</time></td>
         </tr>
         @empty
         <tr><td colspan="4">No messages</td></tr>
@@ -67,22 +67,23 @@
 
 <script type="text/javascript">
 $(document).ready(function(){
+    $("time .timeago").timeago();
     var arrayIds;
     $("#txt-search").keyup(function(){
         var slug = $(this).val();
         if (slug == '')
             return;
-        $('#search-results').load('{{URL::to($guard.'/message/search')}}'+'/'+slug +'/{{@$messages['caption']}}');
+        $('#search-results').load('{{trans_url($guard.'/message/search')}}'+'/'+slug +'/{{@$messages['caption']}}');
     });
 
     $(".btn-refresh").click(function(){
         var caption = '{{@$messages['caption']}}';
         $("#txt-search").val('');
         if (caption == ''){
-            $('#entry-message').load('{{URL::to($guard.'/message/status/Inbox')}}');
+            $('#entry-message').load('{{trans_url($guard.'/message/status/Inbox')}}');
             return;
         }
-        $('#entry-message').load('{{URL::to($guard.'/message/status')}}/{{@$messages['caption']}}');
+        $('#entry-message').load('{{trans_url($guard.'/message/status')}}/{{@$messages['caption']}}');
     });
 
     $(".btn-deleted").click(function(){
@@ -90,6 +91,7 @@ $(document).ready(function(){
         $("input[id^='message_check_']:checked").each(function(){
             arrayIds.push($(this).val());
         });
+         if(arrayIds.length != 0){
         swal({
             title: "Are you sure?",
             text: "You will not be able to recover this data!",
@@ -106,7 +108,7 @@ $(document).ready(function(){
                 success:function(data, textStatus, jqXHR)
                 {
                     swal("Deleted!", data.message, "success");
-                    $('#entry-message').load('{{URL::to($guard.'/message/status/Trash')}}');
+                    $('#entry-message').load('{{trans_url($guard.'/message/status/Trash')}}');
                     $('#inbox_id').html(data.inbox_count);
                     $('#trash_id').html(data.trash_count);
                     $('#draft_id').html(data.draft_count);
@@ -117,6 +119,7 @@ $(document).ready(function(){
                 },
             });
         });
+    }
     });
 
     $(".checkAll").click(function(){
@@ -149,7 +152,7 @@ $(document).ready(function(){
             star = 'Yes' ;
         }
             $.ajax( {
-                url: "{{URL::to($guard.'/message/starred/substatus')}}",
+                url: "{{trans_url($guard.'/message/starred/substatus')}}",
                 type: 'GET',
                 data: {id:msg_id,star:star},
                 beforeSend:function()
@@ -181,7 +184,7 @@ $(document).ready(function(){
             important = 'Yes' ;
         }
             $.ajax( {
-                url: "{{URL::to($guard.'/message/important/substatus')}}",
+                url: "{{trans_url($guard.'/message/important/substatus')}}",
                 type: 'GET',
                 data: {id:msg_id,important:important},
                 beforeSend:function()
@@ -202,27 +205,39 @@ $(document).ready(function(){
 
 
     $('.btn-trashed').click(function(){
+
         var arrayIds = [];        
         $("input:checkbox[name=listMessageID]:checked").each(function(){
             arrayIds.push($(this).val());
         });        
         if(arrayIds.length != 0){
-            $.ajax( {
-                url: "{{URL::to($guard.'/message/message/status/Trash')}}",
-                type: 'GET',
-                data: {data:arrayIds},
-                beforeSend:function()
-                {
-                },
-                success:function(data, textStatus, jqXHR)
-                {
-                      location.reload();
-                },
-                error: function(jqXHR, textStatus, errorThrown)
-                {
-                }
-            });
-        }
+              swal({
+                title: "Are you sure?",
+                text: "You will  be able to recover this data from trash!",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#DD6B55",
+                confirmButtonText: "Yes, delete it!",
+                closeOnConfirm: true
+            }, function(){   
+                $.ajax( {
+                        url: "{{trans_url($guard.'/message/message/status/Trash')}}",
+                        type: 'GET',
+                        data: {data:arrayIds},
+                        beforeSend:function()
+                        {
+                        },
+                        success:function(data, textStatus, jqXHR)
+                        {              
+                            
+                            location.reload();
+                        },
+                        error: function(jqXHR, textStatus, errorThrown)
+                        {
+                        }
+                    });
+               });
+            }
     });
 
     $("#group-msg").change(function(){
@@ -235,14 +250,14 @@ $(document).ready(function(){
         });
         if(arrayIds.length != 0){
             $.ajax( {
-                    url: "{{URL::to($guard.'/message/message/status')}}"+"/"+status,
+                    url: "{{trans_url($guard.'/message/message/status')}}"+"/"+status,
                     type: 'GET',
                     data: {data:arrayIds},
                     success:function(data, textStatus, jqXHR)
                     {
-                        console.log("trashed");
-                         $('#inbox_id').html(data.inbox_count);
-                        $('#entry-message').load('{{URL::to($guard.'/message/status/')}}'+'/'+caption);
+                       
+                        $('#inbox_id').html(data.inbox_count);
+                        $('#entry-message').load('{{trans_url($guard.'/message/status/')}}'+'/'+caption);
                     },
                     error: function(jqXHR, textStatus, errorThrown)
                     {
@@ -256,7 +271,7 @@ $(document).ready(function(){
               var caption = '{{@$messages['caption']}}';
                /*if(caption == '')
                  caption = 'Inbox';*/
-               $('#entry-message').load('{{URL::to($guard.'/message/details/')}}'+'/'+caption+'/'+msgid);
+               $('#entry-message').load('{{trans_url($guard.'/message/details/')}}'+'/'+caption+'/'+msgid);
         });
 
     jQuery("time.timeago").timeago();

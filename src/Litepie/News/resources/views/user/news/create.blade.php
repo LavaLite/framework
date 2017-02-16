@@ -22,7 +22,7 @@
                 ->method('POST')
                 ->files('true')
                 ->class('dashboard-form')
-                ->action(URL::to($guard.'/news/news'))!!}
+                ->action(trans_url($guard.'/news/news'))!!}
                 <div class="content">                
                     @include('public::notifications')
                     @include('news::user.news.partial.entry')

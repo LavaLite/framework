@@ -31,28 +31,28 @@ class RouteServiceProvider extends ServiceProvider
 
         if (Request::is('*/user/user/*')) {
             Route::bind('user', function ($user) {
-                $userrepo = $this->app->make('\Litepie\User\Interfaces\UserRepositoryInterface');
+                $userrepo = $this->app->make('Litepie\User\Interfaces\UserRepositoryInterface');
                 return $userrepo->findorNew($user);
             });
         }
 
         if (Request::is('*/user/permission/*')) {
             Route::bind('permission', function ($permission) {
-                $permissionrepo = $this->app->make('\Litepie\User\Interfaces\PermissionRepositoryInterface');
+                $permissionrepo = $this->app->make('Litepie\User\Interfaces\PermissionRepositoryInterface');
                 return $permissionrepo->findorNew($permission);
             });
         }
 
         if (Request::is('*/user/role/*')) {
             Route::bind('role', function ($role) {
-                $rolerepo = $this->app->make('\Litepie\User\Interfaces\RoleRepositoryInterface');
+                $rolerepo = $this->app->make('Litepie\User\Interfaces\RoleRepositoryInterface');
                 return $rolerepo->findorNew($role);
             });
         }
 
         if (Request::is('*/user/team/*')) {
             Route::bind('team', function ($team) {
-                $teamrepo = $this->app->make('\Litepie\User\Interfaces\TeamRepositoryInterface');
+                $teamrepo = $this->app->make('Litepie\User\Interfaces\TeamRepositoryInterface');
                 return $teamrepo->findorNew($team);
             });
         }
@@ -68,7 +68,7 @@ class RouteServiceProvider extends ServiceProvider
     {
         $this->mapWebRoutes();
 
-        $this->mapApiRoutes();
+        //$this->mapApiRoutes();
 
         //
     }

@@ -2,7 +2,7 @@
 
 // Admin  routes  for news
 Route::group(['prefix' => '/admin/news'], function () {
-    Route::put('news/workflow/{news}/{step}', 'NewsAdminController@putWorkflow');
+    Route::post('news/workflow/{news}/{step}', 'NewsAdminController@putWorkflow');
     Route::resource('news', 'NewsAdminController');
 });
 

@@ -1,6 +1,9 @@
 @extends('admin::general.default')
 @section('heading')
-
+<h1>
+{!! trans('message::message.name') !!}
+<small> {!! trans('app.manage') !!} {!! trans('message::message.names') !!}</small>
+</h1>
 @stop
 @section('title')
 {!! trans('message::message.names') !!}
@@ -8,7 +11,7 @@
 @section('breadcrumb')
 <ol class="breadcrumb">
     <li>
-        <a href="{!!URL::to('admin')!!}">
+        <a href="{!!trans_url('admin')!!}">
             <i class="fa fa-dashboard">
             </i>
             {!! trans('app.home') !!}
@@ -179,63 +182,63 @@
         });
 
         $('#compose-msg').click(function(){
-            $('#entry-message').load('{{URL::to('admin/message/compose')}}');
+            $('#entry-message').load('{{trans_url('admin/message/compose')}}');
         });
 
-        $('#entry-message').load('{{URL::to('admin/message/status/Inbox')}}');
+        $('#entry-message').load('{{trans_url('admin/message/status/Inbox')}}');
          $('#btn-inbox').parent().addClass("active");
         $('#btn-inbox').click(function(){
            $(".cur").removeClass("active");
            $( this ).parent().addClass("active");
-            $('#entry-message').load('{{URL::to('admin/message/status/Inbox')}}');
+            $('#entry-message').load('{{trans_url('admin/message/status/Inbox')}}');
         });
 
         $('#btn-sent').click(function(){
             $(".cur").removeClass("active");
             $( this ).parent().addClass("active");
-            $('#entry-message').load('{{URL::to('admin/message/status/Sent')}}');
+            $('#entry-message').load('{{trans_url('admin/message/status/Sent')}}');
         });
 
         $('#btn-draft').click(function(){
             $(".cur").removeClass("active");
             $( this ).parent().addClass("active");
-            $('#entry-message').load('{{URL::to('admin/message/status/Draft')}}');
+            $('#entry-message').load('{{trans_url('admin/message/status/Draft')}}');
         });
 
         $('#btn-trash').click(function(){
             $(".cur").removeClass("active");
             $( this ).parent().addClass("active");
-            $('#entry-message').load('{{URL::to('admin/message/status/Trash')}}');
+            $('#entry-message').load('{{trans_url('admin/message/status/Trash')}}');
         });
 
         $('#btn-junk').click(function(){
             $(".cur").removeClass("active");
             $( this ).parent().addClass("active");
-            $('#entry-message').load('{{URL::to('admin/message/status/Junk')}}');
+            $('#entry-message').load('{{trans_url('admin/message/status/Junk')}}');
         });
 
         $('#btn-Starred').click(function(){
             $(".cur").removeClass("active");
             $( this ).parent().addClass("active");
-            $('#entry-message').load('{{URL::to('admin/message/starred')}}');
+            $('#entry-message').load('{{trans_url('admin/message/starred')}}');
         });
 
         $('#btn-Important').click(function(){
             $(".cur").removeClass("active");
             $( this ).parent().addClass("active");
-            $('#entry-message').load('{{URL::to('admin/message/important_msg')}}');
+            $('#entry-message').load('{{trans_url('admin/message/important_msg')}}');
         });
 
         $('#btn-Promotions').click(function(){
             $(".cur").removeClass("active");
             $( this ).parent().addClass("active");
-            $('#entry-message').load('{{URL::to('admin/message/status/Promotions')}}');
+            $('#entry-message').load('{{trans_url('admin/message/status/Promotions')}}');
         });
 
         $('#btn-Social').click(function(){
             $(".cur").removeClass("active");
             $( this ).parent().addClass("active");
-            $('#entry-message').load('{{URL::to('admin/message/status/Social')}}');
+            $('#entry-message').load('{{trans_url('admin/message/status/Social')}}');
         });
 
         $('#btn-send').click(function(){

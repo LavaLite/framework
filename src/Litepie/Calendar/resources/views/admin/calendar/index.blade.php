@@ -1,4 +1,4 @@
-@extends('admin::general.default')
+@extends('admin::curd.index')
 @section('heading')
 <i class="fa fa-file-text-o">
 </i>
@@ -13,7 +13,7 @@
 @section('breadcrumb')
 <ol class="breadcrumb">
     <li>
-        <a href="{!! URL::to('admin') !!}">
+        <a href="{!! trans_url('admin') !!}">
             <i class="fa fa-dashboard">
             </i>
             {!! trans('app.home') !!}
@@ -241,9 +241,10 @@ $(function () {
         selectable: true,
         editable: true,
         droppable: true, 
+        eventLimit: true,
           eventClick: function(event, element) {     
             $('#event-modal .modal-title').html('Edit ' + event.title);
-            $('#event-modal .modal-body').load('{{URL::to('admin/calendar/calendar')}}/' + event.id + '/edit');
+            $('#event-modal .modal-body').load('{{trans_url('admin/calendar/calendar')}}/' + event.id + '/edit');
             $('#event-modal').modal('show');
 /* $('.modal-footer #event-delete').css('display','block');*/
         },
@@ -251,7 +252,7 @@ $(function () {
         select: function(start, end) {
             $('#event-modal .modal-title').html('Create New Event');           
             var startdate=start.format('YYYY-MM-DD');            
-            $('#event-modal .modal-body').load('{{URL::to('admin/calendar/calendar/create')}}?dates='+startdate);          
+            $('#event-modal .modal-body').load('{{trans_url('admin/calendar/calendar/create')}}?dates='+startdate);          
             $('#event-modal').modal('show');
             var eventData;
             if (event.title) {

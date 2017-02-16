@@ -1,77 +1,112 @@
-<section class="contact">
-    <div class="contact-details">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-6 contact-skew">
-                    <div class="contact-detail-wraper">
-                        <h1>Contacts</h1>
-                        <div class="contact-icons">
-                            <p><i class="icon-envelope-open"></i><span>{!!$contacts['email']!!}</span></p>
-                            <p><i class="icon-phone"></i><span>{!!$contacts['phone']!!}</span></p>
-                            <p><i class="icon-screen-smartphone"></i><span>{!!$contacts['mobile']!!}</span></p>
-                        </div>
-                        <br>
-                         <p>{!!nl2br($contacts['address'])!!} </p>
-                    </div> 
+  <section class="news-wraper">        
+    <div class="container">
+        
+        <div class="row m-t-40">
+            <div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
+
+  <section class="contact-info">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h3>Contact Information</h3>
+                        <p></p>
+                        <table class="contact">
+                            <tbody>
+                                <tr>
+                                    <th class="address">Address</th>
+                                    <td>{!!$contact['details']!!}</td>
+                                </tr>
+                                <tr>
+                                    <th class="phone">Phone</th>
+                                    <td>{!!$contact['phone']!!}</td>
+                                </tr>
+                                <tr>
+                                    <th class="email">E-mail</th>
+                                    <td><a href="mailto:{!!$contact['email']!!}">{!!$contact['email']!!}</a></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="col-md-6 m-b-20">
+                        <h3>Post Us Message</h3>
+                         @if(Session::has('success'))
+                        <div class="alert alert-success fade in">
+                           <a href="#" class="close" data-dismiss="alert">&times;</a>
+                          <strong>{!!Session::get('success')!!}</strong> 
+                      </div>
+                     @endif
+                        {!!Form::vertical_open()->method('POST')->class('contact-form')->action('contacts/sendmail')!!}
+                        
+                            <div class="row">
+                                <div class="col-md-12">
+                                    {!!Form::text('name','')->required()->placeholder('Name')!!}                                    
+                                </div>
+                                <div class="col-md-12">
+                                    {!!Form::text('email','')->required()->placeholder('Email')!!}                                    
+                                </div>                                
+                                <div class="col-md-12">
+                                        {!!Form::textarea('message','')->required()->placeholder('Message')!!}
+                                </div>
+                            </div>
+                            <div class="row m-b-20">
+                                <div class="col-md-12"><button type="submit" class="btn btn-primary">Send Message</button></div>
+                            </div>
+                        {!!Form::close()!!}
+                    </div>
+
                 </div>
-                <div class="col-md-6">
-                    <div id="map"></div>
+                <div class="row clear-fix mt30">
+                    <div class="col-md-12">
+                        <div id="map_canvas" style="height: 450px;width: 100%,margin-top:20px;"></div>
+                    </div>
                 </div>
+                
+               
             </div>
+        </section>
         </div>
-    </div>
-    <div class="contact-form">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-12">
-                    <h1>Contact Us</h1>
-                </div>
-                @if(Session::has('success'))                        
-                <div class="col-md-12">
-                    <div class = "alert alert-success">{!! Session::get('success') !!}</div>
-                </div>
-                @endif
-            </div>
-            {!!Form::vertical_open()
-            -> id('contactForm')
-            -> method('POST')
-            -> files('true')
-            -> action(trans_url('contact.htm'))!!}
-                    <div class="row">
-                        <div class="col-sm-6">
-                            <input type="text" name="name" class="form-control" placeholder="Name" required>
-                            <i class="form-control-feedback icon-user"></i>
-                        </div>
-                        <div class="col-sm-6">
-                            <input type="text" name="email" class="form-control" placeholder="Email" required>
-                            <i class="form-control-feedback icon-envelope-open"></i>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-sm-12">
-                            <textarea name="subject" id="subjcet" cols="30" rows="10" class="form-control" placeholder="Message"></textarea>
-                            <i class="form-control-feedback icon-speech"></i>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-sm-12 text-right">
-                           <button type="submit" class="btn btn-danger waves-effect waves-float">Send Message</button>
-                        </div>
-                    </div>
-             {!! Form::close() !!}
-        </div>
+      </div>
     </div>
 </section>
-<script>
-      function initMap() {
-        var uluru = {lat: {!!$contacts['lat']!!}, lng:{!!$contacts['lng']!!}};
-        var map = new google.maps.Map(document.getElementById('map'), {
-          zoom: 4,
-          center: uluru
-        });
-        var marker = new google.maps.Marker({
-          position: uluru,
-          map: map
-        });
-      }
-</script>
+<script type="text/javascript">
+  $(function(){
+     var map,myLatlng;
+      @if(!empty($contact->lat) && !empty($contact->lng))
+         myLatlng = new google.maps.LatLng({!! @$contact->lat !!},{!! @$contact->lng !!});
+      @else
+         myLatlng = new google.maps.LatLng(9.929789275194516,76.27235919804684);
+      @endif
+      var myOptions = {
+         zoom: 14,
+         draggable: false,
+         center: myLatlng,
+         mapTypeId: google.maps.MapTypeId.ROADMAP
+         }
+      map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
+
+      var marker = new google.maps.Marker({
+      draggable: false,
+      position: myLatlng,
+      map: map,
+      title: "{{$contact['city']}}"
+      });
+
+      var contentString = '<div id="content">'+
+      '<div id="siteNotice">'+
+      '</div>'+
+      '<div id="bodyContent">'+
+      '<p><b>{{$contact->name}}</b></p>'+ 
+      '<p>{{$contact->address_line1}}</p>'+
+      '<p><a href="mailto:{{$contact["email"]}}">'+
+      '{{$contact["email"]}}</a> '+
+      '</p>'+
+      '</div>'+
+      '</div>';
+      var infowindow = new google.maps.InfoWindow({
+        content: contentString
+      });
+       marker.addListener('click', function() {
+        infowindow.open(map, marker);
+        });  
+  })
+</script> 

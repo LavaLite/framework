@@ -20,7 +20,6 @@ class CreateTeamsTable extends Migration
             $table->increments('id');
             $table->string('name', 15)->nullable();
             $table->string('description', 100)->nullable();
-            $table->text('settings')->nullable();
             $table->string('slug', 200)->nullable();
             $table->enum('status', ['draft', 'complete', 'verify', 'approve', 'publish', 'unpublish', 'archive'])->default('draft')->nullable();
             $table->integer('user_id')->nullable();
@@ -28,6 +27,15 @@ class CreateTeamsTable extends Migration
             $table->string('upload_folder', 100)->nullable();
             $table->softDeletes();
             $table->nullableTimestamps();
+        });
+
+        /*
+         * Table: team_user
+         */
+        Schema::create('team_user', function ($table) {
+            $table->integer('user_id')->nullable();
+            $table->integer('team_id')->nullable();
+            $table->integer('reporting_to')->nullable();
         });
     }
 
@@ -40,5 +48,6 @@ class CreateTeamsTable extends Migration
     public function down()
     {
         Schema::drop('teams');
+        Schema::drop('team_user');
     }
 }

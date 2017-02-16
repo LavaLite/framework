@@ -248,8 +248,8 @@ return [
         'slugs'         => ['slug' => 'name'],
         'dates'         => ['deleted_at'],
         'appends'       => [],
-        'fillable'      => ['user_id', 'name', 'description', 'settings'],
-        'translate'     => ['name', 'description', 'settings'],
+        'fillable'      => ['user_id', 'name', 'description'],
+        'translate'     => ['name', 'description'],
 
         'upload-folder' => 'user/team',
         'uploads'       => [

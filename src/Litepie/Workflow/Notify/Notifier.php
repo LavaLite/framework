@@ -33,14 +33,13 @@ trait Notifier
      * @param  array|mixed  $argument
      * @return bool
      */
-    public function notify($action, $argument)
+    public function notify($action, $argument, $workflow)
     {
         try {
-            $result = $this->rawNotifier($action, $argument);
-        } catch (InvalidArgumentException $e) {
+            $result = $this->rawNotifier($action, $argument, $workflow);
+       } catch (InvalidArgumentException $e) {
             return false;
         }
-
         return $result;
     }
 
@@ -51,16 +50,15 @@ trait Notifier
      * @param  array|mixed  $argument
      * @return mixed
      */
-    protected function rawNotifier($action, $argument)
+    protected function rawNotifier($action, $argument, $workflow)
     {
 
         $instance = $this->getNotifierFor($argument);
-
         if (!is_callable([$instance, $action])) {
             return true;
         }
 
-        return $instance->{$action}($argument);
+        return $instance->{$action}($argument, $workflow);
     }
 
     /**

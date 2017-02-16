@@ -3,6 +3,7 @@
         <li class="active"><a href="#details" data-toggle="tab">  {!! trans('news::news.name') !!}</a></li>
         <li ><a href="#images" data-toggle="tab">Images</a></li>
         <div class="box-tools pull-right">
+            @include('news::workflow.news.partial.entry')
             <button type="button" class="btn btn-success btn-sm" data-action='NEW' data-load-to='#news-news-entry' data-href='{{trans_url('admin/news/news/create')}}'><i class="fa fa-plus-circle"></i> New</button>
             @if($news->id )
             <button type="button" class="btn btn-primary btn-sm" data-action="EDIT" data-load-to='#news-news-entry' data-href='{{ trans_url('/admin/news/news') }}/{{$news->getRouteKey()}}/edit'><i class="fa fa-pencil-square"></i> Edit</button>

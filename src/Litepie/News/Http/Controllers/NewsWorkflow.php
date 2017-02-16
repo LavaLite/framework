@@ -22,10 +22,9 @@ trait NewsWorkflow
 
     public function putWorkflow(NewsRequest $request, News $news, $step)
     {
-
         try {
-
-            $news->applyWorkflow($step);
+            $attributes = $request->all();
+            $news->applyWorkflow($step , $attributes);
 
             return response()->json([
                 'message'  => trans('messages.success.changed', ['Module' => trans('news::news.name'), 'status' => trans("app.{$step}")]),
@@ -61,8 +60,12 @@ trait NewsWorkflow
             $user_id = decrypt($user);
 
             Auth::onceUsingId($user_id);
+            if($news->addInfo($step)){
+                $fields = @$news->workflow['comments'];
+                return $this->theme->layout('blank')->of('news::admin.news.comment',compact('fields'))->render();
+            }
 
-            $news->applyWorkflow($step);
+            $news->applyWorkflow($step, []);
 
             $data = [
                 'message' => trans('messages.success.changed', ['Module' => trans('news::news.name'), 'status' => trans("app.{$step}")]),

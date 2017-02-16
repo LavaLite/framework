@@ -108,9 +108,9 @@ class RequestCriteria implements Criteria
                                 $query->where($field, $condition, "%{$value}%");
                             } elseif ($condition == 'not like') {
                                 $query->where($field, $condition, $value);
-                            } elseif ($condition == 'between' && is_array($value)) {
+                            } elseif ($condition == 'between' && is_array($value) && !empty($value[0]) && !empty($value[1])) {
                                 $query->whereBetween($field, $mergBetween($value, $default));
-                            } elseif ($condition == 'not between' && is_array($value)) {
+                            } elseif ($condition == 'not between' && is_array($value) && !empty($value[0]) && !empty($value[1])) {
                                 $query->whereNotBetween($field, $mergBetween($value, $default));
                             } elseif ($condition == 'in' && is_array($value)) {
                                 $query->whereIn($field, $value);

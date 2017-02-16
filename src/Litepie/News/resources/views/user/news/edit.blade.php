@@ -7,7 +7,7 @@
                 ->method('PUT')
                 ->files('true')
                 ->class('dashboard-form')
-                ->action(URL::to($guard.'/news/news') .'/'.$news->getRouteKey())!!}
+                ->action(trans_url($guard.'/news/news') .'/'.$news->getRouteKey())!!}
                 <div class="header with-sub" data-background-color="red">
                     <div class="row">
                         <div class="col-sm-11 title-main">

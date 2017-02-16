@@ -2,7 +2,7 @@
 
 namespace Litepie\Page\Http\Controllers;
 
-use App\Http\Controllers\UserWebController as UserController;
+use App\Http\Controllers\UserController as UserController;
 use Litepie\Page\Http\Requests\PageUserRequest;
 use Litepie\Page\Interfaces\PageRepositoryInterface;
 

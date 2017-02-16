@@ -44,13 +44,13 @@ class BlockServiceProvider extends ServiceProvider
 
         // Bind Category to repository
         $this->app->bind(
-            \Litepie\Block\Interfaces\CategoryRepositoryInterface::class,
+            'Litepie\Block\Interfaces\CategoryRepositoryInterface',
             \Litepie\Block\Repositories\Eloquent\CategoryRepository::class
         );
 
         // Bind Block to repository
         $this->app->bind(
-            \Litepie\Block\Interfaces\BlockRepositoryInterface::class,
+            'Litepie\Block\Interfaces\BlockRepositoryInterface',
             \Litepie\Block\Repositories\Eloquent\BlockRepository::class
         );
 

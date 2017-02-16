@@ -45,7 +45,7 @@ class NewsServiceProvider extends ServiceProvider
 
         // Bind News to repository
         $this->app->bind(
-            \Litepie\News\Interfaces\NewsRepositoryInterface::class,
+            'Litepie\News\Interfaces\NewsRepositoryInterface',
             \Litepie\News\Repositories\Eloquent\NewsRepository::class
         );
 

@@ -10,11 +10,12 @@ use Litepie\Hashids\Traits\Hashids;
 use Litepie\Repository\Traits\PresentableTrait;
 use Litepie\Revision\Traits\Revision;
 use Litepie\Trans\Traits\Translatable;
+use Litepie\User\Traits\Team as TeamTrait;
 // use Litepie\Workflow\Model\Workflow;
 
 class Team extends Model
 {
-    use Hashids, Slugger, Translatable, Revision, PresentableTrait;
+    use Filer, Hashids, Slugger, Translatable, Revision, PresentableTrait, TeamTrait;
     // use Workflow;
 
     /**
@@ -25,10 +26,4 @@ class Team extends Model
      protected $config = 'litepie.user.team';
 
 
-    /**
-     * The users that belong to the team.
-     */
-    public function users(){
-        return $this->hasManyThrough('User\Team\Models\User');
-    }
 }

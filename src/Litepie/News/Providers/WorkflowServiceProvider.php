@@ -18,22 +18,22 @@ class WorkflowServiceProvider extends ServiceProvider
     ];
 
     /**
-     * The validator mappings for the package.
+     * The actions mappings for the package.
      *
      * @var array
      */
     protected $actions = [
-        // Bind News validator
+        // Bind News actions
         \Litepie\News\Models\News::class => \Litepie\News\Workflow\NewsAction::class,
     ];
 
     /**
-     * The validator mappings for the package.
+     * The notifiers mappings for the package.
      *
      * @var array
      */
     protected $notifiers = [
-        // Bind News validator
+        // Bind News notifiers
         \Litepie\News\Models\News::class => \Litepie\News\Workflow\NewsNotification::class,
     ];
 

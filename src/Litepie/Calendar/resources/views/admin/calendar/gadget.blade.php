@@ -7,6 +7,7 @@
 $(function () {
 
     $('#calendar').fullCalendar({
+        contentHeight: 635,
         header: {
             left: 'prev,next today',
             center: 'title',
@@ -28,6 +29,7 @@ $(function () {
         editable: false,
         droppable: false, // this allows things to be dropped onto the calendar !!!
         resizable: false,
+        eventLimit: true,
     });
        
 });

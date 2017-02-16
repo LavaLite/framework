@@ -20,7 +20,7 @@
 <script type="text/javascript">  
     $(".task-edit").click(function(){
         var id = $(this).parent().parent().attr('id');
-        $('#modal-task .modal-content').load('{{URL::to('admin/task/task')}}'+ '/' + id + '/' + 'edit');
+        $('#modal-task .modal-content').load('{{trans_url('admin/task/task')}}'+ '/' + id + '/' + 'edit');
         $('#modal-task').show();
     });  
     $(".task-trash").click(function(){

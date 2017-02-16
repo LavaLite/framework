@@ -3,12 +3,10 @@
 namespace Litepie\Contact\Policies;
 
 use App\User;
-use Illuminate\Auth\Access\HandlesAuthorization;
 use Litepie\Contact\Models\Contact;
 
 class ContactPolicy
 {
-    use HandlesAuthorization;
 
     /**
      * Determine if the given user can view the contact.
@@ -21,6 +19,12 @@ class ContactPolicy
     public function view(User $user, Contact $contact)
     {
         if ($user->canDo('contact.contact.view') && $user->is('admin')) {
+            return true;
+        }
+
+        if ($user->canDo('blocks.block.view') 
+        && $user->is('manager')
+        && $block->user->parent_id == $user->id) {
             return true;
         }
 
@@ -54,6 +58,12 @@ class ContactPolicy
             return true;
         }
 
+        if ($user->canDo('blocks.block.update') 
+        && $user->is('manager')
+        && $block->user->parent_id == $user->id) {
+            return true;
+        }
+
         return $user->id === $contact->user_id;
     }
 
@@ -71,7 +81,53 @@ class ContactPolicy
             return true;
         }
 
+        if ($user->canDo('blocks.block.delete') 
+        && $user->is('manager')
+        && $block->user->parent_id == $user->id) {
+            return true;
+        }
+
         return $user->id === $contact->user_id;
+    }
+
+    /**
+     * Determine if the given user can verify the given contact.
+     *
+     * @param User $user
+     * @param Contact $contact
+     *
+     * @return bool
+     */
+    public function verify(User $user, Contact $contact)
+    {
+        if ($user->canDo('contact.contact.verify') && $user->is('admin')) {
+            return true;
+        }
+
+        if ($user->canDo('contact.contact.verify') 
+        && $user->is('manager')
+        && $contact->user->parent_id == $user->id) {
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
+     * Determine if the given user can approve the given contact.
+     *
+     * @param User $user
+     * @param Contact $contact
+     *
+     * @return bool
+     */
+    public function approve(User $user, Contact $contact)
+    {
+        if ($user->canDo('contact.contact.approve') && $user->is('admin')) {
+            return true;
+        }
+
+        return false;
     }
 
     /**

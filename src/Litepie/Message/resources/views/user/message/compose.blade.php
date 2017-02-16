@@ -22,7 +22,7 @@
                 ->id('create-message-message')
                 ->method('POST')
                 ->files('true')
-                ->action(URL::to($guard.'/message/message'))
+                ->action(trans_url($guard.'/message/message'))
                 ->class('form-horizontal p15')!!}
                 {!! Form::hidden('status')
                 ->id('status')
@@ -92,7 +92,7 @@
     $('#back-inbox').click(function(){
        $(".cur").removeClass("active");
        $('#btn-inbox').parent().addClass("active");
-        $('#entry-message').load('{{URL::to($guard.'/message/status/Inbox')}}');
+        $('#entry-message').load('{{trans_url($guard.'/message/status/Inbox')}}');
     });
 
 
@@ -119,7 +119,7 @@
                 success:function(data, textStatus, jqXHR)
                 {
                     console.log(data);
-                    $('#entry-message').load('{{URL::to($guard.'/message/status/Inbox')}}');
+                    $('#entry-message').load('{{trans_url($guard.'/message/status/Inbox')}}');
                     $('#inbox_id').html(data.inbox_count);
                     $('#draft_id').html(data.draft_count);
                     $('#sent_id').html(data.sent_count);

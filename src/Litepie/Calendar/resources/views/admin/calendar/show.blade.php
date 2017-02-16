@@ -129,7 +129,7 @@
                 ->id('create-calendar-calendar')
                 ->method('POST')
                 ->files('true')
-                ->action(URL::to('admin/calendar/calendar'))!!}
+                ->action(trans_url('admin/calendar/calendar'))!!}
                 {!! Form::hidden('color')!!}
                 {!! Form::hidden('start')
                 ->forceValue(date('Y-m-d H:i:s'))!!}
@@ -213,7 +213,7 @@
     eventSources: [
     // your event source
     {
-    url: '{!!URL::to('admin/calendar/calendar/ajax/list')!!}', // use the `url` property
+    url: '{!!trans_url('admin/calendar/calendar/ajax/list')!!}', // use the `url` property
     }
     ],
     editable: true,
@@ -303,7 +303,7 @@
         },
         success:function(data, textStatus, jqXHR)
         {
-            $('#entry-calendar').load('{!!URL::to('admin/calendar/calendar/show')!!}');
+            $('#entry-calendar').load('{!!trans_url('admin/calendar/calendar/show')!!}');
         },
         error: function(jqXHR, textStatus, errorThrown)
         {
@@ -313,7 +313,7 @@
         });
         function updateEvents(formData,id){
         $.ajax( {
-        url: "{!!URL::to('admin/calendar/calendar')!!}" +"/"+id,
+        url: "{!!trans_url('admin/calendar/calendar')!!}" +"/"+id,
         type: 'PUT',
         data: {data:formData},
         beforeSend:function()

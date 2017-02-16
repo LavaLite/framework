@@ -21,11 +21,10 @@ trait User
      */
     public function getPictureAttribute($value)
     {
+        if (!empty($this->photo)) {
+            $photo = $this->photo;
 
-        if (!empty($value)) {
-            $photo = json_encode($value);
-
-            return trans_url($photo['folder'] . '/' . $photo['file']);
+            return trans_url('image/sm/'. $this->config .'/'. folder_encode($photo['folder']) . '/' . $photo['file']);
         }
 
         if ($this->sex == 'female') {
@@ -74,5 +73,6 @@ trait User
     {
         return $this->status != 'New' && $this->status != 'Active';
     }
+
 
 }

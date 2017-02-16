@@ -65,10 +65,9 @@
                     </div>
                 </a>
                 <hr>
-                  
                 <div class="tile-footer clearfix">
                     <a href="{!!url(getenv('auth.guard').'/news/news')!!}"><span class="text-small">Go to news</span></a>
-                    <a href="{!!url(getenv('auth.guard').'/news/news/create')!!}"><span class="add-icon"><i class="pe-7s-plus"></i></span></a>
+                    <a href="{!!url(getenv('auth.guard').'/news/news/create')!!}"><span class="percent"><i class="pe-7s-plus"></i></span></a>
                 </div>
             </div>
         </div>
@@ -172,7 +171,7 @@
                     </ul>
                 </div>
                 <div class="footer">
-                    <a href="#" class="btn btn-danger btn-sm btn-raised">See more</a>
+                    <a href="{!!url(getenv('auth.guard').'/task/task')!!}" class="btn btn-danger btn-sm btn-raised">See more</a>
                 </div>
             </div>
         </div>

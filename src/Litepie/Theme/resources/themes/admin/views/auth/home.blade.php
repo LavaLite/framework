@@ -5,14 +5,14 @@
         <small>{!!trans('app.version')!!}</small>
         </h1>
         <ol class="breadcrumb">
-            <li><a href="{!!URL::to('/admin')!!}"><i class="fa fa-dashboard"></i> {!!trans('app.home')!!}</a></li>
+            <li><a href="{!!trans_url('/admin')!!}"><i class="fa fa-dashboard"></i> {!!trans('app.home')!!}</a></li>
             <li class="active">{!!trans('app.dashboard')!!}</li>
         </ol>
     </section>
     <section class="content">
         <div class="row">
             <div class="col-md-3 col-sm-6 col-xs-12">
-                <a href="{!!URL::to('/admin/page/page')!!}">
+                <a href="{!!trans_url('/admin/page/page')!!}">
                     <div class="info-box">
                         <span class="info-box-icon bg-aqua"><i class="fa fa-book"></i></span>
                         <div class="info-box-content">
@@ -23,7 +23,7 @@
                 </a>
             </div>
             <div class="col-md-3 col-sm-6 col-xs-12">
-                <a href="{!!URL::to('/admin/calendar/calendar')!!}">
+                <a href="{!!trans_url('/admin/calendar/calendar')!!}">
                     <div class="info-box">
                         <span class="info-box-icon bg-red"><i class="fa fa-calendar"></i></span>
                         <div class="info-box-content">
@@ -35,7 +35,7 @@
             </div>
             <div class="clearfix visible-sm-block"></div>
             <div class="col-md-3 col-sm-6 col-xs-12">
-                <a href="{!!URL::to('/admin/news/news')!!}">
+                <a href="{!!trans_url('/admin/news/news')!!}">
                     <div class="info-box">
                         <span class="info-box-icon bg-green"><i class="fa fa-newspaper-o"></i></span>
                         <div class="info-box-content">
@@ -46,7 +46,7 @@
                 </a>
             </div>
             <div class="col-md-3 col-sm-6 col-xs-12">
-                <a href="{!!URL::to('/admin/user/user')!!}">
+                <a href="{!!trans_url('/admin/user/user')!!}">
                     <div class="info-box">
                         <span class="info-box-icon bg-yellow"><i class="fa fa-users"></i></span>
                         <div class="info-box-content">
@@ -85,7 +85,7 @@
                         </div>
                     </div>
                     <div class="box-body with-border">
-                        {!!Task::gadget('admin.task.gadget',5)!!}
+                        {!!Task::gadget('admin.task.gadget')!!}
                     </div>
                     <div class="box-footer clearfix">
                         <a href="{!! trans_url('admin/task/task') !!}" class="btn btn-sm btn-info btn-flat new-client pull-right">View All Tasks</a>
@@ -102,7 +102,7 @@
                         </div>
                     </div>
                     <div class="box-body with-border">
-                        {!!News::gadget('admin.news.gadget', 4)!!}
+                        {!!News::gadget('admin.news.gadget')!!}
                     </div>
                     <div class="box-footer clearfix">
                         <a href="{!! trans_url('admin/news/news') !!}" class="btn btn-sm btn-info btn-flat new-client pull-right">View All News</a>

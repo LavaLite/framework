@@ -54,7 +54,6 @@ class UploadController extends Controller
     public function uploadFolder($config, $folder, $field)
     {
         $path = config($config . '.upload_folder', config('litepie.' . $config . '.upload_folder'));
-
         if (empty($path)) {
             throw new FileNotFoundException();
         }
@@ -80,15 +79,20 @@ class UploadController extends Controller
     {      
         $item           = Request::all();
         $file           = $item['cropping'];
+        $file_name      = $item['name'];
         $ufolder        = $this->uploadFolder($config, $folder, $field);
-        $folder         = Filer::checkUploadFolder($ufolder);
+        $path           = Filer::checkUploadFolder($ufolder);
         if(!empty($file)) {
             $file       = str_replace('data:image/jpeg;base64,', '',$file);
             $img        = str_replace(' ', '+', $file);
             $data       = base64_decode($img);
-            $path       = $folder."/test.jpeg";
+            $path       = $path."/".$file_name;
             if (file_put_contents($path, $data)) {
-                echo "success";
+                $array['folder']    = folder_decode($folder)."/{$field}";
+                $array['file']      = $file_name;
+                $array['caption']   = ucwords(substr($file_name, 0, strpos($file_name, '.')));
+
+                return $array;
             }
         }    
     }

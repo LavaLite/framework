@@ -9,7 +9,7 @@
                 {!! Form::textarea('content')
                 -> label(trans('page::page.label.content'))
                 -> value(e($page['content']))
-                -> dataUpload(URL::to($page->getUploadURL('content')))
+                -> dataUpload(trans_url($page->getUploadURL('content')))
                 -> addClass('html-editor')
                 -> placeholder(trans('page::page.placeholder.content'))
                 !!}

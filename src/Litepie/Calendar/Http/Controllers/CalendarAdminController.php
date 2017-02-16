@@ -38,7 +38,6 @@ class CalendarAdminController extends BaseController
     public function __construct(CalendarRepositoryInterface $calendar)
     {
         $this->repository = $calendar;
-        $this->middleware('web');
         $this->middleware('auth:admin.web');
         $this->setupTheme(config('theme.themes.admin.theme'), config('theme.themes.admin.layout'));
         parent::__construct();

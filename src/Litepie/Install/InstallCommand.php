@@ -1,4 +1,5 @@
 <?php
+
 namespace Litepie\Install;
 
 use Illuminate\Console\Command;
@@ -55,8 +56,8 @@ class InstallCommand extends Command
         $success = $this->installer->stack([
             \Litepie\Install\Installers\Scripts\ProtectInstaller::class,
             \Litepie\Install\Installers\Scripts\ConfigureDatabase::class,
-            \Litepie\Install\Installers\Scripts\SetAppKey::class,
             \Litepie\Install\Installers\Scripts\PackgeAssets::class,
+            \Litepie\Install\Installers\Scripts\SetAppKey::class,
             \Litepie\Install\Installers\Scripts\GenerateAutoload::class,
             \Litepie\Install\Installers\Scripts\PackageMigrators::class,
             \Litepie\Install\Installers\Scripts\PackageSeeders::class,

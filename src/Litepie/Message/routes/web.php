@@ -57,9 +57,3 @@ Route::group(['prefix' => 'client/message'], function () {
     Route::post('/delete', 'MessageClientController@deleteMultiple');
     Route::resource('/message', 'MessageClientController');
 });
-
-// Public web routes for message
-Route::group(['prefix' => 'messages'], function () {
-    Route::get('/', 'MessageController@index');
-    Route::get('/{slug?}', 'MessageController@show');
-});

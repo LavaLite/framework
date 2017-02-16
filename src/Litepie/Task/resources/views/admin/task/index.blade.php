@@ -9,7 +9,7 @@
 
 @section('breadcrumb')
 <ol class="breadcrumb">
-    <li><a href="{!! URL::to('admin') !!}"><i class="fa fa-dashboard"></i> {!! trans('app.home') !!} </a></li>
+    <li><a href="{!! trans_url('admin') !!}"><i class="fa fa-dashboard"></i> {!! trans('app.home') !!} </a></li>
     <li class="active">{!! trans('task::task.names') !!}</li>
 </ol>
 @stop
@@ -76,9 +76,9 @@
 @section('script')
     <script>
         $(document).ready(function(){
-            $("#to_do_list").load('{{URL::to('admin/task/status?search[status]=to_do')}}');
-            $("#in_progress_list").load('{{URL::to('admin/task/status?search[status]=in_progress')}}');
-            $("#completed_list").load('{{URL::to('admin/task/status?search[status]=completed')}}'); 
+            $("#to_do_list").load('{{trans_url('admin/task/status?search[status]=to_do')}}');
+            $("#in_progress_list").load('{{trans_url('admin/task/status?search[status]=in_progress')}}');
+            $("#completed_list").load('{{trans_url('admin/task/status?search[status]=completed')}}'); 
         });
     </script>
 @stop

@@ -150,7 +150,20 @@ trait Filer
      */
     public function getUploadURL($field, $file = 'file')
     {
-        return URL::to('upload/' . $this->config . '/' . $this->upload_folder . '/' . $field . '/' . $file);
+        return trans_url('upload/' . $this->config . '/' . $this->upload_folder . '/' . $field . '/' . $file);
+    }
+
+    /**
+     * Return url to upload the file.
+     *
+     * @param srting $field
+     * @param srting|string $file
+     *
+     * @return null
+     */
+    public function getCropURL($field, $file = 'file')
+    {
+        return trans_url('crop/' . $this->config . '/' . $this->upload_folder . '/' . $field . '/' . $file);
     }
 
     /**
@@ -163,7 +176,7 @@ trait Filer
      */
     public function getFileURL($field, $file = 'file')
     {
-        return URL::to('file/' . $this->config . '/' . $this->upload_folder . '/' . $field . '/' . $file);
+        return trans_url('file/' . $this->config . '/' . $this->upload_folder . '/' . $field . '/' . $file);
     }
 
     /**
@@ -403,18 +416,13 @@ trait Filer
      *
      * @return string path
      */
-    public function fileCropper($field, $count = null)
+    public function fileCropper($field, $src = null)
     {
-        $form = new Forms($field, $this->config);
-
+        $form = new Forms($field, $this->config, $this->getFile($field));
         if (in_array($field, $this->uploads['single'])) {
             $form->count(1, true);
-        } else {
-            $form->count($count);
         }
-        
-        $url = $this->getUploadURL($field);
 
-        return view('filer::cropper',compact('url'))->render();
+        return $form->url($this->getCropURL($field))->src($src)->cropper();
     }
 }

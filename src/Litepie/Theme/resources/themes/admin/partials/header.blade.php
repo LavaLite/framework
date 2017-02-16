@@ -61,10 +61,10 @@
                         <!-- Menu Footer-->
                         <li class="user-footer">
                             <div class="pull-left">
-                                <a href="{{ URL::to('admin/profile') }}" class="btn btn-default btn-flat">Profile</a>
+                                <a href="{{ trans_url('admin/profile') }}" class="btn btn-default btn-flat">Profile</a>
                             </div>
                             <div class="pull-right">
-                                <a href="{{ URL::to('logout?role=admin.web') }}" class="btn btn-default btn-flat">Sign out</a>
+                                <a href="{{ trans_url('logout?role=admin.web') }}" class="btn btn-default btn-flat">Sign out</a>
                             </div>
                         </li>
                     </ul>

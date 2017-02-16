@@ -14,6 +14,7 @@ namespace Litepie\User;
 use Form;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Support\Facades\Auth;
+use Litepie\User\Interfaces\TeamRepositoryInterface;
 use Litepie\User\Interfaces\PermissionRepositoryInterface;
 use Litepie\User\Interfaces\RoleRepositoryInterface;
 use Litepie\User\Interfaces\UserRepositoryInterface;
@@ -53,11 +54,13 @@ class User
     public function __construct(Application $app,
         UserRepositoryInterface                          $user,
         RoleRepositoryInterface                          $role,
-        PermissionRepositoryInterface                    $permission) {
+        PermissionRepositoryInterface                    $permission,
+        TeamRepositoryInterface                          $team) {
         $this->app        = $app;
         $this->user       = $user;
         $this->role       = $role;
         $this->permission = $permission;
+        $this->team = $team;
     }
 
     /**
@@ -138,6 +141,18 @@ class User
     public function once(array $user, $guard = null)
     {
         return $this->app['auth']->guard($guard)->once($user);
+    }
+    /**
+     * Logs in user for a single request
+     * in the session.
+     *
+     * @param array $credentials
+     *
+     * @return bool
+     */
+    public function onceUsingId($user_id, $guard = null)
+    {
+        return $this->app['auth']->guard($guard)->onceUsingId($user_id);
     }
 
     /**
@@ -473,6 +488,15 @@ class User
     public function all()
     {
         return $this->user->all();
+    }    
+    /**
+     * Return the profile update page.
+     *
+     * @return Response
+     */
+    public function agents()
+    {
+        return $this->user->agents();
     }
 
     /**
@@ -505,6 +529,15 @@ class User
     public function count()
     {
         return $this->user->count();
+    }
+    /**
+     * Return the array of users.
+     *
+     * @return Response
+     */
+    public function reportingTo($team)
+    {
+        return $this->team->reportingTo($team);
     }
 
 }

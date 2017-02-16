@@ -81,7 +81,7 @@ class MessageRepository extends BaseRepository implements MessageRepositoryInter
         return  $this->model->with('user')
             ->where(function($query) use($slug,$email){
                 if ($slug == 'Inbox') {
-                $query->whereTo($email);
+                return $query->whereTo($email);
                 }
             })
             ->whereStatus($slug)

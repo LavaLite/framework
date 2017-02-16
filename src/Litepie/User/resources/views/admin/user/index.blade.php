@@ -37,7 +37,7 @@
         <th>{!! Form::text('search[email]')->raw()!!}</th>
         <th>{!! Form::text('search[designation]')->raw()!!}</th>
         <th>{!! Form::text('search[mobile]')->raw()!!}</th>
-        <th>{!! Form::select('search[status]')->options(trans('user::user.options.status'))->raw()!!}</th>
+        <th>{!! Form::select('search[status]')->options([''=>'All']+trans('user::user.options.status'))->raw()!!}</th>
        
     </thead>
 </table>

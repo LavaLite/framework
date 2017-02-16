@@ -20,8 +20,53 @@
         <div class="tab-content clearfix">
             <div class="tab-pane active" id="team">
                 <div class="tab-pan-title">  {!! trans('app.view') !!}  {!! trans('user::team.name') !!} [ {!!$team->name!!} ] </div>
-                @include('vuser::admin.team.partial.entry')
+                <div class='row'>
+                    <div class='col-md-6 col-sm-6 disabled'>
+                        @include('vuser::admin.team.partial.entry')
+                        <div class='col-md-12 col-sm-12'>
+                            <label>Icon</label>
+                            {!!@$team->fileShow('icon')!!}
+                        </div>
+                    </div>
+                    <div class='col-md-6 col-sm-6'>
+                        <?php
+                            $members = @$team->member;
+                        ?>
+                        @include('vuser::admin.team.members')
+                    </div>
+                </div>
             </div>
         </div>
     {!! Form::close() !!}
 </div>
+
+<div class="modal fade" id="agentModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-md ">
+    <div class="modal-content">
+        <div class="modal-header" style="background-color: #dd4b39;color: #fff;">
+            <button type="button" class="close" data-dismiss="modal" >&times;</button>
+            <h3 class="modal-title">Revision Values</h3>
+        </div>
+        <div class="modal-body" style="min-height:220px;">
+            <div class='col-md-12'></div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-danger" id="btn-save-users">Save</button>
+            <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+        </div>
+
+    </div>          
+  </div>
+</div>
+
+<script type="text/javascript">
+
+$(document).ready(function(){  
+    $("#btn-add-agents").click(function(){
+
+        $("#agentModal .modal-body").load('{{trans_url("/admin/user/user")}}');
+        $("#agentModal").modal('show');
+    });
+});
+
+</script>

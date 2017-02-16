@@ -299,7 +299,7 @@ class MessageUserController extends BaseController
                 })
                 ->whereStatus($status)
                 ->orderBy('id', 'DESC');
-            })->paginate(10);
+            })->paginate(10);      
         $messages['caption'] = $status;
         return view('message::user.message.show', compact('messages','guard'));
     }

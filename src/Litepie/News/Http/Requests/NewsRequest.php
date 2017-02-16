@@ -21,7 +21,7 @@ class NewsRequest extends FormRequest
 
         if ($this->isWorkflow()) {
             // Determine if the user is authorized to change status of an entry,
-            return $this->can($this->getStatus());
+            return $this->can($this->getStep());
         }
 
         if ($this->isCreate() ||  $this->isStore()) {

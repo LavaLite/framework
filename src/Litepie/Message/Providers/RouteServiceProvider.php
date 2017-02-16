@@ -30,7 +30,7 @@ class RouteServiceProvider extends ServiceProvider
 
         if (Request::is('*/message/message/*')) {
             Route::bind('message', function ($id) {
-                $message = $this->app->make('\Litepie\Message\Interfaces\MessageRepositoryInterface');
+                $message = $this->app->make('Litepie\Message\Interfaces\MessageRepositoryInterface');
                 return $message->findorNew($id);
             });
         }

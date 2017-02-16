@@ -55,7 +55,7 @@ $(document).ready(function(){
         timepicker:false,
         format:'Y-m-d',
     });
-    app.load('#news-news-entry', '{!!URL::to('admin/news/news/0')!!}');
+    app.load('#news-news-entry', '{!!trans_url('admin/news/news/0')!!}');
     oTable = $('#news-news-list').dataTable( {
          "bProcessing": true,
         "sDom": 'R<>rt<ilp><"clear">',
@@ -84,7 +84,7 @@ $(document).ready(function(){
             {data :'created_at'},
             {data :'updated_at'},
         ],
-        "pageLength": 50
+        "pageLength": 10
     });
 
     $('#news-news-list tbody').on( 'click', 'tr', function () {
@@ -98,7 +98,7 @@ $(document).ready(function(){
 
         var d = $('#news-news-list').DataTable().row( this ).data();
 
-        $('#news-news-entry').load('{!!URL::to('admin/news/news')!!}' + '/' + d.id);
+        $('#news-news-entry').load('{!!trans_url('admin/news/news')!!}' + '/' + d.id);
 
     });
      $("#news-news-list .search_bar input").on('keyup select', function (e) {

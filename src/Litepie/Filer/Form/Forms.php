@@ -40,6 +40,11 @@ class Forms
     private $url = null;
 
     /**
+     * Upload src for file.
+     */
+    private $src = null;
+
+    /**
      * Image size config file path.
      */
     private $size = 'sm';
@@ -80,7 +85,17 @@ class Forms
         $this->view('filer::editor', false);
         return $this;
     }
+    /**
+     * Generate html to crop the images
+     * @return string
+     */
+    public function cropper($src = null)
+    {
+        $this->view('filer::cropper', false);
+        $this->src($src, false);
 
+        return $this;
+    }
     /**
      * Generate html to upload files
      * @return type
@@ -105,10 +120,11 @@ class Forms
         $mime   = $this->getMime();
         $config = $this->getConfig();
         $url    = $this->getUrl();
+        $src    = $this->getSrc();
         $count  = $this->getCount();
         $size   = $this->getSize();
 
-        return view($view, compact('count', 'url', 'config', 'field', 'files', 'size', 'mime'))->render();
+        return view($view, compact('count', 'url', 'src', 'config', 'field', 'files', 'size', 'mime'))->render();
     }
 
     /**
@@ -312,6 +328,31 @@ class Forms
 
         if (is_null($this->url) || $force) {
             $this->url = $url;
+        }
+
+        return $this;
+    }
+    /**
+     * Gets the Upload url for file.
+     *
+     * @return mixed
+     */
+    public function getSrc()
+    {
+        return $this->src;
+    }
+
+    /**
+     * Sets the Upload url for file.
+     *
+     * @param mixed $url the url
+     *
+     * @return self
+     */
+    public function src($src, $force = true)
+    {
+        if (is_null($this->src) || $force) {
+            $this->src = $src;
         }
 
         return $this;

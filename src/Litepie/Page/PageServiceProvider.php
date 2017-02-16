@@ -37,7 +37,7 @@ class PageServiceProvider extends ServiceProvider
         });
 
         $this->app->bind(
-            \Litepie\Page\Interfaces\PageRepositoryInterface::class,
+            'Litepie\Page\Interfaces\PageRepositoryInterface',
             \Litepie\Page\Repositories\Eloquent\PageRepository::class
         );
 

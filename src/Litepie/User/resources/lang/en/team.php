@@ -20,8 +20,10 @@ return [
      */
     'placeholder'   => [
         'name'                       => 'Please enter name',
+        'manager'                    => 'Select manager',
+        'member'                     => 'Member',
+        'reporting_to'               => 'Reporting to',
         'description'                => 'Please enter description',
-        'settings'                   => 'Please enter settings',
     ],
 
     /**
@@ -29,9 +31,11 @@ return [
      */
     'label'         => [
         'name'                       => 'Name',
+        'manager'                    => 'Manager',
         'description'                => 'Description',
-        'settings'                   => 'Settings',
         'status'                     => 'Status',
+        'member'                     => 'Member',
+        'reporting_to'               => 'Reporting To',
         'created_at'                 => 'Created at',
         'updated_at'                 => 'Updated at',
     ],
@@ -40,7 +44,7 @@ return [
      * Tab labels
      */
     'tab'           => [
-        'name'  => 'Name',
+        'name'  => 'Team',
     ],
 
     /**

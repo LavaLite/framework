@@ -31,7 +31,7 @@ class RouteServiceProvider extends ServiceProvider
 
         if (Request::is('*news/news/*')) {
             Route::bind('news', function ($news) {
-                $newsrepo = $this->app->make('\Litepie\News\Interfaces\NewsRepositoryInterface');
+                $newsrepo = $this->app->make(\Litepie\News\Interfaces\NewsRepositoryInterface::class);
                 return $newsrepo->findorNew($news);
             });
         }
@@ -47,7 +47,7 @@ class RouteServiceProvider extends ServiceProvider
     {
         $this->mapWebRoutes();
 
-        $this->mapApiRoutes();
+        // $this->mapApiRoutes();
 
         //
     }

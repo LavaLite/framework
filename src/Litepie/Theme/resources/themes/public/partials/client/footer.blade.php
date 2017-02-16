@@ -4,7 +4,7 @@
             <div class="row">
                 <div class="col-md-5 platform-links">
                     <ul class="footer-links">
-                        <li><a href="{{URL::to('about-us.html')}}">About</a></li>
+                        <li><a href="{{trans_url('about-us.html')}}">About</a></li>
                         @if(Auth::check())
                             <li><a href="{{ trans_url('logout') }}" class="logout">Logout</a></li>
                         @else

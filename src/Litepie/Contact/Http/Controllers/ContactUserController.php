@@ -2,7 +2,7 @@
 
 namespace Litepie\Contact\Http\Controllers;
 
-use App\Http\Controllers\Controller as BaseController;
+use App\Http\Controllers\UserController as BaseController;
 use Form;
 use Litepie\Contact\Http\Requests\ContactRequest;
 use Litepie\Contact\Interfaces\ContactRepositoryInterface;
@@ -11,28 +11,18 @@ use Litepie\Contact\Models\Contact;
 class ContactUserController extends BaseController
 {
     /**
-     * The authentication guard that should be used.
-     *
-     * @var string
-     */
-    protected $guard = 'web';
-
-    /**
      * Initialize contact controller.
      *
      * @param type ContactRepositoryInterface $contact
      *
      * @return type
      */
-    protected $home = 'home';
-
     public function __construct(ContactRepositoryInterface $contact)
     {
-        $this->middleware('web');
-        $this->middleware('auth:web');
-        $this->middleware('auth.active:web');
-        $this->setupTheme(config('theme.themes.user.theme'), config('theme.themes.user.layout'));
         $this->repository = $contact;
+        $this->repository
+                ->pushCriteria(app('Litepie\Repository\Criteria\RequestCriteria'))
+                ->pushCriteria(new \Litepie\Contact\Repositories\Criteria\ContactUserCriteria());
         parent::__construct();
     }
 
@@ -43,12 +33,11 @@ class ContactUserController extends BaseController
      */
     public function index(ContactRequest $request)
     {
-        $this->repository->pushCriteria(new \Lavalite\Contact\Repositories\Criteria\ContactUserCriteria());
         $contacts = $this->repository->scopeQuery(function($query){
             return $query->orderBy('id','DESC');
         })->paginate();
 
-        $this->theme->prependTitle(trans('contact::contact.names').' :: ');
+        $this->theme->prependTitle(trans('contact::contact.names'));
 
         return $this->theme->of('contact::user.contact.index', compact('contacts'))->render();
     }
@@ -81,6 +70,7 @@ class ContactUserController extends BaseController
         $contact = $this->repository->newInstance([]);
         Form::populate($contact);
 
+        $this->theme->prependTitle(trans('contact::contact.names'));
         return $this->theme->of('contact::user.contact.create', compact('contact'))->render();
     }
 
@@ -96,7 +86,6 @@ class ContactUserController extends BaseController
         try {
             $attributes = $request->all();
             $attributes['user_id'] = user_id();
-            $attributes['user_type'] = user_type();
             $contact = $this->repository->create($attributes);
 
             return redirect(trans_url('/user/contact/contact'))
@@ -120,6 +109,7 @@ class ContactUserController extends BaseController
     {
 
         Form::populate($contact);
+        $this->theme->prependTitle(trans('contact::contact.names'));
 
         return $this->theme->of('contact::user.contact.edit', compact('contact'))->render();
     }

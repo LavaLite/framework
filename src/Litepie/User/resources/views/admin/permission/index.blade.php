@@ -43,14 +43,14 @@
 <script type="text/javascript">
 var oTable;
 $(document).ready(function(){
-    $("#created_at").pickadate({
+    $("#created_at").datetimepicker({
         format: 'dd mmm, yyyy',
         formatSubmit: 'yyyy-mm-dd',
         hiddenSuffix: '',
         selectMonths: true,
         selectYears: true
     }).prop('type','text');
-    $("#updated_at").pickadate({
+    $("#updated_at").datetimepicker({
         format: 'dd mmm, yyyy',
         formatSubmit: 'yyyy-mm-dd',
         hiddenSuffix: '',

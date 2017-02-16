@@ -27,7 +27,7 @@
 <script type="text/javascript">
 $(document).ready(function(){
     $('#btn-new-calendar, #btn-new-calendar-icn').click(function(){
-        $('#entry-calendar').load('{!!URL::to($guard.'/calendar/calendar/create')!!}');
+        $('#entry-calendar').load('{!!trans_url($guard.'/calendar/calendar/create')!!}');
     });
 });
 </script>

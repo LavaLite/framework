@@ -16,7 +16,7 @@
                         <div class="col-xs-12 col-sm-7 m-b-5">
                                 {!!Form::open()
                                 ->method('GET')
-                                ->action(URL::to('user/{!!$package!!}/block'))!!}
+                                ->action(trans_url('user/{!!$package!!}/block'))!!}
                                 <div class="input-group">
                                     {!!Form::text('search')->type('text')->class('form-control')->placeholder('Search for blocks')->raw()!!}
                                     <span class="input-group-btn">

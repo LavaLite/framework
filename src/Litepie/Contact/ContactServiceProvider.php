@@ -45,13 +45,14 @@ class ContactServiceProvider extends ServiceProvider
 
         // Bind Contact to repository
         $this->app->bind(
-            \Litepie\Contact\Interfaces\ContactRepositoryInterface::class,
+            'Litepie\Contact\Interfaces\ContactRepositoryInterface',
             \Litepie\Contact\Repositories\Eloquent\ContactRepository::class
         );
 
         $this->app->register(\Litepie\Contact\Providers\AuthServiceProvider::class);
         $this->app->register(\Litepie\Contact\Providers\EventServiceProvider::class);
         $this->app->register(\Litepie\Contact\Providers\RouteServiceProvider::class);
+        $this->app->register(\Litepie\Contact\Providers\WorkflowServiceProvider::class);
     }
 
     /**
@@ -87,6 +88,6 @@ class ContactServiceProvider extends ServiceProvider
         $this->publishes([__DIR__ . '/database/seeds/' => base_path('database/seeds')], 'seeds');
 
         // Publish public
-        $this->publishes([__DIR__ . '/public/' => public_path('/')], 'uploads');
-    }
+        $this->publishes([__DIR__ . '/public' => public_path('/')], 'public');
+   }
 }

@@ -17,7 +17,7 @@
     ->id('create-settings-setting')
     ->method('POST')
     ->files('true')
-    ->action(URL::to('user/settings/setting'))!!}
+    ->action(trans_url('user/settings/setting'))!!}
             @include('settings::user.setting.partial.entry')
     {!! Form::close() !!}
 </div>

@@ -8,7 +8,7 @@ use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvid
 class AuthServiceProvider extends ServiceProvider
 {
     /**
-     * The policy mappings for the litepie.
+     * The policy mappings for the package.
      *
      * @var array
      */
@@ -18,7 +18,7 @@ class AuthServiceProvider extends ServiceProvider
     ];
 
     /**
-     * Register any litepie authentication / authorization services.
+     * Register any package authentication / authorization services.
      *
      * @param \Illuminate\Contracts\Auth\Access\Gate $gate
      *

@@ -13,9 +13,9 @@
             
             <ul class="nav navbar-nav navbar-right">
                 @if(Request::is('*login'))
-                <li><a href="{{trans_url(get_guard('url')."/register")}}">Register</a></li>
+                <li><a href="{{trans_url(getenv('auth.guard')."/register")}}">Register</a></li>
                 @else
-                <li><a href="{{trans_url(get_guard('url')."/login")}}">Login</a></li>
+                <li><a href="{{trans_url(getenv('auth.guard')."/login")}}">Login</a></li>
                 @endif
             </ul>
         </div>

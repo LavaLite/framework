@@ -1,18 +1,18 @@
 <?php
 
 // Admin routes  for contact
-Route::group(['prefix' => 'api/admin/contact'], function () {
-    Route::resource('contact', 'Api\ContactAdminApiController');
+Route::group(['prefix' => 'admin/contact'], function () {
+    Route::resource('contact', 'ContactAdminController');
 });
 
 // User routes for contact
-Route::group(['prefix' => 'api/user/contact'], function () {
-    Route::resource('contact', 'Api\ContactUserApiController');
+Route::group(['prefix' => 'user/contact'], function () {
+    Route::resource('contact', 'ContactUserController');
 });
 
 // Public routes for contact
-Route::group(['prefix' => 'api/contacts'], function () {
-    Route::get('/', 'Api\ContactPublicApiController@index');
-    Route::get('/{slug?}', 'Api\ContactPublicApiController@show');
+Route::group(['prefix' => 'contacts'], function () {
+    Route::get('/', 'ContactPublicController@index');
+    Route::get('/{slug?}', 'ContactPublicController@show');
 });
 

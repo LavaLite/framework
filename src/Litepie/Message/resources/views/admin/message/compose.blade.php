@@ -10,7 +10,7 @@
                             ->id('create-message-message')
                             ->method('POST')
                             ->files('true')
-                            ->action(URL::to('admin/message/message'))!!}
+                            ->action(trans_url('admin/message/message'))!!}
                             {!! Form::hidden('status')
                              -> forceValue("Sent")!!}
 
@@ -93,7 +93,7 @@ $(function () {
                 },
                 success:function(data, textStatus, jqXHR)
                 {
-                    $('#entry-message').load('{{URL::to('admin/message/status/Inbox')}}');
+                    $('#entry-message').load('{{trans_url('admin/message/status/Inbox')}}');
                     $('#inbox_id').html(data.inbox_count);
                     $('#draft_id').html(data.draft_count);
                     $('#sent_id').html(data.sent_count);

@@ -30,7 +30,7 @@ class RouteServiceProvider extends ServiceProvider
 
         if (Request::is('*/calendar/calendar/*')) {
             Route::bind('calendar', function ($id) {
-                $calendar = $this->app->make('\Litepie\Calendar\Interfaces\CalendarRepositoryInterface');
+                $calendar = $this->app->make('Litepie\Calendar\Interfaces\CalendarRepositoryInterface');
                 return $calendar->findorNew($id);
             });
         }

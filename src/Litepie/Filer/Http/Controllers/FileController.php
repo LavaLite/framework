@@ -55,7 +55,7 @@ class FileController extends Controller
      */
     public function getFolder($config, $folder, $field)
     {
-        $path = config($config . '.upload_folder', config('litepie.' . $config . '.upload_folder'));
+        $path = config($config . '.upload_folder', config($config . '.upload_folder'));
 
         if (empty($path)) {
             throw new FileNotFoundException();

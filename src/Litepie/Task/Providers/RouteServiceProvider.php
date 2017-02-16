@@ -30,7 +30,7 @@ class RouteServiceProvider extends ServiceProvider
 
         if (Request::is('*/task/task/*') || Request::is('*/task/status/*')) {
             Route::bind('task', function ($id) {
-                $task = $this->app->make('\Litepie\Task\Interfaces\TaskRepositoryInterface');
+                $task = $this->app->make('Litepie\Task\Interfaces\TaskRepositoryInterface');
                 return $task->findorNew($id);
             });
         }

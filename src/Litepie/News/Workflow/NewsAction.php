@@ -106,4 +106,21 @@ class NewsAction
             throw new WorkflowActionNotPerformedException();
         }
     }
+
+    /**
+     * Perform the cancel action.
+     *
+     * @param News $news
+     *
+     * @return News
+     */
+    public function cancel(News $news)
+    {
+        try {
+            $news->status = 'cancel';
+            return $news->save();
+        } catch (Exception $e) {
+            throw new WorkflowActionNotPerformedException();
+        }
+    }
 }

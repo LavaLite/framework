@@ -18,7 +18,7 @@
     ->id('edit-settings-setting')
     ->method('PUT')
     ->files('true')
-    ->action(URL::to('user/settings/setting') .'/'.$setting['eid'])!!}
+    ->action(trans_url('user/settings/setting') .'/'.$setting['eid'])!!}
         @include('settings::user.setting.partial.entry')
     {!! Form::close() !!}
 </div>

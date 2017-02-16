@@ -45,7 +45,7 @@ class CalendarServiceProvider extends ServiceProvider
 
         // Bind Calendar to repository
         $this->app->bind(
-            \Litepie\Calendar\Interfaces\CalendarRepositoryInterface::class,
+            'Litepie\Calendar\Interfaces\CalendarRepositoryInterface',
             \Litepie\Calendar\Repositories\Eloquent\CalendarRepository::class
         );
 

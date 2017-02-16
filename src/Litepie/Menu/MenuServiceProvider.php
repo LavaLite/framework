@@ -39,8 +39,8 @@ class MenuServiceProvider extends ServiceProvider
             return $this->app->make('Litepie\Menu\Menu');
         });
 
-        $this->app->bind('Litepie\\Contracts\\Menu\\MenuRepository',
-            'Litepie\\Menu\\Repository\\MenuRepository');
+        $this->app->bind('Litepie\Contracts\Menu\MenuRepository',
+            \Litepie\Menu\Repository\MenuRepository::class);
 
         $this->app->register(\Litepie\Menu\Providers\AuthServiceProvider::class);
         $this->app->register(\Litepie\Menu\Providers\EventServiceProvider::class);

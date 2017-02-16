@@ -26,13 +26,13 @@
 <table id="user-team-list" class="table table-striped data-table">
     <thead class="list_head">
         <th>{!! trans('user::team.label.name')!!}</th>
+        <th>{!! trans('user::team.label.manager')!!}</th>
         <th>{!! trans('user::team.label.created_at')!!}</th>
-        <th>{!! trans('user::team.label.updated_at')!!}</th>
     </thead>
     <thead  class="search_bar">
         <th>{!! Form::text('search[name]')->raw()!!}</th>
+        <th>{!! Form::text('search[manager_id]')->raw()!!}</th>
         <th>{!! Form::text('search[created_at]')->id('created_at')->raw()!!}</th>
-        <th>{!! Form::text('search[updated_at]')->id('updated_at')->raw()!!}</th>
     </thead>
 </table>
 @stop
@@ -47,10 +47,7 @@ $(document).ready(function(){
         timepicker:false,
         format:'Y-m-d',
     });
-    $("#updated_at").datetimepicker({
-        timepicker:false,
-        format:'Y-m-d',
-    });  
+    
     app.load('#user-team-entry', '{!!trans_url('admin/user/team/0')!!}');
     oTable = $('#user-team-list').dataTable( {
         "bProcessing": true,
@@ -76,8 +73,8 @@ $(document).ready(function(){
 
         "columns": [
             {data :'name'},
+            {data :'manager_id'},
             {data :'created_at'},
-            {data :'updated_at'},
 
         ],
         "pageLength": 25
@@ -93,14 +90,13 @@ $(document).ready(function(){
         $('#user-team-entry').load('{!!trans_url('admin/user/team')!!}' + '/' + d.id);
     });
 
-    $("#user-team-list .search_bar input, #user-team-list .search_bar select").on('keyup select', function (e) {
+    $("#user-team-list .search_bar input").on('keyup select', function (e) {
         e.preventDefault();
-        console.log(e.keyCode);
         if (e.keyCode == 13 || e.keyCode == 9) {
             oTable.api().draw();
         }
     });
-    $("#user-team-list .search_bar select, #updated_at , #created_at").on('change', function (e) {
+    $("#user-team-list .search_bar select, #created_at").on('change', function (e) {
         e.preventDefault();
         oTable.api().draw();
     });

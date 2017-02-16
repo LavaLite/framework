@@ -3,7 +3,7 @@
 namespace Litepie\Block\Models;
 
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Litepie\Database\Model;
+use Litepie\Database\Model as Model;
 use Litepie\Database\Traits\Slugger;
 use Litepie\Filer\Traits\Filer;
 use Litepie\Hashids\Traits\Hashids;

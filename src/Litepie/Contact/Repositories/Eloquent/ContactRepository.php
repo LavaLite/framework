@@ -7,15 +7,11 @@ use Litepie\Repository\Eloquent\BaseRepository;
 
 class ContactRepository extends BaseRepository implements ContactRepositoryInterface
 {
-    /**
-     * @var array
-     */
-    protected $fieldSearchable = [
-        'name'  => 'like'
-    ];
+
 
     public function boot()
     {
+        $this->fieldSearchable = config('litepie.contact.contact.search');
 
     }
 

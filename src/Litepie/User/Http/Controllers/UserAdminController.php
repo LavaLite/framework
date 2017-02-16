@@ -5,6 +5,7 @@ namespace Litepie\User\Http\Controllers;
 use App\Http\Controllers\AdminController as BaseController;
 use App\User;
 use Form;
+use Illuminate\Http\Request;
 use Litepie\User\Http\Requests\UserRequest;
 use Litepie\User\Interfaces\PermissionRepositoryInterface;
 use Litepie\User\Interfaces\RoleRepositoryInterface;
@@ -134,6 +135,7 @@ class UserAdminController extends BaseController
         try {
             $attributes            = $request->all();
             $attributes['user_id'] = user_id('admin.web');
+            $attributes['password'] =bcrypt($attributes['password']);            
             $user                  = $this->repository->create($attributes);
 
             return response()->json([
@@ -180,8 +182,10 @@ class UserAdminController extends BaseController
         try {
 
             $attributes = $request->all();
+            $attributes['password'] =bcrypt($attributes['password']);            
 
             $user->update($attributes);
+
 
             return response()->json([
                 'message'  => trans('messages.success.updated', ['Module' => trans('user::user.name')]),
@@ -231,5 +235,41 @@ class UserAdminController extends BaseController
         }
 
     }
+
+
+    /**
+     * Change the default team.
+     *
+     * @param Request $request
+     * @param Model   $user
+     *
+     * @return Response
+     */
+    public function changeTeam(Request $request)
+    {
+        try {
+
+            $attributes = $request->all();
+            $user = $request->user($this->getGuard());
+            $user->update($attributes);
+
+            return response()->json([
+                'message'  => trans('messages.success.updated', ['Module' => trans('user::user.name')]),
+                'code'     => 204,
+                'redirect' => trans_url('/admin/user/user/' . $user->getRouteKey()),
+            ], 201);
+
+        } catch (Exception $e) {
+
+            return response()->json([
+                'message'  => $e->getMessage(),
+                'code'     => 400,
+                'redirect' => trans_url('/admin/user/user/' . $user->getRouteKey()),
+            ], 400);
+
+        }
+
+    }
+
 
 }

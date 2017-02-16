@@ -143,17 +143,17 @@ $(document).ready(function(){
         var slug = $(this).val();
         if (slug == '')
             return;
-        $('#search-results').load('{{URL::to('admin/message/search')}}'+'/'+slug +'/{{@$messages['caption']}}');
+        $('#search-results').load('{{trans_url('admin/message/search')}}'+'/'+slug +'/{{@$messages['caption']}}');
     });
 
     $(".btn-refresh").click(function(){
         var caption = '{{@$messages['caption']}}';
         $("#txt-search").val('');
         if (caption == ''){
-            $('#entry-message').load('{{URL::to('admin/message/status/Inbox')}}');
+            $('#entry-message').load('{{trans_url('admin/message/status/Inbox')}}');
             return;
         }
-        $('#entry-message').load('{{URL::to('admin/message/status')}}/{{@$messages['caption']}}');
+        $('#entry-message').load('{{trans_url('admin/message/status')}}/{{@$messages['caption']}}');
     });
 
     $(".checkAll").click(function(){
@@ -183,7 +183,7 @@ $(document).ready(function(){
             star = 'Yes';
         }
             $.ajax( {
-                url: "{{URL::to('admin/message/important/substatus')}}",
+                url: "{{trans_url('admin/message/important/substatus')}}",
                 type: 'GET',
                 data: {id:msg_id,star:star},
                 beforeSend:function()
@@ -207,7 +207,7 @@ $(document).ready(function(){
             console.log($(this).val())
         });
         $.ajax( {
-                url: "{{URL::to('admin/message/message/status/Trash')}}",
+                url: "{{trans_url('admin/message/message/status/Trash')}}",
                 type: 'GET',
                 data: {data:arrayIds},
                 success:function(data, textStatus, jqXHR)
@@ -224,7 +224,7 @@ $(document).ready(function(){
                     $('#important_id').html(data.important_count);
                     $('#trash_id').html(data.trash_count);
 
-                    $('#entry-message').load('{{URL::to('admin/message/status/')}}'+'/'+caption);
+                    $('#entry-message').load('{{trans_url('admin/message/status/')}}'+'/'+caption);
                 },
                 error: function(jqXHR, textStatus, errorThrown)
                 {
@@ -242,7 +242,7 @@ $(document).ready(function(){
         });
         if(arrayIds.length != 0){
             $.ajax({                    
-                    url: "{{URL::to('admin/message/message/status')}}"+"/"+status,
+                    url: "{{trans_url('admin/message/message/status')}}"+"/"+status,
                     type: 'GET',
                     data: {data:arrayIds},
                     success:function(data, textStatus, jqXHR)
@@ -252,7 +252,7 @@ $(document).ready(function(){
                         $('#inbox_id').html(data.inbox_count);           
                         $('#social_id').html(data.social_count);                  
                         $('#important_id').html(data.important_count);
-                        $('#entry-message').load('{{URL::to('admin/message/status/')}}'+'/'+caption);
+                        $('#entry-message').load('{{trans_url('admin/message/status/')}}'+'/'+caption);
                     },
                     error: function(jqXHR, textStatus, errorThrown)
                     {
@@ -274,7 +274,7 @@ $(document).ready(function(){
                     success:function(data, textStatus, jqXHR)
                     {
                         console.log("trashed");
-                        $('#entry-message').load('{{URL::to('admin/message/status/Trash')}}');
+                        $('#entry-message').load('{{trans_url('admin/message/status/Trash')}}');
                         $('#inbox_id').html(data.inbox_count);
                         $('#trash_id').html(data.trash_count);
                         $('#promotions_id').html(data.promotions_count);
@@ -296,7 +296,7 @@ $(document).ready(function(){
               var caption = '{{@$messages['caption']}}';
                /*if(caption == '')
                  caption = 'Inbox';*/
-               $('#entry-message').load('{{URL::to('admin/message/details/')}}'+'/'+caption+'/'+msgid);
+               $('#entry-message').load('{{trans_url('admin/message/details/')}}'+'/'+caption+'/'+msgid);
         });
 
     jQuery("time.timeago").timeago();

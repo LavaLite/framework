@@ -2,8 +2,8 @@
 
 namespace Litepie\Contact\Http\Controllers\Api;
 
-use App\Http\Controllers\Controller as BaseController;
-use Litepie\Contact\Http\Requests\ContactUserApiRequest;
+use App\Http\Controllers\Api\UserController as BaseController;
+use Litepie\Contact\Http\Requests\ContactRequest;
 use Litepie\Contact\Interfaces\ContactRepositoryInterface;
 use Litepie\Contact\Models\Contact;
 
@@ -12,7 +12,6 @@ use Litepie\Contact\Models\Contact;
  */
 class ContactUserController extends BaseController
 {
-    
     /**
      * Initialize contact controller.
      *
@@ -20,14 +19,12 @@ class ContactUserController extends BaseController
      *
      * @return type
      */
-    protected $guard = 'api';
-
     public function __construct(ContactRepositoryInterface $contact)
     {
-        $this->middleware('api');
-        $this->middleware('jwt.auth:api');
-        $this->setupTheme(config('theme.themes.user.theme'), config('theme.themes.user.layout'));
         $this->repository = $contact;
+        $this->repository
+                ->pushCriteria(app('Litepie\Repository\Criteria\RequestCriteria'))
+                ->pushCriteria(new \Litepie\Contact\Repositories\Criteria\ContactUserCriteria());
         parent::__construct();
     }
 
@@ -36,10 +33,9 @@ class ContactUserController extends BaseController
      *
      * @return json
      */
-    public function index(ContactUserApiRequest $request)
+    public function index(ContactRequest $request)
     {
         $contacts  = $this->repository
-            ->pushCriteria(new \Lavalite\Contact\Repositories\Criteria\ContactUserCriteria())
             ->setPresenter('\\Litepie\\Contact\\Repositories\\Presenter\\ContactListPresenter')
             ->scopeQuery(function($query){
                 return $query->orderBy('id','DESC');
@@ -58,7 +54,7 @@ class ContactUserController extends BaseController
      *
      * @return Json
      */
-    public function show(ContactUserApiRequest $request, Contact $contact)
+    public function show(ContactRequest $request, Contact $contact)
     {
 
         if ($contact->exists) {
@@ -80,7 +76,7 @@ class ContactUserController extends BaseController
      *
      * @return json
      */
-    public function create(ContactUserApiRequest $request, Contact $contact)
+    public function create(ContactRequest $request, Contact $contact)
     {
         $contact         = $contact->presenter();
         $contact['code'] = 2002;
@@ -95,12 +91,11 @@ class ContactUserController extends BaseController
      *
      * @return json
      */
-    public function store(ContactUserApiRequest $request)
+    public function store(ContactRequest $request)
     {
         try {
             $attributes             = $request->all();
             $attributes['user_id']  = user_id('admin.api');
-            $attributes['user_type'] = user_type();
             $contact          = $this->repository->create($attributes);
             $contact          = $contact->presenter();
             $contact['code']  = 2004;
@@ -124,7 +119,7 @@ class ContactUserController extends BaseController
      *
      * @return json
      */
-    public function edit(ContactUserApiRequest $request, Contact $contact)
+    public function edit(ContactRequest $request, Contact $contact)
     {
         if ($contact->exists) {
             $contact         = $contact->presenter();
@@ -145,7 +140,7 @@ class ContactUserController extends BaseController
      *
      * @return json
      */
-    public function update(ContactUserApiRequest $request, Contact $contact)
+    public function update(ContactRequest $request, Contact $contact)
     {
         try {
 
@@ -177,7 +172,7 @@ class ContactUserController extends BaseController
      *
      * @return json
      */
-    public function destroy(ContactUserApiRequest $request, Contact $contact)
+    public function destroy(ContactRequest $request, Contact $contact)
     {
 
         try {

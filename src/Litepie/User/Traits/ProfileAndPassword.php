@@ -118,7 +118,6 @@ trait ProfileAndPassword
 
         $this->theme->asset()->usepath()->add('cropper-css', 'packages/cropper/css/cropper.css');
         $this->theme->asset()->container('footer')->usepath()->add('cropper-js', 'packages/cropper/js/cropper.js');
-        $this->theme->asset()->container('footer')->add('cropper-main-js', 'js/cropper.js');
 
         $this->theme->prependTitle('Settings');
         return $this->theme->of($this->getView('profile'), compact('user'))->render();

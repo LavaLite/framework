@@ -2,18 +2,16 @@
 
 namespace Litepie\Contact\Http\Controllers\Api;
 
-use App\Http\Controllers\Controller as BaseController;
-use Litepie\Contact\Http\Requests\ContactAdminApiRequest;
+use App\Http\Controllers\Api\AdminController as BaseController;
+use Litepie\Contact\Http\Requests\ContactRequest;
 use Litepie\Contact\Interfaces\ContactRepositoryInterface;
 use Litepie\Contact\Models\Contact;
 
 /**
  * Admin API controller class.
  */
-class ContactAdminApiController extends BaseController
+class ContactAdminController extends BaseController
 {
-    
-
     /**
      * Initialize contact controller.
      *
@@ -21,24 +19,18 @@ class ContactAdminApiController extends BaseController
      *
      * @return type
      */
-    protected $guard = 'admin.api';
-
     public function __construct(ContactRepositoryInterface $contact)
     {
-        $this->middleware('api');
-        $this->middleware('jwt.auth:admin.api');
-        $this->setupTheme(config('theme.themes.admin.theme'), config('theme.themes.admin.layout'));
         $this->repository = $contact;
         parent::__construct();
     }
-
 
     /**
      * Display a list of contact.
      *
      * @return json
      */
-    public function index(ContactAdminApiRequest $request)
+    public function index(ContactRequest $request)
     {
         $contacts  = $this->repository
             ->setPresenter('\\Litepie\\Contact\\Repositories\\Presenter\\ContactListPresenter')
@@ -59,7 +51,7 @@ class ContactAdminApiController extends BaseController
      *
      * @return Json
      */
-    public function show(ContactAdminApiRequest $request, Contact $contact)
+    public function show(ContactRequest $request, Contact $contact)
     {
         $contact         = $contact->presenter();
         $contact['code'] = 2001;
@@ -75,7 +67,7 @@ class ContactAdminApiController extends BaseController
      *
      * @return json
      */
-    public function create(ContactAdminApiRequest $request, Contact $contact)
+    public function create(ContactRequest $request, Contact $contact)
     {
         $contact         = $contact->presenter();
         $contact['code'] = 2002;
@@ -91,12 +83,11 @@ class ContactAdminApiController extends BaseController
      *
      * @return json
      */
-    public function store(ContactAdminApiRequest $request)
+    public function store(ContactRequest $request)
     {
         try {
             $attributes             = $request->all();
             $attributes['user_id']  = user_id('admin.api');
-            $attributes['user_type'] = user_type();
             $contact          = $this->repository->create($attributes);
             $contact          = $contact->presenter();
             $contact['code']  = 2004;
@@ -119,7 +110,7 @@ class ContactAdminApiController extends BaseController
      *
      * @return json
      */
-    public function edit(ContactAdminApiRequest $request, Contact $contact)
+    public function edit(ContactRequest $request, Contact $contact)
     {
         $contact         = $contact->presenter();
         $contact['code'] = 2003;
@@ -135,7 +126,7 @@ class ContactAdminApiController extends BaseController
      *
      * @return json
      */
-    public function update(ContactAdminApiRequest $request, Contact $contact)
+    public function update(ContactRequest $request, Contact $contact)
     {
         try {
 
@@ -167,11 +158,9 @@ class ContactAdminApiController extends BaseController
      *
      * @return json
      */
-    public function destroy(ContactAdminApiRequest $request, Contact $contact)
+    public function destroy(ContactRequest $request, Contact $contact)
     {
-
         try {
-
             $t = $contact->delete();
 
             return response()->json([

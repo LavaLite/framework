@@ -3,6 +3,7 @@
 namespace Litepie\Contact\Providers;
 
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
+use Illuminate\Routing\Router;
 use Litepie\Contact\Models\Contact;
 use Request;
 use Route;
@@ -21,6 +22,7 @@ class RouteServiceProvider extends ServiceProvider
     /**
      * Define your route model bindings, pattern filters, etc.
      *
+     * @param   \Illuminate\Routing\Router  $router
      * @return void
      */
     public function boot()
@@ -28,16 +30,16 @@ class RouteServiceProvider extends ServiceProvider
         parent::boot();
 
         if (Request::is('*/contact/contact/*')) {
-            Route::bind('contact', function ($id) {
-                $contact = $this->app->make('\Litepie\Contact\Interfaces\ContactRepositoryInterface');
-                return $contact->findorNew($id);
+            Route::bind('contact', function ($contact) {
+                $contactrepo = $this->app->make('Litepie\Contact\Interfaces\ContactRepositoryInterface');
+                return $contactrepo->findorNew($contact);
             });
         }
 
     }
 
     /**
-     * Define the routes for the litepie.
+     * Define the routes for the package.
      *
      * @return void
      */
@@ -45,13 +47,13 @@ class RouteServiceProvider extends ServiceProvider
     {
         $this->mapWebRoutes();
 
-// $this->mapApiRoutes();
+        // $this->mapApiRoutes();
 
         //
     }
 
     /**
-     * Define the "web" routes for the litepie.
+     * Define the "web" routes for the package.
      *
      * These routes all receive session state, CSRF protection, etc.
      *
@@ -61,15 +63,15 @@ class RouteServiceProvider extends ServiceProvider
     {
         Route::group([
             'middleware' => 'web',
-            'namespace'  => $this->namespace,
-            'prefix'     => trans_setlocale(),
+            'namespace' => $this->namespace,
+            'prefix' => trans_setlocale(),
         ], function ($router) {
             require (__DIR__ . '/../routes/web.php');
         });
     }
 
     /**
-     * Define the "api" routes for the litepie.
+     * Define the "api" routes for the package.
      *
      * These routes are typically stateless.
      *
@@ -79,11 +81,10 @@ class RouteServiceProvider extends ServiceProvider
     {
         Route::group([
             'middleware' => 'api',
-            'namespace'  => $this->namespace,
-            'prefix'     => trans_setlocale() . '/api',
+            'namespace' => $this->namespace . '\Api',
+            'prefix' => trans_setlocale() . '/api',
         ], function ($router) {
             require (__DIR__ . '/../routes/api.php');
         });
     }
-
 }

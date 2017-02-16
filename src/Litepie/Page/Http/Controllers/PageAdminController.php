@@ -5,7 +5,7 @@ namespace Litepie\Page\Http\Controllers;
 use App\Http\Controllers\AdminController as AdminController;
 use Form;
 use Litepie\Page\Http\Requests\PageAdminWebRequest;
-use Litepie\Page\Interfaces\PageRepositoryInterface;
+use \Litepie\Page\Interfaces\PageRepositoryInterface;
 use Litepie\Page\Models\Page;
 
 /**

@@ -30,14 +30,14 @@ class RouteServiceProvider extends ServiceProvider
 
         if (Request::is('*/block/category/*')) {
             Route::bind('category', function ($id) {
-                $category = $this->app->make('\Litepie\Block\Interfaces\CategoryRepositoryInterface');
+                $category = $this->app->make('Litepie\Block\Interfaces\CategoryRepositoryInterface');
                 return $category->findorNew($id);
             });
         }
 
         if (Request::is('*/block/block/*')) {
             Route::bind('block', function ($id) {
-                $block = $this->app->make('\Litepie\Block\Interfaces\BlockRepositoryInterface');
+                $block = $this->app->make('Litepie\Block\Interfaces\BlockRepositoryInterface');
                 return $block->findorNew($id);
             });
         }

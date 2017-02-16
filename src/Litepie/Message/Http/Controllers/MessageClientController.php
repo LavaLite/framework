@@ -291,7 +291,7 @@ class MessageClientController extends BaseController
 
     public function showMessage($status)
     {
-        $guard = $this->getGuardRoute();
+        $guard = $this->getGuardRoute();     
         $email = user($guard.'.web')->email;
         $messages['data'] =  $this->repository->scopeQuery(function ($query) use ($status,$guard,$email) {
                 return $query->with('user')
@@ -356,7 +356,7 @@ class MessageClientController extends BaseController
         try {
             $id = $request->get('id');
             $sub = $request->get('star');
-            $attributes['star'] = $sub;
+            $attributes['star'] = $sub;       
             $this->repository->update($attributes, $id);
             return;
         } catch (Exception $e) {
@@ -371,9 +371,9 @@ class MessageClientController extends BaseController
         $guard = $this->getGuardRoute();
         $this->repository->pushCriteria(new \Litepie\Message\Repositories\Criteria\MessageUserCriteria());
         $messages['data'] = $this->repository->scopeQuery(function ($query) {
-            return $query->with('user')->whereStar(1)->orderBy('id', 'DESC');
-        })->paginate();
-        dd($messages['data']);
+            return $query->with('user')->whereStar(1)->where('status','<>','Trash')->orderBy('id', 'DESC');
+        })->paginate(10);
+        
         $messages['caption'] = "Starred";
         return view('message::user.message.show', compact('messages','guard'));
     }
@@ -388,7 +388,7 @@ class MessageClientController extends BaseController
         $this->repository->pushCriteria(new \Litepie\Message\Repositories\Criteria\MessageUserCriteria());
         $messages['data'] = $this->repository->scopeQuery(function ($query) {
             return $query->with('user')->whereImportant(1)->where('status','<>','Trash')->orderBy('id', 'DESC');
-        })->paginate();
+        })->paginate(10);
         $messages['caption'] = "Important";
         return view('message::user.message.show', compact('messages','guard'));
     }

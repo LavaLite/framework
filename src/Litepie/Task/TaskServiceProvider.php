@@ -45,7 +45,7 @@ class TaskServiceProvider extends ServiceProvider
 
         // Bind Task to repository
         $this->app->bind(
-            \Litepie\Task\Interfaces\TaskRepositoryInterface::class,
+            'Litepie\Task\Interfaces\TaskRepositoryInterface',
             \Litepie\Task\Repositories\Eloquent\TaskRepository::class
         );
 

@@ -3,7 +3,7 @@
     ->id('edit-calendar')
     ->method('PUT')
     ->enctype('multipart/form-data')
-    ->action(URL::to('admin/calendar/calendar/'. $calendar->getRouteKey()))!!}
+    ->action(trans_url('admin/calendar/calendar/'. $calendar->getRouteKey()))!!}
     {!!Form::token()!!}
     <div class="tab-content">
         <div class="tab-pane active" id="details">

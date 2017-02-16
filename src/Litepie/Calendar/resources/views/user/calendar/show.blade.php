@@ -129,7 +129,7 @@
                 ->id('create-calendar-calendar')
                 ->method('POST')
                 ->files('true')
-                ->action(URL::to($guard.'/calendar/calendar'))!!}
+                ->action(trans_url($guard.'/calendar/calendar'))!!}
                 {!! Form::hidden('color')!!}
                 {!! Form::hidden('start')
                 ->forceValue(date('Y-m-d H:i:s'))!!}
@@ -213,7 +213,7 @@
     eventSources: [
     // your event source
     {
-    url: '{!!URL::to($guard.'/calendar/calendar/ajax/list')!!}', // use the `url` property
+    url: '{!!trans_url($guard.'/calendar/calendar/ajax/list')!!}', // use the `url` property
     }
     ],
     editable: true,
@@ -303,7 +303,7 @@
         },
         success:function(data, textStatus, jqXHR)
         {
-            $('#entry-calendar').load('{!!URL::to($guard.'/calendar/calendar/show')!!}');
+            $('#entry-calendar').load('{!!trans_url($guard.'/calendar/calendar/show')!!}');
         },
         error: function(jqXHR, textStatus, errorThrown)
         {
@@ -313,7 +313,7 @@
         });
         function updateEvents(formData,id){
         $.ajax( {
-        url: "{!!URL::to($guard.'/calendar/calendar')!!}" +"/"+id,
+        url: "{!!trans_url($guard.'/calendar/calendar')!!}" +"/"+id,
         type: 'PUT',
         data: {data:formData},
         beforeSend:function()

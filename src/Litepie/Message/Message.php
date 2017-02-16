@@ -65,7 +65,23 @@ class Message
 
     public function userMsgcount($slug, $guard)
     {
-        return $this->message->userMsgCount($slug , $guard);
+        $email = user(getenv('guard'))->email;
+     
+        return  $this->message->scopeQuery(function($query)use($slug,$email){
+                return $query->with('user')
+                        ->where(function($qry) use($slug,$email){
+                        if ($slug == 'Inbox') {
+                            return $qry->whereTo($email)->where("read", "=", 0);
+                        }
+                        else {
+                         return $qry->whereTo($email)
+                            ->whereUserId(user_id('web'))
+                            ->whereUserType(user_type('web'));  
+                        }
+                    })->whereStatus($slug);
+                })->count();
+           
+
     }
 
     public function userUnreadCount($slug, $guard)

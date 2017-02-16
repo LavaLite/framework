@@ -14,7 +14,7 @@ Route::group(['prefix' => '/user/settings'], function () {
 
 // Public  routes for setting
 Route::group(['prefix' => '/settings'], function () {
-    Route::get('news/workflow/{setting}/{step}/{user}', 'SettingController@getWorkflow');
+    Route::get('news/workflow/{setting}/{step}/{user}', 'SettingPublicController@getWorkflow');
     Route::get('/', 'SettingPublicController@index');
     Route::get('/{slug?}', 'SettingPublicController@show');
 });

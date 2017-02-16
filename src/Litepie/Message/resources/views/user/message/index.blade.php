@@ -73,70 +73,70 @@
         var slug = $(this).val();
         if (slug == '')
             return;       
-        $('#entry-message').load('{{URL::to($guard.'/message/search')}}'+'/'+slug +'/Inbox');
+        $('#entry-message').load('{{trans_url($guard.'/message/search')}}'+'/'+slug +'/Inbox');
     });
 
-    $('#entry-message').load('{{URL::to($guard.'/message/status/Inbox')}}');
+    $('#entry-message').load('{{trans_url($guard.'/message/status/Inbox')}}');
 
     $('#btn-inbox').parent().addClass("active");
 
     $('#compose-id').click(function(){
        $(".cur").removeClass("active");
        $( this ).parent().addClass("active");
-        $('#entry-message').load('{{URL::to($guard.'/message/compose')}}');
+        $('#entry-message').load('{{trans_url($guard.'/message/compose')}}');
     });
 
     $('#btn-inbox').click(function(){
        $(".cur").removeClass("active");
        $( this ).parent().addClass("active");
-        $('#entry-message').load('{{URL::to($guard.'/message/status/Inbox')}}');
+        $('#entry-message').load('{{trans_url($guard.'/message/status/Inbox')}}');
     });
 
     $('#btn-sent').click(function(){
         $(".cur").removeClass("active");
         $( this ).parent().addClass("active");
-        $('#entry-message').load('{{URL::to($guard.'/message/status/Sent')}}');
+        $('#entry-message').load('{{trans_url($guard.'/message/status/Sent')}}');
     });
 
     $('#btn-draft').click(function(){
         $(".cur").removeClass("active");
         $( this ).parent().addClass("active");
-        $('#entry-message').load('{{URL::to($guard.'/message/status/Draft')}}');
+        $('#entry-message').load('{{trans_url($guard.'/message/status/Draft')}}');
     });
 
     $('#btn-trash').click(function(){
         $(".cur").removeClass("active");
         $( this ).parent().addClass("active");
-        $('#entry-message').load('{{URL::to($guard.'/message/status/Trash')}}');
+        $('#entry-message').load('{{trans_url($guard.'/message/status/Trash')}}');
     });
 
     $('#btn-junk').click(function(){
         $(".cur").removeClass("active");
         $( this ).parent().addClass("active");
-        $('#entry-message').load('{{URL::to($guard.'/message/status/Junk')}}');
+        $('#entry-message').load('{{trans_url($guard.'/message/status/Junk')}}');
     });
     $('#btn-starred').click(function(){
         $(".cur").removeClass("active");
         $( this ).parent().addClass("active");
-        $('#entry-message').load('{{URL::to($guard.'/message/starred')}}');
+        $('#entry-message').load('{{trans_url($guard.'/message/starred')}}');
     });
 
     $('#btn-Important').click(function(){
         $(".cur").removeClass("active");
         $( this ).parent().addClass("active");
-        $('#entry-message').load('{{URL::to($guard.'/message/important')}}');
+        $('#entry-message').load('{{trans_url($guard.'/message/important')}}');
     });
 
     $('#btn-Promotions').click(function(){
         $(".cur").removeClass("active");
         $( this ).parent().addClass("active");
-        $('#entry-message').load('{{URL::to($guard.'/message/status/Promotions')}}');
+        $('#entry-message').load('{{trans_url($guard.'/message/status/Promotions')}}');
     });
 
     $('#btn-Social').click(function(){
         $(".cur").removeClass("active");
         $( this ).parent().addClass("active");
-        $('#entry-message').load('{{URL::to($guard.'/message/status/Social')}}');
+        $('#entry-message').load('{{trans_url($guard.'/message/status/Social')}}');
     });
 
     $(".checkbox-toggle").click(function () {
@@ -172,5 +172,7 @@
         $this.toggleClass("fa-star-o");
       }
     });
+
+    
   });
 </script>

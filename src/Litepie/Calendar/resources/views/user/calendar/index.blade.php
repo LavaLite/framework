@@ -202,7 +202,7 @@ $(function () {
         eventLimit: true,
         eventClick: function(event, element) {
             $('#event-modal .modal-title').html('Edit ' + event.title);
-            $('#event-modal .modal-body').load('{{URL::to($guard.'/calendar/calendar')}}/' + event.id + '/edit');
+            $('#event-modal .modal-body').load('{{trans_url($guard.'/calendar/calendar')}}/' + event.id + '/edit');
             $('#event-modal').modal('show');
 /* $('.modal-footer #event-delete').css('display','block');*/
         },
@@ -211,7 +211,7 @@ $(function () {
             $('#event-modal .modal-title').html('Create New Event');
              var startdate = start.format('YYYY-MM-DD');            
              var enddate = end.format('YYYY-MM-DD');           
-            $('#event-modal .modal-body').load('{{URL::to($guard.'/calendar/calendar/create')}}?start='+startdate+'&end='+enddate);         
+            $('#event-modal .modal-body').load('{{trans_url($guard.'/calendar/calendar/create')}}?start='+startdate+'&end='+enddate);         
             $('#event-modal').modal('show');
             var eventData;
             if (event.title) {

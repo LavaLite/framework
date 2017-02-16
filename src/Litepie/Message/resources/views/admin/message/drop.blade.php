@@ -7,7 +7,7 @@
       <div id="slimScroll">
       @forelse(Message::unread() as $key => $value)
        <li>
-           <a href="{!!URL::to('/admin/message/message')!!}">
+           <a href="{!!trans_url('/admin/message/message')!!}">
                <div class="pull-left">
                     <img src="{!!@$value['user']->picture!!}"  class="img-circle img-responsive" alt="User Image" />
                </div>

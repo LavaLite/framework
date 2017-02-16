@@ -17,7 +17,7 @@
     ->id('settings-setting-show')
     ->method('POST')
     ->files('true')
-    ->action(URL::to('admin/settings/setting'))!!}
+    ->action(trans_url('admin/settings/setting'))!!}
         <div class="tab-content clearfix">
             <div class="tab-pan-title"> {{ trans('app.view') }}   {!! trans('settings::setting.name') !!}  [{!! $setting->name !!}] </div>
             <div class="tab-pane active disabled" id="details">

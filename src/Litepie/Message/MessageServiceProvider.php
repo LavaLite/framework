@@ -45,7 +45,7 @@ class MessageServiceProvider extends ServiceProvider
 
         // Bind Message to repository
         $this->app->bind(
-            \Litepie\Message\Interfaces\MessageRepositoryInterface::class,
+            'Litepie\Message\Interfaces\MessageRepositoryInterface',
             \Litepie\Message\Repositories\Eloquent\MessageRepository::class
         );
 

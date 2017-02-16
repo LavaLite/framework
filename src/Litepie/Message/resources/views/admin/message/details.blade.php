@@ -160,7 +160,7 @@ $(document).ready(function(){
                 success:function(data, textStatus, jqXHR)
                 {
                     swal("Deleted!", data.message, "success");
-                    $('#entry-message').load('{{URL::to('admin/message/status/Trash')}}');
+                    $('#entry-message').load('{{trans_url('admin/message/status/Trash')}}');
                 },
             });
         });
@@ -171,7 +171,7 @@ $(document).ready(function(){
         var arrayIds = [];
         arrayIds.push($(this).parent().attr('id'));
         $.ajax( {
-                url: "{{URL::to('admin/message/message/status/Trash')}}",
+                url: "{{trans_url('admin/message/message/status/Trash')}}",
                 type: 'GET',
                 data: {data:arrayIds},
                 beforeSend:function()
@@ -191,7 +191,7 @@ $(document).ready(function(){
     $(".btn-refresh").click(function(){
         var msgid = $( this ).attr('id');
         var caption = '{{@$message['caption']}}';
-        $('#entry-message').load('{{URL::to('admin/message/details/')}}'+'/'+caption+'/'+msgid);
+        $('#entry-message').load('{{trans_url('admin/message/details/')}}'+'/'+caption+'/'+msgid);
     });
 
     $(".btn-back").click(function(){
@@ -202,12 +202,12 @@ $(document).ready(function(){
 
     $(".btn-reply").click(function(){
         var to_uid = $( this ).attr('id');
-        $('#show-message').load('{{URL::to('admin/message/reply')}}'+'/'+to_uid);
+        $('#show-message').load('{{trans_url('admin/message/reply')}}'+'/'+to_uid);
     });
 
     $(".btn-forward").click(function(){
         var to_uid = $( this ).attr('id');
-        $('#show-message').load('{{URL::to('admin/message/forward')}}'+'/'+to_uid);
+        $('#show-message').load('{{trans_url('admin/message/forward')}}'+'/'+to_uid);
     }); 
 
     $("#msg-options").change(function(){
@@ -218,13 +218,13 @@ $(document).ready(function(){
         var caption = '{{@$message["caption"]}}';
         arrayIds.push(to_uid);
         $.ajax({                    
-            url: "{{URL::to('admin/message/message/status')}}"+"/"+status,
+            url: "{{trans_url('admin/message/message/status')}}"+"/"+status,
             type: 'GET',
             data: {data:arrayIds},
             success:function(data, textStatus, jqXHR)
             {
                 $('#inbox_id').html(data.inbox_count);
-                $('#entry-message').load('{{URL::to('admin/message/status/')}}'+'/'+caption);
+                $('#entry-message').load('{{trans_url('admin/message/status/')}}'+'/'+caption);
             },
             error: function(jqXHR, textStatus, errorThrown)
             {

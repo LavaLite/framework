@@ -13,15 +13,7 @@ use Litepie\Contact\Models\Contact;
  */
 class ContactAdminController extends BaseController
 {
-
-    /**
-     * The authentication guard that should be used.
-     *
-     * @var string
-     */
-    public $guard = 'admin.web';
-
-    
+    // use ContactWorkflow;
     /**
      * Initialize contact controller.
      *
@@ -29,13 +21,8 @@ class ContactAdminController extends BaseController
      *
      * @return type
      */
-    public $home = 'admin';
-
     public function __construct(ContactRepositoryInterface $contact)
     {
-        $this->middleware('web');
-        $this->middleware('auth:admin.web');
-        $this->setupTheme(config('theme.themes.admin.theme'), config('theme.themes.admin.layout'));
         $this->repository = $contact;
         parent::__construct();
     }
@@ -47,23 +34,36 @@ class ContactAdminController extends BaseController
      */
     public function index(ContactRequest $request)
     {
-        $pageLimit = $request->input('pageLimit');
+        $this->theme->asset()->container('footer')->add('gmap','https://maps.googleapis.com/maps/api/js?key=AIzaSyCHM_z0TION52zp4ufPuVfedSAcjGOyW9M');
+        
+         $this->theme->asset()->container('footer')->usepath()->add('gmap3','packages/gmap3/js/gmap3.min.js');
         if ($request->wantsJson()) {
-            $contacts  = $this->repository
-                ->setPresenter('\\Litepie\\Contact\\Repositories\\Presenter\\ContactListPresenter')
-                ->scopeQuery(function ($query) {
-                    return $query->orderBy('id', 'DESC');
-                })->paginate($pageLimit);
-
-            $contacts['recordsTotal']    = $contacts['meta']['pagination']['total'];
-            $contacts['recordsFiltered'] = $contacts['meta']['pagination']['total'];
-            $contacts['request']         = $request->all();
-            return response()->json($contacts, 200);
-
+            return $this->getJson($request);
         }
-
         $this   ->theme->prependTitle(trans('contact::contact.names').' :: ');
         return $this->theme->of('contact::admin.contact.index')->render();
+    }
+
+    /**
+     * Display a list of contact.
+     *
+     * @return Response
+     */
+    public function getJson(ContactRequest $request)
+    {
+        $pageLimit = $request->input('pageLimit');
+
+        $contacts  = $this->repository
+                ->pushCriteria(app('Litepie\Repository\Criteria\RequestCriteria'))
+                ->setPresenter('\\Litepie\\Contact\\Repositories\\Presenter\\ContactListPresenter')
+                ->scopeQuery(function($query){
+                    return $query->orderBy('id','DESC');
+                })->paginate($pageLimit);
+        $contacts['recordsTotal']    = $contacts['meta']['pagination']['total'];
+        $contacts['recordsFiltered'] = $contacts['meta']['pagination']['total'];
+        $contacts['request']         = $request->all();
+        return response()->json($contacts, 200);
+
     }
 
     /**
@@ -114,7 +114,6 @@ class ContactAdminController extends BaseController
         try {
             $attributes             = $request->all();
             $attributes['user_id']  = user_id('admin.web');
-            $attributes['user_type'] = user_type();
             $contact          = $this->repository->create($attributes);
 
             return response()->json([
@@ -208,4 +207,5 @@ class ContactAdminController extends BaseController
             ], 400);
         }
     }
+
 }

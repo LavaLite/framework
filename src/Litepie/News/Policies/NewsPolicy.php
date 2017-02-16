@@ -18,7 +18,7 @@ class NewsPolicy
      */
     public function view(UserPolicy $user, News $news)
     {
-        if ($user->canDo('news.news.view') && $user->hasRole('admin')) {
+        if ($user->canDo('news.news.view')) {
             return true;
         }
 

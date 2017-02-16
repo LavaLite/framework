@@ -119,7 +119,7 @@ $(document).ready(function(){
                 {
                     swal("Deleted!", data.message, "success");
                     $('#trash_id').html(data.trash_count);
-                    $('#entry-message').load('{{URL::to($guard.'/message/status/Trash')}}');
+                    $('#entry-message').load('{{trans_url($guard.'/message/status/Trash')}}');
                 },
             });
         });
@@ -130,7 +130,7 @@ $(document).ready(function(){
         var arrayIds = [];
         arrayIds.push($(this).parent().attr('id'));
         $.ajax( {
-                url: "{{URL::to($guard.'/message/message/status/Trash')}}",
+                url: "{{trans_url($guard.'/message/message/status/Trash')}}",
                 type: 'GET',
                 data: {data:arrayIds},
                 beforeSend:function()
@@ -151,7 +151,7 @@ $(document).ready(function(){
     $(".btn-refresh").click(function(){
         var msgid = $( this ).attr('id');
         var caption = '{{@$message["caption"]}}';
-        $('#entry-message').load('{{URL::to($guard.'/message/details/')}}'+'/'+caption+'/'+msgid);
+        $('#entry-message').load('{{trans_url($guard.'/message/details/')}}'+'/'+caption+'/'+msgid);
     });
 
     $(".btn-back").click(function(){
@@ -162,12 +162,12 @@ $(document).ready(function(){
 
     $(".btn-reply").click(function(){ 
         var to_uid = '{{@$message["id"]}}';
-        $('#show-message').load('{{URL::to($guard.'/message/reply')}}'+'/'+to_uid);
+        $('#show-message').load('{{trans_url($guard.'/message/reply')}}'+'/'+to_uid);
     });
 
     $(".btn-forward").click(function(){
         var to_uid = '{{@$message["id"]}}';
-        $('#show-message').load('{{URL::to($guard.'/message/forward')}}'+'/'+to_uid);
+        $('#show-message').load('{{trans_url($guard.'/message/forward')}}'+'/'+to_uid);
     }); 
 
     $(".btn-important").click(function(){
@@ -177,13 +177,13 @@ $(document).ready(function(){
         var caption = '{{@$message["caption"]}}';
         arrayIds.push(to_uid);
         $.ajax({                    
-            url: "{{URL::to($guard.'/message/message/status')}}"+"/"+status,
+            url: "{{trans_url($guard.'/message/message/status')}}"+"/"+status,
             type: 'GET',
             data: {data:arrayIds},
             success:function(data, textStatus, jqXHR)
             {
                 $('#inbox_id').html(data.inbox_count);
-                $('#entry-message').load('{{URL::to($guard.'/message/status/')}}'+'/'+caption);
+                $('#entry-message').load('{{trans_url($guard.'/message/status/')}}'+'/'+caption);
             },
             error: function(jqXHR, textStatus, errorThrown)
             {
@@ -198,13 +198,13 @@ $(document).ready(function(){
         var caption = '{{@$message["caption"]}}';
         arrayIds.push(to_uid);
         $.ajax({                    
-            url: "{{URL::to($guard.'/message/message/status')}}"+"/"+status,
+            url: "{{trans_url($guard.'/message/message/status')}}"+"/"+status,
             type: 'GET',
             data: {data:arrayIds},
             success:function(data, textStatus, jqXHR)
             {
                 $('#inbox_id').html(data.inbox_count);
-                $('#entry-message').load('{{URL::to($guard.'/message/status/')}}'+'/'+caption);
+                $('#entry-message').load('{{trans_url($guard.'/message/status/')}}'+'/'+caption);
             },
             error: function(jqXHR, textStatus, errorThrown)
             {
@@ -219,13 +219,13 @@ $(document).ready(function(){
         var caption = '{{@$message["caption"]}}';
         arrayIds.push(to_uid);
         $.ajax({                    
-            url: "{{URL::to($guard.'/message/message/status')}}"+"/"+status,
+            url: "{{trans_url($guard.'/message/message/status')}}"+"/"+status,
             type: 'GET',
             data: {data:arrayIds},
             success:function(data, textStatus, jqXHR)
             {
                 $('#inbox_id').html(data.inbox_count);
-                $('#entry-message').load('{{URL::to($guard.'/message/status/')}}'+'/'+caption);
+                $('#entry-message').load('{{trans_url($guard.'/message/status/')}}'+'/'+caption);
             },
             error: function(jqXHR, textStatus, errorThrown)
             {

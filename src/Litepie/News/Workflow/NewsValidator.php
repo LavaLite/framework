@@ -19,6 +19,7 @@ class NewsValidator
     {
         return Validator::make($news->toArray(), [
             'title' => 'required|min:15',
+            'status' => 'in:cancel,draft',
         ]);
     }
 
@@ -33,7 +34,7 @@ class NewsValidator
     {
         return Validator::make($news->toArray(), [
             'title'  => 'required|min:15',
-            'status' => 'in:complete',
+            'status' => 'in:cancel,complete',
         ]);
     }
 
@@ -48,7 +49,7 @@ class NewsValidator
     {
         return Validator::make($news->toArray(), [
             'title'  => 'required|min:15',
-            'status' => 'in:verify',
+            'status' => 'in:cancel,verify',
         ]);
 
     }
@@ -65,7 +66,7 @@ class NewsValidator
         return Validator::make($news->toArray(), [
             'title'       => 'required|min:15',
             'description' => 'required|min:50',
-            'status'      => 'in:approve,archive,unpublish',
+            'status'      => 'in:cancel,approve,archive,unpublish',
         ]);
 
     }
@@ -82,7 +83,7 @@ class NewsValidator
         return Validator::make($news->toArray(), [
             'title'       => 'required|min:15',
             'description' => 'required|min:50',
-            'status'      => 'in:approve,publish,unpublish',
+            'status'      => 'in:cancel,approve,publish,unpublish',
         ]);
 
     }
@@ -99,7 +100,23 @@ class NewsValidator
         return Validator::make($news->toArray(), [
             'title'       => 'required|min:15',
             'description' => 'required|min:50',
-            'status'      => 'in:publish',
+            'status'      => 'in:cancel,publish',
+        ]);
+
+    }
+    /**
+     * Determine if the given news is valid for cancel status.
+     *
+     * @param News $news
+     *
+     * @return bool / Validator
+     */
+    public function cancel(News $news)
+    {
+        return Validator::make($news->toArray(), [
+            'title'       => 'required|min:15',
+            'description' => 'required|min:50',
+            'status'      => 'in:complete,verify,approve,publish,archive,unpublish',
         ]);
 
     }

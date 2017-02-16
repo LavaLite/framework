@@ -53,7 +53,10 @@ return [
      * Options for select/radio/check.
      */
     'options'               => [
-        'sex'          => ['Male' => 'Male','Female' => 'Female'],
+        'sex'          => [
+            'male' => ['name' => 'sex', 'value' => 'male'],
+            'female' => ['name' => 'sex', 'value' => 'female'],
+        ],
         'status'          => ['New'=>'New', 'Active'=>'Active','Suspended'=>'Suspended'],
         'reporting_to' => ['1'],
         'department'   => ['marketing' => 'Marketing', 'accounts' => 'Accounts', 'store' => 'Store'],

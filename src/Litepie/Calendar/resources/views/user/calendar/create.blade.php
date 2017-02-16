@@ -7,7 +7,7 @@
         ->id('create-calendar-calendar')
         ->method('POST')
         ->files('true')
-        ->action(URL::to($guard.'/calendar/calendar'))!!}
+        ->action(trans_url($guard.'/calendar/calendar'))!!}
         <div class="tab-content">
             <div class="tab-pane active" id="details">
                 @include('calendar::user.calendar.partial.entry')

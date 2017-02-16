@@ -1,8 +1,8 @@
-This is a Litepie 5 litepie that provides contact management facility for lavalite framework.
+This is a Laravel 5 package that provides contact management facility for lavalite framework.
 
 ## Installation
 
-Begin by installing this litepie through Composer. Edit your project's `composer.json` file to require `litepie/contact`.
+Begin by installing this package through Composer. Edit your project's `composer.json` file to require `litepie/contact`.
 
     "litepie/contact": "dev-master"
 
@@ -40,12 +40,8 @@ Language
 
 Views public and admin
 
-    php artisan vendor:publish --provider="Litepie\Contact\Providers\ContactServiceProvider" --tag="view"
-
-Public folders
-
-	php artisan vendor:publish --provider="Litepie\Contact\Providers\ContactServiceProvider" --tag="public"
-
+    php artisan vendor:publish --provider="Litepie\Contact\Providers\ContactServiceProvider" --tag="view-public"
+    php artisan vendor:publish --provider="Litepie\Contact\Providers\ContactServiceProvider" --tag="view-admin"
 
 Publish admin views only if it is necessary.
 

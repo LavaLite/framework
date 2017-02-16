@@ -10,17 +10,19 @@ use Litepie\Hashids\Traits\Hashids;
 use Litepie\Repository\Traits\PresentableTrait;
 use Litepie\Revision\Traits\Revision;
 use Litepie\Trans\Traits\Translatable;
-use Litepie\User\Traits\User as UserModel;
+// use Litepie\Workflow\Model\Workflow;
 
 class Contact extends Model
 {
-    use Filer, SoftDeletes, Hashids, Slugger, Translatable, Revision, PresentableTrait, UserModel;
+    use Filer, SoftDeletes, Hashids, Slugger, Translatable, Revision, PresentableTrait;
+    // use Workflow;
 
     /**
      * Configuartion for the model.
      *
      * @var array
      */
-    protected $config = 'litepie.contact.contact';
+     protected $config = 'litepie.contact.contact';
+
 
 }

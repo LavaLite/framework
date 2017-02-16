@@ -11,9 +11,9 @@ class TeamListTransformer extends TransformerAbstract
     {
         return [
             'id'                => $team->getRouteKey(),
+            'manager_id'        => @$team->manager->name,
             'name'              => $team->name,
             'description'       => $team->description,
-            'settings'          => $team->settings,
             'status'            => trans('app.'.$team->status),
             'created_at'        => format_date($team->created_at),
             'updated_at'        => format_date($team->updated_at),

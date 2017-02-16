@@ -1,0 +1,21 @@
+{
+    "name": "litepie/alert",
+    "description": "Alert package for litepie.",
+    "keywords": ["lavalite", "Alert"],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Lavalite",
+            "email": "info@lavalite.org"
+        }
+    ],
+    "require": {
+        "php": ">=5.5.9"
+    },
+    "autoload": {
+        "psr-4": {
+            "Litepie\\Alert\\": "src/Litepie/Alert"
+        }
+    },
+    "minimum-stability": "dev"
+}

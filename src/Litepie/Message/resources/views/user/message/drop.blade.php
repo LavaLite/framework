@@ -5,7 +5,7 @@
     <div class="slimScrollDiv" style="position: relative; overflow: hidden; width: auto; height: 200px;"><ul class="menu" style="overflow: hidden; width: 100%; height: 200px;">
       @forelse(Message::unread() as $key => $value)
        <li>
-           <a href="{!!URL::to($guard.'/message/message')!!}">
+           <a href="{!!trans_url($guard.'/message/message')!!}">
                <div class="pull-left">
                    <img src=" {!!@$value->user->picture('photo')!!}" class="img-circle" alt="User Image"/>
                </div>

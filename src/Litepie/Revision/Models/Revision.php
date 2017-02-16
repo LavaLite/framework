@@ -2,20 +2,27 @@
 
 namespace Litepie\Revision\Models;
 
-use Illuminate\Database\Eloquent\Model as Eloquent;
-
+use Litepie\Database\Model;
+use Litepie\Repository\Traits\PresentableTrait;
 /**
  * Revision Model.
  *
  * @author Alexey Bobkov, Samuel Georges
  */
-class Revision extends Eloquent
+class Revision extends Model
 {
+    use PresentableTrait;
     /**
      * @var string The database table used by the model.
      */
     public $table = 'revisions';
-
+    /**
+     * User morph to many relation.
+     */
+    public function user()
+    {
+        return $this->morphTo();
+    }
     /**
      * Returns "new value" casted as the saved type.
      *

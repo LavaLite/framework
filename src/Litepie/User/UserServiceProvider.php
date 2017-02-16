@@ -45,17 +45,17 @@ class UserServiceProvider extends ServiceProvider
 
         // Bind User to repository
         $this->app->bind(
-            \Litepie\User\Interfaces\UserRepositoryInterface::class,
+            'Litepie\User\Interfaces\UserRepositoryInterface',
             \Litepie\User\Repositories\Eloquent\UserRepository::class
         );
         // Bind Permission to repository
         $this->app->bind(
-            \Litepie\User\Interfaces\PermissionRepositoryInterface::class,
+            'Litepie\User\Interfaces\PermissionRepositoryInterface',
             \Litepie\User\Repositories\Eloquent\PermissionRepository::class
         );
         // Bind Role to repository
         $this->app->bind(
-            \Litepie\User\Interfaces\RoleRepositoryInterface::class,
+            'Litepie\User\Interfaces\RoleRepositoryInterface',
             \Litepie\User\Repositories\Eloquent\RoleRepository::class
         );
         // Bind Team to repository

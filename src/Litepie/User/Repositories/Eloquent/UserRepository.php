@@ -40,4 +40,22 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
     {
         return $this->model->whereId($id)->first();
     }
+    
+    /**
+     * Find a agents.
+     *
+     * @param type $id
+     *
+     * @return type
+     */
+    public function agents()
+    {
+        $temp = array();
+        $agents = $this->model->select('id','name')->orderBy('name','ASC')->get();
+        foreach ($agents as $key => $value) {
+            $temp[$value->id] = $value->name;
+        }
+
+        return $temp;
+    }
 }

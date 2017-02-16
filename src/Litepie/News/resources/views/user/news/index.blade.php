@@ -15,7 +15,7 @@
                                     {!!Form::open()
                                    ->method('GET')
                                    ->class('form pn')
-                                   ->action(URL::to($guard.'/news/news'))!!}
+                                   ->action(trans_url($guard.'/news/news'))!!}
                                     <div class="form-group form-white mn">
                                       {!!Form::text('search')->type('text')->placeholder('Search')->raw()!!}
                                     </div>

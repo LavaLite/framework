@@ -16,7 +16,19 @@
         <div class="tab-content clearfix">
             <div class="tab-pane active" id="team">
                 <div class="tab-pan-title">  {!! trans('app.edit') !!}  {!! trans('user::team.name') !!} [ {!!$team->name!!} ] </div>
-                @include('vuser::admin.team.partial.entry')
+                <div class='row'>
+                    <div class='col-md-6 col-sm-6'>
+                        @include('vuser::admin.team.partial.entry')
+                    </div>
+
+                    <div class='col-md-3 col-sm-3'>
+                        <label>Icon</label>
+                        {!!@$team->fileUpload('icon')!!}
+                    </div>
+                    <div class='col-md-3 col-sm-3'>
+                        {!!@$team->fileEdit('icon')!!}
+                    </div>
+                </div>
             </div>
         </div>
         {!!Form::close()!!}

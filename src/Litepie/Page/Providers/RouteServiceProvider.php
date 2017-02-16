@@ -30,7 +30,7 @@ class RouteServiceProvider extends ServiceProvider
 
         if (Request::is('*/page/page/*')) {
             Route::bind('page', function ($id) {
-                $page = $this->app->make('\Litepie\Page\Interfaces\PageRepositoryInterface');
+                $page = $this->app->make(\Litepie\Page\Interfaces\PageRepositoryInterface::class);
                 return $page->findOrNew($id);
             });
         }

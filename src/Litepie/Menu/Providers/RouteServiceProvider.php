@@ -31,7 +31,7 @@ class RouteServiceProvider extends ServiceProvider
 
         if (Request::is('*/menu/menu/*')) {
             Route::bind('menu', function ($id) {
-                $menu = $this->app->make('\Litepie\Contracts\Menu\MenuRepository');
+                $menu = $this->app->make(\Litepie\Contracts\Menu\MenuRepository::class);
                 return $menu->findorNew($id);
             });
         }

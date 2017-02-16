@@ -6,11 +6,10 @@ class UserTableSeeder extends Seeder
 {
     public function run()
     {
-        DB::table('users')->insert([
+        /*DB::table('users')->insert([
             [
                 'id'          => 1,
                 'email'       => 'superuser@superuser.com',
-                'password'    => '$2y$10$bKwW6PzSa1GDOeUTqtTaLOVMutZ12ObeslBfEXPx2pJAL/2B8aB06',
                 'status'      => 'Active',
                 'name'        => 'Super User',
                 'sex'         => 'Male',
@@ -23,7 +22,6 @@ class UserTableSeeder extends Seeder
             [
                 'id'          => 2,
                 'email'       => 'admin@admin.com',
-                'password'    => '$2y$10$T9DqgU3OlGOHHBKRL/tS4.CXyx6VZ.HhlT.otvMWk55zQ3EZB8Sze',
                 'status'      => 'Active',
                 'name'        => 'Admin',
                 'sex'         => 'Male',
@@ -36,7 +34,6 @@ class UserTableSeeder extends Seeder
             [
                 'id'          => 3,
                 'email'       => 'user@user.com',
-                'password'    => '$2y$10$WgdW0SZkx3wlT52nroRGquai2P3l0MSU3vozQLrWgfFpJVxS4R6ky',
                 'status'      => 'Active',
                 'name'        => 'User',
                 'sex'         => 'Male',
@@ -46,7 +43,7 @@ class UserTableSeeder extends Seeder
                 'web'         => 'http://litepie.org',
                 'created_at'  => '2015-09-15',
             ],
-        ]);
+        ]);*/
 
 
         DB::table('menus')->insert([
@@ -57,6 +54,7 @@ class UserTableSeeder extends Seeder
             'description' => null,
             'icon'        => 'pe-7s-graph',
             'target'      => null,
+            'order'       => 190,
             'status'      => 1,
         ]);
 
@@ -68,7 +66,6 @@ class UserTableSeeder extends Seeder
             'description' => null,
             'icon'        => 'fa fa-users',
             'target'      => null,
-            'order'       => 190,
             'status'      => 1,
         ]);
 

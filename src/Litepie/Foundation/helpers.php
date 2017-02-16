@@ -225,7 +225,7 @@ if (!function_exists('user_type')) {
      */
     function user_type($guard = null)
     {
-        $guard = is_null($guard) ? config('auth.guard') : $guard;
+        $guard = is_null($guard) ? getenv('guard') : $guard;
         if (Auth::guard($guard)->check()) {
             $user = Auth::guard($guard)->user();
             return get_class($user);
@@ -246,7 +246,7 @@ if (!function_exists('user_id')) {
     function user_id($guard = null)
     {
 
-        $guard = is_null($guard) ? config('auth.guard') : $guard;
+        $guard = is_null($guard) ? getenv('guard') : $guard;
 
         if (Auth::guard($guard)->check()) {
             return Auth::guard($guard)->user()->id;
@@ -294,8 +294,7 @@ if (!function_exists('users')) {
      */
     function users($property, $guard = null)
     {
-
-        $guard = is_null($guard) ? config('auth.guard') : $guard;
+        $guard = is_null($guard) ? getenv('guard') : $guard;
 
         if (Auth::guard($guard)->check()) {
             return Auth::guard($guard)->user()->$property;

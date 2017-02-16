@@ -112,6 +112,7 @@ class TeamAdminController extends BaseController
             $attributes             = $request->all();
             $attributes['user_id']  = user_id('admin.web');
             $team          = $this->repository->create($attributes);
+            $team->member()->attach($attributes['manager_id']);
 
             return response()->json([
                 'message'  => trans('messages.success.updated', ['Module' => trans('user::team.name')]),
@@ -202,6 +203,73 @@ class TeamAdminController extends BaseController
                 'code'     => 400,
                 'redirect' => trans_url('/admin/user/team/'.$team->getRouteKey()),
             ], 400);
+        }
+    }
+
+    /**
+     * Add the member.
+     *
+     * @param Request $request
+     * @param Model   $team
+     *
+     * @return Response
+     */
+    public function addMember(TeamRequest $request, Team $team)
+    {
+        try {
+
+            $attributes = $request->all();
+            if (!$team->member()->where('team_user.user_id',$attributes['user_id'])->exists()) {
+                $team->member()->attach($attributes['user_id'],['reporting_to' => $attributes['reporting_to']]);
+            }
+                    
+            return response()->json([
+                'message'  => trans('Member added successfully', ['Module' => trans('user::team.name')]),
+                'code'     => 204,
+                'redirect' => trans_url('/admin/user/team/'.$team->getRouteKey())
+            ], 201);
+
+        } catch (Exception $e) {
+
+            return response()->json([
+                'message'  => $e->getMessage(),
+                'code'     => 400,
+                'redirect' => trans_url('/admin/user/team/'.$team->getRouteKey()),
+            ], 400);
+
+        }
+    }
+
+    /**
+     * Remove the member from a team.
+     *
+     * @param Request $request
+     * @param Model   $team
+     *
+     * @return Response
+     */
+    public function removeMember(TeamRequest $request, Team $team)
+    {
+        try {
+            $attributes = $request->all();
+            if ($team->member()->where('team_user.user_id',$attributes['user_id'])->exists()) {
+                $team->member()->detach($attributes['user_id']);
+            }
+                    
+            return response()->json([
+                'message'  => trans('Member added successfully', ['Module' => trans('user::team.name')]),
+                'code'     => 204,
+                'redirect' => trans_url('/admin/user/team/'.$team->getRouteKey())
+            ], 201);
+
+        } catch (Exception $e) {
+
+            return response()->json([
+                'message'  => $e->getMessage(),
+                'code'     => 400,
+                'redirect' => trans_url('/admin/user/team/'.$team->getRouteKey()),
+            ], 400);
+
         }
     }
 

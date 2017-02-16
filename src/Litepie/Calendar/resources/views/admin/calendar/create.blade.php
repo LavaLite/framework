@@ -17,7 +17,7 @@
         ->id('create-calendar-calendar')
         ->method('POST')
         ->files('true')
-        ->action(URL::to('admin/calendar/calendar'))!!}
+        ->action(trans_url('admin/calendar/calendar'))!!}
         <div class="tab-content">
             <div class="tab-pane active" id="details">
                 @include('calendar::admin.calendar.partial.entry')
