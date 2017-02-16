@@ -19,8 +19,8 @@
         "anahkiasen/former": "4.1.*",
         "hashids/hashids": "2.0.*",
         "intervention/imagecache": "2.3.*",
-        "laravel/socialite": "^3.0.*",
-        "league/fractal": "^0.15.*"
+        "laravel/socialite": "3.0.*",
+        "league/fractal": "0.15.*"
     },
     "replace": {
         "litepie/alert": "self.version",
