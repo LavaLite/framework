@@ -56,5 +56,5 @@
         "psr-4": {
             "Litepie\\": "src/Litepie"
         }
-    },
+    }
 }
