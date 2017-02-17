@@ -69,7 +69,6 @@ class UserServiceProvider extends ServiceProvider
         $this->app->register(\Litepie\User\Providers\RouteServiceProvider::class);
         $this->app->register(\Litepie\User\Providers\WorkflowServiceProvider::class);
         $this->app->register(\Laravel\Socialite\SocialiteServiceProvider::class);
-        $this->app->register(\Greggilbert\Recaptcha\RecaptchaServiceProvider::class);
     }
 
     /**

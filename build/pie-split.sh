@@ -3,7 +3,9 @@
 #
 
 ./git-subsplit.sh init git@github.com:lavalite/framework.git
+./git-subsplit.sh publish --no-tags src/Litepie/Alerts:git@github.com:Litepie/alerts.git
 ./git-subsplit.sh publish --no-tags src/Litepie/Block:git@github.com:Litepie/block.git
+./git-subsplit.sh publish --no-tags src/Litepie/Blog:git@github.com:Litepie/blog.git
 ./git-subsplit.sh publish --no-tags src/Litepie/Calendar:git@github.com:Litepie/calendar.git
 ./git-subsplit.sh publish --no-tags src/Litepie/Contact:git@github.com:Litepie/contact.git
 ./git-subsplit.sh publish --no-tags src/Litepie/Database:git@github.com:Litepie/database.git
