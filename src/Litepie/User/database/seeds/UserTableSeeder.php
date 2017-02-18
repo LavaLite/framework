@@ -6,7 +6,7 @@ class UserTableSeeder extends Seeder
 {
     public function run()
     {
-        /*DB::table('users')->insert([
+        DB::table('users')->insert([
             [
                 'id'          => 1,
                 'email'       => 'superuser@superuser.com',
@@ -43,7 +43,7 @@ class UserTableSeeder extends Seeder
                 'web'         => 'http://litepie.org',
                 'created_at'  => '2015-09-15',
             ],
-        ]);*/
+        ]);
 
 
         DB::table('menus')->insert([
