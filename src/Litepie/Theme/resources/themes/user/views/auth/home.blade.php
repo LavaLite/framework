@@ -65,9 +65,10 @@
                     </div>
                 </a>
                 <hr>
+                  
                 <div class="tile-footer clearfix">
                     <a href="{!!url(getenv('auth.guard').'/news/news')!!}"><span class="text-small">Go to news</span></a>
-                    <a href="{!!url(getenv('auth.guard').'/news/news/create')!!}"><span class="percent"><i class="pe-7s-plus"></i></span></a>
+                    <a href="{!!url(getenv('auth.guard').'/news/news/create')!!}"><span class="add-icon"><i class="pe-7s-plus"></i></span></a>
                 </div>
             </div>
         </div>
@@ -81,99 +82,7 @@
             </div>
         </div>
         <div class="col-md-4">
-            <!-- {!!Task::userGadget()!!} -->
-            <div class="panel panel-default alt with-footer">
-                <div class="heading clearfix">
-                    <h2 class="title">Activity Feed</h2>
-                    <div class="ctrls">
-                        <div class="badge badge-info">99</div>
-                    </div>
-                </div>
-                <div class="body pn" style="max-height: 245px;overflow-x: auto;">
-                    <ul class="media-list scroll-content m-n">
-                        <li class="media b-bl">
-                            <a href="#">
-                                <div class="media-left">
-                                    <span class="icon success"><i class="ion-checkmark-circled"></i></span>
-                                </div>
-                                <div class="media-body">
-                                    <span class="name">Jerrod Miller</span> is now following you.
-                                    <span class="time">8 mins ago</span>
-                                </div>
-                            </a>
-                        </li>
-                        <li class="media b-bl">
-                            <a href="#">
-                                <div class="media-left">
-                                    <span class="icon purple"><i class="ion-refresh"></i></span>
-                                </div>
-                                <div class="media-body">
-                                    <span class="name">Ben Hepworth</span> updated project <span class="link">Marvin</span>
-                                    <span class="time">16 mins ago</span>
-                                </div>
-                            </a>
-                        </li>
-                        <li class="media b-bl">
-                            <a href="#">
-                                <div class="media-left">
-                                    <span class="icon blue"><i class="ion-android-sync"></i></span>
-                                </div>
-                                <div class="media-body">
-                                    <span class="name">Ken Duren</span> added new files.
-                                    <span class="time">32 mins ago</span>
-                                </div>
-                            </a>
-                        </li>
-                        <li class="media b-bl">
-                            <a href="#">
-                                <div class="media-left">
-                                    <span class="icon teal"><i class="ion-checkmark-round"></i></span>
-                                </div>
-                                <div class="media-body">
-                                    Your changes were saved.
-                                    <span class="time">2 hrs ago</span>
-                                </div>
-                            </a>
-                        </li>
-                        <li class="media b-bl">
-                            <a href="#">
-                                <div class="media-left">
-                                    <span class="icon lime"><i class="ion-close-round"></i></span>
-                                </div>
-                                <div class="media-body">
-                                    <span class="name">Danial Saracino</span> deleted project <span class="link">Avalon</span>
-                                    <span class="time">4 hrs ago</span>
-                                </div>
-                            </a>
-                        </li>
-                        <li class="media b-bl">
-                            <a href="#">
-                                <div class="media-left">
-                                    <span class="icon success"><i class="ion-checkmark-circled"></i></span>
-                                </div>
-                                <div class="media-body">
-                                    <span class="name">Jerrod Miller</span> is now following you.
-                                    <span class="time">8 mins ago</span>
-                                </div>
-                            </a>
-                        </li>
-                        <li class="media">
-                            <a href="#">
-                                <div class="media-left">
-                                    <span class="icon teal"><i class="ion-checkmark-round"></i></span>
-                                </div>
-                                <div class="media-body">
-                                    Your changes were saved.
-                                    <span class="time">2 hrs ago</span>
-                                </div>
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-                <div class="footer">
-                    <a href="{!!url(getenv('auth.guard').'/task/task')!!}" class="btn btn-danger btn-sm btn-raised">See more</a>
-                </div>
-            </div>
+            {!!Revision::activity()!!}
         </div>
         <div class="col-md-4">
             <div class="panel panel-default alt with-footer">

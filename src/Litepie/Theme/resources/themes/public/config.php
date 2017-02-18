@@ -61,7 +61,7 @@ return [
 
             $theme->asset()->usepath()->add('normalize', 'css/normalize.css');
             $theme->asset()->usepath()->add('main', 'css/main.css');
-            $theme->asset()->usepath()->add('public', 'css/public.css');
+            $theme->asset()->usepath()->add('public', 'css/vendor.css');
             $theme->asset()->usepath()->add('jquery', 'packages/jquery/js/jquery.min.js');
         },
 
@@ -73,19 +73,14 @@ return [
                 /*$theme->asset()->usepath()->add('default', 'css/default.css');*/
             },
 
-            'user'    => function ($theme) {
-                $theme->asset()->usepath()->add('user', 'css/user.css');
-                $theme->asset()->usepath()->add('fullcalendar-css', 'packages/fullcalendar/fullcalendar.min.css');
-                $theme->asset()->container('footer')->usepath()->add('fullcalendar-js-ui', 'packages/fullcalendar/jquery-ui.js');
-                $theme->asset()->container('footer')->usepath()->add('fullcalendar-js', 'packages/fullcalendar/fullcalendar.min.js');
-            },
-
             'public'  => function ($theme) {
                 $theme->asset()->usepath()->add('public', 'css/public.css');
             },
 
-            'auth'    => function ($theme) {
-                $theme->asset()->usepath()->add('auth', 'css/auth.css');
+            'install'  => function ($theme) {
+                $theme->asset()->usepath()->add('install', 'css/install.css');
+                $theme->asset()->usepath()->add('tbw', 'packages/twitter-bootstrap-wizard/jquery.bootstrap.wizard.js');
+                
             },
 
             'home'    => function ($theme) {

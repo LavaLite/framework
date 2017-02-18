@@ -15,12 +15,14 @@
     </head>
 
 
-    <body class="body-bg-full auth login" style="background-image: url({{theme_asset('img/lock.jpg')}});">
-    
-        {!! Theme::partial('auth.header') !!}
-        {!! Theme::content() !!}
-        {!! Theme::partial('auth.footer') !!}
-
+    <body class="signup-page">
+        <div class="wrapper">
+            <div class="full-height-bg" style="background-image: url({{theme_asset('img/login.png')}}); background-size: cover; background-position: top center;">
+                <!-- {!! Theme::partial('auth.header') !!} -->
+                {!! Theme::content() !!}
+                {!! Theme::partial('auth.footer') !!}
+            </div>
+        </div>
         <script src="{{ theme_asset('js/vendor.js') }}"></script>
         <script src="{{ theme_asset('js/main.js') }}"></script>
         {!! Theme::asset()->container('footer')->scripts() !!}
