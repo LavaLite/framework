@@ -7,27 +7,7 @@ $(function () {
         }
     });
 
-    $('.html-editor-mini').summernote({
-        height: "200px",
-        toolbar: [
-            ['style', ['bold', 'italic', 'underline', 'clear']],
-            ['font', ['strikethrough', 'superscript', 'subscript']],
-            ['fontsize', ['fontsize']],
-            ['color', ['color']],
-            ['para', ['ul', 'ol', 'paragraph']],
-            ['height', ['height']]
-          ]
-    });
-
-    
-
-
-    $('.html-editor').summernote({
-        height: "200px",
-        onImageUpload: function(files, editor, welEditable) {
-            app.sendFile(files[0], editor, welEditable);
-        }
-    });
+ 
 
      $('input[type="datetime"], .pickdatetime').datetimepicker({
         format:'Y-m-d H:i',

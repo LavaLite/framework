@@ -7,6 +7,7 @@
         <title>{{ Theme::getTitle() }}</title>
         <meta name="description" content="The Lavalite Content Management System">
         <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="shortcut icon" href="{!!url('favicon.ico')!!}"/>       
         <link rel="apple-touch-icon" href="{{asset('apple-touch-icon.png')}}">
         <link href="{{ theme_asset('css/vendor.css') }}" rel="stylesheet">
 

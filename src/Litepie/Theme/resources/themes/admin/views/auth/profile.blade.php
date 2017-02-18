@@ -1,9 +1,3 @@
-
-<style>
-    .tab-pane {
-        min-height: 500px;
-    }
-</style>
 <div class="content-wrapper" style="min-height: 1096px;">
     <!-- Content Header (Page header) -->
     <section class="content-header">
@@ -11,7 +5,7 @@
         User Profile
         </h1>
         <ol class="breadcrumb">
-            <li><a href="/admin"><i class="fa fa-dashboard"></i> Home</a></li>
+            <li><a href="{!!url('admin')!!}"><i class="fa fa-dashboard"></i> Home</a></li>
             <li class="active">User Profile</li>
         </ol>
     </section>
@@ -25,8 +19,8 @@
                         <img class="profile-user-img img-responsive img-circle" src="{!!user('admin.web')->picture!!}" alt="User profile picture">
                         <h3 class="profile-username text-center">{!!user('admin.web')->name!!}</h3>
                         <p class="text-muted text-center">{!!user('admin.web')->designation!!} - Member Since {!!user('admin.web')->joined!!}</p>
-                        <button  class="btn btn-primary btn-block" data-toggle="modal" data-target="#update-profile"><b>Update Profile</b></button>
-                        <button  class="btn btn-warning btn-block" data-toggle="modal" data-target="#change-password"><b>Change Password</b></button>
+                        <button  class="btn btn-primary btn-block"  id="update-profile"><b>Update Profile</b></button>
+                        <button  class="btn btn-warning btn-block" id="change-password"><b>Change Password</b></button>
                     </div>
                     <!-- /.box-body -->
                 </div>
@@ -63,30 +57,66 @@
                 <!-- /.box -->
             </div>
             <!-- /.col -->
-            <div class="col-md-9">
-                <div class="nav-tabs-custom">
-                    <ul class="nav nav-tabs">
-                        <li class="active"><a href="#taskss" data-toggle="tab" aria-expanded="false">Task</a></li>
-                        <li class=""><a href="#calendars" data-toggle="tab" aria-expanded="false">Calendar</a></li>
-                        <li class=""><a href="#settings" data-toggle="tab" aria-expanded="true">Settings</a></li>
-                    </ul>
-                    <div class="tab-content">
-                        <div class="tab-pane active" id="taskss">
-                            {!! @Task::display('profile') !!}
+            <div id="show-home">
+                <div class="col-md-9">
+                    <div class="nav-tabs-custom">
+                        <ul class="nav nav-tabs">
+                            <li class="active"><a href="#tasks" data-toggle="tab" aria-expanded="false">Task</a></li>
+                            <li class=""><a href="#calendars" data-toggle="tab" aria-expanded="false">Calendar</a></li>
+                            <li class=""><a href="#settings" data-toggle="tab" aria-expanded="true">Settings</a></li>
+                        </ul>
+                        <div class="tab-content">
+                            <div class="tab-pane active" id="tasks">
+                                {!! @Task::display('profile') !!}
+                            </div>
+                            <!-- /.tab-pane -->
+                            <div class="tab-pane" id="calendars">
+                                {!! @Calendar::display('profile') !!}
+                            </div>
+                            <!-- /.tab-pane -->
+                            <div class="tab-pane" id="settings">
+                                {!! @Settings::display('setting') !!}
+                            </div>
+                            <!-- /.tab-pane -->
                         </div>
-                        <!-- /.tab-pane -->
-                        <div class="tab-pane" id="calendars">
-                            {!! @Calendar::display('profile') !!}
-                        </div>
-                        <!-- /.tab-pane -->
-                        <div class="tab-pane" id="settings">
-                            {!! @Settings::display('setting') !!}
-                        </div>
-                        <!-- /.tab-pane -->
+                        <!-- /.tab-content -->
                     </div>
-                    <!-- /.tab-content -->
                 </div>
-                <!-- /.nav-tabs-custom -->
+            </div>
+            
+            <div id="show-profile">
+                <div class="col-md-9">
+                    <div class="nav-tabs-custom">
+                        <ul class="nav nav-tabs">
+                            <li class="active"><a href="#profile" data-toggle="tab" aria-expanded="false">Profile</a></li>
+                        </ul>
+                        <div class="tab-content">
+                            <div class="tab-pane active" id="profile">
+                                @include('public::notifications')
+                                {!!@ User::profile('edit', 'admin.web') !!}
+                                <button type="button" class="btn btn-primary" id="btn-update-profile">Save changes</button>
+                                <button type="button" class="btn btn-default btn-close">Close</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="show-change-password">
+                <div class="col-md-9">
+                    <div class="nav-tabs-custom">
+                        <ul class="nav nav-tabs">
+                            <li class="active"><a href="#change-pwd" data-toggle="tab" aria-expanded="false">Change Password</a></li>
+                        </ul>
+                        <div class="tab-content">
+                            <div class="tab-pane active" id="change-pwd">
+                                {!!@ User::password('change', 'admin.web') !!}
+                                <button type="button" class="btn btn-primary" id="btn-change-password">Save changes</button>
+                                <button type="button" class="btn btn-default btn-close">Close</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
             <!-- /.col -->
         </div>
@@ -95,46 +125,30 @@
     <!-- /.content -->
 </div>
 
-<!-- Update Profile Modal -->
-<div class="modal fade" id="update-profile" tabindex="-1" role="dialog" aria-labelledby="update-profile-label">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="update-profile-label">Update Profile</h4>
-      </div>
-      <div class="modal-body">
-        {!!@ User::profile('edit', 'admin.web') !!}
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-primary" id="btn-update-profile">Save changes</button>
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- Change Password Modal -->
-<div class="modal fade" id="change-password" tabindex="-1" role="dialog" aria-labelledby="change-password-label">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="change-password-label">Change Password</h4>
-      </div>
-      <div class="modal-body">
-        {!!@ User::password('change', 'admin.web') !!}
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-primary" id="btn-change-password">Save changes</button>
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-      </div>
-    </div>
-  </div>
-</div>
 
 <script type="text/javascript">
 (function ($) {
+
+    $('#show-home').hide();
+    $('#show-profile').show();
+    $('#show-change-password').hide();
+    $('#update-profile').click(function(){
+        $('#show-home').hide();
+        $('#show-change-password').hide();
+        $('#show-profile').show();
+    });
+
+    $('#change-password').click(function(){
+        $('#show-home').hide();
+        $('#show-profile').hide();
+        $('#show-change-password').show();
+    });
+
+    $('.btn-close').click(function(){
+        $('#show-profile').hide();
+        $('#show-change-password').hide();
+        $('#show-home').show();
+    });
 
     $('#btn-change-password').click(function(){
         $('#form-change-password').submit();
@@ -161,7 +175,6 @@
             },
             success:function(data, textStatus, jqXHR)
             {
-                $('#change-password').modal('hide');
             },
             error: function(jqXHR, textStatus, errorThrown)
             {
@@ -195,7 +208,7 @@
             },
             success:function(data, textStatus, jqXHR)
             {
-                $('#update-profile').modal('hide');
+                 location.reload();
             },
             error: function(jqXHR, textStatus, errorThrown)
             {

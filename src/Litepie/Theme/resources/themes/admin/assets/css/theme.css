@@ -1,4 +1,4 @@
-@import url(https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic);
+@import url('https://fonts.googleapis.com/css?family=Ubuntu:300,400,500,700');
 /*!
  *   AdminLTE v2.3.0
  *   Author: Almsaeed Studio
@@ -21,7 +21,7 @@ body {
 body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  font-family: 'Source Sans Pro', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-family: 'Ubuntu', 'Helvetica Neue', Helvetica, Arial, sans-serif;
   font-weight: 400;
   overflow-x: hidden;
   overflow-y: auto;
@@ -163,7 +163,7 @@ h6,
 .h4,
 .h5,
 .h6 {
-  font-family: 'Source Sans Pro', sans-serif;
+  font-family: 'Ubuntu', sans-serif;
 }
 /* General Links */
 a {
@@ -631,6 +631,7 @@ a:focus {
   }
   .sidebar-mini.sidebar-collapse .main-sidebar .user-panel > .info,
   .sidebar-mini.sidebar-collapse .sidebar-form,
+  .sidebar-mini.sidebar-collapse .sidebar-settings,
   .sidebar-mini.sidebar-collapse .sidebar-menu > li > a > span,
   .sidebar-mini.sidebar-collapse .sidebar-menu > li > .treeview-menu,
   .sidebar-mini.sidebar-collapse .sidebar-menu > li > a > .pull-right,
@@ -664,10 +665,12 @@ a:focus {
   overflow: visible;
 }
 .sidebar-form,
+.sidebar-settings,
 .sidebar-menu > li.header {
   overflow: hidden;
   text-overflow: clip;
 }
+
 .sidebar-menu li > a {
   position: relative;
 }
@@ -2362,6 +2365,8 @@ a:focus {
  */
 .alert {
   border-radius: 3px;
+  font-size: 12px;
+  font-weight: 400;
 }
 .alert h4 {
   font-weight: 600;
@@ -2394,6 +2399,14 @@ a:focus {
 }
 .alert-info {
   border-color: #00acd6;
+}
+.alert ul {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+.alert .close i {
+  font-size: 16px;
 }
 /*
  * Component: Nav

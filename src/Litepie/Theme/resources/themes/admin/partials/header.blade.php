@@ -52,19 +52,15 @@
                         </li>
                         <!-- Menu Body -->
                         <li class="user-body">
-                            <div class="col-xs-12 text-center">
-                              <a class="btn btn-social-icon btn-facebook"><i class="fa fa-facebook"></i></a>
-                              <a class="btn btn-social-icon btn-twitter"><i class="fa fa-twitter"></i></a>
-                              <a class="btn btn-social-icon btn-linkedin"><i class="fa fa-linkedin"></i></a>
-                            </div>
+                            <a href="#" data-toggle="modal" data-target="#popupTeam" style="color:#000 !important; text-align:center;">Current Team : {!!@user('admin.web')->teams->name!!}</a>
                         </li>
                         <!-- Menu Footer-->
                         <li class="user-footer">
                             <div class="pull-left">
-                                <a href="{{ trans_url('admin/profile') }}" class="btn btn-default btn-flat">Profile</a>
+                                <a href="{{ URL::to('admin/profile') }}" class="btn btn-default btn-flat">Profile</a>
                             </div>
                             <div class="pull-right">
-                                <a href="{{ trans_url('logout?role=admin.web') }}" class="btn btn-default btn-flat">Sign out</a>
+                                <a href="{{ URL::to('logout?role=admin.web') }}" class="btn btn-default btn-flat">Sign out</a>
                             </div>
                         </li>
                     </ul>

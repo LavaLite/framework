@@ -93,17 +93,17 @@ $(function () {
             return app.delete($tag.data('href'), $tag.data('load-to'), $tag.data('datatable'));
         }
         if ($tag.data('action') == 'WORKFLOW')
-            return app.workflow($tag.data('href'), $tag.data('load-to'), $tag.data('datatable'));
+            return app.workflow($tag.data('href'), $tag.data('load-to'), $tag.data('datatable'), $tag.data('method'), $tag.attr('id') );
 
         app.load($tag.data('load-to'), $tag.data('href'));
     });
 
     $('a[data-toggle="tab"]').on('show.bs.tab', function (e) {
-        $('input').iCheck({
+        /*$('input').iCheck({
           checkboxClass: 'icheckbox_square-blue',
           radioClass: 'iradio_square-blue',
           increaseArea: '20%' // optional
-        });
+        });*/
     });
 
     jQuery("time.timeago").timeago();
@@ -210,7 +210,7 @@ var app = {
             return false;
         }
 
-        var formData = new FormData($(forms));
+        var formData = new FormData();
         params   = form.serializeArray();
 
         $.each(params, function(i, val) {
@@ -239,17 +239,26 @@ var app = {
         });
     },
 
-    'workflow' : function(url, tag, datatable) {
+    'workflow' : function(url, tag, datatable, method, id) {
+        var formData = new FormData();
+        $.each($('.workflow_data'), function(i, val) {
+            formData.append(val.name, $(this).val());
+        });
         $.ajax( {
             url: url,
-            type: 'PUT',
+            type: "POST",
+            data: formData,
             cache: false,
             processData: false,
             contentType: false,
             dataType: 'json',
+            beforeSend: function() {
+                $('#'+id).prop('disabled',true);
+                $('#'+id+' i').addClass('fa-spinner fa-spin');
+                $('.btn-workflow i').addClass('fa-spinner fa-spin');
+            },
             success:function(data, textStatus, jqXHR)
             {
-                console.log(data);
                 app.load(tag, data.redirect);
                 $(datatable).DataTable().ajax.reload( null, false );
             }
@@ -281,7 +290,6 @@ var app = {
                 },
                 error:function(data, textStatus, jqXHR)
                 {
-                    console.log(data);
                     swal("Delete failed!", data.message, "error");
                 },
             });
@@ -289,7 +297,6 @@ var app = {
     },
 
     'load' : function(tag, target) {
-        console.log(tag + ' ' + target);
         $(tag).load(target);
     },
 
@@ -314,7 +321,6 @@ var app = {
     
     'dataTable' : function(aoData) {
             var iSortBy = jQuery.grep(aoData, function(n , i){
-                console.log(n);
                 return (n.name == 'iSortCol_0');
             });
 
