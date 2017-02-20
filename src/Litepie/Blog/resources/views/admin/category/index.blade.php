@@ -1,21 +1,21 @@
 @extends('admin::curd.index')
 @section('heading')
-<i class="fa fa-file-text-o"></i> {!! trans('blog::blog_category.name') !!} <small> {!! trans('cms.manage') !!} {!! trans('blog::blog_category.names') !!}</small>
+<i class="fa fa-file-text-o"></i> {!! trans('blog::category.name') !!} <small> {!! trans('app.manage') !!} {!! trans('blog::category.names') !!}</small>
 @stop
 
 @section('title')
-{!! trans('blog::blog_category.names') !!}
+{!! trans('blog::category.names') !!}
 @stop
 
 @section('breadcrumb')
 <ol class="breadcrumb">
-    <li><a href="{!! trans_url('admin') !!}"><i class="fa fa-dashboard"></i> {!! trans('cms.home') !!} </a></li>
-    <li class="active">{!! trans('blog::blog_category.names') !!}</li>
+    <li><a href="{!! trans_url('admin') !!}"><i class="fa fa-dashboard"></i> {!! trans('app.home') !!} </a></li>
+    <li class="active">{!! trans('blog::category.names') !!}</li>
 </ol>
 @stop
 
 @section('entry')
-<div class="box box-warning" id='blog-blog_category-entry'>
+<div class="box box-warning" id='blog-category-entry'>
 </div>
 @stop
 
@@ -23,11 +23,11 @@
 @stop
 
 @section('content')
-<table id="blog-blog_category-list" class="table table-stripedLitepieSERTRAITSSER AS USERMODEL data-table">
+<table id="blog-category-list" class="table table-stripedLitepieSERTRAITSSER AS USERMODEL data-table">
  
      <thead  class="list_head">
-        <th>{!! trans('blog::blog_category.label.name')!!}</th>
-        <th>{!! trans('blog::blog_category.label.status')!!}</th>
+        <th>{!! trans('blog::category.label.name')!!}</th>
+        <th>{!! trans('blog::category.label.status')!!}</th>
     </thead>
     <thead  class="search_bar">
         <th>{!! Form::text('search[name]')->raw()!!}</th>
@@ -43,15 +43,15 @@
 
 var oTable;
 $(document).ready(function(){
-    app.load('#blog-blog_category-entry', '{!!trans_url('admin/blog/blog_category/0')!!}');
-    oTable = $('#blog-blog_category-list').dataTable( {
+    app.load('#blog-category-entry', '{!!trans_url('admin/blog/category/0')!!}');
+    oTable = $('#blog-category-list').dataTable( {
           "bProcessing": true,
         "sDom": 'R<>rt<ilp><"clear">',
         "bServerSide": true,
-        "sAjaxSource": '{!! trans_url('/admin/blog/blog_category') !!}',
+        "sAjaxSource": '{!! trans_url('/admin/blog/category') !!}',
        "fnServerData" : function ( sSource, aoData, fnCallback ) {
 
-            $('#blog-blog_category-list .search_bar input, #blog-blog_category-list .search_bar select').each(
+            $('#blog-category-list .search_bar input, #blog-category-list .search_bar select').each(
                 function(){
                     aoData.push( { 'name' : $(this).attr('name'), 'value' : $(this).val() } );
                 }
@@ -72,7 +72,7 @@ $(document).ready(function(){
         "pageLength": 50
     });
 
-    $('#blog-blog_category-list tbody').on( 'click', 'tr', function () {
+    $('#blog-category-list tbody').on( 'click', 'tr', function () {
 
         if ($(this).hasClass('selected') ) {
             $(this).removeClass('selected');
@@ -81,20 +81,20 @@ $(document).ready(function(){
             $(this).addClass('selected');
         }
 
-        var d = $('#blog-blog_category-list').DataTable().row( this ).data();
+        var d = $('#blog-category-list').DataTable().row( this ).data();
 
-        $('#blog-blog_category-entry').load('{!!trans_url('admin/blog/blog_category')!!}' + '/' + d.id);
+        $('#blog-category-entry').load('{!!trans_url('admin/blog/category')!!}' + '/' + d.id);
 
     });
 
 
-    $("#blog-blog_category-list .search_bar input").on('keyup select', function (e) {
+    $("#blog-category-list .search_bar input").on('keyup select', function (e) {
         e.preventDefault();
         if (e.keyCode == 13 || e.keyCode == 9) {
             oTable.api().draw();
         }
     });
-     $("#blog-blog_category-list .search_bar select").on('change', function (e) {
+     $("#blog-category-list .search_bar select").on('change', function (e) {
         e.preventDefault();
         oTable.api().draw();
     });

@@ -45,13 +45,13 @@ class RevisionServiceProvider extends ServiceProvider
 
         // Bind Activity to repository
         $this->app->bind(
-            \Litepie\Revision\Interfaces\ActivityRepositoryInterface::class,
+            'Litepie\Revision\Interfaces\ActivityRepositoryInterface',
             \Litepie\Revision\Repositories\Eloquent\ActivityRepository::class
         );
 
         // Bind Revision to repository
         $this->app->bind(
-            \Litepie\Revision\Interfaces\RevisionRepositoryInterface::class,
+            'Litepie\Revision\Interfaces\RevisionRepositoryInterface',
             \Litepie\Revision\Repositories\Eloquent\RevisionRepository::class
         );
 
@@ -78,6 +78,9 @@ class RevisionServiceProvider extends ServiceProvider
      */
     private function publishResources()
     {
+        // Publish configuration file
+        $this->publishes([__DIR__.'/config/config.php' => config_path('litepie/revision.php')], 'config');
+
         // Publish migrations
         $this->publishes([__DIR__ . '/database/migrations/' => base_path('database/migrations')], 'migrations');
     }

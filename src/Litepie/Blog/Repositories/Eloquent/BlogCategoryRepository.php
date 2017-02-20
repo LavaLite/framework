@@ -11,7 +11,7 @@ class BlogCategoryRepository extends BaseRepository implements BlogCategoryRepos
 
     public function boot()
     {
-        $this->fieldSearchable = config('litepie.blog.blog_category.search');
+        $this->fieldSearchable = config('litepie.blog.category.search');
 
     }
 
@@ -22,6 +22,6 @@ class BlogCategoryRepository extends BaseRepository implements BlogCategoryRepos
      */
     public function model()
     {
-        return config('litepie.blog.blog_category.model');
+        return config('litepie.blog.category.model');
     }
 }

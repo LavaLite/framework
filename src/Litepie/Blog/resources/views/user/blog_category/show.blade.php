@@ -6,10 +6,10 @@
         </div>
         <div class="col-md-6">
             <div class='pull-right'>
-                <a href="{{ trans_url('/user/blog/blog_category') }}" class="btn btn-default"> {{ trans('cms.back')  }}</a>
-                <a href="{{ trans_url('/user/blog/blog_category') }}/{{ blog_category->getRouteKey() }}/edit" class="btn btn-success"> {{ trans('cms.edit')  }}</a>
-                <a href="{{ trans_url('/user/blog/blog_category') }}/{{ blog_category->getRouteKey() }}/copy" class="btn btn-warning"> {{ trans('cms.copy')  }}</a>
-                <a href="{{ trans_url('/user/blog/blog_category') }}/{{ blog_category->getRouteKey() }}/delete" class="btn btn-danger"> {{ trans('cms.delete')  }}</a>
+                <a href="{{ trans_url('/user/blog/blog_category') }}" class="btn btn-default"> {{ trans('app.back')  }}</a>
+                <a href="{{ trans_url('/user/blog/blog_category') }}/{{ blog_category->getRouteKey() }}/edit" class="btn btn-success"> {{ trans('app.edit')  }}</a>
+                <a href="{{ trans_url('/user/blog/blog_category') }}/{{ blog_category->getRouteKey() }}/copy" class="btn btn-warning"> {{ trans('app.copy')  }}</a>
+                <a href="{{ trans_url('/user/blog/blog_category') }}/{{ blog_category->getRouteKey() }}/delete" class="btn btn-danger"> {{ trans('app.delete')  }}</a>
             </div>
         </div>
     </div>

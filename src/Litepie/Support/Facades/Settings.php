@@ -1,10 +1,10 @@
 <?php
 
-namespace Litepie\User\Facades;
+namespace Litepie\Support\Facades;
 
 use Illuminate\Support\Facades\Facade;
 
-class User extends Facade
+class Settings extends Facade
 {
     /**
      * Get the registered name of the component.
@@ -13,6 +13,6 @@ class User extends Facade
      */
     protected static function getFacadeAccessor()
     {
-        return 'user';
+        return 'settings';
     }
 }

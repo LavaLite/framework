@@ -16,7 +16,7 @@ return [
      * Modules.
      */
     'modules'   => ['blog', 
-'blog_category'],
+'category'],
 
     'image'    => [
 
@@ -125,7 +125,7 @@ return [
         ],
         */
     ],
-'blog_category'       => [
+'category'       => [
         'model'             => 'Litepie\Blog\Models\BlogCategory',
         'table'             => 'blog_categories',
         'presenter'         => \Litepie\Blog\Repositories\Presenter\BlogCategoryItemPresenter::class,
@@ -138,7 +138,7 @@ return [
         'fillable'          => ['user_id', 'name',  'status',  'user_type'],
         'translate'         => ['name',  'status',  'user_type'],
 
-        'upload_folder'     => 'blog/blog_category',
+        'upload_folder'     => 'blog/category',
         'uploads'           => [
                                     'single'    => [],
                                     'multiple'  => [],

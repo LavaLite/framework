@@ -1,6 +1,6 @@
 @extends('admin::curd.index')
 @section('heading')
-<i class="fa fa-file-text-o"></i> {!! trans('blog::blog.name') !!} <small> {!! trans('cms.manage') !!} {!! trans('blog::blog.names') !!}</small>
+<i class="fa fa-file-text-o"></i> {!! trans('blog::blog.name') !!} <small> {!! trans('app.manage') !!} {!! trans('blog::blog.names') !!}</small>
 @stop
 
 @section('title')
@@ -9,7 +9,7 @@
 
 @section('breadcrumb')
 <ol class="breadcrumb">
-    <li><a href="{!! trans_url('admin') !!}"><i class="fa fa-dashboard"></i> {!! trans('cms.home') !!} </a></li>
+    <li><a href="{!! trans_url('admin') !!}"><i class="fa fa-dashboard"></i> {!! trans('app.home') !!} </a></li>
     <li class="active">{!! trans('blog::blog.names') !!}</li>
 </ol>
 @stop

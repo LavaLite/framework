@@ -2,7 +2,7 @@
 
 use Illuminate\Database\Migrations\Migration;
 
-class CreateBlogCategoriesTable extends Migration
+class CreateActivitiesTable extends Migration
 {
     /*
      * Run the migrations.
@@ -12,17 +12,14 @@ class CreateBlogCategoriesTable extends Migration
 
     public function up()
     {
-
-        /*
-         * Table: blog_categories
-         */
-        Schema::create('blog_categories', function ($table) {
+        Schema::create('activities', function ($table) {
             $table->increments('id');
-            $table->string('name', 50)->nullable();
-            $table->enum('status', ['show','hide'])->nullable();
-            $table->string('user_type', 50)->nullable();
+            $table->string('action', 255)->nullable();
+            $table->string('name', 255)->nullable();
+            $table->string('activity_type', 255)->nullable();
+            $table->integer('activity_id')->nullable();
+            $table->text('user_info')->nullable();
             $table->string('slug', 200)->nullable();
-            $table->enum('status', ['draft', 'complete', 'verify', 'approve', 'publish', 'unpublish', 'archive'])->default('draft')->nullable();
             $table->integer('user_id')->nullable();
             $table->string('user_type',50)->nullable();
             $table->string('upload_folder', 100)->nullable();
@@ -39,6 +36,6 @@ class CreateBlogCategoriesTable extends Migration
 
     public function down()
     {
-        Schema::drop('blog_categories');
+        Schema::drop('activities');
     }
 }

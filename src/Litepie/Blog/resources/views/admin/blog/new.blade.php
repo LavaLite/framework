@@ -13,7 +13,7 @@
             <button type="button" class="btn btn-app" data-toggle="tooltip" data-placement="top" title="" data-action='NEW' data-load-to='#blog-blog-entry' data-href='{!!trans_url('admin/blog/blog/create')!!}'>
             <span class="badge bg-purple">{!! Blog::count('blog') !!}</span>
             <i class="fa fa-plus-circle  fa-3x"></i>
-            {{ trans('cms.create') }} {!! trans('blog::blog.name') !!}
+            {{ trans('app.create') }} {!! trans('blog::blog.name') !!}
             </button>
             <br>{!! trans('blog::blog.text.preview') !!}
             </small>

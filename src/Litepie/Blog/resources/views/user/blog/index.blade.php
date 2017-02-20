@@ -29,7 +29,7 @@
                         </div>
                         <div class="col-xs-12 col-sm-5">
                             <a class=" btn btn-success btn-block text-uppercase f-12" href="{{ trans_url('/user/blog/blog/create') }}">
-                                {{ trans('cms.create')  }} Blog
+                                {{ trans('app.create')  }} Blog
                             </a>
                         </div>
                     </div>

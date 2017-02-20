@@ -17,7 +17,8 @@ class NewsTableSeeder extends Seeder
                 'status'        => 'publish',
                 'upload_folder' => '2016/07/21/105031622',
                 'created_at'    => '2016-07-21 16:21:14',
-                'deleted_at'    => null, 'updated_at' => '2016-07-21 10:50:44'],
+                'deleted_at'    => null, 
+                'updated_at' => '2016-07-21 10:50:44'],
             [
                 'user_id'       => '1',
                 'user_type'     => 'App\\User',
@@ -28,7 +29,8 @@ class NewsTableSeeder extends Seeder
                 'status'        => 'publish',
                 'upload_folder' => '2016/07/21/105018827',
                 'created_at'    => '2016-07-21 16:21:17',
-                'deleted_at'    => null, 'updated_at' => '2016-07-21 10:50:29'],
+                'deleted_at'    => null, 
+                'updated_at' => '2016-07-21 10:50:29'],
             [
                 'user_id'       => '1',
                 'user_type'     => 'App\\User',
@@ -39,7 +41,8 @@ class NewsTableSeeder extends Seeder
                 'status'        => 'publish',
                 'upload_folder' => '2016/07/21/104945843',
                 'created_at'    => '2016-07-21 16:21:20',
-                'deleted_at'    => null, 'updated_at' => '2016-07-21 10:50:15'],
+                'deleted_at'    => null, 
+                'updated_at' => '2016-07-21 10:50:15'],
         ]);
 
         DB::table('permissions')->insert([
@@ -100,7 +103,6 @@ class NewsTableSeeder extends Seeder
                 'order'       => 190,
                 'status'      => 1,
             ],
-
             [
                 'parent_id'   => 2,
                 'key'         => null,
@@ -112,19 +114,6 @@ class NewsTableSeeder extends Seeder
                 'order'       => 190,
                 'status'      => 1,
             ],
-
-            [
-                'parent_id'   => 23,
-                'key'         => null,
-                'url'         => 'user/news/news',
-                'name'        => 'News',
-                'description' => null,
-                'icon'        => 'pe-7s-news-paper',
-                'target'      => null,
-                'order'       => 190,
-                'status'      => 1,
-            ],
-
             [
                 'parent_id'   => 4,
                 'key'         => null,

@@ -1,10 +1,10 @@
 <?php
 
-namespace Litepie\Block\Facades;
+namespace Litepie\Support\Facades;
 
 use Illuminate\Support\Facades\Facade;
 
-class Block extends Facade
+class Revision extends Facade
 {
     /**
      * Get the registered name of the component.
@@ -13,6 +13,6 @@ class Block extends Facade
      */
     protected static function getFacadeAccessor()
     {
-        return 'block';
+        return 'revision';
     }
 }

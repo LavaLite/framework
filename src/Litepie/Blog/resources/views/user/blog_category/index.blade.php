@@ -5,7 +5,7 @@
             <h4 class="text-dark  header-title m-t-0"> My Categories </h4>
         </div>
         <div class="col-md-6">
-            <a href="{{ trans_url('/user/blog/blog_category/create') }}" class="btn btn-default pull-right"> {{ trans('cms.create')  }} Category</a>
+            <a href="{{ trans_url('/user/blog/blog_category/create') }}" class="btn btn-default pull-right"> {{ trans('app.create')  }} Category</a>
         </div>
     </div>
     <p class="text-muted m-b-25 font-13">

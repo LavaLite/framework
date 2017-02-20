@@ -10,7 +10,7 @@
                         <h4 class="text-dark  header-title m-t-0"> {!! $blog_category['name'] !!} </h4>
                     </div>
                     <div class="col-md-6">
-                        <a href="{{ trans_url('blog') }}/{!! $blog_category->getPublicKey() !!}" class="btn btn-default pull-right"> {{ trans('cms.details')  }}</a>
+                        <a href="{{ trans_url('blog') }}/{!! $blog_category->getPublicKey() !!}" class="btn btn-default pull-right"> {{ trans('app.details')  }}</a>
                     </div>
                 </div>
                 <hr/>

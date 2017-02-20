@@ -15,20 +15,20 @@ class BlogCategoryAdminController extends BaseController
 {
     // use BlogCategoryWorkflow;
     /**
-     * Initialize blog_category controller.
+     * Initialize category controller.
      *
-     * @param type BlogCategoryRepositoryInterface $blog_category
+     * @param type BlogCategoryRepositoryInterface $category
      *
      * @return type
      */
-    public function __construct(BlogCategoryRepositoryInterface $blog_category)
+    public function __construct(BlogCategoryRepositoryInterface $category)
     {
-        $this->repository = $blog_category;
+        $this->repository = $category;
         parent::__construct();
     }
 
     /**
-     * Display a list of blog_category.
+     * Display a list of category.
      *
      * @return Response
      */
@@ -37,12 +37,12 @@ class BlogCategoryAdminController extends BaseController
         if ($request->wantsJson()) {
             return $this->getJson($request);
         }
-        $this   ->theme->prependTitle(trans('blog::blog_category.names').' :: ');
-        return $this->theme->of('blog::admin.blog_category.index')->render();
+        $this   ->theme->prependTitle(trans('blog::category.names').' :: ');
+        return $this->theme->of('blog::admin.category.index')->render();
     }
 
     /**
-     * Display a list of blog_category.
+     * Display a list of category.
      *
      * @return Response
      */
@@ -64,25 +64,25 @@ class BlogCategoryAdminController extends BaseController
     }
 
     /**
-     * Display blog_category.
+     * Display category.
      *
      * @param Request $request
-     * @param Model   $blog_category
+     * @param Model   $category
      *
      * @return Response
      */
-    public function show(BlogCategoryRequest $request, BlogCategory $blog_category)
+    public function show(BlogCategoryRequest $request, BlogCategory $category)
     {
-        if (!$blog_category->exists) {
-            return response()->view('blog::admin.blog_category.new', compact('blog_category'));
+        if (!$category->exists) {
+            return response()->view('blog::admin.category.new', compact('category'));
         }
 
-        Form::populate($blog_category);
-        return response()->view('blog::admin.blog_category.show', compact('blog_category'));
+        Form::populate($category);
+        return response()->view('blog::admin.category.show', compact('category'));
     }
 
     /**
-     * Show the form for creating a new blog_category.
+     * Show the form for creating a new category.
      *
      * @param Request $request
      *
@@ -91,16 +91,16 @@ class BlogCategoryAdminController extends BaseController
     public function create(BlogCategoryRequest $request)
     {
 
-        $blog_category = $this->repository->newInstance([]);
+        $category = $this->repository->newInstance([]);
 
-        Form::populate($blog_category);
+        Form::populate($category);
 
-        return response()->view('blog::admin.blog_category.create', compact('blog_category'));
+        return response()->view('blog::admin.category.create', compact('category'));
 
     }
 
     /**
-     * Create new blog_category.
+     * Create new category.
      *
      * @param Request $request
      *
@@ -111,12 +111,12 @@ class BlogCategoryAdminController extends BaseController
         try {
             $attributes             = $request->all();
             $attributes['user_id']  = user_id('admin.web');
-            $blog_category          = $this->repository->create($attributes);
+            $category          = $this->repository->create($attributes);
 
             return response()->json([
-                'message'  => trans('messages.success.updated', ['Module' => trans('blog::blog_category.name')]),
+                'message'  => trans('messages.success.updated', ['Module' => trans('blog::category.name')]),
                 'code'     => 204,
-                'redirect' => trans_url('/admin/blog/blog_category/'.$blog_category->getRouteKey())
+                'redirect' => trans_url('/admin/blog/category/'.$category->getRouteKey())
             ], 201);
 
 
@@ -129,39 +129,39 @@ class BlogCategoryAdminController extends BaseController
     }
 
     /**
-     * Show blog_category for editing.
+     * Show category for editing.
      *
      * @param Request $request
-     * @param Model   $blog_category
+     * @param Model   $category
      *
      * @return Response
      */
-    public function edit(BlogCategoryRequest $request, BlogCategory $blog_category)
+    public function edit(BlogCategoryRequest $request, BlogCategory $category)
     {
-        Form::populate($blog_category);
-        return  response()->view('blog::admin.blog_category.edit', compact('blog_category'));
+        Form::populate($category);
+        return  response()->view('blog::admin.category.edit', compact('category'));
     }
 
     /**
-     * Update the blog_category.
+     * Update the category.
      *
      * @param Request $request
-     * @param Model   $blog_category
+     * @param Model   $category
      *
      * @return Response
      */
-    public function update(BlogCategoryRequest $request, BlogCategory $blog_category)
+    public function update(BlogCategoryRequest $request, BlogCategory $category)
     {
         try {
 
             $attributes = $request->all();
 
-            $blog_category->update($attributes);
+            $category->update($attributes);
 
             return response()->json([
-                'message'  => trans('messages.success.updated', ['Module' => trans('blog::blog_category.name')]),
+                'message'  => trans('messages.success.updated', ['Module' => trans('blog::category.name')]),
                 'code'     => 204,
-                'redirect' => trans_url('/admin/blog/blog_category/'.$blog_category->getRouteKey())
+                'redirect' => trans_url('/admin/blog/category/'.$category->getRouteKey())
             ], 201);
 
         } catch (Exception $e) {
@@ -169,30 +169,30 @@ class BlogCategoryAdminController extends BaseController
             return response()->json([
                 'message'  => $e->getMessage(),
                 'code'     => 400,
-                'redirect' => trans_url('/admin/blog/blog_category/'.$blog_category->getRouteKey()),
+                'redirect' => trans_url('/admin/blog/category/'.$category->getRouteKey()),
             ], 400);
 
         }
     }
 
     /**
-     * Remove the blog_category.
+     * Remove the category.
      *
-     * @param Model   $blog_category
+     * @param Model   $category
      *
      * @return Response
      */
-    public function destroy(BlogCategoryRequest $request, BlogCategory $blog_category)
+    public function destroy(BlogCategoryRequest $request, BlogCategory $category)
     {
 
         try {
 
-            $t = $blog_category->delete();
+            $t = $category->delete();
 
             return response()->json([
-                'message'  => trans('messages.success.deleted', ['Module' => trans('blog::blog_category.name')]),
+                'message'  => trans('messages.success.deleted', ['Module' => trans('blog::category.name')]),
                 'code'     => 202,
-                'redirect' => trans_url('/admin/blog/blog_category/0'),
+                'redirect' => trans_url('/admin/blog/category/0'),
             ], 202);
 
         } catch (Exception $e) {
@@ -200,7 +200,7 @@ class BlogCategoryAdminController extends BaseController
             return response()->json([
                 'message'  => $e->getMessage(),
                 'code'     => 400,
-                'redirect' => trans_url('/admin/blog/blog_category/'.$blog_category->getRouteKey()),
+                'redirect' => trans_url('/admin/blog/category/'.$category->getRouteKey()),
             ], 400);
         }
     }

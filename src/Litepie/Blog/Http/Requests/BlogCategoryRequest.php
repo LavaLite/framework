@@ -13,11 +13,11 @@ class BlogCategoryRequest extends FormRequest
      */
     public function authorize()
     {
-        $this->model = $this->route('blog_category');
+        $this->model = $this->route('category');
 
         if (is_null($this->model)) {
-            // Determine if the user is authorized to access blog_category module,
-            return $this->formRequest->user($this->guard)->canDo('blog.blog_category.view');
+            // Determine if the user is authorized to access category module,
+            return $this->formRequest->user($this->guard)->canDo('blog.category.view');
         }
 
         if ($this->isWorkflow()) {

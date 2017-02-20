@@ -22,7 +22,7 @@ class BlogCategory extends Model
      *
      * @var array
      */
-     protected $config = 'litepie.blog.blog_category';
+     protected $config = 'litepie.blog.category';
 
 
 }

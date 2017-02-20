@@ -1,10 +1,10 @@
 <?php
 
-namespace Litepie\Calendar\Facades;
+namespace Litepie\Support\Facades;
 
 use Illuminate\Support\Facades\Facade;
 
-class Calendar extends Facade
+class Message extends Facade
 {
     /**
      * Get the registered name of the component.
@@ -13,6 +13,6 @@ class Calendar extends Facade
      */
     protected static function getFacadeAccessor()
     {
-        return 'calendar';
+        return 'message';
     }
 }

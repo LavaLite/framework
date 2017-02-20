@@ -14,18 +14,18 @@ class BlogCategoryPublicController extends BaseController
     /**
      * Constructor.
      *
-     * @param type \Litepie\BlogCategory\Interfaces\BlogCategoryRepositoryInterface $blog_category
+     * @param type \Litepie\BlogCategory\Interfaces\BlogCategoryRepositoryInterface $category
      *
      * @return type
      */
-    public function __construct(BlogCategoryRepositoryInterface $blog_category)
+    public function __construct(BlogCategoryRepositoryInterface $category)
     {
-        $this->repository = $blog_category;
+        $this->repository = $category;
         parent::__construct();
     }
 
     /**
-     * Show blog_category's list.
+     * Show category's list.
      *
      * @param string $slug
      *
@@ -45,7 +45,7 @@ class BlogCategoryPublicController extends BaseController
     }
 
     /**
-     * Show blog_category.
+     * Show category.
      *
      * @param string $slug
      *
@@ -53,16 +53,16 @@ class BlogCategoryPublicController extends BaseController
      */
     protected function show($slug)
     {
-        $blog_category = $this->repository
+        $category = $this->repository
             ->scopeQuery(function($query) use ($slug) {
             return $query->orderBy('id','DESC')
                          ->where('slug', $slug);
         })->first(['*']);
 
-        if (!is_null($blog_category)) {
-            $blog_category         = $this->itemPresenter($module, new BlogCategoryItemTransformer);
-            $blog_category['code'] = 2001;
-            return response()->json($blog_category)
+        if (!is_null($category)) {
+            $category         = $this->itemPresenter($module, new BlogCategoryItemTransformer);
+            $category['code'] = 2001;
+            return response()->json($category)
                 ->setStatusCode(200, 'SHOW_SUCCESS');
         } else {
             return response()->json([])

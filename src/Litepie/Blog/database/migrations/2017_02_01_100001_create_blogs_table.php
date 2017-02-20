@@ -23,9 +23,7 @@ class CreateBlogsTable extends Migration
             $table->text('details')->nullable();
             $table->text('images')->nullable();
             $table->integer('viewcount')->nullable();
-            $table->enum('status', ['Show','Hide'])->nullable();
             $table->timestamp('posted_on')->nullable();
-            $table->string('user_type', 50)->nullable();
             $table->string('slug', 200)->nullable();
             $table->enum('status', ['draft', 'complete', 'verify', 'approve', 'publish', 'unpublish', 'archive'])->default('draft')->nullable();
             $table->integer('user_id')->nullable();
@@ -34,6 +32,21 @@ class CreateBlogsTable extends Migration
             $table->softDeletes();
             $table->nullableTimestamps();
         });
+
+        /*
+         * Table: blog_categories
+         */
+        Schema::create('blog_categories', function ($table) {
+            $table->increments('id');
+            $table->string('name', 50)->nullable();
+            $table->string('slug', 200)->nullable();
+            $table->enum('status', ['draft', 'complete', 'verify', 'approve', 'publish', 'unpublish', 'archive'])->default('draft')->nullable();
+            $table->integer('user_id')->nullable();
+            $table->string('user_type',50)->nullable();
+            $table->string('upload_folder', 100)->nullable();
+            $table->softDeletes();
+            $table->nullableTimestamps();
+        });        
     }
 
     /*
@@ -44,6 +57,7 @@ class CreateBlogsTable extends Migration
 
     public function down()
     {
+        Schema::drop('blog_categories');
         Schema::drop('blogs');
     }
 }

@@ -12,18 +12,18 @@ class BlogCategoryPublicController extends BaseController
     /**
      * Constructor.
      *
-     * @param type \Litepie\BlogCategory\Interfaces\BlogCategoryRepositoryInterface $blog_category
+     * @param type \Litepie\BlogCategory\Interfaces\BlogCategoryRepositoryInterface $category
      *
      * @return type
      */
-    public function __construct(BlogCategoryRepositoryInterface $blog_category)
+    public function __construct(BlogCategoryRepositoryInterface $category)
     {
-        $this->repository = $blog_category;
+        $this->repository = $category;
         parent::__construct();
     }
 
     /**
-     * Show blog_category's list.
+     * Show category's list.
      *
      * @param string $slug
      *
@@ -37,11 +37,11 @@ class BlogCategoryPublicController extends BaseController
             return $query->orderBy('id','DESC');
         })->paginate();
 
-        return $this->theme->of('blog::public.blog_category.index', compact('blog_categories'))->render();
+        return $this->theme->of('blog::public.category.index', compact('blog_categories'))->render();
     }
 
     /**
-     * Show blog_category.
+     * Show category.
      *
      * @param string $slug
      *
@@ -49,12 +49,12 @@ class BlogCategoryPublicController extends BaseController
      */
     protected function show($slug)
     {
-        $blog_category = $this->repository->scopeQuery(function($query) use ($slug) {
+        $category = $this->repository->scopeQuery(function($query) use ($slug) {
             return $query->orderBy('id','DESC')
                          ->where('slug', $slug);
         })->first(['*']);
 
-        return $this->theme->of('blog::public.blog_category.show', compact('blog_category'))->render();
+        return $this->theme->of('blog::public.category.show', compact('category'))->render();
     }
 
 }

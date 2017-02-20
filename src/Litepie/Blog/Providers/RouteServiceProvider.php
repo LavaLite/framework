@@ -35,8 +35,8 @@ class RouteServiceProvider extends ServiceProvider
                 return $blogrepo->findorNew($blog);
             });
         }
-        if (Request::is('*/blog/blog_category/*')) {
-            Route::bind('blog_category', function ($blog_category) {
+        if (Request::is('*/blog/category/*')) {
+            Route::bind('category', function ($blog_category) {
                 $blog_categoryrepo = $this->app->make(\Litepie\Blog\Interfaces\BlogCategoryRepositoryInterface::class);
                 return $blog_categoryrepo->findorNew($blog_category);
             });

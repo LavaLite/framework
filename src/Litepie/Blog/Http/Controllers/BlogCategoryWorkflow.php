@@ -7,25 +7,25 @@ use Litepie\Blog\Models\BlogCategory;
 trait BlogCategoryWorkflow {
 	
     /**
-     * Workflow controller function for blog_category.
+     * Workflow controller function for category.
      *
-     * @param Model   $blog_category
+     * @param Model   $category
      * @param step    next step for the workflow.
      *
      * @return Response
      */
 
-    public function putWorkflow(BlogCategoryRequest $request, BlogCategory $blog_category, $step)
+    public function putWorkflow(BlogCategoryRequest $request, BlogCategory $category, $step)
     {
 
         try {
 
-            $blog_category->updateWorkflow($step);
+            $category->updateWorkflow($step);
 
             return response()->json([
-                'message'  => trans('messages.success.changed', ['Module' => trans('blog::blog_category.name'), 'status' => trans("app.{$step}")]),
+                'message'  => trans('messages.success.changed', ['Module' => trans('blog::category.name'), 'status' => trans("app.{$step}")]),
                 'code'     => 204,
-                'redirect' => trans_url('/admin/blog_category/blog_category/' . $blog_category->getRouteKey()),
+                'redirect' => trans_url('/admin/category/category/' . $category->getRouteKey()),
             ], 201);
 
         } catch (Exception $e) {
@@ -33,7 +33,7 @@ trait BlogCategoryWorkflow {
             return response()->json([
                 'message'  => $e->getMessage(),
                 'code'     => 400,
-                'redirect' => trans_url('/admin/blog_category/blog_category/' . $blog_category->getRouteKey()),
+                'redirect' => trans_url('/admin/category/category/' . $category->getRouteKey()),
             ], 400);
 
         }
@@ -41,31 +41,31 @@ trait BlogCategoryWorkflow {
     }
 
     /**
-     * Workflow controller function for blog_category.
+     * Workflow controller function for category.
      *
-     * @param Model   $blog_category
+     * @param Model   $category
      * @param step    next step for the workflow.
      * @param user    encrypted user id.
      *
      * @return Response
     */
 
-    public function getWorkflow(BlogCategory $blog_category, $step, $user)
+    public function getWorkflow(BlogCategory $category, $step, $user)
     {
         try {
             $user_id = decrypt($user);
 
             Auth::onceUsingId($user_id);
 
-            $blog_category->updateWorkflow($step);
+            $category->updateWorkflow($step);
 
             $data = [
-                'message' => trans('messages.success.changed', ['Module' => trans('blog::blog_category.name'), 'status' => trans("app.{$step}")]),
+                'message' => trans('messages.success.changed', ['Module' => trans('blog::category.name'), 'status' => trans("app.{$step}")]),
                 'status'  => 'success',
                 'step'    => trans("app.{$step}"),
             ];
 
-            return $this->theme->layout('blank')->of('blog::admin.blog_category.message', $data)->render();
+            return $this->theme->layout('blank')->of('blog::admin.category.message', $data)->render();
 
         } catch (ValidationException $e) {
 
@@ -75,7 +75,7 @@ trait BlogCategoryWorkflow {
                 'step'    => trans("app.{$step}"),
             ];
 
-            return $this->theme->layout('blank')->of('blog::admin.blog_category.message', $data)->render();
+            return $this->theme->layout('blank')->of('blog::admin.category.message', $data)->render();
 
         } catch (Exception $e) {
 
@@ -85,7 +85,7 @@ trait BlogCategoryWorkflow {
                 'step'    => trans("app.{$step}"),
             ];
 
-            return $this->theme->layout('blank')->of('blog::admin.blog_category.message', $data)->render();
+            return $this->theme->layout('blank')->of('blog::admin.category.message', $data)->render();
 
         }
 

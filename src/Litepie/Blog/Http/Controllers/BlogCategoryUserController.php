@@ -11,15 +11,15 @@ use Litepie\Blog\Models\BlogCategory;
 class BlogCategoryUserController extends BaseController
 {
     /**
-     * Initialize blog_category controller.
+     * Initialize category controller.
      *
-     * @param type BlogCategoryRepositoryInterface $blog_category
+     * @param type BlogCategoryRepositoryInterface $category
      *
      * @return type
      */
-    public function __construct(BlogCategoryRepositoryInterface $blog_category)
+    public function __construct(BlogCategoryRepositoryInterface $category)
     {
-        $this->repository = $blog_category;
+        $this->repository = $category;
         $this->repository
                 ->pushCriteria(app('Litepie\Repository\Criteria\RequestCriteria'))
                 ->pushCriteria(new \Litepie\Blog\Repositories\Criteria\BlogCategoryUserCriteria());
@@ -37,24 +37,24 @@ class BlogCategoryUserController extends BaseController
             return $query->orderBy('id','DESC');
         })->paginate();
 
-        $this->theme->prependTitle(trans('blog::blog_category.names'));
+        $this->theme->prependTitle(trans('blog::category.names'));
 
-        return $this->theme->of('blog::user.blog_category.index', compact('blog_categories'))->render();
+        return $this->theme->of('blog::user.category.index', compact('blog_categories'))->render();
     }
 
     /**
      * Display the specified resource.
      *
      * @param Request $request
-     * @param BlogCategory $blog_category
+     * @param BlogCategory $category
      *
      * @return Response
      */
-    public function show(BlogCategoryRequest $request, BlogCategory $blog_category)
+    public function show(BlogCategoryRequest $request, BlogCategory $category)
     {
-        Form::populate($blog_category);
+        Form::populate($category);
 
-        return $this->theme->of('blog::user.blog_category.show', compact('blog_category'))->render();
+        return $this->theme->of('blog::user.category.show', compact('category'))->render();
     }
 
     /**
@@ -67,11 +67,11 @@ class BlogCategoryUserController extends BaseController
     public function create(BlogCategoryRequest $request)
     {
 
-        $blog_category = $this->repository->newInstance([]);
-        Form::populate($blog_category);
+        $category = $this->repository->newInstance([]);
+        Form::populate($category);
 
-        $this->theme->prependTitle(trans('blog::blog_category.names'));
-        return $this->theme->of('blog::user.blog_category.create', compact('blog_category'))->render();
+        $this->theme->prependTitle(trans('blog::category.names'));
+        return $this->theme->of('blog::user.category.create', compact('category'))->render();
     }
 
     /**
@@ -86,10 +86,10 @@ class BlogCategoryUserController extends BaseController
         try {
             $attributes = $request->all();
             $attributes['user_id'] = user_id();
-            $blog_category = $this->repository->create($attributes);
+            $category = $this->repository->create($attributes);
 
-            return redirect(trans_url('/user/blog/blog_category'))
-                -> with('message', trans('messages.success.created', ['Module' => trans('blog::blog_category.name')]))
+            return redirect(trans_url('/user/blog/category'))
+                -> with('message', trans('messages.success.created', ['Module' => trans('blog::category.name')]))
                 -> with('code', 201);
 
         } catch (Exception $e) {
@@ -101,34 +101,34 @@ class BlogCategoryUserController extends BaseController
      * Show the form for editing the specified resource.
      *
      * @param Request $request
-     * @param BlogCategory $blog_category
+     * @param BlogCategory $category
      *
      * @return Response
      */
-    public function edit(BlogCategoryRequest $request, BlogCategory $blog_category)
+    public function edit(BlogCategoryRequest $request, BlogCategory $category)
     {
 
-        Form::populate($blog_category);
-        $this->theme->prependTitle(trans('blog::blog_category.names'));
+        Form::populate($category);
+        $this->theme->prependTitle(trans('blog::category.names'));
 
-        return $this->theme->of('blog::user.blog_category.edit', compact('blog_category'))->render();
+        return $this->theme->of('blog::user.category.edit', compact('category'))->render();
     }
 
     /**
      * Update the specified resource.
      *
      * @param Request $request
-     * @param BlogCategory $blog_category
+     * @param BlogCategory $category
      *
      * @return Response
      */
-    public function update(BlogCategoryRequest $request, BlogCategory $blog_category)
+    public function update(BlogCategoryRequest $request, BlogCategory $category)
     {
         try {
-            $this->repository->update($request->all(), $blog_category->getRouteKey());
+            $this->repository->update($request->all(), $category->getRouteKey());
 
-            return redirect(trans_url('/user/blog/blog_category'))
-                ->with('message', trans('messages.success.updated', ['Module' => trans('blog::blog_category.name')]))
+            return redirect(trans_url('/user/blog/category'))
+                ->with('message', trans('messages.success.updated', ['Module' => trans('blog::category.name')]))
                 ->with('code', 204);
 
         } catch (Exception $e) {
@@ -143,12 +143,12 @@ class BlogCategoryUserController extends BaseController
      *
      * @return Response
      */
-    public function destroy(BlogCategoryRequest $request, BlogCategory $blog_category)
+    public function destroy(BlogCategoryRequest $request, BlogCategory $category)
     {
         try {
-            $this->repository->delete($blog_category->getRouteKey());
-            return redirect(trans_url('/user/blog/blog_category'))
-                ->with('message', trans('messages.success.deleted', ['Module' => trans('blog::blog_category.name')]))
+            $this->repository->delete($category->getRouteKey());
+            return redirect(trans_url('/user/blog/category'))
+                ->with('message', trans('messages.success.deleted', ['Module' => trans('blog::category.name')]))
                 ->with('code', 204);
 
         } catch (Exception $e) {

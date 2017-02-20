@@ -1,10 +1,10 @@
 <?php
 
-namespace Litepie\Html\Facades;
+namespace Litepie\Support\Facades;
 
 use Illuminate\Support\Facades\Facade;
 
-class Html extends Facade
+class Block extends Facade
 {
     /**
      * Get the registered name of the component.
@@ -13,6 +13,6 @@ class Html extends Facade
      */
     protected static function getFacadeAccessor()
     {
-        return 'litepie.html';
+        return 'block';
     }
 }
