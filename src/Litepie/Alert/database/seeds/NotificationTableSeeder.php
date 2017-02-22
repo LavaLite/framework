@@ -27,32 +27,6 @@ class NotificationTableSeeder extends Seeder
                 'slug'      => 'alert.notification.delete',
                 'name'      => 'Delete Notification',
             ],
-            /*
-            [
-                'slug'      => 'alert.notification.verify',
-                'name'      => 'Verify Notification',
-            ],
-            [
-                'slug'      => 'alert.notification.approve',
-                'name'      => 'Approve Notification',
-            ],
-            [
-                'slug'      => 'alert.notification.publish',
-                'name'      => 'Publish Notification',
-            ],
-            [
-                'slug'      => 'alert.notification.unpublish',
-                'name'      => 'Unpublish Notification',
-            ],
-            [
-                'slug'      => 'alert.notification.cancel',
-                'name'      => 'Cancel Notification',
-            ],
-            [
-                'slug'      => 'alert.notification.archive',
-                'name'      => 'Archive Notification',
-            ],
-            */
         ]);
 
         DB::table('menus')->insert([
@@ -75,7 +49,7 @@ class NotificationTableSeeder extends Seeder
                 'url'         => 'user/alert/notification',
                 'name'        => 'Notification',
                 'description' => null,
-                'icon'        => 'icon-book-open',
+                'icon'        => 'pe-7s-speaker',
                 'target'      => null,
                 'order'       => 190,
                 'status'      => 1,
@@ -87,7 +61,7 @@ class NotificationTableSeeder extends Seeder
                 'url'         => 'notification',
                 'name'        => 'Notification',
                 'description' => null,
-                'icon'        => null,
+                'icon'        => 'pe-7s-speaker',
                 'target'      => null,
                 'order'       => 190,
                 'status'      => 1,

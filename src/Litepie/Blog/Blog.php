@@ -11,27 +11,28 @@ class Blog
      */
     protected $blog;
     /**
-     * $blog_category object.
+     * $category object.
      */
-    protected $blog_category;
+    protected $category;
 
     /**
      * Constructor.
      */
-    public function __construct(\Litepie\Blog\Interfaces\BlogRepositoryInterface $blog,
-        \Litepie\Blog\Interfaces\BlogCategoryRepositoryInterface $blog_category)
-    {
-        $this->blog = $blog;
-        $this->blog_category = $blog_category;
+    public function __construct(
+        \Litepie\Blog\Interfaces\BlogRepositoryInterface         $blog,
+        \Litepie\Blog\Interfaces\BlogCategoryRepositoryInterface $category
+    ) {
+        $this->blog     = $blog;
+        $this->category = $category;
     }
 
 /**
-     * Returns count of blog or category.
-     *
-     * @param array $filter
-     *
-     * @return int
-     */
+ * Returns count of blog or category.
+ *
+ * @param array $filter
+ *
+ * @return int
+ */
     public function count($module = 'blog')
     {
 
@@ -49,7 +50,7 @@ class Blog
         }
 
         if ($module == 'category') {
-            return $this->blog_category
+            return $this->category
                 ->scopeQuery(function ($query) {
                     return $query;
                 })->count();
@@ -72,7 +73,7 @@ class Blog
     public function latest($count = 3, $view = 'public.blog.latest')
     {
         $blog = $this->blog->scopeQuery(function ($query) use ($count) {
-            return $query->wherePublished('Yes')->orderBy('posted_on', 'DESC')->take($count);
+            return $query->orderBy('posted_on', 'DESC')->take($count);
         })->all();
         return view('blog::' . $view, compact('blog'))->render();
     }
@@ -84,8 +85,8 @@ class Blog
 
     public function selectCategories()
     {
-        $temp = [];
-        $categories = $this->blog_category->scopeQuery(function ($query) {
+        $temp       = [];
+        $categories = $this->category->scopeQuery(function ($query) {
             return $query->orderBy('name', 'ASC');
         })->all();
 
@@ -116,7 +117,7 @@ class Blog
     public function getCategories($view = 'public.blog.category')
     {
 
-        $blogs = $this->blog_category->scopeQuery(function ($query) {
+        $blogs = $this->category->scopeQuery(function ($query) {
             return $query->whereStatus('Show')->orderBy('id', 'DESC');
         })->all();
 

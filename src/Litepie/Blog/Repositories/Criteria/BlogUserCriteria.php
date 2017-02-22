@@ -9,7 +9,7 @@ class BlogUserCriteria implements CriteriaInterface {
 
     public function apply($model, RepositoryInterface $repository)
     {
-        $model = $model->where('user_id','=', user_id() );
+        $model = $model->whereUserId(user_id());
         return $model;
     }
 }

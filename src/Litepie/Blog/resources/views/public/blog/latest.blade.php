@@ -3,10 +3,7 @@
         Recent Blogs
     </h3>
     @foreach($blog as $latests)
-    <?php
-        $timestamp = strtotime($latests['posted_on']);
-        $dayy = date('D', $timestamp);
-    ?>
+    {{format_date($latests->posted_on)}}
     <div class="popular-post-block">
         <div class="row">
             <div class="col-xs-4">
@@ -23,7 +20,7 @@
                         </h4>
                     </a>
                     <p>
-                        {{$dayy}} ,{{format_date($latests->posted_on)}}
+                        {{format_date($latests->posted_on)}}
                     </p>
                 </div>
             </div>

@@ -33,6 +33,7 @@ class BlogPublicController extends BaseController
     {
         $blogs = $this->repository
         ->pushCriteria(app('Litepie\Repository\Criteria\RequestCriteria'))
+        ->pushCriteria(app('Litepie\Repository\Criteria\RequestCriteria'))
         ->scopeQuery(function($query){
             return $query->orderBy('id','DESC');
         })->paginate();
@@ -51,7 +52,7 @@ class BlogPublicController extends BaseController
     {
         $blog = $this->repository->scopeQuery(function($query) use ($slug) {
             return $query->orderBy('id','DESC')
-                         ->where('slug', $slug);
+                         ->whereSlug($slug);
         })->first(['*']);
 
         return $this->theme->of('blog::public.blog.show', compact('blog'))->render();
