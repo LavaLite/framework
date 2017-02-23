@@ -25,12 +25,12 @@ class CreateContactsTable extends Migration
             $table->tinyInteger('default')->nullable();
             $table->string('website', 250)->nullable();
             $table->text('details')->nullable();
-            $table->string('address_line1', 255)->nullable();
-            $table->string('address_line2', 255)->nullable();
+            $table->string('address', 255)->nullable();
             $table->string('street', 255)->nullable();
             $table->string('city', 255)->nullable();
+            $table->string('state', 255)->nullable();
             $table->string('country', 255)->nullable();
-            $table->integer('pin_code')->nullable();
+            $table->string('zip')->nullable();
             $table->string('lat', 30)->nullable();
             $table->string('lng', 30)->nullable();
             $table->enum('status', ['Show','Hide'])->nullable();

@@ -181,6 +181,26 @@ I am not a great cook, I am not a great artist, but I love art, and I love food,
                 'order'     => 102,
                 'status'    => 1,
             ],
+            [
+                'parent_id'   => 4,
+                'key'         => null,
+                'url'         => 'blogs',
+                'name'        => 'Blog',
+                'icon'        => null,
+                'target'      => null,
+                'order'       => 8,
+                'status'      => 1,
+            ],
+            [
+                'parent_id'   => 5,
+                'key'         => null,
+                'url'         => 'blogs',
+                'name'        => 'Blog',
+                'icon'        => null,
+                'target'      => null,
+                'order'       => 8,
+                'status'      => 1,
+            ],
         ]);
 
         DB::table('settings')->insert([
