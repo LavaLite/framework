@@ -27,7 +27,6 @@ class Settings
      * @return int
      */
 
-
     /**
      * Make gadget View
      *
@@ -53,34 +52,43 @@ class Settings
 
     public function display($view)
     {
-        return view('settings::admin.setting.'.$view);
+        return view('settings::admin.setting.' . $view);
     }
 
     public function count(array $filters = null)
     {
-        return  $this->model->count();
+        return $this->model->count();
     }
 
-    public function get($key)
-    {        
-        return $this->setting->pushCriteria(new \Litepie\Settings\Repositories\Criteria\SettingUserCriteria())
-                ->scopeQuery(function($query)use($key){
-                   return $query->whereSkey($key)->orderBy('type','DESC');
-                })->first();        
-    }
-
-    public function set($key, $value, $user_id = 0)
+    public function get($key, $default = null, $foruser = false)
     {
-        $data = $this->model->findByField('skey', $key)->first();
-        $attributes['value'] = $value;
-        $attributes['user_id'] = $user_id;
-        $attributes['skey'] = $key;
+        $row = $this->setting->scopeQuery(function ($query) use ($key) {
+            return $query->whereSkey($key)->orderBy('type', 'DESC');
+        })->first();
 
-        if(!empty($data)){
-             $this->model->update(["value" => $value], $data->getRouteKey());
-             return;
+        if (!empty($row)) {
+            return $row['value'];
         }
-        $this->model->create($attributes);
-        return ;
+
+        return $default;
     }
+
+    public function set($key, $value, $foruser = false)
+    {
+        $data                = $this->model->findByField('skey', $key)->first();
+        $attributes['value'] = $value;
+        $attributes['skey']  = $key;
+
+        if ($foruser) {
+            $attributes['user_id']   = user_id();
+            $attributes['user_type'] = user_type();
+        }
+
+        if (!empty($data)) {
+            return $this->model->update(["value" => $value], $data->getRouteKey());
+        }
+
+        return $this->model->create($attributes);
+    }
+
 }
