@@ -39,7 +39,6 @@ class MenuTableSeeder extends Seeder
                 'order'       => 1,
                 'status'      => 1,
             ],
-
             [
                 'id'          => 2,
                 'parent_id'   => 0,
@@ -58,7 +57,7 @@ class MenuTableSeeder extends Seeder
                 'parent_id'   => 0,
                 'key'         => 'client',
                 'url'         => '/client',
-                'name'        => 'User',
+                'name'        => 'Client',
                 'description' => null,
                 'icon'        => null,
                 'target'      => null,
@@ -133,12 +132,12 @@ class MenuTableSeeder extends Seeder
 
             [
                 'id'          => null,
-                'parent_id'   => 5,
+                'parent_id'   => 6,
                 'key'         => null,
                 'url'         => 'https://twitter.com/lavalitecms',
                 'name'        => 'Twitter',
                 'description' => null,
-                'icon'        => null,
+                'icon'        => 'ion ion-social-twitter',
                 'target'      => '_blank',
                 'order'       => 11,
                 'status'      => 1,
@@ -146,12 +145,12 @@ class MenuTableSeeder extends Seeder
 
             [
                 'id'          => null,
-                'parent_id'   => 5,
+                'parent_id'   => 6,
                 'key'         => null,
                 'url'         => 'https://github.com/LavaLite',
                 'name'        => 'GitHub',
                 'description' => null,
-                'icon'        => null,
+                'icon'        => 'ion ion-social-github',
                 'target'      => '_blank',
                 'order'       => 12,
                 'status'      => 1,
@@ -159,12 +158,12 @@ class MenuTableSeeder extends Seeder
 
             [
                 'id'          => null,
-                'parent_id'   => 5,
+                'parent_id'   => 6,
                 'key'         => null,
                 'url'         => 'https://www.facebook.com/lavalite/',
                 'name'        => 'Facebook',
                 'description' => null,
-                'icon'        => null,
+                'icon'        => 'ion ion-social-facebook',
                 'target'      => '_blank',
                 'order'       => 13,
                 'status'      => 1,
