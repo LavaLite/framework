@@ -11,13 +11,6 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class FileController extends Controller
 {
-    /**
-     * Create a new file controller instance.
-     */
-    public function __construct()
-    {
-        $this->middleware('web');
-    }
 
     /**
      * Resize/Fix the image according to the specification in the size array.
@@ -30,12 +23,12 @@ class FileController extends Controller
      *
      * @return Response
      */
-    public function image($size, $config, $folder, $field, $file)
+    public function image($config, $module, $size, $folder, $field, $file)
     {
 
-        $size   = $this->getSize($size);
-        $folder = $this->getFolder($config, $folder, $field);
-        $image = Filer::image($folder, $file, $size);
+        $size   = $this->getSize($config, $size);
+        $folder = $this->getFolder($config, $module, $folder, $field);
+        $image  = Filer::image($folder, $file, $size);
 
         $header = [
             'Content-Type'  => 'image/jpg',
@@ -53,9 +46,9 @@ class FileController extends Controller
      *
      * @return array
      */
-    public function getFolder($config, $folder, $field)
+    public function getFolder($config, $module, $folder, $field)
     {
-        $path = config($config . '.upload_folder', config($config . '.upload_folder'));
+        $path = config("{$config}.{$module}.upload_folder");
 
         if (empty($path)) {
             throw new FileNotFoundException();
@@ -74,25 +67,33 @@ class FileController extends Controller
      *
      * @return array
      */
-    public function getSize($size)
+    public function getSize($config, $size)
     {
-        $size = explode('.', $size);
 
-        if (count($size) == 1) {
-            $size = config('filer.size.' . $size[0]);
-        } elseif (count($size) == 2) {
-            $size = config('litepie.' . $size[0] . '.image.' . $size[1]);
-        } else {
-            $size = config(implode('.', $size));
-        }
+        $config = $this->getConfig($config, $size);
 
-        if (empty($size)) {
+        if (empty($config)) {
             throw new NotFoundHttpException();
         }
 
-        $size['action'] = (isset($size['action']) && in_array($size['action'], ['fit', 'resize'])) ? $size['action'] : 'fit';
+        $config['action'] = (isset($config['action']) && in_array($config['action'], ['fit', 'resize'])) ? $config['action'] : 'fit';
 
-        return $size;
+        return $config;
+    }
+
+    public function getConfig($config, $size)
+    {
+
+        if ($config = config($config . '.' . $size)) {
+            return $config;
+        }
+
+        if ($config = config('filer.size.' . $size)) {
+            return $config;
+        }
+
+        return config($size);
+
     }
 
     /**

@@ -273,7 +273,7 @@ trait Filer
      *
      * @return string path
      */
-    public function defaultImage($size = 'md', $field = 'image')
+    public function defaultImage($field = 'image', $size = 'md', $pos = 0)
     {
         $image  = $this->$field;
 
@@ -282,14 +282,11 @@ trait Filer
         }
 
         $config = $this->config;
+        $config = preg_replace('~\.(?!.*\.)~', '/', $config);
 
-        if (in_array($field, $this->uploads['single'])) {
-            return "image/{$size}/{$config}/" . folder_encode($image['folder']) . '/' . $image['file'];
-        }
+        $image = array_pull($image, $pos);
 
-        $image = $image[0];
-
-        return "image/{$size}/{$config}/" . folder_encode($image['folder']) . '/' . $image['file'];
+        return "image/{$config}/{$size}/" . folder_encode($image['folder']) . '/' . $image['file'];
     }
 
     /**

@@ -1,1 +1,0 @@
-Email published  {{$title}}

@@ -4,10 +4,7 @@
 
 ./git-subsplit.sh init git@github.com:lavalite/framework.git
 ./git-subsplit.sh publish --no-tags src/Litepie/Alerts:git@github.com:Litepie/alerts.git
-./git-subsplit.sh publish --no-tags src/Litepie/Block:git@github.com:Litepie/block.git
-./git-subsplit.sh publish --no-tags src/Litepie/Blog:git@github.com:Litepie/blog.git
 ./git-subsplit.sh publish --no-tags src/Litepie/Calendar:git@github.com:Litepie/calendar.git
-./git-subsplit.sh publish --no-tags src/Litepie/Contact:git@github.com:Litepie/contact.git
 ./git-subsplit.sh publish --no-tags src/Litepie/Database:git@github.com:Litepie/database.git
 ./git-subsplit.sh publish --no-tags src/Litepie/Filer:git@github.com:Litepie/filer.git
 ./git-subsplit.sh publish --no-tags src/Litepie/Form:git@github.com:Litepie/form.git
@@ -15,9 +12,7 @@
 ./git-subsplit.sh publish --no-tags src/Litepie/Html:git@github.com:Litepie/html.git
 ./git-subsplit.sh publish --no-tags src/Litepie/Menu:git@github.com:Litepie/menu.git
 ./git-subsplit.sh publish --no-tags src/Litepie/Message:git@github.com:Litepie/message.git
-./git-subsplit.sh publish --no-tags src/Litepie/News:git@github.com:Litepie/news.git
 ./git-subsplit.sh publish --no-tags src/Litepie/Node:git@github.com:Litepie/node.git
-./git-subsplit.sh publish --no-tags src/Litepie/Page:git@github.com:Litepie/page.git
 ./git-subsplit.sh publish --no-tags src/Litepie/Repository:git@github.com:Litepie/repository.git
 ./git-subsplit.sh publish --no-tags src/Litepie/Revision:git@github.com:Litepie/revision.git
 ./git-subsplit.sh publish --no-tags src/Litepie/Settings:git@github.com:Litepie/settings.git
