@@ -20,7 +20,8 @@
         "hashids/hashids": "2.0.*",
         "intervention/imagecache": "2.3.*",
         "laravel/socialite": "3.0.*",
-        "league/fractal": "0.15.*"
+        "league/fractal": "0.15.*",
+        "composer/installers": "dev-master"
     },
     "replace": {
         "litepie/alert": "self.version",
@@ -30,7 +31,6 @@
         "litepie/filer": "self.version",
         "litepie/form": "self.version",
         "litepie/hashids": "self.version",
-        "litepie/html": "self.version",
         "litepie/install": "self.version",
         "litepie/menu": "self.version",
         "litepie/message": "self.version",
