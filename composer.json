@@ -21,7 +21,7 @@
         "intervention/imagecache": "2.3.*",
         "laravel/socialite": "3.0.*",
         "league/fractal": "0.15.*",
-        "composer/installers": "dev-master"
+        "composer/installers": "1.0.x-dev"
     },
     "replace": {
         "litepie/alert": "self.version",
