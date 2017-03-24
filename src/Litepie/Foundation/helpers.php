@@ -73,7 +73,7 @@ if (!function_exists('folder_encode')) {
      */
     function folder_encode($folder)
     {
-        $arr = explode('/', $folder);
+        $arr = array_map('intval', explode('/', $folder));
 
         $suffix = '';
         if (count($arr) > 4) {
