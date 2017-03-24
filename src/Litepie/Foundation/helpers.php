@@ -73,13 +73,15 @@ if (!function_exists('folder_encode')) {
      */
     function folder_encode($folder)
     {
-        $arr = array_map('intval', explode('/', $folder));
+        $arr    = explode('/', $folder);
 
         $suffix = '';
         if (count($arr) > 4) {
             $suffix = '/' . $arr[4];
             unset($arr[4]);
         }
+
+        $arr    = array_map('intval', $arr);
 
         return hashids_encode($arr) . $suffix;
     }
