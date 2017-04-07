@@ -3,25 +3,17 @@
 namespace Litepie\Filer\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use Cache;
 use Filer;
 use Request;
-use Session;
 
 class UploadController extends Controller
 {
-    /**
-     * Create a new upload controller instance.
-     */
-    public function __construct()
-    {
-        $this->middleware('web');
-    }
 
     /**
      * Upload folder to the given path
      *
-     * @param type $package
-     * @param type $module
+     * @param type $config
      * @param type $folder
      * @param type $field
      * @param type|string $file
@@ -30,15 +22,29 @@ class UploadController extends Controller
      */
     public function upload($config, $folder, $field, $file = 'file')
     {
+
         if (Request::hasFile($file)) {
             $ufolder         = $this->uploadFolder($config, $folder, $field);
             $array           = Filer::upload(Request::file($file), $ufolder);
-            $array['folder'] = folder_decode($folder)."/{$field}";
-            Session::push("upload.{$config}.{$field}", $array);
-
+            $array['folder'] = folder_decode($folder) . DIRECTORY_SEPARATOR . $field;
+            $this->setCache("upload.{$config}.{$field}", $array);
             return $array;
         }
 
+    }
+
+    /**
+     * Set uploaded file details to cache for saving to db later
+     *
+     * @return void
+     * @author
+     **/
+    public function setCache($key, $value)
+    {
+        $cache   = Cache::pull($key);
+        $cache[] = $value;
+        print_r($cache);
+        Cache::put($key, $cache, strtotime('+10 minutes'));
     }
 
     /**
@@ -53,9 +59,10 @@ class UploadController extends Controller
      */
     public function uploadFolder($config, $folder, $field)
     {
-        $path = config($config . '.upload_folder', config('litepie.' . $config . '.upload_folder'));
+        $path = config($config . '.upload_folder');
+
         if (empty($path)) {
-            throw new FileNotFoundException();
+            throw new FileNotFoundException('Invalid upload configuration value.');
         }
 
         $folder = folder_decode($folder);
@@ -64,7 +71,7 @@ class UploadController extends Controller
 
     }
 
-        /**
+    /**
      * Upload folder to the given path
      *
      * @param type $package
@@ -76,25 +83,29 @@ class UploadController extends Controller
      * @return array|json
      */
     public function crop($config, $folder, $field, $file = 'file')
-    {      
-        $item           = Request::all();
-        $file           = $item['cropping'];
-        $file_name      = $item['name'];
-        $ufolder        = $this->uploadFolder($config, $folder, $field);
-        $path           = Filer::checkUploadFolder($ufolder);
-        if(!empty($file)) {
-            $file       = str_replace('data:image/jpeg;base64,', '',$file);
-            $img        = str_replace(' ', '+', $file);
-            $data       = base64_decode($img);
-            $path       = $path."/".$file_name;
+    {
+        $item      = Request::all();
+        $file      = $item['cropping'];
+        $file_name = $item['name'];
+        $ufolder   = $this->uploadFolder($config, $folder, $field);
+        $path      = Filer::checkUploadFolder($ufolder);
+
+        if (!empty($file)) {
+            $file = str_replace('data:image/jpeg;base64,', '', $file);
+            $img  = str_replace(' ', '+', $file);
+            $data = base64_decode($img);
+            $path = $path . "/" . $file_name;
+
             if (file_put_contents($path, $data)) {
-                $array['folder']    = folder_decode($folder)."/{$field}";
-                $array['file']      = $file_name;
-                $array['caption']   = ucwords(substr($file_name, 0, strpos($file_name, '.')));
+                $array['folder']  = folder_decode($folder) . "/{$field}";
+                $array['file']    = $file_name;
+                $array['caption'] = ucwords(substr($file_name, 0, strpos($file_name, '.')));
 
                 return $array;
             }
-        }    
+
+        }
+
     }
 
 }

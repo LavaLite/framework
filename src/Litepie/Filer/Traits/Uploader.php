@@ -26,13 +26,13 @@ trait Uploader
      */
     public function upload(UploadedFile $file, $path)
     {
-        // Check the upload type is valid by extension and mimetype
-        $this->verifyUploadType($file);
-
         if ($file->getSize() > config('filer.max_upload_size', 2048)) {
             // Check file size
             throw new FileException('File is too big.');
         }
+
+        // Check the upload type is valid by extension and mimetype
+        $this->verifyUploadType($file);
 
         // Get the folder for uploads
         $folder = $this->checkUploadFolder($path);
@@ -111,19 +111,18 @@ trait Uploader
      * @param $date
      *
      * @throws \Symfony\Component\HttpFoundation\File\Exception\FileException
-     * @throws \Doctrine\Common\Proxy\Exception\InvalidArgumentException
      *
      * @return string
      */
     public function checkUploadFolder($folder)
     {
-        $folder = public_path(config('filer.folder', 'uploads') . '/' . $folder);
-        $folder .= (substr($folder, -1) != '/') ? '/' : '';
+        $folder = public_path(config('filer.folder', 'uploads') . DIRECTORY_SEPARATOR . $folder);
+        $folder .= (substr($folder, -1) != DIRECTORY_SEPARATOR) ? DIRECTORY_SEPARATOR : '';
 
-// Check to see if the upload folder exists
+        // Check to see if the upload folder exists
         if (!File::exists($folder)) {
 
-// Try and create it
+            // Try and create it
             if (!File::makeDirectory($folder, config('filer.folder_permission'), true)) {
                 throw new FileException('Directory is not writable. Please make upload folder writable.');
             }
@@ -143,9 +142,9 @@ trait Uploader
     public function verifyUploadType(UploadedFile $file)
     {
         if (!in_array($file->getMimeType(), config('filer.allowed_types')) && config('filer.allowed_types_check')) {
-            throw new FileException('Invalid upload type.');
+            throw new FileException('Invalid file type.');
         } elseif (!in_array(strtolower($file->getClientOriginalExtension()), config('filer.allowed_extensions')) && config('filer.allowed_extensions_check')) {
-            throw new FileException('Invalid upload type.');
+            throw new FileException('Invalid file extension.');
         }
 
     }
@@ -201,7 +200,6 @@ trait Uploader
         /**
          * Check the image type is valid by extension and mimetype
          */
-
         if ($this->verifyImageType($uFile)) {
             $image = $this->image->make($folder . $file);
 
@@ -221,17 +219,17 @@ trait Uploader
     {
         $path = str_replace(public_path(), '', $path);
 
-// Check to see if it begins in a slash
-        if (substr($path, 0, 1) != '/') {
-            $path = '/' . $path;
+        // Check to see if it begins in a slash
+        if (substr($path, 0, 1) != DIRECTORY_SEPARATOR) {
+            $path = DIRECTORY_SEPARATOR . $path;
         }
 
-// Check to see if it ends in a slash
-        if (substr($path, -1) != '/') {
-            $path .= '/';
+        // Check to see if it ends in a slash
+        if (substr($path, -1) != DIRECTORY_SEPARATOR) {
+            $path .= DIRECTORY_SEPARATOR;
         }
 
-        $path = str_replace('//', '/', $path);
+        $path = str_replace('//', DIRECTORY_SEPARATOR, $path);
 
         return $path;
     }

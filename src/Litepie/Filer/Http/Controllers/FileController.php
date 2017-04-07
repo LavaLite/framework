@@ -106,9 +106,44 @@ class FileController extends Controller
      *
      * @return file
      */
-    public function file($config, $folder, $field, $file)
+    public function file($config, $module, $folder, $field, $file)
     {
-        $folder = $this->getFolder($config, $folder, $field);
+        $folder = $this->getFolder($config, $module, $folder, $field);
+        $file   = public_path($folder . '/' . $file);
+
+        try {
+            $contents = File::get($file);
+        } catch (FileNotFoundException $exception) {
+            throw new FileNotFoundException();
+        }
+
+        $finfo = finfo_open(FILEINFO_MIME_TYPE);
+        $mime  = finfo_file($finfo, $file);
+        finfo_close($finfo);
+
+        $header = [
+            'Cache-Control' => 'max-age=864000, public',
+            'Expires'       => gmdate('D, d M Y H:i:s \G\M\T', time() + 864000),
+            'Pragma'        => 'public'];
+
+        $header['Content-Type'] = $mime;
+
+        return Response::make($contents, 200, $header);
+    }
+
+    /**
+     * Download the given file.
+     *
+     * @param string $table
+     * @param string $folder
+     * @param string $field
+     * @param string $file
+     *
+     * @return file
+     */
+    public function download($config, $module, $folder, $field, $file)
+    {
+        $folder = $this->getFolder($config, $module, $folder, $field);
         $file   = public_path($folder . '/' . $file);
 
         try {

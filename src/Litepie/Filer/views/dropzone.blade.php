@@ -1,8 +1,11 @@
-<div class="dropzone" id="{!!$field!!}"></div>
+<!-- Start dropzone for {!!$field!!} -->
+<div class="dropzone  dropzone-previews" id="{!!$field!!}">
+    
+</div>
 
 <script type="text/javascript">
 $(function () {
-    $("div#{!!$field!!}").dropzone({
+    Dropzone.options.{!!$field!!} = {
         url: "{!! $url !!}",
         maxFiles: {!!$count!!},
         acceptedFiles: "{{$mime}}",
@@ -26,6 +29,8 @@ $(function () {
             });
         }
 
-    });
+    };
 });
 </script>
+<!-- End dropzone. -->
+

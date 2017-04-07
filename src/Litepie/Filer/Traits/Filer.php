@@ -2,10 +2,10 @@
 
 namespace Litepie\Filer\Traits;
 
+use Cache;
 use Filer as Uploader;
 use Litepie\Filer\Form\Forms;
 use Request;
-use Session;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use URL;
 
@@ -42,13 +42,7 @@ trait Filer
             return;
         }
 
-        if (isset($model->uploads['single'])) {
-            $model->uploadSingle();
-        }
-
-        if (isset($model->uploads['multiple'])) {
-            $model->uploadMultiple();
-        }
+        $model->uploadFiles();
 
     }
 
@@ -58,36 +52,10 @@ trait Filer
      * @return null
      *
      */
-    public function uploadSingle()
+    public function uploadFiles()
     {
 
-        foreach ($this->uploads['single'] as $field) {
-            $file = [];
-
-            if (Request::hasFile($field)) {
-                $upfile = Request::file($field);
-
-                if ($upfile instanceof UploadedFile) {
-                    $file = Uploader::upload($upfile, $this->upload_folder . '/' . $field);
-                }
-
-            }
-
-            $this->setFileSingle($field, $file);
-        }
-
-    }
-
-    /**
-     * Upload multiple files and save as multidiamentional array.
-     *
-     * @return null
-     *
-     */
-    public function uploadMultiple()
-    {
-
-        foreach ($this->uploads['multiple'] as $field) {
+        foreach ($this->uploads as $field => $settings) {
             $files = [];
 
             if (is_array(Request::file($field))) {
@@ -95,14 +63,22 @@ trait Filer
                 foreach (Request::file($field) as $file) {
 
                     if ($file instanceof UploadedFile) {
-                        $files[] = Uploader::upload($file, $this->upload_folder . '/' . $field);
+                        $files[] = Uploader::upload($file, $this->upload_folder . DIRECTORY_SEPARATOR . $field);
                     }
 
                 }
 
+            } elseif (Request::hasFile($field)) {
+
+                $file = Request::file($field);
+
+                if ($file instanceof UploadedFile) {
+                    $files[] = Uploader::upload($file, $this->upload_folder . DIRECTORY_SEPARATOR . $field);
+                }
+
             }
 
-            $this->setFileMultiple($field, $files);
+            $this->setFiles($field, $files);
         }
 
     }
@@ -118,26 +94,14 @@ trait Filer
     {
 
         if (!empty($value)) {
-            return folder_encode($value, false, false);
-        } else {
-            $folder                            = folder_new(null, null);
-            $this->attributes['upload_folder'] = $folder;
-
-            return folder_encode($folder, false, false);
+            return $value;
         }
 
-    }
+        $folder                            = folder_new(null, null);
+        $this->attributes['upload_folder'] = $folder;
 
-    /**
-     * Set upload_folder attribute for the model.
-     *
-     * @param string $value
-     *
-     * @return string
-     */
-    public function setUploadFolderAttribute($value)
-    {
-        $this->attributes['upload_folder'] = folder_decode($value, false, false);
+        return $folder;
+
     }
 
     /**
@@ -150,7 +114,7 @@ trait Filer
      */
     public function getUploadURL($field, $file = 'file')
     {
-        return trans_url('upload/' . $this->config . '/' . $this->upload_folder . '/' . $field . '/' . $file);
+        return trans_url('upload/' . $this->config . '/' . folder_encode($this->upload_folder) . '/' . $field . '/' . $file);
     }
 
     /**
@@ -163,7 +127,7 @@ trait Filer
      */
     public function getCropURL($field, $file = 'file')
     {
-        return trans_url('crop/' . $this->config . '/' . $this->upload_folder . '/' . $field . '/' . $file);
+        return trans_url('crop/' . $this->config . '/' . folder_encode($this->upload_folder) . '/' . $field . '/' . $file);
     }
 
     /**
@@ -176,7 +140,7 @@ trait Filer
      */
     public function getFileURL($field, $file = 'file')
     {
-        return trans_url('file/' . $this->config . '/' . $this->upload_folder . '/' . $field . '/' . $file);
+        return trans_url('file/' . $this->config . '/' . folder_encode($this->upload_folder) . '/' . $field . '/' . $file);
     }
 
     /**
@@ -187,52 +151,20 @@ trait Filer
      *
      * @return null
      */
-    public function setFileSingle($field, $value)
-    {
-
-        if (Session::has('upload.' . $this->config . '.' . $field)) {
-            $value = Request::session()->pull('upload.' . $this->config . '.' . $field);
-            $value = end($value);
-            Request::session()->save();
-        } elseif (!empty($value)) {
-            $value = $value;
-        } elseif (Request::has($field)) {
-            $value = Request::get($field);
-        } else {
-            return;
-        }
-
-        if (empty($value)) {
-            $value = [];
-        }
-
-        $this->setAttribute($field, $value);
-    }
-
-    /**
-     * Set single file field after upload.
-     *
-     * @param srting $field
-     * @param srting $value
-     *
-     * @return null
-     */
-    public function setFileMultiple($field, $current)
+    public function setFiles($field, $current)
     {
 
         if (empty($current)) {
             $current = [];
         }
 
-        $session = [];
+        $cache = [];
 
-        if (Session::has('upload.' . $this->config . '.' . $field)) {
-            $session = Request::session()->pull('upload.' . $this->config . '.' . $field);
-            Request::session()->save();
-
+        if (Cache::has('upload.' . $this->config . '.' . $field)) {
+            $cache = Cache::pull('upload.' . $this->config . '.' . $field);
         }
 
-        if (empty($current) && empty($session) && !Request::has($field)) {
+        if (empty($current) && empty($cache) && !Request::has($field)) {
             return;
         }
 
@@ -246,7 +178,7 @@ trait Filer
             $prev = [];
         }
 
-        $value = array_merge($prev, $current, $session);
+        $value = array_merge($prev, $current, $cache);
 
         $this->setAttribute($field, $value);
     }
@@ -273,9 +205,9 @@ trait Filer
      *
      * @return string path
      */
-    public function defaultImage($field = 'image', $size = 'md', $pos = 0)
+    public function defaultImage($field, $size = 'md', $pos = 0)
     {
-        $image  = $this->$field;
+        $image = $this->$field;
 
         if (!is_array($image) || empty($image)) {
             return 'img/default/' . $size . '.jpg';
@@ -290,28 +222,26 @@ trait Filer
     }
 
     /**
-     * Return the main image for the record.
+     * Return the array of images for the data.
      *
      * @param type|string $size
      * @param type|string $field
      *
      * @return string path
      */
-    public function getImages($size = 'md', $field = 'image')
+    public function getImages($field, $size = 'md')
     {
         $image = $this->$field;
-        $config = $this->config;
-        
+
         if (!is_array($image) || empty($image)) {
             return ['img/default/' . $size . '.jpg'];
         }
 
-        if (in_array($field, $this->uploads['single'])) {
-            return ["image/{$size}/{$config}/" . folder_encode($image['folder']) . '/' . $image['file']];
-        }
+        $config = $this->config;
+        $config = preg_replace('~\.(?!.*\.)~', '/', $config);
 
         foreach ($image as $key => $img) {
-            $image[$key] = "image/{$size}/{$config}/" . folder_encode($img['folder']) . '/' . $img['file'];
+            $image[$key] = "image/{$config}/{$size}/" . folder_encode($img['folder']) . '/' . $img['file'];
         }
 
         return $image;
@@ -329,97 +259,34 @@ trait Filer
     {
         $file = $this->$field;
 
-        $prefix = ($download) ? 'file/' : 'download/';
+        $prefix = ($download) ? 'file' : 'download';
 
         if (!is_array($file) || empty($file)) {
-
-            if (in_array($field, $this->uploads['single'])) {
-                return '';
-            } else {
-                return [];
-            }
-
+            return [];
         }
 
-        if (in_array($field, $this->uploads['single'])) {
-            return $file['url'] = url($prefix . folder_encode($file['folder']) . '/' . $file['file']);
-            return $file;
-        }
+        $config = $this->config;
+        $config = preg_replace('~\.(?!.*\.)~', '/', $config);
 
         foreach ($file as $key => $fil) {
-            $file[$key]['url'] = url($prefix . folder_encode($fil['folder']) . '/' . $fil['file']);
+            $file[$key]['url'] = url("{$prefix}/{$config}/" . folder_encode($fil['folder']) . '/' . $fil['file']);
         }
 
         return $file;
     }
 
+
     /**
-     * Display file upload form.
+     * Display files inside a form.
      *
      * @param type|string $field
      *
      * @return string path
      */
-    public function fileUpload($field, $count = null)
-    {
-        $form = new Forms($field, $this->config);
-
-        if (in_array($field, $this->uploads['single'])) {
-            $form->count(1, true);
-        } else {
-            $form->count($count);
-        }
-
-        return $form->url($this->getUploadURL($field))
-            ->uploader();
-    }
-
-    /**
-     * Display files.
-     *
-     * @param type|string $field
-     *
-     * @return string path
-     */
-    public function fileShow($field)
+    public function files($field)
     {
         $form = new Forms($field, $this->config, $this->getFile($field));
-        if (in_array($field, $this->uploads['single'])) {
-            $form->count(1, true);
-        }
-        return $form->show();
+        return $form;
     }
 
-    /**
-     * Display file editor window.
-     *
-     * @param type|string $field
-     *
-     * @return string path
-     */
-    public function fileEdit($field)
-    {
-        $form = new Forms($field, $this->config,  $this->getFile($field));
-        if (in_array($field, $this->uploads['single'])) {
-            $form->count(1, true);
-        }
-        return $form->editor();
-    }
-
-    /**
-     * Display file upload form.
-     *
-     * @param type|string $field
-     *
-     * @return string path
-     */
-    public function fileCropper($field, $src = null)
-    {
-        $form = new Forms($field, $this->config, $this->getFile($field));
-        if (in_array($field, $this->uploads['single'])) {
-            $form->count(1, true);
-        }
-
-        return $form->url($this->getCropURL($field))->src($src)->cropper();
-    }
 }

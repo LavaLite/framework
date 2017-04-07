@@ -60,8 +60,8 @@ class Forms
     public function __construct($field, $config, $files = [])
     {
         $this->field($field);
-        $this->files($files);
         $this->config($config);
+        $this->files($files);
 
     }
 
@@ -96,6 +96,30 @@ class Forms
 
         return $this;
     }
+
+    /**
+     * Generate html to upload files
+     * @return type
+     */
+    public function dropzone($url = null)
+    {
+        $this->url($url, false);
+        $this->view('filer::dropzone', false);
+        $this->mime('image/*', false);
+        return $this;
+    }
+
+    /**
+     * Generate html to upload files
+     * @return type
+     */
+    public function input()
+    {
+        $this->view('filer::input', false);
+        $this->mime('image/*', false);
+        return $this;
+    }
+
     /**
      * Generate html to upload files
      * @return type
@@ -103,7 +127,7 @@ class Forms
     public function uploader($url = null)
     {
         $this->url($url, false);
-        $this->view('filer::upload', false);
+        $this->view('filer::dropzone', false);
         $this->mime('image/*', false);
         return $this;
     }
@@ -171,7 +195,7 @@ class Forms
      */
     public function getView()
     {
-        return is_null($this->view) ? 'filer::upload' : $this->view;
+        return is_null($this->view) ? 'filer::show' : $this->view;
     }
 
     /**
@@ -198,7 +222,7 @@ class Forms
      */
     public function getConfig()
     {
-        return str_replace('package.', '', $this->config) ;
+        return preg_replace('~\.(?!.*\.)~', '/', $this->config);
     }
 
     /**

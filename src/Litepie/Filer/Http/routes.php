@@ -8,4 +8,5 @@ Route::group(['middleware' => ['web']], function () {
     //File/image display routes
     Route::get('image/{config}/{module}/{size}/{folder}/{field}/{file}', 'FileController@image');
     Route::get('file/{config}/{module}/{folder}/{field}/{file}', 'FileController@file');
+    Route::get('download/{config}/{module}/{folder}/{field}/{file}', 'FileController@download');
 });
