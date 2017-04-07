@@ -28,8 +28,12 @@ class ProtectInstaller implements SetupScript
      */
     public function fire(Command $command)
     {
-        if ($this->finder->isFile('.env') && !$command->option('force')) {
-            throw new Exception('Litepie has already been installed. Now you can login to your administration panel.');
+        if ($this->finder->isFile('.env')) {
+            $command->blockMessage('Installed', 'Lavalite has already been installed, continuing the installation will erase all the datas and your updations.', 'comment');
+            if (!$command->confirm('Do you wish to continue?')) {
+                throw new Exception('Installation terminated.');
+            }
+            return;
         }
-    }
+     }
 }

@@ -57,11 +57,10 @@ class InstallCommand extends Command
             \Litepie\Install\Installers\Scripts\ProtectInstaller::class,
             \Litepie\Install\Installers\Scripts\ConfigureDatabase::class,
             \Litepie\Install\Installers\Scripts\PackgeAssets::class,
-            \Litepie\Install\Installers\Scripts\SetAppKey::class,
             \Litepie\Install\Installers\Scripts\GenerateAutoload::class,
+            \Litepie\Install\Installers\Scripts\SetAppKey::class,
             \Litepie\Install\Installers\Scripts\PackageMigrators::class,
             \Litepie\Install\Installers\Scripts\PackageSeeders::class,
-            \Litepie\Install\Installers\Scripts\PublishTheme::class,
             \Litepie\Install\Installers\Scripts\SetSuperuserUser::class,
         ])->install($this);
 
