@@ -85,7 +85,5 @@ class ThemeServiceProvider extends ServiceProvider
         // Publish configuration file
         $this->publishes([__DIR__ . '/config.php' => config_path('theme.php')], 'config');
 
-        // Publish default laravel theme files.
-        $this->publishes([__DIR__ . '/resources/themes' => base_path('public/themes')], 'themes');
     }
 }

@@ -15,7 +15,6 @@ class PackgeAssets implements SetupScript
         'Contact'  => \Litepie\Contact\ContactServiceProvider::class,
         'Menu'     => \Litepie\Menu\MenuServiceProvider::class,
         'Message'  => \Litepie\Message\MessageServiceProvider::class,
-        'News'     => \Litepie\News\NewsServiceProvider::class,
         'Page'     => \Litepie\Page\PageServiceProvider::class,
         'Settings' => \Litepie\Settings\SettingsServiceProvider::class,
         'Task'     => \Litepie\Task\TaskServiceProvider::class,
