@@ -25,10 +25,12 @@ class UploadController extends Controller
 
         if (Request::hasFile($file)) {
             $ufolder         = $this->uploadFolder($config, $folder, $field);
+            $count           = $this->getCount($config, $field);
             $array           = Filer::upload(Request::file($file), $ufolder);
             $array['folder'] = folder_decode($folder) . DIRECTORY_SEPARATOR . $field;
-            $this->setCache("upload.{$config}.{$field}", $array);
-            return $array;
+            $this->setCache("upload.{$config}.{$field}", $array, $count);
+            return response()->json($array)
+                ->setStatusCode(203, 'UPLOAD_SUCCESS');
         }
 
     }
@@ -39,19 +41,18 @@ class UploadController extends Controller
      * @return void
      * @author
      **/
-    public function setCache($key, $value)
+    public function setCache($key, $value, $count)
     {
-        $cache   = Cache::pull($key);
-        $cache[] = $value;
-        print_r($cache);
+        $cache = Cache::pull($key, []);
+        array_push($cache, $value);
+        $cache = array_slice($cache, 0, $count);
         Cache::put($key, $cache, strtotime('+10 minutes'));
     }
 
     /**
      * Return the upload folder path.
      *
-     * @param type $package
-     * @param type $module
+     * @param type $config
      * @param type $folder
      * @param type $field
      *
@@ -69,6 +70,26 @@ class UploadController extends Controller
 
         return "{$path}/{$folder}/{$field}";
 
+    }
+
+    /**
+     * Return the upload folder path.
+     *
+     * @param type $config
+     * @param type $folder
+     * @param type $field
+     *
+     * @return string
+     */
+    public function getCount($config, $field)
+    {
+        $count = config("{$config}.uploads.{$field}.count");
+
+        if (empty($path) && !is_integer($count)) {
+            throw new FileNotFoundException('Invalid upload file count.');
+        }
+
+        return $count;
     }
 
     /**

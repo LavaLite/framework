@@ -7,25 +7,25 @@ class NotificationTableSeeder extends Seeder
     public function run()
     {
         DB::table('notifications')->insert([
-            
+
         ]);
 
         DB::table('permissions')->insert([
             [
-                'slug'      => 'alert.notification.view',
-                'name'      => 'View Notification',
+                'slug' => 'alert.notification.view',
+                'name' => 'View Notification',
             ],
             [
-                'slug'      => 'alert.notification.create',
-                'name'      => 'Create Notification',
+                'slug' => 'alert.notification.create',
+                'name' => 'Create Notification',
             ],
             [
-                'slug'      => 'alert.notification.edit',
-                'name'      => 'Update Notification',
+                'slug' => 'alert.notification.edit',
+                'name' => 'Update Notification',
             ],
             [
-                'slug'      => 'alert.notification.delete',
-                'name'      => 'Delete Notification',
+                'slug' => 'alert.notification.delete',
+                'name' => 'Delete Notification',
             ],
         ]);
 
@@ -72,13 +72,13 @@ class NotificationTableSeeder extends Seeder
         DB::table('settings')->insert([
             // Uncomment  and edit this section for entering value to settings table.
             /*
-            [
-                'key'      => 'alert.notification.key',
-                'name'     => 'Some name',
-                'value'    => 'Some value',
-                'type'     => 'Default',
-            ],
-            */
+        [
+        'key'      => 'alert.notification.key',
+        'name'     => 'Some name',
+        'value'    => 'Some value',
+        'type'     => 'Default',
+        ],
+         */
         ]);
     }
 }

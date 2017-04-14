@@ -31,10 +31,7 @@ return [
         'translatables' => [],
 
         'upload_folder' => 'calendar/calendar',
-        'uploads'       => [
-            'single'   => [],
-            'multiple' => [],
-        ],
+        'uploads'       => [],
         'casts'         => [
         ],
         'revision'      => [],

@@ -27,6 +27,9 @@ class RevisionServiceProvider extends ServiceProvider
         // Load translation
         $this->loadTranslationsFrom(__DIR__ . '/resources/lang', 'revision');
 
+        // Load migrations
+        $this->loadMigrationsFrom(__DIR__ . '/database/migrations');
+
         // Call pblish redources function
         $this->publishResources();
     }
@@ -80,8 +83,5 @@ class RevisionServiceProvider extends ServiceProvider
     {
         // Publish configuration file
         $this->publishes([__DIR__.'/config/config.php' => config_path('litepie/revision.php')], 'config');
-
-        // Publish migrations
-        $this->publishes([__DIR__ . '/database/migrations/' => base_path('database/migrations')], 'migrations');
     }
 }

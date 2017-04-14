@@ -461,7 +461,7 @@ class User
         $user = $this->getUser($guard);
         Form::populate($user);
 
-        return view('vuser::user.admin.edit', compact('user'));
+        return view('user::user.admin.edit', compact('user'));
     }
 
     /**

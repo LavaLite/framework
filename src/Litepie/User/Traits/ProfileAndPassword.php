@@ -118,8 +118,10 @@ trait ProfileAndPassword
 
         $this->theme->asset()->usepath()->add('cropper-css', 'packages/cropper/css/cropper.css');
         $this->theme->asset()->container('footer')->usepath()->add('cropper-js', 'packages/cropper/js/cropper.js');
+        $this->theme->asset()->usepath()->add('fullcalendar-css', 'packages/fullcalendar/fullcalendar.min.css');
+        $this->theme->asset()->container('extra')->usepath()->add('fullcalendar-js', 'packages/fullcalendar/fullcalendar.min.js');
 
-        $this->theme->prependTitle('Settings');
+        $this->theme->prependTitle('Profile');
         return $this->theme->of($this->getView('profile'), compact('user'))->render();
     }
 
