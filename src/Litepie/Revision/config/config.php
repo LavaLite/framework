@@ -63,10 +63,7 @@ return [
         'translate'     => [],
 
         'upload_folder' => '/revision/revision',
-        'uploads'       => [
-            'single'   => [],
-            'multiple' => [],
-        ],
+        'uploads'       => [],
         'casts'         => [
         ],
         'revision'      => [],
@@ -184,10 +181,7 @@ return [
         'translate'     => [],
 
         'upload_folder' => '/revision/revision',
-        'uploads'       => [
-            'single'   => [],
-            'multiple' => [],
-        ],
+        'uploads'       => [],
         'casts'         => [
             'user_info' => 'array',
         ],

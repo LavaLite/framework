@@ -22,9 +22,8 @@ trait User
     public function getPictureAttribute($value)
     {
         if (!empty($this->photo)) {
-            $photo = $this->photo;
 
-            return trans_url('image/sm/'. $this->config .'/'. folder_encode($photo['folder']) . '/' . $photo['file']);
+            return trans_url($this->defaultImage('photo'));
         }
 
         if ($this->sex == 'female') {
@@ -32,6 +31,17 @@ trait User
         }
 
         return theme_asset('img/avatar/male.png');
+    }
+
+    /**
+     * Returns the badge picture of the user.
+     *
+     * @return string image path
+     */
+    public function getBadgeAttribute($value)
+    {
+        return "<a href='" . trans_url("user/".$this->slug) . "' ><img alt=' width='45' height='45' src='{$this->picture}' title='{$this->name}' class='img-circle'></a>";
+
     }
 
     /**

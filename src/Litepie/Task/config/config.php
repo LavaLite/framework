@@ -30,10 +30,7 @@ return [
         'fillable'      => ['user_id', 'user_type', 'parent_id', 'start', 'end', 'category', 'task', 'time_required', 'time_taken', 'priority', 'status', 'upload_folder', 'created_by'],
 
         'upload_folder' => '/task/task',
-        'uploads'       => [
-            'single'   => [],
-            'multiple' => [],
-        ],
+        'uploads'       => [],
         'casts'         => [
         ],
         'revision'      => [],

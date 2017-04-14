@@ -31,10 +31,7 @@ return [
         'translatables' => [],
 
         'upload_folder' => '/message/message',
-        'uploads'       => [
-            'single'   => [],
-            'multiple' => [],
-        ],
+        'uploads'       => [],
         'casts'         => [
         ],
         'revision'      => [],

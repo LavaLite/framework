@@ -9,7 +9,6 @@ Route::group([
     Route::get('/client', 'ClientController@home');
     Route::group(['prefix' => 'admin'], function () {
         Route::get('/', 'AdminController@home');
-        Route::get('profile', 'AdminController@profile');
         Route::get('locked', 'AdminController@locked');
         Route::get('masters', 'AdminController@masters');
         Route::get('reports', 'AdminController@reports');

@@ -29,9 +29,6 @@ return [
         'fillable'      => ['parent_id', 'key', 'url', 'icon', 'permission', 'name', 'description', 'target', 'has_sub', 'order', 'status'],
         'listfields'    => ['id', 'name', 'level', 'url', 'order', 'icon', 'status', 'has_sub', 'type', 'target', 'key'],
         'upload-folder' => 'uploads/menu',
-        'uploadable'    => [
-            'single'   => [],
-            'multiple' => [],
-        ],
+        'uploadable'    => [],
     ],
 ];

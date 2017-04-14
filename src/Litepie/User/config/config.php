@@ -19,33 +19,36 @@ return [
 
     'image'      => [
 
-        'sm' => [
+        'sm'     => [
             'width'     => '140',
             'height'    => '140',
             'action'    => 'fit',
             'watermark' => 'img/logo/default.png',
         ],
 
-        'md' => [
+        'md'     => [
             'width'     => '370',
             'height'    => '420',
             'action'    => 'fit',
             'watermark' => 'img/logo/default.png',
         ],
 
-        'lg' => [
+        'lg'     => [
             'width'     => '780',
             'height'    => '497',
             'action'    => 'fit',
             'watermark' => 'img/logo/default.png',
         ],
-        'xl' => [
+        'xl'     => [
             'width'     => '800',
             'height'    => '530',
             'action'    => 'fit',
             'watermark' => 'img/logo/default.png',
         ],
-
+        'avatar' => [
+            'male'   => '',
+            'female' => '',
+        ],
     ],
 
     'user'       => [
@@ -59,32 +62,34 @@ return [
         'dates'         => ['deleted_at'],
         'appends'       => [],
         'fillable'      => ['user_id', 'name', 'email', 'parent_id', 'password', 'api_token', 'remember_token', 'sex', 'dob', 'designation', 'mobile', 'phone', 'address', 'street', 'city', 'district', 'state', 'country', 'photo', 'web', 'permissions'],
-        'translate'     => ['name', 'email', 'parent_id', 'password', 'api_token', 'remember_token', 'sex', 'dob', 'designation', 'mobile', 'phone', 'address', 'street', 'city', 'district', 'state', 'country', 'photo', 'web', 'permissions'],
+        'translate'     => [],
 
         'upload_folder' => 'user/user',
         'uploads'       => [
-            'single'   => ['photo'],
-            'multiple' => [],
+            'photo' => [
+                'count' => 1,
+                'type'  => 'image',
+            ],
         ],
         'casts'         => [
             'permissions' => 'array',
-            'photo' => 'array',
+            'photo'       => 'array',
         ],
         'revision'      => [],
         'perPage'       => '20',
-        'search'        => [            
-            'name' => 'like',
-            'email' => 'like',
-            'sex' => 'like',
-            'dob' => 'like',
+        'search'        => [
+            'name'        => 'like',
+            'email'       => 'like',
+            'sex'         => 'like',
+            'dob'         => 'like',
             'designation' => 'like',
-            'mobile' => 'like',
-            'street' => 'like',
-            'status' => 'like',
-            'created_at' => 'like',
-            'updated_at' => 'like',
+            'mobile'      => 'like',
+            'street'      => 'like',
+            'status'      => 'like',
+            'created_at'  => 'like',
+            'updated_at'  => 'like',
         ],
-    
+
         'workflow'      => [
             'points' => [
                 'start' => 'new',
@@ -114,7 +119,7 @@ return [
         ],
     ],
 
-    'client'       => [
+    'client'     => [
         'model'         => 'App\\Client',
         'table'         => 'clients',
         'presenter'     => \Litepie\User\Repositories\Presenter\UserItemPresenter::class,
@@ -125,32 +130,34 @@ return [
         'dates'         => ['deleted_at'],
         'appends'       => [],
         'fillable'      => ['user_id', 'name', 'email', 'parent_id', 'password', 'api_token', 'remember_token', 'sex', 'dob', 'designation', 'mobile', 'phone', 'address', 'street', 'city', 'district', 'state', 'country', 'photo', 'web', 'permissions'],
-        'translate'     => ['name', 'email', 'parent_id', 'password', 'api_token', 'remember_token', 'sex', 'dob', 'designation', 'mobile', 'phone', 'address', 'street', 'city', 'district', 'state', 'country', 'photo', 'web', 'permissions'],
+        'translate'     => [],
 
         'upload_folder' => 'client/client',
         'uploads'       => [
-            'single'   => ['photo'],
-            'multiple' => [],
+            'photo' => [
+                'count' => 1,
+                'type'  => 'image',
+            ],
         ],
         'casts'         => [
             'permissions' => 'array',
-            'photo' => 'array',
+            'photo'       => 'array',
         ],
         'revision'      => [],
         'perPage'       => '20',
-        'search'        => [            
-            'name' => 'like',
-            'email' => 'like',
-            'sex' => 'like',
-            'dob' => 'like',
+        'search'        => [
+            'name'        => 'like',
+            'email'       => 'like',
+            'sex'         => 'like',
+            'dob'         => 'like',
             'designation' => 'like',
-            'mobile' => 'like',
-            'street' => 'like',
-            'status' => 'like',
-            'created_at' => 'like',
-            'updated_at' => 'like',
+            'mobile'      => 'like',
+            'street'      => 'like',
+            'status'      => 'like',
+            'created_at'  => 'like',
+            'updated_at'  => 'like',
         ],
-        
+
         'workflow'      => [
             'points' => [
                 'start' => 'new',
@@ -193,12 +200,8 @@ return [
         'fillable'      => ['slug', 'name'],
         'translate'     => [],
         'upload-folder' => 'user/permission',
-        'uploads'       => [
-            'single'   => [],
-            'multiple' => [],
-        ],
-        'casts'         => [
-        ],
+        'uploads'       => [],
+        'casts'         => [],
         'revision'      => [],
         'perPage'       => '20',
         'search'        => [
@@ -218,21 +221,18 @@ return [
         'dates'         => ['deleted_at'],
         'appends'       => [],
         'fillable'      => ['key', 'name', 'permissions'],
-        'translate'     => ['key', 'name', 'permissions'],
+        'translate'     => [],
 
         'upload-folder' => 'user/role',
-        'uploads'       => [
-            'single'   => [],
-            'multiple' => [],
-        ],
+        'uploads'       => [],
         'casts'         => [
             'permissions' => 'array',
         ],
         'revision'      => [],
         'perPage'       => '20',
         'search'        => [
-            'name' => 'like',            
-            'key' => 'like',
+            'name'       => 'like',
+            'key'        => 'like',
             'created_at' => 'like',
             'updated_at' => 'like',
         ],
@@ -249,23 +249,20 @@ return [
         'dates'         => ['deleted_at'],
         'appends'       => [],
         'fillable'      => ['user_id', 'name', 'description'],
-        'translate'     => ['name', 'description'],
+        'translate'     => [],
 
         'upload-folder' => 'user/team',
-        'uploads'       => [
-            'single'   => [],
-            'multiple' => [],
-        ],
+        'uploads'       => [],
         'casts'         => [
         ],
         'revision'      => [],
         'perPage'       => '20',
         'search'        => [
-            'name' => 'like',
+            'name'        => 'like',
             'description' => 'like',
-            'status' => 'like',
-            'created_at' => 'like',
-            'updated_at' => 'like',
+            'status'      => 'like',
+            'created_at'  => 'like',
+            'updated_at'  => 'like',
         ],
 
     ],

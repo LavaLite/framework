@@ -26,6 +26,9 @@ class CalendarServiceProvider extends ServiceProvider
         // Load translation
         $this->loadTranslationsFrom(__DIR__ . '/resources/lang', 'calendar');
 
+        // Load migrations
+        $this->loadMigrationsFrom(__DIR__ . '/database/migrations');
+
         // Call pblish redources function
         $this->publishResources();
 
@@ -80,8 +83,6 @@ class CalendarServiceProvider extends ServiceProvider
         // Publish language files
         $this->publishes([__DIR__ . '/resources/lang' => base_path('resources/lang/vendor/calendar')], 'lang');
 
-        // Publish migrations
-        $this->publishes([__DIR__ . '/database/migrations/' => base_path('database/migrations')], 'migrations');
 
         // Publish seeds
         $this->publishes([__DIR__ . '/database/seeds/' => base_path('database/seeds')], 'seeds');

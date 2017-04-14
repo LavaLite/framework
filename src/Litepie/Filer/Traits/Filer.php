@@ -178,9 +178,11 @@ trait Filer
             $prev = [];
         }
 
-        $value = array_merge($prev, $current, $cache);
+        $files = array_merge($current, $cache, $prev);
 
-        $this->setAttribute($field, $value);
+        $files = array_slice($files, 0, $this->getUploadFileCount($field));
+
+        $this->setAttribute($field, $files);
     }
 
     /**
@@ -195,6 +197,18 @@ trait Filer
         $original = parent::getOriginal($field);
 
         return json_decode($original);
+    }
+
+    /**
+     * Get the original value of file field.
+     *
+     * @param string $field
+     *
+     * @return array
+     */
+    public function getUploadFileCount($field)
+    {
+        return $this->uploads[$field]['count'];
     }
 
     /**
@@ -274,7 +288,6 @@ trait Filer
 
         return $file;
     }
-
 
     /**
      * Display files inside a form.

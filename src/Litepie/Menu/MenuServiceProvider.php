@@ -22,7 +22,11 @@ class MenuServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->loadViewsFrom(__DIR__ . '/resources/views', 'menu');
+
         $this->loadTranslationsFrom(__DIR__ . '/resources/lang', 'menu');
+
+        // Load migrations
+        $this->loadMigrationsFrom(__DIR__ . '/database/migrations');
 
         // Call pblish redources function
         $this->publishResources();
@@ -72,9 +76,6 @@ class MenuServiceProvider extends ServiceProvider
 
         // Publish language files
         $this->publishes([__DIR__ . '/resources/lang' => base_path('resources/lang/vendor/menu')], 'lang');
-
-        // Publish migrations
-        $this->publishes([__DIR__ . '/database/migrations/' => base_path('database/migrations')], 'migrations');
 
         // Publish seeds
         $this->publishes([__DIR__ . '/database/seeds/' => base_path('database/seeds')], 'seeds');
