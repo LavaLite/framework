@@ -44,6 +44,15 @@
         "litepie/workflow": "self.version"
     },
     "autoload": {
+        "classmap": [
+            "Alert/database/seeds",
+            "Calendar/database/seeds",
+            "Menu/database/seeds",
+            "Message/database/seeds",
+            "Settings/database/seeds",
+            "Task/database/seeds",
+            "User/database/seeds"
+        ],
         "files": [
             "src/Litepie/Foundation/helpers.php"
         ],

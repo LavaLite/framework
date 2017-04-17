@@ -84,9 +84,6 @@ class SettingsServiceProvider extends ServiceProvider
         // Publish language files
         $this->publishes([__DIR__ . '/resources/lang' => base_path('resources/lang/vendor/settings')], 'lang');
 
-        // Publish seeds
-        $this->publishes([__DIR__ . '/database/seeds/' => base_path('database/seeds')], 'seeds');
-
         // Publish public files and assets.
         $this->publishes([__DIR__ . '/public/' => public_path('/')], 'public');
     }
