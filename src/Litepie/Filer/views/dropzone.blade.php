@@ -5,7 +5,7 @@
 
 <script type="text/javascript">
 $(function () {
-    Dropzone.options.{!!$field!!} = {
+    $("div#{!!$field!!}").dropzone({
         url: "{!! $url !!}",
         maxFiles: {!!$count!!},
         acceptedFiles: "{{$mime}}",
@@ -29,7 +29,7 @@ $(function () {
             });
         }
 
-    };
+    });
 });
 </script>
 <!-- End dropzone. -->

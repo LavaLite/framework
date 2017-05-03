@@ -25,7 +25,7 @@ class PackgeAssets implements SetupScript
      * @var array
      */
     protected $tags = [
-        'config', 'view', 'seeds', 'lang', 'migrations', 'public',
+        'config', 'view', 'lang', 'public',
     ];
 
     /**

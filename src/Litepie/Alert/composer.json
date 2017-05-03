@@ -13,6 +13,9 @@
         "php": ">=5.5.9"
     },
     "autoload": {
+        "classmap": [
+            "database/seeds"
+        ],
         "psr-4": {
             "Litepie\\Alert\\": "src/Litepie/Alert"
         }

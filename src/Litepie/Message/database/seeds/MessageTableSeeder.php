@@ -1,4 +1,5 @@
 <?php
+namespace Litepie;
 
 use Illuminate\Database\Seeder;
 

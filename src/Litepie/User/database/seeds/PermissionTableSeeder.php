@@ -1,5 +1,7 @@
 <?php
 
+namespace Litepie;
+
 use Illuminate\Database\Seeder;
 
 class PermissionTableSeeder extends Seeder
