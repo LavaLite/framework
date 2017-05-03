@@ -60,7 +60,7 @@ class InstallCommand extends Command
             \Litepie\Install\Installers\Scripts\PackageMigrators::class,
             \Litepie\Install\Installers\Scripts\PackageSeeders::class,
             \Litepie\Install\Installers\Scripts\SetSuperuserUser::class,
-            \Litepie\Install\Installers\Scripts\SetAppKey::class,
+            \Litepie\Install\Installers\Scripts\SetAppKey::class
         ])->install($this);
 
         if ($success) {

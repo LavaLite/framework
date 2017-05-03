@@ -1,10 +1,10 @@
 <?php
 namespace Litepie\Install\Installers\Scripts;
 
+use Exception;
 use Illuminate\Console\Command;
 use Litepie\Install\Installers\SetupScript;
 use Litepie\Install\Installers\Writers\EnvFileWriter;
-use Exception;
 
 class ConfigureDatabase implements SetupScript
 {
@@ -24,7 +24,7 @@ class ConfigureDatabase implements SetupScript
      */
     public function __construct(EnvFileWriter $env)
     {
-        $this->env    = $env;
+        $this->env = $env;
     }
 
     /**
@@ -115,6 +115,7 @@ class ConfigureDatabase implements SetupScript
             if (!$link) {
                 return false;
             }
+
             return true;
         } catch (Exception $e) {
             return false;

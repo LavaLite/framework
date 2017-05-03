@@ -1,4 +1,5 @@
-<?php namespace Litepie\Install\Installers\Scripts;
+<?php
+namespace Litepie\Install\Installers\Scripts;
 
 use Illuminate\Console\Command;
 use Litepie\Install\Installers\SetupScript;
@@ -12,11 +13,14 @@ class SetAppKey implements SetupScript
      */
     public function fire(Command $command)
     {
+
         if ($command->option('verbose')) {
             $command->info('Genarating application key...');
             $command->call('key:generate --show');
             return;
         }
+
         $command->callSilent('key:generate --show');
     }
+
 }
