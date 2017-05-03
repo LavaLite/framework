@@ -169,7 +169,6 @@ class MenuTableSeeder extends Seeder
                 'order'       => 13,
                 'status'      => 1,
             ],
-
         ]);
     }
 }
