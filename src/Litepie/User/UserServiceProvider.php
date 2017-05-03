@@ -100,9 +100,6 @@ class UserServiceProvider extends ServiceProvider
         // Publish language files
         $this->publishes([__DIR__ . '/resources/lang' => base_path('resources/lang/vendor/user')], 'lang');
 
-        // Publish seeds
-        $this->publishes([__DIR__ . '/database/seeds/' => base_path('database/seeds')], 'seeds');
-
         // Publish models
         $this->publishes([__DIR__ . '/database/models/' => base_path('/')], 'models');
 

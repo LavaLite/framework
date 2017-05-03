@@ -83,7 +83,5 @@ class MessageServiceProvider extends ServiceProvider
         // Publish language files
         $this->publishes([__DIR__ . '/resources/lang' => base_path('resources/lang/vendor/message')], 'lang');
 
-        // Publish seeds
-        $this->publishes([__DIR__ . '/database/seeds/' => base_path('database/seeds')], 'seeds');
     }
 }
