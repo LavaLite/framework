@@ -44,6 +44,17 @@
         "litepie/workflow": "self.version"
     },
     "autoload": {
+        "classmap": [
+            "database",
+            "src/Litepie/Alert/database",
+            "src/Litepie/Calendar/database",
+            "src/Litepie/Menu/database",
+            "src/Litepie/Message/database",
+            "src/Litepie/Revision/database",
+            "src/Litepie/Settings/database",
+            "src/Litepie/Task/database",
+            "src/Litepie/User/database"
+        ],
         "files": [
             "src/Litepie/Foundation/helpers.php"
         ],
