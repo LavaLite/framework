@@ -45,7 +45,6 @@
     },
     "autoload": {
         "classmap": [
-            "database",
             "src/Litepie/Alert/database",
             "src/Litepie/Calendar/database",
             "src/Litepie/Menu/database",
