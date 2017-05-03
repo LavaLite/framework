@@ -21,7 +21,7 @@ class SetAppKey implements SetupScript
             return;
         }
 
-        $command->callSilent('key:generate', ['--show' => true]);
+        $command->call('key:generate', ['--show' => true]);
     }
 
 }
