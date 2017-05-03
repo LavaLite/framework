@@ -33,7 +33,7 @@ class SetSuperuserUser implements SetupScript
 
         do {
             $data['email'] = $this->command->ask('Please enter email for superuser', 'superuser@lavalite.org');
-            $validator    = Validator::make($data, ['email' => 'required|email']);
+            $validator     = Validator::make($data, ['email' => 'required|email']);
 
             if ($validator->fails()) {
                 $this->command->error($validator->errors()->first('email'));
@@ -53,7 +53,7 @@ class SetSuperuserUser implements SetupScript
 
         do {
             $data['password'] = $this->command->secret("Please enter password for superuser");
-            $validator               = Validator::make($data, [
+            $validator        = Validator::make($data, [
                 'password' => 'min:8|max:30',
             ]);
 

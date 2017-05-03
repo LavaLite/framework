@@ -1,4 +1,5 @@
-<?php namespace Litepie\Install\Installers\Scripts;
+<?php
+namespace Litepie\Install\Installers\Scripts;
 
 use Exception;
 use Illuminate\Console\Command;
@@ -28,12 +29,17 @@ class ProtectInstaller implements SetupScript
      */
     public function fire(Command $command)
     {
+
         if ($this->finder->isFile('.env')) {
             $command->blockMessage('Installed', 'Lavalite has already been installed, continuing the installation will erase all the datas and your updations.', 'comment');
+
             if (!$command->confirm('Do you wish to continue?')) {
                 throw new Exception('Installation terminated.');
             }
+
             return;
         }
-     }
+
+    }
+
 }

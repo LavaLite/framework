@@ -1,5 +1,7 @@
 <?php
+namespace Litepie;
 
+use DB;
 use Illuminate\Database\Seeder;
 
 class UserTableSeeder extends Seeder

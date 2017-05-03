@@ -1,5 +1,8 @@
 <?php
 
+namespace Litepie;
+
+use DB;
 use Illuminate\Database\Seeder;
 
 class MenuTableSeeder extends Seeder
@@ -169,7 +172,6 @@ class MenuTableSeeder extends Seeder
                 'order'       => 13,
                 'status'      => 1,
             ],
-
         ]);
     }
 }

@@ -1,10 +1,10 @@
 <?php
 namespace Litepie\Install\Installers\Scripts;
 
+use Exception;
 use Illuminate\Console\Command;
 use Litepie\Install\Installers\SetupScript;
 use Litepie\Install\Installers\Writers\EnvFileWriter;
-use Exception;
 
 class ConfigureDatabase implements SetupScript
 {
@@ -24,7 +24,7 @@ class ConfigureDatabase implements SetupScript
      */
     public function __construct(EnvFileWriter $env)
     {
-        $this->env    = $env;
+        $this->env = $env;
     }
 
     /**
@@ -58,7 +58,7 @@ class ConfigureDatabase implements SetupScript
         }
 
         $this->env->write($name, $user, $password, $host);
-        $command->info('Database successfully configured');
+        $command->info('Database successfully configured.');
     }
 
     /**
@@ -66,7 +66,7 @@ class ConfigureDatabase implements SetupScript
      */
     protected function askDatabaseHost()
     {
-        $host = $this->command->ask('Enter your database host', '127.0.0.1');
+        $host = $this->command->ask('Enter your database host.', '127.0.0.1');
 
         return $host;
     }
@@ -77,7 +77,7 @@ class ConfigureDatabase implements SetupScript
     protected function askDatabaseName()
     {
 
-        $name = $this->command->ask('Enter your database name', 'homestead');
+        $name = $this->command->ask('Enter your database name.', 'homestead');
         return $name;
     }
 
@@ -88,7 +88,7 @@ class ConfigureDatabase implements SetupScript
     protected function askDatabaseUsername()
     {
 
-        $user = $this->command->ask('Enter your database username', 'homestead');
+        $user = $this->command->ask('Enter your database username.', 'homestead');
         return $user;
     }
 
@@ -98,7 +98,7 @@ class ConfigureDatabase implements SetupScript
      */
     protected function askDatabasePassword()
     {
-        $databasePassword = $this->command->secret('Enter your database password (type blank for no password)', 'blank');
+        $databasePassword = $this->command->secret('Enter your database password (type blank for no password).', 'blank');
 
         return ($databasePassword === 'blank') ? '' : $databasePassword;
     }
@@ -115,6 +115,7 @@ class ConfigureDatabase implements SetupScript
             if (!$link) {
                 return false;
             }
+
             return true;
         } catch (Exception $e) {
             return false;

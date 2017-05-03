@@ -42,7 +42,7 @@ class InstallServiceProvider extends ServiceProvider
      */
     public function provides()
     {
-        return ['menu'];
+        return ['install'];
     }
 
 
