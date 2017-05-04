@@ -18,10 +18,10 @@ class SetSuperuserUser implements SetupScript
     public function fire(Command $command)
     {
         $this->command    = $command;
-        $data['email']    = $this->askUserEmail();
-        $data['password'] = $this->askUserPassword();
         $user             = User::find(1);
-        $user->update($data);
+        $user->email    = $this->askUserEmail();
+        $user->password = $this->askUserPassword();
+        $user->save();
     }
 
     /**
