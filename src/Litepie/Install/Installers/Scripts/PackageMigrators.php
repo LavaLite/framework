@@ -20,7 +20,7 @@ class PackageMigrators implements SetupScript
             $command->blockMessage('Migrations', 'Starting the package migrations ...', 'comment');
         }
 
-        $command->call('migrate:refresh');
+        $command->call('migrate:refresh', ['--force' => true]);
     }
 
 }

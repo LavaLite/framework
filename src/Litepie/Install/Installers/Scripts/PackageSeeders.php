@@ -20,7 +20,7 @@ class PackageSeeders implements SetupScript
             $command->blockMessage('Seeds', 'Starting the package seeders ...', 'comment');
         }
 
-        $command->call('db:seed');
+        $command->call('db:seed', ['--force' => true]);
     }
 
 }
