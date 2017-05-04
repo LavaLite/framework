@@ -8,6 +8,7 @@ use Litepie\Install\Installers\SetupScript;
 
 class ProtectInstaller implements SetupScript
 {
+
     /**
      * @var Filesystem
      */
@@ -29,11 +30,12 @@ class ProtectInstaller implements SetupScript
      */
     public function fire(Command $command)
     {
+        $currentKey = config('app.key');
 
-        if ($this->finder->isFile('.env')) {
-            $command->blockMessage('Installed', 'Lavalite has already been installed, continuing the installation will erase all the datas and your updations.', 'comment');
+        if (strlen($currentKey) !== 0) {
+            $command->alert('Application In Production!');
 
-            if (!$command->confirm('Do you wish to continue?')) {
+            if (!$command->confirm('Do you really wish to continue the installation?')) {
                 throw new Exception('Installation terminated.');
             }
 

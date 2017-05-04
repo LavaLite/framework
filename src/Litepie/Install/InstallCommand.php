@@ -51,7 +51,7 @@ class InstallCommand extends Command
      */
     public function handle()
     {
-        $this->blockMessage('Welcome!', 'Starting the installation process...', 'comment');
+        $this->alert('Lavalite Installation');
 
         $success = $this->installer->stack([
             \Litepie\Install\Installers\Scripts\ProtectInstaller::class,
@@ -64,7 +64,8 @@ class InstallCommand extends Command
         ])->install($this);
 
         if ($success) {
-            $this->info('Lavalite is ready! You can now login with your username and password at [your application path/admin]');
+            $this->line('Lavalite is ready.');
+            $this->info('You can now login with your username and password at ['.url('/admin').']');
         }
 
     }

@@ -54,7 +54,7 @@ class SetSuperuserUser implements SetupScript
         do {
             $data['password'] = $this->command->secret("Please enter password for superuser");
             $validator        = Validator::make($data, [
-                'password' => 'min:8|max:30',
+                'password' => 'min:6|max:30',
             ]);
 
             if ($validator->fails()) {

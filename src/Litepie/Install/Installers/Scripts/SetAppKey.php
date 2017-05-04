@@ -16,12 +16,12 @@ class SetAppKey implements SetupScript
 
         if ($command->option('verbose')) {
             $command->info('Genarating application key...');
-            $command->call('key:generate', ['--show' => true, '--force' => true]);
+            $command->call('key:generate');
 
             return;
         }
 
-        $command->call('key:generate', ['--show' => true, '--force' => true]);
+        $command->call('key:generate');
     }
 
 }

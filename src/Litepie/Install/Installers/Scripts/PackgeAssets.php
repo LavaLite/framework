@@ -25,7 +25,7 @@ class PackgeAssets implements SetupScript
      * @var array
      */
     protected $tags = [
-        'config', 'view', 'lang', 'public',
+        'config' => 1, 'view' => 0, 'lang' => 0, 'public' => 1,
     ];
 
     /**
@@ -42,10 +42,10 @@ class PackgeAssets implements SetupScript
             $this->command->blockMessage('Package resources', "Publishing package resources for [$package] ...", 'comment');
         }
 
-        foreach ($this->tags as $tag) {
+        foreach ($this->tags as $tag => $option) {
             $this->command->sectionMessage(ucfirst($tag) . " files", "Publishing {$tag} files");
 
-            if ($confirm = $this->confirm($tag)) {
+            if ($confirm = $this->confirm($tag, $option)) {
 
                 if ($confirm == 'Ask') {
 
@@ -68,9 +68,9 @@ class PackgeAssets implements SetupScript
 
     }
 
-    public function confirm($tag)
+    public function confirm($tag, $option)
     {
-        $choice = $this->command->choice("Do you want to publish {$tag} files?", ['No', 'Yes', 'Overwrite', 'Ask'], 1);
+        $choice = $this->command->choice("Do you want to publish {$tag} files?", ['No', 'Yes', 'Overwrite', 'Ask'], $option);
 
         if ($choice == 'No') {
             return false;
