@@ -45,11 +45,15 @@ class ConfigureDatabase implements SetupScript
 
         while (!$connected) {
             $host     = $this->askDatabaseHost();
-            $user     = $this->askDatabaseUsername();
+            $username = $this->askDatabaseUsername();
             $password = $this->askDatabasePassword();
-            $name     = $this->askDatabaseName();
+            $database = $this->askDatabaseName();
 
-            if ($this->databaseConnectionIsValid($host, $user, $password, $name)) {
+            if ($this->databaseConnectionIsValid($host, $username, $password, $database)) {
+                config(['database.connections.mysql.host' => $host]);
+                config(['database.connections.mysql.username' => $username]);
+                config(['database.connections.mysql.password' => $password]);
+                config(['database.connections.mysql.database' => $database]);
                 $connected = true;
             } else {
                 $command->error("Please ensure your database credentials are valid.");
@@ -57,7 +61,7 @@ class ConfigureDatabase implements SetupScript
 
         }
 
-        $this->env->write($name, $user, $password, $host);
+        $this->env->write($database, $username, $password, $host);
         $command->info('Database successfully configured.');
     }
 
@@ -77,8 +81,8 @@ class ConfigureDatabase implements SetupScript
     protected function askDatabaseName()
     {
 
-        $name = $this->command->ask('Enter your database name.', 'homestead');
-        return $name;
+        $database = $this->command->ask('Enter your database name.', 'homestead');
+        return $database;
     }
 
     /**
@@ -88,8 +92,8 @@ class ConfigureDatabase implements SetupScript
     protected function askDatabaseUsername()
     {
 
-        $user = $this->command->ask('Enter your database username.', 'homestead');
-        return $user;
+        $username = $this->command->ask('Enter your database username.', 'homestead');
+        return $username;
     }
 
     /**
@@ -107,10 +111,10 @@ class ConfigureDatabase implements SetupScript
      * Is the database connection valid?
      * @return bool
      */
-    protected function databaseConnectionIsValid($host, $user, $password, $name)
+    protected function databaseConnectionIsValid($host, $username, $password, $database)
     {
         try {
-            $link = @mysqli_connect($host, $user, $password, $name);
+            $link = @mysqli_connect($host, $username, $password, $database);
 
             if (!$link) {
                 return false;
