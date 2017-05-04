@@ -17,8 +17,12 @@ class SetSuperuserUser implements SetupScript
      */
     public function fire(Command $command)
     {
-        $this->command    = $command;
-        $user             = User::find(1);
+        if ($command->option('verbose')) {
+            $command->blockMessage('Set password', 'Set password for superuser.', 'comment');
+        }
+
+        $this->command  = $command;
+        $user           = User::find(1);
         $user->email    = $this->askUserEmail();
         $user->password = $this->askUserPassword();
         $user->save();
