@@ -22,6 +22,12 @@ class SetSuperuserUser implements SetupScript
         }
 
         $this->command  = $command;
+
+        config(['litepie.user.user' => [
+            'table'    => 'users',
+            'fillable' => ['password', 'email'],
+        ]]);
+
         $user           = User::find(1);
         $user->email    = $this->askUserEmail();
         $user->password = $this->askUserPassword();
