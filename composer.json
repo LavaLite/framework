@@ -45,14 +45,14 @@
     },
     "autoload": {
         "classmap": [
-            "src/Litepie/Alert/database",
-            "src/Litepie/Calendar/database",
-            "src/Litepie/Menu/database",
-            "src/Litepie/Message/database",
-            "src/Litepie/Revision/database",
-            "src/Litepie/Settings/database",
-            "src/Litepie/Task/database",
-            "src/Litepie/User/database"
+            "src/Litepie/Alert/database/seeds",
+            "src/Litepie/Calendar/database/seeds",
+            "src/Litepie/Menu/database/seeds",
+            "src/Litepie/Message/database/seeds",
+            "src/Litepie/Revision/database/seeds",
+            "src/Litepie/Settings/database/seeds",
+            "src/Litepie/Task/database/seeds",
+            "src/Litepie/User/database/seeds"
         ],
         "files": [
             "src/Litepie/Foundation/helpers.php"

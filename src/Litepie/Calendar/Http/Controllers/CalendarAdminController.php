@@ -62,7 +62,7 @@ class CalendarAdminController extends BaseController
                 return $query->orderBy('id', 'DESC');
             })->all();
 
-        $this->theme->prependTitle(trans('calendar::calendar.names') . ' :: ');
+        $this->theme->prependTitle(trans('calendar::calendar.names'));
         return $this->theme->of('calendar::admin.calendar.index',compact('calendars'))->render();
     }
 

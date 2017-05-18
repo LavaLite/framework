@@ -71,7 +71,7 @@ class MessageAdminController extends BaseController
 
         }
 
-        $this->theme->prependTitle(trans('message::message.names') . ' :: ');
+        $this->theme->prependTitle(trans('message::message.names'));
         return $this->theme->of('message::admin.message.index')->render();
 
     }
