@@ -65,7 +65,7 @@ class UserTableSeeder extends Seeder
             'key'         => null,
             'url'         => 'admin/user/user',
             'name'        => 'User',
-            'role'        => '["superuser"]'
+            'role'        => '["superuser"]',
             'description' => null,
             'icon'        => 'fa fa-users',
             'target'      => null,
