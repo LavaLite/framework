@@ -13,7 +13,8 @@
         </div>
         <div class='col-md-12 col-sm-12'>
             {!! Form::password('password')
-            -> label(trans('user::user.label.password'))
+            -> label(trans('user::user.label.password').' <a href="javascript:void(0)" class="pwdedit"><i class="fa fa-pencil-square" aria-hidden="true"></i></a>')
+            -> disabled(true)
             -> placeholder(trans('user::user.placeholder.password')) !!}
         </div>
         <div class='col-md-12 col-sm-12'>
@@ -30,10 +31,10 @@
     <div class='col-md-12 col-sm-12'>
     <strong>Roles</strong><br/>
     @foreach ($roles as $role)
-        <div class="col-md-1">
+        <div class="col-md-2">
             <div class="checkbox checkbox-danger" >
-              <input name="roles[{{ $role->id }}]" id="roles.{{ $role->id }}" type="checkbox" {{ ( $user-> hasRole($role->name)) ? 'checked' : '' }} value='{{ $role->id }}'>
-              <label for="roles.{{ $role->id }}">{{ ucfirst($role->name) }}</label>
+              <input name="roles[{{ $role->id }}]" id="roles.{{ $role->id }}" type="checkbox" {{ ( $user-> hasRole($role->key)) ? 'checked' : '' }} value='{{ $role->id }}'>
+              <label for="roles.{{ $role->id }}">{{ $role->name }}</label>
             </div>
         </div>
     @endforeach
@@ -96,7 +97,14 @@
 </style>
 
 <script type="text/javascript">
+
+
 $(function() {
+    $(".pwdedit").click(function(){
+      console.log('dsfdsf');
+      $("#password").removeAttr('disabled');
+    });
+
     $('input[type="checkbox"]').change(function(e) {
 
       var checked = $(this).prop("checked"),

@@ -453,7 +453,7 @@ class User
      */
     public function roles()
     {
-        return $this->role->all(['id', 'name']);
+        return $this->role->all()->pluck('name', 'key');
     }
 
     /**

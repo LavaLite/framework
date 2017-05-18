@@ -55,7 +55,7 @@ class UserAdminController extends BaseController
             return $this->getJson($request);
         }
 
-        $this->theme->prependTitle(trans('user::user.names') . ' :: ');
+        $this->theme->prependTitle(trans('user::user.names'));
         return $this->theme->of('vuser::admin.user.index')->render();
     }
 
@@ -133,10 +133,10 @@ class UserAdminController extends BaseController
     public function store(UserRequest $request)
     {
         try {
-            $attributes            = $request->all();
-            $attributes['user_id'] = user_id('admin.web');
-            $attributes['password'] =bcrypt($attributes['password']);            
-            $user                  = $this->repository->create($attributes);
+            $attributes             = $request->all();
+            $attributes['user_id']  = user_id('admin.web');
+            $attributes['password'] = bcrypt($attributes['password']);
+            $user                   = $this->repository->create($attributes);
 
             return response()->json([
                 'message'  => trans('messages.success.updated', ['Module' => trans('user::user.name')]),
@@ -182,10 +182,13 @@ class UserAdminController extends BaseController
         try {
 
             $attributes = $request->all();
-            $attributes['password'] =bcrypt($attributes['password']);            
+
+            if ($request->has('password')) {
+                $attributes['password'] = bcrypt($attributes['password']);
+            }
 
             $user->update($attributes);
-
+            $user->roles()->sync(array_keys($request->input('roles')));
 
             return response()->json([
                 'message'  => trans('messages.success.updated', ['Module' => trans('user::user.name')]),
@@ -236,7 +239,6 @@ class UserAdminController extends BaseController
 
     }
 
-
     /**
      * Change the default team.
      *
@@ -250,7 +252,7 @@ class UserAdminController extends BaseController
         try {
 
             $attributes = $request->all();
-            $user = $request->user($this->getGuard());
+            $user       = $request->user($this->getGuard());
             $user->update($attributes);
 
             return response()->json([
@@ -270,6 +272,5 @@ class UserAdminController extends BaseController
         }
 
     }
-
 
 }

@@ -4,20 +4,19 @@ namespace App;
 
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Notifications\Notifiable;
-use Illuminate\Auth\Passwords\CanResetPassword;
-use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
-
 use Litepie\Database\Model;
 use Litepie\Database\Traits\Slugger;
 use Litepie\Foundation\Auth\User as Authenticatable;
 use Litepie\Hashids\Traits\Hashids;
+use Litepie\Filer\Traits\Filer;
 use Litepie\Repository\Traits\PresentableTrait;
 use Litepie\User\Traits\Acl\CheckPermission;
 use Litepie\User\Traits\User as UserProfile;
+use Litepie\User\Contracts\UserPolicy;
 
-class User extends Authenticatable implements CanResetPasswordContract
+class User extends Authenticatable implements UserPolicy
 {
-    use Notifiable, CanResetPassword, CheckPermission, UserProfile, SoftDeletes, Hashids, Slugger, PresentableTrait;
+    use Filer, Notifiable, CheckPermission, UserProfile, SoftDeletes, Hashids, Slugger, PresentableTrait;
 
     /**
      * Configuartion for the model.
@@ -45,6 +44,20 @@ class User extends Authenticatable implements CanResetPasswordContract
         }
 
         parent::__construct($attributes);
+    }
+
+    public function getDobAttribute($val)
+    {
+
+        if ($val == '0000-00-00' || empty($val)) {
+            return '';
+        }
+        return format_date(($val));
+    }
+
+    public function messages()
+    {
+        return $this->morphMany('\Litepie\Message\Models\Message', 'user');
     }
 
 

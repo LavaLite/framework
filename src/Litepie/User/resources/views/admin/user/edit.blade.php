@@ -93,8 +93,8 @@
                     <div class='col-md-3 col-sm-4'>
                             <label>Photo</label>
                         <div class='col-md-12 col-sm-12'>
-                            {!!$user->files('photo')->uploader()!!}
-                            {!!$user->file('photo')->editor()!!}
+                            {!!$user->files('photo')->url($user->getUploadUrl('photo'))->dropzone()!!}
+                            {!!$user->files('photo')->editor()!!}
                         </div>
                     </div>
                 </div>

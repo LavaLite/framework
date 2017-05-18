@@ -65,9 +65,11 @@ class UserTableSeeder extends Seeder
             'key'         => null,
             'url'         => 'admin/user/user',
             'name'        => 'User',
+            'role'        => '["superuser"]'
             'description' => null,
             'icon'        => 'fa fa-users',
             'target'      => null,
+            'order'       => 1999,
             'status'      => 1,
         ]);
 
@@ -82,6 +84,18 @@ class UserTableSeeder extends Seeder
                 'icon'        => 'fa fa-user',
                 'target'      => null,
                 'order'       => 1200,
+                'status'      => 1,
+            ],
+
+            [
+                'parent_id'   => $id,
+                'key'         => null,
+                'url'         => 'admin/user/client',
+                'name'        => 'Clients',
+                'description' => null,
+                'icon'        => 'fa fa-user',
+                'target'      => null,
+                'order'       => 1202,
                 'status'      => 1,
             ],
 

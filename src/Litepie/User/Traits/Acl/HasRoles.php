@@ -39,7 +39,7 @@ trait HasRoles
     public function hasRole($role)
     {
         return $this->roles
-            ->where('name', $role)
+            ->where('key', $role)
             ->first() != null;
     }
 

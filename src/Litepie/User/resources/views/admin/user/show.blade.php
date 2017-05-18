@@ -96,7 +96,7 @@
                     </div>
                     <div class='col-md-3 col-sm-4'>
                         <div class='col-md-12 col-sm-12'>
-                           {!!@$user->fileShow('photo')!!}
+                           {!!@$user->files('photo')!!}
                         </div>
                     </div>
                         </div>

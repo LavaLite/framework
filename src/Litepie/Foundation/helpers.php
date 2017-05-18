@@ -314,7 +314,7 @@ if (!function_exists('user')) {
      */
     function user($guard = null)
     {
-
+        $guard = is_null($guard) ? getenv('guard') : $guard;
         if (Auth::guard($guard)->check()) {
             return Auth::guard($guard)->user();
         }

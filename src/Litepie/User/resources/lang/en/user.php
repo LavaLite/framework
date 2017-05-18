@@ -70,7 +70,7 @@ return [
         'email'                     => 'Enter E-mail Address',
         'name'                      => 'Enter Name',
         'department'                => 'Department',
-        'password'                  => 'Entrer Password',
+        'password'                  => 'Enter Password',
         'password_confirmation'     => 'Re-enter Password',
         'current_password'          => 'Please enter current password',
         'new_password'              => 'Please new password',
