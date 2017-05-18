@@ -1,5 +1,6 @@
 
 @foreach ($menus as $menu)
+    @if($menu->has_role)
     @if ($menu->hasChildren())
     <li class="treeview {{ $menu->active or '' }}">
         <a href="{{trans_url($menu->url)}}" >
@@ -16,4 +17,6 @@
         </a>
     </li>
     @endif
+    @endif
 @endforeach
+

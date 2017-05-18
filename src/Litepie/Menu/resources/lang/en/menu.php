@@ -43,7 +43,7 @@ return [
         'uname'       => 'Uname',
         'url'         => 'Url',
         'status'      => 'Status',
-        'role'        => 'Enter role',
+        'role'        => 'Select role',
         'order'       => 'Menu Order',
         'target'      => 'Open in',
         'name'        => 'Name',

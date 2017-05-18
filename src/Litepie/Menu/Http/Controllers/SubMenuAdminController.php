@@ -4,14 +4,15 @@ namespace Litepie\Menu\Http\Controllers;
 
 use App\Http\Controllers\AdminController as AdminController;
 use Form;
-use Litepie\Menu\Http\Requests\AdminMenuRequest;
+use Litepie\Menu\Http\Requests\MenuRequest;
+use Litepie\Menu\Interfaces\MenuRepositoryInterface;
 use Litepie\Menu\Models\Menu as Menu;
 
 class SubMenuAdminController extends AdminController
 {
     private $view;
 
-    public function __construct(\Litepie\Contracts\Menu\MenuRepository $menu)
+    public function __construct(MenuRepositoryInterface $menu)
     {
         $this->repository = $menu;
         parent::__construct();
@@ -25,7 +26,7 @@ class SubMenuAdminController extends AdminController
      *
      * @return Response
      */
-    public function show(AdminMenuRequest $request, $id)
+    public function show(MenuRequest $request, $id)
     {
         $menu = $this->repository->find($id);
         Form::populate($menu);
@@ -40,7 +41,7 @@ class SubMenuAdminController extends AdminController
      *
      * @return Response
      */
-    public function create(AdminMenuRequest $request)
+    public function create(MenuRequest $request)
     {
         $menu            = $this->repository->newInstance([]);
         $menu->parent_id = $request->get('parent_id', 0);
@@ -57,7 +58,7 @@ class SubMenuAdminController extends AdminController
      *
      * @return Response
      */
-    public function store(AdminMenuRequest $request)
+    public function store(MenuRequest $request)
     {
         try {
             $attributes              = $request->all();
@@ -91,7 +92,7 @@ class SubMenuAdminController extends AdminController
      *
      * @return Response
      */
-    public function edit(AdminMenuRequest $request, $id)
+    public function edit(MenuRequest $request, $id)
     {
         $menu = $this->repository->find($id);
 
@@ -108,7 +109,7 @@ class SubMenuAdminController extends AdminController
      *
      * @return Response
      */
-    public function update(AdminMenuRequest $request, $id)
+    public function update(MenuRequest $request, $id)
     {
         try {
 

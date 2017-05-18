@@ -28,7 +28,10 @@
     </div>
     <div class="row">
         <div class="col-md-6 ">
-            {!! Form::text('role')
+            {!! Form::select('role[]')
+            -> options(User::roles(), $menu->role)
+            -> multiple('multiple')
+            -> class('select2')
             -> label(trans('menu::menu.label.role'))
             -> placeholder(trans('menu::menu.placeholder.role'))!!}
         </div>

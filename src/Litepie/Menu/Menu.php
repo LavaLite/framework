@@ -1,12 +1,13 @@
 <?php
 
 namespace Litepie\Menu;
+use Litepie\Menu\Interfaces\MenuRepositoryInterface;
 
 class Menu
 {
     protected $model;
 
-    public function __construct(\Litepie\Contracts\Menu\MenuRepository $menu)
+    public function __construct(MenuRepositoryInterface $menu)
     {
         $this->model = $menu;
     }

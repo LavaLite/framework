@@ -1,5 +1,6 @@
 <?php
 
+// Admin  routes  for menu.
 Route::group(
     [
         'prefix' => trans_setlocale() . '/admin/menu',

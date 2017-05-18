@@ -2,31 +2,12 @@
 
 namespace Litepie;
 
-use DB;
 use Illuminate\Database\Seeder;
 
 class MenuTableSeeder extends Seeder
 {
     public function run()
     {
-        DB::table('permissions')->insert([
-            [
-                'slug' => 'menu.menu.view',
-                'name' => 'View Menu',
-            ],
-            [
-                'slug' => 'menu.menu.create',
-                'name' => 'Create Menu',
-            ],
-            [
-                'slug' => 'menu.menu.edit',
-                'name' => 'Update Menu',
-            ],
-            [
-                'slug' => 'menu.menu.delete',
-                'name' => 'Delete Menu',
-            ],
-        ]);
 
         DB::table('menus')->insert([
 
@@ -36,6 +17,7 @@ class MenuTableSeeder extends Seeder
                 'key'         => 'admin',
                 'url'         => '/admin',
                 'name'        => 'Admin',
+                'role'        => null
                 'description' => null,
                 'icon'        => null,
                 'target'      => null,
@@ -49,6 +31,7 @@ class MenuTableSeeder extends Seeder
                 'key'         => 'user',
                 'url'         => '/home',
                 'name'        => 'User',
+                'role'        => null
                 'description' => null,
                 'icon'        => null,
                 'target'      => null,
@@ -62,6 +45,7 @@ class MenuTableSeeder extends Seeder
                 'key'         => 'client',
                 'url'         => '/client',
                 'name'        => 'Client',
+                'role'        => null
                 'description' => null,
                 'icon'        => null,
                 'target'      => null,
@@ -75,6 +59,7 @@ class MenuTableSeeder extends Seeder
                 'key'         => 'main',
                 'url'         => '',
                 'name'        => 'Main',
+                'role'        => null
                 'description' => 'Website main menu',
                 'icon'        => null,
                 'target'      => null,
@@ -88,6 +73,7 @@ class MenuTableSeeder extends Seeder
                 'key'         => 'footer',
                 'url'         => '',
                 'name'        => 'Footer',
+                'role'        => null
                 'description' => 'Footer menu',
                 'icon'        => null,
                 'target'      => null,
@@ -101,6 +87,7 @@ class MenuTableSeeder extends Seeder
                 'key'         => 'social',
                 'url'         => '',
                 'name'        => 'Social',
+                'role'        => null
                 'description' => 'Social media menu',
                 'icon'        => null,
                 'target'      => null,
@@ -114,6 +101,7 @@ class MenuTableSeeder extends Seeder
                 'key'         => null,
                 'url'         => 'admin/menu/menu',
                 'name'        => 'Menu',
+                'role'        => '["superuser"]'
                 'description' => null,
                 'icon'        => 'fa fa-bars',
                 'target'      => null,
@@ -127,6 +115,7 @@ class MenuTableSeeder extends Seeder
                 'key'         => null,
                 'url'         => 'admin',
                 'name'        => 'Dashboard',
+                'role'        => null
                 'description' => null,
                 'icon'        => 'fa fa-dashboard',
                 'target'      => null,
@@ -140,6 +129,7 @@ class MenuTableSeeder extends Seeder
                 'key'         => null,
                 'url'         => 'https://twitter.com/lavalitecms',
                 'name'        => 'Twitter',
+                'role'        => null
                 'description' => null,
                 'icon'        => null,
                 'target'      => '_blank',
@@ -153,6 +143,7 @@ class MenuTableSeeder extends Seeder
                 'key'         => null,
                 'url'         => 'https://github.com/LavaLite',
                 'name'        => 'GitHub',
+                'role'        => null
                 'description' => null,
                 'icon'        => null,
                 'target'      => '_blank',
@@ -166,6 +157,7 @@ class MenuTableSeeder extends Seeder
                 'key'         => null,
                 'url'         => 'https://www.facebook.com/lavalite/',
                 'name'        => 'Facebook',
+                'role'        => null
                 'description' => null,
                 'icon'        => null,
                 'target'      => '_blank',
@@ -173,5 +165,6 @@ class MenuTableSeeder extends Seeder
                 'status'      => 1,
             ],
         ]);
+
     }
 }

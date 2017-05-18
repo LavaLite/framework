@@ -29,31 +29,29 @@ class RouteServiceProvider extends ServiceProvider
     {
         parent::boot();
 
+        
         if (Request::is('*/menu/menu/*')) {
-            Route::bind('menu', function ($id) {
-                $menu = $this->app->make(\Litepie\Contracts\Menu\MenuRepository::class);
-                return $menu->findorNew($id);
+            Route::bind('menu', function ($menu) {
+                $menurepo = $this->app->make('Litepie\Menu\Interfaces\MenuRepositoryInterface');
+                return $menurepo->findorNew($menu);
             });
         }
 
     }
 
     /**
-     * Define the routes for the application.
+     * Define the routes for the package.
      *
      * @return void
      */
     public function map()
     {
+
         $this->mapWebRoutes();
-
-        // $this->mapApiRoutes();
-
-        //
     }
 
     /**
-     * Define the "web" routes for the application.
+     * Define the "web" routes for the package.
      *
      * These routes all receive session state, CSRF protection, etc.
      *
@@ -64,26 +62,10 @@ class RouteServiceProvider extends ServiceProvider
         Route::group([
             'middleware' => 'web',
             'namespace' => $this->namespace,
+            'prefix' => trans_setlocale(),
         ], function ($router) {
             require (__DIR__ . '/../routes/web.php');
         });
     }
 
-    /**
-     * Define the "api" routes for the application.
-     *
-     * These routes are typically stateless.
-     *
-     * @return void
-     */
-    protected function mapApiRoutes()
-    {
-        Route::group([
-            'middleware' => 'api',
-            'namespace' => $this->namespace,
-            'prefix' => 'api',
-        ], function ($router) {
-            require (__DIR__ . '/../Http/routes/api.php');
-        });
-    }
 }

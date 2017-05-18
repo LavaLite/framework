@@ -14,7 +14,7 @@ class AuthServiceProvider extends ServiceProvider
      */
     protected $policies = [
         // Bind Menu policy
-        \Litepie\Menu\Models\Menu::class => \Litepie\Menu\Policies\MenuPolicy::class,
+        'Litepie\Menu\Models\Menu' => \Litepie\Menu\Policies\MenuPolicy::class,
     ];
 
     /**

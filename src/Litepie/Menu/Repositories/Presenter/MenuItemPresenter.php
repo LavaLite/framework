@@ -4,15 +4,15 @@ namespace Litepie\Menu\Repositories\Presenter;
 
 use Litepie\Repository\Presenter\FractalPresenter;
 
-class MenuListPresenter extends FractalPresenter
-{
+class MenuItemPresenter extends FractalPresenter {
+
     /**
-     * Prepare data to present.
+     * Prepare data to present
      *
      * @return \League\Fractal\TransformerAbstract
      */
     public function getTransformer()
     {
-        return new MenuListTransformer();
+        return new MenuItemTransformer();
     }
 }
