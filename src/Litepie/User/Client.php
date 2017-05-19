@@ -21,7 +21,7 @@ use Litepie\User\Interfaces\UserRepositoryInterface;
 /**
  * User wrapper class.
  */
-class User
+class Client
 {
     /**
      * @var Application variable
