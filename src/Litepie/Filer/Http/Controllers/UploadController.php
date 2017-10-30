@@ -27,7 +27,8 @@ class UploadController extends Controller
             $ufolder         = $this->uploadFolder($config, $folder, $field);
             $count           = $this->getCount($config, $field);
             $array           = Filer::upload(Request::file($file), $ufolder);
-            $array['folder'] = folder_decode($folder) . DIRECTORY_SEPARATOR . $field;
+            $array['folder'] = folder_decode($folder) . '/' . $field;
+            $array['path']   = '/' . config('filer.folder', 'uploads') . $ufolder  . '/' . $array['file'];
             $this->setCache("upload.{$config}.{$field}", $array, $count);
             return response()->json($array)
                 ->setStatusCode(203, 'UPLOAD_SUCCESS');
@@ -85,8 +86,8 @@ class UploadController extends Controller
     {
         $count = config("{$config}.uploads.{$field}.count");
 
-        if (empty($path) && !is_integer($count)) {
-            throw new FileNotFoundException('Invalid upload file count.');
+        if (empty($count) && !is_integer($count)) {
+            $count = 1;
         }
 
         return $count;

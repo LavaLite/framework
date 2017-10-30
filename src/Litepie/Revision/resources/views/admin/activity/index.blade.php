@@ -44,7 +44,7 @@
     </div>          
   </div>
 </div>
-<div class="box-body" >
+
     <div class="nav-tabs-custom">
         <ul class="nav nav-tabs primary">
             <li class="active"><a href="#tab-activities" data-toggle="tab">Activities</a></li>
@@ -56,7 +56,7 @@
                     <thead  class="list_head">
                         <th>Revision Name</th>
                         <th>Action</th>
-                        <th>Module</th>
+                        <th>Table(Model)</th>
                         <th>user</th>
                         <th>User Info</th>
                         <th>Date</th>
@@ -73,21 +73,13 @@
             </div>
         </div>
     </div>
-</div>
 @stop
 
 @section('script')
 <script type="text/javascript">
 var oTable;
 $(document).ready(function(){
-    $("#created_at").datetimepicker({
-        timepicker:false,
-        format:'Y-m-d',
-    });
-    $("#updated_at").datetimepicker({
-        timepicker:false,
-        format:'Y-m-d',
-    });
+
     oTable = $('#revision-activity-list').dataTable( {
          "bProcessing": true,
         "sDom": 'R<>rt<ilp><"clear">',

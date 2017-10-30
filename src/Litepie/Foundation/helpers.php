@@ -228,11 +228,8 @@ if (!function_exists('user_type')) {
     function user_type($guard = null)
     {
         $guard = is_null($guard) ? getenv('guard') : $guard;
-        if (Auth::guard($guard)->check()) {
-            $user = Auth::guard($guard)->user();
-            return get_class($user);
-        }
-        return null;
+        $provider = config("auth.guards." . $guard . ".provider", 'users');
+        return config("auth.providers.$provider.model", App\User::class);
     }
 
 }
@@ -270,17 +267,69 @@ if (!function_exists('get_guard')) {
     {
         switch ($property) {
             case 'url':
-                return getenv('auth.guard');
+                return empty(getenv('guard')) ? 'user' : current(explode(".", getenv('guard')));
                 break;
             case 'route':
-                return getenv('auth.guard');
+                return empty(getenv('guard')) ? 'user' : current(explode(".", getenv('guard')));
                 break;
             case 'model':
-                return getenv('auth.model');
+                $provider = config("auth.guards." . getenv('guard') . ".provider", 'users');
+                return config("auth.providers.$provider.model", App\User::class);
                 break;
             default:
                 return getenv('guard');
         }
+    }
+
+}
+
+if (!function_exists('guard_url')) {
+    /**
+     * Return thr property of the guard for current request.
+     *
+     * @param string $property
+     *
+     * @return mixed
+     */
+    function guard_url($url, $translate = true)
+    {
+        $prefix = empty(getenv('guard')) ? 'user' : current(explode(".", getenv('guard')));
+        if ($translate){
+            return trans_url($prefix . '/' . $url);
+        }
+        return $prefix . '/' . $url;
+    }
+
+}
+
+if (!function_exists('set_route_guard')) {
+    /**
+     * Set local for the translation
+     *
+     * @param string $locale
+     *
+     * @return string
+     */
+    function set_route_guard($sub = 'web')
+    {
+        $i = ($sub == 'web') ? 1 : 2;
+        $guard = request()->segment($i);
+        if (!empty(config("auth.guards.$guard"))){
+            putenv("guard={$guard}.{$sub}");
+            app('auth')->shouldUse("{$guard}.{$sub}");
+            return $guard;
+        }
+
+        $guard = request()->segment(++$i);
+        if (!empty(config("auth.guards.$guard"))){
+            putenv("guard={$guard}.{$sub}");
+            app('auth')->shouldUse("{$guard}.{$sub}");
+            return $guard;
+        }
+
+        putenv("guard=user.{$sub}");
+        app('auth')->shouldUse("user.{$sub}");
+        return $sub;
     }
 
 }
@@ -332,6 +381,7 @@ if (!function_exists('user_check')) {
      */
     function user_check($guard = null)
     {
+        $guard = is_null($guard) ? getenv('guard') : $guard;
         return Auth::guard($guard)->check();
     }
 
@@ -346,7 +396,7 @@ if (!function_exists('format_date')) {
      *
      * @return date
      */
-    function format_date($date, $format = 'd M, Y')
+    function format_date($date, $format = 'd M Y')
     {
         if (empty($date)) return null;
         return date($format, strtotime($date));
@@ -363,7 +413,7 @@ if (!function_exists('format_date_time')) {
      *
      * @return datetime
      */
-    function format_date_time($datetime, $format = 'd M, Y h:i A')
+    function format_date_time($datetime, $format = 'd M Y h:i A')
     {
         return date($format, strtotime($datetime));
     }

@@ -7,31 +7,47 @@ return [
      */
     'name'          => 'Setting',
     'names'         => 'Settings',
+    'title'       => [
+        'user'  => 'My Settings',
+        'admin' => 'Settings',
+        'sub'   => [
+            'user'  => 'Settings created by me',
+            'admin' => 'Settings',
+        ],
+    ],
 
     /**
      * Options for select/radio/check.
      */
     'options'       => [
-            'type'                => ['Default'=>'Default','User'=>'User'],
+            'type'                => ['System','Default','User'],
     ],
 
     /**
      * Placeholder for inputs
      */
     'placeholder'   => [
-        'skey'                       => 'Please enter skey',
+        'key'                        => 'Please enter key',
+        'package'                    => 'Please enter package',
+        'module'                     => 'Please enter module',
         'name'                       => 'Please enter name',
         'value'                      => 'Please enter value',
-        'type'                       => 'Please select type',
+        'file'                       => 'Please enter file',
+        'control'                    => 'Please enter control',
+        'type'                       => 'Please enter type',
     ],
 
     /**
      * Labels for inputs.
      */
     'label'         => [
-        'skey'                       => 'Skey',
+        'key'                        => 'Key',
+        'package'                    => 'Package',
+        'module'                     => 'Module',
         'name'                       => 'Name',
         'value'                      => 'Value',
+        'file'                       => 'File',
+        'control'                    => 'Control',
         'type'                       => 'Type',
         'status'                     => 'Status',
         'created_at'                 => 'Created at',

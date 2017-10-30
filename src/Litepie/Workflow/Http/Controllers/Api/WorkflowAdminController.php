@@ -2,7 +2,7 @@
 
 namespace Litepie\Workflow\Http\Controllers\Api;
 
-use App\Http\Controllers\Api\AdminController as BaseController;
+use App\Http\Controllers\Api\ResourceController as BaseController;
 use Litepie\Workflow\Http\Requests\WorkflowRequest;
 use Litepie\Workflow\Interfaces\WorkflowRepositoryInterface;
 use Litepie\Workflow\Models\Workflow;
@@ -10,7 +10,7 @@ use Litepie\Workflow\Models\Workflow;
 /**
  * Admin API controller class.
  */
-class WorkflowAdminController extends BaseController
+class WorkflowResourceController extends BaseController
 {
     /**
      * Initialize workflow controller.

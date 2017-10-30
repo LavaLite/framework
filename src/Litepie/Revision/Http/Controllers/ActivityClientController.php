@@ -39,9 +39,8 @@ class ActivityClientController extends BaseController
             return $query->orderBy('id','DESC');
         })->paginate();
 
-        $this->theme->prependTitle(trans('revision::activity.names'));
-
-        return $this->theme->of('revision::user.activity.index', compact('activity','guard'))->render();
+        $this->response->title(trans('revision::activity.names'));
+->view($this->getView('revision::user.activity.index')->data(compact('activity','guard'))->output();
     }
 
     /**
@@ -56,9 +55,8 @@ class ActivityClientController extends BaseController
     {
         Form::populate($activity);
         $guard = $this->getGuardRoute();
-        $this->theme->prependTitle(trans('revision::activity.names'));
-
-        return $this->theme->of('revision::user.activity.show', compact('activity','guard'))->render();
+        $this->response->title(trans('revision::activity.names'));
+->view($this->getView('revision::user.activity.show', compact('activity','guard'))->output();
     }
 
     /**
@@ -75,8 +73,7 @@ class ActivityClientController extends BaseController
         $guard = $this->getGuardRoute();
         Form::populate($activity);
         
-        $this->theme->prependTitle(trans('revision::activity.names'));
-        return $this->theme->of('revision::user.activity.create', compact('activity','guard'))->render();
+        $this->response->title(trans('revision::activity.names'))->view($this->getView('revision::user.activity.create', compact('activity','guard'))->output();
     }
 
     /**
@@ -117,8 +114,7 @@ class ActivityClientController extends BaseController
         Form::populate($activity);
         $guard = $this->getGuardRoute();
 
-        $this->theme->prependTitle(trans('revision::activity.names'));
-        return $this->theme->of('revision::user.activity.edit', compact('activity','guard'))->render();
+        $this->response->title(trans('revision::activity.names'))->view($this->getView('revision::user.activity.edit', compact('activity','guard'))->output();
     }
 
     /**

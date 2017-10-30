@@ -10,12 +10,10 @@ use Litepie\Hashids\Traits\Hashids;
 use Litepie\Repository\Traits\PresentableTrait;
 use Litepie\Revision\Traits\Revision;
 use Litepie\Trans\Traits\Translatable;
-// use Litepie\Workflow\Model\Workflow;
-
 class Setting extends Model
 {
     use Filer, SoftDeletes, Hashids, Slugger, Translatable, Revision, PresentableTrait;
-    // use Workflow;
+
 
     /**
      * Configuartion for the model.

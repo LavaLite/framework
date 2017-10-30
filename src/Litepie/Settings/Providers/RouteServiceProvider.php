@@ -29,9 +29,10 @@ class RouteServiceProvider extends ServiceProvider
     {
         parent::boot();
 
+        
         if (Request::is('*/settings/setting/*')) {
             Route::bind('setting', function ($setting) {
-                $settingrepo = $this->app->make('\Litepie\Settings\Interfaces\SettingRepositoryInterface');
+                $settingrepo = $this->app->make('Litepie\Settings\Interfaces\SettingRepositoryInterface');
                 return $settingrepo->findorNew($setting);
             });
         }
@@ -45,11 +46,8 @@ class RouteServiceProvider extends ServiceProvider
      */
     public function map()
     {
+
         $this->mapWebRoutes();
-
-        // $this->mapApiRoutes();
-
-        //
     }
 
     /**
@@ -70,21 +68,4 @@ class RouteServiceProvider extends ServiceProvider
         });
     }
 
-    /**
-     * Define the "api" routes for the package.
-     *
-     * These routes are typically stateless.
-     *
-     * @return void
-     */
-    protected function mapApiRoutes()
-    {
-        Route::group([
-            'middleware' => 'api',
-            'namespace' => $this->namespace . '\Api',
-            'prefix' => trans_setlocale() . '/api',
-        ], function ($router) {
-            require (__DIR__ . '/../routes/api.php');
-        });
-    }
 }

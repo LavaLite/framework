@@ -27,10 +27,20 @@
     <div class="nav-tabs-custom">
         <!-- Nav tabs -->
         <ul class="nav nav-tabs primary">
-            @foreach($rootMenu as $menu)
+            @foreach($rootMenu->take(3) as $menu)
             <li {{($parent->getRouteKey() == $menu->getRouteKey()) ? ' class=active ' : ''}}><a href="{{ Trans::to('/admin/menu/menu') }}/{{$menu->getRouteKey()}}">{{$menu->name}}</a></li>
             @endforeach
-            <li ><a href="#" data-href="{{ Trans::to('/admin/menu/menu/create') }}"  data-action="LOAD" data-load-to="#menu-entry"><i class="fa fa-plus-circle"></i></a></li>
+            <li class="dropdown">
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                  More <span class="caret"></span>
+                </a>
+                <ul class="dropdown-menu">
+                @foreach($rootMenu->except([1,2,3]) as $menu)
+                  <li role="presentation"><a role="menuitem" tabindex="-1" href="{{ Trans::to('/admin/menu/menu') }}/{{$menu->getRouteKey()}}">{{$menu->name}} menu</a></li>
+                @endforeach
+                </ul>
+            </li>
+            <li class="pull-right"><a href="#" data-href="{{ Trans::to('/admin/menu/menu/create') }}"  data-action="LOAD" data-load-to="#menu-entry"><i class="fa fa-plus-circle"></i></a></li>
         </ul>
 
         <div class="tab-content">
@@ -45,11 +55,8 @@
     </div>
 </div>
 </div>
-@stop
 
-@section('script')
 <script type="text/javascript">
-var oTable;
 $(document).ready(function(){
 
     var updateMenu = function(e)
@@ -86,9 +93,7 @@ $(document).ready(function(){
 
 });
 </script>
-@stop
 
-@section('style')
 <style type="text/css">
 .box-body{
     min-height: 420px;

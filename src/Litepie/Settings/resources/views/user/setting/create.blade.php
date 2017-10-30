@@ -1,23 +1,38 @@
-@include('public::notifications')
-<div class="container">
+<div class="container-fluid"> 
     <div class="row">
-        <div class="col-md-6">
-            <h4 class="text-dark  header-title m-t-0"> {{ trans('app.create')  }} Setting </h4>
-        </div>
-        <div class="col-md-6">
-            <a href="{{ trans_url('/user/settings/setting') }}" class="btn btn-default pull-right"> {{ trans('app.back')  }}</a>
+        <div class="col-xs-12">
+            
+            <div class="card">
+                <div class="header with-sub" data-background-color="red">
+                    <div class="row">
+                        <div class="col-sm-11 title-main">
+                            <i class="pe-7s-news-paper"></i>
+                            <h4 class="title">{{ trans('app.create')  }} setting</h4>
+                            <p class="sub-title">{{ trans('app.add')  }} setting here...</p>
+                        </div>
+                        <div class="col-sm-1">
+                            <a href="{{trans_url(get_guard('url').'/settings/setting')}}" rel="tooltip" class="btn btn-white btn-round btn-simple btn-icon pull-right add-new" data-original-title="" title="">
+                                    <i class="fa fa-chevron-left"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                {!!Form::vertical_open()
+                ->id('create-settings-setting')
+                ->method('POST')
+                ->files('true')
+                ->class('dashboard-form')
+                ->action(trans_url(get_guard('url').'/settings/setting'))!!}
+                <div class="content">                
+                    @include('public::notifications')
+                    @include('settings::user.setting.partial.entry')
+                </div>
+                <div class="footer">
+                    <button class="btn-primary btn-raised btn btn-sm">{{ trans('app.create')  }} {!! trans('settings::setting.name') !!}</button>
+                     <a href="{{ trans_url(get_guard('url').'/settings/setting') }}" class="btn-danger btn-raised btn btn-sm"> {{ trans('app.back')  }}</a>
+                </div>
+                {!! Form::close() !!}
+            </div>
         </div>
     </div>
-    <p class="text-muted m-b-25 font-13">
-        Your awesome text goes here.
-    </p>
-    <hr/>
-
-    {!!Form::horizontal_open()
-    ->id('create-settings-setting')
-    ->method('POST')
-    ->files('true')
-    ->action(trans_url('user/settings/setting'))!!}
-            @include('settings::user.setting.partial.entry')
-    {!! Form::close() !!}
 </div>

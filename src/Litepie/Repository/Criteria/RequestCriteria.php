@@ -3,23 +3,14 @@
 namespace Litepie\Repository\Criteria;
 
 use Illuminate\Http\Request;
-use Litepie\Contracts\Repository\Criteria;
-use Litepie\Contracts\Repository\Repository;
+use Litepie\Repository\Contracts\CriteriaInterface;
+use Litepie\Repository\Contracts\RepositoryInterface;
 
 /**
  * Class RequestCriteria.
  */
-class RequestCriteria implements Criteria
+class RequestCriteria implements CriteriaInterface
 {
-    /**
-     * @var \Illuminate\Http\Request
-     */
-    protected $request;
-
-    public function __construct(Request $request)
-    {
-        $this->request = $request;
-    }
 
     /**
      * Apply criteria in query repository.
@@ -29,17 +20,17 @@ class RequestCriteria implements Criteria
      *
      * @return mixed
      */
-    public function apply($model, Repository $repository)
+    public function apply($model, RepositoryInterface $repository)
     {
 
         $fieldsSearchable   = $repository->getFieldsSearchable();
 
-        $search             = $this->request->get(config('repository.criteria.params.search', 'search'), null);
-        $searchFields       = $this->request->get(config('repository.criteria.params.searchFields', 'searchFields'), null);
-        $columns            = $this->request->get(config('repository.criteria.params.columns', 'columns'), null);
-        $sortBy             = $this->request->get(config('repository.criteria.params.sortBy', 'sortBy'), null);
-        $sortOrder          = $this->request->get(config('repository.criteria.params.sortOrder', 'sortOrder'), 'asc');
-        $with               = $this->request->get(config('repository.criteria.params.with', 'with'), null);
+        $search             = request()->get(config('repository.criteria.params.search', 'search'), null);
+        $searchFields       = request()->get(config('repository.criteria.params.searchFields', 'searchFields'), null);
+        $columns            = request()->get(config('repository.criteria.params.columns', 'columns'), null);
+        $sortBy             = request()->get(config('repository.criteria.params.sortBy', 'sortBy'), null);
+        $sortOrder          = request()->get(config('repository.criteria.params.sortOrder', 'sortOrder'), 'asc');
+        $with               = request()->get(config('repository.criteria.params.with', 'with'), null);
         $sortOrder          = !empty($sortOrder) ? $sortOrder : 'asc';
         $modelForceAndWhere = is_array($search);
 

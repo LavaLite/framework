@@ -8,7 +8,6 @@ use Illuminate\Foundation\Auth\RegistersUsers as IlluminateRegistersUsers;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
 use Illuminate\Http\Request;
 use InvalidArgumentException;
-use Litepie\User\Traits\Auth\Common;
 use Mail;
 use Socialite;
 use User;
@@ -28,11 +27,13 @@ trait RegistersUsers
      */
     function showRegistrationForm()
     {
-        $guard = $this->getGuard();
-        $this->check($guard);
-        
-        $this->theme->prependTitle('Register');
-        return $this->theme->of($this->getView('register'), compact('guard'))->render();
+        $guard = $this->getGuardRoute();
+
+        return $this->response->title('Register')
+            ->view($this->getView('auth.register', 'user'))
+            ->data(compact('guard'))
+            ->layout('auth')
+            ->output();
     }
 
     /**
@@ -44,10 +45,9 @@ trait RegistersUsers
      */
     function validator(array $data)
     {
-        $table = $this->getTable($this->getGuard());
         $rules = [
             'name'     => 'required|max:255',
-            'email'    => 'required|email|max:255|unique:' . $table,
+            'email'    => 'required|email|max:255|unique:' . $this->getTable(),
             'password' => 'required|min:6|confirmed',
         ];
 
@@ -67,8 +67,8 @@ trait RegistersUsers
      */
     function create(array $data)
     {
-        $guard = $this->getGuard();
-        $this->check($guard);
+        $guard = $this->getGuardRoute();
+        $this->checkRegistrableGuard($guard);
 
         $data = [
             'name'      => $data['name'],
@@ -81,11 +81,10 @@ trait RegistersUsers
             $data['status'] = 'Active';
         }
 
-        $model      = $this->getModel($this->getGuard());
-        $user       = $model::create($data);
-        $roleKey    = ($guard =='web' || $guard == null )? 'user' : current(explode(".", $guard));
-        $roleId     = User::findRoleByKey($roleKey)->id;
-        $user->roles()->attach($roleId);
+        $model  = $this->getAuthModel();
+        $user   = $model::create($data);
+        $roleId = User::findRoleByKey($guard)->id;
+        $user->attachRole($roleId);
 
         if (config('litepie.user.verify_email')) {
             $this->sendVerificationMail($user);
@@ -127,9 +126,10 @@ trait RegistersUsers
      */
     function handleProviderCallback($provider)
     {
-        $user = Socialite::driver($provider)->user();
-
-        return $this->theme->of($this->getView('social', $guard), compact('user'))->render();
+        $user = Socialite::driver($provider)
+            ->user()
+            ->view($this->getView('social', $guard), compact('user'))
+            ->output();
     }
 
     /**
@@ -178,7 +178,6 @@ trait RegistersUsers
             return redirect()->guest($guard . '/login');
         }
 
-        return $this->theme->of($this->getView('verify', $guard), compact('code'))->render();
     }
 
     /**
@@ -203,7 +202,6 @@ trait RegistersUsers
      */
     function locked()
     {
-        return $this->theme->of($this->getView('locked'))->render();
 
     }
 

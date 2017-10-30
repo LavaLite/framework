@@ -21,7 +21,7 @@ class UserServiceProvider extends ServiceProvider
     public function boot()
     {
         // Load view
-        $this->loadViewsFrom(__DIR__ . '/resources/views', 'vuser');
+        $this->loadViewsFrom(__DIR__ . '/resources/views', 'user');
 
         // Load translation
         $this->loadTranslationsFrom(__DIR__ . '/resources/lang', 'user');
@@ -46,31 +46,22 @@ class UserServiceProvider extends ServiceProvider
             return $this->app->make('Litepie\User\User');
         });
 
+
         // Bind User to repository
         $this->app->bind(
             'Litepie\User\Interfaces\UserRepositoryInterface',
             \Litepie\User\Repositories\Eloquent\UserRepository::class
         );
-        // Bind Permission to repository
-        $this->app->bind(
-            'Litepie\User\Interfaces\PermissionRepositoryInterface',
-            \Litepie\User\Repositories\Eloquent\PermissionRepository::class
-        );
-        // Bind Role to repository
-        $this->app->bind(
-            'Litepie\User\Interfaces\RoleRepositoryInterface',
-            \Litepie\User\Repositories\Eloquent\RoleRepository::class
-        );
+
         // Bind Team to repository
         $this->app->bind(
-            \Litepie\User\Interfaces\TeamRepositoryInterface::class,
+            'Litepie\User\Interfaces\TeamRepositoryInterface',
             \Litepie\User\Repositories\Eloquent\TeamRepository::class
         );
 
         $this->app->register(\Litepie\User\Providers\AuthServiceProvider::class);
         $this->app->register(\Litepie\User\Providers\EventServiceProvider::class);
         $this->app->register(\Litepie\User\Providers\RouteServiceProvider::class);
-        $this->app->register(\Litepie\User\Providers\WorkflowServiceProvider::class);
         $this->app->register(\Laravel\Socialite\SocialiteServiceProvider::class);
     }
 

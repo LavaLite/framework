@@ -1,4 +1,4 @@
-@extends('admin::general.default')
+@extends('admin::default')
 @section('heading')
 <h1>
 {!! trans('message::message.name') !!}
@@ -172,15 +172,9 @@
 
 @stop
 @section('script')
-    <link rel="stylesheet" type="text/css" href="https://select2.github.io/dist/css/select2.min.css">
-    <script type="text/javascript" src="https://select2.github.io/dist/js/select2.full.js"></script>
+
     <script>
       $(function () {
-
-        $(".js-example-tags").select2({
-          tags: true
-        });
-
         $('#compose-msg').click(function(){
             $('#entry-message').load('{{trans_url('admin/message/compose')}}');
         });

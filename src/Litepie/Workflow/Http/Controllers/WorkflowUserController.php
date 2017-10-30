@@ -37,9 +37,10 @@ class WorkflowUserController extends BaseController
             return $query->orderBy('id','DESC');
         })->paginate();
 
-        $this->theme->prependTitle(trans('workflow::workflow.names'));
-
-        return $this->theme->of('workflow::user.workflow.index', compact('workflows'))->render();
+        return $this->response->title(trans('workflow::workflow.names'))
+        ->view('workflow::user.workflow.index')
+        ->data(compact('workflows'))
+        ->output();
     }
 
     /**
@@ -53,8 +54,7 @@ class WorkflowUserController extends BaseController
     public function show(WorkflowRequest $request, Workflow $workflow)
     {
         Form::populate($workflow);
-
-        return $this->theme->of('workflow::user.workflow.show', compact('workflow'))->render();
+->view($this->getView('workflow::user.workflow.show', compact('workflow'))->output();
     }
 
     /**
@@ -70,8 +70,7 @@ class WorkflowUserController extends BaseController
         $workflow = $this->repository->newInstance([]);
         Form::populate($workflow);
 
-        $this->theme->prependTitle(trans('workflow::workflow.names'));
-        return $this->theme->of('workflow::user.workflow.create', compact('workflow'))->render();
+        $this->response->title(trans('workflow::workflow.names'))->view($this->getView('workflow::user.workflow.create', compact('workflow'))->output();
     }
 
     /**
@@ -109,9 +108,8 @@ class WorkflowUserController extends BaseController
     {
 
         Form::populate($workflow);
-        $this->theme->prependTitle(trans('workflow::workflow.names'));
-
-        return $this->theme->of('workflow::user.workflow.edit', compact('workflow'))->render();
+        $this->response->title(trans('workflow::workflow.names'));
+->view($this->getView('workflow::user.workflow.edit', compact('workflow'))->output();
     }
 
     /**

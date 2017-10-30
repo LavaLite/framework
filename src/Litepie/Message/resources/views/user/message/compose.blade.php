@@ -35,7 +35,8 @@
                                 {!! Form::select('mails[]')
                                 -> id('to')
                                 -> options(Message::getUsers())
-                                -> addClass('js-tags select2')
+                                -> addClass('select-search')
+                                -> dataUrl(guard_url('message/message/users'))
                                 -> style('width:100%')
                                 -> multiple()
                                 -> required()
@@ -72,10 +73,6 @@
 
 <script type="text/javascript">
     $(function () {
-        $(".js-tags").select2({
-          tags: true,
-          placeholder: "Type email here..."
-        }); 
         $('.summernote').summernote({ height: 200 });
         $('#send').click(function(){ 
             $('#create-message-message').submit();

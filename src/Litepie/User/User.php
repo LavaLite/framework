@@ -12,11 +12,11 @@ namespace Litepie\User;
  */
 
 use Form;
+use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Support\Facades\Auth;
-use Litepie\User\Interfaces\TeamRepositoryInterface;
-use Litepie\User\Interfaces\PermissionRepositoryInterface;
-use Litepie\User\Interfaces\RoleRepositoryInterface;
+use Litepie\Roles\Interfaces\PermissionRepositoryInterface;
+use Litepie\Roles\Interfaces\RoleRepositoryInterface;
 use Litepie\User\Interfaces\UserRepositoryInterface;
 
 /**
@@ -51,16 +51,16 @@ class User
      * @param \Litepie\Contracts\User\Role                 $role
      * @param \Litepie\Contracts\User\PermissionRepository $permission
      */
-    public function __construct(Application $app,
-        UserRepositoryInterface                          $user,
-        RoleRepositoryInterface                          $role,
-        PermissionRepositoryInterface                    $permission,
-        TeamRepositoryInterface                          $team) {
+    public function __construct(
+        Application                   $app,
+        UserRepositoryInterface       $user,
+        RoleRepositoryInterface       $role,
+        PermissionRepositoryInterface $permission
+    ) {
         $this->app        = $app;
         $this->user       = $user;
         $this->role       = $role;
         $this->permission = $permission;
-        $this->team = $team;
     }
 
     /**
@@ -127,7 +127,7 @@ class User
     public function login(Authenticatable $user, $remember = false, $guard = null)
     {
         // Authentication attempt usng laravel native auth class
-        return $this->app['auth']->guard($guard)->attempt($user, $remember);
+        return $this->app['auth']->guard($guard)->login($user, $remember);
     }
 
     /**
@@ -142,6 +142,7 @@ class User
     {
         return $this->app['auth']->guard($guard)->once($user);
     }
+
     /**
      * Logs in user for a single request
      * in the session.
@@ -187,199 +188,6 @@ class User
     }
 
     /**
-     * Check if the authenticated user has the given permission.
-     *
-     * @param string $permission
-     * @param bool   $force
-     *
-     * @return bool
-     */
-    public function hasPermission($permission, $force = false)
-    {
-
-        if (!is_null($this->getUser())) {
-            return $this->getUser()->hasPermission($permission, $force);
-        }
-
-        return false;
-    }
-
-    /**
-     * Check if the authenticated user has the given permission.
-     *
-     * @param string $permission
-     * @param bool   $force
-     *
-     * @return bool
-     */
-    public function can($permission, $force = false)
-    {
-
-        if ($user = $this->getUser()) {
-            return $user->canDo($permission, $force);
-        }
-
-        return false;
-    }
-
-    /**
-     * Check if the authenticated user has the given permission
-     * using only the roles.
-     *
-     * @param string $permission
-     * @param bool   $force
-     *
-     * @return bool
-     */
-    public function roleHasPermission($permission, $force = false)
-    {
-
-        if (!is_null($this->getUser())) {
-            return $this->getUser()->roleHasPermission($permission, $force);
-        }
-
-        return false;
-    }
-
-    /**
-     * Return if the authenticated user has the given role.
-     *
-     * @param string $roleName
-     *
-     * @return bool
-     */
-    public function hasRole($roleName)
-    {
-
-        if (!is_null($this->getUser())) {
-            return $this->getUser()->hasRole($roleName);
-        }
-
-        return false;
-    }
-
-    /**
-     * Return if the authenticated user has any of the given roles.
-     *
-     * @param string $roles
-     *
-     * @return bool
-     */
-    public function hasRoles($roles)
-    {
-
-        if (!is_null($this->getUser())) {
-            return $this->getUser()->hasRoles($roles);
-        }
-
-        return false;
-    }
-
-    /**
-     * Return if the authenticated user has the given role.
-     *
-     * @param string|array $roleName
-     *
-     * @return bool
-     */
-    public function is($roleName)
-    {
-
-        if (is_array($roleName)) {
-            return $this->hasRoles($roleName);
-        }
-
-        return $this->hasRole($roleName);
-    }
-
-    /**
-     * Check if a role with the given name exists.
-     *
-     * @param string $roleName
-     *
-     * @return bool
-     */
-    public function roleExists($roleName)
-    {
-        return $this->role->findByField('name', $roleName) !== null;
-    }
-
-    /**
-     * Check if a permission with the given name exists.
-     *
-     * @param string $permissionName
-     *
-     * @return bool
-     */
-    public function permissionExists($permissionName)
-    {
-        return $this->permission->findByField('name', $permissionName) !== null;
-    }
-
-    /**
-     * Get the role with the given name.
-     *
-     * @param string $roleName
-     *
-     * @return \Artesaos\Defender\Role|null
-     */
-    public function findRole($roleName)
-    {
-        return $this->role->findByField('name', $roleName);
-    }
-
-    /**
-     * * Find a role by its id.
-     *
-     * @param int $roleId
-     *
-     * @return mixed
-     */
-    public function findRoleById($roleId)
-    {
-        return $this->role->find($roleId);
-    }
-    /**
-     * * Find a role by its key.
-     *
-     * @param int $roleId
-     *
-     * @return mixed
-     */
-    public function findRoleByKey($roleKey)
-    {
-        return $this->role->findRoleByKey($roleKey);
-    }
-    /**
-     * Get the permission with the given name.
-     *
-     * @param string $permissionName
-     *
-     * @return \Artesaos\Defender\Permission|null
-     */
-    public function findPermission($permissionName)
-    {
-        return $this->permission->findByField('name', $permissionName);
-    }
-
-    public function findUser($id)
-    {
-        return $this->user->findUser($id);
-    }
-
-    /**
-     * Find a permission by its id.
-     *
-     * @param int $permissionId
-     *
-     * @return \Artesaos\Defender\Permission|null
-     */
-    public function findPermissionById($permissionId)
-    {
-        return $this->permission->find($permissionId);
-    }
-
-    /**
      * @return \Illuminate\Database\Eloquent\Collection
      */
     public function permissionsList()
@@ -392,44 +200,15 @@ class User
      */
     public function rolesList()
     {
-        return $this->role->getList('name', 'id');
+        return $this->role->pluck('name', 'id')->all();
     }
 
     /**
-     * Create a new role.
-     * Uses a repository to actually create the role.
-     *
-     * @param string $roleName
-     *
-     * @return \Artesaos\Defender\Role
+     * @return \Illuminate\Database\Eloquent\Collection
      */
-    public function createRole($roleName)
+    public function roles($guard = null)
     {
-        return $this->role->create(['name' => $roleName]);
-    }
-
-    /**
-     * @param string $permissionName
-     * @param string $readableName
-     *
-     * @return Permission
-     */
-    public function createPermission($permissionName, $readableName = null)
-    {
-        return $this->permission->create(['name' => $permissionName, 'readable_name' => $readableName]);
-    }
-
-    /**
-     * @return Javascript
-     */
-    public function javascript()
-    {
-
-        if (!$this->javascript) {
-            $this->javascript = new Javascript($this);
-        }
-
-        return $this->javascript;
+        return $this->role->pluck('name', 'id')->all();
     }
 
     /**
@@ -447,37 +226,17 @@ class User
     }
 
     /**
-     * Returns all roles avilable .
-     *
-     * @return mixed
-     */
-    public function roles()
-    {
-        return $this->role->all()->pluck('name', 'key');
-    }
-
-    /**
-     * Returns all roles avilable .
-     *
-     * @return mixed
-     */
-    public function usersWithRole($role)
-    {
-        return $this->role->users($role);
-    }
-
-    /**
      * Return the profile update page.
      *
      * @return Response
      */
-    public function profile($mode, $guard = null)
+    public function profile($view, $guard = null)
     {
         $user = $this->getUser($guard);
 
         Form::populate($user);
-        
-        return view('admin::auth.edit', compact('user'));
+
+        return view($view, compact('user'));
     }
 
     /**
@@ -488,15 +247,6 @@ class User
     public function all()
     {
         return $this->user->all();
-    }    
-    /**
-     * Return the profile update page.
-     *
-     * @return Response
-     */
-    public function agents()
-    {
-        return $this->user->agents();
     }
 
     /**
@@ -504,11 +254,11 @@ class User
      *
      * @return Response
      */
-    public function password($mode, $guard = null)
+    public function password($view, $guard = null)
     {
         $user = $this->getUser($guard);
 
-        return view('admin::auth.changepassword', compact('user'));
+        return view($view, compact('user'));
     }
 
     /**
@@ -529,15 +279,6 @@ class User
     public function count()
     {
         return $this->user->count();
-    }
-    /**
-     * Return the array of users.
-     *
-     * @return Response
-     */
-    public function reportingTo($team)
-    {
-        return $this->team->reportingTo($team);
     }
 
 }

@@ -30,7 +30,7 @@ class ClientTableSeeder extends Seeder
             'url'         => 'client',
             'name'        => 'Dashborad',
             'description' => null,
-            'icon'        => 'pe-7s-graph',
+            'icon'        => 'dashboard',
             'target'      => null,
             'status'      => 1,
         ]);

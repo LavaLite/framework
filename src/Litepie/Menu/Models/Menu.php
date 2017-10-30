@@ -25,7 +25,8 @@ class Menu extends Model
         if (empty($this->role)) {
             return true;
         }
-        if (is_array($this->role) && user()->hasRoles($this->role)) {
+
+        if (is_array($this->role) && user()->isOne($this->role)) {
             return true;
         }
 

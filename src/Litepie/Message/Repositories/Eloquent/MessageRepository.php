@@ -15,7 +15,7 @@ class MessageRepository extends BaseRepository implements MessageRepositoryInter
      */
     public function boot()
     {
-        $this->pushCriteria(app('Litepie\Repository\Criteria\RequestCriteria'));
+        $this->fieldSearchable = config('litepie.message.message.search');
     }
 
     /**
@@ -25,7 +25,6 @@ class MessageRepository extends BaseRepository implements MessageRepositoryInter
      */
     public function model()
     {
-        $this->fieldSearchable = config('litepie.message.message.search');
         return config('litepie.message.message.model');
     }
 
@@ -57,8 +56,8 @@ class MessageRepository extends BaseRepository implements MessageRepositoryInter
                 }
             })
             ->whereStatus($slug)
-            ->whereUserId(user_id('admin.web'))
-            ->whereUserType(user_type('admin.web'))
+            ->whereUserId(user_id())
+            ->whereUserType(user_type())
             ->where("read", "=", 0)
             ->orderBy('id', 'DESC')
             ->count();
@@ -68,8 +67,8 @@ class MessageRepository extends BaseRepository implements MessageRepositoryInter
     {
         return $this->model->with('user')           
             ->where($slug ,'=' ,'Yes')
-            ->whereUserId(user_id('admin.web'))
-            ->whereUserType(user_type('admin.web'))
+            ->whereUserId(user_id())
+            ->whereUserType(user_type())
             ->where("read", "=", 0)
             ->orderBy('id', 'DESC')
             ->count();
@@ -132,7 +131,7 @@ class MessageRepository extends BaseRepository implements MessageRepositoryInter
 
     public function findByStatus($status)
     {
-        $email = user('admin.web')->email;
+        $email = user()->email;
         return $this->model
             ->with('user')
              ->where(function($query) use($status,$email){
@@ -141,8 +140,8 @@ class MessageRepository extends BaseRepository implements MessageRepositoryInter
                 }
             })
             ->whereStatus($status)
-            ->whereUserId(user_id('admin.web'))
-            ->whereUserType(user_type('admin.web'))
+            ->whereUserId(user_id())
+            ->whereUserType(user_type())
             ->orderBy('id', 'DESC')->paginate(10);
     }
 
@@ -152,13 +151,13 @@ class MessageRepository extends BaseRepository implements MessageRepositoryInter
             ->with('user')
             ->whereStar("Yes")
             ->where('status','<>',"Trash")
-            ->whereUserId(user_id('admin.web'))
+            ->whereUserId(user_id())
             ->orderBy('id', 'DESC')->paginate(10);
     }
 
     public function inbox()
     {
-        $email = user(getenv('guard'))->email;
+        $email = users()->email;
 
         return $this->model->with('user')->whereTo($email)->whereStatus('Sent')->orderBy('id', 'DESC')->paginate(10);
     }

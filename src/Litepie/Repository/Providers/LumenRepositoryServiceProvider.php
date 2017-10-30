@@ -1,11 +1,11 @@
 <?php
-
 namespace Litepie\Repository\Providers;
 
 use Illuminate\Support\ServiceProvider;
 
 /**
- * Class LumenRepositoryServiceProvider.
+ * Class LumenRepositoryServiceProvider
+ * @package Litepie\Repository\Providers
  */
 class LumenRepositoryServiceProvider extends ServiceProvider
 {
@@ -23,6 +23,7 @@ class LumenRepositoryServiceProvider extends ServiceProvider
      */
     public function register()
     {
+        $this->commands('Litepie\Repository\Generators\Commands\RepositoryCommand');
         $this->app->register('Litepie\Repository\Providers\EventServiceProvider');
     }
 

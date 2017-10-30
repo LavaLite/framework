@@ -15,7 +15,7 @@ return [
     /*
      * Modules.
      */
-    'modules'    => ['user', 'permission', 'role', 'team'],
+    'modules'    => ['user', 'team'],
 
     'image'      => [
 
@@ -90,33 +90,6 @@ return [
             'updated_at'  => 'like',
         ],
 
-        'workflow'      => [
-            'points' => [
-                'start' => 'new',
-                'end'   => ['delete'],
-            ],
-            'steps'  => [
-                'new'     => [
-                    'label'  => "User created",
-                    'action' => ['setStatus', 'new'],
-                    'next'   => ['active', 'suspend', 'delete'],
-                ],
-                'active'  => [
-                    'label'  => "User Activated",
-                    'status' => ['setStatus', 'active'],
-                    'next'   => ['suspend', 'delete'],
-                ],
-                'suspend' => [
-                    'label'  => "User suspended",
-                    'action' => ['setStatus', 'suspend'],
-                    'next'   => ['active', 'delete'],
-                ],
-                'delete'  => [
-                    'label'  => "User deleted",
-                    'action' => ['delete'],
-                ],
-            ],
-        ],
     ],
 
     'client'     => [
@@ -158,86 +131,9 @@ return [
             'updated_at'  => 'like',
         ],
 
-        'workflow'      => [
-            'points' => [
-                'start' => 'new',
-                'end'   => ['delete'],
-            ],
-            'steps'  => [
-                'new'     => [
-                    'label'  => "User created",
-                    'action' => ['setStatus', 'new'],
-                    'next'   => ['active', 'suspend', 'delete'],
-                ],
-                'active'  => [
-                    'label'  => "User Activated",
-                    'status' => ['setStatus', 'active'],
-                    'next'   => ['suspend', 'delete'],
-                ],
-                'suspend' => [
-                    'label'  => "User suspended",
-                    'action' => ['setStatus', 'suspend'],
-                    'next'   => ['active', 'delete'],
-                ],
-                'delete'  => [
-                    'label'  => "User deleted",
-                    'action' => ['delete'],
-                ],
-            ],
-        ],
     ],
 
-    'permission' => [
-        'model'         => 'Litepie\User\Models\Permission',
-        'table'         => 'permissions',
-        'presenter'     => \Litepie\User\Repositories\Presenter\PermissionItemPresenter::class,
-        'hidden'        => [],
-        'visible'       => [],
-        'guarded'       => ['*'],
-        'slugs'         => ['slug' => 'name'],
-        'dates'         => ['deleted_at'],
-        'appends'       => [],
-        'fillable'      => ['slug', 'name'],
-        'translate'     => [],
-        'upload-folder' => 'user/permission',
-        'uploads'       => [],
-        'casts'         => [],
-        'revision'      => [],
-        'perPage'       => '20',
-        'search'        => [
-            'name' => 'like',
-            'status',
-        ],
 
-    ],
-    'role'       => [
-        'model'         => 'Litepie\User\Models\Role',
-        'table'         => 'roles',
-        'presenter'     => \Litepie\User\Repositories\Presenter\RoleItemPresenter::class,
-        'hidden'        => [],
-        'visible'       => [],
-        'guarded'       => ['*'],
-        'slugs'         => [],
-        'dates'         => ['deleted_at'],
-        'appends'       => [],
-        'fillable'      => ['key', 'name', 'permissions'],
-        'translate'     => [],
-
-        'upload-folder' => 'user/role',
-        'uploads'       => [],
-        'casts'         => [
-            'permissions' => 'array',
-        ],
-        'revision'      => [],
-        'perPage'       => '20',
-        'search'        => [
-            'name'       => 'like',
-            'key'        => 'like',
-            'created_at' => 'like',
-            'updated_at' => 'like',
-        ],
-
-    ],
     'team'       => [
         'model'         => 'Litepie\User\Models\Team',
         'table'         => 'teams',

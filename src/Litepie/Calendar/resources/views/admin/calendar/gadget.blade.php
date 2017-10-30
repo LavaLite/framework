@@ -2,6 +2,9 @@
     <div class="no-padding">
        <div id="calendar"></div>
     </div>
+    @push('scripts')
+        <script src="/example.js"></script>
+    @endpush
 @section('script')
 <script type="text/javascript">
 $(function () {

@@ -4,7 +4,7 @@
     <!-- inner menu: contains the actual data -->
     <div class="slimScrollDiv" >
       <ul class="menu" >
-      <div id="slimScroll">
+      <div class="slim-scroll">
       @forelse(Message::unread() as $key => $value)
        <li>
            <a href="{!!trans_url('/admin/message/message')!!}">
@@ -34,13 +34,3 @@
   </li>
   <li class="footer"><a href="{{trans_url('/admin/message/message')}}">See All Messages</a></li>
 </ul>
-<script type="text/javascript">
-$(function(){
-$('#slimScroll').slimScroll({
-        color: '#dd4b39',
-        height: '100%',
-        alwaysVisible: true
-    });
-})
-      
-</script>

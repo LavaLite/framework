@@ -106,7 +106,7 @@
                 </p>
             </div>
             @endif
-            {{$tasks->render()}}
+            {{$tasks->output()}}
         </div>
         <div class="col-md-4">
             @include('task::public.task.aside')

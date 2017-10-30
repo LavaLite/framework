@@ -1,79 +1,88 @@
-@extends('admin::curd.index')
-@section('heading')
-<i class="fa fa-file-text-o"></i> {!! trans('user::user.name') !!} <small> {!! trans('app.manage') !!} {!! trans('user::user.names') !!}</small>
-@stop
-
-@section('title')
-{!! trans('user::user.names') !!}
-@stop
-
-@section('breadcrumb')
-<ol class="breadcrumb">
-    <li><a href="{!! trans_url('admin') !!}"><i class="fa fa-dashboard"></i> {!! trans('app.home') !!} </a></li>
-    <li class="active">{!! trans('user::user.names') !!}</li>
-</ol>
-@stop
-
-@section('entry')
-<div id='user-user-entry'>
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <h1>
+            <i class="fa fa-file-text-o"></i> {!! trans('user::user.name') !!} <small> {!! trans('app.manage') !!} {!! trans('user::user.names') !!}</small>
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="{!! guard_url('/') !!}"><i class="fa fa-dashboard"></i> {!! trans('app.home') !!} </a></li>
+            <li class="active">{!! trans('user::user.names') !!}</li>
+        </ol>
+    </section>
+    <!-- Main content -->
+    <section class="content">
+    <div id='user-user-entry'>
+    </div>
+        <div class="nav-tabs-custom">
+            <ul class="nav nav-tabs">
+                    <li class="{!!(request('status') == '')?'active':'';!!}"><a href="{!!guard_url('user/user')!!}">{!! trans('user::user.names') !!}</a></li>
+                    <li class="{!!(request('status') == 'archive')?'active':'';!!}"><a href="{!!guard_url('user/user?status=archive')!!}">Archived</a></li>
+                    <li class="{!!(request('status') == 'deleted')?'active':'';!!}"><a href="{!!guard_url('user/user?status=deleted')!!}">Trashed</a></li>
+                    <li class="pull-right">
+                    <span class="actions">
+                    <!--   
+                    <a  class="btn btn-xs btn-purple"  href="{!!guard_url('user/user/reports')!!}"><i class="fa fa-bar-chart" aria-hidden="true"></i><span class="hidden-sm hidden-xs"> Reports</span></a>
+                    @include('user::admin.user.partial.actions')
+                    -->
+                    @include('user::admin.user.partial.filter')
+                    @include('user::admin.user.partial.column')
+                    </span> 
+                </li>
+            </ul>
+            <div class="tab-content">
+                <table id="user-user-list" class="table table-striped data-table">
+                    <thead class="list_head">
+                        <th style="text-align: right;" width="1%"><a class="btn-reset-filter" href="#Reset" style="display:none; color:#fff;"><i class="fa fa-filter"></i></a> <input type="checkbox" id="user-user-check-all"></th>
+                        <th>{!! trans('user::user.label.name')!!}</th>
+                    <th>{!! trans('user::user.label.email')!!}</th>
+                    <th>{!! trans('user::user.label.sex')!!}</th>
+                    <th>{!! trans('user::user.label.dob')!!}</th>
+                    <th>{!! trans('user::user.label.designation')!!}</th>
+                    <th>{!! trans('user::user.label.mobile')!!}</th>
+                    <th>{!! trans('user::user.label.phone')!!}</th>
+                    <th>{!! trans('user::user.label.street')!!}</th>
+                    <th>{!! trans('user::user.label.city')!!}</th>
+                    <th>{!! trans('user::user.label.district')!!}</th>
+                    <th>{!! trans('user::user.label.state')!!}</th>
+                    <th>{!! trans('user::user.label.country')!!}</th>
+                    <th>{!! trans('user::user.label.web')!!}</th>
+                    <th>{!! trans('user::user.label.status')!!}</th>
+                    </thead>
+                </table>
+            </div>
+        </div>
+    </section>
 </div>
-@stop
 
-@section('tools')
-@stop
-
-@section('content')
-<table id="user-user-list" class="table table-striped data-table">
-    <thead class="list_head">
-        <th>{!! trans('user::user.label.name')!!}</th>
-        <th>{!! trans('user::user.label.email')!!}</th>
-        <th>{!! trans('user::user.label.designation')!!}</th>
-        <th>{!! trans('user::user.label.mobile')!!}</th>
-        <th>{!! trans('user::user.label.status')!!}</th>
-       
-    </thead>
-    <thead  class="search_bar">
-        <th>{!! Form::text('search[name]')->raw()!!}</th>
-        <th>{!! Form::text('search[email]')->raw()!!}</th>
-        <th>{!! Form::text('search[designation]')->raw()!!}</th>
-        <th>{!! Form::text('search[mobile]')->raw()!!}</th>
-        <th>{!! Form::select('search[status]')->options([''=>'All']+trans('user::user.options.status'))->raw()!!}</th>
-       
-    </thead>
-</table>
-@stop
-
-@section('script')
 <script type="text/javascript">
 
-
 var oTable;
+var oSearch;
 $(document).ready(function(){
-    $("#created_at").datetimepicker({
-        timepicker:false,
-        format:'Y-m-d',
-    });
-    $("#updated_at").datetimepicker({
-        timepicker:false,
-        format:'Y-m-d',
-    });
-    $("#dob").datetimepicker({
-        timepicker:false,
-        format:'Y-m-d',
-    });
-    app.load('#user-user-entry', '{!!trans_url('admin/user/user/0')!!}');
+    app.load('#user-user-entry', '{!!guard_url('user/user/0')!!}');
     oTable = $('#user-user-list').dataTable( {
+        'columnDefs': [{
+            'targets': 0,
+            'searchable': false,
+            'orderable': false,
+            'className': 'dt-body-center',
+            'render': function (data, type, full, meta){
+                return '<input type="checkbox" name="id[]" value="' + data.id + '">';
+            }
+        }], 
+        
+        "responsive" : true,
+        "order": [[1, 'asc']],
         "bProcessing": true,
         "sDom": 'R<>rt<ilp><"clear">',
         "bServerSide": true,
-        "sAjaxSource": '{!! trans_url('/admin/user/user') !!}',
+        "sAjaxSource": '{!! guard_url('user/user') !!}',
         "fnServerData" : function ( sSource, aoData, fnCallback ) {
 
-            $('#user-user-list .search_bar input, #user-user-list .search_bar select').each(
-                function(){
-                    aoData.push( { 'name' : $(this).attr('name'), 'value' : $(this).val() } );
-                }
-            );
+            $.each(oSearch, function(key, val){
+                aoData.push( { 'name' : key, 'value' : val } );
+            });
             app.dataTable(aoData);
             $.ajax({
                 'dataType'  : 'json',
@@ -85,41 +94,89 @@ $(document).ready(function(){
         },
 
         "columns": [
+            {data :'id'},
             {data :'name'},
-            {data :'email'},          
+            {data :'email'},
+            {data :'sex'},
+            {data :'dob'},
             {data :'designation'},
-            {data :'mobile'},           
+            {data :'mobile'},
+            {data :'phone'},
+            {data :'street'},
+            {data :'city'},
+            {data :'district'},
+            {data :'state'},
+            {data :'country'},
+            {data :'web'},
             {data :'status'},
-
         ],
         "pageLength": 25
     });
 
-    $('#user-user-list tbody').on( 'click', 'tr', function () {
+    $('#user-user-list tbody').on( 'click', 'tr td:not(:first-child)', function (e) {
+        e.preventDefault();
 
         oTable.$('tr.selected').removeClass('selected');
         $(this).addClass('selected');
-
         var d = $('#user-user-list').DataTable().row( this ).data();
-
-        $('#user-user-entry').load('{!!trans_url('admin/user/user')!!}' + '/' + d.id);
+        $('#user-user-entry').load('{!!guard_url('user/user')!!}' + '/' + d.id);
     });
 
-    $("#user-user-list .search_bar input, #user-user-list .search_bar select").on('keyup select', function (e) {
+    $('#user-user-list tbody').on( 'change', "input[name^='id[]']", function (e) {
         e.preventDefault();
-        console.log(e.keyCode);
-        if (e.keyCode == 13 || e.keyCode == 9) {
-            oTable.api().draw();
+
+        aIds = [];
+        $(".child").remove();
+        $(this).parent().parent().removeClass('parent'); 
+        $("input[name^='id[]']:checked").each(function(){
+            aIds.push($(this).val());
+        });
+    });
+
+    $("#user-user-check-all").on( 'change', function (e) {
+        e.preventDefault();
+        aIds = [];
+        if ($(this).prop('checked')) {
+            $("input[name^='id[]']").each(function(){
+                $(this).prop('checked',true);
+                aIds.push($(this).val());
+            });
+
+            return;
+        }else{
+            $("input[name^='id[]']").prop('checked',false);
+        }
+        
+    });
+
+
+    $(".reset_filter").click(function (e) {
+        e.preventDefault();
+        $("#form-search")[ 0 ].reset();
+        $('#form-search input,#form-search select').each( function () {
+          oTable.search( this.value ).draw();
+        });
+        $('#user-user-list .reset_filter').css('display', 'none');
+
+    });
+
+
+    // Add event listener for opening and closing details
+    $('#user-user-list tbody').on('click', 'td.details-control', function (e) {
+        e.preventDefault();
+        var tr = $(this).closest('tr');
+        var row = table.row( tr );
+ 
+        if ( row.child.isShown() ) {
+            // This row is already open - close it
+            row.child.hide();
+            tr.removeClass('shown');
+        } else {
+            // Open this row
+            row.child( format(row.data()) ).show();
+            tr.addClass('shown');
         }
     });
-    $("#user-user-list .search_bar select, #updated_at , #created_at").on('change', function (e) {
-        e.preventDefault();
-        oTable.api().draw();
-    });
+
 });
 </script>
-@stop
-
-@section('style')
-@stop
-

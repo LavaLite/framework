@@ -1,4 +1,4 @@
-@extends('admin::general.default')
+@extends('admin::default')
 @section('heading')
 <i class="fa fa-file-text-o"></i> {!! trans('task::task.name') !!} <small> {!! trans('app.manage') !!} {!! trans('task::task.names') !!}</small>
 @stop

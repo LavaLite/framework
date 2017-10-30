@@ -12,7 +12,7 @@
             ->id('settings-setting-create')
             ->method('POST')
             ->files('true')
-            ->action(trans_url('admin/settings/setting'))!!}
+            ->action(URL::to('admin/settings/setting'))!!}
             <div class="tab-pane active" id="details">
                 <div class="tab-pan-title">  {{ trans('app.new') }}  [{!! trans('settings::setting.name') !!}] </div>
                 @include('settings::admin.setting.partial.entry')

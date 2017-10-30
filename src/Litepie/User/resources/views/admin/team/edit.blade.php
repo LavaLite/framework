@@ -18,15 +18,15 @@
                 <div class="tab-pan-title">  {!! trans('app.edit') !!}  {!! trans('user::team.name') !!} [ {!!$team->name!!} ] </div>
                 <div class='row'>
                     <div class='col-md-6 col-sm-6'>
-                        @include('vuser::admin.team.partial.entry')
+                        @include('user::admin.team.partial.entry')
                     </div>
 
                     <div class='col-md-3 col-sm-3'>
                         <label>Icon</label>
-                        {!!@$team->fileUpload('icon')!!}
+                        {!!@$team->files('icon')->url($team->getUploadUrl('icon'))->dropzone()!!}
                     </div>
                     <div class='col-md-3 col-sm-3'>
-                        {!!@$team->fileEdit('icon')!!}
+                        {!!@$team->files('icon')!!}
                     </div>
                 </div>
             </div>

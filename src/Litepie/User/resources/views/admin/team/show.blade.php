@@ -22,17 +22,17 @@
                 <div class="tab-pan-title">  {!! trans('app.view') !!}  {!! trans('user::team.name') !!} [ {!!$team->name!!} ] </div>
                 <div class='row'>
                     <div class='col-md-6 col-sm-6 disabled'>
-                        @include('vuser::admin.team.partial.entry')
+                        @include('user::admin.team.partial.entry')
                         <div class='col-md-12 col-sm-12'>
                             <label>Icon</label>
-                            {!!@$team->fileShow('icon')!!}
+                            {!!@$team->files('icon')!!}
                         </div>
                     </div>
                     <div class='col-md-6 col-sm-6'>
                         <?php
                             $members = @$team->member;
                         ?>
-                        @include('vuser::admin.team.members')
+                        @include('user::admin.team.members')
                     </div>
                 </div>
             </div>

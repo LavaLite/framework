@@ -1,6 +1,7 @@
 <?php
 
 namespace Litepie\Calendar;
+
 use User;
 
 class Calendar
@@ -25,14 +26,14 @@ class Calendar
      *
      * @return int
      */
-    public function count($type='admin.web')
+    public function count($type = 'admin.web')
     {
-       
+
         return $this->calendar
-            ->scopeQuery(function ($query) use($type){
-                return $query->where('status','<>','Draft')
-                            ->whereUserId(user_id($type))
-                            ->whereUserType(user_type($type));
+            ->scopeQuery(function ($query) use ($type) {
+                return $query->where('status', '<>', 'Draft')
+                    ->whereUserId(user_id($type))
+                    ->whereUserType(user_type($type));
             })->count();
     }
 
@@ -43,15 +44,13 @@ class Calendar
      *
      * @author
      **/
-    public function display($view,$count=10)
+    public function display($view, $count = 10)
     {
-        $data=$this->calendar->scopeQuery(function($query)use($count){
-                        return $query->where('status', '<>', 'Draft')->orderBy('id', 'DESC')->take($count);
-                })->all();
-        return view('calendar::admin.calendar.' . $view,compact('data'));
+        $data = $this->calendar->scopeQuery(function ($query) use ($count) {
+            return $query->where('status', '<>', 'Draft')->orderBy('id', 'DESC')->take($count);
+        })->all();
+        return view('calendar::admin.calendar.' . $view, compact('data'));
     }
-
-   
 
     /**
      * get calendar.
@@ -77,19 +76,21 @@ class Calendar
 
         return view('calendar::' . $view, compact('guard'))->render();
     }
+
     /**
      * Make Users list.
-    * @return array
+     * @return array
      **/
     public function users()
     {
-        $list=[];
-        $users=User::all();
+        $list  = [];
+        $users = User::all();
+
         foreach ($users as $key => $user) {
-           $list[$user->id]=$user->name;
+            $list[$user->id] = $user->name;
         }
+
         return $list;
     }
-
 
 }

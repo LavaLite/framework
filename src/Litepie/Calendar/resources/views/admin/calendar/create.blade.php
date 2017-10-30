@@ -1,36 +1,49 @@
-<!-- <div class="box-header with-border">
-    <h3 class="box-title"> New Calendar </h3>
-    <div class="box-tools pull-right">
-      <button type="button" class="btn btn-primary btn-sm" data-action='CREATE' data-form='#create-calendar-calendar'  data-load-to='#entry-calendar' data-datatable='#main-list'><i class="fa fa-floppy-o"></i> {{ trans('app.save') }}</button>
-        <button type="button" class="btn btn-default btn-sm" data-action='CANCEL' data-load-to='#entry-calendar' data-href='{{Trans::to('admin/calendar/calendar/0')}}'><i class="fa fa-times-circle"></i> {{ trans('app.cancel') }}</button>
-          <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
-    </div>
+<div class="modal-header clearfix">
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+    <h4 class="modal-title">Create event</h4>
 </div>
-<div class="box-body" >
-    <div class="nav-tabs-custom">
-        Nav tabs
-        <ul class="nav nav-tabs primary">
-            <li class="active"><a href="#details" data-toggle="tab">Calendar</a></li>
-        </ul> -->
-    <div class="row"> 
-        {!!Form::vertical_open()
-        ->id('create-calendar-calendar')
-        ->method('POST')
-        ->files('true')
-        ->action(trans_url('admin/calendar/calendar'))!!}
-        <div class="tab-content">
-            <div class="tab-pane active" id="details">
-                @include('calendar::admin.calendar.partial.entry')
-                  <div class='col-md-12 col-sm-12 '>                  
-                <button type="button" class="btn  btn-default btn-xs pull-right" style="margin-left: 5px" data-dismiss="modal"><i class="fa fa-times-circle-o"></i> Close</button>    
-                  
-                  <button class="btn btn-primary btn-xs pull-right" type="submit"><i class="fa fa-floppy-o"></i>Save</button>
-                  </div>
-            </div>
-        </div>
-    {!! Form::close() !!}
-    </div>
-<!-- </div>
-<div class="box-footer" >
-    &nbsp;
-</div> -->
+{!!Form::vertical_open()
+->id('create-calendar')
+->method('POST')
+->files('true')
+->action(trans_url('admin/calendar/calendar'))!!}
+{!!Form::token()!!}
+<div class="modal-body clearfix">
+    @include('calendar::admin.calendar.partial.entry')
+</div>
+<div class="modal-footer clearfix"> 
+    <div class='col-md-12 col-sm-12 '>                  
+    <button type="button" class="btn  btn-default btn-xs pull-right" style="margin-left: 5px" data-dismiss="modal"><i class="fa fa-times-circle-o"></i> Close</button>    
+      
+      <button class="btn btn-primary btn-xs pull-right create" type="button"><i class="fa fa-floppy-o"></i> Save</button>
+      </div>
+</div>
+{!!Form::close()!!}
+<script type="text/javascript">
+$(function() {
+    $('.create').click(function() {
+        if ($('#create-calendar').valid() == false) {
+            toastr.warning('Please enter valid information.', 'Warning');
+            return false;
+        }
+        var formData = new FormData();
+        var params = $('#create-calendar').serializeArray();
+        $.each(params, function(i, val) {
+            formData.append(val.name, val.value);
+        });
+        $.ajax({
+            url: "{!!url('admin/calendar/calendar')!!}",
+            type: 'POST',
+            data: formData,
+            processData: false,
+            contentType: false,
+            success: function(data, textStatus, jqXHR) {
+                $('#calendar').fullCalendar('refetchEvents');
+                $('#event-modal').modal('hide');
+            },
+
+        });
+    });
+
+});   
+</script>

@@ -46,16 +46,16 @@ class SettingsServiceProvider extends ServiceProvider
             return $this->app->make('Litepie\Settings\Settings');
         });
 
-        // Bind Setting to repository
+                // Bind Setting to repository
         $this->app->bind(
-            \Litepie\Settings\Interfaces\SettingRepositoryInterface::class,
+            'Litepie\Settings\Interfaces\SettingRepositoryInterface',
             \Litepie\Settings\Repositories\Eloquent\SettingRepository::class
         );
 
         $this->app->register(\Litepie\Settings\Providers\AuthServiceProvider::class);
-        $this->app->register(\Litepie\Settings\Providers\EventServiceProvider::class);
+        
         $this->app->register(\Litepie\Settings\Providers\RouteServiceProvider::class);
-        // $this->app->register(\Litepie\Settings\Providers\WorkflowServiceProvider::class);
+                
     }
 
     /**

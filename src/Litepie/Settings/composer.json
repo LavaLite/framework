@@ -1,13 +1,12 @@
 {
     "name": "litepie/settings",
-    "description": "Settings bundle for Lavalite",
-    "keywords": ["lavalite", "settings"],
+    "description": "Settings package for litepie.",
+    "keywords": ["lavalite", "Settings"],
     "license": "MIT",
-    "homepage": "https://github.com/Litepie/Settings",
     "authors": [
         {
-            "name": "Renfos Technologies Pvt. Ltd.",
-            "email": "info@renfos.com"
+            "name": "Lavalite",
+            "email": "info@lavalite.org"
         }
     ],
     "require": {
@@ -17,8 +16,9 @@
         "classmap": [
             "database/seeds"
         ],
-        "psr-4": { 
-            "Litepie\\Settings\\": "" 
+        "psr-4": {
+            "Litepie\\Settings\\": "src"
         }
-    }
+    },
+    "minimum-stability": "dev"
 }

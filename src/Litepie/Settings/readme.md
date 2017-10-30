@@ -1,4 +1,4 @@
-This is a Laravel 5 package that provides settings management facility for lavalite framework.
+Lavalite package that provides settings management facility for the cms.
 
 ## Installation
 
@@ -12,38 +12,31 @@ Next, update Composer from the Terminal:
 
 Once this operation completes execute below cammnds in command line to finalize installation.
 
-```php
-Litepie\Settings\Providers\SettingsServiceProvider::class,
-
-```
+    Litepie\Settings\Providers\SettingsServiceProvider::class,
 
 And also add it to alias
 
-```php
-'Settings'  => Litepie\Settings\Facades\Settings::class,
-```
+    'Settings'  => Litepie\Settings\Facades\Settings::class,
 
-Use the below commands for publishing
+## Publishing files and migraiting database.
 
-Migration and seeds
+**Migration and seeds**
 
-    php artisan vendor:publish --provider="Litepie\Settings\Providers\SettingsServiceProvider" --tag="migrations"
-    php artisan vendor:publish --provider="Litepie\Settings\Providers\SettingsServiceProvider" --tag="seeds"
+    php artisan migrate
+    php artisan db:seed --class=Litepie\\SettingsTableSeeder
 
-Configuration
+**Publishing configuration**
 
     php artisan vendor:publish --provider="Litepie\Settings\Providers\SettingsServiceProvider" --tag="config"
 
-Language
+**Publishing language**
 
     php artisan vendor:publish --provider="Litepie\Settings\Providers\SettingsServiceProvider" --tag="lang"
 
-Views public and admin
+**Publishing views**
 
-    php artisan vendor:publish --provider="Litepie\Settings\Providers\SettingsServiceProvider" --tag="view-public"
-    php artisan vendor:publish --provider="Litepie\Settings\Providers\SettingsServiceProvider" --tag="view-admin"
+    php artisan vendor:publish --provider="Litepie\Settings\Providers\SettingsServiceProvider" --tag="view"
 
-Publish admin views only if it is necessary.
 
 ## Usage
 

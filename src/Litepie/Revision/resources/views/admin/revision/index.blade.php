@@ -51,7 +51,8 @@
     </div>          
   </div>
 </div>
-<div class="box-body" >
+
+
     <div class="nav-tabs-custom">
         <ul class="nav nav-tabs primary">
             <li><a href="{{trans_url('admin/revision/activity')}}">Activities</a></li>
@@ -78,21 +79,15 @@
             </div>
         </div>
     </div>
-</div>
+
+
 @stop
 
 @section('script')
 <script type="text/javascript">
 var oTable;
 $(document).ready(function(){
-    $("#created_at").datetimepicker({
-        timepicker:false,
-        format:'Y-m-d',
-    });
-    $("#updated_at").datetimepicker({
-        timepicker:false,
-        format:'Y-m-d',
-    });
+
     oTable = $('#revision-revision-list').dataTable( {
          "bProcessing": true,
         "sDom": 'R<>rt<ilp><"clear">',

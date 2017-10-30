@@ -21,10 +21,26 @@
     <div class="row">
         <div class="col-md-4 col-sm-6">
             <div class"form-group">
-                <label for="skey">
-                    {!! trans('settings::setting.label.skey') !!}
+                <label for="key">
+                    {!! trans('settings::setting.label.key') !!}
                 </label><br />
-                    {!! $setting['skey'] !!}
+                    {!! $setting['key'] !!}
+            </div>
+        </div>
+        <div class="col-md-4 col-sm-6">
+            <div class"form-group">
+                <label for="package">
+                    {!! trans('settings::setting.label.package') !!}
+                </label><br />
+                    {!! $setting['package'] !!}
+            </div>
+        </div>
+        <div class="col-md-4 col-sm-6">
+            <div class"form-group">
+                <label for="module">
+                    {!! trans('settings::setting.label.module') !!}
+                </label><br />
+                    {!! $setting['module'] !!}
             </div>
         </div>
         <div class="col-md-4 col-sm-6">
@@ -41,6 +57,22 @@
                     {!! trans('settings::setting.label.value') !!}
                 </label><br />
                     {!! $setting['value'] !!}
+            </div>
+        </div>
+        <div class="col-md-4 col-sm-6">
+            <div class"form-group">
+                <label for="file">
+                    {!! trans('settings::setting.label.file') !!}
+                </label><br />
+                    {!! $setting['file'] !!}
+            </div>
+        </div>
+        <div class="col-md-4 col-sm-6">
+            <div class"form-group">
+                <label for="control">
+                    {!! trans('settings::setting.label.control') !!}
+                </label><br />
+                    {!! $setting['control'] !!}
             </div>
         </div>
         <div class="col-md-4 col-sm-6">

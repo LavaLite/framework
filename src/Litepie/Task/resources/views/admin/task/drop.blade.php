@@ -4,7 +4,7 @@
     <!-- inner menu: contains the actual data -->
     <div class="slimScrollDiv" >
     <ul class="menu"  >
-      <div id="myslimScroll">
+      <div id="slim-scroll">
          @forelse(Task::tasks() as $key => $value)
                   <li>
                       <a href="{!!trans_url('/admin/task/task')!!}">
@@ -34,13 +34,3 @@
   </li>
   <li class="footer"><a href="{{trans_url('/admin/task/task')}}">View all</a></li>
 </ul>
-<script type="text/javascript">
-$(function(){
-$('#myslimScroll').slimScroll({
-       color: '#ec240b',
-        height: '100%',
-        alwaysVisible: true    
-    });
-})
-      
-</script>

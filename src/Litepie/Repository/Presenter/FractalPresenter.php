@@ -1,5 +1,4 @@
 <?php
-
 namespace Litepie\Repository\Presenter;
 
 use Exception;
@@ -12,12 +11,13 @@ use League\Fractal\Pagination\IlluminatePaginatorAdapter;
 use League\Fractal\Resource\Collection;
 use League\Fractal\Resource\Item;
 use League\Fractal\Serializer\SerializerAbstract;
-use Litepie\Contracts\Repository\Presenter;
+use Prettus\Repository\Contracts\PresenterInterface;
 
 /**
- * Class FractalPresenter.
+ * Class FractalPresenter
+ * @package Litepie\Repository\Presenter
  */
-abstract class FractalPresenter implements Presenter
+abstract class FractalPresenter implements PresenterInterface
 {
     /**
      * @var string
@@ -44,7 +44,6 @@ abstract class FractalPresenter implements Presenter
      */
     public function __construct()
     {
-
         if (!class_exists('League\Fractal\Manager')) {
             throw new Exception(trans('repository::packages.league_fractal_required'));
         }
@@ -73,7 +72,8 @@ abstract class FractalPresenter implements Presenter
      */
     protected function parseIncludes()
     {
-        $request       = app('Illuminate\Http\Request');
+
+        $request = app('Illuminate\Http\Request');
         $paramIncludes = config('repository.fractal.params.include', 'include');
 
         if ($request->has($paramIncludes)) {
@@ -84,7 +84,7 @@ abstract class FractalPresenter implements Presenter
     }
 
     /**
-     * Get Serializer.
+     * Get Serializer
      *
      * @return SerializerAbstract
      */
@@ -96,24 +96,22 @@ abstract class FractalPresenter implements Presenter
     }
 
     /**
-     * Transformer.
+     * Transformer
      *
      * @return \League\Fractal\TransformerAbstract
      */
     abstract public function getTransformer();
 
     /**
-     * Prepare data to present.
+     * Prepare data to present
      *
      * @param $data
      *
-     * @throws Exception
-     *
      * @return mixed
+     * @throws Exception
      */
     public function present($data)
     {
-
         if (!class_exists('League\Fractal\Manager')) {
             throw new Exception(trans('repository::packages.league_fractal_required'));
         }
@@ -157,10 +155,9 @@ abstract class FractalPresenter implements Presenter
     protected function transformPaginator($paginator)
     {
         $collection = $paginator->getCollection();
-        $resource   = new Collection($collection, $this->getTransformer(), $this->resourceKeyCollection);
+        $resource = new Collection($collection, $this->getTransformer(), $this->resourceKeyCollection);
         $resource->setPaginator(new IlluminatePaginatorAdapter($paginator));
 
         return $resource;
     }
-
 }

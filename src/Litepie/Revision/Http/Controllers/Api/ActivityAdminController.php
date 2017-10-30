@@ -2,7 +2,7 @@
 
 namespace Litepie\Revision\Http\Controllers\Api;
 
-use App\Http\Controllers\Api\AdminController as BaseController;
+use App\Http\Controllers\Api\ResourceController as BaseController;
 use Litepie\Revision\Http\Requests\RevisionRequest;
 use Litepie\Revision\Interfaces\ActivityRepositoryInterface;
 use Litepie\Revision\Models\Revision;
@@ -10,7 +10,7 @@ use Litepie\Revision\Models\Revision;
 /**
  * Admin API controller class.
  */
-class ActivityAdminController extends BaseController
+class ActivityResourceController extends BaseController
 {
     /**
      * Initialize activity controller.

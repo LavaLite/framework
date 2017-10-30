@@ -1,12 +1,12 @@
 <?php
-
 namespace Litepie\Repository\Events;
 
 use Illuminate\Database\Eloquent\Model;
-use Litepie\Contracts\Repository\Repository;
+use Prettus\Repository\Contracts\RepositoryInterface;
 
 /**
- * Class RepositoryEventBase.
+ * Class RepositoryEventBase
+ * @package Litepie\Repository\Events
  */
 abstract class RepositoryEventBase
 {
@@ -16,7 +16,7 @@ abstract class RepositoryEventBase
     protected $model;
 
     /**
-     * @var Repository
+     * @var RepositoryInterface
      */
     protected $repository;
 
@@ -26,13 +26,13 @@ abstract class RepositoryEventBase
     protected $action;
 
     /**
-     * @param Repository $repository
-     * @param Model      $model
+     * @param RepositoryInterface $repository
+     * @param Model               $model
      */
-    public function __construct(Repository $repository, Model $model)
+    public function __construct(RepositoryInterface $repository, Model $model)
     {
         $this->repository = $repository;
-        $this->model      = $model;
+        $this->model = $model;
     }
 
     /**
@@ -44,7 +44,7 @@ abstract class RepositoryEventBase
     }
 
     /**
-     * @return Repository
+     * @return RepositoryInterface
      */
     public function getRepository()
     {

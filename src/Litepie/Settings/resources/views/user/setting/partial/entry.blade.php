@@ -1,7 +1,19 @@
 <div class='col-md-4 col-sm-6'>
-                       {!! Form::text('skey')
-                       -> label(trans('settings::setting.label.skey'))
-                       -> placeholder(trans('settings::setting.placeholder.skey'))!!}
+                       {!! Form::text('key')
+                       -> label(trans('settings::setting.label.key'))
+                       -> placeholder(trans('settings::setting.placeholder.key'))!!}
+                </div>
+
+                <div class='col-md-4 col-sm-6'>
+                       {!! Form::text('package')
+                       -> label(trans('settings::setting.label.package'))
+                       -> placeholder(trans('settings::setting.placeholder.package'))!!}
+                </div>
+
+                <div class='col-md-4 col-sm-6'>
+                       {!! Form::text('module')
+                       -> label(trans('settings::setting.label.module'))
+                       -> placeholder(trans('settings::setting.placeholder.module'))!!}
                 </div>
 
                 <div class='col-md-4 col-sm-6'>
@@ -14,6 +26,18 @@
                        {!! Form::text('value')
                        -> label(trans('settings::setting.label.value'))
                        -> placeholder(trans('settings::setting.placeholder.value'))!!}
+                </div>
+
+                <div class='col-md-4 col-sm-6'>
+                       {!! Form::text('file')
+                       -> label(trans('settings::setting.label.file'))
+                       -> placeholder(trans('settings::setting.placeholder.file'))!!}
+                </div>
+
+                <div class='col-md-4 col-sm-6'>
+                       {!! Form::text('control')
+                       -> label(trans('settings::setting.label.control'))
+                       -> placeholder(trans('settings::setting.placeholder.control'))!!}
                 </div>
 
                 <div class='col-md-4 col-sm-6'>

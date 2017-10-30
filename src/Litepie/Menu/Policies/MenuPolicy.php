@@ -98,7 +98,7 @@ class MenuPolicy
      */
     public function before($user, $ability)
     {
-        if ($user->isSuperUser()) {
+        if ($user->hsaRole('superuser')) {
             return true;
         }
     }

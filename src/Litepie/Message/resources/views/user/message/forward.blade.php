@@ -13,7 +13,8 @@
                         <td colspan="4">
                         {!! Form::select('mails[]','To')
                         -> options(Message::getUsers())
-                        -> class('js-example-tags select2-hidden-accessible')
+                        -> class('select-search')
+                        -> dataUrl(guard_url('message/message/users'))
                         -> style('width:100%')
                         -> multiple()
                         -> required()!!}
@@ -39,13 +40,10 @@
                 </tbody>
             </table>
             {!! Form::close() !!}
-            <link rel="stylesheet" type="text/css" href="https://select2.github.io/dist/css/select2.min.css">
-            <script type="text/javascript" src="https://select2.github.io/dist/js/select2.full.js"></script>       
+    
 
             <script type="text/javascript">
-            $(".js-example-tags").select2({
-                  tags: true
-                });
+
             $(document).ready(function(){
                 $('#forward-send').click(function(){
                     $('#forward-message-message').submit();

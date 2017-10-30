@@ -10,69 +10,51 @@ class SettingTableSeeder extends Seeder
     public function run()
     {
         DB::table('settings')->insert([
-            
-        ]);
-
-        DB::table('permissions')->insert([
             [
-                'slug'      => 'settings.setting.view',
-                'name'      => 'View Setting',
+                'package'   => 'Main',
+                'module'    => 'Company',
+                'user_type' => null,
+                'user_id'   => null,
+                'key'       => 'main.company.name',
+                'name'      => 'Company name',
+                'value'     => 'Lavalite',
+                'type'      => 'Lavalite',
+                'control'   => 'text',
             ],
             [
-                'slug'      => 'settings.setting.create',
-                'name'      => 'Create Setting',
+                'package'   => 'Main',
+                'module'    => 'Company',
+                'user_type' => null,
+                'user_id'   => null,
+                'key'       => 'main.company.address',
+                'name'      => 'Company address',
+                'value'     => 'Some value',
+                'type'      => '3481 Melrose Place <br>
+Beverly Hills, CA 90210',
+                'control'   => 'text',
             ],
             [
-                'slug'      => 'settings.setting.edit',
-                'name'      => 'Update Setting',
+                'package'   => 'Main',
+                'module'    => 'Company',
+                'user_type' => null,
+                'user_id'   => null,
+                'key'       => 'main.company.email',
+                'name'      => 'Company address',
+                'value'     => 'Company Email',
+                'type'      => 'info@lavalite.org',
+                'control'   => 'text',
             ],
             [
-                'slug'      => 'settings.setting.delete',
-                'name'      => 'Delete Setting',
+                'package'   => 'Main',
+                'module'    => 'Company',
+                'user_type' => null,
+                'user_id'   => null,
+                'key'       => 'main.company.logo',
+                'name'      => 'Company logo',
+                'value'     => 'Some value',
+                'type'      => 'img/logo.png',
+                'control'   => 'text',
             ],
-            /*
-            [
-                'slug'      => 'settings.setting.verify',
-                'name'      => 'Verify Setting',
-            ],
-            [
-                'slug'      => 'settings.setting.approve',
-                'name'      => 'Approve Setting',
-            ],
-            [
-                'slug'      => 'settings.setting.publish',
-                'name'      => 'Publish Setting',
-            ],
-            [
-                'slug'      => 'settings.setting.unpublish',
-                'name'      => 'Unpublish Setting',
-            ],
-            [
-                'slug'      => 'settings.setting.cancel',
-                'name'      => 'Cancel Setting',
-            ],
-            [
-                'slug'      => 'settings.setting.archive',
-                'name'      => 'Archive Setting',
-            ],
-            */
-        ]);
-
-        DB::table('menus')->insert([
-
-
-        ]);
-
-        DB::table('settings')->insert([
-            // Uncomment  and edit this section for entering value to settings table.
-            /*
-            [
-                'key'      => 'settings.setting.key',
-                'name'     => 'Some name',
-                'value'    => 'Some value',
-                'type'     => 'Default',
-            ],
-            */
         ]);
     }
 }

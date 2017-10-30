@@ -21,6 +21,10 @@ class ThemeServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->publishResources();
+        
+        foreach(config('theme.themes') as $key => $val) {
+            $this->loadViewsFrom(public_path(config('theme.themeDir').'/'.config("theme.themes.{$key}.theme").'/views'), $key);
+        }
     }
 
     /**
@@ -31,9 +35,14 @@ class ThemeServiceProvider extends ServiceProvider
     public function register()
     {
 
-        // Temp to use in closure.
-        $app = $this->app;
-
+        
+        $this->app->singleton('view.finder', function($app) {
+            return new \Litepie\Theme\ThemeViewFinder(
+                $app['files'],
+                $app['config']['view.paths'],
+                null
+            );
+        });
         // Register providers.
         $this->registerAsset();
         $this->registerTheme();

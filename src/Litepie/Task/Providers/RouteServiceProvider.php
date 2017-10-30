@@ -3,9 +3,9 @@
 namespace Litepie\Task\Providers;
 
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
-use Route;
 use Litepie\Task\Models\Task;
 use Request;
+use Route;
 
 class RouteServiceProvider extends ServiceProvider
 {
@@ -46,7 +46,7 @@ class RouteServiceProvider extends ServiceProvider
     {
         $this->mapWebRoutes();
 
-        // $this->mapApiRoutes();
+// $this->mapApiRoutes();
 
         //
     }
@@ -62,7 +62,8 @@ class RouteServiceProvider extends ServiceProvider
     {
         Route::group([
             'middleware' => 'web',
-            'namespace' => $this->namespace,
+            'namespace'  => $this->namespace,
+            'prefix'     => trans_setlocale(),
         ], function ($router) {
             require (__DIR__ . '/../routes/web.php');
         });
@@ -79,10 +80,11 @@ class RouteServiceProvider extends ServiceProvider
     {
         Route::group([
             'middleware' => 'api',
-            'namespace' => $this->namespace . '\Api',
-            'prefix' => 'api',
+            'namespace'  => $this->namespace,
+            'prefix'     => trans_setlocale() . '/api',
         ], function ($router) {
             require (__DIR__ . '/../routes/api.php');
         });
     }
+
 }

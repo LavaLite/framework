@@ -48,6 +48,7 @@ return [
 
     ],
 
+    
     'setting'       => [
         'model'             => 'Litepie\Settings\Models\Setting',
         'table'             => 'settings',
@@ -55,73 +56,20 @@ return [
         'hidden'            => [],
         'visible'           => [],
         'guarded'           => ['*'],
-        'slugs'             => [],
+        'slugs'             => ['slug' => 'name'],
         'dates'             => ['deleted_at'],
         'appends'           => [],
-        'fillable'          => ['user_id', 'skey',  'name',  'value',  'type'],
-        'translate'         => ['skey',  'name',  'value',  'type'],
-
+        'fillable'          => ['user_id', 'key',  'package',  'module',  'name',  'value',  'file',  'control',  'type'],
+        'translate'         => ['key',  'package',  'module',  'name',  'value',  'file',  'control',  'type'],
         'upload_folder'     => 'settings/setting',
-        'uploads'           => [
-                                    'single'    => [],
-                                    'multiple'  => [],
-                               ],
-        'casts'             => [
-                               ],
+        'uploads'           => [],
+        'casts'             => [],
         'revision'          => [],
         'perPage'           => '20',
         'search'        => [
             'name'  => 'like',
             'status',
         ],
-        /*
-        'workflow'      => [
-            'points' => [
-                'start' => 'draft',
-                'end'   => ['delete'],
-            ],
-            'steps'  => [
-                'draft'     => [
-                    'label'  => "Setting created",
-                    'action' => ['setStatus', 'draft'],
-                    'next'   => ['complete'],
-                ],
-                'complete'  => [
-                    'label'  => "Setting completed",
-                    'status' => ['setStatus', 'complete'],
-                    'next'   => ['verify'],
-                ],
-                'verify'    => [
-                    'label'  => "Setting verified",
-                    'action' => ['setStatus', 'verify'],
-                    'next'   => ['approve'],
-                ],
-                'approve'   => [
-                    'label'  => "Setting approved",
-                    'action' => ['setStatus', 'approve'],
-                    'next'   => ['publish'],
-                ],
-                'publish'   => [
-                    'label'  => "Setting published",
-                    'action' => ['setStatus', 'publish'],
-                    'next'   => ['unpublish', 'delete', 'target', 'archive'],
-                ],
-                'unpublish' => [
-                    'label'  => "Setting unpublished",
-                    'action' => ['setStatus', 'unpublish'],
-                    'next'   => ['publish', 'target', 'archive', 'delete'],
-                ],
-                'archive'   => [
-                    'label'  => "Setting archived",
-                    'action' => ['setStatus', 'archive'],
-                    'next'   => ['publish', 'delete'],
-                ],
-                'delete'    => [
-                    'Label'  => "Setting deleted",
-                    'status' => ['delete', 'archive'],
-                ],
-            ],
-        ],
-        */
+
     ],
 ];

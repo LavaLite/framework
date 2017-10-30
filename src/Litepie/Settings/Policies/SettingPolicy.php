@@ -2,7 +2,7 @@
 
 namespace Litepie\Settings\Policies;
 
-use App\User;
+use Litepie\User\Contracts\UserPolicy;
 use Litepie\Settings\Models\Setting;
 
 class SettingPolicy
@@ -11,12 +11,12 @@ class SettingPolicy
     /**
      * Determine if the given user can view the setting.
      *
-     * @param User $user
+     * @param UserPolicy $user
      * @param Setting $setting
      *
      * @return bool
      */
-    public function view(User $user, Setting $setting)
+    public function view(UserPolicy $user, Setting $setting)
     {
         if ($user->canDo('settings.setting.view') && $user->is('admin')) {
             return true;
@@ -34,12 +34,12 @@ class SettingPolicy
     /**
      * Determine if the given user can create a setting.
      *
-     * @param User $user
+     * @param UserPolicy $user
      * @param Setting $setting
      *
      * @return bool
      */
-    public function create(User $user)
+    public function create(UserPolicy $user)
     {
         return  $user->canDo('settings.setting.create');
     }
@@ -47,12 +47,12 @@ class SettingPolicy
     /**
      * Determine if the given user can update the given setting.
      *
-     * @param User $user
+     * @param UserPolicy $user
      * @param Setting $setting
      *
      * @return bool
      */
-    public function update(User $user, Setting $setting)
+    public function update(UserPolicy $user, Setting $setting)
     {
         if ($user->canDo('settings.setting.update') && $user->is('admin')) {
             return true;
@@ -70,12 +70,12 @@ class SettingPolicy
     /**
      * Determine if the given user can delete the given setting.
      *
-     * @param User $user
+     * @param UserPolicy $user
      * @param Setting $setting
      *
      * @return bool
      */
-    public function destroy(User $user, Setting $setting)
+    public function destroy(UserPolicy $user, Setting $setting)
     {
         if ($user->canDo('settings.setting.delete') && $user->is('admin')) {
             return true;
@@ -93,12 +93,12 @@ class SettingPolicy
     /**
      * Determine if the given user can verify the given setting.
      *
-     * @param User $user
+     * @param UserPolicy $user
      * @param Setting $setting
      *
      * @return bool
      */
-    public function verify(User $user, Setting $setting)
+    public function verify(UserPolicy $user, Setting $setting)
     {
         if ($user->canDo('settings.setting.verify') && $user->is('admin')) {
             return true;
@@ -116,12 +116,12 @@ class SettingPolicy
     /**
      * Determine if the given user can approve the given setting.
      *
-     * @param User $user
+     * @param UserPolicy $user
      * @param Setting $setting
      *
      * @return bool
      */
-    public function approve(User $user, Setting $setting)
+    public function approve(UserPolicy $user, Setting $setting)
     {
         if ($user->canDo('settings.setting.approve') && $user->is('admin')) {
             return true;

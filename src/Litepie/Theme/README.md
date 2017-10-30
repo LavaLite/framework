@@ -170,26 +170,26 @@ class HomeController extends Controller {
         );
 
         // home.index will look up the path 'resources/views/home/index.php'
-        return $theme->of('home.index', $view)->render();
+        return $theme->of('home.index', $view)->output();
 
         // Specific status code with render.
-        return $theme->of('home.index', $view)->render(200);
+        return $theme->of('home.index', $view)->output(200);
 
         // home.index will look up the path 'resources/views/mobile/home/index.php'
-        return $theme->ofWithLayout('home.index', $view)->render();
+        return $theme->ofWithLayout('home.index', $view)->output();
 
         // home.index will look up the path 'public/themes/default/views/home/index.php'
-        return $theme->scope('home.index', $view)->render();
+        return $theme->scope('home.index', $view)->output();
 
         // home.index will look up the path 'public/themes/default/views/mobile/home/index.php'
-        return $theme->scopeWithLayout('home.index', $view)->render();
+        return $theme->scopeWithLayout('home.index', $view)->output();
 
         // Looking for a custom path.
-        return $theme->load('app.somewhere.viewfile', $view)->render();
+        return $theme->load('app.somewhere.viewfile', $view)->output();
 
         // Working with cookie.
         $cookie = Cookie::make('name', 'Tee');
-        return $theme->of('home.index', $view)->withCookie($cookie)->render();
+        return $theme->of('home.index', $view)->withCookie($cookie)->output();
     }
 
 }
@@ -200,7 +200,7 @@ Finding from both theme's view and application's view.
 ~~~php
 $theme = Theme::uses('default')->layout('default');
 
-return $theme->watch('home.index')->render();
+return $theme->watch('home.index')->output();
 ~~~
 
 To check whether a theme exists.
@@ -233,17 +233,17 @@ Theme now supports PHP, Blade and Twig. To use Blade or Twig template you just c
 
 ~~~php
 // Blade template.
-return $theme->string('<h1>{{ $name }}</h1>', array('name' => 'Teepluss'), 'blade')->render();
+return $theme->string('<h1>{{ $name }}</h1>', array('name' => 'Teepluss'), 'blade')->output();
 
 // Twig Template
-return $theme->string('<h1>{{ name }}</h1>', array('name' => 'Teepluss'), 'twig')->render();
+return $theme->string('<h1>{{ name }}</h1>', array('name' => 'Teepluss'), 'twig')->output();
 ~~~
 
 ### Compile string
 
 ~~~php
 // Blade compile.
-$template = '<h1>Name: {{ $name }}</h1><p>{{ Theme::widget("WidgetIntro", array("userId" => 9999, "title" => "Demo Widget"))->render() }}</p>';
+$template = '<h1>Name: {{ $name }}</h1><p>{{ Theme::widget("WidgetIntro", array("userId" => 9999, "title" => "Demo Widget"))->output() }}</p>';
 
 echo Theme::blader($template, array('name' => 'Teepluss'));
 ~~~
@@ -539,11 +539,11 @@ $theme->breadcrumb()->add(array(
 To render breadcrumbs.
 
 ~~~php
-echo $theme->breadcrumb()->render();
+echo $theme->breadcrumb()->output();
 
 // or
 
-echo Theme::breadcrumb()->render();
+echo Theme::breadcrumb()->output();
 ~~~
 
 You can set up breadcrumbs template anywhere you want by using a blade template.
@@ -593,7 +593,7 @@ Now you will see a widget class at /app/Widgets/WidgetDemo.php
 ### Calling your widget in layout or view
 
 ~~~php
-echo Theme::widget('demo', array('label' => 'Demo Widget'))->render();
+echo Theme::widget('demo', array('label' => 'Demo Widget'))->output();
 ~~~
 
 ### Using theme global
@@ -633,7 +633,7 @@ public function getIndex()
     // or just override layout
     $this->theme->layout('desktop');
 
-    $this->theme->of('somewhere.index')->render();
+    $this->theme->of('somewhere.index')->output();
 }
 ~~~
 

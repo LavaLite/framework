@@ -2,7 +2,7 @@
 
 namespace Litepie\Settings;
 
-use User;
+use Litepie\Settings\Interfaces\SettingRepositoryInterface;
 
 class Settings
 {
@@ -14,7 +14,7 @@ class Settings
     /**
      * Constructor.
      */
-    public function __construct(\Litepie\Settings\Interfaces\SettingRepositoryInterface $setting)
+    public function __construct(SettingRepositoryInterface $setting)
     {
         $this->setting = $setting;
     }
@@ -26,44 +26,15 @@ class Settings
      *
      * @return int
      */
-
-    /**
-     * Make gadget View
-     *
-     * @param string $view
-     *
-     * @param int $count
-     *
-     * @return View
-     */
-    public function gadget($view = 'admin.setting.gadget', $count = 10)
+    public function count()
     {
-
-        if (User::hasRole('user')) {
-            $this->setting->pushCriteria(new \Litepie\Litepie\Repositories\Criteria\SettingUserCriteria());
-        }
-
-        $setting = $this->setting->scopeQuery(function ($query) use ($count) {
-            return $query->orderBy('id', 'DESC')->take($count);
-        })->all();
-
-        return view('settings::' . $view, compact('setting'))->render();
-    }
-
-    public function display($view)
-    {
-        return view('settings::admin.setting.' . $view);
-    }
-
-    public function count(array $filters = null)
-    {
-        return $this->model->count();
+        return 0;
     }
 
     public function get($key, $default = null, $foruser = false)
     {
         $row = $this->setting->scopeQuery(function ($query) use ($key) {
-            return $query->whereSkey($key)->orderBy('type', 'DESC');
+            return $query->whereKey($key)->orderBy('type', 'DESC');
         })->first();
 
         if (!empty($row)) {
@@ -75,9 +46,9 @@ class Settings
 
     public function set($key, $value, $foruser = false)
     {
-        $data                = $this->model->findByField('skey', $key)->first();
+        $data                = $this->model->findByField('key', $key)->first();
         $attributes['value'] = $value;
-        $attributes['skey']  = $key;
+        $attributes['key']   = $key;
 
         if ($foruser) {
             $attributes['user_id']   = user_id();
@@ -90,5 +61,9 @@ class Settings
 
         return $this->model->create($attributes);
     }
-
+    
+    public function display($view)
+    {
+        return view('settings::admin.setting.' . $view);
+    }
 }

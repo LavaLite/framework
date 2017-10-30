@@ -23,7 +23,7 @@ trait User
     {
         if (!empty($this->photo)) {
 
-            return trans_url($this->defaultImage('photo'));
+            return url($this->defaultImage('photo'));
         }
 
         if ($this->sex == 'female') {

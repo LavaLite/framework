@@ -483,7 +483,7 @@ class Client
     {
         $user = $this->getUser($guard);
 
-        return view('vuser::user.admin.changepassword', compact('user'));
+        return view('user::user.admin.changepassword', compact('user'));
     }
 
     /**

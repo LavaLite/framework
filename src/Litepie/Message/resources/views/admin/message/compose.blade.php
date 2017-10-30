@@ -16,8 +16,8 @@
 
                             <div class="form-group">
                             {!! Form::select('mails[]')
-                            -> options(Message::getUsers())
-                            -> class('js-example-tags select2-hidden-accessible')
+                            -> class('select-search')
+                            -> dataUrl(guard_url('message/message/users'))
                             -> style('width:100%')
                             -> multiple()
                             -> required()
@@ -50,15 +50,8 @@
         </div>
     </div>
  </div>  
-<link rel="stylesheet" type="text/css" href="https://select2.github.io/dist/css/select2.min.css">
-<script type="text/javascript" src="https://select2.github.io/dist/js/select2.full.js"></script>
 <script type="text/javascript">
-    
 $(function () {
-        $(".js-example-tags").select2({
-          tags: true
-        }); 
-
         $('#btn-send').click(function(){
             $('#create-message-message').submit();
         });

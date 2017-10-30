@@ -17,7 +17,7 @@
         <div class="tab-content clearfix">
             <div class="tab-pane active" id="profile">
                 <div class="tab-pan-title">  {!! trans('app.create') !!}  {!! trans('user::user.name') !!} </div>
-                @include('vuser::admin.user.partial.entry')
+                @include('user::admin.user.partial.entry')
             </div>
             <div class="tab-pane " id="details">
                 <div class="row">
@@ -93,7 +93,9 @@
                     <div class='col-md-3 col-sm-4'>
                     <label>Photo</label>
                         <div class='col-md-12 col-sm-12'>
-                           {!!@$user->fileUpload('photo')!!}
+                           {!!@$user->files('photo')
+                           ->url($user->getUploadUrl('photo'))
+                           ->dropzone()!!}
                         </div>
                     </div>
                 </div>

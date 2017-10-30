@@ -2,7 +2,7 @@
 
 namespace Litepie\Revision\Http\Controllers;
 
-use App\Http\Controllers\AdminController as BaseController;
+use App\Http\Controllers\ResourceController as BaseController;
 use Form;
 use Litepie\Revision\Http\Requests\RevisionRequest;
 use Litepie\Revision\Interfaces\ActivityRepositoryInterface;
@@ -11,7 +11,7 @@ use Litepie\Revision\Models\Activity;
 /**
  * Admin web controller class.
  */
-class ActivityAdminController extends BaseController
+class ActivityResourceController extends BaseController
 {
     /**
      * Initialize revision controller.
@@ -36,8 +36,7 @@ class ActivityAdminController extends BaseController
         if ($request->wantsJson()) {
             return $this->getJson($request);
         }
-        $this   ->theme->prependTitle(trans('revision::activity.names').' :: ');
-        return $this->theme->of('revision::admin.activity.index')->render();
+        $this   ->response->title(trans('revision::activity.names').' :: ')->view($this->getView('revision::admin.activity.index')->output();
     }
 
     /**

@@ -15,7 +15,9 @@ class Message
      */
     public function __construct(\Litepie\Message\Interfaces\MessageRepositoryInterface $message)
     {
-        $this->message = $message;
+        $this->repository = $message;
+        $this->repository
+            ->pushCriteria(\Litepie\Message\Repositories\Criteria\MessageResourceCriteria::class);
     }
 
     /**
@@ -29,14 +31,13 @@ class Message
     {
 
         $email = user(getenv('guard'))->email;
-        $this->message->pushCriteria(new \Litepie\Message\Repositories\Criteria\MessageUserCriteria());
         if($slug == 'Inbox'){
-            return $this->message->scopeQuery(function ($query) use ($slug,$email) {
+            return $this->repository->scopeQuery(function ($query) use ($slug,$email) {
                 return $query->with('user')->whereStatus($slug)->whereTo($email)->where("read", "=", 0)->orderBy('id', 'DESC');
             })->count();
         }
 
-        return $this->message->scopeQuery(function ($query) use ($slug) {
+        return $this->repository->scopeQuery(function ($query) use ($slug) {
                 return $query->with('user')->whereStatus($slug)->where("read", "=", 0)->orderBy('id', 'DESC');
             })->count();
        
@@ -46,8 +47,8 @@ class Message
     {
 
         $email = user(getenv('guard'))->email;
-        $this->message->pushCriteria(new \Litepie\Message\Repositories\Criteria\MessageUserCriteria());
-        return $this->message->scopeQuery(function ($query) use ($slug) {
+        $this->repository->pushCriteria(new \Litepie\Message\Repositories\Criteria\MessageUserCriteria());
+        return $this->repository->scopeQuery(function ($query) use ($slug) {
                 return $query->with('user')->where($slug,'=','Yes')->where("read", "=", 0)->orderBy('id', 'DESC');
             })->count();
        
@@ -55,19 +56,19 @@ class Message
 
     public function adminMsgcount($slug)
     {
-        return $this->message->msgCount($slug);
+        return $this->repository->msgCount($slug);
     }
 
     public function adminSpecialcount($slug)
     {
-        return $this->message->specialCount($slug);
+        return $this->repository->specialCount($slug);
     }
 
     public function userMsgcount($slug, $guard)
     {
         $email = user(getenv('guard'))->email;
      
-        return  $this->message->scopeQuery(function($query)use($slug,$email){
+        return  $this->repository->scopeQuery(function($query)use($slug,$email){
                 return $query->with('user')
                         ->where(function($qry) use($slug,$email){
                         if ($slug == 'Inbox') {
@@ -86,13 +87,13 @@ class Message
 
     public function userUnreadCount($slug, $guard)
     {
-        return $this->message->userUnreadCount($slug , $guard);
+        return $this->repository->userUnreadCount($slug , $guard);
     }
 
 
     public function userSpecialcount($slug, $guard)
     {
-        return $this->message->userSpecialCount($slug , $guard);
+        return $this->repository->userSpecialCount($slug , $guard);
     }
 
 
@@ -110,17 +111,17 @@ class Message
 
     public function messages()
     {
-        return $this->message->messages();
+        return $this->repository->messages();
     }
 
     public function unreadCount()
     {
-        return $this->message->unreadCount();
+        return $this->repository->unreadCount();
     }
 
     public function unread()
     {
-        return $this->message->unread();
+        return $this->repository->unread();
     }
 
     /**

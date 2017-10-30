@@ -11,13 +11,17 @@ class SettingItemTransformer extends TransformerAbstract
     {
         return [
             'id'                => $setting->getRouteKey(),
-            'skey'              => $setting->skey,
+            'key'               => $setting->key,
+            'package'           => $setting->package,
+            'module'            => $setting->module,
             'name'              => $setting->name,
             'value'             => $setting->value,
+            'file'              => $setting->file,
+            'control'           => $setting->control,
             'type'              => $setting->type,
             'status'            => trans('app.'.$setting->status),
-            'created_at'        => format_date($team->created_at),
-            'updated_at'        => format_date($team->updated_at),
+            'created_at'        => format_date($setting->created_at),
+            'updated_at'        => format_date($setting->updated_at),
         ];
     }
 }

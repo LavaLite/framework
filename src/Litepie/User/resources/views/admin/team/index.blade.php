@@ -22,19 +22,33 @@
 @section('tools')
 @stop
 
+@section('tabs')
+    <ul class="nav nav-tabs">
+      <li class="active"><a href="{!!trans_url('admin/user/user')!!}">Teams</a></li>
+      <li class="pull-right">@section('tools') Tools @show</li>
+    </ul>
+@stop
+
 @section('content')
-<table id="user-team-list" class="table table-striped data-table">
-    <thead class="list_head">
-        <th>{!! trans('user::team.label.name')!!}</th>
-        <th>{!! trans('user::team.label.manager')!!}</th>
-        <th>{!! trans('user::team.label.created_at')!!}</th>
-    </thead>
-    <thead  class="search_bar">
-        <th>{!! Form::text('search[name]')->raw()!!}</th>
-        <th>{!! Form::text('search[manager_id]')->raw()!!}</th>
-        <th>{!! Form::text('search[created_at]')->id('created_at')->raw()!!}</th>
-    </thead>
-</table>
+        <div class="nav-tabs-custom">
+            <ul class="nav nav-tabs primary">
+                <li class="active"><a href="#tab-pages-active" data-toggle="tab">{!! trans('user::team.names') !!}</a></li>
+            </ul>
+            <div class="tab-content">
+            <table id="user-team-list" class="table table-striped data-table">
+                <thead class="list_head">
+                    <th>{!! trans('user::team.label.name')!!}</th>
+                    <th>{!! trans('user::team.label.manager')!!}</th>
+                    <th>{!! trans('user::team.label.created_at')!!}</th>
+                </thead>
+                <thead  class="search_bar">
+                    <th>{!! Form::text('search[name]')->raw()!!}</th>
+                    <th>{!! Form::text('search[manager_id]')->raw()!!}</th>
+                    <th>{!! Form::text('search[created_at]')->id('created_at')->raw()!!}</th>
+                </thead>
+            </table>
+            </div>
+        </div>
 @stop
 
 @section('script')
@@ -43,10 +57,6 @@
 var oTable;
 
 $(document).ready(function(){  
-     $("#created_at").datetimepicker({
-        timepicker:false,
-        format:'Y-m-d',
-    });
     
     app.load('#user-team-entry', '{!!trans_url('admin/user/team/0')!!}');
     oTable = $('#user-team-list').dataTable( {

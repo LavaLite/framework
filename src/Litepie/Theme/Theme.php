@@ -3,6 +3,7 @@
 namespace Litepie\Theme;
 
 use Closure;
+use Config;
 use Illuminate\Config\Repository;
 use Illuminate\Events\Dispatcher;
 use Illuminate\Filesystem\Filesystem;
@@ -118,6 +119,7 @@ class Theme implements ThemeContract
      */
     protected $cookie;
 
+    protected $laravelViewsPath;
     /**
      * Engine compiler.
      *
@@ -138,14 +140,15 @@ class Theme implements ThemeContract
      * @return \Litepie\Theme\Theme
      */
     public function __construct(Repository $config,
-                                Dispatcher $events,
-                                Factory $view,
-                                Asset $asset,
-                                Filesystem $files)
-    {
+        Dispatcher                             $events,
+        Factory                                $view,
+        Asset                                  $asset,
+        Filesystem                             $files) {
         $this->config = $config;
 
         $this->events = $events;
+
+        $this->laravelViewsPath = Config::get('view.paths');
 
         $this->view = $view;
 
@@ -193,10 +196,10 @@ class Theme implements ThemeContract
     public function getThemeNamespace($path = '')
     {
         // Namespace relate with the theme name.
-        $namespace = static::$namespace.'.'.$this->getThemeName();
+        $namespace = static::$namespace . '.' . $this->getThemeName();
 
         if ($path != false) {
-            return $namespace.'::'.$path;
+            return $namespace . '::' . $path;
         }
 
         return $namespace;
@@ -211,7 +214,7 @@ class Theme implements ThemeContract
      */
     public function exists($theme)
     {
-        $path = app('path.public').'/'.$this->path($theme).'/';
+        $path = app('path.public') . '/' . $this->path($theme) . '/';
 
         return is_dir($path);
     }
@@ -285,23 +288,26 @@ class Theme implements ThemeContract
     public function getConfig($key = null)
     {
 
-        // Main package config.
+// Main package config.
         if (!$this->themeConfig) {
             $this->themeConfig = $this->config->get('theme');
         }
-        // Config inside a public theme.
-        // This config having buffer by array object.
+
+// Config inside a public theme.
+
+// This config having buffer by array object.
         if ($this->theme and !isset($this->themeConfig['_themes'][$this->theme])) {
             $this->themeConfig['_themes'][$this->theme] = [];
 
             try {
                 // Require public theme config.
-                $minorConfigPath = public_path($this->themeConfig['themeDir'].'/'.$this->theme.'/config.php');
+                $minorConfigPath = public_path($this->themeConfig['themeDir'] . '/' . $this->theme . '/config.php');
 
                 $this->themeConfig['_themes'][$this->theme] = $this->files->getRequire($minorConfigPath);
             } catch (\Illuminate\Filesystem\FileNotFoundException $e) {
                 //var_dump($e->getMessage());
             }
+
         }
 
         // Evaluate theme config.
@@ -322,6 +328,7 @@ class Theme implements ThemeContract
      */
     protected function evaluateConfig($config)
     {
+
         if (!isset($config['_themes'][$this->theme])) {
             return $config;
         }
@@ -329,7 +336,7 @@ class Theme implements ThemeContract
         // Config inside a public theme.
         $minorConfig = $config['_themes'][$this->theme];
 
-        // Before event is special case, It's combination.
+// Before event is special case, It's combination.
         if (isset($minorConfig['events']['before'])) {
             $minorConfig['events']['appendBefore'] = $minorConfig['events']['before'];
             unset($minorConfig['events']['before']);
@@ -354,7 +361,7 @@ class Theme implements ThemeContract
         // First path is in the selected theme.
         $hints[] = public_path($location);
 
-        // This is nice feature to use inherit from another.
+// This is nice feature to use inherit from another.
         if ($this->getConfig('inherit')) {
             // Inherit from theme name.
             $inherit = $this->getConfig('inherit');
@@ -365,6 +372,7 @@ class Theme implements ThemeContract
             if ($this->files->isDirectory($inheritPath)) {
                 array_push($hints, $inheritPath);
             }
+
         }
 
         // Add namespace with hinting paths.
@@ -381,11 +389,12 @@ class Theme implements ThemeContract
      */
     public function fire($event, $args)
     {
-        $onEvent = $this->getConfig('events.'.$event);
+        $onEvent = $this->getConfig('events.' . $event);
 
         if ($onEvent instanceof Closure) {
             $onEvent($args);
         }
+
     }
 
     /**
@@ -399,12 +408,13 @@ class Theme implements ThemeContract
      */
     public function theme($theme = null)
     {
-        // If theme name is not set, so use default from config.
+
+// If theme name is not set, so use default from config.
         if ($theme != false) {
             $this->theme = $theme;
         }
 
-        // Is theme ready?
+// Is theme ready?
         if (!$this->exists($theme)) {
             throw new UnknownThemeException("Theme [$theme] not found.");
         }
@@ -419,7 +429,7 @@ class Theme implements ThemeContract
         $this->fire('appendBefore', $this);
 
         // Add asset path to asset container.
-        $this->asset->addPath($this->path().'/'.$this->getConfig('containerDir.asset'));
+        $this->asset->addPath($this->path() . '/' . $this->getConfig('containerDir.asset'));
 
         return $this;
     }
@@ -445,7 +455,8 @@ class Theme implements ThemeContract
      */
     public function layout($layout)
     {
-        // If layout name is not set, so use default from config.
+
+// If layout name is not set, so use default from config.
         if ($layout != false) {
             $this->layout = $layout;
         }
@@ -470,7 +481,7 @@ class Theme implements ThemeContract
             $theme = $forceThemeName;
         }
 
-        return $themeDir.'/'.$theme;
+        return $themeDir . '/' . $theme;
     }
 
     /**
@@ -483,7 +494,8 @@ class Theme implements ThemeContract
      */
     public function set($region, $value)
     {
-        // Content is reserve region for render sub-view.
+
+// Content is reserve region for render sub-view.
         if ($region == 'content') {
             return;
         }
@@ -530,16 +542,18 @@ class Theme implements ThemeContract
      */
     protected function appendOrPrepend($region, $value, $type = 'append')
     {
-        // If region not found, create a new region.
+
+// If region not found, create a new region.
         if (isset($this->regions[$region])) {
             switch ($type) {
                 case 'prepend':
-                    $this->regions[$region] = $value.$this->regions[$region];
+                    $this->regions[$region] = $value . $this->regions[$region];
                     break;
                 case 'append':
                     $this->regions[$region] .= $value;
                     break;
             }
+
         } else {
             $this->set($region, $value);
         }
@@ -557,9 +571,9 @@ class Theme implements ThemeContract
      */
     public function bind($variable, $callback = null)
     {
-        $name = 'bind.'.$variable;
+        $name = 'bind.' . $variable;
 
-        // If callback pass, so put in a queue.
+// If callback pass, so put in a queue.
         if (!empty($callback)) {
             // Preparing callback in to queues.
             $this->events->listen($name, function () use ($callback, $variable) {
@@ -568,7 +582,7 @@ class Theme implements ThemeContract
         }
 
         // Passing variable to closure.
-        $_events = &$this->events;
+        $_events   = &$this->events;
         $_bindings = &$this->bindings;
 
         // Buffer processes to save request.
@@ -589,7 +603,7 @@ class Theme implements ThemeContract
      */
     public function binded($variable)
     {
-        $name = 'bind.'.$variable;
+        $name = 'bind.' . $variable;
 
         return $this->events->hasListeners($name);
     }
@@ -636,7 +650,7 @@ class Theme implements ThemeContract
      */
     public function partialWithLayout($view, $args = [])
     {
-        $view = $this->getLayoutName().'.'.$view;
+        $view = $this->getLayoutName() . '.' . $view;
 
         return $this->partial($view, $args);
     }
@@ -654,13 +668,13 @@ class Theme implements ThemeContract
      */
     public function loadPartial($view, $partialDir, $args)
     {
-        $path = $partialDir.'.'.$view;
+        $path = $partialDir . '.' . $view;
 
         if (!$this->view->exists($path)) {
             throw new UnknownPartialFileException("Partial view [$view] not found.");
         }
 
-        $partial = $this->view->make($path, $args)->render();
+        $partial              = $this->view->make($path, $args)->render();
         $this->regions[$view] = $partial;
 
         return $this->regions[$view];
@@ -688,6 +702,7 @@ class Theme implements ThemeContract
 
             return $this->loadPartial($view, $partialDir, $args);
         }
+
     }
 
     /**
@@ -704,14 +719,14 @@ class Theme implements ThemeContract
     {
         static $widgets = [];
 
-        // If the class name is not lead with upper case add prefix "Widget".
+// If the class name is not lead with upper case add prefix "Widget".
         if (!preg_match('|^[A-Z]|', $className)) {
             $className = ucfirst($className);
         }
 
         $widgetNamespace = $this->getConfig('namespaces.widget');
 
-        $className = $widgetNamespace.'\\'.$className;
+        $className = $widgetNamespace . '\\' . $className;
 
         if (!$instance = array_get($widgets, $className)) {
             $reflector = new ReflectionClass($className);
@@ -750,13 +765,13 @@ class Theme implements ThemeContract
         // Partial path with namespace.
         $path = $this->getThemeNamespace($partialDir);
 
-        // This code support partialWithLayout.
+// This code support partialWithLayout.
         if (!is_null($layout)) {
-            $path = $path.'.'.$layout;
+            $path = $path . '.' . $layout;
         }
 
         $view = array_map(function ($v) use ($path) {
-            return $path.'.'.$v;
+            return $path . '.' . $v;
         }, $view);
 
         $this->view->composer($view, $callback);
@@ -774,6 +789,7 @@ class Theme implements ThemeContract
         if (isset($this->compilers[$compiler])) {
             return $this->compilers[$compiler];
         }
+
     }
 
     /**
@@ -790,7 +806,7 @@ class Theme implements ThemeContract
     public function blader($str, $data = [], $phpCompile = true)
     {
         if ($phpCompile == false) {
-            $patterns = ['|<\?|', '|<\?php|', '|<\%|', '|\?>|', '|\%>|'];
+            $patterns     = ['|<\?|', '|<\?php|', '|<\%|', '|\?>|', '|\%>|'];
             $replacements = ['&lt;?', '&lt;php', '&lt;%', '?&gt;', '%&gt;'];
 
             $str = preg_replace($patterns, $replacements, $str);
@@ -802,7 +818,7 @@ class Theme implements ThemeContract
         ob_start() and extract($data, EXTR_SKIP);
 
         try {
-            eval('?>'.$parsed);
+            eval('?>' . $parsed);
         } catch (\Exception $e) {
             ob_end_clean();
             throw $e;
@@ -862,6 +878,7 @@ class Theme implements ThemeContract
      */
     public function get($region, $default = null)
     {
+
         if ($this->has($region)) {
             return $this->regions[$region];
         }
@@ -933,23 +950,13 @@ class Theme implements ThemeContract
         $this->fire('beforeRenderTheme', $this);
 
         // Fire event before render layout.
-        $this->fire('beforeRenderLayout.'.$this->layout, $this);
+        $this->fire('beforeRenderLayout.' . $this->layout, $this);
 
         // Keeping arguments.
         $this->arguments = $args;
 
-        // Compile string blade, string twig, or from file path.
-        switch ($type) {
-            case 'blade':
-                $content = $this->bladerWithOutServerScript($view, $args);
-                break;
-            case 'twig':
-                $content = $this->twigy($view, $args);
-                break;
-            default:
-                $content = $this->view->make($view, $args)->render();
-                break;
-        }
+
+        $content = view($view, $args);
 
         // View path of content.
         $this->content = $view;
@@ -971,7 +978,7 @@ class Theme implements ThemeContract
      */
     public function ofWithLayout($view, $args = [], $type = null)
     {
-        $view = $this->getLayoutName().'.'.$view;
+        $view = $this->getLayoutName() . '.' . $view;
 
         return $this->of($view, $args, $type);
     }
@@ -993,7 +1000,7 @@ class Theme implements ThemeContract
         $viewDir = $this->getConfig('containerDir.view');
 
         // Add namespace to find in a theme path.
-        $path = $this->getThemeNamespace($viewDir.'.'.$view);
+        $path = $this->getThemeNamespace($viewDir . '.' . $view);
 
         return $this->of($path, $args, $type);
     }
@@ -1009,7 +1016,7 @@ class Theme implements ThemeContract
      */
     public function scopeWithLayout($view, $args = [], $type = null)
     {
-        $view = $this->getLayoutName().'.'.$view;
+        $view = $this->getLayoutName() . '.' . $view;
 
         return $this->scope($view, $args, $type);
     }
@@ -1032,12 +1039,12 @@ class Theme implements ThemeContract
         $view = array_pop($segments);
 
         // Custom directory path.
-        $pathOfView = app('path.base').'/'.implode('/', $segments);
+        $pathOfView = app('path.base') . '/' . implode('/', $segments);
 
         // Add temporary path with a hint type.
         $this->view->addNamespace('custom', $pathOfView);
 
-        return $this->of('custom::'.$view, $args);
+        return $this->of('custom::' . $view, $args);
     }
 
     /**
@@ -1058,6 +1065,7 @@ class Theme implements ThemeContract
         } catch (\InvalidArgumentException $e) {
             return $this->of($view, $args, $type);
         }
+
     }
 
     /**
@@ -1078,6 +1086,7 @@ class Theme implements ThemeContract
         } catch (\InvalidArgumentException $e) {
             return $this->ofWithLayout($view, $args, $type);
         }
+
     }
 
     /**
@@ -1124,9 +1133,11 @@ class Theme implements ThemeContract
      */
     public function location($realpath = false)
     {
+
         if ($this->view->exists($this->content)) {
             return ($realpath) ? $this->view->getFinder()->find($this->content) : $this->content;
         }
+
     }
 
     /**
@@ -1145,6 +1156,14 @@ class Theme implements ThemeContract
         return $this->watch($view)->location($realpath);
     }
 
+    /*
+     *Original view paths defined in config.view.php
+     */
+    public function getLaravelViewPaths()
+    {
+        return $this->laravelViewsPath;
+    }
+
     /**
      * Compile from string.
      *
@@ -1156,9 +1175,9 @@ class Theme implements ThemeContract
      */
     public function string($str, $args = [], $type = 'blade')
     {
-        $shared = $this->view->getShared();
+        $shared         = $this->view->getShared();
         $data['errors'] = $shared['errors'];
-        $args = array_merge($data, $args);
+        $args           = array_merge($data, $args);
 
         return $this->of($str, $args, $type);
     }
@@ -1197,7 +1216,7 @@ class Theme implements ThemeContract
         // Layout directory.
         $layoutDir = $this->getConfig('containerDir.layout');
 
-        $path = $this->getThemeNamespace($layoutDir.'.'.$this->layout);
+        $path = $this->getThemeNamespace($layoutDir . '.' . $this->layout);
 
         if (!$this->view->exists($path)) {
             throw new UnknownLayoutFileException("Layout [$this->layout] not found.");
@@ -1208,7 +1227,7 @@ class Theme implements ThemeContract
         // Append status code to view.
         $content = new Response($content, $statusCode);
 
-        // Having cookie set.
+// Having cookie set.
         if ($this->cookie) {
             $content->withCookie($this->cookie);
         }
@@ -1229,12 +1248,13 @@ class Theme implements ThemeContract
         $callable = preg_split('|[A-Z]|', $method);
 
         if (in_array($callable[0], ['set', 'prepend', 'append', 'has', 'get'])) {
-            $value = lcfirst(preg_replace('|^'.$callable[0].'|', '', $method));
+            $value = lcfirst(preg_replace('|^' . $callable[0] . '|', '', $method));
             array_unshift($parameters, $value);
 
             return call_user_func_array([$this, $callable[0]], $parameters);
         }
 
-        trigger_error('Call to undefined method '.__CLASS__.'::'.$method.'()', E_USER_ERROR);
+        trigger_error('Call to undefined method ' . __CLASS__ . '::' . $method . '()', E_USER_ERROR);
     }
+
 }

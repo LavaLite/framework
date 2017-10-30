@@ -38,8 +38,7 @@ class WorkflowPublicController extends BaseController
             ->scopeQuery(function ($query) {
                 return $query->orderBy('id', 'DESC');
             })->paginate();
-
-        return $this->theme->of('workflow::public.workflow.index', compact('workflow'))->render();
+->view($this->getView('workflow::public.workflow.index')->data(compact('workflow'))->output();
     }
 
     /**
@@ -55,8 +54,7 @@ class WorkflowPublicController extends BaseController
             return $query->orderBy('id', 'DESC')
                 ->where('slug', $slug);
         })->first(['*']);
-
-        return $this->theme->of('workflow::public.workflow.show', compact('workflow'))->render();
+->view($this->getView('workflow::public.workflow.show', compact('workflow'))->output();
     }
 
 
@@ -80,7 +78,7 @@ class WorkflowPublicController extends BaseController
                 })->first();
 
         if (empty($workflow)  || $workflow->status <> 'pending' ) {
-            return $this->theme->layout('blank')->of('workflow::admin.workflow.error', compact('workflow'))->render();
+            return $this->theme->layout('blank')->of('workflow::admin.workflow.error', compact('workflow'))->output();
         }        
 
         if($workflow->workflowable->addInfo($workflow->action) ){
@@ -89,8 +87,8 @@ class WorkflowPublicController extends BaseController
                 $view = 'workflow::admin.workflow.'.$view;
             }
             
-            $this->theme->prependTitle(trans('workflow::workflow.names').' :: ');
-            return $this->theme->layout('blank')->of('workflow::admin.workflow.public', compact('workflow', 'view'))->render();
+            $this->response->title(trans('workflow::workflow.names').' :: ');
+            return $this->theme->layout('blank')->of('workflow::admin.workflow.public', compact('workflow', 'view'))->output();
         }
 
         return $this->workflow($workflow, []);
@@ -111,8 +109,8 @@ class WorkflowPublicController extends BaseController
     {
         try {
             User::onceUsingId($workflow->performable->id, $workflow->guard);
-            putenv('guard='. $workflow->guard);
-            putenv('auth.model='. $workflow->performable_type);
+            //putenv('guard='. $workflow->guard);
+            //putenv('auth.model='. $workflow->performable_type);
             unset($comments['_token']);
             $workflow->workflowable->applyWorkflow($workflow->action, $comments);
 
@@ -122,7 +120,7 @@ class WorkflowPublicController extends BaseController
                 'step'    => trans("app.{$workflow->action}"),
             ];
 
-            return $this->theme->layout('blank')->of('workflow::admin.workflow.message', $data)->render();
+            return $this->theme->layout('blank')->of('workflow::admin.workflow.message', $data)->output();
 
         } catch (ValidationException $e) {
 
@@ -132,7 +130,7 @@ class WorkflowPublicController extends BaseController
                 'step'    => trans("app.{$workflow->action}"),
             ];
 
-            return $this->theme->layout('blank')->of('workflow::admin.workflow.message', $data)->render();
+            return $this->theme->layout('blank')->of('workflow::admin.workflow.message', $data)->output();
 
         } 
     }

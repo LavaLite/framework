@@ -8,7 +8,7 @@
     <!-- inner menu: contains the actual data -->
     <div class="slimScrollDiv" >
     <ul class="menu"  >
-      <div id="slimScrolls">  
+      <div id="slim-scroll">  
           @forelse($data as $key => $value) 
                   <li>
                       <a href="{!!trans_url('/admin/calendar/calendar')!!}">
@@ -37,13 +37,4 @@
   </li>
   <li class="footer"><a href="{{trans_url('/admin/calendar/calendar')}}">View all</a></li>
 </ul>
-<script type="text/javascript">
-$(function(){
-  $('.menu #slimScrolls').slimScroll({
-       color: '#ec240b',
-        height: '100%',
-        alwaysVisible: true    
-    });
-})
-      
 </script>

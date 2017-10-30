@@ -68,6 +68,18 @@ class CalendarServiceProvider extends ServiceProvider
     }
 
     /**
+     * Get the services provided by the provider.
+     *
+     * @return array
+     */
+    public static function compiles()
+    {
+        return [
+                __DIR__ . '/Reposietories/Criteria/CalendarAdminCriteria.php',
+        ];
+    }
+
+    /**
      * Publish resources.
      *
      * @return void

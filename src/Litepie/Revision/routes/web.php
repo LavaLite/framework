@@ -1,9 +1,9 @@
 <?php
 
 // Admin  routes  for revision
-Route::group(['prefix' => '/admin/revision'], function () {
-    Route::resource('revision', 'RevisionAdminController');
-    Route::resource('activity', 'ActivityAdminController');
+Route::group(['prefix' => set_route_guard('web').'/revision'], function () {
+    Route::resource('revision', 'RevisionResourceController');
+    Route::resource('activity', 'ActivityResourceController');
 });
 
 // User  routes for revision

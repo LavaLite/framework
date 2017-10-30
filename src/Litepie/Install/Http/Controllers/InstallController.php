@@ -25,10 +25,10 @@ class InstallController extends PublicController
     public function index(Request $request)
     {
 
-        $this->theme->prependTitle(trans('Welcome to lavalite instalation wizard.'));
+        $this->response->title(trans('Welcome to lavalite instalation wizard.'));
 
 
-        return $this->theme->layout('install')->of('install::index')->render();
+        return $this->theme->layout('install')->of('install::index')->output();
     }
 
 
@@ -40,8 +40,8 @@ class InstallController extends PublicController
     public function getDb(Request $request)
     {
 
-        $this->theme->prependTitle('Database setup:: Installation (step 1 of 4)');
-        return $this->theme->layout('install')->of('install::db')->render();
+        $this->response->title('Database setup:: Installation (step 1 of 4)');
+        return $this->theme->layout('install')->of('install::db')->output();
     }
 
     /**
@@ -68,10 +68,10 @@ class InstallController extends PublicController
     public function getPublish(Request $request)
     {
 
-        $this->theme->prependTitle('Publish files:: Installation (step 2 of 4)');
+        $this->response->title('Publish files:: Installation (step 2 of 4)');
 
 
-        return $this->theme->layout('install')->of('install::publish')->render();
+        return $this->theme->layout('install')->of('install::publish')->output();
     }
 
 
@@ -98,9 +98,9 @@ class InstallController extends PublicController
      */
     public function getUser(Request $request)
     {
-        $this->theme->prependTitle('User setup:: Installation (step 3 of 4)');
+        $this->response->title('User setup:: Installation (step 3 of 4)');
 
-        return $this->theme->layout('install')->of('install::user')->render();
+        return $this->theme->layout('install')->of('install::user')->output();
     }
 
     /**
@@ -135,9 +135,9 @@ class InstallController extends PublicController
      */
     public function finished(Request $request)
     {
-        $this->theme->prependTitle('Finished:: Installation (step 1 of 4)');
+        $this->response->title('Finished:: Installation (step 1 of 4)');
 
-        return $this->theme->layout('install')->of('install::finished')->render();
+        return $this->theme->layout('install')->of('install::finished')->output();
     }
 
 

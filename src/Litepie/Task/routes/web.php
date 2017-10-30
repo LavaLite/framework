@@ -1,28 +1,15 @@
 <?php
 
 // Admin  routes  for task
-Route::group(['prefix' => trans_setlocale().'/admin/task'], function () {
-	Route::get('status', 'TaskAdminController@taskList'); 
-    Route::resource('task', 'TaskAdminController');
-});
-
-// User  routes for task
-Route::group(['prefix' => trans_setlocale().'/user/task'], function () {
-	Route::get('status', 'TaskUserController@taskList'); 
-    Route::resource('task', 'TaskUserController');
-});
-
-
-// User  routes for task
-Route::group(['prefix' => trans_setlocale().'/client/task'], function () {
-	Route::get('status', 'TaskClientController@taskList'); 
-    Route::resource('task', 'TaskClientController');
+Route::group(['prefix' => set_route_guard('web') .'/task'], function () {
+	Route::get('status', 'TaskResourceController@taskList'); 
+    Route::resource('task', 'TaskResourceController');
 });
 
 //  Public routes for task
-Route::group(['prefix' => trans_setlocale().'/tasks'], function () {
-    Route::get('/', 'TaskController@index');
-    Route::get('/{slug?}', 'TaskController@show');
+Route::group(['prefix' => set_route_guard('web') .'/tasks'], function () {
+    Route::get('/', 'TaskPublicController@index');
+    Route::get('/{slug?}', 'TaskPublicController@show');
 });
 
 

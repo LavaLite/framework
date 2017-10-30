@@ -1,12 +1,12 @@
-<?php
-
+<?php 
 namespace Litepie\Repository\Transformer;
 
 use League\Fractal\TransformerAbstract;
-use Litepie\Contracts\Repository\Transformable;
+use Prettus\Repository\Contracts\Transformable;
 
 /**
- * Class ModelTransformer.
+ * Class ModelTransformer
+ * @package Litepie\Repository\Transformer
  */
 class ModelTransformer extends TransformerAbstract
 {

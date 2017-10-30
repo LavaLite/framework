@@ -21,7 +21,7 @@
         <div class="tab-content clearfix">
             <div class="tab-pane active" id="profile">
                 <div class="tab-pan-title">  {!! trans('app.view') !!}  {!! trans('user::user.name') !!} [ {!!$user->name!!} ] </div>
-                @include('vuser::admin.user.partial.entry')
+                @include('user::admin.user.partial.entry')
             </div>
             <div class="tab-pane " id="details">
                 <div class="row disabled">

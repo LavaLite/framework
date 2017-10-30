@@ -2,7 +2,7 @@
 
 namespace Litepie\Revision\Http\Controllers\Api;
 
-use App\Http\Controllers\Api\AdminController as BaseController;
+use App\Http\Controllers\Api\ResourceController as BaseController;
 use Litepie\Revision\Http\Requests\RevisionRequest;
 use Litepie\Revision\Interfaces\RevisionRepositoryInterface;
 use Litepie\Revision\Models\Revision;
@@ -10,7 +10,7 @@ use Litepie\Revision\Models\Revision;
 /**
  * Admin API controller class.
  */
-class RevisionAdminController extends BaseController
+class RevisionResourceController extends BaseController
 {
     /**
      * Initialize revision controller.

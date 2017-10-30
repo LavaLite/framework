@@ -2,8 +2,8 @@
 
 namespace Litepie\Package\Repositories\Criteria;
 
-use Litepie\Contracts\Repository\Criteria as CriteriaInterface;
-use Litepie\Contracts\Repository\Repository as RepositoryInterface;
+use Litepie\Repository\Contracts\CriteriaInterface;
+use Litepie\Repository\Contracts\RepositoryInterface;
 
 class ModulePublicCriteria implements CriteriaInterface
 {

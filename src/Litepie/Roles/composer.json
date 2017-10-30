@@ -1,0 +1,21 @@
+{
+    "name": "litepie/roles",
+    "description": "Repository bundle for Lavalite",
+    "keywords": ["lavalite", "roles"],
+    "license": "MIT",
+    "homepage": "https://github.com/Litepie/Repository",
+    "authors": [
+        {
+            "name": "Renfos Technologies Pvt. Ltd.",
+            "email": "info@renfos.com"
+        }
+    ],
+    "require": {
+        "zizaco/entrust": "5.2.x-dev"
+    },
+    "autoload": {
+        "psr-4": { 
+            "Litepie\\Roles\\": "" 
+        }
+    }
+}

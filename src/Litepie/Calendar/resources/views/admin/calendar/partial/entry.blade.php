@@ -42,65 +42,14 @@
                     <div class="event-color-block">
             <ul class="fc-color-picker" id="color-chooser">
                 <li>
-                    <a class="event-azure" href="#">
-                        <i class="ion ion-record">
-                        </i>
-                    </a>
-                </li>
-                <li>
-                    <a class="event-purple" href="#">
-                        <i class="ion ion-record">
-                        </i>
-                    </a>
-                </li>
-                <li>
-                    <a class="event-blue" href="#">
-                        <i class="ion ion-record">
-                        </i>
-                    </a>
-                </li>
-                <li>
-                    <a class="event-green" href="#">
-                        <i class="ion ion-record">
-                        </i>
-                    </a>
-                </li>
-                <li>
-                    <a class="event-orange" href="#">
-                        <i class="ion ion-record">
-                        </i>
-                    </a>
-                </li>
-                <li>
-                    <a class="event-red" href="#">
-                        <i class="ion ion-record">
-                        </i>
-                    </a>
-                </li>
-                <li>
-                    <a class="event-rose" href="#">
-                        <i class="ion ion-record">
-                        </i>
-                    </a>
-                </li>
-                <li>
-                    <a class="event-pink" href="#">
-                        <i class="ion ion-record">
-                        </i>
-                    </a>
-                </li>
-                <li>
-                    <a class="event-indigo" href="#">
-                        <i class="ion ion-record">
-                        </i>
-                    </a>
-                </li>
-                <li>
-                    <a class="event-default" href="#">
-                        <i class="ion ion-record">
-                        </i>
-                    </a>
-                </li>
+                        <li><a class="event-azure" href="#"><i class="fa fa-circle" aria-hidden="true"></i></a></li>
+                        <li><a class="event-purple" href="#"><i class="fa fa-circle" aria-hidden="true"></i></a></li>
+                        <li><a class="event-blue" href="#"><i class="fa fa-circle" aria-hidden="true"></i></a></li>
+                        <li><a class="event-orange" href="#"><i class="fa fa-circle" aria-hidden="true"></i></a></li>
+                        <li><a class="event-green" href="#"><i class="fa fa-circle" aria-hidden="true"></i></a></li>
+                        <li><a class="event-red" href="#"><i class="fa fa-circle" aria-hidden="true"></i></a></li>
+                        <li><a class="event-indigo" href="#"><i class="fa fa-circle" aria-hidden="true"></i></a></li>
+                        <li><a class="event-pink" href="#"><i class="fa fa-circle" aria-hidden="true"></i></a></li>
             </ul>
         </div>
                 </div>

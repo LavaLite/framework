@@ -72,7 +72,7 @@
 </div>
 
 <script type="text/javascript">
-$('document').ready(function(){
+$(function () {
     $(".remove-image").on('click', function(e){
         $(this).parents('.img_box').remove();
         e.preventDefault();

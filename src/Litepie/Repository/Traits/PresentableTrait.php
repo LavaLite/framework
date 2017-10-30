@@ -3,24 +3,26 @@
 namespace Litepie\Repository\Traits;
 
 use Illuminate\Support\Arr;
-use Litepie\Contracts\Repository\Presenter;
+use Prettus\Repository\Contracts\PresenterInterface;
 
 /**
- * Class PresentableTrait.
+ * Class PresentableTrait
+ * @package Litepie\Repository\Traits
  */
 trait PresentableTrait
 {
+
     /**
-     * @var Presenter
+     * @var PresenterInterface
      */
     protected $presenter = null;
 
     /**
-     * @param \Litepie\Contracts\Repository\Presenter $presenter
+     * @param \Litepie\Repository\Contracts\PresenterInterface $presenter
      *
      * @return $this
      */
-    public function setPresenter(Presenter $presenter)
+    public function setPresenter(PresenterInterface $presenter)
     {
         $this->presenter = $presenter;
 
@@ -28,27 +30,13 @@ trait PresentableTrait
     }
 
     /**
-     * @return $this|mixed
-     */
-    public function presenter()
-    {
-
-        if ($this->hasPresenter()) {
-            return $this->presenter->present($this);
-        }
-
-        return $this;
-    }
-
-    /**
-     * @param $key
+     * @param      $key
      * @param null $default
      *
      * @return mixed|null
      */
     public function present($key, $default = null)
     {
-
         if ($this->hasPresenter()) {
             $data = $this->presenter()['data'];
 
@@ -63,7 +51,18 @@ trait PresentableTrait
      */
     protected function hasPresenter()
     {
-        return isset($this->presenter) && $this->presenter instanceof Presenter;
+        return isset($this->presenter) && $this->presenter instanceof PresenterInterface;
     }
 
+    /**
+     * @return $this|mixed
+     */
+    public function presenter()
+    {
+        if ($this->hasPresenter()) {
+            return $this->presenter->present($this);
+        }
+
+        return $this;
+    }
 }

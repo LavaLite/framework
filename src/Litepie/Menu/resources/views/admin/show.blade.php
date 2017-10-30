@@ -2,7 +2,7 @@
     <div class="nav-tabs-custom">
         <!-- Nav tabs -->
         <ul class="nav nav-tabs primary">
-            <li class="active"><a href="#details" data-toggle="tab">Menu</a></li>
+            <li class="active"><a href="#details" data-toggle="tab">Menu [{{$menu->name}}]</a></li>
             <div class="box-tools pull-right">
                 <button type="button" class="btn btn-success btn-sm" data-action="NEW" data-load-to='#menu-entry' data-href='{{trans_url('admin/menu/submenu/create')}}?parent_id={{$menu->getRouteKey()}}'><i class="fa fa-plus-circle"></i> Sub Menu</button>
                 @if($menu->id)

@@ -40,16 +40,6 @@ class Model extends Eloquent
     }
 
     /**
-     * Adds a manipulator to the setter.
-     *
-     * @param $callback  \Closure
-     */
-    public function getPublicKey()
-    {
-        return $this->getAttribute('slug');
-    }
-
-    /**
      * Adds a manipulator to the getter.
      *
      * @param $callback  \Closure
@@ -57,6 +47,16 @@ class Model extends Eloquent
     protected static function addGetterManipulator($key, Closure $callback)
     {
         static::$getter_manipulators[$key] = $callback;
+    }
+
+    /**
+     * Adds a manipulator to the setter.
+     *
+     * @param $callback  \Closure
+     */
+    public function getPublicKey()
+    {
+        return $this->getAttribute('slug');
     }
 
     /**

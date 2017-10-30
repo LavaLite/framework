@@ -51,10 +51,10 @@ class UserTableSeeder extends Seeder
         DB::table('menus')->insert([
             'parent_id'   => 2,
             'key'         => null,
-            'url'         => 'home',
+            'url'         => 'user',
             'name'        => 'Dashborad',
             'description' => null,
-            'icon'        => 'pe-7s-graph',
+            'icon'        => 'dashboard',
             'target'      => null,
             'order'       => 190,
             'status'      => 1,

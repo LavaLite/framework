@@ -30,7 +30,7 @@ class MenuTableSeeder extends Seeder
                 'id'          => 2,
                 'parent_id'   => 0,
                 'key'         => 'user',
-                'url'         => '/home',
+                'url'         => '/user',
                 'name'        => 'User',
                 'role'        => null,
                 'description' => null,

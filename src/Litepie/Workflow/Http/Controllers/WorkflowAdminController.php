@@ -2,7 +2,7 @@
 
 namespace Litepie\Workflow\Http\Controllers;
 
-use App\Http\Controllers\AdminController as BaseController;
+use App\Http\Controllers\ResourceController as BaseController;
 use Form;
 use Litepie\Workflow\Http\Requests\WorkflowRequest;
 use Litepie\Workflow\Interfaces\WorkflowRepositoryInterface;
@@ -11,7 +11,7 @@ use Litepie\Workflow\Models\Workflow;
 /**
  * Admin web controller class.
  */
-class WorkflowAdminController extends BaseController
+class WorkflowResourceController extends BaseController
 {
     // use WorkflowWorkflow;
     /**
@@ -37,8 +37,7 @@ class WorkflowAdminController extends BaseController
         if ($request->wantsJson()) {
             return $this->getJson($request);
         }
-        $this   ->theme->prependTitle(trans('workflow::workflow.names').' :: ');
-        return $this->theme->of('workflow::admin.workflow.index')->render();
+        $this   ->response->title(trans('workflow::workflow.names').' :: ')->view($this->getView('workflow::admin.workflow.index')->output();
     }
 
     /**
@@ -226,8 +225,8 @@ class WorkflowAdminController extends BaseController
             return response()->json($workflows, 200);
         }
 
-        $this   ->theme->prependTitle(trans('workflow::workflow.names').' :: ');
-        return view('workflow::admin.workflow.workflow')->render();
+        $this   ->response->title(trans('workflow::workflow.names').' :: ');
+        return view('workflow::admin.workflow.workflow')->output();
     }
 
 }
