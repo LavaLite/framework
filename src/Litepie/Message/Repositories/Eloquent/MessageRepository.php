@@ -28,143 +28,74 @@ class MessageRepository extends BaseRepository implements MessageRepositoryInter
         return config('litepie.message.message.model');
     }
 
-    public function deleteMultiple($ids)
-    {
-        return $this->model->whereIn('id', $ids)->delete();
-    }
-
-    public function unread()
-    {
-
-        return $this->model->with('user')->whereStatus("Inbox")->where("read", "=", 0)->orderBy('id', 'DESC')->get();
-    }
-
-    public function messages()
-    {
-        $email = user(getenv('guard'))->email;
-
-        return $this->model->with('user')->whereTo($email)->whereStatus('Sent')->orderBy('id', 'DESC')->take(10)->get();
-    }
-
-    public function msgCount($slug)
-    {
-        $email = user(getenv('guard'))->email;
-        return $this->model->with('user')
-            ->where(function($query) use($slug,$email){
-                if ($slug == 'Inbox') {
-                $query->whereTo($email);
-                }
-            })
-            ->whereStatus($slug)
-            ->whereUserId(user_id())
-            ->whereUserType(user_type())
-            ->where("read", "=", 0)
-            ->orderBy('id', 'DESC')
-            ->count();
-    }
-
-    public function specialCount($slug)
-    {
-        return $this->model->with('user')           
-            ->where($slug ,'=' ,'Yes')
-            ->whereUserId(user_id())
-            ->whereUserType(user_type())
-            ->where("read", "=", 0)
-            ->orderBy('id', 'DESC')
-            ->count();
-    }
-
-    public function userMsgCount($slug,$guard)
-    {
-        $email = user(getenv('guard'))->email;
-        return  $this->model->with('user')
-            ->where(function($query) use($slug,$email){
-                if ($slug == 'Inbox') {
-                return $query->whereTo($email);
-                }
-            })
-            ->whereStatus($slug)
-            ->whereUserId(user_id(getenv('guard')))
-            ->whereUserType(user_type(getenv('guard')))
-            ->where("read", "=", 0)
-            ->orderBy('id', 'DESC')
-            ->count();
-    }
-
-    public function userUnreadCount($slug,$guard)
-    {
-        $email = user(getenv('guard'))->email;
-        return  $this->model->with('user')            
-            ->whereStatus($slug)
-            ->whereUserId(user_id(getenv('guard')))
-            ->whereUserType(user_type(getenv('guard')))
-            ->orderBy('id', 'DESC')
-            ->count();
-    }
-
-
-    public function userSpecialCount($slug,$guard)
-    {
-        return $this->model->with('user')           
-            ->where($slug ,'=' ,'Yes')
-            ->whereUserId(user_id(getenv('guard')))
-            ->whereUserType(user_type(getenv('guard')))
-            ->orderBy('id', 'DESC')
-            ->count();
-    }
-
-    public function search($status, $slug)
-    {
-
-        return $this->model->with('user')->where(function ($query) use ($slug) {
-            if ($slug != 'none') {
-                $query->orWhere('subject', 'LIKE', '%' . $slug . '%');
-                $query->orWhere('message', 'LIKE', '%' . $slug . '%');
-                $query->orWhere('created_at', 'LIKE', '%' . $slug . '%');
-            }
-        })
-        ->whereStatus($status)
-        ->orderBy('id', 'DESC')
-        ->paginate(10);
-
-    }
-
-    public function findByStatus($status)
-    {
-        $email = user()->email;
-        return $this->model
-            ->with('user')
-             ->where(function($query) use($status,$email){
-                if ($status == 'Inbox') {
-                $query->whereTo($email);
-                }
-            })
-            ->whereStatus($status)
-            ->whereUserId(user_id())
-            ->whereUserType(user_type())
-            ->orderBy('id', 'DESC')->paginate(10);
-    }
-
-    public function getStarredMessages()
+    public function unreaded($count = 10, $folder = 'Inbox')
     {
         return $this->model
             ->with('user')
-            ->whereStar("Yes")
-            ->where('status','<>',"Trash")
-            ->whereUserId(user_id())
-            ->orderBy('id', 'DESC')->paginate(10);
+            ->whereFolder($folder)
+            ->whereReaded('No')
+            ->orderBy('id', 'DESC')
+            ->take($count);
     }
 
-    public function inbox()
+    public function countUnreaded($folder = 'Inbox')
     {
-        $email = users()->email;
-
-        return $this->model->with('user')->whereTo($email)->whereStatus('Sent')->orderBy('id', 'DESC')->paginate(10);
+        return $this->model
+            ->whereFolder($folder)
+            ->whereReaded('No')
+            ->count();
     }
 
-    public function getDetails($id)
+    public function mailList()
     {
-        return $this->model->with('user')->whereId($id)->first();
+        return $this ->with('user')
+            ->orderBy('id', 'DESC')
+            ->paginate();
+    }
+
+    public function mailCount()
+    {
+        return $this->count();
+    }
+
+    public function withLabel($label)
+    {
+        return $this->model
+            ->with('user')
+            ->where('labels', 'LIKE', "%$label%")
+            ->orderBy('id', 'DESC')
+            ->paginate();
+    }
+
+    public function countWithLabel($label)
+    {
+        return $this->model
+            ->where('labels', 'LIKE', "%$label%")
+            ->count();
+    }
+
+    public function starred()
+    {
+        return $this->model
+            ->with('user')
+            ->whereStarred("Yes")
+            ->orderBy('id', 'DESC')
+            ->paginate();
+    }
+
+    public function countStarred()
+    {
+        return $this->model
+            ->whereStarred("Yes")
+            ->count();
+    }
+
+    public function message($id)
+    {
+        return $this->model
+            ->with('user')
+            ->whereId($id)
+            ->first();
     }
 
 }

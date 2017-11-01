@@ -25,8 +25,7 @@ class MessageResourceController extends BaseController
         parent::__construct();
         $this->repository = $message;
         $this->repository
-            ->pushCriteria(\Litepie\Repository\Criteria\RequestCriteria::class)
-            ->pushCriteria(\Litepie\Message\Repositories\Criteria\MessageResourceCriteria::class);
+            ->pushCriteria(\Litepie\Repository\Criteria\RequestCriteria::class);
     }
 
     /**
@@ -36,21 +35,22 @@ class MessageResourceController extends BaseController
      */
     public function index(MessageRequest $request)
     {
-        $pageLimit = $request->input('pageLimit');
 
-        if ($request->wantsJson()) {
+        if ($this->response->typeIs('json')) {
             $pageLimit = $request->input('pageLimit');
             $data      = $this->repository
-                ->setPresenter(Litepie\Calendar\Repositories\Presenter\MessageListPresenter::class)
+                ->setPresenter(\Litepie\Message\Repositories\Presenter\MessageListPresenter::class)
                 ->getDataTable($pageLimit);
             return $this->response
                 ->data($data)
                 ->output();
-
         }
 
+        $messages = $this->repository->paginate();
+
         return $this->response->title(trans('message::message.names'))
-            ->view('message::admin.message.index')
+            ->view('message::message.index', true)
+            ->data(compact('messages'))
             ->output();
 
     }
@@ -65,15 +65,16 @@ class MessageResourceController extends BaseController
      */
     public function show(MessageRequest $request, Message $message)
     {
+
         if ($message->exists) {
-            $view = 'message::admin.message.show';
+            $view = 'message::message.show';
         } else {
-            $view = 'message::admin.message.new';
+            $view = 'message::message.new';
         }
 
         return $this->response->title(trans('app.view') . ' ' . trans('message::message.name'))
             ->data(compact('message'))
-            ->view($view)
+            ->view($view, true)
             ->output();
     }
 
@@ -87,8 +88,9 @@ class MessageResourceController extends BaseController
     public function create(MessageRequest $request)
     {
         $message = $this->repository->newInstance([]);
-        return $this->response->title(trans('app.new') . ' ' . trans('message::message.name')) 
-            ->view('message::admin.message.compose') 
+        return $this->response
+            ->title(trans('app.new') . ' ' . trans('message::message.name'))
+            ->view('message::message.compose', true)
             ->data(compact('message'))
             ->output();
     }
@@ -177,7 +179,7 @@ class MessageResourceController extends BaseController
     public function edit(MessageRequest $request, Message $message)
     {
         Form::populate($message);
-        return response()->view('message::admin.message.edit', compact('message'));
+        return response()->view('message::message.edit', compact('message'));
     }
 
     /**
@@ -257,19 +259,26 @@ class MessageResourceController extends BaseController
 
     }
 
-    public function inbox(MessageRequest $request)
+    public function list(MessageRequest $request)
     {
-        $messages['data'] = $this->repository->inbox();
-
-        return view('message::admin.message.show', compact('messages'));
+        $messages['data'] = $this->repository
+            ->pushCriteria(\Litepie\Message\Repositories\Criteria\MessageResourceCriteria::class)
+            ->mailList();
+        $messages['caption'] = $request->folder;
+        return $this->response->title(trans('app.new') . ' ' . trans('message::message.name')) 
+            ->view('message::message.show', true) 
+            ->data(compact('messages'))
+            ->output();
     }
 
-    public function search(MessageRequest $request, $slug = 'none', $status = 'Inbox')
+    public function outbox(MessageRequest $request)
     {
 
-        $messages['data'] = $this->repository->search($status, $slug);
+        $messages['data'] = $this->repository
+            ->pushCriteria(\Litepie\Message\Repositories\Criteria\MessageOutboxCriteria::class)
+            ->mailList();
 
-        return view('message::admin.message.search', compact('messages'));
+        return view('message::message.show', compact('messages'));
     }
 
     public function updateStatus(MessageRequest $request, Message $message, $status)
@@ -328,32 +337,32 @@ class MessageResourceController extends BaseController
 
         $messages['data']    = $this->repository->findByStatus($status);
         $messages['caption'] = $status;
-        return view('message::admin.message.show', compact('messages'));
+        return view('message::message.show', compact('messages'));
     }
 
     public function getDetails($caption, $id)
     {
         $message            = $this->repository->getDetails($id);
         $message['caption'] = $caption;
-        return view('message::admin.message.details', compact('message'));
+        return view('message::message.details', compact('message'));
     }
 
     public function reply($id)
     {
         $message = $this->repository->getDetails($id);
-        return view('message::admin.message.reply', compact('message'));
+        return view('message::message.reply', compact('message'));
     }
 
     public function forward($id)
     {
         $message = $this->repository->getDetails($id);
 
-        return view('message::admin.message.forward', compact('message'));
+        return view('message::message.forward', compact('message'));
     }
 
     /*   public function compose()
     {
-    return view('message::admin.message.compose');
+    return view('message::message.compose');
     }*/
     public function changeSubStatus(MessageRequest $request, Message $message)
     {
@@ -376,7 +385,7 @@ class MessageResourceController extends BaseController
             return $query->with('user')->whereStar(1)->orderBy('id', 'DESC');
         })->paginate();
         $messages['caption'] = "Starred";
-        return view('message::admin.message.show', compact('messages'));
+        return view('message::message.show', compact('messages'));
     }
 
     public function importantMessages()
@@ -385,7 +394,7 @@ class MessageResourceController extends BaseController
             return $query->with('user')->whereImportant(1)->orderBy('id', 'DESC');
         })->paginate();
         $messages['caption'] = "Important";
-        return view('message::admin.message.show', compact('messages'));
+        return view('message::message.show', compact('messages'));
     }
 
 }

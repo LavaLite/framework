@@ -1,7 +1,10 @@
 <?php
 
 namespace Litepie\Message;
+
 use User;
+use Litepie\Message\Interfaces\MessageRepositoryInterface;
+use Litepie\Message\Repositories\Criteria\MessageResourceCriteria;
 
 class Message
 {
@@ -13,11 +16,9 @@ class Message
     /**
      * Constructor.
      */
-    public function __construct(\Litepie\Message\Interfaces\MessageRepositoryInterface $message)
+    public function __construct(MessageRepositoryInterface $message)
     {
         $this->repository = $message;
-        $this->repository
-            ->pushCriteria(\Litepie\Message\Repositories\Criteria\MessageResourceCriteria::class);
     }
 
     /**
@@ -27,75 +28,26 @@ class Message
      *
      * @return int
      */
-    public function count($slug)
+    public function count($folder, $label = null, $read = 1)
     {
-
-        $email = user(getenv('guard'))->email;
-        if($slug == 'Inbox'){
-            return $this->repository->scopeQuery(function ($query) use ($slug,$email) {
-                return $query->with('user')->whereStatus($slug)->whereTo($email)->where("read", "=", 0)->orderBy('id', 'DESC');
-            })->count();
-        }
-
-        return $this->repository->scopeQuery(function ($query) use ($slug) {
-                return $query->with('user')->whereStatus($slug)->where("read", "=", 0)->orderBy('id', 'DESC');
-            })->count();
-       
+        return $this->repository
+            ->pushCriteria(new MessageResourceCriteria($folder, $label, $read))
+            ->mailCount();
     }
 
-    public function specialCount($slug)
+    /**
+     * Returns count of message with given label.
+     *
+     * @param array $filter
+     *
+     * @return int
+     */
+    public function list($folder, $label = null, $read = 1)
     {
-
-        $email = user(getenv('guard'))->email;
-        $this->repository->pushCriteria(new \Litepie\Message\Repositories\Criteria\MessageUserCriteria());
-        return $this->repository->scopeQuery(function ($query) use ($slug) {
-                return $query->with('user')->where($slug,'=','Yes')->where("read", "=", 0)->orderBy('id', 'DESC');
-            })->count();
-       
+        return $this->repository
+            ->pushCriteria(new MessageResourceCriteria($folder, $label, $read))
+            ->mailList();
     }
-
-    public function adminMsgcount($slug)
-    {
-        return $this->repository->msgCount($slug);
-    }
-
-    public function adminSpecialcount($slug)
-    {
-        return $this->repository->specialCount($slug);
-    }
-
-    public function userMsgcount($slug, $guard)
-    {
-        $email = user(getenv('guard'))->email;
-     
-        return  $this->repository->scopeQuery(function($query)use($slug,$email){
-                return $query->with('user')
-                        ->where(function($qry) use($slug,$email){
-                        if ($slug == 'Inbox') {
-                            return $qry->whereTo($email)->where("read", "=", 0);
-                        }
-                        else {
-                         return $qry->whereTo($email)
-                            ->whereUserId(user_id('web'))
-                            ->whereUserType(user_type('web'));  
-                        }
-                    })->whereStatus($slug);
-                })->count();
-           
-
-    }
-
-    public function userUnreadCount($slug, $guard)
-    {
-        return $this->repository->userUnreadCount($slug , $guard);
-    }
-
-
-    public function userSpecialcount($slug, $guard)
-    {
-        return $this->repository->userSpecialCount($slug , $guard);
-    }
-
 
     /**
      * Display message of the user.
@@ -104,9 +56,9 @@ class Message
      *
      * @author
      **/
-    public function display($view)
+    public function gadget($view)
     {
-        return view('message::admin.message.' . $view);
+        return view('message::' . $view);
     }
 
     public function messages()
@@ -119,25 +71,9 @@ class Message
         return $this->repository->unreadCount();
     }
 
-    public function unread()
+    public function unreaded()
     {
-        return $this->repository->unread();
-    }
-
-    /**
-     *Taking all Users mail id
-     *@return array
-     */
-    public function getUsers()
-    {
-        $array = [];
-        $model = getenv('auth.model');
-        $users = $model::all();
-        foreach ($users as $key => $user) {
-            $array[$user->email] = $user->email;
-        }
-        
-        return $array;
+        return $this->repository->unreaded();
     }
 
 }

@@ -11,7 +11,7 @@
 @section('breadcrumb')
 <ol class="breadcrumb">
     <li>
-        <a href="{!!trans_url('admin')!!}">
+        <a href="{!!guard_url('/')!!}">
             <i class="fa fa-dashboard">
             </i>
             {!! trans('app.home') !!}
@@ -52,7 +52,7 @@
                             </i>
                             Inbox
                             <span class="label label-primary pull-right" id="inbox_id">
-                                {!!Message::adminMsgcount('Inbox')!!}
+                                {!!Message::count('Inbox')!!}
                             </span>
                         </a>
                     </li>
@@ -62,7 +62,7 @@
                             </i>
                             Sent
                             <span class="label label-success pull-right" id="sent_id">
-                                {!!Message::adminMsgcount('Sent')!!}
+                                {!!Message::count('Sent')!!}
                             </span>
                         </a>
                     </li>                     
@@ -72,7 +72,7 @@
                             </i>
                             Drafts
                             <span class="label label-default pull-right" id="draft_id">
-                                {!!Message::adminMsgcount('Draft')!!}
+                                {!!Message::count('Draft')!!}
                             </span>
                         </a>
                     </li>
@@ -82,7 +82,7 @@
                             </i>
                             Junk
                             <span class="label label-warning pull-right" id="junk_id">
-                                {!!Message::adminMsgcount('Junk')!!}
+                                {!!Message::count('Junk')!!}
                             </span>
                         </a>
                     </li>
@@ -92,7 +92,7 @@
                             </i>
                             Trash
                             <span class="label label-danger pull-right" id="trash_id">
-                                {!!Message::adminMsgcount('Trash')!!}
+                                {!!Message::count('Trash')!!}
                             </span>
                         </a>
                     </li>
@@ -120,9 +120,9 @@
                             <i class="fa fa-star text-red">
                             </i>
                             Starred
-                           <!--  <span class="label label-primary pull-right">
-                                {!!Message::adminSpecialcount('star')!!}
-                            </span> -->
+                            <span class="label label-primary pull-right">
+                                {!!Message::count('Inbox', 'star')!!}
+                            </span>
                         </a>
                     </li>                  
                     
@@ -131,9 +131,9 @@
                             <i class="fa fa-circle-o text-yellow">
                             </i>
                             Promotions
-                            <!-- <span class="label label-success pull-right" id="promotions_id">
-                                {!!Message::adminMsgcount('Promotions')!!}
-                            </span> -->
+                            <span class="label label-success pull-right" id="promotions_id">
+                                {!!Message::count('Inbox', 'Promotions')!!}
+                            </span>
                         </a>
                     </li>
                     <li class="cur">
@@ -141,9 +141,9 @@
                             <i class="fa fa-circle-o text-light-blue">
                             </i>
                             Social
-                            <!-- <span class="label label-primary pull-right" id="social_id">
-                                {!!Message::adminMsgcount('Social')!!}
-                            </span> -->
+                            <span class="label label-primary pull-right" id="social_id">
+                                {!!Message::count('Inbox', 'Social')!!}
+                            </span>
                         </a>
                     </li>
                     <li class="cur">
@@ -151,9 +151,9 @@
                             <i class="fa fa-circle-o text-red">
                             </i>
                             Important
-                            <!-- <span class="label label-danger pull-right" id="important_id">
-                                {!!Message::adminSpecialcount('important')!!}
-                            </span> -->
+                            <span class="label label-danger pull-right" id="important_id">
+                                {!!Message::count('Inbox', 'important')!!}
+                            </span>
                         </a>
                     </li>
                 </ul>
@@ -165,7 +165,7 @@
     <!-- /.col -->
 
     <div class="col-md-9">
-        <div id='entry-message'></div>
+        <div id='message-display'></div>
     </div>
     <!-- /.col -->
 </div>
@@ -176,63 +176,64 @@
     <script>
       $(function () {
         $('#compose-msg').click(function(){
-            $('#entry-message').load('{{trans_url('admin/message/compose')}}');
+            $('#message-display').load('{{guard_url('message/message/create')}}');
         });
 
-        $('#entry-message').load('{{trans_url('admin/message/status/Inbox')}}');
-         $('#btn-inbox').parent().addClass("active");
+        $('#message-display').load('{{guard_url('message/message/list/inbox')}}');
+        $('#btn-inbox').parent().addClass("active");
+
         $('#btn-inbox').click(function(){
-           $(".cur").removeClass("active");
-           $( this ).parent().addClass("active");
-            $('#entry-message').load('{{trans_url('admin/message/status/Inbox')}}');
+            $(".cur").removeClass("active");
+            $( this ).parent().addClass("active");
+            $('#message-display').load('{{guard_url('message/message/list/Inbox')}}');
         });
 
         $('#btn-sent').click(function(){
             $(".cur").removeClass("active");
             $( this ).parent().addClass("active");
-            $('#entry-message').load('{{trans_url('admin/message/status/Sent')}}');
+            $('#message-display').load('{{guard_url('message/message/list/Sent')}}');
         });
 
         $('#btn-draft').click(function(){
             $(".cur").removeClass("active");
             $( this ).parent().addClass("active");
-            $('#entry-message').load('{{trans_url('admin/message/status/Draft')}}');
+            $('#message-display').load('{{guard_url('message/message/list/Draft')}}');
         });
 
         $('#btn-trash').click(function(){
             $(".cur").removeClass("active");
             $( this ).parent().addClass("active");
-            $('#entry-message').load('{{trans_url('admin/message/status/Trash')}}');
+            $('#message-display').load('{{guard_url('message/message/list/Trash')}}');
         });
 
         $('#btn-junk').click(function(){
             $(".cur").removeClass("active");
             $( this ).parent().addClass("active");
-            $('#entry-message').load('{{trans_url('admin/message/status/Junk')}}');
+            $('#message-display').load('{{guard_url('message/message/list/Junk')}}');
         });
 
         $('#btn-Starred').click(function(){
             $(".cur").removeClass("active");
             $( this ).parent().addClass("active");
-            $('#entry-message').load('{{trans_url('admin/message/starred')}}');
+            $('#message-display').load('{{guard_url('message/message/label/starred')}}');
         });
 
         $('#btn-Important').click(function(){
             $(".cur").removeClass("active");
             $( this ).parent().addClass("active");
-            $('#entry-message').load('{{trans_url('admin/message/important_msg')}}');
+            $('#message-display').load('{{guard_url('message/message/label/important')}}');
         });
 
         $('#btn-Promotions').click(function(){
             $(".cur").removeClass("active");
             $( this ).parent().addClass("active");
-            $('#entry-message').load('{{trans_url('admin/message/status/Promotions')}}');
+            $('#message-display').load('{{guard_url('message/message/label/promotions')}}');
         });
 
         $('#btn-Social').click(function(){
             $(".cur").removeClass("active");
             $( this ).parent().addClass("active");
-            $('#entry-message').load('{{trans_url('admin/message/status/Social')}}');
+            $('#message-display').load('{{guard_url('message/message/label/social')}}');
         });
 
         $('#btn-send').click(function(){
@@ -274,7 +275,8 @@
     a{
         cursor: pointer;
     }
-    .box-header{    display:none;
+    .box-header{    
+        display:none;
     }
 </style>
 @stop
