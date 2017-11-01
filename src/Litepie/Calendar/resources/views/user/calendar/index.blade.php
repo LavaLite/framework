@@ -193,7 +193,7 @@ $(function () {
         eventSources: [
         // your event source
         {
-        url: '{!!Trans::to($guard.'/calendar/calendar/ajax/list')!!}', // use the `url` property
+        url: '{!!guard_url('calendar/calendar/ajax/list')!!}', // use the `url` property
         }
         ],
         editable: true,
@@ -202,7 +202,7 @@ $(function () {
         eventLimit: true,
         eventClick: function(event, element) {
             $('#event-modal .modal-title').html('Edit ' + event.title);
-            $('#event-modal .modal-body').load('{{trans_url($guard.'/calendar/calendar')}}/' + event.id + '/edit');
+            $('#event-modal .modal-body').load('{{guard_url('calendar/calendar')}}/' + event.id + '/edit');
             $('#event-modal').modal('show');
 /* $('.modal-footer #event-delete').css('display','block');*/
         },
@@ -211,7 +211,7 @@ $(function () {
             $('#event-modal .modal-title').html('Create New Event');
              var startdate = start.format('YYYY-MM-DD');            
              var enddate = end.format('YYYY-MM-DD');           
-            $('#event-modal .modal-body').load('{{trans_url($guard.'/calendar/calendar/create')}}?start='+startdate+'&end='+enddate);         
+            $('#event-modal .modal-body').load('{{guard_url('calendar/calendar/create')}}?start='+startdate+'&end='+enddate);         
             $('#event-modal').modal('show');
             var eventData;
             if (event.title) {
@@ -290,7 +290,7 @@ $(function () {
                     });                   
               
                 $.ajax( {
-                            url: '{!!url($guard."/calendar/calendar")!!}',
+                            url: '{!!guard_url("calendar/calendar")!!}',
                             type: 'POST',
                             data: formData,
                             processData:false,  
@@ -298,7 +298,7 @@ $(function () {
                             success:function(data, textStatus, jqXHR)
                             {   
                              $("#input-title").val('');
-                             $('#external-events').load('{!!url($guard."/calendar/calendar/draft")!!}');                          
+                             $('#external-events').load('{!!guard_url("calendar/calendar/draft")!!}');                          
 
                             },
                             error: function(jqXHR, textStatus, errorThrown)
@@ -315,7 +315,7 @@ $(function () {
     function updateEvents(formData,id){     
 
         $.ajax( {
-            url: "{!!Trans::to($guard.'/calendar/calendar')!!}" +"/"+id,
+            url: "{!!guard_url('calendar/calendar')!!}" +"/"+id,
             type: 'PUT',
             data: {data:formData},
             beforeSend:function()
