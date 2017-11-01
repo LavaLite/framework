@@ -76,9 +76,9 @@
 @section('script')
     <script>
         $(document).ready(function(){
-            $("#to_do_list").load('{{trans_url('admin/task/status?search[status]=to_do')}}');
-            $("#in_progress_list").load('{{trans_url('admin/task/status?search[status]=in_progress')}}');
-            $("#completed_list").load('{{trans_url('admin/task/status?search[status]=completed')}}'); 
+            $("#to_do_list").load('{{trans_url('admin/task/task/status?search[status]=to_do')}}');
+            $("#in_progress_list").load('{{trans_url('admin/task/task/status?search[status]=in_progress')}}');
+            $("#completed_list").load('{{trans_url('admin/task/task/status?search[status]=completed')}}'); 
         });
     </script>
 @stop

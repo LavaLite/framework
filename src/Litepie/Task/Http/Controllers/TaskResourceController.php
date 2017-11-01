@@ -1,43 +1,31 @@
 <?php
-
 namespace Litepie\Task\Http\Controllers;
 
 use App\Http\Controllers\ResourceController as BaseController;
-use Form;
 use Litepie\Task\Http\Requests\TaskRequest;
 use Litepie\Task\Interfaces\TaskRepositoryInterface;
 use Litepie\Task\Models\Task;
 
 /**
- * Admin web controller class.
+ * Resource controller class for task.
  */
 class TaskResourceController extends BaseController
 {
-    /**
-     * The authentication guard that should be used.
-     *
-     * @var string
-     */
-    public $guard = 'admin.web';
 
     /**
-     * The home page route of admin.
-     *
-     * @var string
-     */
-    public $home = 'admin';
-    /**
-     * Initialize task controller.
+     * Initialize task resource controller.
      *
      * @param type TaskRepositoryInterface $task
      *
-     * @return type
+     * @return null
      */
     public function __construct(TaskRepositoryInterface $task)
     {
-        $this->repository = $task;
-        $this->repository->pushCriteria(app('Litepie\Repository\Criteria\RequestCriteria'));
         parent::__construct();
+        $this->repository = $task;
+        $this->repository
+            ->pushCriteria(\Litepie\Repository\Criteria\RequestCriteria::class)
+            ->pushCriteria(\Litepie\Task\Repositories\Criteria\TaskResourceCriteria::class);
     }
 
     /**
@@ -47,14 +35,21 @@ class TaskResourceController extends BaseController
      */
     public function index(TaskRequest $request)
     {
-        $tasks = $this->repository
-            ->setPresenter('\\Litepie\\Task\\Repositories\\Presenter\\TaskListPresenter')
-            ->scopeQuery(function ($query) {
-                return $query->orderBy('id', 'DESC');
-            })->all();
 
-        return $this->response->title(trans('task::task.names') . ' :: ')
-            ->view($this->getView('admin.task.index', 'task'))
+        if ($this->response->typeIs('json')) {
+            $pageLimit = $request->input('pageLimit');
+            $data      = $this->repository
+                ->setPresenter(\Litepie\Task\Repositories\Presenter\TaskListPresenter::class)
+                ->getDataTable($pageLimit);
+            return $this->response
+                ->data($data)
+                ->output();
+        }
+
+        $tasks = $this->repository->paginate();
+
+        return $this->response->title(trans('task::task.names'))
+            ->view('task::task.index', true)
             ->data(compact('tasks'))
             ->output();
     }
@@ -70,12 +65,16 @@ class TaskResourceController extends BaseController
     public function show(TaskRequest $request, Task $task)
     {
 
-        if (!$task->exists) {
-            return response()->view('task::admin.task.new', compact('task'));
+        if ($task->exists) {
+            $view = 'task::task.show';
+        } else {
+            $view = 'task::task.new';
         }
 
-        Form::populate($task);
-        return response()->view('task::admin.task.show', compact('task'));
+        return $this->response->title(trans('app.view') . ' ' . trans('task::task.name'))
+            ->data(compact('task'))
+            ->view($view, true)
+            ->output();
     }
 
     /**
@@ -89,11 +88,10 @@ class TaskResourceController extends BaseController
     {
 
         $task = $this->repository->newInstance([]);
-
-        Form::populate($task);
-
-        return response()->view('task::admin.task.create', compact('task'));
-
+        return $this->response->title(trans('app.new') . ' ' . trans('task::task.name')) 
+            ->view('task::task.create', true) 
+            ->data(compact('task'))
+            ->output();
     }
 
     /**
@@ -107,24 +105,21 @@ class TaskResourceController extends BaseController
     {
         try {
             $attributes              = $request->all();
-            $attributes['status']    = $attributes['new-status'];
-            $attributes['task']      = $attributes['new-task'];
+            $attributes['user_id']   = user_id();
             $attributes['user_type'] = user_type();
-            $attributes['user_id']   = user_id('admin.web');
-            $attributes['user_type'] = user_type();
-            $task                    = $this->repository->create($attributes);
+            $task                 = $this->repository->create($attributes);
 
-            return response()->json([
-                'message'  => trans('messages.success.updated', ['Module' => trans('task::task.name')]),
-                'code'     => 204,
-                'redirect' => trans_url('/admin/task/status?search[status]=' . $task['status']),
-            ], 201);
-
+            return $this->response->message(trans('messages.success.created', ['Module' => trans('task::task.name')]))
+                ->code(204)
+                ->status('success')
+                ->url(guard_url('task/task/status?search[status]=to_do'))
+                ->redirect();
         } catch (Exception $e) {
-            return response()->json([
-                'message' => $e->getMessage(),
-                'code'    => 400,
-            ], 400);
+            return $this->response->message($e->getMessage())
+                ->code(400)
+                ->status('error')
+                ->url(guard_url('/task/task/status?search[status]=to_do'))
+                ->redirect();
         }
 
     }
@@ -139,8 +134,10 @@ class TaskResourceController extends BaseController
      */
     public function edit(TaskRequest $request, Task $task)
     {
-        Form::populate($task);
-        return response()->view('task::admin.task.edit', compact('task'));
+        return $this->response->title(trans('app.edit') . ' ' . trans('task::task.name'))
+            ->view('task::task.edit', true)
+            ->data(compact('task'))
+            ->output();
     }
 
     /**
@@ -154,24 +151,20 @@ class TaskResourceController extends BaseController
     public function update(TaskRequest $request, Task $task)
     {
         try {
-
             $attributes = $request->all();
+
             $task->update($attributes);
-
-            return response()->json([
-                'message'  => trans('messages.success.updated', ['Module' => trans('task::task.name')]),
-                'code'     => 204,
-                'redirect' => trans_url('/admin/task/status?search[status]=' . $task['status']),
-            ], 201);
-
+            return $this->response->message(trans('messages.success.updated', ['Module' => trans('task::task.name')]))
+                ->code(204)
+                ->status('success')
+                ->url(guard_url('task/task/status?search[status]=' . $task->status))
+                ->redirect();
         } catch (Exception $e) {
-
-            return response()->json([
-                'message'  => $e->getMessage(),
-                'code'     => 400,
-                'redirect' => trans_url('/admin/task/task/' . $task->getRouteKey()),
-            ], 400);
-
+            return $this->response->message($e->getMessage())
+                ->code(400)
+                ->status('error')
+                ->url(guard_url('task/task/status?search[status]=' . $task->status))
+                ->redirect();
         }
 
     }
@@ -185,24 +178,22 @@ class TaskResourceController extends BaseController
      */
     public function destroy(TaskRequest $request, Task $task)
     {
-
         try {
 
-            $t = $task->delete();
-
-            return response()->json([
-                'message'  => trans('messages.success.deleted', ['Module' => trans('task::task.name')]),
-                'code'     => 202,
-                'redirect' => trans_url('/admin/task/status?search[status]=' . $task['status']),
-            ], 202);
+            $task->delete();
+            return $this->response->message(trans('messages.success.deleted', ['Module' => trans('task::task.name')]))
+                ->code(202)
+                ->status('success')
+                ->url(guard_url('task/task'))
+                ->redirect();
 
         } catch (Exception $e) {
 
-            return response()->json([
-                'message'  => $e->getMessage(),
-                'code'     => 400,
-                'redirect' => trans_url('/admin/task/task/' . $task->getRouteKey()),
-            ], 400);
+            return $this->response->message($e->getMessage())
+                ->code(400)
+                ->status('error')
+                ->url(guard_url('task/task/' . $task->getRouteKey()))
+                ->redirect();
         }
 
     }
@@ -215,7 +206,10 @@ class TaskResourceController extends BaseController
             ->scopeQuery(function ($query) {
                 return $query->orderBy('id', 'DESC');
             })->all();
-        return view('task::admin.task.task_list', compact('tasks', 'status'));
+        return $this->response->title(trans('app.new') . ' ' . trans('task::task.name')) 
+            ->view('task::task.task_list', true) 
+            ->data(compact('tasks', 'status'))
+            ->output();
     }
 
 }

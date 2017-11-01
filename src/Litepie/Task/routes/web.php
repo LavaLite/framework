@@ -2,7 +2,7 @@
 
 // Admin  routes  for task
 Route::group(['prefix' => set_route_guard('web') .'/task'], function () {
-	Route::get('status', 'TaskResourceController@taskList'); 
+	Route::get('task/status', 'TaskResourceController@taskList'); 
     Route::resource('task', 'TaskResourceController');
 });
 

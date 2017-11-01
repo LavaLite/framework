@@ -31,7 +31,7 @@
 
         <div class='col-md-6 col-sm-6'>
               {!! Form::select('created')
-               -> value(user_id('web'))
+               -> value(user_id())
                -> disabled()
                -> options(Task::users())
                -> label(trans('task::task.label.created_by'))              
