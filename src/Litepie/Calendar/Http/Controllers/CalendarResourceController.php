@@ -42,7 +42,7 @@ class CalendarResourceController extends BaseController
             ->all();
 
         return $this->response->title(trans('calendar::calendar.names'))
-            ->view('calendar::admin.calendar.index')
+            ->view('calendar::calendar.index', true)
             ->data(compact('calendars'))
             ->output();
 
@@ -59,12 +59,16 @@ class CalendarResourceController extends BaseController
     public function show(CalendarRequest $request, Calendar $calendar)
     {
 
-        if (!$calendar->exists) {
-            return response()->view('calendar::admin.calendar.new', compact('calendar'));
+        if ($calendar->exists) {
+            $view = 'calendar::calendar.show';
+        } else {
+            $view = 'calendar::calendar.new';
         }
 
-        Form::populate($calendar);
-        return response()->view('calendar::admin.calendar.show', compact('calendar'));
+        return $this->response->title(trans('app.view') . ' ' . trans('calendar::calendar.name'))
+            ->data(compact('calendar'))
+            ->view($view, true)
+            ->output();
     }
 
     /**
