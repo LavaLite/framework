@@ -29,7 +29,7 @@ trait AuthenticatesUsers
         return $this->response
             ->title('Login')
             ->layout('auth')
-            ->view($this->getView('auth.login', 'user', null, 'public'))
+            ->view('user::auth.login', true)
             ->data(compact('guard'))
             ->output();
     }

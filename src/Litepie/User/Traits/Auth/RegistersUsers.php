@@ -27,11 +27,8 @@ trait RegistersUsers
      */
     function showRegistrationForm()
     {
-        $guard = $this->getGuardRoute();
-
         return $this->response->title('Register')
-            ->view($this->getView('auth.register', 'user'))
-            ->data(compact('guard'))
+            ->view('user::auth.register', true)
             ->layout('auth')
             ->output();
     }
