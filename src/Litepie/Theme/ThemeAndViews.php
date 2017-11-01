@@ -4,8 +4,10 @@ namespace Litepie\Theme;
 
 use Theme;
 use View;
+
 trait ThemeAndViews
 {
+
     /*
      * Store theme
      */
@@ -58,59 +60,6 @@ trait ThemeAndViews
     }
 
     /**
-     * Return view for the current guard.
-     *
-     * @return string
-     *
-     */
-    protected function getView($view, $package = null, $theme = null, $folder = null)
-    {
-
-        if ($cview = $this->getThemeView($view, $package, $theme)) {
-            return $cview;
-        }
-
-        if ($cview = $this->getPackageView($view, $package, $folder)) {
-            return $cview;
-        }
-
-        return $view;
-    }
-
-    public function getThemeView($view, $package, $theme)
-    {
-
-        if (empty($theme)) {
-            $theme = $this->getTheme();
-        }
-
-        if (is_null($package) && View::exists("{$theme}::{$view}")) {
-            return "{$theme}::{$view}";
-        }
-
-        if (View::exists("{$theme}::{$package}.{$view}")) {
-            return "{$theme}::{$package}.{$view}";
-        }
-
-        return false;
-    }
-
-    public function getPackageView($view, $package, $folder)
-    {
-        $newfolder = $this->getViewFolder();
-
-        if (View::exists("{$package}::{$newfolder}.{$view}")) {
-            return "{$package}::{$newfolder}.{$view}";
-        }
-
-        if (View::exists("{$package}::{$folder}.{$view}")) {
-            return "{$package}::{$folder}.{$view}";
-        }
-
-        return false;
-    }
-
-    /**
      * Return folder for current guard.
      *
      * @return type
@@ -118,7 +67,8 @@ trait ThemeAndViews
      */
     protected function getViewFolder()
     {
-        return substr($this->getGuard(), 0, strpos(getenv('guard'), '.'));
+        return  substr($this->getGuard(), 0, strpos(getenv('guard'), '.'));
     }
+
 
 }
