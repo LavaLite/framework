@@ -12,21 +12,24 @@ class CreateMessagesTable extends Migration
 
     public function up()
     {
+
         /*
          * Table: messages
          */
         Schema::create('messages', function ($table) {
             $table->increments('id');
-            $table->enum('status', ['Draft', 'Inbox', 'Sent', 'Trash', 'Junk', 'Important', 'Promosions', 'Social'])->nullable();
-            $table->enum('star', ['Yes', 'No'])->nullable();
-            $table->enum('important', ['Yes', 'No'])->nullable();
-            $table->integer('from')->nullable();
-            $table->integer('to')->nullable();
+            $table->integer('from_id')->nullable();
+            $table->string('from_type', 225)->nullable();
+            $table->string('from_email', 50)->nullable();
+            $table->integer('to_id')->nullable();
+            $table->string('to_type', 225)->nullable();
+            $table->string('to_email', 50)->nullable();
             $table->string('subject', 255)->nullable();
             $table->text('message')->nullable();
-            $table->tinyInteger('read')->nullable();
-            $table->enum('type', ['System', 'Admin', 'User'])->nullable();
-            $table->string('slug', 200)->nullable();
+            $table->enum('folder', ['Draft','Inbox','Sent','Junk'])->nullable();
+            $table->enum('starred', ['Yes','No'])->nullable();
+            $table->enum('readed', ['Yes','No'])->nullable();
+            $table->mediumText('labels')->nullable();
             $table->integer('user_id')->nullable();
             $table->string('user_type', 255)->nullable();
             $table->string('upload_folder', 100)->nullable();
@@ -36,10 +39,10 @@ class CreateMessagesTable extends Migration
     }
 
     /*
-     * Reverse the migrations.
-     *
-     * @return void
-     */
+    * Reverse the migrations.
+    *
+    * @return void
+    */
 
     public function down()
     {
