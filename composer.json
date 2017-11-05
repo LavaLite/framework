@@ -51,7 +51,7 @@
     },
     "autoload": {
         "classmap": [
-            "src/Litepie/Alert/database/seeds",
+            "src/Litepie/Alerts/database/seeds",
             "src/Litepie/Calendar/database/seeds",
             "src/Litepie/Menu/database/seeds",
             "src/Litepie/Message/database/seeds",
