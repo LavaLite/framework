@@ -55,6 +55,7 @@
             "src/Litepie/Calendar/database/seeds",
             "src/Litepie/Menu/database/seeds",
             "src/Litepie/Message/database/seeds",
+            "src/Litepie/Roles/database/seeds",
             "src/Litepie/Settings/database/seeds",
             "src/Litepie/Task/database/seeds",
             "src/Litepie/User/database/seeds"
