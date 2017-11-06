@@ -1,22 +1,6 @@
 <?php
-
-// Admin API routes  for task
-Route::group(['prefix' => trans_setlocale().'api/v1/admin/task'], function () {
-    Route::resource('task', 'TaskAdminApiController');
+// Admin  routes  for task
+Route::group(['prefix' => set_route_guard('api') .'/task'], function () {
+	Route::get('task/status', 'TaskResourceController@taskList'); 
+    Route::resource('task', 'TaskResourceController');
 });
-
-
-
-// User API routes for task
-Route::group(['prefix' => trans_setlocale().'api/v1/user/task'], function () {
-    Route::resource('task', 'TaskUserApiController');
-});
-
-
-
-//  API routes for task
-Route::group(['prefix' => trans_setlocale().'api/v1/tasks'], function () {
-    Route::get('/', 'TaskApiController@index');
-    Route::get('/{slug?}', 'TaskApiController@show');
-});
-

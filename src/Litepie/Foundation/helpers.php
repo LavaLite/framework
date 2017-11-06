@@ -310,25 +310,28 @@ if (!function_exists('set_route_guard')) {
      *
      * @return string
      */
-    function set_route_guard($sub = 'web')
+    function set_route_guard($sub = 'web', $guard=null)
     {
         $i = ($sub == 'web') ? 1 : 2;
-        $guard = request()->segment($i);
+
+        //check whether guard is the first parameter of the route
+        $guard = is_null($guard) ? request()->segment($i) : $guard;
         if (!empty(config("auth.guards.$guard"))){
             putenv("guard={$guard}.{$sub}");
             app('auth')->shouldUse("{$guard}.{$sub}");
             return $guard;
         }
 
-        $guard = request()->segment(++$i);
+        //check whether guard is the second parameter of the route
+        $guard = is_null($guard) ? request()->segment(++$i) : $guard;
         if (!empty(config("auth.guards.$guard"))){
             putenv("guard={$guard}.{$sub}");
             app('auth')->shouldUse("{$guard}.{$sub}");
             return $guard;
         }
 
-        putenv("guard=user.{$sub}");
-        app('auth')->shouldUse("user.{$sub}");
+        putenv("guard=client.{$sub}");
+        app('auth')->shouldUse("client.{$sub}");
         return $sub;
     }
 

@@ -2,9 +2,6 @@
 
 namespace Litepie\Theme;
 
-use Theme;
-use View;
-
 trait ThemeAndViews
 {
 
@@ -67,8 +64,7 @@ trait ThemeAndViews
      */
     protected function getViewFolder()
     {
-        return  substr($this->getGuard(), 0, strpos(getenv('guard'), '.'));
+        return substr($this->getGuard(), 0, strpos(getenv('guard'), '.'));
     }
-
 
 }

@@ -33,10 +33,14 @@ class ActivityResourceController extends BaseController
      */
     public function index(RevisionRequest $request)
     {
+
         if ($request->wantsJson()) {
             return $this->getJson($request);
         }
-        $this   ->response->title(trans('revision::activity.names').' :: ')->view($this->getView('revision::admin.activity.index')->output();
+
+        $this->response->title(trans('revision::activity.names'))
+            ->view('revision::activity.index', true)
+            ->output();
     }
 
     /**
@@ -48,12 +52,12 @@ class ActivityResourceController extends BaseController
     {
         $pageLimit = $request->input('pageLimit');
 
-        $activity  = $this->repository
-                ->pushCriteria(app('Litepie\Repository\Criteria\RequestCriteria'))
-                ->setPresenter('\\Litepie\\Revision\\Repositories\\Presenter\\ActivityListPresenter')
-                ->scopeQuery(function($query){
-                    return $query->orderBy('id','DESC');
-                })->paginate($pageLimit);
+        $activity = $this->repository
+            ->pushCriteria(app('Litepie\Repository\Criteria\RequestCriteria'))
+            ->setPresenter('\\Litepie\\Revision\\Repositories\\Presenter\\ActivityListPresenter')
+            ->scopeQuery(function ($query) {
+                return $query->orderBy('id', 'DESC');
+            })->paginate($pageLimit);
         $activity['recordsTotal']    = $activity['meta']['pagination']['total'];
         $activity['recordsFiltered'] = $activity['meta']['pagination']['total'];
         $activity['request']         = $request->all();
@@ -71,6 +75,7 @@ class ActivityResourceController extends BaseController
      */
     public function show(RevisionRequest $request, Revision $activity)
     {
+
         if (!$activity->exists) {
             return response()->view('revision::admin.activity.new', compact('revision'));
         }
@@ -107,23 +112,23 @@ class ActivityResourceController extends BaseController
     public function store(RevisionRequest $request)
     {
         try {
-            $attributes             = $request->all();
-            $attributes['user_id']  = user_id('admin.web');
-            $activity          = $this->repository->create($attributes);
+            $attributes            = $request->all();
+            $attributes['user_id'] = user_id('admin.web');
+            $activity              = $this->repository->create($attributes);
 
             return response()->json([
                 'message'  => trans('messages.success.updated', ['Module' => trans('revision::activity.name')]),
                 'code'     => 204,
-                'redirect' => trans_url('/admin/revision/activity/'.$activity->getRouteKey())
+                'redirect' => trans_url('/admin/revision/activity/' . $activity->getRouteKey()),
             ], 201);
-
 
         } catch (Exception $e) {
             return response()->json([
-                'message'  => $e->getMessage(),
-                'code'     => 400,
+                'message' => $e->getMessage(),
+                'code'    => 400,
             ], 400);
         }
+
     }
 
     /**
@@ -137,7 +142,7 @@ class ActivityResourceController extends BaseController
     public function edit(RevisionRequest $request, Revision $activity)
     {
         Form::populate($activity);
-        return  response()->view('revision::admin.activity.edit', compact('revision'));
+        return response()->view('revision::admin.activity.edit', compact('revision'));
     }
 
     /**
@@ -159,7 +164,7 @@ class ActivityResourceController extends BaseController
             return response()->json([
                 'message'  => trans('messages.success.updated', ['Module' => trans('revision::activity.name')]),
                 'code'     => 204,
-                'redirect' => trans_url('/admin/revision/activity/'.$activity->getRouteKey())
+                'redirect' => trans_url('/admin/revision/activity/' . $activity->getRouteKey()),
             ], 201);
 
         } catch (Exception $e) {
@@ -167,10 +172,11 @@ class ActivityResourceController extends BaseController
             return response()->json([
                 'message'  => $e->getMessage(),
                 'code'     => 400,
-                'redirect' => trans_url('/admin/revision/activity/'.$activity->getRouteKey()),
+                'redirect' => trans_url('/admin/revision/activity/' . $activity->getRouteKey()),
             ], 400);
 
         }
+
     }
 
     /**
@@ -194,17 +200,19 @@ class ActivityResourceController extends BaseController
                 'redirect' => trans_url('/admin/revision/activity'),
             ], 202);
 
-           /* return redirect(trans_url('/user/testimonial/testimonial'))
-                ->with('message', trans('messages.success.deleted', ['Module' => trans('testimonial::testimonial.name')]))
-                ->with('code', 204);*/
+            /* return redirect(trans_url('/user/testimonial/testimonial'))
+        ->with('message', trans('messages.success.deleted', ['Module' => trans('testimonial::testimonial.name')]))
+        ->with('code', 204);*/
 
         } catch (Exception $e) {
 
             return response()->json([
                 'message'  => $e->getMessage(),
                 'code'     => 400,
-                'redirect' => trans_url('/admin/revision/activity/'.$activity->getRouteKey()),
+                'redirect' => trans_url('/admin/revision/activity/' . $activity->getRouteKey()),
             ], 400);
         }
+
     }
+
 }

@@ -16,10 +16,8 @@ class CalendarPublicController extends BaseController
      */
     public function __construct(CalendarRepositoryInterface $calendar)
     {
-        $this->repository = $calendar;
-        $this->middleware('web');
-        $this->setupTheme(config('theme.themes.public.theme'), config('theme.themes.public.layout'));
         parent::__construct();
+        $this->repository = $calendar;
     }
 
     /**

@@ -7,14 +7,14 @@ Route::group([
     'namespace' => '\\App\\Http\\Controllers',
     'prefix'    => trans_setlocale() . '/' . set_route_guard('web'),
 ], function () {
-    Route::get('locked', 'UserController@locked');
-    Route::get('masters', 'UserController@masters');
-    Route::get('reports', 'UserController@reports');
+    Route::get('locked', 'ResourceController@locked');
+    Route::get('masters', 'ResourceController@masters');
+    Route::get('reports', 'ResourceController@reports');
 
-    Route::get('profile', 'UserController@getProfile');
-    Route::get('password', 'UserController@getPassword');
-    Route::post('profile', 'UserController@postProfile');
-    Route::post('password', 'UserController@postPassword');
+    Route::get('profile', 'ResourceController@getProfile');
+    Route::get('password', 'ResourceController@getPassword');
+    Route::post('profile', 'ResourceController@postProfile');
+    Route::post('password', 'ResourceController@postPassword');
 
     Route::get('login/{provider}', 'Auth\SocialAuthController@redirectToProvider');
     Route::get('login/{provider}/callback', 'Auth\SocialAuthController@handleProviderCallback');

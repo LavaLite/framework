@@ -33,10 +33,14 @@ class RevisionResourceController extends BaseController
      */
     public function index(RevisionRequest $request)
     {
+
         if ($request->wantsJson()) {
             return $this->getJson($request);
         }
-        $this   ->response->title(trans('revision::revision.names').' :: ')->view($this->getView('revision::admin.revision.index')->output();
+
+        $this->response->title(trans('revision::revision.names') )
+            ->view('revision::revision.index', true)
+            ->output();
     }
 
     /**
@@ -48,12 +52,12 @@ class RevisionResourceController extends BaseController
     {
         $pageLimit = $request->input('pageLimit');
 
-        $revision  = $this->repository
-                ->pushCriteria(app('Litepie\Repository\Criteria\RequestCriteria'))
-                ->setPresenter('\\Litepie\\Revision\\Repositories\\Presenter\\RevisionListPresenter')
-                ->scopeQuery(function($query){
-                    return $query->orderBy('id','DESC');
-                })->paginate($pageLimit);
+        $revision = $this->repository
+            ->pushCriteria(app('Litepie\Repository\Criteria\RequestCriteria'))
+            ->setPresenter('\\Litepie\\Revision\\Repositories\\Presenter\\RevisionListPresenter')
+            ->scopeQuery(function ($query) {
+                return $query->orderBy('id', 'DESC');
+            })->paginate($pageLimit);
         $revision['recordsTotal']    = $revision['meta']['pagination']['total'];
         $revision['recordsFiltered'] = $revision['meta']['pagination']['total'];
         $revision['request']         = $request->all();
@@ -71,6 +75,7 @@ class RevisionResourceController extends BaseController
      */
     public function show(RevisionRequest $request, Revision $revision)
     {
+
         if (!$revision->exists) {
             return response()->view('revision::admin.revision.new', compact('revision'));
         }
@@ -107,23 +112,23 @@ class RevisionResourceController extends BaseController
     public function store(RevisionRequest $request)
     {
         try {
-            $attributes             = $request->all();
-            $attributes['user_id']  = user_id('admin.web');
-            $revision          = $this->repository->create($attributes);
+            $attributes            = $request->all();
+            $attributes['user_id'] = user_id('admin.web');
+            $revision              = $this->repository->create($attributes);
 
             return response()->json([
                 'message'  => trans('messages.success.updated', ['Module' => trans('revision::revision.name')]),
                 'code'     => 204,
-                'redirect' => trans_url('/admin/revision/revision/'.$revision->getRouteKey())
+                'redirect' => trans_url('/admin/revision/revision/' . $revision->getRouteKey()),
             ], 201);
-
 
         } catch (Exception $e) {
             return response()->json([
-                'message'  => $e->getMessage(),
-                'code'     => 400,
+                'message' => $e->getMessage(),
+                'code'    => 400,
             ], 400);
         }
+
     }
 
     /**
@@ -137,7 +142,7 @@ class RevisionResourceController extends BaseController
     public function edit(RevisionRequest $request, Revision $revision)
     {
         Form::populate($revision);
-        return  response()->view('revision::admin.revision.edit', compact('revision'));
+        return response()->view('revision::admin.revision.edit', compact('revision'));
     }
 
     /**
@@ -159,7 +164,7 @@ class RevisionResourceController extends BaseController
             return response()->json([
                 'message'  => trans('messages.success.updated', ['Module' => trans('revision::revision.name')]),
                 'code'     => 204,
-                'redirect' => trans_url('/admin/revision/revision/'.$revision->getRouteKey())
+                'redirect' => trans_url('/admin/revision/revision/' . $revision->getRouteKey()),
             ], 201);
 
         } catch (Exception $e) {
@@ -167,10 +172,11 @@ class RevisionResourceController extends BaseController
             return response()->json([
                 'message'  => $e->getMessage(),
                 'code'     => 400,
-                'redirect' => trans_url('/admin/revision/revision/'.$revision->getRouteKey()),
+                'redirect' => trans_url('/admin/revision/revision/' . $revision->getRouteKey()),
             ], 400);
 
         }
+
     }
 
     /**
@@ -194,17 +200,19 @@ class RevisionResourceController extends BaseController
                 'redirect' => trans_url('/admin/revision/revision'),
             ], 202);
 
-           /* return redirect(trans_url('/user/testimonial/testimonial'))
-                ->with('message', trans('messages.success.deleted', ['Module' => trans('testimonial::testimonial.name')]))
-                ->with('code', 204);*/
+            /* return redirect(trans_url('/user/testimonial/testimonial'))
+        ->with('message', trans('messages.success.deleted', ['Module' => trans('testimonial::testimonial.name')]))
+        ->with('code', 204);*/
 
         } catch (Exception $e) {
 
             return response()->json([
                 'message'  => $e->getMessage(),
                 'code'     => 400,
-                'redirect' => trans_url('/admin/revision/revision/'.$revision->getRouteKey()),
+                'redirect' => trans_url('/admin/revision/revision/' . $revision->getRouteKey()),
             ], 400);
         }
+
     }
+
 }

@@ -13,7 +13,8 @@ use Litepie\User\Models\Team;
  */
 class TeamResourceController extends BaseController
 {
-    // use TeamWorkflow;
+
+// use TeamWorkflow;
     /**
      * Initialize team controller.
      *
@@ -37,7 +38,10 @@ class TeamResourceController extends BaseController
         if ($request->wantsJson()) {
             return $this->getJson($request);
         }
-        $this   ->response->title(trans('user::team.names'))->view($this->getView('user::admin.team.index')->output();
+
+        $this->response->title(trans('user::team.names'))
+            ->view('user::team.index', true)
+            ->output();
     }
 
     /**
@@ -49,12 +53,12 @@ class TeamResourceController extends BaseController
     {
         $pageLimit = $request->input('pageLimit');
 
-        $teams  = $this->repository
-                ->pushCriteria(app('Litepie\Repository\Criteria\RequestCriteria'))
-                ->setPresenter('\\Litepie\\User\\Repositories\\Presenter\\TeamListPresenter')
-                ->scopeQuery(function($query){
-                    return $query->orderBy('id','DESC');
-                })->paginate($pageLimit);
+        $teams = $this->repository
+            ->pushCriteria(app('Litepie\Repository\Criteria\RequestCriteria'))
+            ->setPresenter('\\Litepie\\User\\Repositories\\Presenter\\TeamListPresenter')
+            ->scopeQuery(function ($query) {
+                return $query->orderBy('id', 'DESC');
+            })->paginate($pageLimit);
         $teams['recordsTotal']    = $teams['meta']['pagination']['total'];
         $teams['recordsFiltered'] = $teams['meta']['pagination']['total'];
         $teams['request']         = $request->all();
@@ -108,24 +112,24 @@ class TeamResourceController extends BaseController
     public function store(TeamRequest $request)
     {
         try {
-            $attributes             = $request->all();
-            $attributes['user_id']  = user_id('admin.web');
-            $team          = $this->repository->create($attributes);
+            $attributes            = $request->all();
+            $attributes['user_id'] = user_id('admin.web');
+            $team                  = $this->repository->create($attributes);
             $team->member()->attach($attributes['manager_id']);
 
             return response()->json([
                 'message'  => trans('messages.success.updated', ['Module' => trans('user::team.name')]),
                 'code'     => 204,
-                'redirect' => trans_url('/admin/user/team/'.$team->getRouteKey())
+                'redirect' => trans_url('/admin/user/team/' . $team->getRouteKey()),
             ], 201);
-
 
         } catch (Exception $e) {
             return response()->json([
-                'message'  => $e->getMessage(),
-                'code'     => 400,
+                'message' => $e->getMessage(),
+                'code'    => 400,
             ], 400);
         }
+
     }
 
     /**
@@ -139,7 +143,7 @@ class TeamResourceController extends BaseController
     public function edit(TeamRequest $request, Team $team)
     {
         Form::populate($team);
-        return  response()->view('user::admin.team.edit', compact('team'));
+        return response()->view('user::admin.team.edit', compact('team'));
     }
 
     /**
@@ -161,7 +165,7 @@ class TeamResourceController extends BaseController
             return response()->json([
                 'message'  => trans('messages.success.updated', ['Module' => trans('user::team.name')]),
                 'code'     => 204,
-                'redirect' => trans_url('/admin/user/team/'.$team->getRouteKey())
+                'redirect' => trans_url('/admin/user/team/' . $team->getRouteKey()),
             ], 201);
 
         } catch (Exception $e) {
@@ -169,10 +173,11 @@ class TeamResourceController extends BaseController
             return response()->json([
                 'message'  => $e->getMessage(),
                 'code'     => 400,
-                'redirect' => trans_url('/admin/user/team/'.$team->getRouteKey()),
+                'redirect' => trans_url('/admin/user/team/' . $team->getRouteKey()),
             ], 400);
 
         }
+
     }
 
     /**
@@ -200,9 +205,10 @@ class TeamResourceController extends BaseController
             return response()->json([
                 'message'  => $e->getMessage(),
                 'code'     => 400,
-                'redirect' => trans_url('/admin/user/team/'.$team->getRouteKey()),
+                'redirect' => trans_url('/admin/user/team/' . $team->getRouteKey()),
             ], 400);
         }
+
     }
 
     /**
@@ -218,14 +224,14 @@ class TeamResourceController extends BaseController
         try {
 
             $attributes = $request->all();
-            if (!$team->member()->where('team_user.user_id',$attributes['user_id'])->exists()) {
-                $team->member()->attach($attributes['user_id'],['reporting_to' => $attributes['reporting_to']]);
+            if (!$team->member()->where('team_user.user_id', $attributes['user_id'])->exists()) {
+                $team->member()->attach($attributes['user_id'], ['reporting_to' => $attributes['reporting_to']]);
             }
-                    
+
             return response()->json([
                 'message'  => trans('Member added successfully', ['Module' => trans('user::team.name')]),
                 'code'     => 204,
-                'redirect' => trans_url('/admin/user/team/'.$team->getRouteKey())
+                'redirect' => trans_url('/admin/user/team/' . $team->getRouteKey()),
             ], 201);
 
         } catch (Exception $e) {
@@ -233,10 +239,11 @@ class TeamResourceController extends BaseController
             return response()->json([
                 'message'  => $e->getMessage(),
                 'code'     => 400,
-                'redirect' => trans_url('/admin/user/team/'.$team->getRouteKey()),
+                'redirect' => trans_url('/admin/user/team/' . $team->getRouteKey()),
             ], 400);
 
         }
+
     }
 
     /**
@@ -251,14 +258,14 @@ class TeamResourceController extends BaseController
     {
         try {
             $attributes = $request->all();
-            if ($team->member()->where('team_user.user_id',$attributes['user_id'])->exists()) {
+            if ($team->member()->where('team_user.user_id', $attributes['user_id'])->exists()) {
                 $team->member()->detach($attributes['user_id']);
             }
-                    
+
             return response()->json([
                 'message'  => trans('Member added successfully', ['Module' => trans('user::team.name')]),
                 'code'     => 204,
-                'redirect' => trans_url('/admin/user/team/'.$team->getRouteKey())
+                'redirect' => trans_url('/admin/user/team/' . $team->getRouteKey()),
             ], 201);
 
         } catch (Exception $e) {
@@ -266,10 +273,11 @@ class TeamResourceController extends BaseController
             return response()->json([
                 'message'  => $e->getMessage(),
                 'code'     => 400,
-                'redirect' => trans_url('/admin/user/team/'.$team->getRouteKey()),
+                'redirect' => trans_url('/admin/user/team/' . $team->getRouteKey()),
             ], 400);
 
         }
+
     }
 
 }
