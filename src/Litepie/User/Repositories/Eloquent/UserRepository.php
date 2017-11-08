@@ -24,8 +24,8 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
      */
     public function model()
     {
-        $this->fieldSearchable = config('litepie.user.user.search');
-        return config('litepie.user.user.model');
+        $this->fieldSearchable = config('users.user.model.search');
+        return config('users.user.model.model');
     }
 
     

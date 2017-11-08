@@ -22,8 +22,8 @@ class RoleRepository extends BaseRepository implements RoleRepositoryInterface
      */
     public function model()
     {
-        $this->fieldSearchable = config('litepie.role.role.search');
-        return config('litepie.role.role.model');
+        $this->fieldSearchable = config('roles.role.model.search');
+        return config('roles.role.model.model');
     }
 
     /**

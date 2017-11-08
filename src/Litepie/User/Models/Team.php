@@ -23,7 +23,7 @@ class Team extends Model
      *
      * @var array
      */
-     protected $config = 'litepie.user.team';
+     protected $config = 'users.team.model';
 
 
 }

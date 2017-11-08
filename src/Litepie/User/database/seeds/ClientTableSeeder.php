@@ -9,10 +9,10 @@ class ClientTableSeeder extends Seeder
 {
     public function run()
     {
-        /*DB::table('clients')->insert([
+        DB::table('clients')->insert([
             [
                 'id'          => 1,
-                'email'       => 'client@client.com',
+                'email'       => 'client@lavalite.org',
                 'status'      => 'Active',
                 'name'        => 'Client',
                 'sex'         => 'Male',
@@ -22,7 +22,7 @@ class ClientTableSeeder extends Seeder
                 'web'         => 'http://litepie.org',
                 'created_at'  => '2015-09-15',
             ]
-        ]);*/
+        ]);
 
         DB::table('menus')->insert([
             'parent_id'   => 3,

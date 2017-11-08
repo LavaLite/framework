@@ -23,8 +23,8 @@ class PermissionRepository extends BaseRepository implements PermissionRepositor
      */
     public function model()
     {
-        $this->fieldSearchable = config('litepie.role.permission.search');
-        return config('litepie.role.permission.model');
+        $this->fieldSearchable = config('roles.permission.model.search');
+        return config('roles.permission.model.model');
     }
 
     /**
