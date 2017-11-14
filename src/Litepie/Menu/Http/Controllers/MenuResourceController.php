@@ -65,7 +65,7 @@ class MenuResourceController extends BaseController
 
         $rootMenu = $this->repository->rootMenues();
         return $this->response->title(trans('menu::menu.names'))
-            ->view($this->getView('admin.index', 'menu'))
+            ->view('menu::admin.index', true)
             ->data(compact('rootMenu', 'parent'))
             ->output();
     }
@@ -97,14 +97,13 @@ class MenuResourceController extends BaseController
     {
         try {
             $attributes            = $request->all();
-            $attributes['user_id'] = user_id('admin.web');
             $menu                  = $this->repository->create($attributes);
 
             return $this->response
                 ->message(trans('messages.success.created', ['Module' => trans('menu::menu.name')]))
                 ->code(204)
                 ->status('success')
-                ->url(guard_url('/menu/menu/' . $menu->getRouteKey()))
+                ->url(guard_url('menu/menu/' . $menu->getRouteKey()))
                 ->redirect();
 
         } catch (Exception $e) {
@@ -112,7 +111,7 @@ class MenuResourceController extends BaseController
                 ->message($e->getMessage())
                 ->code(400)
                 ->status('error')
-                ->url(guard_url('/menu/menu'))
+                ->url(guard_url('menu/menu'))
                 ->redirect();
         }
 
@@ -153,13 +152,13 @@ class MenuResourceController extends BaseController
             return $this->response->message(trans('messages.success.updated', ['Module' => trans('menu::menu.name')]))
                 ->code(204)
                 ->status('success')
-                ->url(guard_url('/menu/menu/' . $menu->getRouteKey()))
+                ->url(guard_url('menu/menu/' . $menu->getRouteKey()))
                 ->redirect();
         } catch (Exception $e) {
             return $this->response->message($e->getMessage())
                 ->code(400)
                 ->status('error')
-                ->url(guard_url('/menu/menu/' . $menu->getRouteKey()))
+                ->url(guard_url('menu/menu/' . $menu->getRouteKey()))
                 ->redirect();
 
         }
@@ -191,7 +190,7 @@ class MenuResourceController extends BaseController
             return $this->response->message(trans('messages.success.deleted', ['Module' => trans('menu::menu.name')]))
                 ->code(202)
                 ->status('success')
-                ->url(guard_url('/menu/menu'))
+                ->url(guard_url('menu/menu'))
                 ->redirect();
 
         } catch (Exception $e) {
@@ -199,7 +198,7 @@ class MenuResourceController extends BaseController
             return $this->response->message($e->getMessage())
                 ->code(400)
                 ->status('error')
-                ->url(guard_url('/menu/menu/' . $menu->getRouteKey()))
+                ->url(guard_url('menu/menu/' . $menu->getRouteKey()))
                 ->redirect();
         }
 

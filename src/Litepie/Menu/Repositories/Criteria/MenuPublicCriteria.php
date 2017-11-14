@@ -10,7 +10,7 @@ class ModulePublicCriteria implements CriteriaInterface
 
     public function apply($model, RepositoryInterface $repository)
     {
-        $model = $model->where('status', '=', 'Published');
+        $model = $model->where('status', '=', 'Show');
         return $model;
     }
 }
