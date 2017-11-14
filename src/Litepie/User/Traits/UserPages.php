@@ -38,7 +38,8 @@ trait UserPages
     public function getPassword(Request $request, $role = null)
     {
         $this->response->title('Change Password')
-            ->view($this->getView('auth.changepassword', 'user', $this->getViewFolder()))->output();
+            ->view('user::auth.changepassword', true)
+                ->output();
     }
 
     /**
@@ -49,7 +50,7 @@ trait UserPages
     public function home()
     {
         return $this->response->title('Dashboard')
-            ->view($this->getView('home'))
+            ->view('home')
             ->output();
     }
 
@@ -98,13 +99,11 @@ trait UserPages
         $user = $request->user($this->getGuard());
         Form::populate($user);
 
-        $this->theme->asset()->add('cropper-css', 'packages/cropper/css/cropper.css');
-        $this->theme->asset()->container('footer')->add('cropper-js', 'packages/cropper/js/cropper.js');
-        $this->theme->asset()->add('fullcalendar-css', 'packages/fullcalendar/fullcalendar.min.css');
-        $this->theme->asset()->container('extra')->add('fullcalendar-js', 'packages/fullcalendar/fullcalendar.min.js');
+        $this->response->theme->asset()->add('cropper-css', 'packages/cropper/css/cropper.css');
+        $this->response->theme->asset()->container('footer')->add('cropper-js', 'packages/cropper/js/cropper.js');
 
-        $this->response->title('Profile')
-            ->view($this->getView('auth.profile', 'user', $this->getViewFolder()))
+        return $this->response->title('Profile')
+            ->view('user::auth.profile', true)
             ->data(compact('user'))
             ->output();
     }
@@ -118,7 +117,7 @@ trait UserPages
      */
     public function postProfile(Request $request)
     {
-        $user = $request->user($this->getGuard());
+        $user = $request->user();
 
         $this->validate($request, [
             'name' => 'required|min:3',
@@ -143,7 +142,7 @@ trait UserPages
     {
         $this->theme->layout('blank');
         $this->response->title('Locked')
-            ->view($this->getView('lock', $this->getViewFolder(), false))
+            ->view('lock')
             ->output();
     }
 
@@ -155,7 +154,7 @@ trait UserPages
     public function masters()
     {
         return $this->response->title('Masters')
-            ->view($this->getView('masters', $this->getViewFolder(), false))
+            ->view('masters')
             ->output();
     }
 
@@ -167,7 +166,7 @@ trait UserPages
     public function reports()
     {
         return $this->response->title('Reports')
-            ->view($this->getView('reports', $this->getViewFolder(), false))
+            ->view('reports')
             ->output();
     }
 

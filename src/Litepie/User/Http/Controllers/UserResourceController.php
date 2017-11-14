@@ -89,7 +89,7 @@ class UserResourceController extends BaseController
         }
 
         $roles       = $this->roles->all();
-        $permissions = $this->permissions->all();
+        $permissions = $this->permissions->groupedPermissions();
         return $this->response->title(trans('app.view') . ' ' . trans('user::user.name'))
             ->data(compact('user', 'roles', 'permissions'))
             ->view($view)

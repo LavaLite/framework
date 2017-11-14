@@ -100,7 +100,7 @@ trait RegistersUsers
         $data['confirmation_code'] = Crypt::encrypt($user->id);
         $data['guard']             = $this->getGuard();
 
-        Mail::send($this->getView('emails.verify'), $data, function ($message) use ($user) {
+        Mail::send('user::emails.verify', $data, function ($message) use ($user) {
             $message->to($user->email, $user->name)
                 ->subject('Verify your email address');
         });
@@ -125,7 +125,8 @@ trait RegistersUsers
     {
         $user = Socialite::driver($provider)
             ->user()
-            ->view($this->getView('social', $guard), compact('user'))
+            ->view('user::social', $guard)
+            ->data(compact('user'))
             ->output();
     }
 

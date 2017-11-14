@@ -2,11 +2,11 @@
 
 namespace Litepie\User\Traits\Auth;
 
-use Illuminate\Support\Str;
+use Illuminate\Foundation\Auth\RedirectsUsers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Password;
-use Illuminate\Foundation\Auth\RedirectsUsers;
+use Illuminate\Support\Str;
 
 trait ResetsPassword
 {
@@ -25,16 +25,22 @@ trait ResetsPassword
     function showResetForm(Request $request, $token = null)
     {
         $email = $request->email;
-        
-        $this->response->title('Reset')->view($this->getView('auth.reset', 'user'), compact('token','email'))->output();        
+
+        $this->response->title('Reset')
+            ->view('user::auth.reset')
+            ->data(compact('token', 'email'))
+            ->output();
     }
-    
+
     /**
      * Display the form to request a password reset link.
      * @return \Illuminate\Http\Response
      */
     function getEmail($guard = null)
     {
-        $this->response->title('Reset')->view($this->getView('password'), compact('guard'))->output();
+        $this->response->title('Reset')
+            ->view('password')
+            ->data(compact('guard'))
+            ->output();
     }
 }

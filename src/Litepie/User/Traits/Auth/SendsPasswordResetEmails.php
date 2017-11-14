@@ -19,7 +19,7 @@ trait SendsPasswordResetEmails
     {
         return $this->response->title('Reset')
             ->layout('auth')
-            ->view($this->getView('auth.password', 'user'))
+            ->view('user::auth.password')
             ->output();
     }
 

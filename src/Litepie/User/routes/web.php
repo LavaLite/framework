@@ -7,14 +7,15 @@ Route::group([
     'namespace' => '\\App\\Http\\Controllers',
     'prefix'    => trans_setlocale() . '/' . set_route_guard('web'),
 ], function () {
-    Route::get('locked', 'ResourceController@locked');
-    Route::get('masters', 'ResourceController@masters');
-    Route::get('reports', 'ResourceController@reports');
+    Route::get('home', 'UserController@home');
+    Route::get('locked', 'UserController@locked');
+    Route::get('masters', 'UserController@masters');
+    Route::get('reports', 'UserController@reports');
 
-    Route::get('profile', 'ResourceController@getProfile');
-    Route::get('password', 'ResourceController@getPassword');
-    Route::post('profile', 'ResourceController@postProfile');
-    Route::post('password', 'ResourceController@postPassword');
+    Route::get('profile', 'UserController@getProfile');
+    Route::get('password', 'UserController@getPassword');
+    Route::post('profile', 'UserController@postProfile');
+    Route::post('password', 'UserController@postPassword');
 
     Route::get('login/{provider}', 'Auth\SocialAuthController@redirectToProvider');
     Route::get('login/{provider}/callback', 'Auth\SocialAuthController@handleProviderCallback');
@@ -31,9 +32,9 @@ Route::group([
     'prefix' => set_route_guard('web').'/user'
 ], function () {
     Route::post('user/change/team', 'UserResourceController@changeTeam');
-    Route::post('team/add/member/{team}', 'TeamResourceController@addMember');
-    Route::post('team/remove/member/{team}', 'TeamResourceController@removeMember');
+    // Route::post('team/add/member/{team}', 'TeamResourceController@addMember');
+    // Route::post('team/remove/member/{team}', 'TeamResourceController@removeMember');
     
     Route::resource('user', 'UserResourceController');
-    Route::resource('team', 'TeamResourceController');
+    // Route::resource('team', 'TeamResourceController');
 });

@@ -44,7 +44,7 @@ trait AuthenticatesUsers
         $data['confirmation_code'] = Crypt::encrypt($user->id);
         $data['guard']             = $this->getGuard();
 
-        Mail::send($this->getView('emails.verify'), $data, function ($message) use ($user) {
+        Mail::send('emails.verify', $data, function ($message) use ($user) {
             $message->to($user->email, $user->name)
                 ->subject('Verify your email address');
         });
@@ -70,7 +70,7 @@ trait AuthenticatesUsers
         $user = Socialite::driver($provider)->user();
 
         return $this->response->getTheme()
-            ->of($this->getView('social', $guard), compact('user'))
+            ->of('user::social', compact('user'))
             ->output();
     }
 
@@ -89,12 +89,12 @@ trait AuthenticatesUsers
 
             if ($this->activate($code)) {
                 return redirect()
-                    ->guest($guard . '/login')
+                    ->guest(guard_url('login'))
                     ->withCode(201)
                     ->withMessage('Your account is activated.');
             } else {
                 return redirect()
-                    ->guest($guard . '/login')
+                    ->guest(guard_url('login'))
                     ->withCode(301)
                     ->withMessage('Activation link is invalid or expired.');
             }
@@ -103,11 +103,12 @@ trait AuthenticatesUsers
 
         if (Auth::guard($guard)->guest()) {
             return redirect()
-                ->guest($guard . '/login');
+                ->guest(guard_url('login'));
         }
 
-        return $this->response->getTheme()
-            ->of($this->getView('verify', $guard), compact('code'))
+        return $this->response
+            ->view('user::verify', true)
+            ->data(compact('code'))
             ->output();
     }
 

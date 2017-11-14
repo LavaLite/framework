@@ -5,7 +5,7 @@ use Illuminate\Support\ServiceProvider;
 use Litepie\Workflow\Workflow;
 use Litepie\Contracts\Workflow\Workflow as WorkflowContract;
 
-class WorkflowServiceProvider extends ServiceProvider
+class TeamServiceProvider extends ServiceProvider
 {
 
     /**

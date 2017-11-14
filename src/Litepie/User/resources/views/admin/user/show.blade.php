@@ -4,10 +4,10 @@
         <li class="active"><a href="#profile" data-toggle="tab">  {!! trans('user::user.name') !!}</a></li>
         <li><a href="#details" data-toggle="tab">Details</a></li>
         <div class="box-tools pull-right">
-            <button type="button" class="btn btn-success btn-sm" data-action='NEW' data-load-to='#user-user-entry' data-href='{{trans_url('admin/user/user/create')}}'><i class="fa fa-plus-circle"></i> New</button>
+            <button type="button" class="btn btn-success btn-sm" data-action='NEW' data-load-to='#user-user-entry' data-href='{{guard_url('user/user/create')}}'><i class="fa fa-plus-circle"></i> New</button>
             @if($user->id )
-            <button type="button" class="btn btn-primary btn-sm" data-action="EDIT" data-load-to='#user-user-entry' data-href='{{ trans_url('/admin/user/user') }}/{{$user->getRouteKey()}}/edit'><i class="fa fa-pencil-square"></i> Edit</button>
-            <button type="button" class="btn btn-danger btn-sm" data-action="DELETE" data-load-to='#user-user-entry' data-datatable='#user-user-list' data-href='{{ trans_url('/admin/user/user') }}/{{$user->getRouteKey()}}' >
+            <button type="button" class="btn btn-primary btn-sm" data-action="EDIT" data-load-to='#user-user-entry' data-href='{{ guard_url('user/user') }}/{{$user->getRouteKey()}}/edit'><i class="fa fa-pencil-square"></i> Edit</button>
+            <button type="button" class="btn btn-danger btn-sm" data-action="DELETE" data-load-to='#user-user-entry' data-datatable='#user-user-list' data-href='{{ guard_url('user/user') }}/{{$user->getRouteKey()}}' >
             <i class="fa fa-times-circle"></i> Delete
             </button>
             @endif
@@ -17,7 +17,7 @@
     ->id('user-user-show')
     ->method('POST')
     ->files('true')
-    ->action(trans_url('admin/user/user'))!!}
+    ->action(guard_url('user/user'))!!}
         <div class="tab-content clearfix">
             <div class="tab-pane active" id="profile">
                 <div class="tab-pan-title">  {!! trans('app.view') !!}  {!! trans('user::user.name') !!} [ {!!$user->name!!} ] </div>

@@ -33,7 +33,7 @@
     @foreach ($roles as $role)
         <div class="col-md-2">
             <div class="checkbox checkbox-danger" >
-              <input name="roles[{{ $role->id }}]" id="roles.{{ $role->id }}" type="checkbox" {{ ( $user-> hasRole($role->key)) ? 'checked' : '' }} value='{{ $role->id }}'>
+              <input name="roles[{{ $role->id }}]" id="roles.{{ $role->id }}" type="checkbox" {{ ($user->hasRole($role->key)) ? 'checked' : '' }} value='{{ $role->id }}'>
               <label for="roles.{{ $role->id }}">{{ $role->name }}</label>
             </div>
         </div>
@@ -51,12 +51,12 @@
                   <ul>
                   @foreach($modules as $module => $permissions)
                       <li>
-                      <input name="permissions[{{$package}}.{{$module}}]" id="permissions_{{$package}}_{{$module}}" type="checkbox" {{ @array_key_exists($package. '.' . $module, $role->permissions) ? 'checked' : '' }} value='1'>
+                      <input name="permissions[{{$package}}.{{$module}}]" id="permissions_{{$package}}_{{$module}}" type="checkbox" {{ @array_key_exists($package. '.' . $module, $user->permissions) ? 'checked' : '' }} value='1'>
                       <label for="permissions_{{$package}}_{{$module}}">{{ucfirst($module)}}</label>
                           <ul class="clearfix">
                           @foreach($permissions as $permission => $value)
                               <li style="float:left; margin-right: 10px;">
-                                  <input name="permissions[{{$package}}.{{$module}}.{{$permission}}]" id="permissions_{{$package}}_{{$module}}_{{$permission}}" type="checkbox" {{ @array_key_exists($package. '.' . $module . '.' . $permission, $role->permissions) ? 'checked' : '' }} value='1'>
+                                  <input name="permissions[{{$package}}.{{$module}}.{{$permission}}]" id="permissions_{{$package}}_{{$module}}_{{$permission}}" type="checkbox" {{ @array_key_exists($package. '.' . $module . '.' . $permission, $user->permissions) ? 'checked' : '' }} value='1'>
                                   <label for="permissions_{{$package}}_{{$module}}_{{$permission}}">{{ucfirst($permission)}} </label>
                               </li>
                           @endforeach

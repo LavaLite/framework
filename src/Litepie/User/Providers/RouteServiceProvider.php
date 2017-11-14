@@ -36,20 +36,6 @@ class RouteServiceProvider extends ServiceProvider
             });
         }
 
-        if (Request::is('*/user/permission/*')) {
-            Route::bind('permission', function ($permission) {
-                $permissionrepo = $this->app->make('Litepie\User\Interfaces\PermissionRepositoryInterface');
-                return $permissionrepo->findorNew($permission);
-            });
-        }
-
-        if (Request::is('*/user/role/*')) {
-            Route::bind('role', function ($role) {
-                $rolerepo = $this->app->make('Litepie\User\Interfaces\RoleRepositoryInterface');
-                return $rolerepo->findorNew($role);
-            });
-        }
-
         if (Request::is('*/user/team/*')) {
             Route::bind('team', function ($team) {
                 $teamrepo = $this->app->make('Litepie\User\Interfaces\TeamRepositoryInterface');
@@ -92,29 +78,5 @@ class RouteServiceProvider extends ServiceProvider
 
     }
 
-    /**
-     * Define the "api" routes for the package.
-     *
-     * These routes are typically stateless.
-     *
-     * @return void
-     */
-    protected function mapApiRoutes()
-    {
-        Route::group([
-            'middleware' => 'api',
-            'namespace'  => $this->namespace,
-            'prefix'     => trans_setlocale() . '/api',
-        ], function ($router) {
-            require (__DIR__ . '/../routes/api.php');
-        });
-
-        Route::group([
-            'middleware' => 'api',
-            'prefix'     => trans_setlocale() . '/api',
-        ], function ($router) {
-            require (__DIR__ . '/../routes/apiuser.php');
-        });
-    }
 
 }
