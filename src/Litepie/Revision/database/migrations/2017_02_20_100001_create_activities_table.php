@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Support\Facades\Schema;
+use Illuminate\Database\Schema\Blueprint;
 
 class CreateActivitiesTable extends Migration
 {
@@ -12,7 +14,7 @@ class CreateActivitiesTable extends Migration
 
     public function up()
     {
-        Schema::create('activities', function ($table) {
+        Schema::create('activities', function (Blueprint $table) {
             $table->increments('id');
             $table->string('action', 255)->nullable();
             $table->string('name', 255)->nullable();

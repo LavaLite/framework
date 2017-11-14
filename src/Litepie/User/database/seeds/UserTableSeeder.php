@@ -12,6 +12,7 @@ class UserTableSeeder extends Seeder
             [
                 'id'          => 1,
                 'email'       => 'superuser@superuser.com',
+                'password'    => bcrypt('superuser@superuser'),
                 'status'      => 'Active',
                 'name'        => 'Super User',
                 'sex'         => 'Male',
@@ -24,6 +25,7 @@ class UserTableSeeder extends Seeder
             [
                 'id'          => 2,
                 'email'       => 'admin@admin.com',
+                'password'    => bcrypt('admin@admin'),
                 'status'      => 'Active',
                 'name'        => 'Admin',
                 'sex'         => 'Male',
@@ -36,6 +38,7 @@ class UserTableSeeder extends Seeder
             [
                 'id'          => 3,
                 'email'       => 'user@user.com',
+                'password'    => bcrypt('user@user'),
                 'status'      => 'Active',
                 'name'        => 'User',
                 'sex'         => 'Male',
@@ -46,7 +49,6 @@ class UserTableSeeder extends Seeder
                 'created_at'  => '2015-09-15',
             ],
         ]);
-
 
         DB::table('menus')->insert([
             'parent_id'   => 2,
@@ -86,7 +88,6 @@ class UserTableSeeder extends Seeder
                 'order'       => 1200,
                 'status'      => 1,
             ],
-
             [
                 'parent_id'   => $id,
                 'key'         => null,
@@ -94,30 +95,6 @@ class UserTableSeeder extends Seeder
                 'name'        => 'Clients',
                 'description' => null,
                 'icon'        => 'fa fa-user',
-                'target'      => null,
-                'order'       => 1202,
-                'status'      => 1,
-            ],
-
-            [
-                'parent_id'   => $id,
-                'key'         => null,
-                'url'         => 'admin/user/role',
-                'name'        => 'Roles',
-                'description' => null,
-                'icon'        => 'fa fa-thumbs-up',
-                'target'      => null,
-                'order'       => 1201,
-                'status'      => 1,
-            ],
-
-            [
-                'parent_id'   => $id,
-                'key'         => null,
-                'url'         => 'admin/user/permission',
-                'name'        => 'Permissions',
-                'description' => null,
-                'icon'        => 'fa fa-check-circle-o',
                 'target'      => null,
                 'order'       => 1202,
                 'status'      => 1,

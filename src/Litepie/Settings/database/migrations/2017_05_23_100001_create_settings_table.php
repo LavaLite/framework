@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Support\Facades\Schema;
+use Illuminate\Database\Schema\Blueprint;
 
 class CreateSettingsTable extends Migration
 {
@@ -16,7 +18,7 @@ class CreateSettingsTable extends Migration
         /*
          * Table: settings
          */
-        Schema::create('settings', function ($table) {
+        Schema::create('settings', function (Blueprint $table) {
             $table->increments('id');
             $table->string('key', 255)->nullable();
             $table->string('package', 255)->nullable();

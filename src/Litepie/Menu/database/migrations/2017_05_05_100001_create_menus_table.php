@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Support\Facades\Schema;
+use Illuminate\Database\Schema\Blueprint;
 
 class CreateMenusTable extends Migration
 {
@@ -16,7 +18,7 @@ class CreateMenusTable extends Migration
         /*
          * Table: menus
          */
-        Schema::create('menus', function ($table) {
+        Schema::create('menus', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('parent_id')->nullable();
             $table->string('key', 100)->nullable();
@@ -31,8 +33,6 @@ class CreateMenusTable extends Migration
             $table->string('uload_folder', 150)->nullable();
             $table->string('slug', 200)->nullable();
             $table->boolean('status')->default('1')->nullable();
-            $table->integer('user_id')->nullable();
-            $table->string('user_type',50)->nullable();
             $table->string('upload_folder', 100)->nullable();
             $table->softDeletes();
             $table->nullableTimestamps();

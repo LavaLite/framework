@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Support\Facades\Schema;
+use Illuminate\Database\Schema\Blueprint;
 
 class CreateNotificationsTable extends Migration
 {
@@ -16,7 +18,7 @@ class CreateNotificationsTable extends Migration
         /*
          * Table: notifications
          */
-        Schema::create('notifications', function ($table) {
+        Schema::create('notifications', function (Blueprint $table) {
             $table->increments('id');
             $table->string('type', 255)->nullable();
             $table->integer('notifiable_id')->nullable();

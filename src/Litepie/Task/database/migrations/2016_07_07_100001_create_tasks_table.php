@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Support\Facades\Schema;
+use Illuminate\Database\Schema\Blueprint;
 
 class CreateTasksTable extends Migration
 {
@@ -16,7 +18,7 @@ class CreateTasksTable extends Migration
         /*
          * Table: tasks
          */
-        Schema::create('tasks', function ($table) {
+        Schema::create('tasks', function (Blueprint $table) {
             $table->increments('id');
             $table->string('parent_id', 255)->nullable();
             $table->dateTime('start')->nullable();

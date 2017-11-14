@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
 class CreateUsersTable extends Migration
 {
@@ -14,7 +16,7 @@ class CreateUsersTable extends Migration
         /*
          * Table: users
          */
-        Schema::create('users', function ($table) {
+        Schema::create('users', function (Blueprint $table) {
             $table->increments('id')->unsigned();
             $table->integer('reporting_to')->nullable()->default(0);
             $table->string('name', 100)->nullable();
@@ -38,7 +40,7 @@ class CreateUsersTable extends Migration
             $table->longText('permissions')->nullable();
             $table->enum('status', ['New', 'Active', 'Suspended'])->default('New')->nullable();
             $table->integer('user_id')->nullable();
-            $table->string('user_type',50)->nullable();
+            $table->string('user_type', 50)->nullable();
             $table->string('upload_folder', 100)->nullable();
             $table->softDeletes();
             $table->nullableTimestamps();

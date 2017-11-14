@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Support\Facades\Schema;
+use Illuminate\Database\Schema\Blueprint;
 
 class CreateClientsTable extends Migration
 {
@@ -14,7 +16,7 @@ class CreateClientsTable extends Migration
         /*
          * Table: users
          */
-        Schema::create('clients', function ($table) {
+        Schema::create('clients', function (Blueprint $table) {
             $table->increments('id')->unsigned();
             $table->integer('reporting_to')->nullable()->default(0);
             $table->string('name', 100)->nullable();

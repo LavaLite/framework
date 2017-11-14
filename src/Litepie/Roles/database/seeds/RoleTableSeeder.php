@@ -29,10 +29,49 @@ class RoleTableSeeder extends Seeder
 
         DB::table('role_user')->insert([
             [
-                'role_id' => 1,
                 'user_id' => 1,
+                'role_id' => 1,
+            ],
+            [
+                'user_id' => 1,
+                'role_id' => 2,
+            ],
+            [
+                'user_id' => 2,
+                'role_id' => 2,
             ],
         ]);
 
+        $id = DB::table('menus')->insertGetId(
+            [
+                'parent_id'   => 1,
+                'key'         => 'role',
+                'url'         => 'admin/roles/role',
+                'name'        => 'Role',
+                'description' => null,
+                'icon'        => 'fa fa-newspaper-o',
+                'target'      => null,
+                'role'        => '["superuser"]',
+                'order'       => 190,
+                'status'      => 1,
+            ]
+        );
+
+        DB::table('menus')->insert([
+
+            [
+                'parent_id'   => $id,
+                'key'         => 'role',
+                'url'         => 'admin/roles/role',
+                'name'        => 'Role',
+                'description' => null,
+                'icon'        => 'fa fa-newspaper-o',
+                'role'        => '["superuser"]',
+                'target'      => null,
+                'order'       => 190,
+                'status'      => 1,
+            ],
+
+        ]);
     }
 }

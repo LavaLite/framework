@@ -9,24 +9,21 @@ class PermissionTableSeeder extends Seeder
 {
     public function run()
     {
-        DB::table('permissions')->insert([
-            [
-                'slug'          => 'user.user.view',
-                'name'          => 'View user',
-            ],
-            [
-                'slug'          => 'user.user.create',
-                'name'          => 'Create user',
-            ],
-            [
-                'slug'          => 'user.user.edit',
-                'name'          => 'Update user',
-            ],
-            [
-                'slug'          => 'user.user.delete',
-                'name'          => 'Delete user',
-            ],
+        $id = DB::table('menus')->whereKey('role')->first()->id;
 
+        DB::table('menus')->insert([
+            [
+                'parent_id'   => $id,
+                'key'         => null,
+                'url'         => 'admin/roles/permission',
+                'name'        => 'Permission',
+                'description' => null,
+                'icon'        => 'fa fa-newspaper-o',
+                'role'        => '["superuser"]',
+                'target'      => null,
+                'order'       => 190,
+                'status'      => 1,
+            ],
         ]);
     }
 }

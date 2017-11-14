@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Support\Facades\Schema;
+use Illuminate\Database\Schema\Blueprint;
 
 class CreateMessagesTable extends Migration
 {
@@ -16,7 +18,7 @@ class CreateMessagesTable extends Migration
         /*
          * Table: messages
          */
-        Schema::create('messages', function ($table) {
+        Schema::create('messages', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('from_id')->nullable();
             $table->string('from_type', 225)->nullable();

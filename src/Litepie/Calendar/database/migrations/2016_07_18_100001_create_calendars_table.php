@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Support\Facades\Schema;
+use Illuminate\Database\Schema\Blueprint;
 
 class CreateCalendarsTable extends Migration
 {
@@ -16,7 +18,7 @@ class CreateCalendarsTable extends Migration
         /*
          * Table: calendars
          */
-        Schema::create('calendars', function ($table) {
+        Schema::create('calendars', function (Blueprint $table) {
             $table->increments('id');
             $table->string('title', 255)->nullable();
             $table->string('slug', 200)->nullable(); 
