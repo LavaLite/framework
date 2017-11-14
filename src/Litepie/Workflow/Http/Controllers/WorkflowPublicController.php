@@ -38,7 +38,6 @@ class WorkflowPublicController extends BaseController
             ->scopeQuery(function ($query) {
                 return $query->orderBy('id', 'DESC');
             })->paginate();
-->view($this->getView('workflow::public.workflow.index')->data(compact('workflow'))->output();
     }
 
     /**
@@ -54,7 +53,6 @@ class WorkflowPublicController extends BaseController
             return $query->orderBy('id', 'DESC')
                 ->where('slug', $slug);
         })->first(['*']);
-->view($this->getView('workflow::public.workflow.show', compact('workflow'))->output();
     }
 
 
