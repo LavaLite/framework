@@ -2,34 +2,24 @@
 
 namespace Litepie\Roles\Models;
 
-use Litepie\Roles\Traits\Slugable;
-use Illuminate\Database\Eloquent\Model;
-use Litepie\Roles\Traits\RoleHasRelations;
-use Litepie\Roles\Interfaces\RoleHasRelations as RoleHasRelationsContract;
-
-class Role extends Model implements RoleHasRelationsContract
+use Litepie\Database\Model;
+use Litepie\Database\Traits\Slugger;
+use Litepie\Filer\Traits\Filer;
+use Litepie\Hashids\Traits\Hashids;
+use Litepie\Repository\Traits\PresentableTrait;
+use Litepie\Revision\Traits\Revision;
+use Litepie\Trans\Traits\Translatable;
+class Role extends Model
 {
-    use Slugable, RoleHasRelations;
+    use Filer, Hashids, Slugger, Translatable, Revision, PresentableTrait;
+
 
     /**
-     * The attributes that are mass assignable.
+     * Configuartion for the model.
      *
      * @var array
      */
-    protected $fillable = ['name', 'slug', 'description', 'level'];
+     protected $config = 'roles.role.model';
 
-    /**
-     * Create a new model instance.
-     *
-     * @param array $attributes
-     * @return void
-     */
-    public function __construct(array $attributes = [])
-    {
-        parent::__construct($attributes);
 
-        if ($connection = config('roles.connection')) {
-            $this->connection = $connection;
-        }
-    }
 }

@@ -1,74 +1,77 @@
-@extends('admin::curd.index')
-@section('heading')
-<i class="fa fa-file-text-o"></i> {!! trans('user::role.name') !!} <small> {!! trans('app.manage') !!} {!! trans('user::role.names') !!}</small>
-@stop
-
-@section('title')
-{!! trans('user::role.names') !!}
-@stop
-
-@section('breadcrumb')
-<ol class="breadcrumb">
-    <li><a href="{!! trans_url('admin') !!}"><i class="fa fa-dashboard"></i> {!! trans('app.home') !!} </a></li>
-    <li class="active">{!! trans('user::role.names') !!}</li>
-</ol>
-@stop
-
-@section('entry')
-<div  id='user-role-entry'>
-</div>
-@stop
-
-@section('tools')
-@stop
-
-@section('tabs')
-    <ul class="nav nav-tabs">
-      <li class="active"><a href="{!!trans_url('admin/user/user')!!}">Roles</a></li>
-      <li class="pull-right">@section('tools') Tools @show</li>
-    </ul>
-@stop
-@section('content')
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <h1>
+            <i class="fa fa-file-text-o"></i> {!! trans('roles::role.name') !!} <small> {!! trans('app.manage') !!} {!! trans('roles::role.names') !!}</small>
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="{!! guard_url('/') !!}"><i class="fa fa-dashboard"></i> {!! trans('app.home') !!} </a></li>
+            <li class="active">{!! trans('roles::role.names') !!}</li>
+        </ol>
+    </section>
+    <!-- Main content -->
+    <section class="content">
+    <div id='roles-role-entry'>
+    </div>
         <div class="nav-tabs-custom">
-            <ul class="nav nav-tabs primary">
-                <li class="active"><a href="#tab-pages-active" data-toggle="tab">{!! trans('user::role.names') !!}</a></li>
+            <ul class="nav nav-tabs">
+                    <li class="{!!(request('status') == '')?'active':'';!!}"><a href="{!!guard_url('roles/role')!!}">{!! trans('roles::role.names') !!}</a></li>
+                    <li class="{!!(request('status') == 'archive')?'active':'';!!}"><a href="{!!guard_url('roles/role?status=archive')!!}">Archived</a></li>
+                    <li class="{!!(request('status') == 'deleted')?'active':'';!!}"><a href="{!!guard_url('roles/role?status=deleted')!!}">Trashed</a></li>
+                    <li class="pull-right">
+                    <span class="actions">
+                    <!--   
+                    <a  class="btn btn-xs btn-purple"  href="{!!guard_url('roles/role/reports')!!}"><i class="fa fa-bar-chart" aria-hidden="true"></i><span class="hidden-sm hidden-xs"> Reports</span></a>
+                    @include('roles::admin.role.partial.actions')
+                    -->
+                    @include('roles::admin.role.partial.filter')
+                    @include('roles::admin.role.partial.column')
+                    </span> 
+                </li>
             </ul>
             <div class="tab-content">
-                <table id="user-role-list" class="table table-striped data-table">
+                <table id="roles-role-list" class="table table-striped data-table">
                     <thead class="list_head">
-                        <th>{!! trans('user::role.label.name')!!}</th>
-                        <th>{!! trans('user::role.label.key')!!}</th>
-                        <th>{!! trans('user::role.label.created_at')!!}</th>
-                        <th>{!! trans('user::role.label.updated_at')!!}</th>
-                    </thead>
-                    <thead  class="search_bar">
-                        <th>{!! Form::text('search[name]')->raw()!!}</th>
-                        <th>{!! Form::text('search[key]')->raw()!!}</th>
-                        <th>{!! Form::text('search[created_at]')->id('created_at')->raw()!!}</th>
-                        <th>{!! Form::text('search[updated_at]')->id('updated_at')->raw()!!}</th>
+                        <th style="text-align: right;" width="1%"><a class="btn-reset-filter" href="#Reset" style="display:none; color:#fff;"><i class="fa fa-filter"></i></a> <input type="checkbox" id="roles-role-check-all"></th>
+                        <th>{!! trans('roles::role.label.name')!!}</th>
+                    <th>{!! trans('roles::role.label.slug')!!}</th>
+                    <th>{!! trans('roles::role.label.level')!!}</th>
                     </thead>
                 </table>
             </div>
         </div>
-@stop
+    </section>
+</div>
 
-@section('script')
 <script type="text/javascript">
+
 var oTable;
+var oSearch;
 $(document).ready(function(){
-    app.load('#user-role-entry', '{!!trans_url('admin/user/role/0')!!}');
-    oTable = $('#user-role-list').dataTable( {
+    app.load('#roles-role-entry', '{!!guard_url('roles/role/0')!!}');
+    oTable = $('#roles-role-list').dataTable( {
+        'columnDefs': [{
+            'targets': 0,
+            'searchable': false,
+            'orderable': false,
+            'className': 'dt-body-center',
+            'render': function (data, type, full, meta){
+                return '<input type="checkbox" name="id[]" value="' + data.id + '">';
+            }
+        }], 
+        
+        "responsive" : true,
+        "order": [[1, 'asc']],
         "bProcessing": true,
         "sDom": 'R<>rt<ilp><"clear">',
         "bServerSide": true,
-        "sAjaxSource": '{!! trans_url('/admin/user/role') !!}',
+        "sAjaxSource": '{!! guard_url('roles/role') !!}',
         "fnServerData" : function ( sSource, aoData, fnCallback ) {
 
-            $('#user-role-list .search_bar input, #user-role-list .search_bar select').each(
-                function(){
-                    aoData.push( { 'name' : $(this).attr('name'), 'value' : $(this).val() } );
-                }
-            );
+            $.each(oSearch, function(key, val){
+                aoData.push( { 'name' : key, 'value' : val } );
+            });
             app.dataTable(aoData);
             $.ajax({
                 'dataType'  : 'json',
@@ -80,40 +83,78 @@ $(document).ready(function(){
         },
 
         "columns": [
+            {data :'id'},
             {data :'name'},
-            {data :'key'},
-            {data :'created_at'},
-            {data :'updated_at'},
-
+            {data :'slug'},
+            {data :'level'},
         ],
         "pageLength": 25
     });
 
-    $('#user-role-list tbody').on( 'click', 'tr', function () {
+    $('#roles-role-list tbody').on( 'click', 'tr td:not(:first-child)', function (e) {
+        e.preventDefault();
 
         oTable.$('tr.selected').removeClass('selected');
         $(this).addClass('selected');
-
-        var d = $('#user-role-list').DataTable().row( this ).data();
-
-        $('#user-role-entry').load('{!!trans_url('admin/user/role')!!}' + '/' + d.id);
+        var d = $('#roles-role-list').DataTable().row( this ).data();
+        $('#roles-role-entry').load('{!!guard_url('roles/role')!!}' + '/' + d.id);
     });
 
-    $("#user-role-list .search_bar input, #user-role-list .search_bar select").on('keyup select', function (e) {
+    $('#roles-role-list tbody').on( 'change', "input[name^='id[]']", function (e) {
         e.preventDefault();
-        console.log(e.keyCode);
-        if (e.keyCode == 13 || e.keyCode == 9) {
-            oTable.api().draw();
+
+        aIds = [];
+        $(".child").remove();
+        $(this).parent().parent().removeClass('parent'); 
+        $("input[name^='id[]']:checked").each(function(){
+            aIds.push($(this).val());
+        });
+    });
+
+    $("#roles-role-check-all").on( 'change', function (e) {
+        e.preventDefault();
+        aIds = [];
+        if ($(this).prop('checked')) {
+            $("input[name^='id[]']").each(function(){
+                $(this).prop('checked',true);
+                aIds.push($(this).val());
+            });
+
+            return;
+        }else{
+            $("input[name^='id[]']").prop('checked',false);
+        }
+        
+    });
+
+
+    $(".reset_filter").click(function (e) {
+        e.preventDefault();
+        $("#form-search")[ 0 ].reset();
+        $('#form-search input,#form-search select').each( function () {
+          oTable.search( this.value ).draw();
+        });
+        $('#roles-role-list .reset_filter').css('display', 'none');
+
+    });
+
+
+    // Add event listener for opening and closing details
+    $('#roles-role-list tbody').on('click', 'td.details-control', function (e) {
+        e.preventDefault();
+        var tr = $(this).closest('tr');
+        var row = table.row( tr );
+ 
+        if ( row.child.isShown() ) {
+            // This row is already open - close it
+            row.child.hide();
+            tr.removeClass('shown');
+        } else {
+            // Open this row
+            row.child( format(row.data()) ).show();
+            tr.addClass('shown');
         }
     });
-    $("#user-role-list .search_bar select, #updated_at , #created_at").on('change', function (e) {
-        e.preventDefault();
-        oTable.api().draw();
-    });
+
 });
 </script>
-@stop
-
-@section('style')
-@stop
-

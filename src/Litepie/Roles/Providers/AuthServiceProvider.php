@@ -1,4 +1,5 @@
 <?php
+
 namespace Litepie\Roles\Providers;
 
 use Illuminate\Contracts\Auth\Access\Gate as GateContract;
@@ -12,16 +13,16 @@ class AuthServiceProvider extends ServiceProvider
      * @var array
      */
     protected $policies = [
+        // Bind Role policy
+        'Litepie\Roles\Models\Role' => \Litepie\Roles\Policies\RolePolicy::class,
 // Bind Permission policy
-        \Litepie\Roles\Models\Permission::class => \Litepie\Roles\Policies\PermissionPolicy::class,
-// Bind Role policy
-        \Litepie\Roles\Models\Role::class => \Litepie\Roles\Policies\RolePolicy::class,
+        'Litepie\Roles\Models\Permission' => \Litepie\Roles\Policies\PermissionPolicy::class,
     ];
 
     /**
      * Register any package authentication / authorization services.
      *
-     * @param \Illuminate\Interfaces\Auth\Access\Gate $gate
+     * @param \Illuminate\Contracts\Auth\Access\Gate $gate
      *
      * @return void
      */

@@ -1,21 +1,24 @@
 {
     "name": "litepie/roles",
-    "description": "Repository bundle for Lavalite",
-    "keywords": ["lavalite", "roles"],
+    "description": "Roles package for litepie.",
+    "keywords": ["lavalite", "Roles"],
     "license": "MIT",
-    "homepage": "https://github.com/Litepie/Repository",
     "authors": [
         {
-            "name": "Renfos Technologies Pvt. Ltd.",
-            "email": "info@renfos.com"
+            "name": "Lavalite",
+            "email": "info@lavalite.org"
         }
     ],
     "require": {
-        "zizaco/entrust": "5.2.x-dev"
+        "php": ">=5.6.4"
     },
     "autoload": {
-        "psr-4": { 
-            "Litepie\\Roles\\": "" 
+        "classmap": [
+            "database/seeds"
+        ],
+        "psr-4": {
+            "Litepie\\Roles\\": "src"
         }
-    }
+    },
+    "minimum-stability": "dev"
 }

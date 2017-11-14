@@ -17,7 +17,7 @@ class RoleRequest extends FormRequest
 
         if (is_null($this->model)) {
             // Determine if the user is authorized to access role module,
-            return $this->formRequest->user($this->guard)->canDo('user.role.view');
+            return $this->formRequest->user()->canDo('roles.role.view');
         }
 
         if ($this->isWorkflow()) {
@@ -25,12 +25,12 @@ class RoleRequest extends FormRequest
             return $this->can($this->getStatus());
         }
 
-        if ($this->isCreate()) {
+        if ($this->isCreate() || $this->isStore()) {
             // Determine if the user is authorized to create an entry,
             return $this->can('create');
         }
 
-        if ($this->isUpdate()) {
+        if ($this->isEdit() || $this->isUpdate()) {
             // Determine if the user is authorized to update an entry,
             return $this->can('update');
         }
@@ -52,7 +52,7 @@ class RoleRequest extends FormRequest
      */
     public function rules()
     {
-        if ($this->isCreate()) {
+        if ($this->isStore()) {
             // validation rule for create request.
             return [
 

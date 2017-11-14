@@ -50,7 +50,7 @@ class PermissionResourceController extends BaseController
         $permissions = $this->repository->paginate();
 
         return $this->response->title(trans('roles::permission.names'))
-            ->view('roles::admin.permission.index')
+            ->view('roles::permission.index', true)
             ->data(compact('permissions'))
             ->output();
     }
@@ -67,14 +67,14 @@ class PermissionResourceController extends BaseController
     {
 
         if ($permission->exists) {
-            $view = 'roles::admin.permission.show';
+            $view = 'roles::permission.show';
         } else {
-            $view = 'roles::admin.permission.new';
+            $view = 'roles::permission.new';
         }
 
         return $this->response->title(trans('app.view') . ' ' . trans('roles::permission.name'))
             ->data(compact('permission'))
-            ->view($view)
+            ->view($view, true)
             ->output();
     }
 
@@ -89,8 +89,8 @@ class PermissionResourceController extends BaseController
     {
 
         $permission = $this->repository->newInstance([]);
-        $this->response->title(trans('app.new') . ' ' . trans('roles::permission.name')) 
-            ->view('roles::admin.permission.create') 
+        return $this->response->title(trans('app.new') . ' ' . trans('roles::permission.name')) 
+            ->view('roles::permission.create', true) 
             ->data(compact('permission'))
             ->output();
     }
@@ -113,13 +113,13 @@ class PermissionResourceController extends BaseController
             return $this->response->message(trans('messages.success.created', ['Module' => trans('roles::permission.name')]))
                 ->code(204)
                 ->status('success')
-                ->url(trans_url(guard_url('/roles/permission/' . $permission->getRouteKey())))
+                ->url(guard_url('roles/permission/' . $permission->getRouteKey()))
                 ->redirect();
         } catch (Exception $e) {
             return $this->response->message($e->getMessage())
                 ->code(400)
                 ->status('error')
-                ->url(trans_url(guard_url('/roles/permission')))
+                ->url(guard_url('/roles/permission'))
                 ->redirect();
         }
 
@@ -136,7 +136,7 @@ class PermissionResourceController extends BaseController
     public function edit(PermissionRequest $request, Permission $permission)
     {
         return $this->response->title(trans('app.edit') . ' ' . trans('roles::permission.name'))
-            ->view('roles::admin.permission.edit')
+            ->view('roles::permission.edit', true)
             ->data(compact('permission'))
             ->output();
     }
@@ -158,13 +158,13 @@ class PermissionResourceController extends BaseController
             return $this->response->message(trans('messages.success.updated', ['Module' => trans('roles::permission.name')]))
                 ->code(204)
                 ->status('success')
-                ->url(trans_url(guard_url('/roles/permission/' . $permission->getRouteKey())))
+                ->url(guard_url('roles/permission/' . $permission->getRouteKey()))
                 ->redirect();
         } catch (Exception $e) {
             return $this->response->message($e->getMessage())
                 ->code(400)
                 ->status('error')
-                ->url(guard_url('/roles/permission/' . $permission->getRouteKey()))
+                ->url(guard_url('roles/permission/' . $permission->getRouteKey()))
                 ->redirect();
         }
 
@@ -185,7 +185,7 @@ class PermissionResourceController extends BaseController
             return $this->response->message(trans('messages.success.deleted', ['Module' => trans('roles::permission.name')]))
                 ->code(202)
                 ->status('success')
-                ->url(trans_url(guard_url('/roles/permission')))
+                ->url(guard_url('roles/permission'))
                 ->redirect();
 
         } catch (Exception $e) {
@@ -193,7 +193,7 @@ class PermissionResourceController extends BaseController
             return $this->response->message($e->getMessage())
                 ->code(400)
                 ->status('error')
-                ->url(trans_url(guard_url('/roles/permission/' . $permission->getRouteKey())))
+                ->url(guard_url('roles/permission/' . $permission->getRouteKey()))
                 ->redirect();
         }
 
@@ -220,7 +220,7 @@ class PermissionResourceController extends BaseController
             return $this->response->message(trans('messages.success.deleted', ['Module' => trans('roles::permission.name')]))
                 ->status("success")
                 ->code(202)
-                ->url(trans_url(guard_url('/roles/permission')))
+                ->url(guard_url('roles/permission'))
                 ->redirect();
 
         } catch (Exception $e) {
@@ -228,7 +228,7 @@ class PermissionResourceController extends BaseController
             return $this->response->message($e->getMessage())
                 ->status("error")
                 ->code(400)
-                ->url(trans_url(guard_url('/roles/permission')))
+                ->url(guard_url('/roles/permission'))
                 ->redirect();
         }
 
@@ -250,7 +250,7 @@ class PermissionResourceController extends BaseController
             return $this->response->message(trans('messages.success.restore', ['Module' => trans('roles::permission.name')]))
                 ->status("success")
                 ->code(202)
-                ->url(trans_url(guard_url('/roles/permission')))
+                ->url(guard_url('/roles/permission'))
                 ->redirect();
 
         } catch (Exception $e) {
@@ -258,7 +258,7 @@ class PermissionResourceController extends BaseController
             return $this->response->message($e->getMessage())
                 ->status("error")
                 ->code(400)
-                ->url(trans_url(guard_url('/roles/permission/')))
+                ->url(guard_url('/roles/permission/'))
                 ->redirect();
         }
 

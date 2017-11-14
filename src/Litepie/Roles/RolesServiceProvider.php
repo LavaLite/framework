@@ -7,49 +7,90 @@ use Illuminate\Support\ServiceProvider;
 class RolesServiceProvider extends ServiceProvider
 {
     /**
-     * Bootstrap any application services.
+     * Indicates if loading of the provider is deferred.
+     *
+     * @var bool
+     */
+    protected $defer = false;
+
+    /**
+     * Bootstrap the application events.
      *
      * @return void
      */
     public function boot()
     {
-        $this->publishes([
-            __DIR__ . '/config/config.php' => config_path('roles.php')
-        ], 'config');
-
-        $this->loadMigrationsFrom(__DIR__ . '/database/migrations');
+        // Load view
+        $this->loadViewsFrom(__DIR__ . '/resources/views', 'roles');
 
         // Load translation
         $this->loadTranslationsFrom(__DIR__ . '/resources/lang', 'roles');
 
-        // Load view
-        $this->loadViewsFrom(__DIR__ . '/resources/views', 'roles');
+        // Load migrations
+        $this->loadMigrationsFrom(__DIR__ . '/database/migrations');
 
-        $this->registerBladeExtensions();
+        // Call pblish redources function
+        $this->publishResources();
 
-        $this->app->register(\Litepie\Roles\Providers\AuthServiceProvider::class);
-        $this->app->register(\Litepie\Roles\Providers\EventServiceProvider::class);
-        $this->app->register(\Litepie\Roles\Providers\RouteServiceProvider::class);
     }
 
     /**
-     * Register any application services.
+     * Register the service provider.
      *
      * @return void
      */
     public function register()
     {
-        // Bind Roles to repository
+        // Bind facade
+        $this->app->bind('roles.roles', function ($app) {
+            return $this->app->make('Litepie\Roles\Roles');
+        });
+
+        // Bind Role to repository
         $this->app->bind(
             'Litepie\Roles\Interfaces\RoleRepositoryInterface',
             \Litepie\Roles\Repositories\Eloquent\RoleRepository::class
         );
-
-        // Bind Permissions to repository
+        // Bind Permission to repository
         $this->app->bind(
             'Litepie\Roles\Interfaces\PermissionRepositoryInterface',
             \Litepie\Roles\Repositories\Eloquent\PermissionRepository::class
         );
+        
+        $this->registerBladeExtensions();
+        $this->app->register(\Litepie\Roles\Providers\AuthServiceProvider::class);
+        $this->app->register(\Litepie\Roles\Providers\RouteServiceProvider::class);
+                
+    }
+
+    /**
+     * Get the services provided by the provider.
+     *
+     * @return array
+     */
+    public function provides()
+    {
+        return ['roles.roles'];
+    }
+
+    /**
+     * Publish resources.
+     *
+     * @return void
+     */
+    private function publishResources()
+    {
+        // Publish configuration file
+        $this->publishes([__DIR__ . '/config/config.php' => config_path('roles.php')], 'config');
+
+        // Publish admin view
+        $this->publishes([__DIR__ . '/resources/views' => base_path('resources/views/vendor/roles')], 'view');
+
+        // Publish language files
+        $this->publishes([__DIR__ . '/resources/lang' => base_path('resources/lang/vendor/roles')], 'lang');
+
+        // Publish public files and assets.
+        $this->publishes([__DIR__ . '/public/' => public_path('/')], 'public');
     }
 
     /**

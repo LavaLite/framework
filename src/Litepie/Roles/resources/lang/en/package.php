@@ -12,6 +12,6 @@ return [
     |
     */
 
-    'name'          => 'User',
-    'names'         => 'Users',
+    'name'          => 'Roles',
+    'names'         => 'Roles',
 ];

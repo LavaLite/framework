@@ -4,37 +4,22 @@ namespace Litepie\Roles\Models;
 
 use Litepie\Database\Model;
 use Litepie\Database\Traits\Slugger;
+use Litepie\Filer\Traits\Filer;
 use Litepie\Hashids\Traits\Hashids;
+use Litepie\Repository\Traits\PresentableTrait;
 use Litepie\Revision\Traits\Revision;
-use Litepie\Roles\Interfaces\PermissionHasRelations as PermissionHasRelationsContract;
-use Litepie\Roles\Traits\PermissionHasRelations;
 use Litepie\Trans\Traits\Translatable;
-
-class Permission extends Model implements PermissionHasRelationsContract
+class Permission extends Model
 {
-    use PermissionHasRelations, Hashids, Slugger, Translatable, Revision;
+    use Filer, Hashids, Slugger, Translatable, Revision, PresentableTrait;
+
 
     /**
-     * The attributes that are mass assignable.
+     * Configuartion for the model.
      *
      * @var array
      */
-    protected $fillable = ['name', 'slug', 'description', 'model'];
+     protected $config = 'roles.permission.model';
 
-    /**
-     * Create a new model instance.
-     *
-     * @param array $attributes
-     * @return void
-     */
-    public function __construct(array $attributes = [])
-    {
-        parent::__construct($attributes);
-
-        if ($connection = config('roles.connection')) {
-            $this->connection = $connection;
-        }
-
-    }
 
 }

@@ -7,12 +7,11 @@ use Litepie\Repository\Eloquent\BaseRepository;
 
 class PermissionRepository extends BaseRepository implements PermissionRepositoryInterface
 {
-    /**
-     * @var array
-     */
+
 
     public function boot()
     {
+        $this->fieldSearchable = config('roles.permission.search');
 
     }
 
@@ -23,9 +22,9 @@ class PermissionRepository extends BaseRepository implements PermissionRepositor
      */
     public function model()
     {
-        $this->fieldSearchable = config('roles.permission.model.search');
         return config('roles.permission.model.model');
     }
+
 
     /**
      * Returns all users with given role.
@@ -44,6 +43,7 @@ class PermissionRepository extends BaseRepository implements PermissionRepositor
         }
         return $array;
     }
+
 
     /**
      * Create a new permission using the given name.
@@ -100,4 +100,5 @@ class PermissionRepository extends BaseRepository implements PermissionRepositor
             })
             ->get();
     }
+
 }

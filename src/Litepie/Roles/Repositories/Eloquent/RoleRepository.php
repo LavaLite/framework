@@ -7,11 +7,11 @@ use Litepie\Repository\Eloquent\BaseRepository;
 
 class RoleRepository extends BaseRepository implements RoleRepositoryInterface
 {
-    /**
-     * @var array
-     */
+
+
     public function boot()
     {
+        $this->fieldSearchable = config('roles.role.search');
 
     }
 
@@ -22,7 +22,6 @@ class RoleRepository extends BaseRepository implements RoleRepositoryInterface
      */
     public function model()
     {
-        $this->fieldSearchable = config('roles.role.model.search');
         return config('roles.role.model.model');
     }
 

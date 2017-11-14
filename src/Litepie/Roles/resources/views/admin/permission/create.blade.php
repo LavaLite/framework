@@ -1,24 +1,22 @@
-
     <div class="nav-tabs-custom">
         <!-- Nav tabs -->
         <ul class="nav nav-tabs primary">
-            <li class="active"><a href="#permission" data-toggle="tab">Contact</a></li>
-            <li><a href="#details" data-toggle="tab">Details</a></li>
+            <li class="active"><a href="#details" data-toggle="tab">Permission</a></li>
             <div class="box-tools pull-right">
-                <button type="button" class="btn btn-primary btn-sm" data-action='CREATE' data-form='#user-permission-create'  data-load-to='#user-permission-entry' data-datatable='#user-permission-list'><i class="fa fa-floppy-o"></i> Save</button>
-                <button type="button" class="btn btn-default btn-sm" data-action='CLOSE' data-load-to='#user-permission-entry' data-href='{{trans_url('admin/user/permission/0')}}'><i class="fa fa-times-circle"></i> {{ trans('app.close') }}</button>
+                <button type="button" class="btn btn-primary btn-sm" data-action='CREATE' data-form='#roles-permission-create'  data-load-to='#roles-permission-entry' data-datatable='#roles-permission-list'><i class="fa fa-floppy-o"></i> {{ trans('app.save') }}</button>
+                <button type="button" class="btn btn-default btn-sm" data-action='CLOSE' data-load-to='#roles-permission-entry' data-href='{{guard_url('roles/permission/0')}}'><i class="fa fa-times-circle"></i> {{ trans('app.close') }}</button>
             </div>
         </ul>
-        {!!Form::vertical_open()
-        ->id('user-permission-create')
-        ->method('POST')
-        ->files('true')
-        ->action(trans_url('admin/user/permission'))!!}
         <div class="tab-content clearfix">
-            <div class="tab-pane active" id="permission">
-                <div class="tab-pan-title">  {!! trans('app.create') !!}  {!! trans('user::permission.name') !!} </div>
-                @include('vuser::admin.permission.partial.entry')
+            {!!Form::vertical_open()
+            ->id('roles-permission-create')
+            ->method('POST')
+            ->files('true')
+            ->action(guard_url('roles/permission'))!!}
+            <div class="tab-pane active" id="details">
+                <div class="tab-pan-title">  {{ trans('app.new') }}  [{!! trans('roles::permission.name') !!}] </div>
+                @include('roles::admin.permission.partial.entry', ['mode' => 'create'])
             </div>
+            {!! Form::close() !!}
         </div>
-        {!! Form::close() !!}
     </div>
