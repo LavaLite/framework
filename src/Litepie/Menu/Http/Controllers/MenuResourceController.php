@@ -65,7 +65,7 @@ class MenuResourceController extends BaseController
 
         $rootMenu = $this->repository->rootMenues();
         return $this->response->title(trans('menu::menu.names'))
-            ->view('menu::admin.index', true)
+            ->view('menu::index', true)
             ->data(compact('rootMenu', 'parent'))
             ->output();
     }
