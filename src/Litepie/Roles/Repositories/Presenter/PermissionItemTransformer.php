@@ -11,12 +11,9 @@ class PermissionItemTransformer extends TransformerAbstract
     {
         return [
             'id'                => $permission->getRouteKey(),
-            'id'                => $permission->id,
             'name'              => $permission->name,
             'slug'              => $permission->slug,
             'description'       => $permission->description,
-            'created_at'        => $permission->created_at,
-            'updated_at'        => $permission->updated_at,
             'status'            => trans('app.'.$permission->status),
             'created_at'        => format_date($permission->created_at),
             'updated_at'        => format_date($permission->updated_at),

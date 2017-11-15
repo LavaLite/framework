@@ -107,9 +107,11 @@ class UserResourceController extends BaseController
     {
 
         $user = $this->repository->newInstance([]);
+        $roles       = $this->roles->all();
+        $permissions = $this->permissions->groupedPermissions();
         return $this->response->title(trans('app.new') . ' ' . trans('user::user.name'))
             ->view('user::admin.user.create')
-            ->data(compact('user'))
+            ->data(compact('user', 'roles', 'permissions'))
             ->output();
     }
 
@@ -153,9 +155,11 @@ class UserResourceController extends BaseController
      */
     public function edit(UserRequest $request, User $user)
     {
+        $roles       = $this->roles->all();
+        $permissions = $this->permissions->groupedPermissions();
         return $this->response->title(trans('app.edit') . ' ' . trans('user::user.name'))
             ->view('user::admin.user.edit')
-            ->data(compact('user'))
+            ->data(compact('user', 'roles', 'permissions'))
             ->output();
     }
 
@@ -171,8 +175,11 @@ class UserResourceController extends BaseController
     {
         try {
             $attributes = $request->all();
-
+            $roles          = $request->get('roles');
+            $permissions    = $request->get('permissions');
             $user->update($attributes);
+            $user->userPermissions()->sync($permissions);
+            $user->roles()->sync($roles);
             return $this->response->message(trans('messages.success.updated', ['Module' => trans('user::user.name')]))
                 ->code(204)
                 ->status('success')

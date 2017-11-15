@@ -9,9 +9,12 @@ use Litepie\Hashids\Traits\Hashids;
 use Litepie\Repository\Traits\PresentableTrait;
 use Litepie\Revision\Traits\Revision;
 use Litepie\Trans\Traits\Translatable;
-class Role extends Model
+use Litepie\Roles\Traits\RoleHasRelations;
+use Litepie\Roles\Interfaces\RoleHasRelations as RoleHasRelationsContract;
+
+class Role extends Model implements RoleHasRelationsContract
 {
-    use Filer, Hashids, Slugger, Translatable, Revision, PresentableTrait;
+    use Filer, Hashids, Slugger, Translatable, Revision, PresentableTrait, RoleHasRelations;
 
 
     /**

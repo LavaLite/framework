@@ -6,7 +6,6 @@ use App\Http\Controllers\ResourceController as BaseController;
 use Litepie\Roles\Http\Requests\PermissionRequest;
 use Litepie\Roles\Interfaces\PermissionRepositoryInterface;
 use Litepie\Roles\Models\Permission;
-
 /**
  * Resource controller class for permission.
  */

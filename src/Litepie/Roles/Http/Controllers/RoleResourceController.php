@@ -4,6 +4,7 @@ namespace Litepie\Roles\Http\Controllers;
 
 use App\Http\Controllers\ResourceController as BaseController;
 use Litepie\Roles\Http\Requests\RoleRequest;
+use Litepie\Roles\Interfaces\PermissionRepositoryInterface;
 use Litepie\Roles\Interfaces\RoleRepositoryInterface;
 use Litepie\Roles\Models\Role;
 
@@ -20,10 +21,13 @@ class RoleResourceController extends BaseController
      *
      * @return null
      */
-    public function __construct(RoleRepositoryInterface $role)
-    {
+    public function __construct(
+        RoleRepositoryInterface       $role,
+        PermissionRepositoryInterface $permission
+    ) {
         parent::__construct();
         $this->repository = $role;
+        $this->permission = $permission;
         $this->repository
             ->pushCriteria(\Litepie\Repository\Criteria\RequestCriteria::class)
             ->pushCriteria(\Litepie\Roles\Repositories\Criteria\RoleResourceCriteria::class);
@@ -71,9 +75,9 @@ class RoleResourceController extends BaseController
         } else {
             $view = 'roles::role.new';
         }
-
+        $permissions     = $this->permission->groupedPermissions(true);
         return $this->response->title(trans('app.view') . ' ' . trans('roles::role.name'))
-            ->data(compact('role'))
+            ->data(compact('role', 'permissions'))
             ->view($view, true)
             ->output();
     }
@@ -87,11 +91,11 @@ class RoleResourceController extends BaseController
      */
     public function create(RoleRequest $request)
     {
-
+        $permissions     = $this->permission->groupedPermissions(true);
         $role = $this->repository->newInstance([]);
-        return $this->response->title(trans('app.new') . ' ' . trans('roles::role.name')) 
-            ->view('roles::role.create', true) 
-            ->data(compact('role'))
+        return $this->response->title(trans('app.new') . ' ' . trans('roles::role.name'))
+            ->view('roles::role.create', true)
+            ->data(compact('role', 'permissions'))
             ->output();
     }
 
@@ -108,7 +112,7 @@ class RoleResourceController extends BaseController
             $attributes              = $request->all();
             $attributes['user_id']   = user_id();
             $attributes['user_type'] = user_type();
-            $role                 = $this->repository->create($attributes);
+            $role                    = $this->repository->create($attributes);
 
             return $this->response->message(trans('messages.success.created', ['Module' => trans('roles::role.name')]))
                 ->code(204)
@@ -135,9 +139,10 @@ class RoleResourceController extends BaseController
      */
     public function edit(RoleRequest $request, Role $role)
     {
+        $permissions     = $this->permission->groupedPermissions(true);
         return $this->response->title(trans('app.edit') . ' ' . trans('roles::role.name'))
             ->view('roles::role.edit', true)
-            ->data(compact('role'))
+            ->data(compact('role', 'permissions'))
             ->output();
     }
 
@@ -153,8 +158,10 @@ class RoleResourceController extends BaseController
     {
         try {
             $attributes = $request->all();
-
+            $permissions = $request->input('permissions');
             $role->update($attributes);
+            $role->permissions()->sync($permissions);
+
             return $this->response->message(trans('messages.success.updated', ['Module' => trans('roles::role.name')]))
                 ->code(204)
                 ->status('success')

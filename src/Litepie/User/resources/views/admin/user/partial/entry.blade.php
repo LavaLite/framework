@@ -33,7 +33,7 @@
     @foreach ($roles as $role)
         <div class="col-md-2">
             <div class="checkbox checkbox-danger" >
-              <input name="roles[{{ $role->id }}]" id="roles.{{ $role->id }}" type="checkbox" {{ ($user->hasRole($role->key)) ? 'checked' : '' }} value='{{ $role->id }}'>
+              <input name="roles[{{ $role->id }}]" id="roles.{{ $role->id }}" type="checkbox" {{ !($user->hasRole($role->slug)) ? :'checked'}} value='{{ $role->id }}'>
               <label for="roles.{{ $role->id }}">{{ $role->name }}</label>
             </div>
         </div>
@@ -56,7 +56,7 @@
                           <ul class="clearfix">
                           @foreach($permissions as $permission => $value)
                               <li style="float:left; margin-right: 10px;">
-                                  <input name="permissions[{{$package}}.{{$module}}.{{$permission}}]" id="permissions_{{$package}}_{{$module}}_{{$permission}}" type="checkbox" {{ @array_key_exists($package. '.' . $module . '.' . $permission, $user->permissions) ? 'checked' : '' }} value='1'>
+                                  <input name="permissions[]" id="permissions_{{$package}}_{{$module}}_{{$permission}}" type="checkbox" {{ (!$user->hasPermission($package. '.' . $module . '.' . $permission)) ? : 'checked'}} value='{{$value}}'>
                                   <label for="permissions_{{$package}}_{{$module}}_{{$permission}}">{{ucfirst($permission)}} </label>
                               </li>
                           @endforeach

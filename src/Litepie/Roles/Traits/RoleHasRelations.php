@@ -11,7 +11,7 @@ trait RoleHasRelations
      */
     public function permissions()
     {
-        return $this->belongsToMany(config('roles.models.permission'))->withTimestamps();
+        return $this->belongsToMany(config('roles.permission.model.model'))->withTimestamps();
     }
 
     /**
@@ -55,4 +55,17 @@ trait RoleHasRelations
     {
         return $this->permissions()->detach();
     }
+    
+    /**
+     * Detach all permissions.
+     *
+     * @return int
+     */
+    public function hasPermission($permission)
+    {
+        return $this->permissions()->get()->contains(function ($value, $key) use ($permission) {
+            return $permission == $value->id || str_is($permission, $value->slug);
+        });
+    }
+    
 }

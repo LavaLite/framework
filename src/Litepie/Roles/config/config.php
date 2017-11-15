@@ -18,37 +18,6 @@ return [
     'modules'   => ['role', 
 'permission'],
 
-    'image'    => [
-
-        'sm' => [
-            'width'     => '140',
-            'height'    => '140',
-            'action'    => 'fit',
-            'watermark' => 'img/logo/default.png',
-        ],
-
-        'md' => [
-            'width'     => '370',
-            'height'    => '420',
-            'action'    => 'fit',
-            'watermark' => 'img/logo/default.png',
-        ],
-
-        'lg' => [
-            'width'     => '780',
-            'height'    => '497',
-            'action'    => 'fit',
-            'watermark' => 'img/logo/default.png',
-        ],
-        'xl' => [
-            'width'     => '800',
-            'height'    => '530',
-            'action'    => 'fit',
-            'watermark' => 'img/logo/default.png',
-        ],
-
-    ],
-
     'role'       => [
         'model' => [
             'model'                 => \Litepie\Roles\Models\Role::class,
@@ -60,7 +29,7 @@ return [
             'slugs'                 => ['slug' => 'name'],
             'dates'                 => ['deleted_at'],
             'appends'               => [],
-            'fillable'              => ['user_id', 'id',  'name',  'slug',  'description',  'level',  'created_at',  'updated_at'],
+            'fillable'              => ['name',  'slug',  'description',  'level'],
             'translatables'         => [],
             'upload_folder'         => 'roles/role',
             'uploads'               => [],
@@ -92,7 +61,7 @@ return [
             'slugs'                 => ['slug' => 'name'],
             'dates'                 => ['deleted_at'],
             'appends'               => [],
-            'fillable'              => ['user_id', 'id',  'name',  'slug',  'description',  'created_at',  'updated_at'],
+            'fillable'              => ['name',  'slug',  'description'],
             'translatables'         => [],
             'upload_folder'         => 'roles/permission',
             'uploads'               => [],
@@ -112,4 +81,35 @@ return [
         ],
 
     ],
+    /*
+    |--------------------------------------------------------------------------
+    | Slug Separator
+    |--------------------------------------------------------------------------
+    |
+    | Here you can change the slug separator. This is very important in matter
+    | of magic method __call() and also a `Slugable` trait. The default value
+    | is a dot.
+    |
+     */
+    'separator'  => '.',
+
+    /*
+    |--------------------------------------------------------------------------
+    | Roles, Permissions and Allowed "Pretend"
+    |--------------------------------------------------------------------------
+    |
+    | You can pretend or simulate package behavior no matter what is in your
+    | database. It is really useful when you are testing you application.
+    | Set up what will methods is(), can() and allowed() return.
+    |
+     */
+    'pretend'    => [
+        'enabled' => true,
+        'options' => [
+            'is'      => true,
+            'can'     => true,
+            'allowed' => true,
+        ],
+    ],
+
 ];

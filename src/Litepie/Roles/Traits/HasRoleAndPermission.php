@@ -187,7 +187,6 @@ trait HasRoleAndPermission
         if ($this->isPretendEnabled()) {
             return $this->pretend('can');
         }
-        dd($permission);
 
         return $this->{$this->getMethodName('can', $all)}($permission);
     }

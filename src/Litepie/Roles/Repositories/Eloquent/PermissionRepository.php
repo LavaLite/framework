@@ -33,12 +33,12 @@ class PermissionRepository extends BaseRepository implements PermissionRepositor
      */
     public function groupedPermissions($grouped = false)
     {
-        $result = $this->model->orderBy('slug')->pluck('name', 'slug')->toArray();
+        $result = $this->model->orderBy('slug')->get()->pluck('id', 'slug')->toArray();
 
         $array = [];
 
         foreach ($result as $key => $value) {
-            $key                      = explode('.', $key, 3);
+            $key                      = explode('.', $key, 4);
             @$array[$key[0]][$key[1]][$key[2]] = $value;
         }
         return $array;

@@ -9,9 +9,11 @@ use Litepie\Hashids\Traits\Hashids;
 use Litepie\Repository\Traits\PresentableTrait;
 use Litepie\Revision\Traits\Revision;
 use Litepie\Trans\Traits\Translatable;
+use Litepie\Roles\Traits\PermissionHasRelations;
+
 class Permission extends Model
 {
-    use Filer, Hashids, Slugger, Translatable, Revision, PresentableTrait;
+    use Filer, Hashids, Slugger, Translatable, Revision, PresentableTrait, PermissionHasRelations;
 
 
     /**
@@ -21,5 +23,9 @@ class Permission extends Model
      */
      protected $config = 'roles.permission.model';
 
+	public function getSlugIdAttribute()
+	{
+	    return $this->slug . '.' . $this->id;
+	}
 
 }
