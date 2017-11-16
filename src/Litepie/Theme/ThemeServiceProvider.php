@@ -21,10 +21,11 @@ class ThemeServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->publishResources();
-        
-        foreach(config('theme.themes') as $key => $val) {
-            $this->loadViewsFrom(public_path(config('theme.themeDir').'/'.config("theme.themes.{$key}.theme").'/views'), $key);
+
+        foreach (config('theme.themes') as $key => $val) {
+            $this->loadViewsFrom(public_path(config('theme.themeDir') . '/' . config("theme.themes.{$key}.theme") . '/views'), $key);
         }
+
     }
 
     /**
@@ -35,14 +36,15 @@ class ThemeServiceProvider extends ServiceProvider
     public function register()
     {
 
-        
-        $this->app->singleton('view.finder', function($app) {
+        $this->app->singleton('view.finder', function ($app) {
             return new \Litepie\Theme\ThemeViewFinder(
                 $app['files'],
                 $app['config']['view.paths'],
                 null
             );
         });
+        app('view')->setFinder(app('view.finder'));
+
         // Register providers.
         $this->registerAsset();
         $this->registerTheme();
@@ -67,11 +69,11 @@ class ThemeServiceProvider extends ServiceProvider
      */
     public function registerTheme()
     {
+
         $this->app->singleton('theme', function ($app) {
             return new Theme($app['config'], $app['events'], $app['view'], $app['asset'], $app['files']);
         });
 
-       // $this->app->alias('theme', 'Litepie\Theme\Contracts\Theme');
     }
 
     /**
@@ -95,4 +97,5 @@ class ThemeServiceProvider extends ServiceProvider
         $this->publishes([__DIR__ . '/config.php' => config_path('theme.php')], 'config');
 
     }
+
 }
