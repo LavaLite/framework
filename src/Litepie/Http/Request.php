@@ -35,7 +35,6 @@ abstract class Request extends FormRequest
      **/
     public function __construct(IlluminateRequest $request)
     {
-        $this->guard = getenv('guard');
         $this->formRequest = $request;
     }
 
@@ -46,7 +45,7 @@ abstract class Request extends FormRequest
      **/
     protected function can($action)
     {
-        return $this->formRequest->user($this->guard)->canDo($action, $this->model);
+        return $this->formRequest->user()->can($action, $this->model);
     }
 
     /**

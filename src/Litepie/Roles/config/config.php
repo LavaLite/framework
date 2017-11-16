@@ -15,8 +15,7 @@ return [
     /*
      * Modules.
      */
-    'modules'   => ['role', 
-'permission'],
+    'modules'   => ['role', 'permission'],
 
     'role'       => [
         'model' => [

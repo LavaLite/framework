@@ -18,17 +18,7 @@ class RolePolicy
      */
     public function view(UserPolicy $user, Role $role)
     {
-        if ($user->canDo('roles.role.view') && $user->is('admin')) {
-            return true;
-        }
-
-        if ($user->canDo('blocks.block.view') 
-        && $user->is('manager')
-        && $block->user->parent_id == $user->id) {
-            return true;
-        }
-
-        return $user->id === $role->user_id;
+        return flase;
     }
 
     /**
@@ -41,7 +31,7 @@ class RolePolicy
      */
     public function create(UserPolicy $user)
     {
-        return  $user->canDo('roles.role.create');
+        return  false;
     }
 
     /**
@@ -54,17 +44,8 @@ class RolePolicy
      */
     public function update(UserPolicy $user, Role $role)
     {
-        if ($user->canDo('roles.role.update') && $user->is('admin')) {
-            return true;
-        }
 
-        if ($user->canDo('blocks.block.update') 
-        && $user->is('manager')
-        && $block->user->parent_id == $user->id) {
-            return true;
-        }
-
-        return $user->id === $role->user_id;
+        return flase;
     }
 
     /**
@@ -77,17 +58,7 @@ class RolePolicy
      */
     public function destroy(UserPolicy $user, Role $role)
     {
-        if ($user->canDo('roles.role.delete') && $user->is('admin')) {
-            return true;
-        }
-
-        if ($user->canDo('blocks.block.delete') 
-        && $user->is('manager')
-        && $block->user->parent_id == $user->id) {
-            return true;
-        }
-
-        return $user->id === $role->user_id;
+        return flase;
     }
 
     /**
@@ -100,35 +71,10 @@ class RolePolicy
      */
     public function verify(UserPolicy $user, Role $role)
     {
-        if ($user->canDo('roles.role.verify') && $user->is('admin')) {
-            return true;
-        }
-
-        if ($user->canDo('roles.role.verify') 
-        && $user->is('manager')
-        && $role->user->parent_id == $user->id) {
-            return true;
-        }
 
         return false;
     }
 
-    /**
-     * Determine if the given user can approve the given role.
-     *
-     * @param UserPolicy $user
-     * @param Role $role
-     *
-     * @return bool
-     */
-    public function approve(UserPolicy $user, Role $role)
-    {
-        if ($user->canDo('roles.role.approve') && $user->is('admin')) {
-            return true;
-        }
-
-        return false;
-    }
 
     /**
      * Determine if the user can perform a given action ve.
@@ -140,7 +86,7 @@ class RolePolicy
      */
     public function before($user, $ability)
     {
-        if ($user->isSuperUser()) {
+        if ($user->isSuperuser()) {
             return true;
         }
     }

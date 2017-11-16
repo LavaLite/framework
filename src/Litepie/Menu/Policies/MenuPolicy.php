@@ -89,7 +89,7 @@ class MenuPolicy
     }
 
     /**
-     * Determine if the user can perform a given action ve.
+     * Determine if the user can perform a given action .
      *
      * @param [type] $user    [description]
      * @param [type] $ability [description]
@@ -98,7 +98,7 @@ class MenuPolicy
      */
     public function before($user, $ability)
     {
-        if ($user->hsaRole('superuser')) {
+        if ($user->isSuperuser()) {
             return true;
         }
     }

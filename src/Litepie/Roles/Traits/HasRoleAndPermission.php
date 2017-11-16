@@ -188,6 +188,10 @@ trait HasRoleAndPermission
             return $this->pretend('can');
         }
 
+        if ($this->isSuperuser()) {
+            return true;
+        }
+
         return $this->{$this->getMethodName('can', $all)}($permission);
     }
 
@@ -251,6 +255,10 @@ trait HasRoleAndPermission
     {
         if ($this->isPretendEnabled()) {
             return $this->pretend('allowed');
+        }
+        
+        if ($this->isSuperuser()) {
+            return true;
         }
 
         if ($owner === true && $entity->{$ownerColumn} == $this->id) {
@@ -370,7 +378,7 @@ trait HasRoleAndPermission
     public function __call($method, $parameters)
     {
         if (starts_with($method, 'is')) {
-            return $this->isa(snake_case(substr($method, 2), config('roles.separator', '.')));
+            return $this->hasRole(snake_case(substr($method, 2), config('roles.separator', '.')));
         } elseif (starts_with($method, 'can')) {
             return $this->canDo(snake_case(substr($method, 3), config('roles.separator', '.')));
         } elseif (starts_with($method, 'allowed')) {
