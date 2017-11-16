@@ -16,7 +16,7 @@ class RevisionRequest extends FormRequest
         $this->model = $this->route('revision');
         if (is_null($this->model)) {
             // Determine if the user is authorized to access revision module,
-            return $this->formRequest->user($this->guard)->canDo('revision.revision.view');
+            return $this->formRequest->user()->canDo('revision.revision.view');
         }
 
         if ($this->isWorkflow()) {

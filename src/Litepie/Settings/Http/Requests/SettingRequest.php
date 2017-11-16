@@ -17,7 +17,7 @@ class SettingRequest extends FormRequest
 
         if (is_null($this->model)) {
             // Determine if the user is authorized to access setting module,
-            return $this->formRequest->user($this->guard)->canDo('settings.setting.view');
+            return $this->formRequest->user()->canDo('settings.setting.view');
         }
 
         if ($this->isWorkflow()) {

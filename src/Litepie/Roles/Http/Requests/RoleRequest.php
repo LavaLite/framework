@@ -14,8 +14,8 @@ class RoleRequest extends FormRequest
     public function authorize()
     {
         $this->model = $this->route('role');
-
         if (is_null($this->model)) {
+
             // Determine if the user is authorized to access role module,
             return $this->formRequest->user()->canDo('roles.role.view');
         }

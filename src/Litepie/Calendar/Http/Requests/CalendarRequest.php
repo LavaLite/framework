@@ -16,7 +16,7 @@ class CalendarRequest extends FormRequest
         $this->model = $this->route('calendar');
         if (is_null($this->model)) {
             // Determine if the user is authorized to access calendar module,
-            return $this->formRequest->user($this->guard)->canDo('calendar.calendar.view');
+            return $this->formRequest->user()->canDo('calendar.calendar.view');
         }
 
         if ($this->isWorkflow()) {

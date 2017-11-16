@@ -17,7 +17,7 @@ class NotificationRequest extends FormRequest
 
         if (is_null($this->model)) {
             // Determine if the user is authorized to access notification module,
-            return $this->formRequest->user($this->guard)->canDo('alerts.notification.view');
+            return $this->formRequest->user()->canDo('alerts.notification.view');
         }
 
         if ($this->isWorkflow()) {

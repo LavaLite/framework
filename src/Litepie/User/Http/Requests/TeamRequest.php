@@ -17,7 +17,7 @@ class TeamRequest extends FormRequest
 
         if (is_null($this->model)) {
             // Determine if the user is authorized to access team module,
-            return $this->formRequest->user($this->guard)->canDo('user.team.view');
+            return $this->formRequest->user()->canDo('user.team.view');
         }
 
         if ($this->isWorkflow()) {

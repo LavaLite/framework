@@ -16,7 +16,7 @@ class UserRequest extends FormRequest
         $this->model = $this->route('user');
         if (is_null($this->model)) {
             // Determine if the user is authorized to access user module,
-            return $this->formRequest->user($this->guard)->canDo('user.user.view');
+            return $this->formRequest->user()->canDo('user.user.view');
         }
 
         if ($this->isWorkflow()) {

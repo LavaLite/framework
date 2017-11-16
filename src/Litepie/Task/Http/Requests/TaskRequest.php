@@ -16,7 +16,7 @@ class TaskRequest extends FormRequest
         $this->model = $this->route('task');
         if (is_null($this->model)) {
             // Determine if the user is authorized to access task module,
-            return $this->formRequest->user($this->guard)->canDo('task.task.view');
+            return $this->formRequest->user()->canDo('task.task.view');
         }
 
         if ($this->isWorkflow()) {
