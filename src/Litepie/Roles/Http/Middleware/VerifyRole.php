@@ -3,7 +3,7 @@
 namespace Litepie\Roles\Middleware;
 
 use Closure;
-use Illuminate\Interfaces\Auth\Guard;
+use Illuminate\Contracts\Auth\Guard;
 use Litepie\Roles\Exceptions\RoleDeniedException;
 
 class VerifyRole
@@ -35,7 +35,7 @@ class VerifyRole
      */
     public function handle($request, Closure $next, $role)
     {
-        if ($this->auth->check() && $this->auth->user()->is($role)) {
+        if ($this->auth->check() && $this->auth->user()->hasRole($role)) {
             return $next($request);
         }
 

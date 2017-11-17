@@ -3,7 +3,7 @@
 namespace Litepie\Roles\Middleware;
 
 use Closure;
-use Illuminate\Interfaces\Auth\Guard;
+use Illuminate\Contracts\Auth\Guard;
 use Litepie\Roles\Exceptions\LevelDeniedException;
 
 class VerifyLevel
