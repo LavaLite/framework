@@ -60,6 +60,17 @@ trait HasRoleAndPermission
     }
 
     /**
+     * Check if the user has at least one role.
+     *
+     * @param int|string|array $role
+     * @return bool
+     */
+    public function isA($role)
+    {
+        return $this->hasRole($role);
+    }
+
+    /**
      * Check if the user has all roles.
      *
      * @param int|string|array $role

@@ -25,6 +25,11 @@ class RoleTableSeeder extends Seeder
                 'slug' => 'user',
                 'name' => 'User',
             ],
+            [
+                'id'   => 4,
+                'slug' => 'client',
+                'name' => 'Client',
+            ],
         ]);
 
         DB::table('role_user')->insert([

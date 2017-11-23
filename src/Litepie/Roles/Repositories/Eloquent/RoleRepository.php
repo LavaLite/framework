@@ -32,8 +32,8 @@ class RoleRepository extends BaseRepository implements RoleRepositoryInterface
      *
      * @return type
      */
-    public function findRoleByKey($key)
+    public function findRoleBySlug($key)
     {
-        return $this->model->whereKey($key)->first();
+        return $this->model->whereSlug($key)->first();
     }
 }
