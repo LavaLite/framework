@@ -21,11 +21,8 @@ class ThemeServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->publishResources();
-
-        foreach (config('theme.themes') as $key => $val) {
-            $this->loadViewsFrom(public_path(config('theme.themeDir') . '/' . config("theme.themes.{$key}.theme") . '/views'), $key);
-        }
-
+        $this->app['view.finder']->prependLocation(base_path($this->app['theme']->path().'/view'));
+        $this->app['theme']->setView($this->app['view']);
     }
 
     /**
@@ -43,7 +40,7 @@ class ThemeServiceProvider extends ServiceProvider
                 null
             );
         });
-        app('view')->setFinder(app('view.finder'));
+        $this->app['view']->setFinder($this->app['view.finder']);
 
         // Register providers.
         $this->registerAsset();

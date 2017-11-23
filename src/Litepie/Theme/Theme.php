@@ -220,6 +220,18 @@ class Theme implements ThemeContract
     }
 
     /**
+     * Check theme exists.
+     *
+     * @param string $theme
+     *
+     * @return bool
+     */
+    public function setView(Factory $view)
+    {
+        $this->view = $view;
+    }
+
+    /**
      * Link to another view.
      *
      * <code>
@@ -356,7 +368,7 @@ class Theme implements ThemeContract
      *
      * @param string $location
      */
-    protected function addPathLocation($location)
+    public function addPathLocation($location)
     {
         // First path is in the selected theme.
         $hints[] = public_path($location);
@@ -1227,7 +1239,7 @@ class Theme implements ThemeContract
         // Append status code to view.
         $content = new Response($content, $statusCode);
 
-// Having cookie set.
+        // Having cookie set.
         if ($this->cookie) {
             $content->withCookie($this->cookie);
         }

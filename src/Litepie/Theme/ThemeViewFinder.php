@@ -3,10 +3,11 @@ namespace Litepie\Theme;
 
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\View\FileViewFinder;
+use Illuminate\View\ViewFinderInterface;
 use InvalidArgumentException;
 use Theme;
 
-class ThemeViewFinder extends FileViewFinder
+class ThemeViewFinder extends FileViewFinder implements ViewFinderInterface
 {
 
     public function __construct(Filesystem $files, array $paths, array $extensions = null)
@@ -22,12 +23,10 @@ class ThemeViewFinder extends FileViewFinder
      */
     protected function findNamespacedView($name)
     {
-
         // Extract the $view and the $namespace parts
         list($namespace, $view) = $this->parseNamespaceSegments($name);
 
-        $this->prependNamespace($namespace, public_path(Theme::path() . '/views/vendor/' . $namespace));
-
+        $this->prependNamespace($namespace, public_path(app('theme')->path() . '/views/vendor/' . $namespace));
         return $this->findInPaths($view, $this->hints[$namespace]);
     }
 
@@ -42,6 +41,7 @@ class ThemeViewFinder extends FileViewFinder
      */
     protected function findInPaths($name, $paths)
     {
+
         $location = public_path(Theme::path() . '/views');
         array_unshift($paths, $location);
 
