@@ -53,7 +53,6 @@ class MenuServiceProvider extends ServiceProvider
         );
 
         $this->app->register(\Litepie\Menu\Providers\AuthServiceProvider::class);
-        
         $this->app->register(\Litepie\Menu\Providers\RouteServiceProvider::class);
                 
     }
