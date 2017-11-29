@@ -2,7 +2,6 @@
 
 namespace Litepie\Filer\Traits;
 
-use Cache;
 use Filer as Uploader;
 use Litepie\Filer\Form\Forms;
 use Request;
@@ -114,7 +113,7 @@ trait Filer
      */
     public function getUploadURL($field, $file = 'file')
     {
-        return trans_url('upload/' . $this->config . '/' . folder_encode($this->upload_folder) . '/' . $field . '/' . $file);
+        return trans_url('upload/' . $this->config . '/' . ($this->upload_folder) . '/' . $field . '/' . $file);
     }
 
     /**
@@ -127,7 +126,7 @@ trait Filer
      */
     public function getCropURL($field, $file = 'file')
     {
-        return trans_url('crop/' . $this->config . '/' . folder_encode($this->upload_folder) . '/' . $field . '/' . $file);
+        return trans_url('crop/' . $this->config . '/' . ($this->upload_folder) . '/' . $field . '/' . $file);
     }
 
     /**
@@ -140,7 +139,7 @@ trait Filer
      */
     public function getFileURL($field, $file = 'file')
     {
-        return trans_url('file/' . $this->config . '/' . folder_encode($this->upload_folder) . '/' . $field . '/' . $file);
+        return trans_url('file/' . $this->config . '/' . ($this->upload_folder) . '/' . $field . '/' . $file);
     }
 
     /**
@@ -160,8 +159,9 @@ trait Filer
 
         $cache = [];
 
-        if (Cache::has('upload.' . $this->config . '.' . $field)) {
-            $cache = Cache::pull('upload.' . $this->config . '.' . $field);
+        if (session()->has('upload.' . $this->config . '.' . $field)) {
+            $cache = session()->pull('upload.' . $this->config . '.' . $field);
+            session()->forget('upload.' . $this->config . '.' . $field, null);
         }
 
         if (empty($current) && empty($cache) && !Request::has($field)) {
@@ -232,7 +232,7 @@ trait Filer
 
         $image = array_pull($image, $pos);
 
-        return "image/{$config}/{$size}/" . folder_encode($image['folder']) . '/' . $image['file'];
+        return "image/{$size}/" . ($image['path']);
     }
 
     /**
@@ -255,7 +255,7 @@ trait Filer
         $config = preg_replace('~\.(?!.*\.)~', '/', $config);
 
         foreach ($image as $key => $img) {
-            $image[$key] = "image/{$config}/{$size}/" . folder_encode($img['folder']) . '/' . $img['file'];
+            $image[$key] = "image/{$size}/" . ($img['path']);
         }
 
         return $image;
@@ -271,22 +271,17 @@ trait Filer
      */
     public function getFile($field, $download = false)
     {
-        $file = $this->$field;
+        $files = $this->$field;
 
-        $prefix = ($download) ? 'file' : 'download';
+        $prefix = ($download) ? 'original' : 'download';
 
-        if (!is_array($file) || empty($file)) {
+        if (!is_array($files) || empty($files)) {
             return [];
         }
-
-        $config = $this->config;
-        $config = preg_replace('~\.(?!.*\.)~', '/', $config);
-
-        foreach ($file as $key => $fil) {
-            $file[$key]['url'] = url("{$prefix}/{$config}/" . folder_encode($fil['folder']) . '/' . $fil['file']);
+        foreach ($files as $key => $file) {
+            $files[$key]['url'] = url("{$prefix}/" . $file['path']);
         }
-
-        return $file;
+        return $files;
     }
 
     /**

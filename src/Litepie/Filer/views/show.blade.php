@@ -7,7 +7,7 @@
     @endphp
     @if (in_array($ext, ['jpg','jpeg', 'png', 'gif']) )
         <a href='{!!$file["url"]!!}' target="_blank">
-            <img src='{!! url("/image/{$config}/{$size}/".folder_encode($file["folder"]))!!}/{!! $file["file"] !!}' class="img-thumbnail image-responsive">
+            <img src='{!! url("/image/{$size}/".$file["path"])!!}' class="img-thumbnail image-responsive">
         </a>
     @else
         <a href='{!!$file["url"]!!}' target="_blank">{!!$files["file"]!!}</a>

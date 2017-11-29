@@ -116,8 +116,8 @@ trait Uploader
      */
     public function checkUploadFolder($folder)
     {
-        $folder = public_path(config('filer.folder', 'uploads') . DIRECTORY_SEPARATOR . $folder);
-        $folder .= (substr($folder, -1) != DIRECTORY_SEPARATOR) ? DIRECTORY_SEPARATOR : '';
+        $folder = base_path(config('filer.folder', 'storage/uploads') . DIRECTORY_SEPARATOR . $folder);
+        $folder = str_finish($folder, DIRECTORY_SEPARATOR);
 
         // Check to see if the upload folder exists
         if (!File::exists($folder)) {

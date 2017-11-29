@@ -3,7 +3,6 @@
 namespace Litepie\Filer\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-use Cache;
 use Filer;
 use Request;
 
@@ -20,16 +19,21 @@ class UploadController extends Controller
      *
      * @return array|json
      */
-    public function upload($config, $folder, $field, $file = 'file')
+    public function upload($config, $path)
     {
+
+        $path   = explode('/', $path);
+        $file   = array_pop($path);
+        $field  = array_pop($path);
+        $folder = implode('/', $path);
 
         if (Request::hasFile($file)) {
             $ufolder         = $this->uploadFolder($config, $folder, $field);
             $count           = $this->getCount($config, $field);
             $array           = Filer::upload(Request::file($file), $ufolder);
-            $array['folder'] = folder_decode($folder) . '/' . $field;
-            $array['path']   = '/' . config('filer.folder', 'uploads') . $ufolder  . '/' . $array['file'];
-            $this->setCache("upload.{$config}.{$field}", $array, $count);
+            $array['folder'] = ($folder) . '/' . $field;
+            $array['path']   = $ufolder . '/' . $array['file'];
+            $this->setFiles("upload.{$config}.{$field}", $array, $count);
             return response()->json($array)
                 ->setStatusCode(203, 'UPLOAD_SUCCESS');
         }
@@ -42,12 +46,12 @@ class UploadController extends Controller
      * @return void
      * @author
      **/
-    public function setCache($key, $value, $count)
+    public function setFiles($key, $value, $count)
     {
-        $cache = Cache::pull($key, []);
-        array_push($cache, $value);
-        $cache = array_slice($cache, 0, $count);
-        Cache::put($key, $cache, strtotime('+10 minutes'));
+        $session = session()->pull($key, []);
+        array_push($session, $value);
+        $session = array_slice($session, 0, $count);
+        session()->put($key, $session);
     }
 
     /**
@@ -66,8 +70,6 @@ class UploadController extends Controller
         if (empty($path)) {
             throw new FileNotFoundException('Invalid upload configuration value.');
         }
-
-        $folder = folder_decode($folder);
 
         return "{$path}/{$folder}/{$field}";
 

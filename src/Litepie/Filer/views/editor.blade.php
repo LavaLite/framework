@@ -15,7 +15,7 @@
             ?>
             @if (in_array($ext, ['jpg','jpeg', 'png', 'gif']) )
                 <a href='{!! url($file["url"])!!}' target="_blank" style="cursor:move;">
-                    <img src='{!! url("/image/{$config}/{$size}/ ". folder_encode($file["folder"]))!!}/{!! $file["file"] !!}' class="img-thumbnail image-responsive">
+                    <img src='{!! url("/image/{$size}/".($file["path"]))!!}' class="img-thumbnail image-responsive">
                 </a>
             @else
                 <div id="file">
@@ -47,7 +47,7 @@
                     <div class="modal-body">
                         @if (in_array($ext, ['jpg','jpeg', 'png', 'gif']) )
                             <a href='{!!url($file["url"])!!}' target="_blank">
-                                <img src='{!! url("/image/{$config}/{$size}/".folder_encode($file["folder"]))!!}/{!! $file["file"] !!}'' class="img-thumbnail image-responsive">
+                                <img src='{!! url("/image/{$size}/".($file["path"]))!!}' class="img-thumbnail image-responsive">
                             </a>
                         @else
                             <a href="{!! url($file['url'])!!}" target="_blank">{!!$file["file"]!!}</a>
@@ -56,6 +56,7 @@
                         {!!Form::text($field."[$key][caption]", 'Caption')->value(@$file['caption'])!!}
                         {!!Form::hidden($field."[$key][folder]")->value(@$file["folder"])->raw()!!}
                         {!!Form::hidden($field."[$key][time]")->value(@$file['time'])->raw()!!}
+                        {!!Form::hidden($field."[$key][path]")->value(@$file["path"])->raw()!!}
                         {!!Form::hidden($field."[$key][file]")->value(@$file["file"])->raw()!!}
                         <br />
                     </div>
