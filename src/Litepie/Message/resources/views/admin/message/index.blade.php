@@ -1,4 +1,4 @@
-@extends('admin::default')
+@extends('curd.default')
 @section('heading')
 <h1>
 {!! trans('message::message.name') !!}

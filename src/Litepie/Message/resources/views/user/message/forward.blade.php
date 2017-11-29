@@ -2,7 +2,7 @@
                 ->id('forward-message-message')
                 ->method('POST')
                 ->files('true')
-                ->action(trans_url($guard.'/message/message'))!!}
+                ->action(guard_url('message/message'))!!}
                 {!! Form::hidden('status')
                  -> forceValue("Sent")!!}
                  {!! Form::hidden('subject')!!}
@@ -13,8 +13,7 @@
                         <td colspan="4">
                         {!! Form::select('mails[]','To')
                         -> options(Message::getUsers())
-                        -> class('select-search')
-                        -> dataUrl(guard_url('message/message/users'))
+                        -> class('js-example-tags select2-hidden-accessible')
                         -> style('width:100%')
                         -> multiple()
                         -> required()!!}
@@ -40,10 +39,13 @@
                 </tbody>
             </table>
             {!! Form::close() !!}
-    
+            <link rel="stylesheet" type="text/css" href="https://select2.github.io/dist/css/select2.min.css">
+            <script type="text/javascript" src="https://select2.github.io/dist/js/select2.full.js"></script>       
 
             <script type="text/javascript">
-
+            $(".js-example-tags").select2({
+                  tags: true
+                });
             $(document).ready(function(){
                 $('#forward-send').click(function(){
                     $('#forward-message-message').submit();
@@ -70,7 +72,7 @@
                         {
                             $('#inbox_id').html(data.inbox_count);           
                             $('#sent_id').html(data.sent_count);
-                            $('#entry-message').load('{{trans_url($guard.'/message/status/Inbox')}}');
+                            $('#entry-message').load('{{guard_url('message/status/Inbox')}}');
                         },
                         error: function(jqXHR, textStatus, errorThrown)
                         {

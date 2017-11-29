@@ -1,5 +1,5 @@
 
-<div class="content pn" style="margin: -30px -15px;">
+<div class="content pn" style="margin: -30px -30px;">
     <div class="static-content mn">
         <div class="page-content aside-content">
             <div class="aside-wrapper">
@@ -20,9 +20,7 @@
                                 <li class="cur active">
                                     <a href="#" id="btn-inbox"><span class="icon"><i class="ion-arrow-down-a"></i></span><span class="text">Inbox</span><span class="badge badge-info" id="inbox_id">{!!Message::count('Inbox')!!}</span></a>
                                 </li>
-                                 <li class="cur">
-                                    <a href="#" id="btn-junk"><span class="icon"><i class="ion-close"></i></span><span class="text">Junk</span><span class="badge badge-warning" id="junk_id">{!!Message::count('Junk')!!}</span></a>
-                                </li> 
+
                                 <li class="cur">
                                     <a href="#" id="btn-draft"><span class="icon"><i class="ion-android-create"></i></span><span class="text">Drafts</span><span class="badge badge-primary" id="draft_id">{!!Message::count('draft')!!}</span></a>
                                 </li>
@@ -30,20 +28,20 @@
                                     <a href="#" id="btn-sent"><span class="icon"><i class="ion-forward"></i></span><span class="text">Sent</span><span class="badge badge-success" id="sent_id">{!!Message::count('Sent')!!}</span></a>
                                 </li>
                                 <li class="cur">
-                                    <a href="#" id="btn-trash"><span class="icon"><i class="ion-android-delete"></i></span><span class="text">Trash</span><span class="badge badge-danger" id="trash_id">{!!Message::count('Trash')!!}</span></a>
+                                    <a href="#" id="btn-trash"><span class="icon"><i class="ion-android-delete"></i></span><span class="text">Trash</span><span class="badge badge-danger" id="trash_id">{!!Message::count('Trash' )!!}</span></a>
                                 </li>
                                 <li class="nav-separator">Quick Links</li>
                                 <li class="cur">
-                                    <a href="#" id="btn-starred"><span class="icon"><i class="ion-stop text-warning"></i></span><span class="text">Starred</span><span class="badge badge-primary" id="star_id">{!!Message::count('star')!!}</span> </a>
+                                    <a href="#" id="btn-starred"><span class="icon"><i class="ion-stop text-warning"></i></span><span class="text">Starred</span><!-- <span class="badge badge-primary" id="star_id">{!!Message::count('star')!!}</span> --></a>
                                 </li>
                                 <li class="cur">
-                                    <a href="#" id="btn-Important"><span class="icon"><i class="ion-stop text-danger"></i></span><span class="text">Important</span> <span class="badge badge-primary" id="important_id">{!!Message::count('important')!!}</span></a>
+                                    <a href="#" id="btn-Important"><span class="icon"><i class="ion-stop text-danger"></i></span><span class="text">Important</span><!-- <span class="badge badge-primary" id="important_id">{!!Message::count('important' )!!}</span -->></a>
                                 </li>
                                 <li class="cur">
-                                    <a href="#" id="btn-Promotions"><span class="icon"><i class="ion-stop text-success"></i></span><span class="text">Promotions</span><span class="badge badge-primary" id="promotions_id">{!!Message::count('Promotions')!!}</span></a>
+                                    <a href="#" id="btn-Promotions"><span class="icon"><i class="ion-stop text-success"></i></span><span class="text">Promotions</span><!-- <span class="badge badge-primary" id="promotions_id">{!!Message::count('Promotions')!!}</span> --></a>
                                 </li>
                                 <li class="cur">
-                                    <a href="#" id="btn-Social"><span class="icon"><i class="ion-stop text-info"></i></span><span class="text">Social</span> <span class="badge badge-primary" id="social_id">{!!Message::count('Social')!!}</span></a>
+                                    <a href="#" id="btn-Social"><span class="icon"><i class="ion-stop text-info"></i></span><span class="text">Social</span><!-- <span class="badge badge-primary" id="social_id">{!!Message::count('Social')!!}</span> --></a>
                                 </li>
                             </ul>
                         </div>
@@ -76,7 +74,7 @@
         $('#entry-message').load('{{guard_url('message/message/search')}}'+'/'+slug +'/Inbox');
     });
 
-    $('#entry-message').load('{{guard_url('message/message/folder/inbox')}}');
+    $('#entry-message').load('{{guard_url('message/message/list/inbox')}}');
 
     $('#btn-inbox').parent().addClass("active");
 
@@ -89,31 +87,31 @@
     $('#btn-inbox').click(function(){
        $(".cur").removeClass("active");
        $( this ).parent().addClass("active");
-        $('#entry-message').load('{{guard_url('message/message/folder/inbox')}}');
+        $('#entry-message').load('{{guard_url('message/message/list/Inbox')}}');
     });
 
     $('#btn-sent').click(function(){
         $(".cur").removeClass("active");
         $( this ).parent().addClass("active");
-        $('#entry-message').load('{{guard_url('message/message/status/Sent')}}');
+        $('#entry-message').load('{{guard_url('message/message/list/Sent')}}');
     });
 
     $('#btn-draft').click(function(){
         $(".cur").removeClass("active");
         $( this ).parent().addClass("active");
-        $('#entry-message').load('{{guard_url('message/message/status/Draft')}}');
+        $('#entry-message').load('{{guard_url('message/message/list/Draft')}}');
     });
 
     $('#btn-trash').click(function(){
         $(".cur").removeClass("active");
         $( this ).parent().addClass("active");
-        $('#entry-message').load('{{guard_url('message/message/status/Trash')}}');
+        $('#entry-message').load('{{guard_url('message/message/list/Trash')}}');
     });
 
     $('#btn-junk').click(function(){
         $(".cur").removeClass("active");
         $( this ).parent().addClass("active");
-        $('#entry-message').load('{{guard_url('message/message/status/Junk')}}');
+        $('#entry-message').load('{{guard_url('message/message/list/Junk')}}');
     });
     $('#btn-starred').click(function(){
         $(".cur").removeClass("active");
@@ -130,13 +128,13 @@
     $('#btn-Promotions').click(function(){
         $(".cur").removeClass("active");
         $( this ).parent().addClass("active");
-        $('#entry-message').load('{{guard_url('message/message/status/Promotions')}}');
+        $('#entry-message').load('{{guard_url('message/message/list/Promotions')}}');
     });
 
     $('#btn-Social').click(function(){
         $(".cur").removeClass("active");
         $( this ).parent().addClass("active");
-        $('#entry-message').load('{{guard_url('message/message/status/Social')}}');
+        $('#entry-message').load('{{guard_url('message/message/list/Social')}}');
     });
 
     $(".checkbox-toggle").click(function () {

@@ -5,7 +5,7 @@
             <h4 class="text-dark  header-title m-t-0"> {{ trans('app.create')  }} Message </h4>
         </div>
         <div class="col-md-6">
-            <a href="{{ trans_url($guard.'/message/message') }}" class="btn btn-default pull-right"> {{ trans('app.back')  }}</a>
+            <a href="{{ guard_url('message/message') }}" class="btn btn-default pull-right"> {{ trans('app.back')  }}</a>
         </div>
     </div>
     <p class="text-muted m-b-25 font-13">
@@ -17,7 +17,7 @@
     ->id('create-message-message')
     ->method('POST')
     ->files('true')
-    ->action(trans_url($guard.'/message/message'))!!}
+    ->action(guard_url('message/message'))!!}
             @include('message::user.message.partial.entry')
     {!! Form::close() !!}
 </div>

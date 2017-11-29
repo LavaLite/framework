@@ -73,17 +73,17 @@ $(document).ready(function(){
         var slug = $(this).val();
         if (slug == '')
             return;
-        $('#search-results').load('{{trans_url($guard.'/message/search')}}'+'/'+slug +'/{{@$messages['caption']}}');
+        $('#search-results').load('{{guard_url('message/search')}}'+'/'+slug +'/{{@$messages['caption']}}');
     });
 
     $(".btn-refresh").click(function(){
         var caption = '{{@$messages['caption']}}';
         $("#txt-search").val('');
         if (caption == ''){
-            $('#entry-message').load('{{trans_url($guard.'/message/status/Inbox')}}');
+            $('#entry-message').load('{{guard_url('message/status/Inbox')}}');
             return;
         }
-        $('#entry-message').load('{{trans_url($guard.'/message/status')}}/{{@$messages['caption']}}');
+        $('#entry-message').load('{{guard_url('message/status')}}/{{@$messages['caption']}}');
     });
 
     $(".btn-deleted").click(function(){
@@ -102,13 +102,13 @@ $(document).ready(function(){
             closeOnConfirm: false
         }, function(){
             $.ajax({
-                url: "{{trans_url($guard.'/message/delete')}}",
+                url: "{{guard_url('message/delete')}}",
                 type: 'POST',
                 data: {arrayIds},
                 success:function(data, textStatus, jqXHR)
                 {
                     swal("Deleted!", data.message, "success");
-                    $('#entry-message').load('{{trans_url($guard.'/message/status/Trash')}}');
+                    $('#entry-message').load('{{guard_url('message/status/Trash')}}');
                     $('#inbox_id').html(data.inbox_count);
                     $('#trash_id').html(data.trash_count);
                     $('#draft_id').html(data.draft_count);
@@ -152,7 +152,7 @@ $(document).ready(function(){
             star = 'Yes' ;
         }
             $.ajax( {
-                url: "{{trans_url($guard.'/message/starred/substatus')}}",
+                url: "{{guard_url('message/starred/substatus')}}",
                 type: 'GET',
                 data: {id:msg_id,star:star},
                 beforeSend:function()
@@ -184,7 +184,7 @@ $(document).ready(function(){
             important = 'Yes' ;
         }
             $.ajax( {
-                url: "{{trans_url($guard.'/message/important/substatus')}}",
+                url: "{{guard_url('message/important/substatus')}}",
                 type: 'GET',
                 data: {id:msg_id,important:important},
                 beforeSend:function()
@@ -221,7 +221,7 @@ $(document).ready(function(){
                 closeOnConfirm: true
             }, function(){   
                 $.ajax( {
-                        url: "{{trans_url($guard.'/message/message/status/Trash')}}",
+                        url: "{{guard_url('message/message/status/Trash')}}",
                         type: 'GET',
                         data: {data:arrayIds},
                         beforeSend:function()
@@ -250,14 +250,14 @@ $(document).ready(function(){
         });
         if(arrayIds.length != 0){
             $.ajax( {
-                    url: "{{trans_url($guard.'/message/message/status')}}"+"/"+status,
+                    url: "{{guard_url('message/message/status')}}"+"/"+status,
                     type: 'GET',
                     data: {data:arrayIds},
                     success:function(data, textStatus, jqXHR)
                     {
                        
                         $('#inbox_id').html(data.inbox_count);
-                        $('#entry-message').load('{{trans_url($guard.'/message/status/')}}'+'/'+caption);
+                        $('#entry-message').load('{{guard_url('message/status/')}}'+'/'+caption);
                     },
                     error: function(jqXHR, textStatus, errorThrown)
                     {
@@ -271,7 +271,7 @@ $(document).ready(function(){
               var caption = '{{@$messages['caption']}}';
                /*if(caption == '')
                  caption = 'Inbox';*/
-               $('#entry-message').load('{{trans_url($guard.'/message/details/')}}'+'/'+caption+'/'+msgid);
+               $('#entry-message').load('{{guard_url('message/details/')}}'+'/'+caption+'/'+msgid);
         });
 
     jQuery("time.timeago").timeago();

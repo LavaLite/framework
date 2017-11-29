@@ -16,7 +16,7 @@ class MessageRequest extends FormRequest
         $this->model = $this->route('message');
         if (is_null($this->model)) {
             // Determine if the user is authorized to access message module,
-            return $this->formRequest->user()->canDo('message.message.view');
+            return $this->canAccess();
         }
 
         if ($this->isWorkflow()) {
@@ -68,5 +68,19 @@ class MessageRequest extends FormRequest
         return [
 
         ];
+    }
+
+    /**
+     * Check whether the user can access the module.
+     *
+     * @return bool
+     **/
+    protected function canAccess()
+    {
+        if ($this->formRequest->user()->isAdmin() || $this->formRequest->user()->isUser()) {
+            return true;
+        }
+
+        return $this->formRequest->user()->canDo('message.message.view');
     }
 }

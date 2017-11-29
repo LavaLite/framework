@@ -54,17 +54,6 @@ class MessagePolicy
      */
     public function update(UserPolicy $user, Message $message)
     {  
-        if ($user->canDo('message.message.update') && $user->hasRole('admin')) {
-            return true;
-        }
-
-        if ($user->canDo('message.message.update') 
-            && $user->hasRole('manager') 
-            && $message->user->parent_id == $user->id
-            && get_class($user) === $user->user_type) {
-            return true;
-        }
-
         return $user->id === $message->user_id && get_class($user) === $message->user_type;
     }
 
@@ -77,59 +66,8 @@ class MessagePolicy
      * @return bool
      */
     public function destroy(UserPolicy $user, Message $message)
-    {    
-
-        if ($user->canDo('message.message.delete') && $user->hasRole('admin')) {
-            return true;
-        }
-
-        if ($user->canDo('message.message.delete') 
-        && $user->hasRole('manager')
-        && $message->user->parent_id == $user->id) {
-            return true;
-        }
-
+    {
         return $user->id === $message->user_id && get_class($user) === $message->user_type;
-    }
-
-    /**
-     * Determine if the given user can verify the given message.
-     *
-     * @param User $user
-     * @param Message $message
-     *
-     * @return bool
-     */
-    public function verify(UserPolicy $user, Message $message)
-    {
-        if ($user->canDo('message.message.verify') && $user->hasRole('admin')) {
-            return true;
-        }
-
-        if ($user->canDo('message.message.verify') 
-        && $user->hasRole('manager')
-        && $message->user->parent_id == $user->id) {
-            return true;
-        }
-
-        return false;
-    }
-
-    /**
-     * Determine if the given user can approve the given message.
-     *
-     * @param User $user
-     * @param Message $message
-     *
-     * @return bool
-     */
-    public function approve(UserPolicy $user, Message $message)
-    {
-        if ($user->canDo('message.message.approve') && $user->hasRole('admin')) {
-            return true;
-        }
-
-        return false;
     }
 
     /**
@@ -145,6 +83,5 @@ class MessagePolicy
         if ($user->hasRole('superuser')) {
             return true;
         }
-        return true;
     }
 }

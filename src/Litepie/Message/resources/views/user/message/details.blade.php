@@ -3,7 +3,7 @@
 ->id('edit-message')
 ->method('PUT')
 ->enctype('multipart/form-data')
-->action(Trans::to($guard.'/message/message/'. $message->getRouteKey()))!!}
+->action(guard_url('message/message/'. $message->getRouteKey()))!!}
 {!!Form::token()!!}  
 
 {!! Form::hidden('read')
@@ -110,7 +110,7 @@ $(document).ready(function(){
         }, function(){
             var data = new FormData();
             $.ajax({
-                url: "{{trans_url($guard.'/message/message')}}/{{$message->getRouteKey()}}",
+                url: "{{guard_url('message/message')}}/{{$message->getRouteKey()}}",
                 type: 'DELETE',
                 processData: false,
                 contentType: false,
@@ -119,7 +119,7 @@ $(document).ready(function(){
                 {
                     swal("Deleted!", data.message, "success");
                     $('#trash_id').html(data.trash_count);
-                    $('#entry-message').load('{{trans_url($guard.'/message/status/Trash')}}');
+                    $('#entry-message').load('{{guard_url('message/status/Trash')}}');
                 },
             });
         });
@@ -130,7 +130,7 @@ $(document).ready(function(){
         var arrayIds = [];
         arrayIds.push($(this).parent().attr('id'));
         $.ajax( {
-                url: "{{trans_url($guard.'/message/message/status/Trash')}}",
+                url: "{{guard_url('message/message/status/Trash')}}",
                 type: 'GET',
                 data: {data:arrayIds},
                 beforeSend:function()
@@ -140,7 +140,7 @@ $(document).ready(function(){
                 { 
                   var msgcaption = $(".btn-back").attr('id');
                   $('#trash_id').html(data.trash_count);
-                  $('#entry-message').load('{{Trans::to($guard."/message/status")}}'+'/'+msgcaption);
+                  $('#entry-message').load('{{guard_url("message/status")}}'+'/'+msgcaption);
                 },
                 error: function(jqXHR, textStatus, errorThrown)
                 {
@@ -151,23 +151,23 @@ $(document).ready(function(){
     $(".btn-refresh").click(function(){
         var msgid = $( this ).attr('id');
         var caption = '{{@$message["caption"]}}';
-        $('#entry-message').load('{{trans_url($guard.'/message/details/')}}'+'/'+caption+'/'+msgid);
+        $('#entry-message').load('{{guard_url('message/details/')}}'+'/'+caption+'/'+msgid);
     });
 
     $(".btn-back").click(function(){
         var msgcaption = '{{@$message["caption"]}}';
-        $('#entry-message').load('{{Trans::to($guard."/message/status")}}'+'/'+msgcaption);
+        $('#entry-message').load('{{guard_url("message/status")}}'+'/'+msgcaption);
 
     });
 
     $(".btn-reply").click(function(){ 
         var to_uid = '{{@$message["id"]}}';
-        $('#show-message').load('{{trans_url($guard.'/message/reply')}}'+'/'+to_uid);
+        $('#show-message').load('{{guard_url('message/reply')}}'+'/'+to_uid);
     });
 
     $(".btn-forward").click(function(){
         var to_uid = '{{@$message["id"]}}';
-        $('#show-message').load('{{trans_url($guard.'/message/forward')}}'+'/'+to_uid);
+        $('#show-message').load('{{guard_url('message/forward')}}'+'/'+to_uid);
     }); 
 
     $(".btn-important").click(function(){
@@ -177,13 +177,13 @@ $(document).ready(function(){
         var caption = '{{@$message["caption"]}}';
         arrayIds.push(to_uid);
         $.ajax({                    
-            url: "{{trans_url($guard.'/message/message/status')}}"+"/"+status,
+            url: "{{guard_url('message/message/status')}}"+"/"+status,
             type: 'GET',
             data: {data:arrayIds},
             success:function(data, textStatus, jqXHR)
             {
                 $('#inbox_id').html(data.inbox_count);
-                $('#entry-message').load('{{trans_url($guard.'/message/status/')}}'+'/'+caption);
+                $('#entry-message').load('{{guard_url('message/status/')}}'+'/'+caption);
             },
             error: function(jqXHR, textStatus, errorThrown)
             {
@@ -198,13 +198,13 @@ $(document).ready(function(){
         var caption = '{{@$message["caption"]}}';
         arrayIds.push(to_uid);
         $.ajax({                    
-            url: "{{trans_url($guard.'/message/message/status')}}"+"/"+status,
+            url: "{{guard_url('message/message/status')}}"+"/"+status,
             type: 'GET',
             data: {data:arrayIds},
             success:function(data, textStatus, jqXHR)
             {
                 $('#inbox_id').html(data.inbox_count);
-                $('#entry-message').load('{{trans_url($guard.'/message/status/')}}'+'/'+caption);
+                $('#entry-message').load('{{guard_url('message/status/')}}'+'/'+caption);
             },
             error: function(jqXHR, textStatus, errorThrown)
             {
@@ -219,13 +219,13 @@ $(document).ready(function(){
         var caption = '{{@$message["caption"]}}';
         arrayIds.push(to_uid);
         $.ajax({                    
-            url: "{{trans_url($guard.'/message/message/status')}}"+"/"+status,
+            url: "{{guard_url('message/message/status')}}"+"/"+status,
             type: 'GET',
             data: {data:arrayIds},
             success:function(data, textStatus, jqXHR)
             {
                 $('#inbox_id').html(data.inbox_count);
-                $('#entry-message').load('{{trans_url($guard.'/message/status/')}}'+'/'+caption);
+                $('#entry-message').load('{{guard_url('message/status/')}}'+'/'+caption);
             },
             error: function(jqXHR, textStatus, errorThrown)
             {

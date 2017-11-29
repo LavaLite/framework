@@ -22,7 +22,7 @@
                 ->id('create-message-message')
                 ->method('POST')
                 ->files('true')
-                ->action(trans_url($guard.'/message/message'))
+                ->action(guard_url('message/message'))
                 ->class('form-horizontal p15')!!}
                 {!! Form::hidden('status')
                 ->id('status')
@@ -35,8 +35,7 @@
                                 {!! Form::select('mails[]')
                                 -> id('to')
                                 -> options(Message::getUsers())
-                                -> addClass('select-search')
-                                -> dataUrl(guard_url('message/message/users'))
+                                -> addClass('js-tags select2')
                                 -> style('width:100%')
                                 -> multiple()
                                 -> required()
@@ -73,6 +72,10 @@
 
 <script type="text/javascript">
     $(function () {
+        $(".js-tags").select2({
+          tags: true,
+          placeholder: "Type email here..."
+        }); 
         $('.summernote').summernote({ height: 200 });
         $('#send').click(function(){ 
             $('#create-message-message').submit();
@@ -89,7 +92,7 @@
     $('#back-inbox').click(function(){
        $(".cur").removeClass("active");
        $('#btn-inbox').parent().addClass("active");
-        $('#entry-message').load('{{trans_url($guard.'/message/status/Inbox')}}');
+        $('#entry-message').load('{{guard_url('message/status/Inbox')}}');
     });
 
 
@@ -116,7 +119,7 @@
                 success:function(data, textStatus, jqXHR)
                 {
                     console.log(data);
-                    $('#entry-message').load('{{trans_url($guard.'/message/status/Inbox')}}');
+                    $('#entry-message').load('{{guard_url('message/status/Inbox')}}');
                     $('#inbox_id').html(data.inbox_count);
                     $('#draft_id').html(data.draft_count);
                     $('#sent_id').html(data.sent_count);

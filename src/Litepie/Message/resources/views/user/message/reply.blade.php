@@ -2,7 +2,7 @@
                 ->id('reply-message-message')
                 ->method('POST')
                 ->files('true')
-                ->action(trans_url($guard.'/message/message'))!!}
+                ->action(guard_url('message/message'))!!}
                 {!! Form::hidden('status')
                  -> forceValue("Sent")!!}
                  {!! Form::hidden('subject')!!}
@@ -67,7 +67,7 @@
                         {
                             $('#inbox_id').html(data.inbox_count);           
                             $('#sent_id').html(data.sent_count);
-                            $('#entry-message').load('{{trans_url($guard.'/message/status/Inbox')}}');                            
+                            $('#entry-message').load('{{guard_url('message/status/Inbox')}}');                            
                         },
                         error: function(jqXHR, textStatus, errorThrown)
                         {

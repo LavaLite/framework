@@ -47,23 +47,11 @@ class MessageTableSeeder extends Seeder
                 'url'         => 'user/message/message',
                 'name'        => 'Message',
                 'description' => null,
-                'icon'        => 'pe-7s-mail',
+                'icon'        => 'message',
                 'target'      => null,
                 'order'       => 180,
                 'status'      => 1,
-            ],
-
-            [
-                'parent_id'   => 3,
-                'key'         => null,
-                'url'         => 'client/message/message',
-                'name'        => 'Message',
-                'description' => null,
-                'icon'        => 'pe-7s-mail',
-                'target'      => null,
-                'order'       => 180,
-                'status'      => 1,
-            ],
+            ]
 
         ]);
 

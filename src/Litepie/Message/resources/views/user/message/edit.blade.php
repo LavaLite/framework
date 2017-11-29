@@ -5,7 +5,7 @@
             <h4 class="text-dark  header-title m-t-0"> {{ trans('app.edit')  }} Module </h4>
         </div>
         <div class="col-md-6">
-            <a href="{{ trans_url($guard.'/message/message') }}" class="btn btn-default pull-right"> {{ trans('app.back')  }}</a>
+            <a href="{{ guard_url('message/message') }}" class="btn btn-default pull-right"> {{ trans('app.back')  }}</a>
         </div>
     </div>
     <p class="text-muted m-b-25 font-13">
@@ -18,7 +18,7 @@
     ->id('edit-message-message')
     ->method('PUT')
     ->files('true')
-    ->action(trans_url($guard.'/message/message') .'/'.$message['eid'])!!}
+    ->action(guard_url('message/message') .'/'.$message['eid'])!!}
         @include('message::user.message.partial.entry')
     {!! Form::close() !!}
 </div>

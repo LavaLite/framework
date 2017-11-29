@@ -9,20 +9,20 @@ class MessageResourceCriteria implements CriteriaInterface
 {
     public $folder = null;
     public $label  = null;
-    public $readed   = 1;
+    public $readed = 1;
 
     public function __construct($folder = null, $label = null, $readed = 0)
     {
         $this->folder = $folder;
         $this->label  = $label;
-        $this->readed   = $readed;
+        $this->readed = $readed;
     }
 
     public function apply($model, RepositoryInterface $repository)
     {
         $this->folder = request()->input('folder', $this->folder);
-        $this->label  = request()->input('label',  $this->label);
-        $this->readed  = request()->input('readed', $this->readed);
+        $this->label  = request()->input('label', $this->label);
+        $this->readed = request()->input('readed', $this->readed);
 
         if (in_array($this->folder, ['Sent', 'Draft', 'Outbox'])) {
             $model = $model
