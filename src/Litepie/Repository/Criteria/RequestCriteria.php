@@ -156,7 +156,7 @@ class RequestCriteria implements CriteriaInterface
 
             foreach ($search as $key => $value) {
 
-                if (empty($value)) {
+                if ($value == '') {
                     unset($search[$key]);
                 }
 
