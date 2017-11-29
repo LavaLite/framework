@@ -7,12 +7,6 @@ use Illuminate\Http\Request as IlluminateRequest;
 
 abstract class Request extends FormRequest
 {
-    /**
-     * Auth guard for the current controller.
-     *
-     * @var array
-     */
-    protected $guard;
 
     /**
      * User for the current request.
@@ -46,6 +40,18 @@ abstract class Request extends FormRequest
     protected function can($action)
     {
         return $this->formRequest->user()->can($action, $this->model);
+    }
+
+    /**
+     * Check the proess is verify.
+     *
+     * @return bool
+     **/
+    protected function canAccess()
+    {
+        if ($this->formRequest->user()->isSuperuser()) {
+            return true;
+        }
     }
 
     /**

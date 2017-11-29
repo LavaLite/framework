@@ -148,6 +148,7 @@ class Response
     {
         Form::populate($this->getFormData());
         $this->theme->prependTitle($this->getTitle());
+
         return $this->theme->of($this->getView(), $this->getData())->render();
     }
 
