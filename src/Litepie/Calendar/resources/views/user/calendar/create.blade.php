@@ -1,5 +1,5 @@
 
-<div class="box-body row" >
+<div class="box-body row" > 
     <div class="nav-tabs-custom">
         <!-- Nav tabs -->
  
@@ -7,7 +7,7 @@
         ->id('create-calendar-calendar')
         ->method('POST')
         ->files('true')
-        ->action(trans_url($guard.'/calendar/calendar'))!!}
+        ->action(guard_url('calendar/calendar'))!!}
         <div class="tab-content">
             <div class="tab-pane active" id="details">
                 @include('calendar::user.calendar.partial.entry')

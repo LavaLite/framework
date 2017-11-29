@@ -22,11 +22,8 @@ class CalendarPolicy
             return true;
         }
 
-        if ($user->canDo('calendar.calendar.view') 
-        && $user->hasRole('manager')
-        && $calendar->user->parent_id == $user->id
-        && get_class($user) === $user->user_type) {
-            return true;
+        if ($user->isUser() || $user->isAdmin()){
+            return true
         }
 
         return $user->id === $calendar->user_id && get_class($user) === $calendar->user_type;
@@ -55,19 +52,7 @@ class CalendarPolicy
      */
     public function update(UserPolicy $user, Calendar $calendar)
     {
-        if ($user->canDo('calendar.calendar.update') && $user->hasRole('admin')) {
-            return true;
-        }
-
-        if ($user->canDo('calendar.calendar.update') 
-            && $user->hasRole('manager') 
-            && $calendar->user->parent_id == $user->id
-            && get_class($user) === $user->user_type) {
-            return true;
-        }
-
        return $user->id == $calendar->user_id && get_class($user) == $calendar->user_type;
-
     }
 
     /**
@@ -80,57 +65,7 @@ class CalendarPolicy
      */
     public function destroy(UserPolicy $user, Calendar $calendar)
     {
-        if ($user->canDo('calendar.calendar.delete') && $user->hasRole('admin')) {
-            return true;
-        }
-
-        if ($user->canDo('calendar.calendar.delete') 
-        && $user->hasRole('manager')
-        && $calendar->user->parent_id == $user->id) {
-            return true;
-        }
-        
         return $user->id == $calendar->user_id && get_class($user) == $calendar->user_type;
-    }
-
-    /**
-     * Determine if the given user can verify the given calendar.
-     *
-     * @param User $user
-     * @param Calendar $calendar
-     *
-     * @return bool
-     */
-    public function verify(UserPolicy $user, Calendar $calendar)
-    {
-        if ($user->canDo('calendar.calendar.verify') && $user->hasRole('admin')) {
-            return true;
-        }
-
-        if ($user->canDo('calendar.calendar.verify') 
-        && $user->hasRole('manager')
-        && $calendar->user->parent_id == $user->id) {
-            return true;
-        }
-
-        return false;
-    }
-
-    /**
-     * Determine if the given user can approve the given calendar.
-     *
-     * @param User $user
-     * @param Calendar $calendar
-     *
-     * @return bool
-     */
-    public function approve(UserPolicy $user, Calendar $calendar)
-    {
-        if ($user->canDo('calendar.calendar.approve') && $user->hasRole('admin')) {
-            return true;
-        }
-
-        return false;
     }
 
     /**

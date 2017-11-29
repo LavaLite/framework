@@ -102,23 +102,11 @@ class CalendarTableSeeder extends Seeder
                 'url'         => 'user/calendar/calendar',
                 'name'        => 'Calendars',
                 'description' => null,
-                'icon'        => 'pe-7s-date',
+                'icon'        => 'date_range',
                 'target'      => null,
                 'order'       => 120,
                 'status'      => 1,
-            ],
-
-            [
-                'parent_id'   => 3,
-                'key'         => null,
-                'url'         => 'client/calendar/calendar',
-                'name'        => 'Calendars',
-                'description' => null,
-                'icon'        => 'pe-7s-date',
-                'target'      => null,
-                'order'       => 120,
-                'status'      => 1,
-            ],
+            ]
 
         ]);
 

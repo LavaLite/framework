@@ -14,9 +14,10 @@ class CalendarRequest extends FormRequest
     public function authorize()
     {
         $this->model = $this->route('calendar');
+
         if (is_null($this->model)) {
             // Determine if the user is authorized to access calendar module,
-            return $this->formRequest->user()->canDo('calendar.calendar.view');
+            return $this->canAccess();
         }
 
         if ($this->isWorkflow()) {
@@ -69,5 +70,19 @@ class CalendarRequest extends FormRequest
         return [
 
         ];
+    }
+
+    /**
+     * Check whether the user can access the module.
+     *
+     * @return bool
+     **/
+    protected function canAccess()
+    {
+        if ($this->formRequest->user()->isAdmin() || $this->formRequest->user()->isUser()) {
+            return true;
+        }
+
+        return $this->formRequest->user()->canDo('calendar.calendar.view');
     }
 }

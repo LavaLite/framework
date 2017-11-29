@@ -1,5 +1,5 @@
 
-<div class="box-body row" >
+<div class="box-body row" > 
     <div class="nav-tabs-custom">
    
         {!!Form::vertical_open()
@@ -34,7 +34,7 @@ $(function(){
                 formData.append(val.name, val.value);
             });    
           $.ajax( {
-            url: "{!!Trans::to($guard.'/calendar/calendar')!!}/{{$calendar->getRouteKey()}}",
+            url: "{!!guard_url('calendar/calendar')!!}/{{$calendar->getRouteKey()}}",
             type: 'POST',
             data: formData,
             processData:false,
@@ -66,7 +66,7 @@ $(function(){
             closeOnConfirm: false
         }, function(){
         $.ajax( {
-            url: "{!!Trans::to($guard.'/calendar/calendar')!!}/{{$calendar->getRouteKey()}}",
+            url: "{!!guard_url('calendar/calendar')!!}/{{$calendar->getRouteKey()}}",
             type: 'DELETE',
             processData:false,
             contentType:false, 

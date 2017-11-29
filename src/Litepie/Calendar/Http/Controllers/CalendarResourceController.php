@@ -87,7 +87,10 @@ class CalendarResourceController extends BaseController
 
         Form::populate($calendar);
 
-        return response()->view('calendar::admin.calendar.create', compact('calendar'));
+        return $this->response
+            ->data(compact('calendar'))
+            ->view('calendar::calendar.create', true)
+            ->output();
 
     }
 

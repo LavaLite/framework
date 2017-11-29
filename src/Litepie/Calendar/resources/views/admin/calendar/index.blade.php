@@ -1,4 +1,4 @@
-@extends('admin::curd.blank')
+@extends('curd.blank')
 @section('heading')
 <i class="fa fa-file-text-o">
 </i>
