@@ -3,6 +3,8 @@
 namespace Litepie\Task\Http\Requests;
 
 use App\Http\Requests\Request as FormRequest;
+use Illuminate\Http\Request;
+use Gate;
 
 class TaskRequest extends FormRequest
 {
@@ -11,36 +13,32 @@ class TaskRequest extends FormRequest
      *
      * @return bool
      */
-    public function authorize()
+    public function authorize(Request $request)
     {
-        $this->model = $this->route('task');
-        if (is_null($this->model)) {
+        $task = $this->route('task');
+
+        if (is_null($task)) {
             // Determine if the user is authorized to access task module,
-            return $this->formRequest->user()->canDo('task.task.view');
+            return $this->canAccess();
         }
 
-        if ($this->isWorkflow()) {
-            // Determine if the user is authorized to change status of an entry,
-            return $this->can($this->getStatus());
-        }
-
-        if ($this->isCreate() || $this->isStore()) {
+        if ($request->isMethod('POST') || $request->is('*/create')) {
             // Determine if the user is authorized to create an entry,
-            return $this->can('create');
+            return $request->user('admin.web')->can('create', $task);
         }
 
-        if ($this->isEdit() || $this->isUpdate()) {
+        if ($request->isMethod('PUT') || $request->isMethod('PATCH') || $request->is('*/edit')) {
             // Determine if the user is authorized to update an entry,
-            return $this->can('update');
+            return $request->user('admin.web')->can('update', $task);
         }
 
-        if ($this->isDelete()) {
+        if ($request->isMethod('DELETE')) {
             // Determine if the user is authorized to delete an entry,
-            return $this->can('delete');
+            return $request->user('admin.web')->can('delete', $task);
         }
 
         // Determine if the user is authorized to view the module.
-        return $this->can('view');
+        return $request->user('admin.web')->can('view', $task);
 
     }
 
@@ -49,19 +47,19 @@ class TaskRequest extends FormRequest
      *
      * @return array
      */
-    public function rules()
+    public function rules(Request $request)
     {
-        if ($this->isStore()) {
+        if ($request->isMethod('POST')) {
             // validation rule for create request.
             return [
-
+                
             ];
         }
 
-        if ($this->isUpdate()) {
+        if ($request->isMethod('PUT') || $request->isMethod('PATCH')) {
             // Validation rule for update request.
             return [
-
+                
             ];
         }
 
@@ -70,4 +68,18 @@ class TaskRequest extends FormRequest
 
         ];
     }
+    /**
+     * Check whether the user can access the module.
+     *
+     * @return bool
+     **/
+    protected function canAccess()
+    {
+        if ($this->formRequest->user()->isAdmin() || $this->formRequest->user()->isUser()) {
+            return true;
+        }
+
+        return $this->formRequest->user()->canDo('calendar.calendar.view');
+    }
+
 }

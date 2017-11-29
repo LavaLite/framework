@@ -6,10 +6,10 @@
         </div>
         <div class="col-md-6">
             <div class='pull-right'>
-                <a href="{{ trans_url($guard.'/task/task') }}" class="btn btn-default"> {{ trans('app.back')  }}</a>
-                <a href="{{ trans_url($guard.'/task/task') }}/{{ task->getRouteKey() }}/edit" class="btn btn-success"> {{ trans('app.edit')  }}</a>
-                <a href="{{ trans_url($guard.'/task/task') }}/{{ task->getRouteKey() }}/copy" class="btn btn-warning"> {{ trans('app.copy')  }}</a>
-                <a href="{{ trans_url($guard.'/task/task') }}/{{ task->getRouteKey() }}/delete" class="btn btn-danger"> {{ trans('app.delete')  }}</a>
+                <a href="{{ guard_url('task/task') }}" class="btn btn-default"> {{ trans('app.back')  }}</a>
+                <a href="{{ guard_url('task/task') }}/{{ task->getRouteKey() }}/edit" class="btn btn-success"> {{ trans('app.edit')  }}</a>
+                <a href="{{ guard_url('task/task') }}/{{ task->getRouteKey() }}/copy" class="btn btn-warning"> {{ trans('app.copy')  }}</a>
+                <a href="{{ guard_url('task/task') }}/{{ task->getRouteKey() }}/delete" class="btn btn-danger"> {{ trans('app.delete')  }}</a>
             </div>
         </div>
     </div>

@@ -3,7 +3,7 @@
         <div class="row">
             <div class="col-md-4">
                 <div class="card">
-                    <div class="header with-sub" data-background-color="red">
+                    <div class="card-header with-sub" data-background-color="red">
                         <div class="row">
                             <div class="col-sm-12 title-main">
                                 <i class="pe-7s-right-arrow"></i>
@@ -34,7 +34,7 @@
             </div>
             <div class="col-md-4">
                 <div class="card">
-                    <div class="header with-sub" data-background-color="orange">
+                    <div class="card-header with-sub" data-background-color="orange">
                         <div class="row">
                             <div class="col-sm-12 title-main">
                                 <i class="pe-7s-shuffle"></i>
@@ -51,7 +51,7 @@
             </div>
             <div class="col-md-4">
                 <div class="card">
-                    <div class="header with-sub" data-background-color="green">
+                    <div class="card-header with-sub" data-background-color="green">
                         <div class="row">
                             <div class="col-sm-12 title-main">
                                 <i class="pe-7s-check"></i>

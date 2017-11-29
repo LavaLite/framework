@@ -2,7 +2,7 @@
     ->id('task-task-edit')
     ->method('PUT')
     ->enctype('multipart/form-data')
-    ->action(trans_url($guard.'/task/task/'. $task->getRouteKey()))!!}
+    ->action(guard_url('task/task/'. $task->getRouteKey()))!!}
 <div class="modal-header">
     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
     <h4 class="modal-title">Edit Task</h4>
