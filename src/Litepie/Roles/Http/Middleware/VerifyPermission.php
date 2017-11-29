@@ -1,6 +1,6 @@
 <?php
 
-namespace Litepie\Roles\Middleware;
+namespace Litepie\Roles\Http\Middleware;
 
 use Closure;
 use Illuminate\Contracts\Auth\Guard;
