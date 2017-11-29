@@ -37,7 +37,7 @@ trait UserPages
      */
     public function getPassword(Request $request, $role = null)
     {
-        $this->response->title('Change Password')
+        return $this->response->title('Change Password')
             ->view('user::auth.changepassword', true)
                 ->output();
     }

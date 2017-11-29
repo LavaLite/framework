@@ -5,18 +5,17 @@
                 {!!Form::vertical_open()
                 ->id('login')
                 ->method('POST')!!}
-                    <div class="header header-primary text-center" data-background-color="red">
+                    <div class="card-header header-primary text-center" data-background-color="red">
                         <h4>Sign In</h4>
                         <div class="social-line">
-                            <a href="{!!trans_url($guard . '/login/facebook')!!}" class="btn btn-simple btn-just-icon"><i class="fa fa-facebook" aria-hidden="true"></i></a>
-                            <a href="{!!trans_url($guard . '/login/twitter')!!}" class="btn btn-simple btn-just-icon"><i class="fa fa-twitter" aria-hidden="true"></i></a>
-                            <a href="{!!trans_url($guard . '/login/google')!!}" class="btn btn-simple btn-just-icon"><i class="fa fa-google-plus" aria-hidden="true"></i></a>
-                            <a href="{!!trans_url($guard . '/login/linkedin')!!}" class="btn btn-simple btn-just-icon"><i class="fa fa-linkedin" aria-hidden="true"></i></a>
+                            <a href="{!!guard_url('login/facebook')!!}" class="btn btn-simple btn-just-icon"><i class="fa fa-facebook" aria-hidden="true"></i></a>
+                            <a href="{!!guard_url('login/twitter')!!}" class="btn btn-simple btn-just-icon"><i class="fa fa-twitter" aria-hidden="true"></i></a>
+                            <a href="{!!guard_url('login/google')!!}" class="btn btn-simple btn-just-icon"><i class="fa fa-google-plus" aria-hidden="true"></i></a>
+                            <a href="{!!guard_url('login/linkedin')!!}" class="btn btn-simple btn-just-icon"><i class="fa fa-linkedin" aria-hidden="true"></i></a>
                         </div>
                     </div>  
-                    <a href="{{trans_url('/')}}"><img src="{{theme_asset('img/logo-color.svg')}}" class="mt20" alt=""></a>
                     <p class="text-muted mb10 mt10">Or Be Classical</p>
-                    @include('public::notifications')
+                    @include('notifications')
                     <div class="content">
                         <div class="input-group">
                             <span class="input-group-addon">
@@ -42,11 +41,14 @@
                             </div>
                         </div>
                     </div>                   
-                    <div class="footer text-center mt20">
+                    <div class=" text-center mt20">
                         <button type="submit" class="btn btn-raised btn-danger">Login</button>
                     </div>
-                    <a href="{{trans_url("$guard/password/reset")}}" class="btn btn-primary btn-lg mb10">Forgot Password?</a>
                 {!! Form::close() !!}
+                <div class="mb30 mt10">
+                    <a href="{{guard_url('register')}}" class="mr10"> New? register now!</a>
+                    <a href="{{guard_url('password/reset')}}"> Forgot Password?</a>
+                </div>
             </div>
         </div>
     </div>

@@ -58,7 +58,7 @@ class UserTableSeeder extends Seeder
             'description' => null,
             'icon'        => 'dashboard',
             'target'      => null,
-            'order'       => 190,
+            'order'       => 50,
             'status'      => 1,
         ]);
 

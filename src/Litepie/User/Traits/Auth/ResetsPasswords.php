@@ -7,12 +7,15 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Str;
+use Illuminate\Foundation\Auth\ResetsPasswords as IlluminateResetsPasswords;
 
-trait ResetsPassword
+trait ResetsPasswords
 {
 
-    use Common, RedirectsUsers;
-
+    use Common, RedirectsUsers, IlluminateResetsPasswords{
+        Common::guard insteadof IlluminateResetsPasswords;
+        RedirectsUsers::redirectPath insteadof IlluminateResetsPasswords;
+    }
     /**
      * Display the password reset view for the given token.
      *
@@ -26,21 +29,10 @@ trait ResetsPassword
     {
         $email = $request->email;
 
-        $this->response->title('Reset')
-            ->view('user::auth.reset')
+        return $this->response->title('Reset')
+            ->view('user::auth.reset', true)
             ->data(compact('token', 'email'))
             ->output();
     }
 
-    /**
-     * Display the form to request a password reset link.
-     * @return \Illuminate\Http\Response
-     */
-    function getEmail($guard = null)
-    {
-        $this->response->title('Reset')
-            ->view('password')
-            ->data(compact('guard'))
-            ->output();
-    }
 }

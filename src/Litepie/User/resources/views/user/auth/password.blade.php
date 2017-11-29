@@ -2,17 +2,15 @@
     <div class="row">
         <div class="col-md-4 col-md-offset-4 col-sm-6 col-sm-offset-3 text-center">
             <div class="card card-signup">
+                <div class="card-header header-primary text-center" data-background-color="red">
+                    <h4>Forgot Password</h4>
+                    <p >Enter your Email and instructions <br> will be sent to you!</p>
+                </div>  
                 {!!Form::vertical_open()
                 ->method('POST')
-                ->action('password/email')!!}
+                ->action(guard_url('password/email'))!!}
                 {!! csrf_field() !!}
-                {!! Form::hidden(config('litepie.user.params.type'))!!}
-                    <div class="header header-primary text-center" data-background-color="red">
-                        <h4>Forgot Password</h4>
-                    </div>  
-                    <a href="{{trans_url('/')}}"><img src="{{theme_asset('img/logo-color.svg')}}" class="mt20" alt=""></a>
-                    <p class="text-muted mb10 mt10">Enter your Email and instructions <br> will be sent to you!</p>
-                    @include('public::notifications')
+                    @include('notifications')
                     <div class="content">
                         <div class="input-group">
                             <span class="input-group-addon">
@@ -30,6 +28,9 @@
                         <button type="submit" class="btn btn-raised btn-danger">Reset Password</button>
                     </div>
                 {!! Form::close() !!}
+                <div class="mb30 mt10">
+                    <a href="{{guard_url('login')}}" class="mr10"> Back to Login</a>
+                </div>
             </div>
         </div>
     </div>

@@ -13,6 +13,7 @@ class ClientTableSeeder extends Seeder
             [
                 'id'          => 1,
                 'email'       => 'client@lavalite.org',
+                'password'    => bcrypt('client@client'),
                 'status'      => 'Active',
                 'name'        => 'Client',
                 'sex'         => 'Male',

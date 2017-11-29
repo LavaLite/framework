@@ -5,7 +5,7 @@
                 {!!Form::vertical_open()
                 ->id('register')
                 ->method('POST')!!}
-                    <div class="header header-primary text-center" data-background-color="red">
+                    <div class="card-header header-primary text-center" data-background-color="red">
                         <h4>Register</h4>
                         <div class="social-line">
                             <a href="{!!guard_url('login/facebook')!!}" class="btn btn-simple btn-just-icon"><i class="fa fa-facebook" aria-hidden="true"></i></a>
@@ -14,8 +14,7 @@
                             <a href="{!!guard_url('login/linkedin')!!}" class="btn btn-simple btn-just-icon"><i class="fa fa-linkedin" aria-hidden="true"></i></a>
                         </div>
                     </div>  
-                    <a href="{{trans_url('/')}}"><img src="{{theme_asset('img/logo-color.svg')}}" class="mt20" alt=""></a>
-                    @include('public::notifications')
+                    @include('notifications')
                     <div class="content">
                         <div class="input-group">
                             <span class="input-group-addon">
@@ -76,6 +75,10 @@
                         <button class="btn btn-raised btn-danger" type="submit">Register</button>
                      </div>
                 {!!Form::close()!!}
+                <div class="mb30 mt10">
+                    <a href="{{guard_url('login')}}" class="mr10"> Back to login</a>
+                    <a href="{{guard_url('password/reset')}}"> Forgot Password?</a>
+                </div>
             </div>
         </div>
     </div>

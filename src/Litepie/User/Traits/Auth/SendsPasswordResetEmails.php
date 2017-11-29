@@ -17,11 +17,19 @@ trait SendsPasswordResetEmails
      */
     public function showLinkRequestForm()
     {
-        return $this->response->title('Reset')
+        return $this->response->title('Forgot Password')
             ->layout('auth')
-            ->view('user::auth.password')
+            ->view('user::auth.password', true)
             ->output();
     }
 
-
+    /**
+     * Get the broker to be used during password reset.
+     *
+     * @return \Illuminate\Contracts\Auth\PasswordBroker
+     */
+    public function broker()
+    {
+        return Password::broker(get_guard('route'));
+    }
 }

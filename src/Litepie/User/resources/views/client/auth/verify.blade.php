@@ -23,10 +23,10 @@
         </g>
         </svg>
         <h2>Verify your <span>email!</span></h2>
-        @include('public::notifications')
+        @include('notifications')
         <p>You registration is successful verify your email before proceeding by clicking the link provided in the email. If you didn't receive a mail click on the button to get the verification mail again.</p>
         <br>
-        <a class="btn btn-danger" href="{{asset('verify/send')}}">Re-send verification email</a>
+        <a class="btn btn-danger" href="{{guard_url('verify/send')}}">Re-send verification email</a>
 
     </div>
 </div>

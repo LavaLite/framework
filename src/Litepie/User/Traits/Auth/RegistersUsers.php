@@ -9,9 +9,10 @@ use Illuminate\Foundation\Auth\ThrottlesLogins;
 use Illuminate\Http\Request;
 use InvalidArgumentException;
 use Mail;
+use Role;
 use Socialite;
-use User;
 use Validator;
+use Exception;
 
 trait RegistersUsers
 {
@@ -27,6 +28,8 @@ trait RegistersUsers
      */
     function showRegistrationForm()
     {
+        $this->canRegister();
+
         return $this->response->title('Register')
             ->view('user::auth.register', true)
             ->layout('auth')
@@ -64,8 +67,7 @@ trait RegistersUsers
      */
     function create(array $data)
     {
-        $guard = $this->getGuardRoute();
-        $this->checkRegistrableGuard($guard);
+        $this->canRegister();
 
         $data = [
             'name'      => $data['name'],
@@ -74,16 +76,15 @@ trait RegistersUsers
             'api_token' => str_random(60),
         ];
 
-        if (!config('litepie.user.verify_email')) {
+        if (!config('auth.verify_email')) {
             $data['status'] = 'Active';
         }
 
-        $model  = $this->getAuthModel();
-        $user   = $model::create($data);
-        $roleId = User::findRoleByKey($guard)->id;
-        $user->attachRole($roleId);
+        $model = $this->getAuthModel();
+        $user  = $model::create($data);
+        $this->attachRoles($user);
 
-        if (config('litepie.user.verify_email')) {
+        if (config('auth.verify_email')) {
             $this->sendVerificationMail($user);
         }
 
@@ -100,55 +101,10 @@ trait RegistersUsers
         $data['confirmation_code'] = Crypt::encrypt($user->id);
         $data['guard']             = $this->getGuard();
 
-        Mail::send('user::emails.verify', $data, function ($message) use ($user) {
+        Mail::send('emails.verify', $data, function ($message) use ($user) {
             $message->to($user->email, $user->name)
                 ->subject('Verify your email address');
         });
-    }
-
-    /**
-     * Redirect the user to the provider authentication page.
-     *
-     * @return Response
-     */
-    function redirectToProvider($provider)
-    {
-        return Socialite::driver($provider)->redirect();
-    }
-
-    /**
-     * Obtain the user information from provider.
-     *
-     * @return Response
-     */
-    function handleProviderCallback($provider)
-    {
-        $user = Socialite::driver($provider)
-            ->user()
-            ->view('user::social', $guard)
-            ->data(compact('user'))
-            ->output();
-    }
-
-    /**
-     * Check the given guard.
-     *
-     * @param  string  $name
-     * @return \Illuminate\Contracts\Auth\Guard|\Illuminate\Contracts\Auth\StatefulGuard
-     *
-     * @throws \InvalidArgumentException
-     */
-    function check($name)
-    {
-
-        $config = config("auth.guards.{$name}");
-
-        if (!is_null($name) && is_null($config)) {
-            throw new InvalidArgumentException("Auth guard [{$name}] is not defined.");
-        }
-
-        return;
-
     }
 
     /**
@@ -193,52 +149,41 @@ trait RegistersUsers
 
     }
 
-    /**
-     * Display locked screen.
-     *
-     * @return response
-     */
-    function locked()
-    {
-
-    }
-
-    /**
-     * Send the response after the user was authenticated.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  bool  $throttles
-     * @return \Illuminate\Http\Response
-     */
-
-    function handleUserWasAuthenticated(Request $request, $throttles, $token = null)
-    {
-
-        if ($throttles) {
-            $this->clearLoginAttempts($request);
-        }
-
-        if (method_exists($this, 'authenticated') && !is_null($token)) {
-            return $this->authenticated($request, Auth::guard($this->getApiGuard())->user(), $token);
-        }
-
-        return redirect()->intended($this->redirectPath());
-    }
-
-    function authenticated($request, $user, $token)
-    {
-        return response()->json([
-            'user'    => $user,
-            'request' => $request->all(),
-            'token'   => $token,
-        ]);
-    }
 
     function sendVerification()
     {
         $this->sendVerificationMail(user());
         return redirect()->back()->withCode(201)->withMessage('Verification link send to your email please check the mail for actvation mail.');
 
+    }
+
+    function canRegister()
+    {
+        $guard = $this->getGuardRoute();
+
+        if (in_array($guard, config('auth.register.allowed'))) {
+            return true;
+        }
+
+        throw new Exception("You are not allowed to register as [$guard]");
+
+    }
+
+    function attachRoles($user)
+    {
+        $guard = $this->getGuardRoute();
+        $roles = config('auth.register.roles.'.$guard, null);
+
+        if ($roles == null) {
+            return;
+        }
+
+        foreach ($roles as $role) {
+            $roleId = Role::findBySlug($role)->id;
+            $user->attachRole($roleId);
+        }
+
+        return true;
     }
 
 }

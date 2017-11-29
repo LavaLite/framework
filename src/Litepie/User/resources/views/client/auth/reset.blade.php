@@ -6,14 +6,15 @@
                 {!!Form::vertical_open()
                 ->id('reset')
                 ->method('POST')
-                ->action('/password/reset')!!}
+                ->action(guard_url('password'))
+                !!}
                 {!! csrf_field() !!}
                 {!! Form::hidden('token')->value($token) !!}
                 <div class="header header-primary text-center mb10">
                     <h4>Forgot Password</h4>
                     <p>Enter your Email and instructions <br> will be sent to you!</p>
                 </div>  
-                @include('public::notifications')
+                @include('notifications')
                 <div class="content">                        
                     <div class="input-group">
                         <span class="input-group-addon">
