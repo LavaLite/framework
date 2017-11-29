@@ -53,21 +53,5 @@ trait Common
         return $this->redirectTo = 'user';
     }
 
-    /**
-     * Check the given guard is avilable and can register online.
-     *
-     * @param  string  $name
-     * @return \Illuminate\Contracts\Auth\Guard|\Illuminate\Contracts\Auth\StatefulGuard
-     *
-     * @throws \InvalidArgumentException
-     */
-    function canRegister($name)
-    {
-        $config = config("auth.registrable.{$name}");
-        if (!is_null($name) && is_null($config)) {
-            throw new InvalidArgumentException("Auth guard [{$name}] is not defined.");
-        }
-        return true;
-    }
 
 }

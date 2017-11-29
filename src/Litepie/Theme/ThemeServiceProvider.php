@@ -23,9 +23,6 @@ class ThemeServiceProvider extends ServiceProvider
         $this->publishResources();
         $this->app['view.finder']->prependLocation(base_path($this->app['theme']->path().'/view'));
         $this->app['theme']->setView($this->app['view']);
-        foreach (config('theme.themes') as $key => $val) {
-            $this->loadViewsFrom(public_path(config('theme.themeDir') . '/' . config("theme.themes.{$key}.theme") . '/views'), $key);
-        }
     }
 
     /**

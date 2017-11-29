@@ -31,7 +31,7 @@ trait RegistersUsers
         $this->canRegister();
 
         return $this->response->title('Register')
-            ->view('user::auth.register', true)
+            ->view('auth.register')
             ->layout('auth')
             ->output();
     }

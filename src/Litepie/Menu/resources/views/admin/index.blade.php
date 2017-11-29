@@ -1,4 +1,4 @@
-@extends('admin::curd.blank')
+@extends('curd.blank')
 @section('heading')
 <h1>
 {!! trans('menu::menu.name') !!}

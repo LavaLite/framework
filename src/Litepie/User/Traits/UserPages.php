@@ -38,7 +38,7 @@ trait UserPages
     public function getPassword(Request $request, $role = null)
     {
         return $this->response->title('Change Password')
-            ->view('user::auth.changepassword', true)
+            ->view('user.password')
                 ->output();
     }
 
@@ -103,7 +103,7 @@ trait UserPages
         $this->response->theme->asset()->container('footer')->add('cropper-js', 'packages/cropper/js/cropper.js');
 
         return $this->response->title('Profile')
-            ->view('user::auth.profile', true)
+            ->view('user.profile')
             ->data(compact('user'))
             ->output();
     }
@@ -142,7 +142,7 @@ trait UserPages
     {
         $this->theme->layout('blank');
         $this->response->title('Locked')
-            ->view('lock')
+            ->view('user.lock')
             ->output();
     }
 
@@ -154,7 +154,7 @@ trait UserPages
     public function masters()
     {
         return $this->response->title('Masters')
-            ->view('masters')
+            ->view('user.masters')
             ->output();
     }
 
@@ -166,7 +166,7 @@ trait UserPages
     public function reports()
     {
         return $this->response->title('Reports')
-            ->view('reports')
+            ->view('user.reports')
             ->output();
     }
 

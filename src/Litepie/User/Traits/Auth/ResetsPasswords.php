@@ -30,7 +30,7 @@ trait ResetsPasswords
         $email = $request->email;
 
         return $this->response->title('Reset')
-            ->view('user::auth.reset', true)
+            ->view('auth.reset')
             ->data(compact('token', 'email'))
             ->output();
     }
