@@ -18,7 +18,7 @@ class PermissionTableSeeder extends Seeder
                 'url'         => 'admin/roles/permission',
                 'name'        => 'Permission',
                 'description' => null,
-                'icon'        => 'fa fa-newspaper-o',
+                'icon'        => 'fa fa-check-circle-o',
                 'role'        => '["superuser"]',
                 'target'      => null,
                 'order'       => 190,

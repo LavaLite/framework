@@ -6,7 +6,7 @@
                                 <button type="button" class="btn btn-success btn-sm" data-action='NEW' data-load-to='#roles-permission-entry' data-href='{{guard_url('roles/permission/create')}}'><i class="fa fa-plus-circle"></i> {{ trans('app.new') }}</button>
                 @if($permission->id )
                 <button type="button" class="btn btn-primary btn-sm" data-action="EDIT" data-load-to='#roles-permission-entry' data-href='{{ guard_url('roles/permission') }}/{{$permission->getRouteKey()}}/edit'><i class="fa fa-pencil-square"></i> {{ trans('app.edit') }}</button>
-                <button type="button" class="btn btn-danger btn-sm" data-action="DELETE" data-load-to='#roles-permission-entry' data-datatable='#roles-permission-list' data-href='{{ guard_url('/roles/permission') }}/{{$permission->getRouteKey()}}' >
+                <button type="button" class="btn btn-danger btn-sm" data-action="DELETE" data-load-to='#roles-permission-entry' data-datatable='#roles-permission-list' data-href='{{ guard_url('roles/permission') }}/{{$permission->getRouteKey()}}' >
                 <i class="fa fa-times-circle"></i> {{ trans('app.delete') }}
                 </button>
                 @endif

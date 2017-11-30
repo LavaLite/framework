@@ -3,7 +3,7 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
         <h1>
-            <i class="fa fa-file-text-o"></i> {!! trans('roles::permission.name') !!} <small> {!! trans('app.manage') !!} {!! trans('roles::permission.names') !!}</small>
+            <i class="fa fa-check-circle-o"></i> {!! trans('roles::permission.name') !!} <small> {!! trans('app.manage') !!} {!! trans('roles::permission.names') !!}</small>
         </h1>
         <ol class="breadcrumb">
             <li><a href="{!! guard_url('/') !!}"><i class="fa fa-dashboard"></i> {!! trans('app.home') !!} </a></li>
@@ -17,8 +17,6 @@
         <div class="nav-tabs-custom">
             <ul class="nav nav-tabs">
                     <li class="{!!(request('status') == '')?'active':'';!!}"><a href="{!!guard_url('roles/permission')!!}">{!! trans('roles::permission.names') !!}</a></li>
-                    <li class="{!!(request('status') == 'archive')?'active':'';!!}"><a href="{!!guard_url('roles/permission?status=archive')!!}">Archived</a></li>
-                    <li class="{!!(request('status') == 'deleted')?'active':'';!!}"><a href="{!!guard_url('roles/permission?status=deleted')!!}">Trashed</a></li>
                     <li class="pull-right">
                     <span class="actions">
                     <!--   

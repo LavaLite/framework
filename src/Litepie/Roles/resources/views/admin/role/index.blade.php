@@ -3,7 +3,7 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
         <h1>
-            <i class="fa fa-file-text-o"></i> {!! trans('roles::role.name') !!} <small> {!! trans('app.manage') !!} {!! trans('roles::role.names') !!}</small>
+            <i class="fa fa-check-circle-o"></i> {!! trans('roles::role.name') !!} <small> {!! trans('app.manage') !!} {!! trans('roles::role.names') !!}</small>
         </h1>
         <ol class="breadcrumb">
             <li><a href="{!! guard_url('/') !!}"><i class="fa fa-dashboard"></i> {!! trans('app.home') !!} </a></li>
@@ -17,14 +17,9 @@
         <div class="nav-tabs-custom">
             <ul class="nav nav-tabs">
                     <li class="{!!(request('status') == '')?'active':'';!!}"><a href="{!!guard_url('roles/role')!!}">{!! trans('roles::role.names') !!}</a></li>
-                    <li class="{!!(request('status') == 'archive')?'active':'';!!}"><a href="{!!guard_url('roles/role?status=archive')!!}">Archived</a></li>
-                    <li class="{!!(request('status') == 'deleted')?'active':'';!!}"><a href="{!!guard_url('roles/role?status=deleted')!!}">Trashed</a></li>
                     <li class="pull-right">
                     <span class="actions">
-                    <!--   
-                    <a  class="btn btn-xs btn-purple"  href="{!!guard_url('roles/role/reports')!!}"><i class="fa fa-bar-chart" aria-hidden="true"></i><span class="hidden-sm hidden-xs"> Reports</span></a>
-                    @include('roles::admin.role.partial.actions')
-                    -->
+
                     @include('roles::admin.role.partial.filter')
                     @include('roles::admin.role.partial.column')
                     </span> 

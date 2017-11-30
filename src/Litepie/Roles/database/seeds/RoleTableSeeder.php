@@ -58,7 +58,7 @@ class RoleTableSeeder extends Seeder
                 'url'         => 'admin/roles/role',
                 'name'        => 'Role',
                 'description' => null,
-                'icon'        => 'fa fa-newspaper-o',
+                'icon'        => 'fa fa-check-circle-o',
                 'target'      => null,
                 'role'        => '["superuser"]',
                 'order'       => 190,

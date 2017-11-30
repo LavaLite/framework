@@ -3,10 +3,12 @@
     <div class='col-md-3 col-sm-6'>
                        {!! Form::text('name')
                        -> label(trans('roles::role.label.name'))
+                       -> required()
                        -> placeholder(trans('roles::role.placeholder.name'))!!}
 
                        {!! Form::text('slug')
                        -> label(trans('roles::role.label.slug'))
+                       -> required()
                        -> placeholder(trans('roles::role.placeholder.slug'))!!}
 
                        {!! Form::text('description')
