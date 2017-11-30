@@ -18,17 +18,12 @@ class NotificationPolicy
      */
     public function view(User $user, Notification $notification)
     {
-        if ($user->canDo('alerts.notification.view') && $user->is('admin')) {
+
+        if ($user->canDo('alerts.notification.view') && $user->isAdmin()) {
             return true;
         }
 
-        if ($user->canDo('blocks.block.view') 
-        && $user->is('manager')
-        && $block->user->parent_id == $user->id) {
-            return true;
-        }
-
-        return $user->id === $notification->user_id;
+        return $user->id == $notification->user_id;
     }
 
     /**
@@ -41,7 +36,7 @@ class NotificationPolicy
      */
     public function create(User $user)
     {
-        return  $user->canDo('alerts.notification.create');
+        return $user->canDo('alerts.notification.create');
     }
 
     /**
@@ -54,17 +49,12 @@ class NotificationPolicy
      */
     public function update(User $user, Notification $notification)
     {
-        if ($user->canDo('alerts.notification.update') && $user->is('admin')) {
+
+        if ($user->canDo('alerts.notification.update') && $user->isAdmin()) {
             return true;
         }
 
-        if ($user->canDo('blocks.block.update') 
-        && $user->is('manager')
-        && $block->user->parent_id == $user->id) {
-            return true;
-        }
-
-        return $user->id === $notification->user_id;
+        return $user->id == $notification->user_id;
     }
 
     /**
@@ -77,57 +67,12 @@ class NotificationPolicy
      */
     public function destroy(User $user, Notification $notification)
     {
-        if ($user->canDo('alerts.notification.delete') && $user->is('admin')) {
+
+        if ($user->canDo('alerts.notification.delete') && $user->isAdmin()) {
             return true;
         }
 
-        if ($user->canDo('blocks.block.delete') 
-        && $user->is('manager')
-        && $block->user->parent_id == $user->id) {
-            return true;
-        }
-
-        return $user->id === $notification->user_id;
-    }
-
-    /**
-     * Determine if the given user can verify the given notification.
-     *
-     * @param User $user
-     * @param Notification $notification
-     *
-     * @return bool
-     */
-    public function verify(User $user, Notification $notification)
-    {
-        if ($user->canDo('alerts.notification.verify') && $user->is('admin')) {
-            return true;
-        }
-
-        if ($user->canDo('alerts.notification.verify') 
-        && $user->is('manager')
-        && $notification->user->parent_id == $user->id) {
-            return true;
-        }
-
-        return false;
-    }
-
-    /**
-     * Determine if the given user can approve the given notification.
-     *
-     * @param User $user
-     * @param Notification $notification
-     *
-     * @return bool
-     */
-    public function approve(User $user, Notification $notification)
-    {
-        if ($user->canDo('alerts.notification.approve') && $user->is('admin')) {
-            return true;
-        }
-
-        return false;
+        return $user->id == $notification->user_id;
     }
 
     /**
@@ -140,8 +85,11 @@ class NotificationPolicy
      */
     public function before($user, $ability)
     {
-        if ($user->isSuperUser()) {
+
+        if ($user->isSuperuser()) {
             return true;
         }
+
     }
+
 }

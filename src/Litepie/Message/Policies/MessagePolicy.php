@@ -21,14 +21,7 @@ class MessagePolicy
             return true;
         }
 
-        if ($user->canDo('message.message.view') 
-        && $user->hasRole('manager')
-        && $message->user->parent_id == $user->id
-        && get_class($user) === $user->user_type) {
-            return true;
-        }
-
-        return $user->id === $message->user_id && get_class($user) === $message->user_type;
+        return $user->id == $message->user_id && get_class($user) == $message->user_type;
     }
 
     /**
@@ -54,7 +47,7 @@ class MessagePolicy
      */
     public function update(UserPolicy $user, Message $message)
     {  
-        return $user->id === $message->user_id && get_class($user) === $message->user_type;
+        return $user->id == $message->user_id && get_class($user) == $message->user_type;
     }
 
     /**
@@ -67,7 +60,7 @@ class MessagePolicy
      */
     public function destroy(UserPolicy $user, Message $message)
     {
-        return $user->id === $message->user_id && get_class($user) === $message->user_type;
+        return $user->id == $message->user_id && get_class($user) == $message->user_type;
     }
 
     /**

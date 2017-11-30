@@ -18,7 +18,7 @@ class TeamPolicy
      */
     public function view(User $user, Team $team)
     {
-        if ($user->canDo('user.team.view') && $user->is('admin')) {
+        if ($user->canDo('user.team.view') && $user->isAdmin()) {
             return true;
         }
 
@@ -28,7 +28,7 @@ class TeamPolicy
             return true;
         }
 
-        return $user->id === $team->user_id;
+        return $user->id == $team->user_id;
     }
 
     /**
@@ -106,7 +106,7 @@ class TeamPolicy
      */
     public function before($user, $ability)
     {
-        if ($user->isSuperUser()) {
+        if ($user->isSuperuser()) {
             return true;
         }
     }

@@ -54,7 +54,6 @@ class MenuResourceController extends BaseController
      */
     public function show(MenuRequest $request, $parent)
     {
-
         if ($request->ajax()) {
             $menu = $parent;
 

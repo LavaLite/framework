@@ -17,18 +17,11 @@ class TaskPolicy
      */
     public function view(UserPolicy $user, Task $task)
     {
-        if ($user->canDo('task.task.view') && $user->is('admin')) {
+        if ($user->canDo('task.task.view') && $user->isAdmin()) {
             return true;
         }
 
-        if ($user->canDo('task.task.view') 
-        && $user->is('manager')
-        && $task->user->parent_id == $user->id
-        && get_class($user) === $user->user_type) {
-            return true;
-        }
-
-        return $user->id === $task->user_id && get_class($user) === $task->user_type;
+        return $user->id == $task->user_id && get_class($user) === $task->user_type;
     }
 
     /**
@@ -54,18 +47,11 @@ class TaskPolicy
      */
     public function update(UserPolicy $user, Task $task)
     {
-        if ($user->canDo('task.task.update') && $user->is('admin')) {
+        if ($user->canDo('task.task.update') && $user->isAdmin()) {
             return true;
         }
 
-        if ($user->canDo('task.task.update') 
-            && $user->is('manager') 
-            && $task->user->parent_id == $user->id
-            && get_class($user) === $user->user_type) {
-            return true;
-        }
-
-        return $user->id === $task->user_id && get_class($user) === $task->user_type;
+        return $user->id == $task->user_id && get_class($user) === $task->user_type;
     }
 
 
@@ -79,17 +65,11 @@ class TaskPolicy
      */
     public function destroy(UserPolicy $user, Task $task)
     {
-        if ($user->canDo('task.task.delete') && $user->is('admin')) {
+        if ($user->canDo('task.task.delete') && $user->isAdmin()) {
             return true;
         }
 
-        if ($user->canDo('task.task.delete') 
-        && $user->is('manager')
-        && $task->user->parent_id == $user->id) {
-            return true;
-        }
-
-        return $user->id === $task->user_id && get_class($user) === $task->user_type;
+        return $user->id == $task->user_id && get_class($user) === $task->user_type;
     }
 
     /**
@@ -102,15 +82,10 @@ class TaskPolicy
      */
     public function verify(UserPolicy $user, Task $task)
     {
-        if ($user->canDo('task.task.verify') && $user->is('admin')) {
+        if ($user->canDo('task.task.verify') && $user->isAdmin()) {
             return true;
         }
 
-        if ($user->canDo('task.task.verify') 
-        && $user->is('manager')
-        && $task->user->parent_id == $user->id) {
-            return true;
-        }
 
         return false;
     }
@@ -125,7 +100,7 @@ class TaskPolicy
      */
     public function approve(UserPolicy $user, Task $task)
     {
-        if ($user->canDo('task.task.approve') && $user->is('admin')) {
+        if ($user->canDo('task.task.approve') && $user->isAdmin()) {
             return true;
         }
 
@@ -141,7 +116,7 @@ class TaskPolicy
      */
     public function before($user, $ability)
     {
-        if ($user->isSuperUser()) {
+        if ($user->isSuperuser()) {
             return true;
         }
     }

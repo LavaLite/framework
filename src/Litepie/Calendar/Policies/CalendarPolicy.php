@@ -26,7 +26,7 @@ class CalendarPolicy
             return true
         }
 
-        return $user->id === $calendar->user_id && get_class($user) === $calendar->user_type;
+        return $user->id == $calendar->user_id && get_class($user) === $calendar->user_type;
     }
 
     /**

@@ -18,7 +18,7 @@ class WorkflowPolicy
      */
     public function view(User $user, Workflow $workflow)
     {
-        if ($user->canDo('workflow.workflow.view') && $user->is('admin')) {
+        if ($user->canDo('workflow.workflow.view') && $user->isAdmin()) {
             return true;
         }
 
@@ -28,7 +28,7 @@ class WorkflowPolicy
             return true;
         }
 
-        return $user->id === $workflow->user_id;
+        return $user->id == $workflow->user_id;
     }
 
     /**
@@ -54,7 +54,7 @@ class WorkflowPolicy
      */
     public function update(User $user, Workflow $workflow)
     {
-        if ($user->canDo('workflow.workflow.update') && $user->is('admin')) {
+        if ($user->canDo('workflow.workflow.update') && $user->isAdmin()) {
             return true;
         }
 
@@ -64,7 +64,7 @@ class WorkflowPolicy
             return true;
         }
 
-        return $user->id === $workflow->user_id;
+        return $user->id == $workflow->user_id;
     }
 
     /**
@@ -77,7 +77,7 @@ class WorkflowPolicy
      */
     public function destroy(User $user, Workflow $workflow)
     {
-        if ($user->canDo('workflow.workflow.delete') && $user->is('admin')) {
+        if ($user->canDo('workflow.workflow.delete') && $user->isAdmin()) {
             return true;
         }
 
@@ -87,7 +87,7 @@ class WorkflowPolicy
             return true;
         }
 
-        return $user->id === $workflow->user_id;
+        return $user->id == $workflow->user_id;
     }
 
     /**
@@ -100,7 +100,7 @@ class WorkflowPolicy
      */
     public function verify(User $user, Workflow $workflow)
     {
-        if ($user->canDo('workflow.workflow.verify') && $user->is('admin')) {
+        if ($user->canDo('workflow.workflow.verify') && $user->isAdmin()) {
             return true;
         }
 
@@ -123,7 +123,7 @@ class WorkflowPolicy
      */
     public function approve(User $user, Workflow $workflow)
     {
-        if ($user->canDo('workflow.workflow.approve') && $user->is('admin')) {
+        if ($user->canDo('workflow.workflow.approve') && $user->isAdmin()) {
             return true;
         }
 
@@ -140,7 +140,7 @@ class WorkflowPolicy
      */
     public function before($user, $ability)
     {
-        if ($user->isSuperUser()) {
+        if ($user->isSuperuser()) {
             return true;
         }
     }

@@ -18,17 +18,11 @@ class SettingPolicy
      */
     public function view(UserPolicy $user, Setting $setting)
     {
-        if ($user->canDo('settings.setting.view') && $user->is('admin')) {
+        if ($user->canDo('settings.setting.view') && $user->isAdmin()) {
             return true;
         }
 
-        if ($user->canDo('blocks.block.view') 
-        && $user->is('manager')
-        && $block->user->parent_id == $user->id) {
-            return true;
-        }
-
-        return $user->id === $setting->user_id;
+        return $user->id == $setting->user_id;
     }
 
     /**
@@ -54,17 +48,11 @@ class SettingPolicy
      */
     public function update(UserPolicy $user, Setting $setting)
     {
-        if ($user->canDo('settings.setting.update') && $user->is('admin')) {
+        if ($user->canDo('settings.setting.update') && $user->isAdmin()) {
             return true;
         }
 
-        if ($user->canDo('blocks.block.update') 
-        && $user->is('manager')
-        && $block->user->parent_id == $user->id) {
-            return true;
-        }
-
-        return $user->id === $setting->user_id;
+        return $user->id == $setting->user_id;
     }
 
     /**
@@ -77,57 +65,11 @@ class SettingPolicy
      */
     public function destroy(UserPolicy $user, Setting $setting)
     {
-        if ($user->canDo('settings.setting.delete') && $user->is('admin')) {
+        if ($user->canDo('settings.setting.delete') && $user->isAdmin()) {
             return true;
         }
 
-        if ($user->canDo('blocks.block.delete') 
-        && $user->is('manager')
-        && $block->user->parent_id == $user->id) {
-            return true;
-        }
-
-        return $user->id === $setting->user_id;
-    }
-
-    /**
-     * Determine if the given user can verify the given setting.
-     *
-     * @param UserPolicy $user
-     * @param Setting $setting
-     *
-     * @return bool
-     */
-    public function verify(UserPolicy $user, Setting $setting)
-    {
-        if ($user->canDo('settings.setting.verify') && $user->is('admin')) {
-            return true;
-        }
-
-        if ($user->canDo('settings.setting.verify') 
-        && $user->is('manager')
-        && $setting->user->parent_id == $user->id) {
-            return true;
-        }
-
-        return false;
-    }
-
-    /**
-     * Determine if the given user can approve the given setting.
-     *
-     * @param UserPolicy $user
-     * @param Setting $setting
-     *
-     * @return bool
-     */
-    public function approve(UserPolicy $user, Setting $setting)
-    {
-        if ($user->canDo('settings.setting.approve') && $user->is('admin')) {
-            return true;
-        }
-
-        return false;
+        return $user->id == $setting->user_id;
     }
 
     /**
@@ -140,7 +82,7 @@ class SettingPolicy
      */
     public function before($user, $ability)
     {
-        if ($user->isSuperUser()) {
+        if ($user->isSuperuser()) {
             return true;
         }
     }
