@@ -1,136 +1,64 @@
-@extends('curd.blank')
-@section('heading')
-<i class="fa fa-file-text-o">
-</i>
-{!! trans('calendar::calendar.name') !!}
-<small>
-    {!! trans('app.manage') !!} {!! trans('calendar::calendar.names') !!}
-</small>
-@stop
-
-@section('title')
-{!! trans('calendar::calendar.names') !!}
-@stop
-
-@section('breadcrumb')
-<ol class="breadcrumb">
-    <li>
-        <a href="{!! trans_url('admin') !!}">
-            <i class="fa fa-dashboard"> </i>
-            {!! trans('app.home') !!}
-        </a>
-    </li>
-    <li class="active">
-        {!! trans('calendar::calendar.names') !!}
-    </li>
-</ol>
-@stop
-
-
-@section('content')
-<div class="row">
-    <div class="col-md-3">
-        <div class="box box-primary">
-            <div class="box-header with-border">
-                <h4 class="box-title">
-                    Draggable Events
-                </h4>
-            </div>
-            <div class="box-body">
-                <!-- the events -->
-                <div id="external-events">
-                    @foreach($calendars as $key =>$value)
-                    <div class="external-event {!!@$value['color']!!}" id="{!!@$value->getRouteKey()!!}">
-                        {!!@$value['title']!!}
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <h1>
+            <i class="fa fa-calendar">
+            </i>
+            {!! trans('calendar::calendar.name') !!}
+            <small>
+                {!! trans('app.manage') !!} {!! trans('calendar::calendar.names') !!}
+            </small>
+        </h1>
+        <ol class="breadcrumb">
+            <li>
+                <a href="{!! trans_url('admin') !!}">
+                    <i class="fa fa-dashboard"> </i>
+                    {!! trans('app.home') !!}
+                </a>
+            </li>
+            <li class="active">
+                {!! trans('calendar::calendar.names') !!}
+            </li>
+        </ol>
+    </section>
+    <!-- Main content -->
+    <section class="content">
+        <div class="row">
+            <!-- /.col -->
+            <div class="col-md-12">
+                <div class="box box-primary">
+                    <div class="box-body no-padding">
+                        <!-- THE CALENDAR -->
+                        <div id="calendar"></div>
                     </div>
-                    @endforeach
-                    <div class="checkbox checkbox-danger">
-                        <input type="checkbox" id="drop-remove"/>
-                        <label for="drop-remove">Remove after drop</label>                            
+                    <!-- /.box-body -->
+                </div>
+                <!-- /. box -->
+            </div>
+            <div class="modal fade" id="event-modal">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            <h4 class="modal-title">Calendar</h4>
+                        </div>
+                        <div class="modal-body">
+                            <p>Loading &hellip;</p>
+                        </div>
+                        <div class="modal-footer"> 
+                        </div>
                     </div>
                 </div>
             </div>
-            <!-- /.box-body -->
+            <!-- /.col -->
         </div>
-        <!-- /. box -->
-        <div class="box box-primary">
-            <div class="box-header with-border">
-                <h3 class="box-title">
-                    Create Event
-                </h3>
-            </div>
-            <div class="box-body">
-                <div class="event-color-block">
-                    <ul class="fc-color-picker" id="color-chooser">
-                        <li><a class="event-azure" href="#"><i class="fa fa-circle" aria-hidden="true"></i></a></li>
-                        <li><a class="event-purple" href="#"><i class="fa fa-circle" aria-hidden="true"></i></a></li>
-                        <li><a class="event-blue" href="#"><i class="fa fa-circle" aria-hidden="true"></i></a></li>
-                        <li><a class="event-orange" href="#"><i class="fa fa-circle" aria-hidden="true"></i></a></li>
-                        <li><a class="event-green" href="#"><i class="fa fa-circle" aria-hidden="true"></i></a></li>
-                        <li><a class="event-red" href="#"><i class="fa fa-circle" aria-hidden="true"></i></a></li>
-                        <li><a class="event-indigo" href="#"><i class="fa fa-circle" aria-hidden="true"></i></a></li>
-                        <li><a class="event-pink" href="#"><i class="fa fa-circle" aria-hidden="true"></i></a></li>
-                    </ul>
-                </div>
-                    
-                <!-- /btn-group -->
-                {!!Form::vertical_open()
-                ->id('create-calendar-calendar')
-                ->method('POST')
-                ->files('true') 
-                ->enctype('multipart/form-data')
-               !!}
-                {!!Form::token()!!}
-
-                {!! Form::hidden('color')->id('color')->value('event-default')!!}
-                {!! Form::hidden('start')
-                ->forceValue(date('Y-m-d H:i:s'))!!}
-                {!! Form::hidden('end')
-                ->forceValue(date('Y-m-d 12:00:00'))!!}
-                {!! Form::hidden('temp_id')
-                ->forceValue('0')!!}
-                <div class="input-group">
-                    <input type="text" name="title" id="input-title" required class="form-control" placeholder="Event Title"/>
-                    <div class="input-group-btn">
-                        <button id="add-new-event" type="button" class="btn btn-primary btn-flat">Add</button>
-                    </div>
-                    <!-- /btn-group -->
-                </div>
-                <!-- /input-group -->
-                {!! Form::close() !!}
-            </div>
-        </div>
-    </div>
-    <!-- /.col -->
-    <div class="col-md-9">
-        <div class="box box-primary">
-            <div class="box-body no-padding">
-                <!-- THE CALENDAR -->
-                <div id="calendar"></div>
-            </div>
-            <!-- /.box-body -->
-        </div>
-        <!-- /. box -->
-    </div>
-    <div class="modal fade" id="event-modal">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title">Calendar</h4>
-                </div>
-                <div class="modal-body">
-                    <p>Loading &hellip;</p>
-                </div>
-                <div class="modal-footer"> 
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- /.col -->
+    </section>
 </div>
-@stop
-@section('script')
+
+
+
+
 <script type="text/javascript">
 function ini_events(ele) {
     ele.each(function () {
@@ -334,4 +262,3 @@ $(function () {
 
 });
 </script>
-@show

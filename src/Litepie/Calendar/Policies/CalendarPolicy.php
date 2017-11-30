@@ -23,10 +23,10 @@ class CalendarPolicy
         }
 
         if ($user->isUser() || $user->isAdmin()){
-            return true
+            return true;
         }
 
-        return $user->id == $calendar->user_id && get_class($user) === $calendar->user_type;
+        return $user->id == $calendar->user_id && get_class($user) == $calendar->user_type;
     }
 
     /**
@@ -78,7 +78,7 @@ class CalendarPolicy
      */
     public function before(UserPolicy $user, $ability)
     {
-        if ($user->hasRole('superuser')) {
+        if ($user->isSuperuser) {
             return true;
         }
     }

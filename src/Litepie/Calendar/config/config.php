@@ -25,7 +25,7 @@ return [
         'visible'       => [],
         'guarded'       => ['*'],
         'slugs'         => ['slug' => 'title'],
-        'dates'         => ['deleted_at'],
+        'dates'         => ['start', 'end', 'deleted_at'],
         'appends'       => [],
         'fillable'      => ['user_id', 'user_type', 'category_id', 'status', 'start', 'end', 'location', 'color', 'title', 'details', 'created_by', 'upload_folder'],
         'translatables' => [],
