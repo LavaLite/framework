@@ -3,7 +3,7 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
         <h1>
-            <i class="fa fa-file-text-o"></i> {!! trans('task::task.name') !!} <small> {!! trans('app.manage') !!} {!! trans('task::task.names') !!}</small>
+            <i class="fa fa-flag-o"></i> {!! trans('task::task.name') !!} <small> {!! trans('app.manage') !!} {!! trans('task::task.names') !!}</small>
         </h1>
         <ol class="breadcrumb">
             <li><a href="{!! trans_url('admin') !!}"><i class="fa fa-dashboard"></i> {!! trans('app.home') !!} </a></li>

@@ -40,7 +40,7 @@ class NotificationTableSeeder extends Seeder
                 'url'         => 'admin/alerts/notification',
                 'name'        => 'Notification',
                 'description' => null,
-                'icon'        => 'fa fa-newspaper-o',
+                'icon'        => 'fa fa-bell-o',
                 'target'      => null,
                 'order'       => 190,
                 'status'      => 1,

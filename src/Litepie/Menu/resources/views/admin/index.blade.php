@@ -1,60 +1,58 @@
-@extends('curd.blank')
-@section('heading')
-<h1>
-{!! trans('menu::menu.name') !!}
-<small> {!! trans('app.manage') !!} {!! trans('menu::menu.names') !!}</small>
-</h1>
-@stop
-@section('title')
-{!! trans('menu::menu.names') !!}
-@stop
-@section('breadcrumb')
-<ol class="breadcrumb">
-    <li><a href="{!! trans_url('admin') !!}"><i class="fa fa-dashboard"></i> {!! trans('app.home') !!} </a></li>
-    <li class="active">{!! trans('menu::menu.names') !!}</li>
-</ol>
-@stop
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <h1>
+            <i class="fa fa-bars"></i>
+        {!! trans('menu::menu.name') !!}
+        <small> {!! trans('app.manage') !!} {!! trans('menu::menu.names') !!}</small>
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="{!! trans_url('admin') !!}"><i class="fa fa-dashboard"></i> {!! trans('app.home') !!} </a></li>
+            <li class="active">{!! trans('menu::menu.names') !!}</li>
+        </ol>
+    </section>
+    <!-- Main content -->
+    <section class="content">
+        <div class='row' style="min-height:700px;">
+            <div class="col-md-5">
+                <div class="nav-tabs-custom">
+                    <!-- Nav tabs -->
+                    <ul class="nav nav-tabs primary">
+                        @foreach($rootMenu->take(3) as $menu)
+                        <li {{($parent->getRouteKey() == $menu->getRouteKey()) ? ' class=active ' : ''}}><a href="{{ Trans::to('/admin/menu/menu') }}/{{$menu->getRouteKey()}}">{{$menu->name}}</a></li>
+                        @endforeach
+                        <li class="dropdown">
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                              More <span class="caret"></span>
+                            </a>
+                            <ul class="dropdown-menu">
+                            @foreach($rootMenu->except([1,2,3]) as $menu)
+                              <li role="presentation"><a role="menuitem" tabindex="-1" href="{{ Trans::to('/admin/menu/menu') }}/{{$menu->getRouteKey()}}">{{$menu->name}} menu</a></li>
+                            @endforeach
+                            </ul>
+                        </li>
+                        <li class="pull-right"><a href="#" data-href="{{ Trans::to('/admin/menu/menu/create') }}"  data-action="LOAD" data-load-to="#menu-entry"><i class="fa fa-plus-circle"></i></a></li>
+                    </ul>
 
-@section('entry')
-@stop
-
-@section('tools')
-@stop
-
-@section('content')
-<div class='row' style="min-height:700px;">
-<div class="col-md-5">
-    <div class="nav-tabs-custom">
-        <!-- Nav tabs -->
-        <ul class="nav nav-tabs primary">
-            @foreach($rootMenu->take(3) as $menu)
-            <li {{($parent->getRouteKey() == $menu->getRouteKey()) ? ' class=active ' : ''}}><a href="{{ Trans::to('/admin/menu/menu') }}/{{$menu->getRouteKey()}}">{{$menu->name}}</a></li>
-            @endforeach
-            <li class="dropdown">
-                <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                  More <span class="caret"></span>
-                </a>
-                <ul class="dropdown-menu">
-                @foreach($rootMenu->except([1,2,3]) as $menu)
-                  <li role="presentation"><a role="menuitem" tabindex="-1" href="{{ Trans::to('/admin/menu/menu') }}/{{$menu->getRouteKey()}}">{{$menu->name}} menu</a></li>
-                @endforeach
-                </ul>
-            </li>
-            <li class="pull-right"><a href="#" data-href="{{ Trans::to('/admin/menu/menu/create') }}"  data-action="LOAD" data-load-to="#menu-entry"><i class="fa fa-plus-circle"></i></a></li>
-        </ul>
-
-        <div class="tab-content">
-            <div class="tab-pane active" id="details">
-                {!!Menu::menu($parent->key, 'menu::admin.menu.nestable')!!}
+                    <div class="tab-content">
+                        <div class="tab-pane active" id="details">
+                            {!!Menu::menu($parent->key, 'menu::admin.menu.nestable')!!}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-7">
+                <div id='menu-entry'>
+                </div>
             </div>
         </div>
-    </div>
+    </section>
 </div>
-<div class="col-md-7">
-    <div id='menu-entry'>
-    </div>
-</div>
-</div>
+
+
+
+
 
 <script type="text/javascript">
 $(document).ready(function(){
@@ -99,4 +97,3 @@ $(document).ready(function(){
     min-height: 420px;
 }
 </style>
-@stop
