@@ -54,14 +54,16 @@ class MenuRequest extends FormRequest
         if ($this->isStore()) {
             // validation rule for create request.
             return [
-                'name'  => 'required',
-                'url'   => 'required'
+                // 'name'  => 'required',
+                // 'url'   => 'required'
             ];
         }
 
         if ($this->isUpdate()) {
             // Validation rule for update request.
             return [
+                // 'name'  => 'required',
+                // 'url'   => 'required'
             ];
         }
 
