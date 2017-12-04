@@ -58,59 +58,45 @@ if (!function_exists('folder_new')) {
     {
         $folder        = date('Y/m/d/His') . rand(100, 999);
         return $folder;
-
-    }
-
-}
-
-if (!function_exists('folder_encode')) {
-    /**
-     * Encrypt upload folder.
-     *
-     * @param string $folder
-     *
-     * @return string
-     */
-    function folder_encode($folder)
-    {
-        $arr    = explode('/', $folder);
-
-        $suffix = '';
-        if (count($arr) > 4) {
-            $suffix = '/' . $arr[4];
-            unset($arr[4]);
-        }
-
-        $arr    = array_map('intval', $arr);
-
-        return hashids_encode($arr) . $suffix;
     }
 }
 
-if (!function_exists('folder_decode')) {
+if (!function_exists('blade_compile')) {
     /**
-     * Get decoded folder.
+     * Get new upload folder pathes.
      *
-     * @param array $folder
+     * @param string $prefix
+     * @param string $sufix
      *
-     * @return string
+     * @return array
      */
-    function folder_decode($folder)
+    function blade_compile($string, array $args = [])
     {
-        $formatFolder = function ($folder) {
-            return str_pad($folder[0], 4, '0', STR_PAD_LEFT) . '/'
-            . str_pad($folder[1], 2, '0', STR_PAD_LEFT) . '/'
-            . str_pad($folder[2], 2, '0', STR_PAD_LEFT) . '/'
-            . str_pad($folder[3], 9, '0', STR_PAD_LEFT);
-        };
+        $compiled = \Blade::compileString($string);
+        ob_start() and extract($args, EXTR_SKIP);
 
-        $arr = explode('/', $folder);
+        // We'll include the view contents for parsing within a catcher
 
-        if (count($arr) == 1) {
-            $folder = hashids_decode($arr[0]);
-
-            return $formatFolder($folder);
+        // so we can avoid any WSOD errors. If an exception occurs we
+        // will throw it out to the exception handler.
+        try
+        {
+            eval('?>' . $compiled);
         }
+
+        // If we caught an exception, we'll silently flush the output
+
+        // buffer so that no partially rendered views get thrown out
+        // to the client and confuse the user with junk.
+         catch (\Exception $e) {
+            ob_get_clean();throw $e;
+        }
+
+        $content = ob_get_clean();
+        $content = str_replace(['@param  ', '@return  ', '@var  ', '@throws  '], ['@param ', '@return ', '@var ', '@throws '], $content);
+
+        return $content;
+
     }
 
 }
