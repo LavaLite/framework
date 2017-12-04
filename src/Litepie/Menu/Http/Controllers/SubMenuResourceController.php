@@ -61,7 +61,6 @@ class SubMenuResourceController extends ResourceController
     {
         try {
             $attributes              = $request->all();
-            $attributes['user_id']   = user_id('admin.web');
             $attributes['parent_id'] = hashids_decode($attributes['parent_id']);
             $menu                    = $this->repository->create($attributes);
 
