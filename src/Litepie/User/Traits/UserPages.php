@@ -39,7 +39,7 @@ trait UserPages
     {
         return $this->response->title('Change Password')
             ->view('user.password')
-                ->output();
+            ->output();
     }
 
     /**
@@ -99,9 +99,6 @@ trait UserPages
         $user = $request->user($this->getGuard());
         Form::populate($user);
 
-        $this->response->theme->asset()->add('cropper-css', 'packages/cropper/css/cropper.css');
-        $this->response->theme->asset()->container('footer')->add('cropper-js', 'packages/cropper/js/cropper.js');
-
         return $this->response->title('Profile')
             ->view('user.profile')
             ->data(compact('user'))
@@ -140,9 +137,9 @@ trait UserPages
      */
     public function locked()
     {
-        $this->theme->layout('blank');
-        $this->response->title('Locked')
-            ->view('user.lock')
+        $this->response->layout('blank');
+        return $this->response->title('Locked')
+            ->view('user.locked')
             ->output();
     }
 

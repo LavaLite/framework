@@ -6,7 +6,7 @@
 ->id('edit-calendar-calendar')
 ->method('PUT')
 ->enctype('multipart/form-data')
-->action(trans_url('admin/calendar/calendar/'. $calendar->getRouteKey()))!!}
+->action(guard_url('calendar/calendar/'. $calendar->getRouteKey()))!!}
 {!!Form::token()!!}
 <div class="modal-body clearfix">
     @include('calendar::admin.calendar.partial.entry')
@@ -33,7 +33,7 @@ $(function() {
             formData.append(val.name, val.value);
         });
         $.ajax({
-            url: "{!!Trans::to('admin/calendar/calendar')!!}/{{$calendar->getRouteKey()}}",
+            url: "{!!guard_url('calendar/calendar')!!}/{{$calendar->getRouteKey()}}",
             type: 'POST',
             data: formData,
             processData: false,
@@ -57,7 +57,7 @@ $(function() {
             closeOnConfirm: false
         }, function() {
             $.ajax({
-                url: "{!!Trans::to('admin/calendar/calendar')!!}/{{$calendar->getRouteKey()}}",
+                url: "{!!guard_url('calendar/calendar')!!}/{{$calendar->getRouteKey()}}",
                 type: 'DELETE',
                 processData: false,
                 contentType: false,

@@ -10,7 +10,7 @@
     ->id('edit-message')
     ->method('PUT')
     ->enctype('multipart/form-data')
-    ->action(Trans::to('admin/message/message/'. $message->getRouteKey()))!!}
+    ->action(guard_url('message/message/'. $message->getRouteKey()))!!}
     {!!Form::token()!!}  
 
     {!! Form::hidden('read')

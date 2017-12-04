@@ -10,22 +10,6 @@
     </div>
 </div>
 
-<div class="modal fade" id="event-modal">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title">Calendar</h4>
-            </div>
-            <div class="modal-body">
-                <p>Loading &hellip;</p>
-            </div>
-            <div class="modal-footer"> 
-            </div>
-        </div>
-    </div>
-</div>
-
 <script type="text/javascript">
 var tempId = 0;
 $(function () {
@@ -64,17 +48,17 @@ $(function () {
         selectable: true, // this allows things to be dropped onto the calendar !!!
         eventLimit: true,
         eventClick: function(event, element) {
-            $('#event-modal .modal-title').html('Edit ' + event.title);
-            $('#event-modal .modal-body').load('{{guard_url('calendar/calendar')}}/' + event.id + '/edit');
-            $('#event-modal').modal('show');
+            $('#modal-entry-md .modal-dialog').html('Loading &hellip;');
+            $('#modal-entry-md .modal-dialog').load('{{guard_url('calendar/calendar')}}/' + event.id + '/edit');
+            $('#modal-entry-md').modal('show');
         },
 
         select: function(start, end) {
-            $('#event-modal .modal-title').html('Create New Event');
              var startdate = moment(start).format('YYYY-MM-DD');            
              var enddate = moment(end).format('YYYY-MM-DD');           
-            $('#event-modal .modal-body').load('{{guard_url('calendar/calendar/create')}}?start='+startdate+'&end='+enddate);         
-            $('#event-modal').modal('show');
+            $('#modal-entry-md .modal-dialog').html('Loading &hellip;');
+            $('#modal-entry-md .modal-dialog').load('{{guard_url('calendar/calendar/create')}}?start='+startdate+'&end='+enddate);
+            $('#modal-entry-md').modal('show');
             var eventData;
             if (event.title) {
                 eventData = {

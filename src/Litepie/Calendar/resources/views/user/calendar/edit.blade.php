@@ -1,26 +1,25 @@
-
-<div class="box-body row" > 
-    <div class="nav-tabs-custom">
-   
+    <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title">{{__(app.edit)}} {{__(app.edit)}}</h4>
+        </div>
         {!!Form::vertical_open()
         ->id('edit-calendar')
         ->method('PUT')
         ->enctype('multipart/form-data')
         !!}
         {!!Form::token()!!}
-        <div class="tab-content">
-            <div class="tab-pane active mt30" id="details">
-                @include('calendar::user.calendar.partial.entry')
-                <div class='col-md-12 col-sm-12 mt20'>
-                    <button type="button" class="btn mr5 btn-sm btn-raised btn-info pull-right" data-dismiss="modal"><i class="fa fa-times-circle-o"></i>Close</button>    
-                    <button type="button" data-dismiss="modal" id="update" class="btn  mr5 btn-raised btn-sm btn-success pull-right "  ><i class="fa fa-floppy-o"></i>Update</button>
-                    <button type="button" class="btn delete-btn btn-danger btn-raised btn-sm  pull-right mr5" ><i class="fa fa-trash-o"></i>  Delete </button> 
-                </div>
-            </div>
+        <div class="modal-body">
+            @include('calendar::user.calendar.partial.entry')
         </div>
-        {!!Form::close()!!}
+        <div class="modal-footer"> 
+            <button type="button" class="btn mr5 btn-sm btn-raised btn-info pull-right" data-dismiss="modal"><i class="fa fa-times-circle-o"></i>Close</button>    
+            <button type="button" data-dismiss="modal" id="update" class="btn  mr5 btn-raised btn-sm btn-success pull-right "  ><i class="fa fa-floppy-o"></i>Update</button>
+            <button type="button" class="btn delete-btn btn-danger btn-raised btn-sm  pull-right mr5" ><i class="fa fa-trash-o"></i>  Delete </button> 
+        </div>
+        {!! Form::close() !!}
     </div>
-</div>
+
 <script type="text/javascript">
 $(function(){
     $('#update').click(function(){

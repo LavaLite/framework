@@ -6,7 +6,7 @@
 ->id('create-calendar')
 ->method('POST')
 ->files('true')
-->action(trans_url('admin/calendar/calendar'))!!}
+->action(guard_url('calendar/calendar'))!!}
 {!!Form::token()!!}
 <div class="modal-body clearfix">
     @include('calendar::admin.calendar.partial.entry')
@@ -32,7 +32,7 @@ $(function() {
             formData.append(val.name, val.value);
         });
         $.ajax({
-            url: "{!!url('admin/calendar/calendar')!!}",
+            url: "{!!guard_url('calendar/calendar')!!}",
             type: 'POST',
             data: formData,
             processData: false,

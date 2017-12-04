@@ -41,7 +41,8 @@ class CalendarResourceController extends BaseController
         $calendars = $this->repository
             ->all();
 
-        return $this->response->title(trans('calendar::calendar.names'))
+        return $this->response
+            ->title(trans('calendar::calendar.names'))
             ->view('calendar::calendar.index', true)
             ->data(compact('calendars'))
             ->output();
@@ -65,7 +66,8 @@ class CalendarResourceController extends BaseController
             $view = 'calendar::calendar.new';
         }
 
-        return $this->response->title(trans('app.view') . ' ' . trans('calendar::calendar.name'))
+        return $this->response
+            ->title(trans('app.view') . ' ' . trans('calendar::calendar.name'))
             ->data(compact('calendar'))
             ->view($view, true)
             ->output();
@@ -88,6 +90,7 @@ class CalendarResourceController extends BaseController
         Form::populate($calendar);
 
         return $this->response
+            ->title(trans('app.create') . ' ' . trans('calendar::calendar.name'))
             ->data(compact('calendar'))
             ->view('calendar::calendar.create', true)
             ->output();

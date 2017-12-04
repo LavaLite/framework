@@ -101,18 +101,16 @@ $(function () {
             day: 'day'
         },
         //Random default events
-        eventSources: [
-            {
-            url: '{!!trans_url('admin/calendar/calendar/ajax/list')!!}', // use the `url` property
-            }
-        ],
+        eventSources: [{
+            url: '{!!guard_url('calendar/calendar/ajax/list')!!}', // use the `url` property
+        }],
         selectable: true,
         editable: true,
         droppable: true, 
         eventLimit: true,
         eventClick: function(event, element) {     
             $('#event-modal .modal-title').html('Edit ' + event.title);
-            $('#event-modal .modal-content').load('{{trans_url('admin/calendar/calendar')}}/' + event.id + '/edit');
+            $('#event-modal .modal-content').load('{{guard_url('calendar/calendar')}}/' + event.id + '/edit');
             $('#event-modal').modal('show');
         },
 
@@ -120,7 +118,7 @@ $(function () {
             $('#event-modal .modal-title').html('Create New Event');
             start = moment(start).format('DD+MMM+YYYY+h:mm+A');
             end = moment(end).format('DD+MMM+YYYY+h:mm+A');
-            $('#event-modal .modal-content').load('{{trans_url('admin/calendar/calendar/create')}}?start='+start + '&end='+end);
+            $('#event-modal .modal-content').load('{{guard_url('calendar/calendar/create')}}?start='+start + '&end='+end);
             $('#event-modal').modal('show');
             var eventData;
             if (event.title) {
@@ -194,7 +192,7 @@ $(function () {
         });
 
         $.ajax( {
-            url: '{!!url("admin/calendar/calendar")!!}',
+            url: '{!!guard_url("calendar/calendar")!!}',
             type: 'POST',
             data: formData,
             processData:false,  
@@ -202,7 +200,7 @@ $(function () {
             async: false,
             success:function(data, textStatus, jqXHR)
             {   
-                $('#external-events').load('{!!url("admin/calendar/calendar/draft")!!}');
+                $('#external-events').load('{!!guard_url("calendar/calendar/draft")!!}');
                 form[0].reset();
             }
         });
@@ -214,7 +212,7 @@ $(function () {
     function updateEvents(formData, id, refresh = false){
 
         $.ajax( {
-            url: "{!!trans_url('admin/calendar/calendar')!!}" +"/"+id,
+            url: "{!!guard_url('calendar/calendar')!!}" +"/"+id,
             type: 'POST',
             data: formData,
             cache: false,
@@ -232,7 +230,7 @@ $(function () {
 
     function createEvents(formData, refresh = false){
         $.ajax( {
-            url: "{!!trans_url('admin/calendar/calendar')!!}",
+            url: "{!!guard_url('calendar/calendar')!!}",
             type: 'POST',
             data: formData,
             cache: false,
@@ -249,7 +247,7 @@ $(function () {
     }
     function deleteEvents(id){
         $.ajax({
-            url: "{!!Trans::to('admin/calendar/calendar')!!}" + '/' + id,
+            url: "{!!guard_url('calendar/calendar')!!}" + '/' + id,
             type: 'DELETE',
             processData: false,
             contentType: false,

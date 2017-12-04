@@ -21,7 +21,7 @@ $(function () {
         //Random default events
         eventSources: [
         {
-        url: '{!!Trans::to('admin/calendar/calendar/ajax/list')!!}', // use the `url` property
+        url: '{!!guard_url('calendar/calendar/ajax/list')!!}', // use the `url` property
         }
         ],
         editable: false,
