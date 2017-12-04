@@ -8,7 +8,7 @@
         <small> {!! trans('app.manage') !!} {!! trans('menu::menu.names') !!}</small>
         </h1>
         <ol class="breadcrumb">
-            <li><a href="{!! trans_url('admin') !!}"><i class="fa fa-dashboard"></i> {!! trans('app.home') !!} </a></li>
+            <li><a href="{!! guard_url('admin') !!}"><i class="fa fa-dashboard"></i> {!! trans('app.home') !!} </a></li>
             <li class="active">{!! trans('menu::menu.names') !!}</li>
         </ol>
     </section>
@@ -20,7 +20,7 @@
                     <!-- Nav tabs -->
                     <ul class="nav nav-tabs primary">
                         @foreach($rootMenu->take(3) as $menu)
-                        <li {{($parent->getRouteKey() == $menu->getRouteKey()) ? ' class=active ' : ''}}><a href="{{ Trans::to('/admin/menu/menu') }}/{{$menu->getRouteKey()}}">{{$menu->name}}</a></li>
+                        <li {{($parent->getRouteKey() == $menu->getRouteKey()) ? ' class=active ' : ''}}><a href="{{ guard_url('menu/menu') }}/{{$menu->getRouteKey()}}">{{$menu->name}}</a></li>
                         @endforeach
                         <li class="dropdown">
                             <a class="dropdown-toggle" data-toggle="dropdown" href="#">
@@ -28,11 +28,11 @@
                             </a>
                             <ul class="dropdown-menu">
                             @foreach($rootMenu->except([1,2,3]) as $menu)
-                              <li role="presentation"><a role="menuitem" tabindex="-1" href="{{ Trans::to('/admin/menu/menu') }}/{{$menu->getRouteKey()}}">{{$menu->name}} menu</a></li>
+                              <li role="presentation"><a role="menuitem" tabindex="-1" href="{{ guard_url('menu/menu') }}/{{$menu->getRouteKey()}}">{{$menu->name}} menu</a></li>
                             @endforeach
                             </ul>
                         </li>
-                        <li class="pull-right"><a href="#" data-href="{{ Trans::to('/admin/menu/menu/create') }}"  data-action="LOAD" data-load-to="#menu-entry"><i class="fa fa-plus-circle"></i></a></li>
+                        <li class="pull-right"><a href="#" data-href="{{ guard_url('menu/menu/create') }}"  data-action="LOAD" data-load-to="#menu-entry"><i class="fa fa-plus-circle"></i></a></li>
                     </ul>
 
                     <div class="tab-content">
@@ -65,7 +65,7 @@ $(document).ready(function(){
         var formData = new FormData();
         formData.append('tree', out);
 
-        var url  = '{!! trans_url('admin/menu/menu/'. $parent->getRouteKey() . '/tree') !!}';
+        var url  = '{!! guard_url('menu/menu/'. $parent->getRouteKey() . '/tree') !!}';
 
         $.ajax( {
             url: url,
@@ -86,7 +86,7 @@ $(document).ready(function(){
     $('.dd').nestable().on('change', updateMenu);
 
 
-    $('#menu-entry').load('{{trans_url('admin/menu/menu')}}/{{$parent->getRouteKey()}}');
+    $('#menu-entry').load('{{guard_url('menu/menu')}}/{{$parent->getRouteKey()}}');
 
 
 });

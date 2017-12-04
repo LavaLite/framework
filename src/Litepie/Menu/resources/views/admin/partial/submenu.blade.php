@@ -3,11 +3,13 @@
     <div class="row">
         <div class="col-md-6 ">
             {!! Form::text('name')
+            -> required()
             -> label(trans('menu::menu.label.name'))
             -> placeholder(trans('menu::menu.placeholder.name'))!!}
         </div>
         <div class="col-md-6 ">
             {!! Form::text('url')
+            -> required()
             -> label(trans('menu::menu.label.url'))
             -> placeholder(trans('menu::menu.placeholder.url'))!!}
         </div>

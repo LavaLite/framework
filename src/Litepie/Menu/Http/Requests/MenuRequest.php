@@ -36,7 +36,7 @@ class MenuRequest extends FormRequest
 
         if ($this->isDelete()) {
             // Determine if the user is authorized to delete an entry,
-            return $this->can('delete');
+            return $this->can('destroy');
         }
 
         // Determine if the user is authorized to view the module.
@@ -54,14 +54,16 @@ class MenuRequest extends FormRequest
         if ($this->isStore()) {
             // validation rule for create request.
             return [
-
+                'name'  => 'required',
+                'url'   => 'required'
             ];
         }
 
         if ($this->isUpdate()) {
             // Validation rule for update request.
             return [
-
+                'name'  => 'required',
+                'url'   => 'required'
             ];
         }
 

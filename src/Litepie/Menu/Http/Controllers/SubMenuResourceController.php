@@ -64,21 +64,21 @@ class SubMenuResourceController extends ResourceController
             $attributes['parent_id'] = hashids_decode($attributes['parent_id']);
             $menu                    = $this->repository->create($attributes);
 
-            return response()->json(
-                [
-                    'message'  => trans('messages.success.updated', ['Module' => trans('menu::menu.name')]),
-                    'code'     => 204,
-                    'redirect' => trans_url('/admin/menu/submenu/' . $menu->getRouteKey()),
-                ],
-                201);
+            return $this->response
+                ->message(trans('messages.success.created', ['Module' => trans('menu::menu.name')]))
+                ->code(204)
+                ->status('success')
+                ->url(guard_url('menu/submenu/' . $menu->getRouteKey()))
+                ->redirect();
+
 
         } catch (Exception $e) {
-            return response()->json(
-                [
-                    'message' => $e->getMessage(),
-                    'code'    => 400,
-                ],
-                400);
+            return $this->response
+                ->message($e->getMessage())
+                ->code(400)
+                ->status('error')
+                ->url(guard_url('menu/menu/submenu'))
+                ->redirect();
         }
     }
 
@@ -115,22 +115,19 @@ class SubMenuResourceController extends ResourceController
 
             $menu = $this->repository->update($attributes, $id);
 
-            return response()->json([
-                'message'  => trans('messages.success.updated', ['Module' => trans('menu::menu.name')]),
-                'code'     => 204,
-                'redirect' => trans_url('/admin/menu/submenu/' . $menu->getRouteKey()),
-            ], 201);
+            return $this->response->message(trans('messages.success.updated', ['Module' => trans('menu::menu.name')]))
+                ->code(204)
+                ->status('success')
+                ->url(guard_url('menu/submenu/' . $menu->getRouteKey()))
+                ->redirect();
 
         } catch (Exception $e) {
 
-            return response()->json(
-                [
-                    'message'  => $e->getMessage(),
-                    'code'     => 400,
-                    'redirect' => trans_url('/admin/menu/submenu/' . $menu->getRouteKey()),
-                ],
-                400);
-
+            return $this->response->message($e->getMessage())
+                ->code(400)
+                ->status('error')
+                ->url(guard_url('menu/submenu/' . $menu->getRouteKey()))
+                ->redirect();
         }
 
     }

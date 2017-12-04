@@ -11,7 +11,7 @@
         {!!Form::vertical_open()
         ->id('create-menu')
         ->method('POST')
-        ->action(trans_url('admin/menu/submenu'))!!}
+        ->action(guard_url('menu/submenu'))!!}
         {!! Form::token() !!}
             <div class="tab-content">
                 @include('menu::admin.partial.submenu')

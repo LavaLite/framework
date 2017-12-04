@@ -13,7 +13,7 @@
         ->method('PUT')
         ->files('true')
         ->enctype('multipart/form-data')
-        ->action(trans_url('admin/menu/submenu/'. $menu->getRouteKey()))!!}
+        ->action(guard_url('menu/submenu/'. $menu->getRouteKey()))!!}
         <div class="tab-content">
             @include('menu::admin.partial.submenu')
         </div>
