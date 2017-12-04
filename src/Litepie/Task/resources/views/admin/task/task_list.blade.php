@@ -34,7 +34,7 @@
         var status = $(this).attr('id');
         var id     = ui.item.attr('id');
 
-        var formURL  = "{{ Trans::to('admin/task/task')}}"+"/"+id;
+        var formURL  = "{{ guard_url('task/task')}}"+"/"+id;
         $.ajax( {
             url: formURL,
             type: 'PUT',

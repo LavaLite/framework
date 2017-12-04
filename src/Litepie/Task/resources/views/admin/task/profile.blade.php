@@ -9,7 +9,7 @@
                 ->method('POST')
                 ->files('true')
                 ->enctype('multipart/form-data')
-                ->action(Trans::to('admin/task/task'))!!}
+                ->action(guard_url('task/task'))!!}
                 {!!Form::token()!!}
                 <div class="input-group">
                     <input type="hidden" name="new-status" value="to_do" placeholder="Add new task." class="input input-sm form-control">
