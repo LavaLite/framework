@@ -62,8 +62,6 @@ class MenuRequest extends FormRequest
         if ($this->isUpdate()) {
             // Validation rule for update request.
             return [
-                'name'  => 'required',
-                'url'   => 'required'
             ];
         }
 
