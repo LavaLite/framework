@@ -505,4 +505,24 @@ class Response
         return getenv('guard');
     }
 
+    /**
+     * Handle dynamic method calls.
+     *
+     * @param string $method
+     * @param array $parameters
+     * @return mixed
+     */
+    public function __call($method, $parameters)
+    {
+        $callable = preg_split('|[A-Z]|', $method);
+
+        if (in_array($callable[0], array('set', 'prepend', 'append', 'has', 'get'))) {
+            $value = lcfirst(preg_replace('|^'.$callable[0].'|', '', $method));
+            array_unshift($parameters, $value);
+            call_user_func_array(array($this->theme, $callable[0]), $parameters);
+        }
+
+        return $this;
+    }
+
 }
