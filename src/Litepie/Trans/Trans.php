@@ -2,8 +2,8 @@
 
 namespace Litepie\Trans;
 
-use Mcamara\LaravelLocalization\LaravelLocalization;
 use Mcamara\LaravelLocalization\Exceptions\SupportedLocalesNotDefined;
+use Mcamara\LaravelLocalization\LaravelLocalization;
 
 class Trans extends LaravelLocalization
 {
@@ -32,7 +32,7 @@ class Trans extends LaravelLocalization
 
         return $locales;
     }
-    
+
     /**
      * Returns an URL adapted to $locale or current locale.
      *
@@ -45,6 +45,11 @@ class Trans extends LaravelLocalization
      */
     public function to($url = null, $locale = null)
     {
+
+        if (starts_with($url, 'http')) {
+            return url($url);
+        }
+
         return $this->getLocalizedURL($locale, $url);
     }
 
@@ -55,6 +60,7 @@ class Trans extends LaravelLocalization
      */
     public function hideDefaultLocaleInURL()
     {
-        return true; config('trans.hideDefaultLocaleInURL');
+        return config('trans.hideDefaultLocaleInURL');
     }
+
 }
