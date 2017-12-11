@@ -26,7 +26,19 @@ class ThemeViewFinder extends FileViewFinder implements ViewFinderInterface
         // Extract the $view and the $namespace parts
         list($namespace, $view) = $this->parseNamespaceSegments($name);
 
-        $this->prependNamespace($namespace, public_path(app('theme')->path() . '/views/vendor/' . $namespace));
+        // Add possible view folders based of the route
+        if (count($this->hints[$namespace]) < 8) {
+            $hintPath = $this->hints[$namespace][0];
+            $this->prependNamespace($namespace, $hintPath . '/' . $this->getDefaultFolder());
+            $this->prependNamespace($namespace, $hintPath . '/' . $this->getViewFolder());
+            $this->prependNamespace($namespace, resource_path('views/vendor/') . $namespace);
+            $this->prependNamespace($namespace, resource_path('views/vendor/') . $namespace . '/' . $this->getDefaultFolder());
+            $this->prependNamespace($namespace, resource_path('views/vendor/') . $namespace . '/' . $this->getViewFolder());
+            $this->prependNamespace($namespace, public_path(app('theme')->path() . '/views/vendor/' . $namespace));
+            $this->prependNamespace($namespace, public_path(app('theme')->path() . '/views/vendor/' . $namespace . '/' . $this->getDefaultFolder()));
+            $this->prependNamespace($namespace, public_path(app('theme')->path() . '/views/vendor/' . $namespace . '/' . $this->getViewFolder()));
+
+        }
         return $this->findInPaths($view, $this->hints[$namespace]);
     }
 
@@ -42,10 +54,14 @@ class ThemeViewFinder extends FileViewFinder implements ViewFinderInterface
     protected function findInPaths($name, $paths)
     {
 
-        $location = public_path(Theme::path() . '/views');
+        $location = public_path(app('theme')->path() . '/views');
         array_unshift($paths, $location);
 
         foreach ((array) $paths as $path) {
+
+            if (!$this->files->exists($path)) {
+                continue;
+            }
 
             foreach ($this->getPossibleViewFiles($name) as $file) {
 
@@ -58,6 +74,30 @@ class ThemeViewFinder extends FileViewFinder implements ViewFinderInterface
         }
 
         throw new InvalidArgumentException("View [$name] not found.");
+    }
+
+    /**
+     * Return folder for current guard.
+     *
+     * @return type
+     *
+     */
+    private function getViewFolder()
+    {
+        $guard = substr(getenv('guard'), 0, strpos(getenv('guard'), '.'));
+        return config("theme.themes." . $guard . ".view", config('theme.themes.default.view', $guard));
+    }
+
+    /**
+     * Return default folder for current guard.
+     *
+     * @return type
+     *
+     */
+    private function getDefaultFolder()
+    {
+        $guard = substr(getenv('guard'), 0, strpos(getenv('guard'), '.'));
+        return config("theme.themes." . $guard . ".default", config('theme.themes.default.default', 'default'));
     }
 
 }

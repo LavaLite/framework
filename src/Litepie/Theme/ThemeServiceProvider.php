@@ -22,7 +22,6 @@ class ThemeServiceProvider extends ServiceProvider
     {
         $this->publishResources();
         $this->app['view.finder']->prependLocation(base_path($this->app['theme']->path().'/view'));
-        $this->app['theme']->setView($this->app['view']);
     }
 
     /**
@@ -66,11 +65,9 @@ class ThemeServiceProvider extends ServiceProvider
      */
     public function registerTheme()
     {
-
         $this->app->singleton('theme', function ($app) {
-            return new Theme($app['config'], $app['events'], $app['view'], $app['asset'], $app['files']);
+            return new Theme($app['events'], $app['asset'], $app['files']);
         });
-
     }
 
     /**

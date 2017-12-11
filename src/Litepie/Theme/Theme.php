@@ -21,12 +21,6 @@ class Theme implements ThemeContract
      */
     public static $namespace = 'theme';
 
-    /**
-     * Repository config.
-     *
-     * @var \Illuminate\Config\Repository
-     */
-    protected $config;
 
     /**
      * Event dispatcher.
@@ -139,18 +133,15 @@ class Theme implements ThemeContract
      *
      * @return \Litepie\Theme\Theme
      */
-    public function __construct(Repository $config,
+    public function __construct(
         Dispatcher                             $events,
-        Factory                                $view,
         Asset                                  $asset,
         Filesystem                             $files) {
-        $this->config = $config;
 
         $this->events = $events;
 
-        $this->laravelViewsPath = Config::get('view.paths');
+        $this->laravelViewsPath = config('view.paths');
 
-        $this->view = $view;
 
         $this->asset = $asset;
 
@@ -220,18 +211,6 @@ class Theme implements ThemeContract
     }
 
     /**
-     * Check theme exists.
-     *
-     * @param string $theme
-     *
-     * @return bool
-     */
-    public function setView(Factory $view)
-    {
-        $this->view = $view;
-    }
-
-    /**
      * Link to another view.
      *
      * <code>
@@ -254,7 +233,7 @@ class Theme implements ThemeContract
         $link = str_replace($this->getThemeName(), $theme, array_get($trace[1], 'file'));
 
         extract($this->arguments);
-        extract($this->view->getShared());
+        extract(view()->getShared());
 
         return require $link;
     }
@@ -285,7 +264,7 @@ class Theme implements ThemeContract
         $link = preg_replace("#(public/{$config['themeDir']}/)[^/]+#", "$1{$theme}", $path);
 
         extract($this->arguments);
-        extract($this->view->getShared());
+        extract(view()->getShared());
 
         return require $link;
     }
@@ -302,7 +281,7 @@ class Theme implements ThemeContract
 
 // Main package config.
         if (!$this->themeConfig) {
-            $this->themeConfig = $this->config->get('theme');
+            $this->themeConfig = config('theme');
         }
 
 // Config inside a public theme.
@@ -388,7 +367,7 @@ class Theme implements ThemeContract
         }
 
         // Add namespace with hinting paths.
-        $this->view->addNamespace($this->getThemeNamespace(), $hints);
+        view()->addNamespace($this->getThemeNamespace(), $hints);
     }
 
     /**
@@ -507,7 +486,7 @@ class Theme implements ThemeContract
     public function set($region, $value)
     {
 
-// Content is reserve region for render sub-view.
+        // Content is reserve region for render sub-view.
         if ($region == 'content') {
             return;
         }
@@ -630,7 +609,7 @@ class Theme implements ThemeContract
      */
     public function share($key, $value)
     {
-        return $this->view->share($key, $value);
+        return view()->share($key, $value);
     }
 
     /**
@@ -682,11 +661,11 @@ class Theme implements ThemeContract
     {
         $path = $partialDir . '.' . $view;
 
-        if (!$this->view->exists($path)) {
+        if (!view()->exists($path)) {
             throw new UnknownPartialFileException("Partial view [$view] not found.");
         }
 
-        $partial              = $this->view->make($path, $args)->render();
+        $partial              = view()->make($path, $args)->render();
         $this->regions[$view] = $partial;
 
         return $this->regions[$view];
@@ -747,7 +726,7 @@ class Theme implements ThemeContract
                 throw new UnknownWidgetClassException("Widget target [$className] is not instantiable.");
             }
 
-            $instance = $reflector->newInstance($this, $this->config, $this->view);
+            $instance = $reflector->newInstance($this, $this->config, view());
             array_set($widgets, $className, $instance);
         }
 
@@ -777,7 +756,7 @@ class Theme implements ThemeContract
         // Partial path with namespace.
         $path = $this->getThemeNamespace($partialDir);
 
-// This code support partialWithLayout.
+        // This code support partialWithLayout.
         if (!is_null($layout)) {
             $path = $path . '.' . $layout;
         }
@@ -786,7 +765,7 @@ class Theme implements ThemeContract
             return $path . '.' . $v;
         }, $view);
 
-        $this->view->composer($view, $callback);
+        view()->composer($view, $callback);
     }
 
     /**
@@ -1054,7 +1033,7 @@ class Theme implements ThemeContract
         $pathOfView = app('path.base') . '/' . implode('/', $segments);
 
         // Add temporary path with a hint type.
-        $this->view->addNamespace('custom', $pathOfView);
+        view()->addNamespace('custom', $pathOfView);
 
         return $this->of('custom::' . $view, $args);
     }
@@ -1146,8 +1125,8 @@ class Theme implements ThemeContract
     public function location($realpath = false)
     {
 
-        if ($this->view->exists($this->content)) {
-            return ($realpath) ? $this->view->getFinder()->find($this->content) : $this->content;
+        if (view()->exists($this->content)) {
+            return ($realpath) ? view()->getFinder()->find($this->content) : $this->content;
         }
 
     }
@@ -1187,7 +1166,7 @@ class Theme implements ThemeContract
      */
     public function string($str, $args = [], $type = 'blade')
     {
-        $shared         = $this->view->getShared();
+        $shared         = view()->getShared();
         $data['errors'] = $shared['errors'];
         $args           = array_merge($data, $args);
 
@@ -1230,11 +1209,11 @@ class Theme implements ThemeContract
 
         $path = $this->getThemeNamespace($layoutDir . '.' . $this->layout);
 
-        if (!$this->view->exists($path)) {
+        if (!view()->exists($path)) {
             throw new UnknownLayoutFileException("Layout [$this->layout] not found.");
         }
 
-        $content = $this->view->make($path)->render();
+        $content = view()->make($path)->render();
 
         // Append status code to view.
         $content = new Response($content, $statusCode);

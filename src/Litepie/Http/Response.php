@@ -3,31 +3,17 @@
 namespace Litepie\http;
 
 use Form;
-use Theme;
+use Litepie\http\Traits\Request;
+use Litepie\http\Traits\Theme;
+use Litepie\http\Traits\View;
 
-class Response
+abstract class Response
 {
-    /**
-     * Hint path delimiter value.
-     *
-     * @var string
-     */
-    private $HINT_PATH_DELIMITER = '::';
-
-    /**
-     * @var store the response type.
-     */
-    protected $type = null;
-
+    use View, Request, Theme;
     /**
      * @var store the response data.
      */
     protected $data = null;
-
-    /**
-     * @var Store the page title.
-     */
-    protected $title = null;
 
     /**
      * @var Response message for the response.
@@ -45,29 +31,9 @@ class Response
     protected $code = null;
 
     /**
-     * @var  View for the response.
-     */
-    protected $view = null;
-
-    /**
-     * @var  View for the response.
-     */
-    protected $includeGuardFolder = false;
-
-    /**
      * @var  Url for the redirect response.
      */
     protected $url = null;
-
-    /**
-     * @var  Theme for the request.
-     */
-    public $theme = null;
-
-    /**
-     * @var  Theme layout for the request.
-     */
-    protected $layout = null;
 
     /**
      * Return the type of response for the current request.
@@ -91,28 +57,6 @@ class Response
 
         return 'http';
 
-    }
-
-    /**
-     * Return json array for  json response.
-     *
-     * @return json string
-     *
-     */
-    public function type($type)
-    {
-        $this->type = in_array($type, ['json', 'ajax', 'http']) ? $type : null;
-    }
-
-    /**
-     * Return json array for  json response.
-     *
-     * @return json string
-     *
-     */
-    public function typeIs($type)
-    {
-        return $this->getType() == $type;
     }
 
     /**
@@ -208,26 +152,6 @@ class Response
     /**
      * @return mixed
      */
-    public function getTitle()
-    {
-        return $this->title;
-    }
-
-    /**
-     * @param mixed $title
-     *
-     * @return self
-     */
-    public function title($title)
-    {
-        $this->title = $title;
-
-        return $this;
-    }
-
-    /**
-     * @return mixed
-     */
     public function getMessage()
     {
         return $this->message;
@@ -296,67 +220,6 @@ class Response
     /**
      * @return  View for the request
      */
-    public function getView()
-    {
-
-        if ($this->includeGuardFolder) {
-            return $this->viewWithGuardFolder($this->view);
-        }
-
-        return $this->view;
-    }
-
-    /**
-     * @param  view for the request $view
-     *
-     * @return self
-     */
-    public function addFolder($include = true)
-    {
-        $this->includeGuardFolder = $include;
-
-        return $this;
-    }
-
-    /**
-     * @param  view for the request $view
-     *
-     * @return self
-     */
-    public function view($view, $includeFolder = null)
-    {
-
-        if (is_bool($includeFolder)) {
-            $this->includeGuardFolder = $includeFolder;
-        }
-
-        $this->view = $view;
-
-        return $this;
-    }
-
-    /**
-     * Return view for the current guard.
-     *
-     * @return string
-     *
-     */
-    protected function viewWithGuardFolder($name)
-    {
-        $folder = $this->getViewFolder();
-
-        if (!$this->hasHintInformation($name)) {
-            return $folder . '.' . $name;
-        }
-
-        $segments = $this->parseNamespaceSegments($name);
-
-        return $segments[0] . '::' . $folder . '.' . $segments[1];
-    }
-
-    /**
-     * @return  View for the request
-     */
     public function getUrl()
     {
         return $this->url;
@@ -387,27 +250,6 @@ class Response
     }
 
     /**
-     * @param  View for the request $theme
-     *
-     * @return self
-     */
-    public function theme($theme)
-    {
-
-        $this->theme = Theme::uses($theme);
-
-        return $this;
-    }
-
-    /**
-     * @return  View for the request
-     */
-    public function getTheme()
-    {
-        return $this->theme;
-    }
-
-    /**
      * @param store the response data $data
      *
      * @return self
@@ -433,68 +275,6 @@ class Response
     }
 
     /**
-     * @param  Theme for the request $layout
-     *
-     * @return self
-     */
-    public function layout($layout)
-    {
-        $this->theme->layout($layout);
-
-        return $this;
-    }
-
-    /**
-     * @return  Theme for the request
-     */
-    public function getLayout()
-    {
-        return $this->layout;
-    }
-
-    /**
-     * Return folder for current guard.
-     *
-     * @return type
-     *
-     */
-    private function getViewFolder()
-    {
-        $guard = substr($this->getGuard(), 0, strpos(getenv('guard'), '.'));
-        return config("theme.themes." . $guard . ".view", config('theme.themes.default.view'));
-    }
-
-    /**
-     * Returns whether or not the view name has any hint information.
-     *
-     * @param  string  $name
-     * @return bool
-     */
-    private function hasHintInformation($name)
-    {
-        return strpos($name, $this->HINT_PATH_DELIMITER) > 0;
-    }
-
-    /**
-     * Get the segments of a template with a named path.
-     *
-     * @param  string  $name
-     * @return array
-     *
-     * @throws \InvalidArgumentException
-     */
-    private function parseNamespaceSegments($name)
-    {
-        $segments = explode($this->HINT_PATH_DELIMITER, $name);
-
-        if (count($segments) != 2) {
-            throw new InvalidArgumentException("View [$name] has an invalid name.");
-        }
-
-        return $segments;
-    }
-
-    /**
      * Return auth guard for the current route.
      *
      * @return type
@@ -516,12 +296,11 @@ class Response
     {
         $callable = preg_split('|[A-Z]|', $method);
 
-        if (in_array($callable[0], array('set', 'prepend', 'append', 'has', 'get'))) {
-            $value = lcfirst(preg_replace('|^'.$callable[0].'|', '', $method));
+        if (in_array($callable[0], ['set', 'prepend', 'append', 'has', 'get'])) {
+            $value = lcfirst(preg_replace('|^' . $callable[0] . '|', '', $method));
             array_unshift($parameters, $value);
-            call_user_func_array(array($this->theme, $callable[0]), $parameters);
+            call_user_func_array([$this->theme, $callable[0]], $parameters);
         }
-
         return $this;
     }
 

@@ -70,7 +70,7 @@ class AssetContainer
 
         // Finding asset url config.
         if (is_null($assetUrl)) {
-            $assetUrl = \Config::get('theme.assetUrl', '');
+            $assetUrl = config('theme.assetUrl', '');
         }
 
         // Using asset url, if available.
