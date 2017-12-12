@@ -1,7 +1,7 @@
 <?php
 
 namespace Litepie\http\Traits;
-use Theme;
+use Theme as BaseTheme;
 
 trait Theme
 {
@@ -48,7 +48,7 @@ trait Theme
     public function theme($theme)
     {
 
-        $this->theme = Theme::uses($theme);
+        $this->theme = BaseTheme::uses($theme);
 
         return $this;
     }
