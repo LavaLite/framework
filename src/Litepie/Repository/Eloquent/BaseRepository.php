@@ -121,7 +121,7 @@ abstract class BaseRepository extends PrettusRepository implements RepositoryInt
      *
      * @return     array  The data table array.
      */
-    public function getDataTable($page)
+    public function getDataTable()
     {
         $data = $this->paginate();
 

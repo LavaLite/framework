@@ -127,7 +127,7 @@ trait View
      * @return type
      *
      */
-    public function defaultview($folder)
+    public function defaultView()
     {
 
         $folder = $this->getDefaultFolder();
