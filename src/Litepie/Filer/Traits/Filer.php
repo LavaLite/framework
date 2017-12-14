@@ -227,9 +227,6 @@ trait Filer
             return 'img/default/' . $size . '.jpg';
         }
 
-        $config = $this->config;
-        $config = preg_replace('~\.(?!.*\.)~', '/', $config);
-
         $image = array_pull($image, $pos);
 
         return "image/{$size}/" . ($image['path']);
@@ -243,7 +240,7 @@ trait Filer
      *
      * @return string path
      */
-    public function getImages($field, $size = 'md')
+    public function getImages($field, $size = 'sm')
     {
         $image = $this->$field;
 
@@ -251,11 +248,8 @@ trait Filer
             return ['img/default/' . $size . '.jpg'];
         }
 
-        $config = $this->config;
-        $config = preg_replace('~\.(?!.*\.)~', '/', $config);
-
         foreach ($image as $key => $img) {
-            $image[$key] = "image/{$size}/" . ($img['path']);
+            $image[$key] = "image/{$size}" . ($img['path']);
         }
 
         return $image;
