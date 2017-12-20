@@ -6,25 +6,19 @@ use Exception;
 
 /**
  * Sorter model trait.
- *
- * Usage:
- *
- * Model table must have sort_order table column.
- *
- * In the model class definition:
- *
- *   use Litepie\Lava\Database\Traits\Sorter;
- *
- * To set orders:
- *
- *   $model->setSorterOrder($recordIds, $recordOrders);
- *
- * You can change the sort field used by declaring:
- *
- *   const SORT_ORDER = 'my_sort_order';
  */
+
+
 trait Sorter
 {
+
+    /**
+     * @var variable to store sort order column name.
+     *
+     * protected $sort_order = [];
+     */
+    protected $sort_order = 'sort_order';
+
     /**
      * Boot the Sorter trait for this model.
      *
@@ -68,6 +62,6 @@ trait Sorter
      */
     public function getSortOrderColumn()
     {
-        return defined('static::SORT_ORDER') ? static::SORT_ORDER : 'sort_order';
+        return !empty($this->sort_order) ? $this->sort_order : 'sort_order';
     }
 }

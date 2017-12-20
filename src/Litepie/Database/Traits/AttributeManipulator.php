@@ -1,11 +1,12 @@
 <?php
 
-namespace Larapack\AttributeManipulation;
+namespace Litepie\Database\Traits;
 
 use Closure;
 
-trait Manipulateable
+trait AttributeManipulator
 {
+
     /**
      * @var array List of setters to be ran
      */
@@ -21,7 +22,7 @@ trait Manipulateable
      *
      * @param $callback  \Closure
      */
-    protected static function addSetterManipulator(Closure $callback, $key)
+    protected static function addSetterManipulator($key, Closure $callback)
     {
         static::$setter_manipulators[$key] = $callback;
     }
@@ -31,7 +32,7 @@ trait Manipulateable
      *
      * @param $callback  \Closure
      */
-    protected static function addGetterManipulator(Closure $callback, $key)
+    protected static function addGetterManipulator($key, Closure $callback)
     {
         static::$getter_manipulators[$key] = $callback;
     }
@@ -63,6 +64,7 @@ trait Manipulateable
      */
     public function getOriginalAttribute($key)
     {
+
         return parent::getAttribute($key);
     }
 
@@ -74,6 +76,7 @@ trait Manipulateable
      */
     public function setAttribute($key, $value)
     {
+
         foreach (static::$setter_manipulators as $manipulator) {
             $value = $manipulator($this, $key, $value);
         }
@@ -91,4 +94,24 @@ trait Manipulateable
     {
         parent::setAttribute($key, $value);
     }
+
+    /**
+     * Returns an array of attributes that will be used in traits.
+     *
+     * @return array
+     */
+    public function checkGetSetAttribute($variable, $field)
+    {
+
+        if (!property_exists($this, $variable) && empty($this->$variable)) {
+            return false;
+        }
+
+        if (in_array($field, $this->$variable)) {
+            return true;
+        }
+
+        return false;
+    }
+
 }
