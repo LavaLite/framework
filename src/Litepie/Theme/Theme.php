@@ -279,14 +279,14 @@ class Theme implements ThemeContract
     public function getConfig($key = null)
     {
 
-// Main package config.
+        // Main package config.
         if (!$this->themeConfig) {
             $this->themeConfig = config('theme');
         }
 
-// Config inside a public theme.
+        // Config inside a public theme.
 
-// This config having buffer by array object.
+        // This config having buffer by array object.
         if ($this->theme and !isset($this->themeConfig['_themes'][$this->theme])) {
             $this->themeConfig['_themes'][$this->theme] = [];
 
@@ -305,6 +305,18 @@ class Theme implements ThemeContract
         $this->themeConfig = $this->evaluateConfig($this->themeConfig);
 
         return is_null($key) ? $this->themeConfig : array_get($this->themeConfig, $key);
+    }
+
+    /**
+     * Get the list view for the current theme.
+     *
+     * @param string $key
+     *
+     * @return mixed
+     */
+    public function listView()
+    {
+        return $this->getConfig('listView') ? : 'default';
     }
 
     /**
