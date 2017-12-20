@@ -117,9 +117,7 @@ abstract class BaseRepository extends PrettusRepository implements RepositoryInt
     /**
      * Return data for datatable
      *
-     * @param      int  $page   The pagenumber
-     *
-     * @return     array  The data table array.
+     * @return     array  array.
      */
     public function getDataTable()
     {
@@ -128,6 +126,22 @@ abstract class BaseRepository extends PrettusRepository implements RepositoryInt
         $data['recordsTotal']    = $data['meta']['pagination']['total'];
         $data['recordsFiltered'] = $data['meta']['pagination']['total'];
         $data['request']         = request()->all();
+        return $data;
+    }
+
+    /**
+     * Return data for bootstraptable
+     *
+     *
+     * @return     array.
+     */
+    public function getBootstrapTable()
+    {
+        $data = $this->paginate();
+
+        $data['total'] = count($data['data']);
+        $data['rows']  = $data['data'];
+        $data['request'] = request()->all();
         return $data;
     }
 
@@ -191,6 +205,7 @@ abstract class BaseRepository extends PrettusRepository implements RepositoryInt
     {
         return $this->model->whereIn('id', $ids)->get();
     }
+
     /**
      * Find data by slug.
      *
@@ -207,4 +222,5 @@ abstract class BaseRepository extends PrettusRepository implements RepositoryInt
         $this->resetModel();
         return $this->parserResult($model);
     }
+
 }
