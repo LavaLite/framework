@@ -49,7 +49,9 @@ trait UserPages
      */
     public function home()
     {
-        return $this->response->title('Dashboard')
+        return $this->response
+            ->layout('user')
+            ->title('Dashboard')
             ->view('home')
             ->output();
     }
@@ -137,8 +139,10 @@ trait UserPages
      */
     public function locked()
     {
-        $this->response->layout('blank');
-        return $this->response->title('Locked')
+
+        return $this->response
+            ->title('Locked')
+            ->layout('user')
             ->view('user.locked')
             ->output();
     }
@@ -151,7 +155,7 @@ trait UserPages
     public function masters()
     {
         return $this->response->title('Masters')
-            ->view('user.masters')
+            ->view('masters')
             ->output();
     }
 
@@ -163,7 +167,7 @@ trait UserPages
     public function reports()
     {
         return $this->response->title('Reports')
-            ->view('user.reports')
+            ->view('reports')
             ->output();
     }
 
