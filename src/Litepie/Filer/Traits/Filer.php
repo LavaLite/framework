@@ -113,7 +113,7 @@ trait Filer
      */
     public function getUploadURL($field, $file = 'file')
     {
-        return trans_url('upload/' . $this->config . '/' . ($this->upload_folder) . '/' . $field . '/' . $file);
+        return guard_url('upload/' . $this->config . '/' . ($this->upload_folder) . '/' . $field . '/' . $file);
     }
 
     /**
@@ -157,14 +157,7 @@ trait Filer
             $current = [];
         }
 
-        $cache = [];
-
-        if (session()->has('upload.' . $this->config . '.' . $field)) {
-            $cache = session()->pull('upload.' . $this->config . '.' . $field);
-            session()->forget('upload.' . $this->config . '.' . $field, null);
-        }
-
-        if (empty($current) && empty($cache) && !Request::has($field)) {
+        if (empty($current) && !Request::has($field)) {
             return;
         }
 
@@ -178,7 +171,7 @@ trait Filer
             $prev = [];
         }
 
-        $files = array_merge($current, $cache, $prev);
+        $files = array_merge($current, $prev);
 
         $files = array_slice($files, 0, $this->getUploadFileCount($field));
 
@@ -272,9 +265,11 @@ trait Filer
         if (!is_array($files) || empty($files)) {
             return [];
         }
+
         foreach ($files as $key => $file) {
             $files[$key]['url'] = url("{$prefix}/" . $file['path']);
         }
+
         return $files;
     }
 

@@ -6,11 +6,11 @@
         $ext  = strtolower($info['extension']);
     @endphp
     @if (in_array($ext, ['jpg','jpeg', 'png', 'gif']) )
-        <a href='{!!$file["url"]!!}' target="_blank">
+        <a href='{!! url("/image/original/".$file["path"])!!}' target="_blank">
             <img src='{!! url("/image/{$size}/".$file["path"])!!}' class="img-thumbnail image-responsive">
         </a>
     @else
-        <a href='{!!$file["url"]!!}' target="_blank">{!!$files["file"]!!}</a>
+        <a href='{{url('/file/download')}}/{!!$file["path"]!!}' target="_blank" class="show-file">{!!$file["file"]!!}</a><br/>
     @endif
 @empty
 Files not uploaded.
