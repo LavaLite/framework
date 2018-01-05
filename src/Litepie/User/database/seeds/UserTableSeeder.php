@@ -11,8 +11,8 @@ class UserTableSeeder extends Seeder
         DB::table('users')->insert([
             [
                 'id'          => 1,
-                'email'       => 'superuser@superuser.com',
-                'password'    => bcrypt('superuser@superuser'),
+                'email'       => 'superuser@lavalite.org',
+                'password'    => bcrypt('superuser@lavalite'),
                 'status'      => 'Active',
                 'name'        => 'Super User',
                 'sex'         => 'Male',
@@ -24,8 +24,8 @@ class UserTableSeeder extends Seeder
             ],
             [
                 'id'          => 2,
-                'email'       => 'admin@admin.com',
-                'password'    => bcrypt('admin@admin'),
+                'email'       => 'admin@lavalite.org',
+                'password'    => bcrypt('admin@lavalite'),
                 'status'      => 'Active',
                 'name'        => 'Admin',
                 'sex'         => 'Male',
@@ -37,8 +37,8 @@ class UserTableSeeder extends Seeder
             ],
             [
                 'id'          => 3,
-                'email'       => 'user@user.com',
-                'password'    => bcrypt('user@user'),
+                'email'       => 'user@lavalite.org',
+                'password'    => bcrypt('user@lavalite'),
                 'status'      => 'Active',
                 'name'        => 'User',
                 'sex'         => 'Male',
