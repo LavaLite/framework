@@ -20,6 +20,12 @@ class ThemeServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        
+        if ($this->app->runningInConsole()) {
+            $this->commands([
+                \Litepie\Theme\Console\ThemePublishCommand::class
+            ]);
+        }
         $this->publishResources();
         $this->app['view.finder']->prependLocation(base_path($this->app['theme']->path().'/view'));
     }
@@ -31,6 +37,7 @@ class ThemeServiceProvider extends ServiceProvider
      */
     public function register()
     {
+
 
         $this->app->singleton('view.finder', function ($app) {
             return new \Litepie\Theme\ThemeViewFinder(

@@ -1239,6 +1239,16 @@ class Theme implements ThemeContract
     }
 
     /**
+     * Return the list of themes used..
+     *
+     * @return array
+     */
+    public function themes()
+    {
+        return array_unique(array_pluck(config('theme.themes'), 'theme'));
+    }
+
+    /**
      * Magic method for set, prepend, append, has, get.
      *
      * @param string $method
