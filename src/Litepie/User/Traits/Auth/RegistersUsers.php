@@ -101,7 +101,7 @@ trait RegistersUsers
         $data['confirmation_code'] = Crypt::encrypt($user->id);
         $data['guard']             = $this->getGuard();
 
-        Mail::send('emails.verify', $data, function ($message) use ($user) {
+        Mail::send('auth.emails.verify', $data, function ($message) use ($user) {
             $message->to($user->email, $user->name)
                 ->subject('Verify your email address');
         });
