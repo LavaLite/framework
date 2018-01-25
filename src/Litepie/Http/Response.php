@@ -79,7 +79,13 @@ abstract class Response
     protected function ajax()
     {
         Form::populate($this->getFormData());
-        return response()->view($this->getView(), $this->getData());
+        $view = $this->getView();
+
+        if (!is_array($view)) {
+            return view($this->getView(), $this->getData());
+        }
+
+        return view()->first($this->getView(), $this->getData());
     }
 
     /**
@@ -301,6 +307,7 @@ abstract class Response
             array_unshift($parameters, $value);
             call_user_func_array([$this->theme, $callable[0]], $parameters);
         }
+
         return $this;
     }
 
