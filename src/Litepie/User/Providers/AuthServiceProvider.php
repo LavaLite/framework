@@ -2,7 +2,6 @@
 
 namespace Litepie\User\Providers;
 
-use Illuminate\Contracts\Auth\Access\Gate as GateContract;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 
 class AuthServiceProvider extends ServiceProvider
@@ -13,10 +12,6 @@ class AuthServiceProvider extends ServiceProvider
      * @var array
      */
     protected $policies = [
-        // Bind User policy
-        \App\User::class => \Litepie\User\Policies\UserPolicy::class,
-        // Bind Team policy
-        \Litepie\User\Models\Team::class => \Litepie\User\Policies\TeamPolicy::class,
     ];
 
     /**
@@ -28,6 +23,7 @@ class AuthServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        $this->policies = config('users.policies');
         $this->registerPolicies();
     }
 }

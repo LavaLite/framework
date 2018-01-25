@@ -56,7 +56,7 @@ class UserResourceController extends BaseController
         if ($this->response->typeIs('json')) {
             $pageLimit = $request->input('pageLimit');
             $data      = $this->repository
-                ->setPresenter(\Litepie\User\Repositories\Presenter\UserListPresenter::class)
+                ->setPresenter(\Litepie\User\Repositories\Presenter\UserPresenter::class)
                 ->getDataTable($pageLimit);
             return $this->response
                 ->data($data)

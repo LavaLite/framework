@@ -55,7 +55,7 @@ class TeamResourceController extends BaseController
 
         $teams = $this->repository
             ->pushCriteria(app('Litepie\Repository\Criteria\RequestCriteria'))
-            ->setPresenter('\\Litepie\\User\\Repositories\\Presenter\\TeamListPresenter')
+            ->setPresenter('\\Litepie\\User\\Repositories\\Presenter\\TeamPresenter')
             ->scopeQuery(function ($query) {
                 return $query->orderBy('id', 'DESC');
             })->paginate($pageLimit);

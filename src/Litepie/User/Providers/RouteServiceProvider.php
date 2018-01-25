@@ -29,20 +29,27 @@ class RouteServiceProvider extends ServiceProvider
     {
         parent::boot();
 
-        if (Request::is('*/user/user/*')) {
+        if (Request::is('admin/user/user/*')) {
             Route::bind('user', function ($user) {
                 $userrepo = $this->app->make('Litepie\User\Interfaces\UserRepositoryInterface');
                 return $userrepo->findorNew($user);
             });
         }
 
-        if (Request::is('*/user/team/*')) {
+        if (Request::is('admin/user/team/*')) {
             Route::bind('team', function ($team) {
                 $teamrepo = $this->app->make('Litepie\User\Interfaces\TeamRepositoryInterface');
                 return $teamrepo->findorNew($team);
             });
         }
 
+        if (Request::is('admin/user/*')) {
+            Route::bind('client', function ($client) {
+
+                $userrepo = $this->app->make('Litepie\User\Interfaces\ClientRepositoryInterface');
+                return $userrepo->findorNew($client);
+            });
+        }
     }
 
     /**
@@ -70,9 +77,9 @@ class RouteServiceProvider extends ServiceProvider
     {
         Route::group([
             'middleware' => 'web',
-            //'namespace'  => $this->namespace,
             'prefix'     => trans_setlocale(),
         ], function ($router) {
+            require (__DIR__ . '/../routes/auth.php');
             require (__DIR__ . '/../routes/web.php');
         });
 

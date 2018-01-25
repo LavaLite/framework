@@ -53,6 +53,12 @@ class UserServiceProvider extends ServiceProvider
             \Litepie\User\Repositories\Eloquent\UserRepository::class
         );
 
+        // Bind User to repository
+        $this->app->bind(
+            'Litepie\User\Interfaces\ClientRepositoryInterface',
+            \Litepie\User\Repositories\Eloquent\ClientRepository::class
+        );
+
         // Bind Team to repository
         $this->app->bind(
             'Litepie\User\Interfaces\TeamRepositoryInterface',

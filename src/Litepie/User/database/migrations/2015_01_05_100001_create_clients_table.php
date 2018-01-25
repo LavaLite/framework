@@ -38,7 +38,7 @@ class CreateClientsTable extends Migration
             $table->string('photo', 500)->nullable();
             $table->string('web', 100)->nullable();
             $table->longText('permissions')->nullable();
-            $table->enum('status', ['draft', 'complete', 'verify', 'approve', 'publish', 'unpublish', 'archive'])->default('draft')->nullable();
+            $table->enum('status', ['New', 'Active', 'Suspended', 'Locked'])->default('New')->nullable();
             $table->integer('user_id')->nullable();
             $table->string('user_type', 50)->nullable();
             $table->string('upload_folder', 100)->nullable();

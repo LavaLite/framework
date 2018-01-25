@@ -4,7 +4,7 @@ namespace Litepie\User\Repositories\Presenter;
 
 use Litepie\Repository\Presenter\FractalPresenter;
 
-class TeamItemPresenter extends FractalPresenter {
+class TeamPresenter extends FractalPresenter {
 
     /**
      * Prepare data to present
@@ -13,6 +13,6 @@ class TeamItemPresenter extends FractalPresenter {
      */
     public function getTransformer()
     {
-        return new TeamItemTransformer();
+        return new TeamListTransformer();
     }
 }
