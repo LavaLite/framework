@@ -67,16 +67,5 @@ trait ThemeAndViews
         return substr($this->getGuard(), 0, strpos(getenv('guard'), '.'));
     }
 
-    /**
-     * Return folder for current guard.
-     *
-     * @return type
-     *
-     */
-    protected function setView($view = 'default')
-    {
-        $this->response->defaultViews($view);
-        return $this;
-    }
 
 }

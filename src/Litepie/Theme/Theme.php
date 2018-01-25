@@ -958,8 +958,11 @@ class Theme implements ThemeContract
         // Keeping arguments.
         $this->arguments = $args;
 
-
-        $content = view($view, $args);
+        if(is_array($view)){
+            $content = view()->first($view, $args);
+        } else {
+            $content = view($view, $args);
+        }
 
         // View path of content.
         $this->content = $view;
