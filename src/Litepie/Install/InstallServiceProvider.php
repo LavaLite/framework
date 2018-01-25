@@ -32,6 +32,10 @@ class InstallServiceProvider extends ServiceProvider
      */
     public function register()
     {
+        $this->commands([
+            \Litepie\Install\InstallCommand::class
+        ]);
+
         $this->app->register(\Litepie\Install\Providers\RouteServiceProvider::class);
     }
 
