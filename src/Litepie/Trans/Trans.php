@@ -17,12 +17,11 @@ class Trans extends LaravelLocalization
      */
     public function getSupportedLocales()
     {
-
         if (!empty($this->supportedLocales)) {
             return $this->supportedLocales;
         }
 
-        $locales = $this->configRepository->get('trans.locales');
+        $locales = $this->configRepository->get('trans.supportedLocales');
 
         if (empty($locales) || !is_array($locales)) {
             throw new SupportedLocalesNotDefined();
@@ -63,4 +62,34 @@ class Trans extends LaravelLocalization
         return config('trans.hideDefaultLocaleInURL');
     }
 
+    /**
+     * Returns the translation key for a given path.
+     *
+     * @return bool Returns value of useAcceptLanguageHeader in config.
+     */
+    protected function useAcceptLanguageHeader()
+    {
+        return $this->configRepository->get('trans.useAcceptLanguageHeader');
+    }
+    
+    /**
+     * Return an array of all supported Locales but in the order the user
+     * has specified in the config file. Useful for the language selector.
+     *
+     * @return array
+     */
+    public function getLocalesOrder()
+    {
+        $locales = $this->getSupportedLocales();
+
+        $order = $this->configRepository->get('trans.localesOrder');
+
+        uksort($locales, function ($a, $b) use ($order) {
+            $pos_a = array_search($a, $order);
+            $pos_b = array_search($b, $order);
+            return $pos_a - $pos_b;
+        });
+
+        return $locales;
+    }
 }
