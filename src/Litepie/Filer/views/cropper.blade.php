@@ -1,11 +1,13 @@
-
+@php
+$image = head($files);
+@endphp
 <div class="{{$field}}-file-cropper text-center">
     <img src='{!! url(@$src) !!}' alt="" class="img-responsive" id="image-{{$field}}">
     <br/>
     <div class="btn-group">
 
     <label class="btn btn-primary" for="inputImage" title="Change Image">
-      <input type="file" class="sr-only" id="inputImage" name="file" accept=".jpg,.jpeg,.png,.gif,.bmp,.tiff">
+      <input type="file" class="sr-only" id="inputImage" name="file" accept=".jpg,.jpeg,.png,.gif">
       <span class="docs-tooltip" data-toggle="tooltip" data-animation="false" title="Upload new image">
         <span class="fa fa-upload"></span>
       </span>
@@ -16,6 +18,11 @@
       </span>
     </button>
   </div>
+  <input type="hidden" name="{{$field}}[0][caption]"  id="{{$field}}_caption"  value="{{$image['caption']}}">
+  <input type="hidden" name="{{$field}}[0][file]"  id="{{$field}}_file"  value="{{$image['file']}}">
+  <input type="hidden" name="{{$field}}[0][folder]"  id="{{$field}}_folder"  value="{{$image['folder']}}">
+  <input type="hidden" name="{{$field}}[0][path]"  id="{{$field}}_path"  value="{{$image['path']}}">
+  <input type="hidden" name="{{$field}}[0][time]"  id="{{$field}}_time"  value="{{$image['time']}}">
 </div>
 
 <script type="text/javascript">
@@ -31,13 +38,15 @@ $(function () {
       };
   var originalImageURL = $image.attr('src');
   var uploadedImageURL;
-  var imageName = "profile.jpg";
+  var imageName = "profile.png";
 
   // Cropper
   $image.cropper(options);
 
   // Methods
-  $('#{{$field}}-save-image').on('click', function () {
+  $('#{{$field}}-save-image').on('click', function (e) {
+    e.preventDefault();
+    e.stopImmediatePropagation();
     // Upload cropped image to server if the browser supports `HTMLCanvasElement.toBlob`
     $image.cropper('getCroppedCanvas').toBlob(function (blob) {
       var formData = new FormData();
@@ -50,13 +59,19 @@ $(function () {
         processData: false,
         contentType: false,
         success: function (data, textStatus, jqXHR) {
-                app.message(jqXHR);
+            $('#{{$field}}_caption').val(data.caption);
+            $('#{{$field}}_file').val(data.file);
+            $('#{{$field}}_folder').val(data.folder);
+            $('#{{$field}}_path').val(data.path);
+            $('#{{$field}}_time').val(data.time);
         },
         error: function (jqXHR, textStatus, errorThrown) {
-                app.message(jqXHR);
+            app.message(jqXHR);
         }
       });
+      return false;
     });
+    return false;
   });
 
 

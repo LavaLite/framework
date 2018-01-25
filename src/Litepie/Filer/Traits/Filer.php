@@ -212,7 +212,7 @@ trait Filer
      *
      * @return string path
      */
-    public function defaultImage($field, $size = 'md', $pos = 0)
+    public function defaultImage($field, $size = 'original', $pos = 0)
     {
         $image = $this->$field;
 
@@ -220,7 +220,7 @@ trait Filer
             return 'img/default/' . $size . '.jpg';
         }
 
-        $image = array_pull($image, $pos);
+        $image = array_pull($image, $pos, head($image));
 
         return "image/{$size}/" . ($image['path']);
     }
