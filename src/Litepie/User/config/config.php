@@ -116,7 +116,7 @@ return [
         'model' => [
             'model'         => \Litepie\User\Models\Team::class,
             'table'         => 'teams',
-            'presenter'     => \Litepie\User\Repositories\Presenter\TeamItemPresenter::class,
+            'presenter'     => \Litepie\User\Repositories\Presenter\TeamPresenter::class,
             'hidden'        => [],
             'visible'       => [],
             'guarded'       => ['*'],

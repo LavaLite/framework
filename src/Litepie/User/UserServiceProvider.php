@@ -97,9 +97,7 @@ class UserServiceProvider extends ServiceProvider
         // Publish language files
         $this->publishes([__DIR__ . '/resources/lang' => base_path('resources/lang/vendor/user')], 'lang');
 
-        // Publish models
-        $this->publishes([__DIR__ . '/database/models/' => base_path('/')], 'models');
-
+        // Publish public files
         $this->publishes([__DIR__ . '/public' => base_path('public')], 'public');
     }
 }

@@ -98,18 +98,7 @@ class UserTableSeeder extends Seeder
                 'target'      => null,
                 'order'       => 1202,
                 'status'      => 1,
-            ],
-            [
-                'parent_id'   => $id,
-                'key'         => null,
-                'url'         => 'admin/user/team',
-                'name'        => 'Team',
-                'description' => null,
-                'icon'        => 'fa fa-users',
-                'target'      => null,
-                'order'       => 1202,
-                'status'      => 1,
-            ],
+            ]
         ]);
     }
 }

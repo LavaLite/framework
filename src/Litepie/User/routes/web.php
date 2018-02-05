@@ -9,7 +9,6 @@
 Route::group([
     'namespace' => 'Litepie\User\Http\Controllers',
     'prefix' => set_route_guard('web') . '/user',
-    'middleware' => ['localize']
 ], function () {
     Route::post('user/change/team', 'UserResourceController@changeTeam');
     // Route::post('team/add/member/{team}', 'TeamResourceController@addMember');
