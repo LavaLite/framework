@@ -223,4 +223,19 @@ abstract class BaseRepository extends PrettusRepository implements RepositoryInt
         return $this->parserResult($model);
     }
 
+    /**
+     * Find data by slug.
+     *
+     * @param $value
+     * @param array $columns
+     *
+     * @return mixed
+     */
+    public function toSql()
+    {
+        $this->applyCriteria();
+        $this->applyScope();
+        return $this->model->toSql();
+    }
+
 }
