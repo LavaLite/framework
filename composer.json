@@ -29,37 +29,28 @@
         "spatie/laravel-backup": "~5.1"
     },
     "replace": {
-        "litepie/alert": "self.version",
-        "litepie/calendar": "self.version",
-        "litepie/contracts": "self.version",
+        "litepie/activities": "self.version",
         "litepie/database": "self.version",
         "litepie/filer": "self.version",
         "litepie/form": "self.version",
         "litepie/hashids": "self.version",
         "litepie/install": "self.version",
         "litepie/menu": "self.version",
-        "litepie/message": "self.version",
         "litepie/node": "self.version",
         "litepie/repository": "self.version",
-        "litepie/revision": "self.version",
         "litepie/roles": "self.version",
         "litepie/settings": "self.version",
-        "litepie/task": "self.version",
         "litepie/team": "self.version",
         "litepie/theme": "self.version",
         "litepie/trans": "self.version",
-        "litepie/user": "self.version",
-        "litepie/workflow": "self.version"
+        "litepie/user": "self.version"
     },
     "autoload": {
         "classmap": [
-            "src/Litepie/Alerts/database/seeds",
-            "src/Litepie/Calendar/database/seeds",
+            "src/Litepie/Activities/database/seeds",
             "src/Litepie/Menu/database/seeds",
-            "src/Litepie/Message/database/seeds",
             "src/Litepie/Roles/database/seeds",
             "src/Litepie/Settings/database/seeds",
-            "src/Litepie/Task/database/seeds",
             "src/Litepie/User/database/seeds"
         ],
         "files": [
