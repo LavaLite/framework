@@ -14,6 +14,8 @@ class HashidsServiceProvider extends ServiceProvider
      */
     public function register()
     {
+        $this->mergeConfigFrom(__DIR__.'/config.php', 'hashids');
+
         // Bind 'hashids' shared component to the IoC container
         $this->app->singleton('hashids', function ($app) {
             // Read settings from config file

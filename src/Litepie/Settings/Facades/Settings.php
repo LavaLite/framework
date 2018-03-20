@@ -13,6 +13,6 @@ class Settings extends Facade
      */
     protected static function getFacadeAccessor()
     {
-        return 'settings';
+        return 'litepie.settings';
     }
 }

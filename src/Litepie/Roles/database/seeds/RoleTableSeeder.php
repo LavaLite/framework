@@ -51,12 +51,12 @@ class RoleTableSeeder extends Seeder
             ],
         ]);
 
-        $id = DB::table('menus')->insertGetId(
+        DB::table('menus')->insertGetId(
             [
                 'parent_id'   => 1,
                 'key'         => 'role',
                 'url'         => 'admin/roles/role',
-                'name'        => 'Role',
+                'name'        => 'Roles & Permissions',
                 'description' => null,
                 'icon'        => 'fa fa-check-circle-o',
                 'target'      => null,
@@ -66,21 +66,5 @@ class RoleTableSeeder extends Seeder
             ]
         );
 
-        DB::table('menus')->insert([
-
-            [
-                'parent_id'   => $id,
-                'key'         => 'role',
-                'url'         => 'admin/roles/role',
-                'name'        => 'Role',
-                'description' => null,
-                'icon'        => 'fa fa-newspaper-o',
-                'role'        => '["superuser"]',
-                'target'      => null,
-                'order'       => 190,
-                'status'      => 1,
-            ],
-
-        ]);
     }
 }

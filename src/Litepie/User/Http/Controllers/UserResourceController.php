@@ -66,7 +66,7 @@ class UserResourceController extends BaseController
         $users = $this->repository->paginate();
 
         return $this->response->title(trans('user::user.names'))
-            ->view('user::admin.user.index')
+            ->view('user::user.index')
             ->data(compact('users'))
             ->output();
     }
@@ -83,9 +83,9 @@ class UserResourceController extends BaseController
     {
 
         if ($user->exists) {
-            $view = 'user::admin.user.show';
+            $view = 'user::user.show';
         } else {
-            $view = 'user::admin.user.new';
+            $view = 'user::user.new';
         }
 
         $roles       = $this->roles->all();
@@ -110,7 +110,7 @@ class UserResourceController extends BaseController
         $roles       = $this->roles->all();
         $permissions = $this->permissions->groupedPermissions();
         return $this->response->title(trans('app.new') . ' ' . trans('user::user.name'))
-            ->view('user::admin.user.create')
+            ->view('user::user.create')
             ->data(compact('user', 'roles', 'permissions'))
             ->output();
     }
@@ -158,7 +158,7 @@ class UserResourceController extends BaseController
         $roles       = $this->roles->all();
         $permissions = $this->permissions->groupedPermissions();
         return $this->response->title(trans('app.edit') . ' ' . trans('user::user.name'))
-            ->view('user::admin.user.edit')
+            ->view('user::user.edit')
             ->data(compact('user', 'roles', 'permissions'))
             ->output();
     }

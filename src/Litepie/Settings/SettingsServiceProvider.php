@@ -41,9 +41,12 @@ class SettingsServiceProvider extends ServiceProvider
      */
     public function register()
     {
+        $configPath = __DIR__ . '/config/config.php';
+        $this->mergeConfigFrom($configPath, 'settings');
+
         // Bind facade
         $this->app->bind('settings', function ($app) {
-            return $this->app->make('Litepie\Settings\Settings');
+            return $this->app->make(\Litepie\Settings\Settings::class);
         });
 
                 // Bind Setting to repository

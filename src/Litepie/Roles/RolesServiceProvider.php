@@ -41,6 +41,8 @@ class RolesServiceProvider extends ServiceProvider
      */
     public function register()
     {
+        $this->mergeConfigFrom(__DIR__.'/config/config.php', 'roles');
+
         // Bind facade
         $this->app->bind('roles.roles', function ($app) {
             return $this->app->make('Litepie\Roles\Roles');

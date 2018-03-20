@@ -21,7 +21,7 @@ class FilerServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->loadViewsFrom(__DIR__ . '/views', 'filer');
-        $this->app->register('\Intervention\Image\ImageServiceProvider');
+        $this->app->register('\Litepie\Filer\ImageServiceProvider');
         $this->publishResources();
     }
 
@@ -32,6 +32,8 @@ class FilerServiceProvider extends ServiceProvider
      */
     public function register()
     {
+        $this->mergeConfigFrom(__DIR__.'/config.php', 'filer');
+
         $this->app->bind('filer', function ($app) {
             return new \Litepie\Filer\Filer();
         });
@@ -57,7 +59,10 @@ class FilerServiceProvider extends ServiceProvider
     private function publishResources()
     {
         // Publish configuration file
-        $this->publishes([__DIR__ . '/config.php' => config_path('filer.php')], 'config');
+        $this->publishes([
+            __DIR__ . '/config.php' => config_path('filer.php'),
+            __DIR__ . '/image.php' => config_path('image.php'),
+        ], 'config');
 
         // Publish public view
         $this->publishes([__DIR__ . '/views' => base_path('resources/views/vendor/filer')], 'view');

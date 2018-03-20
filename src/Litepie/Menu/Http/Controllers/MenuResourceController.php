@@ -37,7 +37,6 @@ class MenuResourceController extends BaseController
     {
         $parent   = $this->repository->find(hashids_encode($parent));
         $rootMenu = $this->repository->rootMenues();
-
         return $this->response->title(trans('menu::menu.names'))
             ->view('menu::admin.index')
             ->data(compact('rootMenu', 'parent'))

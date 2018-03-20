@@ -41,6 +41,8 @@ class UserServiceProvider extends ServiceProvider
      */
     public function register()
     {
+        $this->mergeConfigFrom(__DIR__.'/config/config.php', 'users');
+
         // Bind facade
         $this->app->bind('user', function ($app) {
             return $this->app->make('Litepie\User\User');

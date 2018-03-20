@@ -101,19 +101,6 @@ if (!function_exists('blade_compile')) {
 
 }
 
-if (!function_exists('theme_asset')) {
-    /**
-     * Get translated url.
-     *
-     * @param string $url
-     *
-     * @return string
-     */
-    function theme_asset($file)
-    {
-        return Theme::asset()->url($file);
-    }
-}
 
 if (!function_exists('trans_url')) {
     /**

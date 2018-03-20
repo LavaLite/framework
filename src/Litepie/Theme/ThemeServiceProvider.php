@@ -38,6 +38,7 @@ class ThemeServiceProvider extends ServiceProvider
     public function register()
     {
 
+        $this->mergeConfigFrom(__DIR__.'/config.php', 'theme');
 
         $this->app->singleton('view.finder', function ($app) {
             return new \Litepie\Theme\ThemeViewFinder(

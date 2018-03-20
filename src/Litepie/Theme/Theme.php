@@ -10,11 +10,10 @@ use Illuminate\Filesystem\Filesystem;
 use Illuminate\Http\Response;
 use Illuminate\View\Compilers\BladeCompiler;
 use Illuminate\View\Factory;
-use Litepie\Contracts\Theme\Theme as ThemeContract;
 use ReflectionClass;
 use Symfony\Component\HttpFoundation\Cookie;
 
-class Theme implements ThemeContract
+class Theme  
 {
     /**
      * Theme namespace.

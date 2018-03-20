@@ -16,7 +16,8 @@
     </div>
         <div class="nav-tabs-custom">
             <ul class="nav nav-tabs">
-                    <li class="{!!(request('status') == '')?'active':'';!!}"><a href="{!!guard_url('roles/permission')!!}">{!! trans('roles::permission.names') !!}</a></li>
+                    <li class=""><a href="{!!guard_url('roles/role')!!}">{!! trans('roles::role.names') !!}</a></li>
+                    <li class="active"><a href="{!!guard_url('roles/permission')!!}">{!! trans('roles::permission.names') !!}</a></li>
                     <li class="pull-right">
                     <span class="actions">
                     <!--   

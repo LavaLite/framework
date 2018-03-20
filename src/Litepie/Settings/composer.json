@@ -10,14 +10,13 @@
         }
     ],
     "require": {
-        "php": ">=5.6.4"
     },
     "autoload": {
         "classmap": [
             "database/seeds"
         ],
         "psr-4": {
-            "Litepie\\Settings\\": "src"
+            "Litepie\\Settings\\": ""
         }
     },
     "minimum-stability": "dev"

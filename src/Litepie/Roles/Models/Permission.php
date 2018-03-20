@@ -7,13 +7,12 @@ use Litepie\Database\Traits\Slugger;
 use Litepie\Filer\Traits\Filer;
 use Litepie\Hashids\Traits\Hashids;
 use Litepie\Repository\Traits\PresentableTrait;
-use Litepie\Revision\Traits\Revision;
 use Litepie\Trans\Traits\Translatable;
 use Litepie\Roles\Traits\PermissionHasRelations;
 
 class Permission extends Model
 {
-    use Filer, Hashids, Slugger, Translatable, Revision, PresentableTrait, PermissionHasRelations;
+    use Filer, Hashids, Slugger, Translatable,  PresentableTrait, PermissionHasRelations;
 
 
     /**

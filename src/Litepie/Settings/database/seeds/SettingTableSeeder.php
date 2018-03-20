@@ -18,7 +18,6 @@ class SettingTableSeeder extends Seeder
                 'key'       => 'main.company.name',
                 'name'      => 'Company name',
                 'value'     => 'Lavalite',
-                'type'      => 'Lavalite',
                 'control'   => 'text',
             ],
             [
@@ -28,10 +27,9 @@ class SettingTableSeeder extends Seeder
                 'user_id'   => null,
                 'key'       => 'main.company.address',
                 'name'      => 'Company address',
-                'value'     => 'Some value',
-                'type'      => '3481 Melrose Place <br>
+                'value'     => '3481 Melrose Place <br>
 Beverly Hills, CA 90210',
-                'control'   => 'text',
+                'control'   => 'textarea',
             ],
             [
                 'package'   => 'Main',
@@ -40,9 +38,8 @@ Beverly Hills, CA 90210',
                 'user_id'   => null,
                 'key'       => 'main.company.email',
                 'name'      => 'Company address',
-                'value'     => 'Company Email',
-                'type'      => 'info@lavalite.org',
-                'control'   => 'text',
+                'value'     => 'info@lavalite.org',
+                'control'   => 'email',
             ],
             [
                 'package'   => 'Main',
@@ -51,9 +48,8 @@ Beverly Hills, CA 90210',
                 'user_id'   => null,
                 'key'       => 'main.company.logo',
                 'name'      => 'Company logo',
-                'value'     => 'Some value',
-                'type'      => 'img/logo.png',
-                'control'   => 'text',
+                'value'     => 'img/logo.png',
+                'control'   => 'file',
             ],
         ]);
     }

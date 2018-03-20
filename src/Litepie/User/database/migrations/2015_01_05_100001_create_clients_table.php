@@ -1,8 +1,8 @@
 <?php
 
 use Illuminate\Database\Migrations\Migration;
-use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
 class CreateClientsTable extends Migration
 {
@@ -20,7 +20,7 @@ class CreateClientsTable extends Migration
             $table->increments('id')->unsigned();
             $table->integer('reporting_to')->nullable()->default(0);
             $table->string('name', 100)->nullable();
-            $table->string('email')->unique();
+            $table->string('email', 100)->unique();
             $table->string('password', 100);
             $table->string('api_token', 60)->unique();
             $table->string('remember_token', 255)->nullable();

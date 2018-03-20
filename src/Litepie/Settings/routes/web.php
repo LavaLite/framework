@@ -2,7 +2,8 @@
 
 // Admin  routes  for setting
 Route::group(['prefix' => set_route_guard('web').'/settings'], function () {
-    Route::resource('setting', 'SettingResourceController');
+    Route::get('setting', 'SettingResourceController@index');
+    Route::post('setting', 'SettingResourceController@saveSettings');
 });
 
 

@@ -19,51 +19,34 @@ class Settings
         $this->setting = $setting;
     }
 
-    /**
-     * Returns count of settings.
-     *
-     * @param array $filter
-     *
-     * @return int
-     */
-    public function count()
+    public function get($key, $default = null)
     {
-        return 0;
+        return $this->setting->getValue($key, $default);
     }
 
-    public function get($key, $default = null, $foruser = false)
+    public function set($key, $value)
     {
-        $row = $this->setting->scopeQuery(function ($query) use ($key) {
-            return $query->whereKey($key)->orderBy('type', 'DESC');
-        })->first();
+        return $this->setting->setValue($key, $value);
+    }
 
-        if (!empty($row)) {
-            return $row['value'];
+    public function getForUser($key, $default = null)
+    {
+        return $this->setting->getForUser($key, $default);
+    }
+
+    public function setForUser($key, $value)
+    {
+        return $this->setting->setForUser($key, $value);
+    }
+
+    public function user($key, $default = null)
+    {
+        if (is_array($key)) {
+            $this->setForUser(key($key), value($key));
+            return value($key);
         }
 
-        return $default;
+        return $this->getForuser($key, $default);
     }
 
-    public function set($key, $value, $foruser = false)
-    {
-        $data                = $this->model->findByField('key', $key)->first();
-        $attributes['value'] = $value;
-        $attributes['key']   = $key;
-
-        if ($foruser) {
-            $attributes['user_id']   = user_id();
-            $attributes['user_type'] = user_type();
-        }
-
-        if (!empty($data)) {
-            return $this->model->update(["value" => $value], $data->getRouteKey());
-        }
-
-        return $this->model->create($attributes);
-    }
-    
-    public function display($view)
-    {
-        return view('settings::admin.setting.' . $view);
-    }
 }

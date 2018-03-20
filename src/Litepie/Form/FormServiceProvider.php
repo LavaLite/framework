@@ -2,19 +2,11 @@
 
 namespace Litepie\Form;
 
-use Illuminate\Config\Repository;
-use Illuminate\Container\Container;
-use Illuminate\Http\Request;
-use Illuminate\Session\SessionManager;
-use Illuminate\Support\ServiceProvider;
-use Illuminate\Translation\FileLoader;
-use Illuminate\Translation\Translator;
-use Symfony\Component\Finder\Finder;
-
+use Former\FormerServiceProvider;
 /**
  * Register the Former package with the Laravel framework.
  */
-class FormServiceProvider extends ServiceProvider
+class FormServiceProvider extends FormerServiceProvider
 {
     /**
      * Indicates if loading of the provider is deferred.
@@ -24,12 +16,26 @@ class FormServiceProvider extends ServiceProvider
     protected $defer = true;
 
     /**
+     * Bootstrap the application events.
+     *
+     * @return void
+     */
+    public function boot()
+    {
+        // Call pblish redources function
+        $this->publishResources();
+
+    }
+
+    /**
      * Register Former's package with Laravel.
      *
      * @return void
      */
     public function register()
     {
+        $this->mergeConfigFrom(__DIR__.'/config.php', 'former');
+
         $this->app = static::make($this->app);
     }
 
@@ -43,166 +49,16 @@ class FormServiceProvider extends ServiceProvider
         return ['form', 'former', 'Former\Former'];
     }
 
-    ////////////////////////////////////////////////////////////////////
-    /////////////////////////// CLASS BINDINGS /////////////////////////
-    ////////////////////////////////////////////////////////////////////
-
     /**
-     * Create a Former container.
-     *
-     * @param Container $app
-     *
-     * @return Container
-     */
-    public static function make($app = null)
-    {
-        if (!$app) {
-            $app = new Container();
-        }
-
-        // Bind classes to container
-        $provider = new static($app);
-        $app = $provider->bindCoreClasses($app);
-        $app = $provider->bindFormer($app);
-
-        return $app;
-    }
-
-    /**
-     * Bind the core classes to the Container.
-     *
-     * @param Container $app
-     *
-     * @return Container
-     */
-    public function bindCoreClasses(Container $app)
-    {
-        // Cancel if in the scope of a Laravel application
-        if ($app->bound('events')) {
-            return $app;
-        }
-
-        // Core classes
-        //////////////////////////////////////////////////////////////////
-
-        $app->bindIf('files', 'Illuminate\Filesystem\Filesystem');
-        $app->bindIf('url', 'Illuminate\Routing\UrlGenerator');
-
-        // Session and request
-        //////////////////////////////////////////////////////////////////
-
-        $app->bindIf('session.manager', function ($app) {
-            return new SessionManager($app);
-        });
-
-        $app->bindIf('session', function ($app) {
-            return $app['session.manager']->driver('array');
-        }, true);
-
-        $app->bindIf('request', function ($app) {
-            $request = Request::createFromGlobals();
-            if (method_exists($request, 'setSessionStore')) {
-                $request->setSessionStore($app['session']);
-            } else {
-                $request->setSession($app['session']);
-            }
-
-            return $request;
-        }, true);
-
-        // Config
-        //////////////////////////////////////////////////////////////////
-
-        $app->bindIf('path.config', function ($app) {
-            return __DIR__.'/../config/';
-        }, true);
-
-        $app->bindIf('config', function ($app) {
-            $config = new Repository();
-            $this->loadConfigurationFiles($app, $config);
-
-            return $config;
-        }, true);
-
-        // Localization
-        //////////////////////////////////////////////////////////////////
-
-        $app->bindIf('translation.loader', function ($app) {
-            return new FileLoader($app['files'], 'src/config');
-        });
-
-        $app->bindIf('translator', function ($app) {
-            $loader = new FileLoader($app['files'], 'lang');
-
-            return new Translator($loader, 'fr');
-        });
-
-        return $app;
-    }
-
-    /**
-     * Load the configuration items from all of the files.
-     *
-     * @param Container  $app
-     * @param Repository $config
+     * Publish resources.
      *
      * @return void
      */
-    protected function loadConfigurationFiles($app, Repository $config)
+    private function publishResources()
     {
-        foreach ($this->getConfigurationFiles($app) as $key => $path) {
-            $config->set($key, require $path);
-        }
+        // Publish configuration file
+        $this->publishes([__DIR__ . '/config.php' => config_path('form.php')], 'config');
+
     }
 
-    /**
-     * Get all of the configuration files for the application.
-     *
-     * @param  $app
-     *
-     * @return array
-     */
-    protected function getConfigurationFiles($app)
-    {
-        $files = [];
-
-        foreach (Finder::create()->files()->name('*.php')->in($app['path.config']) as $file) {
-            $files[basename($file->getRealPath(), '.php')] = $file->getRealPath();
-        }
-
-        return $files;
-    }
-
-    /**
-     * Bind Former classes to the container.
-     *
-     * @param Container $app
-     *
-     * @return Container
-     */
-    public function bindFormer(Container $app)
-    {
-        $framework = $app['config']->get('former.framework');
-
-        $app->bind('former.framework', function ($app) {
-            return $app['former']->getFrameworkInstance($app['config']->get('former.framework'));
-        });
-
-        $app->singleton('former.populator', function ($app) {
-            return new \Former\Populator();
-        });
-
-        $app->singleton('former.dispatcher', function ($app) {
-            return new \Former\MethodDispatcher($app, \Former\Former::FIELDSPACE);
-        });
-
-        $app->singleton('former', function ($app) {
-            return new \Former\Former($app, $app->make('former.dispatcher'));
-        });
-        $app->alias('former', 'Former\Former');
-
-        \Former\Helpers::setApp($app);
-
-        return $app;
-    }
 }

@@ -9,9 +9,9 @@ class ExtraLarge implements FilterInterface
 {
     public function applyFilter(Image $image)
     {
-        $action = config('filer.size.xl.action', 'fit');
-        $width  = config('filer.size.xl.width', 2000);
-        $height = config('filer.size.xl.height', 1500);
+        $action = config('image.size.xl.action', 'fit');
+        $width  = config('image.size.xl.width', 2000);
+        $height = config('image.size.xl.height', 1500);
 
         if ($action == 'resize') {
             $image->resize($width, $height);
@@ -21,8 +21,8 @@ class ExtraLarge implements FilterInterface
             });
         }
 
-        if (!empty(config('filer.size.xl.watermark'))) {
-            $image->insert(config('filer.size.xl.watermark'), 'center');
+        if (!empty(config('image.size.xl.watermark'))) {
+            $image->insert(config('image.size.xl.watermark'), 'center');
         }
 
         return $image;

@@ -1,9 +1,9 @@
 {
-    "name": "litepie/team",
+    "name": "lavalite/team",
     "description": "Team management package for Lavalite",
     "keywords": ["lavalite", "roles"],
     "license": "MIT",
-    "homepage": "https://github.com/Litepie/Team",
+    "homepage": "https://github.com/Lavalite/Team",
     "authors": [
         {
             "name": "Renfos Technologies Pvt. Ltd.",
@@ -11,11 +11,11 @@
         }
     ],
     "require": {
-        "mpociot/teamwork": "~5.0"
+        "mpociot/teamwork": "~5.1"
     },
     "autoload": {
         "psr-4": { 
-            "Litepie\\Team\\": "" 
+            "Lavalite\\Team\\": "" 
         }
     }
 }

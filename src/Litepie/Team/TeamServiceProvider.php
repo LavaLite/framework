@@ -1,13 +1,16 @@
-<?php
-namespace Litepie\Workflow;
+<?php 
+
+namespace Lavalite\Team;
+
+/**
+ * This file is part of Team
+ *
+ */
 
 use Illuminate\Support\ServiceProvider;
-use Litepie\Workflow\Workflow;
-use Litepie\Contracts\Workflow\Workflow as WorkflowContract;
 
 class TeamServiceProvider extends ServiceProvider
 {
-
     /**
      * Indicates if loading of the provider is deferred.
      *
@@ -22,15 +25,21 @@ class TeamServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        // Load view
-        $this->loadViewsFrom(__DIR__ . '/resources/views', 'workflow');
+        $this->publishConfig();
 
-        // Load translation
-        $this->loadTranslationsFrom(__DIR__ . '/resources/lang', 'workflow');
+        // Load migrations
+        $this->loadMigrationsFrom(__DIR__ . '/database/migrations');
+    }
 
-        // Call pblish redources function
-        $this->publishResources();
-
+    /**
+     * Publish Team configuration
+     */
+    protected function publishConfig()
+    {
+        // Publish config files
+        $this->publishes( [
+            __DIR__ . '/config/config.php' => config_path( 'team.php' ),
+        ] );
     }
 
 
@@ -41,57 +50,58 @@ class TeamServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        // Bind 'workflow' shared component to the IoC container
-        $this->app->bind('workflow', function ($app) {
-            return new Workflow($app);
-        });
-
-        $this->app->singleton(WorkflowContract::class, function ($app) {
-            return new Workflow($app);
-        });
-
-        // Bind facade
-/*        $this->app->bind('workflow', function ($app) {
-            return $this->app->make('Litepie\Workflow\Workflow');
-        });
-*/
-        // Bind Workflow to repository
-        $this->app->bind(
-            'Litepie\Workflow\Interfaces\WorkflowRepositoryInterface',
-            \Litepie\Workflow\Repositories\Eloquent\WorkflowRepository::class
-        );
-
-        $this->app->register(\Litepie\Workflow\Providers\AuthServiceProvider::class);
-        $this->app->register(\Litepie\Workflow\Providers\EventServiceProvider::class);
-        $this->app->register(\Litepie\Workflow\Providers\RouteServiceProvider::class);
-
+        $this->mergeConfig();
+        $this->registerTeam();
+        $this->registerFacade();
+        $this->registerCommands();
     }
+
     /**
-     * Get the services provided by the provider.
-     *
-     * @return array
-     */
-    public function provides()
-    {
-        return [WorkflowContract::class];
-    }
-    /**
-     * Publish resources.
+     * Register the application bindings.
      *
      * @return void
      */
-    private function publishResources()
+    protected function registerTeam()
     {
-        // Publish configuration file
-        $this->publishes([__DIR__ . '/config/config.php' => config_path('litepie/workflow.php')], 'config');
-
-        // Publish admin view
-        $this->publishes([__DIR__ . '/resources/views' => base_path('resources/views/vendor/workflow')], 'view');
-
-        // Publish language files
-        $this->publishes([__DIR__ . '/resources/lang' => base_path('resources/lang/vendor/workflow')], 'lang');
-
+        $this->app->bind('team', function($app) {
+            return new Team($app);
+        });
     }
 
+    /**
+     * Register the vault facade without the user having to add it to the app.php file.
+     *
+     * @return void
+     */
+    public function registerFacade() {
+        $this->app->booting(function()
+        {
+            $loader = \Illuminate\Foundation\AliasLoader::getInstance();
+            $loader->alias('Team', 'Lavalite\Team\Facades\Team');
+        });
+    }
 
+    /**
+     * Merges user's and teams's configs.
+     *
+     * @return void
+     */
+    protected function mergeConfig()
+    {
+        $this->mergeConfigFrom(
+            __DIR__ . '/config/config.php', 'team'
+        );
+    }
+
+    /**
+     * Register scaffolding command
+     */
+    protected function registerCommands()
+    {
+        if ($this->app->runningInConsole()) {
+            $this->commands([
+                Commands\MakeTeam::class,
+            ]);
+        }
+    }
 }

@@ -81,42 +81,4 @@ return [
 
     'image_max_size'           => ['w' => 2000, 'h' => 2000],
 
-    // Image size
-    'size'                     => [
-        'xs' => [
-            'width'     => '80',
-            'height'    => '60',
-            'action'    => 'fit',
-            'default'   => 'img/noimage.jpg',
-            'watermark' => public_path('assets/img/watermark.png'),
-        ],
-        'sm' => [
-            'width'     => '400',
-            'height'    => '300',
-            'action'    => 'fit',
-            //'default'   => 'img/noimage.jpg',
-            //'watermark' => public_path('assets/img/watermark.png'),
-        ],
-        'md' => [
-            'width'     => '800',
-            'height'    => '600',
-            'action'    => 'fit',
-            //'default'   => 'img/noimage.jpg',
-            //'watermark' => public_path('assets/img/watermark.png'),
-        ],
-        'lg' => [
-            'width'     => '1000',
-            'height'    => '750',
-            'action'    => 'fit',
-            //'default'   => 'img/noimage.jpg',
-            //'watermark' => public_path('assets/img/watermark.png'),
-        ],
-        'xl' => [
-            'width'     => '2000',
-            'height'    => '1500',
-            'action'    => 'fit',
-            //'default'   => 'img/noimage.jpg',
-            //'watermark' => public_path('assets/img/watermark.png'),
-        ],
-    ],
 ];

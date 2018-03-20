@@ -4,16 +4,14 @@ namespace Litepie\User\Models;
 
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Notifications\Notifiable;
-use Litepie\Database\Model;
 use Litepie\Filer\Traits\Filer;
-use Litepie\Foundation\Auth\User as Authenticatable;
 use Litepie\Hashids\Traits\Hashids;
 use Litepie\Repository\Traits\PresentableTrait;
 use Litepie\Roles\Traits\CheckRoleAndPermission;
 use Litepie\User\Contracts\UserPolicy;
 use Litepie\User\Traits\User as UserProfile;
 
-class Client extends Authenticatable implements UserPolicy
+class Client extends Model implements UserPolicy
 {
     use Filer, Notifiable, CheckRoleAndPermission, UserProfile, SoftDeletes, Hashids, PresentableTrait;
     /**
@@ -57,4 +55,8 @@ class Client extends Authenticatable implements UserPolicy
         return $this->morphMany('\Litepie\Message\Models\Message', 'user');
     }
 
+    public function setPasswordAttribute($val)
+    {
+        $this->attributes['password']  = bcrypt($val);
+    }
 }

@@ -16,43 +16,11 @@ return [
      * Modules.
      */
     'modules'   => ['setting'],
-
-    'image'    => [
-
-        'sm' => [
-            'width'     => '140',
-            'height'    => '140',
-            'action'    => 'fit',
-            'watermark' => 'img/logo/default.png',
-        ],
-
-        'md' => [
-            'width'     => '370',
-            'height'    => '420',
-            'action'    => 'fit',
-            'watermark' => 'img/logo/default.png',
-        ],
-
-        'lg' => [
-            'width'     => '780',
-            'height'    => '497',
-            'action'    => 'fit',
-            'watermark' => 'img/logo/default.png',
-        ],
-        'xl' => [
-            'width'     => '800',
-            'height'    => '530',
-            'action'    => 'fit',
-            'watermark' => 'img/logo/default.png',
-        ],
-
-    ],
-
     
     'setting'       => [
         'model'             => 'Litepie\Settings\Models\Setting',
         'table'             => 'settings',
-        'presenter'         => \Litepie\Settings\Repositories\Presenter\SettingItemPresenter::class,
+        'presenter'         => \Litepie\Settings\Repositories\Presenter\SettingPresenter::class,
         'hidden'            => [],
         'visible'           => [],
         'guarded'           => ['*'],

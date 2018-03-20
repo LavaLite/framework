@@ -24,3 +24,18 @@ if (!function_exists('theme')) {
         return $theme;
     }
 }
+
+
+if (!function_exists('theme_asset')) {
+    /**
+     * Get translated url.
+     *
+     * @param string $url
+     *
+     * @return string
+     */
+    function theme_asset($file)
+    {
+        return app('theme')->asset()->url($file);
+    }
+}

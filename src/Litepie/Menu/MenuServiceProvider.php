@@ -41,6 +41,8 @@ class MenuServiceProvider extends ServiceProvider
      */
     public function register()
     {
+        $this->mergeConfigFrom(__DIR__.'/config/menu.php', 'menu');
+
         // Bind facade
         $this->app->bind('menu', function ($app) {
             return $this->app->make('Litepie\Menu\Menu');
@@ -75,7 +77,7 @@ class MenuServiceProvider extends ServiceProvider
     private function publishResources()
     {
         // Publish configuration file
-        $this->publishes([__DIR__ . '/config/config.php' => config_path('menu.php')], 'config');
+        $this->publishes([__DIR__ . '/config/menu.php' => config_path('menu.php')], 'config');
 
         // Publish admin view
         $this->publishes([__DIR__ . '/resources/views' => base_path('resources/views/vendor/menu')], 'view');

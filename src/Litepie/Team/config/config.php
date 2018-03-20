@@ -1,10 +1,10 @@
 <?php
 
 /**
- * This file is part of Teamwork
+ * This file is part of Team
  *
  * @license MIT
- * @package Teamwork
+ * @package Team
  */
 
 return [
@@ -13,48 +13,48 @@ return [
     | Auth Model
     |--------------------------------------------------------------------------
     |
-    | This is the Auth model used by Teamwork.
+    | This is the Auth model used by Team.
     |
     */
     'user_model' => config('auth.providers.users.model', App\User::class),
 
     /*
     |--------------------------------------------------------------------------
-    | Teamwork users Table
+    | Team users Table
     |--------------------------------------------------------------------------
     |
-    | This is the users table name used by Teamwork.
+    | This is the users table name used by Team.
     |
     */
     'users_table' => 'users',
 
     /*
     |--------------------------------------------------------------------------
-    | Teamwork Team Model
+    | Team Team Model
     |--------------------------------------------------------------------------
     |
-    | This is the Team model used by Teamwork to create correct relations.  Update
+    | This is the Team model used by Team to create correct relations.  Update
     | the team if it is in a different namespace.
     |
     */
-    'team_model' => Mpociot\Teamwork\TeamworkTeam::class,
+    'team_model' => Lavalite\Team\Model\Team::class,
 
     /*
     |--------------------------------------------------------------------------
-    | Teamwork teams Table
+    | Team teams Table
     |--------------------------------------------------------------------------
     |
-    | This is the teams table name used by Teamwork to save teams to the database.
+    | This is the teams table name used by Team to save teams to the database.
     |
     */
     'teams_table' => 'teams',
 
     /*
     |--------------------------------------------------------------------------
-    | Teamwork team_user Table
+    | Team team_user Table
     |--------------------------------------------------------------------------
     |
-    | This is the team_user table used by Teamwork to save assigned teams to the
+    | This is the team_user table used by Team to save assigned teams to the
     | database.
     |
     */
@@ -62,28 +62,28 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | User Foreign key on Teamwork's team_user Table (Pivot)
+    | User Foreign key on Team's team_user Table (Pivot)
     |--------------------------------------------------------------------------
     */
     'user_foreign_key' => 'id',
 
     /*
     |--------------------------------------------------------------------------
-    | Teamwork Team Invite Model
+    | Team Team Invite Model
     |--------------------------------------------------------------------------
     |
-    | This is the Team Invite model used by Teamwork to create correct relations.
+    | This is the Team Invite model used by Team to create correct relations.
     | Update the team if it is in a different namespace.
     |
     */
-    'invite_model' => Mpociot\Teamwork\TeamInvite::class,
+    'invite_model' => Lavalite\Team\Model\Invite::class,
 
     /*
     |--------------------------------------------------------------------------
-    | Teamwork team invites Table
+    | Team team invites Table
     |--------------------------------------------------------------------------
     |
-    | This is the team invites table name used by Teamwork to save sent/pending
+    | This is the team invites table name used by Team to save sent/pending
     | invitation into teams to the database.
     |
     */
