@@ -23,7 +23,7 @@
         "league/fractal": "~0.15",
         "mcamara/laravel-localization": "~1.3",
         "prettus/l5-repository": "~2.6",
-        "mpociot/teamwork": "~5.1",
+        "mpociot/teamwork": "~5.1"
     },
     "replace": {
         "litepie/activities": "self.version",
