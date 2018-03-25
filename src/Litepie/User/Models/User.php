@@ -2,6 +2,7 @@
 
 namespace Litepie\User\Models;
 
+use Hash;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Notifications\Notifiable;
 use Litepie\Database\Traits\Slugger;
@@ -61,7 +62,13 @@ class User extends Model implements UserPolicy
 
     public function setPasswordAttribute($val)
     {
-        $this->attributes['password']  = bcrypt($val);
+
+        if (Hash::needsRehash($val)) {
+            $this->attributes['password'] = bcrypt($val);
+        } else {
+            $this->attributes['password'] = ($val);
+        }
+
     }
 
 }
