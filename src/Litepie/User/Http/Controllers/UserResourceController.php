@@ -128,6 +128,7 @@ class UserResourceController extends BaseController
             $attributes              = $request->all();
             $attributes['user_id']   = user_id();
             $attributes['user_type'] = user_type();
+	    $attributes['api_token'] = str_random(60);
             $user                    = $this->repository->create($attributes);
 
             return $this->response->message(trans('messages.success.created', ['Module' => trans('user::user.name')]))
