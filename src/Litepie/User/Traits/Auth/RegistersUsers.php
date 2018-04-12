@@ -72,6 +72,7 @@ trait RegistersUsers
         $data = [
             'name'      => $data['name'],
             'email'     => $data['email'],
+	    'password'  => $data['password'];
             'api_token' => str_random(60),
         ];
 
