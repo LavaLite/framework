@@ -18,7 +18,7 @@ class RolePolicy
      */
     public function view(UserPolicy $user, Role $role)
     {
-        return flase;
+        return false;
     }
 
     /**
@@ -45,7 +45,7 @@ class RolePolicy
     public function update(UserPolicy $user, Role $role)
     {
 
-        return flase;
+        return false;
     }
 
     /**
@@ -58,7 +58,7 @@ class RolePolicy
      */
     public function destroy(UserPolicy $user, Role $role)
     {
-        return flase;
+        return false;
     }
 
     /**
