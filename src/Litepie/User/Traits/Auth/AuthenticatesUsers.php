@@ -80,7 +80,7 @@ trait AuthenticatesUsers
     protected function sendVerification()
     {
         $this->sendVerificationMail(user());
-        return redirect()->back()->withCode(201)->withMessage('Verification link send to your email please check the mail for actvation mail.');
+        return redirect()->back()->withCode(201)->withMessage('Verification link send to your email please check the mail for activation mail.');
     }
     /**
      * Send email verification email to the user.
