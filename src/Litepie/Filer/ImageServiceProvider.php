@@ -62,7 +62,7 @@ class ImageServiceProvider extends ServiceProvider
 
             // route to access template applied image file
             $app['router']->get(config('image.route').'/{template}/{filename}', [
-                'uses' => 'Intervention\Image\ImageCacheController@getResponse',
+                'uses' => 'Litepie\Filer\ImageCacheController@getResponse',
                 'as' => 'imagecache'
             ])->where(['filename' => $filename_pattern]);
         }
