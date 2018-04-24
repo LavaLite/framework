@@ -5,6 +5,7 @@ namespace Litepie\User\Models;
 use Hash;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Notifications\Notifiable;
+use Litepie\Database\Traits\DateFormatter;
 use Litepie\Filer\Traits\Filer;
 use Litepie\Hashids\Traits\Hashids;
 use Litepie\Repository\Traits\PresentableTrait;
@@ -14,7 +15,7 @@ use Litepie\User\Traits\User as UserProfile;
 
 class Client extends Model implements UserPolicy
 {
-    use Filer, Notifiable, CheckRoleAndPermission, UserProfile, SoftDeletes, Hashids, PresentableTrait;
+    use Filer, Notifiable, DateFormatter, CheckRoleAndPermission, UserProfile, SoftDeletes, Hashids, PresentableTrait;
     /**
      * Configuartion for the model.
      *

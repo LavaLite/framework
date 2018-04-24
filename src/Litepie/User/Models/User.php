@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Notifications\Notifiable;
 use Litepie\Database\Traits\Slugger;
 use Litepie\Filer\Traits\Filer;
+use Litepie\Database\Traits\DateFormatter;
 use Litepie\Hashids\Traits\Hashids;
 use Litepie\Repository\Traits\PresentableTrait;
 use Litepie\Roles\Traits\HasRoleAndPermission;
@@ -15,7 +16,7 @@ use Litepie\User\Traits\User as UserProfile;
 
 class User extends Model implements UserPolicy
 {
-    use Filer, Notifiable, HasRoleAndPermission, UserProfile, SoftDeletes, Hashids, Slugger, PresentableTrait;
+    use Filer, Notifiable, HasRoleAndPermission, UserProfile, SoftDeletes, Hashids, Slugger, PresentableTrait, DateFormatter;
 
     /**
      * Configuartion for the model.

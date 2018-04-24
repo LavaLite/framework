@@ -3,7 +3,7 @@
         <ul class="nav nav-tabs primary">
             <li class="active"><a href="#details" data-toggle="tab">  {!! trans('user::client.name', ['client' => $type]) !!}</a></li>
             <div class="box-tools pull-right">
-                                <button type="button" class="btn btn-success btn-sm" data-action='NEW' data-load-to='#user-client-entry' data-href='{{guard_url('user' . $type . '/create')}}'><i class="fa fa-plus-circle"></i> {{ trans('app.new') }}</button>
+                                <button type="button" class="btn btn-success btn-sm" data-action='NEW' data-load-to='#user-client-entry' data-href='{{guard_url('user/' . $type . '/create')}}'><i class="fa fa-plus-circle"></i> {{ trans('app.new') }}</button>
                 @if($client->id )
                 <button type="button" class="btn btn-primary btn-sm" data-action="EDIT" data-load-to='#user-client-entry' data-href='{{ guard_url('user/' . $type) }}/{{$client->getRouteKey()}}/edit'><i class="fa fa-pencil-square"></i> {{ trans('app.edit') }}</button>
                 <button type="button" class="btn btn-danger btn-sm" data-action="DELETE" data-load-to='#user-client-entry' data-datatable='#user-client-list' data-href='{{ guard_url('user/' . $type) }}/{{$client->getRouteKey()}}' >

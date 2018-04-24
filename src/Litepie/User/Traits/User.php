@@ -51,7 +51,7 @@ trait User
      */
     public function getJoinedAttribute()
     {
-        return $this->created_at->format(config('cms.format.date'));
+        return format_date($this->created_at, 'd M Y')   ;
     }
 
     /**

@@ -38,7 +38,7 @@ return [
             'visible'       => [],
             'guarded'       => ['*'],
             'slugs'         => [],
-            'dates'         => ['deleted_at'],
+            'dates'         => ['created_at', 'updated_at', 'deleted_at', 'dob'],
             'appends'       => [],
             'fillable'      => ['user_id', 'name', 'email', 'parent_id', 'password', 'api_token', 'remember_token', 'sex', 'dob', 'designation', 'mobile', 'phone', 'address', 'street', 'city', 'district', 'state', 'country', 'photo', 'web', 'permissions'],
             'translate'     => [],
@@ -53,6 +53,7 @@ return [
             'casts'         => [
                 'permissions' => 'array',
                 'photo'       => 'array',
+                'dob'         => 'date',
             ],
             'revision'      => [],
             'perPage'       => '20',
