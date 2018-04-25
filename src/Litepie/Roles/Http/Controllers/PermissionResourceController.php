@@ -184,7 +184,7 @@ class PermissionResourceController extends BaseController
             return $this->response->message(trans('messages.success.deleted', ['Module' => trans('roles::permission.name')]))
                 ->code(202)
                 ->status('success')
-                ->url(guard_url('roles/permission'))
+                ->url(guard_url('roles/permission/0'))
                 ->redirect();
 
         } catch (Exception $e) {
@@ -219,7 +219,7 @@ class PermissionResourceController extends BaseController
             return $this->response->message(trans('messages.success.deleted', ['Module' => trans('roles::permission.name')]))
                 ->status("success")
                 ->code(202)
-                ->url(guard_url('roles/permission'))
+                ->url(guard_url('roles/permission/0'))
                 ->redirect();
 
         } catch (Exception $e) {

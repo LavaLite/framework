@@ -192,7 +192,7 @@ class RoleResourceController extends BaseController
             return $this->response->message(trans('messages.success.deleted', ['Module' => trans('roles::role.name')]))
                 ->code(202)
                 ->status('success')
-                ->url(guard_url('roles/role'))
+                ->url(guard_url('roles/role/0'))
                 ->redirect();
 
         } catch (Exception $e) {
