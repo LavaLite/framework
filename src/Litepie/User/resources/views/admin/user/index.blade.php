@@ -17,8 +17,6 @@
         <div class="nav-tabs-custom">
             <ul class="nav nav-tabs">
                     <li class="{!!(request('status') == '')?'active':'';!!}"><a href="{!!guard_url('user/user')!!}">{!! trans('user::user.names') !!}</a></li>
-                    <li class="{!!(request('status') == 'archive')?'active':'';!!}"><a href="{!!guard_url('user/user?status=archive')!!}">Archived</a></li>
-                    <li class="{!!(request('status') == 'deleted')?'active':'';!!}"><a href="{!!guard_url('user/user?status=deleted')!!}">Trashed</a></li>
                     <li class="pull-right">
                     <span class="actions">
                     <!--   
