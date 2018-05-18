@@ -11,7 +11,7 @@ class ClientRepository extends BaseRepository implements ClientRepositoryInterfa
 
     public function boot()
     {
-        $type = request('type');
+        $type = request('type', 'client');
         $this->fieldSearchable = config('users.' . $type . '.model.search');
 
     }
@@ -23,7 +23,7 @@ class ClientRepository extends BaseRepository implements ClientRepositoryInterfa
      */
     public function model()
     {
-        $type = request('type');
+        $type = request('type', 'client');
         return config('users.' . $type . '.model.model');
     }
 }
