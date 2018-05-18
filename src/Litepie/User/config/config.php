@@ -82,7 +82,7 @@ return [
             'visible'       => [],
             'guarded'       => ['*'],
             'slugs'         => ['slug' => 'name'],
-            'dates'         => ['deleted_at', 'createdat', 'updated_at'],
+            'dates'         => ['deleted_at', 'created_at', 'updated_at'],
             'appends'       => [],
             'fillable'      => ['id', 'name', 'email', 'password', 'api_token', 'remember_token', 'sex', 'dob', 'mobile', 'phone', 'address', 'street', 'city', 'district', 'state', 'country', 'photo', 'web', 'status', 'upload_folder', 'deleted_at', 'created_at', 'updated_at'],
             'translatables' => [],
