@@ -27,18 +27,20 @@ class ThemeViewFinder extends FileViewFinder implements ViewFinderInterface
         list($namespace, $view) = $this->parseNamespaceSegments($name);
 
         // Add possible view folders based of the route
-        if (count($this->hints[$namespace]) < 8) {
+        if (count($this->hints[$namespace]) < 3) {
             $hintPath = $this->hints[$namespace][0];
-            $this->prependNamespace($namespace, $hintPath . '/' . $this->getDefaultFolder());
-            $this->prependNamespace($namespace, $hintPath . '/' . $this->getViewFolder());
-            $this->prependNamespace($namespace, resource_path('views/vendor/') . $namespace);
-            $this->prependNamespace($namespace, resource_path('views/vendor/') . $namespace . '/' . $this->getDefaultFolder());
-            $this->prependNamespace($namespace, resource_path('views/vendor/') . $namespace . '/' . $this->getViewFolder());
-            $this->prependNamespace($namespace, public_path(app('theme')->path() . '/views/vendor/' . $namespace));
-            $this->prependNamespace($namespace, public_path(app('theme')->path() . '/views/vendor/' . $namespace . '/' . $this->getDefaultFolder()));
-            $this->prependNamespace($namespace, public_path(app('theme')->path() . '/views/vendor/' . $namespace . '/' . $this->getViewFolder()));
-
+            $resoPath = resource_path('views/vendor/') . $namespace;
+            $themPath = public_path(app('theme')->path() . '/views/vendor/' . $namespace);
+            $defaFolder = $this->getDefaultFolder();
+            $viewFolder = $this->getViewFolder();
+            $this->prependNamespace($namespace, $hintPath . '/' . $defaFolder);
+            $this->prependNamespace($namespace, $hintPath . '/' . $viewFolder);
+            $this->prependNamespace($namespace, $resoPath);
+            $this->prependNamespace($namespace, $resoPath . '/' . $defaFolder);
+            $this->prependNamespace($namespace, $resoPath . '/' . $viewFolder);
+            $this->prependNamespace($namespace, $themPath);
         }
+
         return $this->findInPaths($view, $this->hints[$namespace]);
     }
 
