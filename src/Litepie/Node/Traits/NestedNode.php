@@ -11,7 +11,7 @@ use Illuminate\Database\Eloquent\Collection;
  * Model table must have parent_id, nest_left, nest_right and nest_depth table columns.
  * In the model class definition:
  *
- *   use \Litepie\Node\Database\Traits\NestedNode;
+ *   use \Litepie\Node\Traits\NestedNode;
  *
  *   $table->integer('parent_id')->nullable();
  *   $table->integer('nest_left')->nullable();
@@ -850,7 +850,7 @@ trait NestedNode
 /*
          * Validate target
          */
-        if ($target instanceof \Litepie\Node\Database\Model) {
+        if ($target instanceof \Litepie\Database\Model) {
             $target->reload();
         } else {
             $target = $this->newQuery()->find($target);
