@@ -10,10 +10,10 @@ trait Translatable
     /**
      * @var array List of attribute names which should be translated.
      *
-     * protected $translatables = [];
+     * protected $translatable = [];
      */
     
-    public $translatables = [];
+    public $translatable = [];
 
     /**
      * Boot the Trans trait for a model.
@@ -22,15 +22,15 @@ trait Translatable
      */
     public static function bootTranslatable()
     {
-        static::addSetterManipulator('translatables.set', function ($model, $key, $value) {
-            if ($model->checkGetSetAttribute('translatables', $key)) {
+        static::addSetterManipulator('translatable.set', function ($model, $key, $value) {
+            if ($model->checkGetSetAttribute('translatable', $key)) {
                 return $model->setTranslation($key, $value);
             }
             return $value;
         });
 
-        static::addGetterManipulator('translatables.get', function ($model, $key, $value) {
-            if ($model->checkGetSetAttribute('translatables', $key)) {
+        static::addGetterManipulator('translatable.get', function ($model, $key, $value) {
+            if ($model->checkGetSetAttribute('translatable', $key)) {
                 return $model->getTranslation($value);
             }
             return $value;
@@ -45,6 +45,7 @@ trait Translatable
      */
     public function getTranslation($value)
     {
+
         $langs = $this->decodeLang($value);
 
         $locale = $this->locale();

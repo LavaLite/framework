@@ -110,9 +110,9 @@ if (!function_exists('trans_url')) {
      *
      * @return string
      */
-    function trans_url($url)
+    function trans_url($url = null, $lng = null)
     {
-        return Trans::to($url);
+        return Trans::to($url, $lng);
     }
 
 }
@@ -283,12 +283,13 @@ if (!function_exists('set_route_guard')) {
      *
      * @return string
      */
-    function set_route_guard($sub = 'web', $guard=null)
+    function set_route_guard($sub = 'web')
     {
         $i = ($sub == 'web') ? 1 : 2;
 
         //check whether guard is the first parameter of the route
-        $guard = is_null($guard) ? request()->segment($i) : $guard;
+        $guard = request()->segment($i);
+
         if (!empty(config("auth.guards.$guard"))){
             putenv("guard={$guard}.{$sub}");
             app('auth')->shouldUse("{$guard}.{$sub}");
@@ -296,7 +297,14 @@ if (!function_exists('set_route_guard')) {
         }
 
         //check whether guard is the second parameter of the route
-        $guard = is_null($guard) ? request()->segment(++$i) : $guard;
+        $guard = request()->segment(++$i);
+        if (!empty(config("auth.guards.$guard"))){
+            putenv("guard={$guard}.{$sub}");
+            app('auth')->shouldUse("{$guard}.{$sub}");
+            return $guard;
+        }
+
+        $guard = request()->segment(++$i);
         if (!empty(config("auth.guards.$guard"))){
             putenv("guard={$guard}.{$sub}");
             app('auth')->shouldUse("{$guard}.{$sub}");
@@ -305,7 +313,7 @@ if (!function_exists('set_route_guard')) {
 
         putenv("guard=client.{$sub}");
         app('auth')->shouldUse("client.{$sub}");
-        return $sub;
+        return 'client';
     }
 
 }
