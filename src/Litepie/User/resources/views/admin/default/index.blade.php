@@ -21,12 +21,8 @@
                     <li class="{!!(request('status') == 'deleted')?'active':'';!!}"><a href="{!!guard_url('user/client?status=deleted')!!}">Trashed</a></li>
                     <li class="pull-right">
                     <span class="actions">
-                    <!--   
-                    <a  class="btn btn-xs btn-purple"  href="{!!guard_url('user/client/reports')!!}"><i class="fa fa-bar-chart" aria-hidden="true"></i><span class="hidden-sm hidden-xs"> Reports</span></a>
-                    @include('user::default.partial.actions')
-                    -->
-                    @include('user::default.partial.filter')
-                    @include('user::default.partial.column')
+                    @include('user::admin.default.partial.filter')
+                    @include('user::admin.default.partial.column')
                     </span> 
                 </li>
             </ul>
