@@ -1,11 +1,11 @@
 <?php
 
-namespace Litepie\http;
+namespace Litepie\Http;
 
 use Form;
-use Litepie\http\Traits\Request;
-use Litepie\http\Traits\Theme;
-use Litepie\http\Traits\View;
+use Litepie\Http\Traits\Request;
+use Litepie\Http\Traits\Theme;
+use Litepie\Http\Traits\View;
 
 abstract class Response
 {
