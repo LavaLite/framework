@@ -11,10 +11,10 @@ class UserTableSeeder extends Seeder
         DB::table('users')->insert([
             [
                 'id'          => 1,
-                'email'       => 'superuser@lavalite.org',
+                'email'       => 'admin@lavalite.org',
                 'password'    => bcrypt('superuser@lavalite'),
                 'status'      => 'Active',
-                'name'        => 'Super User',
+                'name'        => 'Administrator',
                 'sex'         => 'Male',
                 'dob'         => '2014-05-15',
                 'api_token'   => str_random(60),
@@ -24,8 +24,8 @@ class UserTableSeeder extends Seeder
             ],
             [
                 'id'          => 2,
-                'email'       => 'admin@lavalite.org',
-                'password'    => bcrypt('admin@lavalite'),
+                'email'       => 'user@lavalite.org',
+                'password'    => bcrypt('user@lavalite'),
                 'status'      => 'Active',
                 'name'        => 'Admin',
                 'sex'         => 'Male',
@@ -34,20 +34,7 @@ class UserTableSeeder extends Seeder
                 'designation' => 'Admin',
                 'web'         => 'http://litepie.org',
                 'created_at'  => '2015-09-15',
-            ],
-            [
-                'id'          => 3,
-                'email'       => 'user@lavalite.org',
-                'password'    => bcrypt('user@lavalite'),
-                'status'      => 'Active',
-                'name'        => 'User',
-                'sex'         => 'Male',
-                'dob'         => '2014-05-15',
-                'api_token'   => str_random(60),
-                'designation' => 'User',
-                'web'         => 'http://litepie.org',
-                'created_at'  => '2015-09-15',
-            ],
+            ]
         ]);
 
         DB::table('menus')->insert([

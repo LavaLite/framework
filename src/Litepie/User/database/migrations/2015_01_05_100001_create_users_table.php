@@ -24,7 +24,7 @@ class CreateUsersTable extends Migration
             $table->string('password', 100);
             $table->string('api_token', 60)->unique();
             $table->string('remember_token', 255)->nullable();
-            $table->enum('sex', ['', 'male', 'female'])->nullable();
+            $table->enum('sex', ['', 'Male', 'Female'])->nullable();
             $table->date('dob')->nullable();
             $table->string('designation', 50)->nullable();
             $table->string('mobile', 100)->nullable();
