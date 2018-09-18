@@ -242,7 +242,7 @@ trait Filer
         }
 
         foreach ($image as $key => $img) {
-            $image[$key] = "image/{$size}" . ($img['path']);
+            $image[$key] = url("image/{$size}/") . '/' . ($img['path']);
         }
 
         return $image;

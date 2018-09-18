@@ -12,7 +12,7 @@ class UserTableSeeder extends Seeder
             [
                 'id'          => 1,
                 'email'       => 'admin@lavalite.org',
-                'password'    => bcrypt('superuser@lavalite'),
+                'password'    => bcrypt('admin@lavalite'),
                 'status'      => 'Active',
                 'name'        => 'Administrator',
                 'sex'         => 'Male',
