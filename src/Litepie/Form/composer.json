@@ -11,8 +11,8 @@
         }
     ],
     "require": {
+        "php" : "^7.0",
         "anahkiasen/former": "~4.1"
-
     },
     "autoload": {
         "psr-4": { 

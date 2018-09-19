@@ -16,15 +16,19 @@
     ],
     "require": {
         "anahkiasen/former": "~4.1",
-        "hashids/hashids": "~2.0",
+        "barryvdh/laravel-debugbar": "~3.2",
+        "hashids/hashids": "~3.0",
         "intervention/imagecache": "~2.3",
-        "laravel/framework": "~5.6",
-        "laravel/socialite": "~3.0",
+        "laravel/framework": "~5.7",
+        "laravel/socialite": "~3.1",
+        "laravel/tinker": "~1.0",
         "league/fractal": "~0.15",
         "mcamara/laravel-localization": "~1.3",
         "mpociot/teamwork": "~5.1",
         "prettus/l5-repository": "~2.6",
-        "spatie/laravel-activitylog" : "^2.5"
+        "rachidlaasri/laravel-installer": "^4.0",
+        "spatie/laravel-activitylog": "~2.8",
+        "spatie/laravel-backup": "~5.1"
     },
     "replace": {
         "litepie/activities": "self.version",
@@ -57,6 +61,14 @@
         ],
         "psr-4": {
             "Litepie\\": "src/Litepie"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "dont-discover": [
+                "rachidlaasri/laravel-installer",
+                "intervention/imagecache"
+            ]
         }
     }
 }

@@ -11,7 +11,8 @@
         }
     ],
     "require": {
-        "prettus/l5-repository": "2.6.*"
+        "php": "^7.0",
+        "prettus/l5-repository": "~2.6"
     },
     "autoload": {
         "psr-4": { 
