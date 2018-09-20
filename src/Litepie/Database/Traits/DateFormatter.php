@@ -23,7 +23,7 @@ trait DateFormatter
     {
         static::addSetterManipulator('dateformat.set', function ($model, $key, $value) {
 
-            if ($model->checkGetSetAttribute('dates', $key) && is_a($model, get_class())) {
+            if (is_a($model, get_class()) && $model->checkGetSetAttribute('dates', $key)) {
                 return $model->setFormatedDate($key, $value);
             }
 
@@ -32,7 +32,7 @@ trait DateFormatter
 
         static::addGetterManipulator('dateformat.get', function ($model, $key, $value) {
 
-            if ($model->checkGetSetAttribute('dates', $key) && is_a($model, get_class())) {
+            if (is_a($model, get_class()) && $model->checkGetSetAttribute('dates', $key)) {
                 return $model->getFormatedDate($value);
             }
 

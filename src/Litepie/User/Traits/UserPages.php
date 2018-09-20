@@ -38,6 +38,7 @@ trait UserPages
     public function getPassword(Request $request, $role = null)
     {
         return $this->response->title('Change Password')
+            ->layout('auth')
             ->view('user.password')
             ->output();
     }
@@ -142,7 +143,7 @@ trait UserPages
 
         return $this->response
             ->title('Locked')
-            ->layout('user')
+            ->layout('blank')
             ->view('user.locked')
             ->output();
     }

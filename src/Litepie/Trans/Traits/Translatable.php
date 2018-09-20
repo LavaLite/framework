@@ -23,14 +23,14 @@ trait Translatable
     public static function bootTranslatable()
     {
         static::addSetterManipulator('translatable.set', function ($model, $key, $value) {
-            if ($model->checkGetSetAttribute('translatable', $key) && is_a($model, get_class())) {
+            if (is_a($model, get_class()) && $model->checkGetSetAttribute('translatable', $key)) {
                 return $model->setTranslation($key, $value);
             }
             return $value;
         });
 
         static::addGetterManipulator('translatable.get', function ($model, $key, $value) {
-            if ($model->checkGetSetAttribute('translatable', $key) && is_a($model, get_class())) {
+            if (is_a($model, get_class()) && $model->checkGetSetAttribute('translatable', $key)) {
                 return $model->getTranslation($value);
             }
             return $value;
