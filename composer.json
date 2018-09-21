@@ -67,7 +67,8 @@
         "laravel": {
             "dont-discover": [
                 "rachidlaasri/laravel-installer",
-                "intervention/imagecache"
+                "intervention/imagecache",
+                "spatie/laravel-backup"
             ]
         }
     }

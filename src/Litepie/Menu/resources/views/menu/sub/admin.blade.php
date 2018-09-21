@@ -1,4 +1,4 @@
-<ul class="treeview-menu {{ $menus->active or '' }}">
+<ul class="treeview-menu">
     @foreach ($menus as $menu)
         @if($menu->has_role)
             @if ($menu->hasChildren())

@@ -25,7 +25,7 @@ return [
         'guarded'           => ['*'],
         'slugs'             => ['slug' => 'name'],
         'dates'             => ['deleted_at'],
-        'appends'           => [],
+        'appends'           => ['has_role'],
         'fillable'          => ['user_id', 'parent_id',  'key',  'url',  'icon',  'permission',  'role',  'name',  'description',  'target',  'order',  'uload_folder'],
         'translate'         => ['parent_id',  'key',  'url',  'icon',  'permission',  'role',  'name',  'description',  'target',  'order',  'uload_folder'],
         'upload_folder'     => 'menu/menu',

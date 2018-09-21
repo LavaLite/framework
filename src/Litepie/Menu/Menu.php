@@ -19,9 +19,7 @@ class Menu
 
     public function menu($key, $view = null)
     {
-        $menus = $this->model->scopeQuery(function ($query) {
-            return $query->orderBy('order', 'ASC');
-        })->all()->toMenu($key);
+        $menus = $this->model->getMenu($key);
 
         if (is_null($view)) {
             $view = 'menu::menu.' . $key;
@@ -34,11 +32,5 @@ class Menu
         return view($view, compact('menus'));
     }
 
-    public function select($key, $view = 'menu::menu.default')
-    {
-        $menu = $this->model->getAllSubMenus($key);
-
-        return view("menu.$view", compact('menu'));
-    }
 
 }

@@ -147,6 +147,11 @@ class NodeCollection extends CollectionBase
 
         }
 
+        foreach ($collection as $key => $model) {
+            $model->active = '';
+            $model->setRelation('children', new CollectionBase());
+        }
+
         if ($menu) {
 
             $menu_id = $menu->id;
@@ -156,10 +161,6 @@ class NodeCollection extends CollectionBase
                 $menu_id                      = $collection[$menu_id]->getParentId();
             }
 
-        }
-
-        foreach ($collection as $key => $model) {
-            $model->setRelation('children', new CollectionBase());
         }
 
         /*
