@@ -89,4 +89,14 @@ class MenuRepository extends BaseRepository implements MenuRepositoryInterface
         ->all()
         ->toMenu($key);
     }
-}
+
+    public function getParentChild($id, $array)
+    {
+         foreach ($array as $node) {
+            $this->tempHolder[hashids_decode($id)][] = array_get($node, 'id');
+             if (isset($node['children'])) {
+                $this->getParentChild(array_get($node, 'id'), $node['children']);
+            }
+         }
+     }
+ }
