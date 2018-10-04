@@ -283,6 +283,7 @@ trait Filer
     public function files($field)
     {
         $form = new Forms($field, $this->config, $this->getFile($field));
+        $form->url($this->getUploadUrl($field));
         return $form;
     }
 

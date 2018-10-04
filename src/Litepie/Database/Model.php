@@ -4,11 +4,10 @@ namespace Litepie\Database;
 
 use Closure;
 use Illuminate\Database\Eloquent\Model as Eloquent;
-use Litepie\Database\Traits\AttributeManipulator;
 
 class Model extends Eloquent
 {
-    use AttributeManipulator;
+
     /**
      * Initialiaze page modal.
      *
@@ -53,5 +52,30 @@ class Model extends Eloquent
         }
 
     }
+    /**
+     * Gets an attribute value without running through the manipulators.
+     *
+     * @param $key
+     *
+     * @return mixed
+     */
+    public function getOriginalAttribute($key)
+    {
+
+        return parent::getAttribute($key);
+    }
+
+
+    /**
+     * Sets an attribute value without running through the manipulators.
+     *
+     * @param $key
+     * @param $value
+     */
+    public function setOriginalAttribute($key, $value)
+    {
+        parent::setAttribute($key, $value);
+    }
+
 
 }

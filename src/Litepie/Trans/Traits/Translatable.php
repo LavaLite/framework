@@ -12,7 +12,7 @@ trait Translatable
      *
      * protected $translatable = [];
      */
-    
+
     public $translatable = [];
 
     /**
@@ -22,19 +22,24 @@ trait Translatable
      */
     public static function bootTranslatable()
     {
-        static::addSetterManipulator('translatable.set', function ($model, $key, $value) {
-            if (is_a($model, get_class()) && $model->checkGetSetAttribute('translatable', $key)) {
-                return $model->setTranslation($key, $value);
+        /*
+         * Set slugged attributes on new records
+         */
+        static::saving(function ($model) {
+            foreach ($model->translatable as $key) {
+                $model->setTranslation($key, $model->$key);
             }
-            return $value;
         });
 
-        static::addGetterManipulator('translatable.get', function ($model, $key, $value) {
-            if (is_a($model, get_class()) && $model->checkGetSetAttribute('translatable', $key)) {
-                return $model->getTranslation($value);
+        /*
+         * Set slugged attributes on new records
+         */
+        static::retrieved(function ($model) {
+            foreach ($model->translatable as $key) {
+                $model->$key = $model->getTranslation($key);
             }
-            return $value;
         });
+
     }
 
     /**
@@ -43,17 +48,23 @@ trait Translatable
      *
      * @return \Illuminate\Database\Eloquent\Model|null
      */
-    public function getTranslation($value)
+    public function getTranslation($key)
     {
+        $langs = $this->getOriginalAttribute($key);
 
-        $langs = $this->decodeLang($value);
+        $langs                  = $this->decodeLang($langs);
+        return $langs[$this->locale()];
 
-        $locale = $this->locale();
+    }
 
-        if (isset($langs[$locale])) {
-            return $langs[$locale];
-        }
-
+    /**
+     * @param string|null $locale
+     * @param bool        $withFallback
+     *
+     * @return \Illuminate\Database\Eloquent\Model|null
+     */
+    public function getTranslations()
+    {
     }
 
     /**
@@ -67,7 +78,7 @@ trait Translatable
 
         $locale = $this->locale();
 
-        $langs = $this->getOriginalAttribute($key);
+        $langs = $this->getOriginal($key);
 
         $langs                  = $this->decodeLang($langs);
         $langs[$this->locale()] = $value;
@@ -75,18 +86,8 @@ trait Translatable
         return $this->{$key}    = $value;
     }
 
-    /**
-     * Alias for getTranslation().
-     *
-     * @param string|null $locale
-     * @param bool        $withFallback
-     *
-     * @return \Illuminate\Database\Eloquent\Model|null
-     */
-    public function translate($locale = null, $withFallback = false)
-    {
-        return $this->getTranslation($locale, $withFallback);
-    }
+
+
 
     /**
      * Encrypts an value.

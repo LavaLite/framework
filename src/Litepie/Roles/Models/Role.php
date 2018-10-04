@@ -13,7 +13,7 @@ use Litepie\Trans\Traits\Translatable;
 
 class Role extends Model implements RoleHasRelationsContract
 {
-    use Filer, Hashids, Slugger, Translatable, PresentableTrait, RoleHasRelations;
+    use Filer, Hashids, Slugger, PresentableTrait, RoleHasRelations;
 
     /**
      * Configuartion for the model.

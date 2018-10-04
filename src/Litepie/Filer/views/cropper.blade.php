@@ -2,7 +2,7 @@
 $image = head($files);
 @endphp
 <div class="{{$field}}-file-cropper text-center">
-    <img src='{!! url(@$src) !!}' alt="" class="img-responsive" id="image-{{$field}}">
+    <img src='{!! url()->to(@$src) !!}' alt="" class="img-responsive" id="image-{{$field}}">
     <br/>
     <div class="btn-group">
 

@@ -147,7 +147,6 @@ class Forms
         $src    = $this->getSrc();
         $count  = $this->getCount();
         $size   = $this->getSize();
-
         return view($view, compact('count', 'url', 'src', 'config', 'field', 'files', 'size', 'mime'))->render();
     }
 

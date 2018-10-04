@@ -46,15 +46,6 @@ class User extends Model implements UserPolicy
         parent::__construct($attributes);
     }
 
-    public function getDobAttribute($val)
-    {
-
-        if ($val == '0000-00-00' || empty($val)) {
-            return '';
-        }
-
-        return format_date(($val));
-    }
 
     public function messages()
     {
