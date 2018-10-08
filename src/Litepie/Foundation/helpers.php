@@ -311,9 +311,7 @@ if (!function_exists('set_route_guard')) {
             return $guard;
         }
 
-        putenv("guard=client.{$sub}");
-        app('auth')->shouldUse("client.{$sub}");
-        return 'client';
+        return null;
     }
 
 }
