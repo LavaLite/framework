@@ -311,7 +311,7 @@ if (!function_exists('set_route_guard')) {
             return $guard;
         }
 
-        return null;
+        return 'client';
     }
 
 }
