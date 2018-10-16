@@ -27,7 +27,7 @@ trait AuthenticatesUsers
         $guard = $this->getGuardRoute();
 
         return $this->response
-            ->title('Login')
+            ->setMetaTitle('Login')
             ->layout('auth')
             ->view('auth.login')
             ->data(compact('guard'))
@@ -58,7 +58,7 @@ trait AuthenticatesUsers
         }
 
        return $this->response
-            ->title('Verify email address')
+            ->setMetaTitle('Verify email address')
             ->layout('auth')
             ->view('auth.verify')
             ->output();

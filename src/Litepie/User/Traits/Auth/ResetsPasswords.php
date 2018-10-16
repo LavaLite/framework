@@ -29,7 +29,7 @@ trait ResetsPasswords
     {
         $email = $request->email;
 
-        return $this->response->title('Reset')
+        return $this->response->setMetaTitle('Reset')
             ->view('auth.reset')
             ->data(compact('token', 'email'))
             ->output();

@@ -37,7 +37,7 @@ trait UserPages
      */
     public function getPassword(Request $request, $role = null)
     {
-        return $this->response->title('Change Password')
+        return $this->response->setMetaTitle('Change Password')
             ->layout('auth')
             ->view('user.password')
             ->output();
@@ -52,7 +52,7 @@ trait UserPages
     {
         return $this->response
             ->layout('user')
-            ->title('Dashboard')
+            ->setMetaTitle('Dashboard')
             ->view('home')
             ->output();
     }
@@ -102,7 +102,7 @@ trait UserPages
         $user = $request->user($this->getGuard());
         Form::populate($user);
 
-        return $this->response->title('Profile')
+        return $this->response->setMetaTitle('Profile')
             ->view('user.profile')
             ->data(compact('user'))
             ->output();
@@ -142,7 +142,7 @@ trait UserPages
     {
 
         return $this->response
-            ->title('Locked')
+            ->setMetaTitle('Locked')
             ->layout('blank')
             ->view('user.locked')
             ->output();
@@ -155,7 +155,7 @@ trait UserPages
      */
     public function masters()
     {
-        return $this->response->title('Masters')
+        return $this->response->setMetaTitle('Masters')
             ->view('masters')
             ->output();
     }
@@ -167,7 +167,7 @@ trait UserPages
      */
     public function reports()
     {
-        return $this->response->title('Reports')
+        return $this->response->setMetaTitle('Reports')
             ->view('reports')
             ->output();
     }

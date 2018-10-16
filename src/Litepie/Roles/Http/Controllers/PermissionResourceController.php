@@ -48,7 +48,7 @@ class PermissionResourceController extends BaseController
 
         $permissions = $this->repository->paginate();
 
-        return $this->response->title(trans('roles::permission.names'))
+        return $this->response->setMetaTitle(trans('roles::permission.names'))
             ->view('roles::permission.index', true)
             ->data(compact('permissions'))
             ->output();
@@ -71,7 +71,7 @@ class PermissionResourceController extends BaseController
             $view = 'roles::permission.new';
         }
 
-        return $this->response->title(trans('app.view') . ' ' . trans('roles::permission.name'))
+        return $this->response->setMetaTitle(trans('app.view') . ' ' . trans('roles::permission.name'))
             ->data(compact('permission'))
             ->view($view, true)
             ->output();
@@ -88,7 +88,7 @@ class PermissionResourceController extends BaseController
     {
 
         $permission = $this->repository->newInstance([]);
-        return $this->response->title(trans('app.new') . ' ' . trans('roles::permission.name')) 
+        return $this->response->setMetaTitle(trans('app.new') . ' ' . trans('roles::permission.name')) 
             ->view('roles::permission.create', true) 
             ->data(compact('permission'))
             ->output();
@@ -134,7 +134,7 @@ class PermissionResourceController extends BaseController
      */
     public function edit(PermissionRequest $request, Permission $permission)
     {
-        return $this->response->title(trans('app.edit') . ' ' . trans('roles::permission.name'))
+        return $this->response->setMetaTitle(trans('app.edit') . ' ' . trans('roles::permission.name'))
             ->view('roles::permission.edit', true)
             ->data(compact('permission'))
             ->output();

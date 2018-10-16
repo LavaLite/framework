@@ -39,7 +39,7 @@ class TeamResourceController extends BaseController
             return $this->getJson($request);
         }
 
-        $this->response->title(trans('user::team.names'))
+        $this->response->setMetaTitle(trans('user::team.names'))
             ->view('user::team.index', true)
             ->output();
     }

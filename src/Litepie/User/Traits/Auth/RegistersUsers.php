@@ -30,7 +30,7 @@ trait RegistersUsers
     {
         $this->canRegister();
 
-        return $this->response->title('Register')
+        return $this->response->setMetaTitle('Register')
             ->view('auth.register')
             ->layout('auth')
             ->output();

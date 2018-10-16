@@ -52,7 +52,7 @@ class ClientResourceController extends BaseController
 
         $clients = $this->repository->paginate();
 
-        return $this->response->title(trans('user::client.names', ['client' => $type]))
+        return $this->response->setMetaTitle(trans('user::client.names', ['client' => $type]))
             ->view(["user::{$type}.index", 'user::default.index'])
             ->data(compact('clients', 'type'))
             ->output();
@@ -75,7 +75,7 @@ class ClientResourceController extends BaseController
             $view = ["user::{$type}.new", 'user::default.new'];
         }
 
-        return $this->response->title(trans('app.view') . ' ' . trans('user::client.name', ['client' => $type]))
+        return $this->response->setMetaTitle(trans('app.view') . ' ' . trans('user::client.name', ['client' => $type]))
             ->data(compact('client', 'type'))
             ->view($view)
             ->output();
@@ -92,7 +92,7 @@ class ClientResourceController extends BaseController
     {
 
         $client = $this->repository->newInstance([]);
-        return $this->response->title(trans('app.new') . ' ' . trans('user::client.name', ['client' => $type])) 
+        return $this->response->setMetaTitle(trans('app.new') . ' ' . trans('user::client.name', ['client' => $type])) 
             ->view(["user::{$type}.create", 'user::default.create']) 
             ->data(compact('client', 'type'))
             ->output();
@@ -139,7 +139,7 @@ class ClientResourceController extends BaseController
      */
     public function edit(ClientRequest $request, String $type, Client $client)
     {
-        return $this->response->title(trans('app.edit') . ' ' . trans('user::client.name', ['client' => $type]))
+        return $this->response->setMetaTitle(trans('app.edit') . ' ' . trans('user::client.name', ['client' => $type]))
             ->view(["user::{$type}.edit", 'user::default.edit'])
             ->data(compact('client', 'type'))
             ->output();

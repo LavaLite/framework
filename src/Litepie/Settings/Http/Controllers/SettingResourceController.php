@@ -48,7 +48,7 @@ class SettingResourceController extends BaseController
 
         $settings = $this->repository->paginate();
 
-        return $this->response->title(trans('settings::setting.names'))
+        return $this->response->setMetaTitle(trans('settings::setting.names'))
             ->view('settings::admin.setting.index')
             ->data(compact('settings'))
             ->output();

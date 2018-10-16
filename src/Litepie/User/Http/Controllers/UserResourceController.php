@@ -65,7 +65,7 @@ class UserResourceController extends BaseController
 
         $users = $this->repository->paginate();
 
-        return $this->response->title(trans('user::user.names'))
+        return $this->response->setMetaTitle(trans('user::user.names'))
             ->view('user::user.index')
             ->data(compact('users'))
             ->output();
@@ -90,7 +90,7 @@ class UserResourceController extends BaseController
 
         $roles       = $this->roles->all();
         $permissions = $this->permissions->groupedPermissions();
-        return $this->response->title(trans('app.view') . ' ' . trans('user::user.name'))
+        return $this->response->setMetaTitle(trans('app.view') . ' ' . trans('user::user.name'))
             ->data(compact('user', 'roles', 'permissions'))
             ->view($view)
             ->output();
@@ -109,7 +109,7 @@ class UserResourceController extends BaseController
         $user = $this->repository->newInstance([]);
         $roles       = $this->roles->all();
         $permissions = $this->permissions->groupedPermissions();
-        return $this->response->title(trans('app.new') . ' ' . trans('user::user.name'))
+        return $this->response->setMetaTitle(trans('app.new') . ' ' . trans('user::user.name'))
             ->view('user::user.create')
             ->data(compact('user', 'roles', 'permissions'))
             ->output();
@@ -158,7 +158,7 @@ class UserResourceController extends BaseController
     {
         $roles       = $this->roles->all();
         $permissions = $this->permissions->groupedPermissions();
-        return $this->response->title(trans('app.edit') . ' ' . trans('user::user.name'))
+        return $this->response->setMetaTitle(trans('app.edit') . ' ' . trans('user::user.name'))
             ->view('user::user.edit')
             ->data(compact('user', 'roles', 'permissions'))
             ->output();
