@@ -37,7 +37,7 @@ class MenuResourceController extends BaseController
     {
         $parent   = $this->repository->find(hashids_encode($parent));
         $rootMenu = $this->repository->rootMenues();
-        return $this->response->title(trans('menu::menu.names'))
+        return $this->response->setMetaTitle(trans('menu::menu.names'))
             ->view('menu::admin.index')
             ->data(compact('rootMenu', 'parent'))
             ->output();
@@ -62,7 +62,7 @@ class MenuResourceController extends BaseController
         }
 
         $rootMenu = $this->repository->rootMenues();
-        return $this->response->title(trans('menu::menu.names'))
+        return $this->response->setMetaTitle(trans('menu::menu.names'))
             ->view('menu::index', true)
             ->data(compact('rootMenu', 'parent'))
             ->output();
