@@ -36,6 +36,11 @@ abstract class Response
     protected $url = null;
 
     /**
+     * @var  Url for the redirect response.
+     */
+    protected $populate = true;
+
+    /**
      * Return the type of response for the current request.
      *
      * @return  string
@@ -78,7 +83,11 @@ abstract class Response
      */
     protected function ajax()
     {
-        Form::populate($this->getFormData());
+
+        if ($this->populate) {
+            Form::populate($this->getFormData());
+        }
+
         $view = $this->getView();
 
         if (!is_array($view)) {
@@ -96,7 +105,10 @@ abstract class Response
      */
     protected function http()
     {
-        Form::populate($this->getFormData());
+        if ($this->populate) {
+            Form::populate($this->getFormData());
+        }
+
         $this->theme->prependTitle($this->getTitle());
 
         return $this->theme->of($this->getView(), $this->getData())->render();
@@ -219,6 +231,19 @@ abstract class Response
     public function code($code)
     {
         $this->code = $code;
+
+        return $this;
+    }
+
+    /**
+     * @param mixed $code
+     *
+     * @return self
+     */
+    public function populate($status)
+    {
+
+        $this->populate = $status;
 
         return $this;
     }
