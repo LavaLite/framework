@@ -21,7 +21,6 @@ class RepositoryServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        $this->publishResources();
     }
 
     /**
@@ -31,6 +30,9 @@ class RepositoryServiceProvider extends ServiceProvider
      */
     public function register()
     {
+        // Merge configuration file
+        $this->mergeConfigFrom(__DIR__ . '/config.php', 'database');
+
         $this->app->register('Litepie\Repository\Providers\EventServiceProvider');
     }
 
@@ -44,14 +46,4 @@ class RepositoryServiceProvider extends ServiceProvider
         return [];
     }
 
-    /**
-     * Publish resources.
-     *
-     * @return void
-     */
-    private function publishResources()
-    {
-        // Merge configuration file
-        $this->mergeConfigFrom([__DIR__ . '/config.php', 'database');
-    }
 }
