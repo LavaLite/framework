@@ -21,7 +21,6 @@ class DatabaseServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-
     }
 
     /**
@@ -30,6 +29,6 @@ class DatabaseServiceProvider extends ServiceProvider
     public function register()
     {
         // Merge configuration file
-        $this->mergeConfigFrom(__DIR__ . '/config.php', 'database');
+        $this->mergeConfigFrom(__DIR__.'/config.php', 'database');
     }
 }

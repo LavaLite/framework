@@ -1,11 +1,11 @@
 <?php
+
 namespace Litepie\Repository\Providers;
 
 use Illuminate\Support\ServiceProvider;
 
 class EventServiceProvider extends ServiceProvider
 {
-
     /**
      * The event handler mappings for the application.
      *
@@ -13,14 +13,14 @@ class EventServiceProvider extends ServiceProvider
      */
     protected $listen = [
         'Litepie\Repository\Events\RepositoryEntityCreated' => [
-            'Litepie\Repository\Listeners\CleanCacheRepository'
+            'Litepie\Repository\Listeners\CleanCacheRepository',
         ],
         'Litepie\Repository\Events\RepositoryEntityUpdated' => [
-            'Litepie\Repository\Listeners\CleanCacheRepository'
+            'Litepie\Repository\Listeners\CleanCacheRepository',
         ],
         'Litepie\Repository\Events\RepositoryEntityDeleted' => [
-            'Litepie\Repository\Listeners\CleanCacheRepository'
-        ]
+            'Litepie\Repository\Listeners\CleanCacheRepository',
+        ],
     ];
 
     /**

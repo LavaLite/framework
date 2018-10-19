@@ -2,9 +2,9 @@
 
 namespace Litepie\Activities\Test;
 
-use Spatie\Activitylog\Exceptions\InvalidConfiguration;
 use Litepie\Activities\Test\Models\CustomActivityModel;
 use Litepie\Activities\Test\Models\InvalidActivityModel;
+use Spatie\Activitylog\Exceptions\InvalidConfiguration;
 
 class CustomActivityModelTest extends TestCase
 {

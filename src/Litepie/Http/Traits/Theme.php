@@ -1,17 +1,18 @@
 <?php
 
 namespace Litepie\http\Traits;
+
 use Theme as BaseTheme;
 
 trait Theme
 {
     /**
-     * @var  Theme for the request.
+     * @var Theme for the request.
      */
     public $theme = null;
 
     /**
-     * @var  Theme layout for the request.
+     * @var Theme layout for the request.
      */
     protected $layout = null;
 
@@ -41,13 +42,12 @@ trait Theme
     }
 
     /**
-     * @param  set the  $theme
+     * @param set the $theme
      *
      * @return self
      */
     public function theme($theme)
     {
-
         $this->theme = BaseTheme::uses($theme);
 
         return $this;
@@ -62,7 +62,7 @@ trait Theme
     }
 
     /**
-     * @param  Theme for the request $layout
+     * @param Theme for the request $layout
      *
      * @return self
      */
@@ -74,11 +74,10 @@ trait Theme
     }
 
     /**
-     * @return  Theme for the request
+     * @return Theme for the request
      */
     public function getLayout()
     {
         return $this->layout;
     }
-
 }

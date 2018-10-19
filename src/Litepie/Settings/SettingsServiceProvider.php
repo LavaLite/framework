@@ -21,17 +21,16 @@ class SettingsServiceProvider extends ServiceProvider
     public function boot()
     {
         // Load view
-        $this->loadViewsFrom(__DIR__ . '/resources/views', 'settings');
+        $this->loadViewsFrom(__DIR__.'/resources/views', 'settings');
 
         // Load translation
-        $this->loadTranslationsFrom(__DIR__ . '/resources/lang', 'settings');
+        $this->loadTranslationsFrom(__DIR__.'/resources/lang', 'settings');
 
         // Load migrations
-        $this->loadMigrationsFrom(__DIR__ . '/database/migrations');
+        $this->loadMigrationsFrom(__DIR__.'/database/migrations');
 
         // Call pblish redources function
         $this->publishResources();
-
     }
 
     /**
@@ -41,7 +40,7 @@ class SettingsServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $configPath = __DIR__ . '/config/config.php';
+        $configPath = __DIR__.'/config/config.php';
         $this->mergeConfigFrom($configPath, 'settings');
 
         // Bind facade
@@ -49,16 +48,15 @@ class SettingsServiceProvider extends ServiceProvider
             return $this->app->make(\Litepie\Settings\Settings::class);
         });
 
-                // Bind Setting to repository
+        // Bind Setting to repository
         $this->app->bind(
             'Litepie\Settings\Interfaces\SettingRepositoryInterface',
             \Litepie\Settings\Repositories\Eloquent\SettingRepository::class
         );
 
         $this->app->register(\Litepie\Settings\Providers\AuthServiceProvider::class);
-        
+
         $this->app->register(\Litepie\Settings\Providers\RouteServiceProvider::class);
-                
     }
 
     /**
@@ -79,15 +77,15 @@ class SettingsServiceProvider extends ServiceProvider
     private function publishResources()
     {
         // Publish configuration file
-        $this->publishes([__DIR__ . '/config/config.php' => config_path('litepie/settings.php')], 'config');
+        $this->publishes([__DIR__.'/config/config.php' => config_path('litepie/settings.php')], 'config');
 
         // Publish admin view
-        $this->publishes([__DIR__ . '/resources/views' => base_path('resources/views/vendor/settings')], 'view');
+        $this->publishes([__DIR__.'/resources/views' => base_path('resources/views/vendor/settings')], 'view');
 
         // Publish language files
-        $this->publishes([__DIR__ . '/resources/lang' => base_path('resources/lang/vendor/settings')], 'lang');
+        $this->publishes([__DIR__.'/resources/lang' => base_path('resources/lang/vendor/settings')], 'lang');
 
         // Publish public files and assets.
-        $this->publishes([__DIR__ . '/public/' => public_path('/')], 'public');
+        $this->publishes([__DIR__.'/public/' => public_path('/')], 'public');
     }
 }

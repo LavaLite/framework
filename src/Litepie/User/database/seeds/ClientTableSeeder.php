@@ -22,7 +22,7 @@ class ClientTableSeeder extends Seeder
                 'designation' => 'Super User',
                 'web'         => 'http://litepie.org',
                 'created_at'  => '2015-09-15',
-            ]
+            ],
         ]);
     }
 }

@@ -10,7 +10,6 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
     /**
      * @var array
      */
-
     public function boot()
     {
         $this->fieldSearchable = config('users.user.model.search');
@@ -23,7 +22,8 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
      */
     public function model()
     {
-        $provider = config("auth.guards." . getenv('guard') . ".web.provider", 'users');
+        $provider = config('auth.guards.'.getenv('guard').'.web.provider', 'users');
+
         return config("auth.providers.$provider.model", App\User::class);
     }
 
@@ -48,7 +48,7 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
      */
     public function agents()
     {
-        $temp   = [];
+        $temp = [];
         $agents = $this->model->select('id', 'name')->orderBy('name', 'ASC')->get();
 
         foreach ($agents as $key => $value) {
@@ -81,5 +81,4 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
 
         return false;
     }
-
 }

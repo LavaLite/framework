@@ -2,17 +2,14 @@
 
 namespace Litepie\Roles\Repositories\Eloquent;
 
-use Litepie\Roles\Interfaces\RoleRepositoryInterface;
 use Litepie\Repository\Eloquent\BaseRepository;
+use Litepie\Roles\Interfaces\RoleRepositoryInterface;
 
 class RoleRepository extends BaseRepository implements RoleRepositoryInterface
 {
-
-
     public function boot()
     {
         $this->fieldSearchable = config('roles.role.search');
-
     }
 
     /**

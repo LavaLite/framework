@@ -39,23 +39,21 @@ class NodeCollection extends CollectionBase
         $nestedKeys = [];
 
         foreach ($collection as $key => $model) {
-
             if (!$parentKey = $model->getParentId()) {
                 continue;
             }
 
             if (array_key_exists($parentKey, $collection)) {
                 $collection[$parentKey]->children[] = $model;
-                $nestedKeys[]                       = $model->getKey();
+                $nestedKeys[] = $model->getKey();
             } elseif ($removeOrphans) {
                 $nestedKeys[] = $model->getKey();
             }
-
         }
 
-/*
- * Remove processed nodes
- */
+        /*
+         * Remove processed nodes
+         */
         foreach ($nestedKeys as $key) {
             unset($collection[$key]);
         }
@@ -83,13 +81,12 @@ class NodeCollection extends CollectionBase
             $indentString = str_repeat($indent, $depth);
 
             foreach ($items as $item) {
-
                 if ($key !== null) {
                     $result[$item->{$key}
 
-                    ] = $indentString . $item->{$value};
+                    ] = $indentString.$item->{$value};
                 } else {
-                    $result[] = $indentString . $item->{$value};
+                    $result[] = $indentString.$item->{$value};
                 }
 
                 /*
@@ -98,15 +95,12 @@ class NodeCollection extends CollectionBase
                 $childItems = $item->getChildren();
 
                 if ($childItems->count() > 0) {
-
                     if ($key === null) {
                         $result = array_merge($result, $buildCollection($childItems, $depth + 1));
                     } else {
                         $result = $result + $buildCollection($childItems, $depth + 1);
                     }
-
                 }
-
             }
 
             return $result;
@@ -116,7 +110,7 @@ class NodeCollection extends CollectionBase
          * Build a nested collection
          */
         $rootItems = $this->toNested();
-        $result    = $buildCollection($rootItems);
+        $result = $buildCollection($rootItems);
 
         return $result;
     }
@@ -136,15 +130,13 @@ class NodeCollection extends CollectionBase
          * Set new collection for "children" relations
          */
         $collection = collect($this->getDictionary());
-        $menu       = null;
+        $menu = null;
 
         foreach ($collection as $item) {
-
             if ($item->url == Request::path()) {
                 $menu = $item;
                 break;
             }
-
         }
 
         foreach ($collection as $key => $model) {
@@ -153,14 +145,12 @@ class NodeCollection extends CollectionBase
         }
 
         if ($menu) {
-
             $menu_id = $menu->id;
 
             while ($menu_id) {
                 $collection[$menu_id]->active = 'active';
-                $menu_id                      = $collection[$menu_id]->getParentId();
+                $menu_id = $collection[$menu_id]->getParentId();
             }
-
         }
 
         /*
@@ -169,21 +159,18 @@ class NodeCollection extends CollectionBase
         $nestedKeys = [];
 
         foreach ($collection as $key => $model) {
-
             if (!$parentKey = $model->getParentId()) {
                 continue;
             }
 
             if ($collection->get($parentKey)) {
                 $collection[$parentKey]->children[] = $model;
-                $nestedKeys[]                       = $model->getKey();
+                $nestedKeys[] = $model->getKey();
             } else {
                 $nestedKeys[] = $model->getKey();
             }
-
         }
 
         return new CollectionBase($collection->where('key', $menu_key)->first()->getChildren());
     }
-
 }

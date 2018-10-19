@@ -1,4 +1,5 @@
 <?php
+
 namespace Litepie\Install\Installers\Scripts;
 
 use Illuminate\Console\Command;
@@ -29,8 +30,10 @@ class PackgeAssets implements SetupScript
     ];
 
     /**
-     * Fire the install script
-     * @param  Command $command
+     * Fire the install script.
+     *
+     * @param Command $command
+     *
      * @return mixed
      */
     public function fire(Command $command)
@@ -43,29 +46,22 @@ class PackgeAssets implements SetupScript
         }
 
         foreach ($this->tags as $tag => $option) {
-            $this->command->sectionMessage(ucfirst($tag) . " files", "Publishing {$tag} files");
+            $this->command->sectionMessage(ucfirst($tag).' files', "Publishing {$tag} files");
 
             if ($confirm = $this->confirm($tag, $option)) {
-
                 if ($confirm == 'Ask') {
-
                     foreach ($this->packages as $kp => $package) {
-
                         if (!$reConfirm = $this->reConfirm($tag, $kp)) {
                             continue;
                         }
 
                         $this->publish($reConfirm);
                     }
-
                 } else {
                     $this->publish($confirm);
                 }
-
             }
-
         }
-
     }
 
     public function confirm($tag, $option)
@@ -108,13 +104,12 @@ class PackgeAssets implements SetupScript
 
     public function publish($options)
     {
-
         if ($this->command->option('verbose')) {
             $this->command->call('vendor:publish', $options);
+
             return;
         }
 
         $this->command->callSilent('vendor:publish', $options);
     }
-
 }

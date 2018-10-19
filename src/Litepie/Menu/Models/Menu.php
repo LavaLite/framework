@@ -31,7 +31,5 @@ class Menu extends Model
         }
 
         return false;
-
     }
-
 }

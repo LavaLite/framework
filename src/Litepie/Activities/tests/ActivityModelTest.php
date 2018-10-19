@@ -2,10 +2,10 @@
 
 namespace Litepie\Activities\Test;
 
-use Litepie\Activities\Models\Activity;
-use Litepie\Activities\Test\Models\User;
-use Litepie\Activities\Test\Models\Article;
 use Illuminate\Database\Eloquent\Relations\Relation;
+use Litepie\Activities\Models\Activity;
+use Litepie\Activities\Test\Models\Article;
+use Litepie\Activities\Test\Models\User;
 
 class ActivityModelTest extends TestCase
 {
@@ -94,7 +94,7 @@ class ActivityModelTest extends TestCase
     {
         Relation::morphMap([
             'articles' => 'Litepie\Activities\Test\Models\Article',
-            'users' => 'Litepie\Activities\Test\Models\User',
+            'users'    => 'Litepie\Activities\Test\Models\User',
         ]);
 
         $subject = Article::first();
@@ -120,7 +120,7 @@ class ActivityModelTest extends TestCase
     {
         Relation::morphMap([
             'articles' => 'Litepie\Activities\Test\Models\Article',
-            'users' => 'Litepie\Activities\Test\Models\User',
+            'users'    => 'Litepie\Activities\Test\Models\User',
         ]);
 
         $subject = Article::first();

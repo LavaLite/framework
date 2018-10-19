@@ -20,10 +20,9 @@ class ThemeServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        
         if ($this->app->runningInConsole()) {
             $this->commands([
-                \Litepie\Theme\Console\ThemePublishCommand::class
+                \Litepie\Theme\Console\ThemePublishCommand::class,
             ]);
         }
         $this->publishResources();
@@ -37,7 +36,6 @@ class ThemeServiceProvider extends ServiceProvider
      */
     public function register()
     {
-
         $this->mergeConfigFrom(__DIR__.'/config.php', 'theme');
 
         $this->app->singleton('view.finder', function ($app) {
@@ -96,8 +94,6 @@ class ThemeServiceProvider extends ServiceProvider
     private function publishResources()
     {
         // Publish configuration file
-        $this->publishes([__DIR__ . '/config.php' => config_path('theme.php')], 'config');
-
+        $this->publishes([__DIR__.'/config.php' => config_path('theme.php')], 'config');
     }
-
 }

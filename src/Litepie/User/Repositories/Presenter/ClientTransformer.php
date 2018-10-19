@@ -3,7 +3,6 @@
 namespace Litepie\User\Repositories\Presenter;
 
 use League\Fractal\TransformerAbstract;
-use Hashids;
 
 class ClientTransformer extends TransformerAbstract
 {
@@ -33,10 +32,10 @@ class ClientTransformer extends TransformerAbstract
             'deleted_at'        => $client->deleted_at,
             'created_at'        => $client->created_at,
             'updated_at'        => $client->updated_at,
-            'url'              => [
+            'url'               => [
                 'public' => trans_url('user/'.$client->getPublicKey()),
                 'user'   => guard_url('user/client/'.$client->getRouteKey()),
-            ], 
+            ],
             'status'            => trans('app.'.$client->status),
             'created_at'        => format_date($client->created_at),
             'updated_at'        => format_date($client->updated_at),

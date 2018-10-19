@@ -7,11 +7,11 @@ use Mcamara\LaravelLocalization\LaravelLocalization;
 
 class Trans extends LaravelLocalization
 {
-
     /**
      * Return an array of all supported Locales.
      *
-     * @param boolean $excludeCurrent
+     * @param bool $excludeCurrent
+     *
      * @throws SupportedLocalesNotDefined
      *
      * @return array
@@ -27,9 +27,10 @@ class Trans extends LaravelLocalization
         if ($excludeCurrent) {
             $locales = $this->supportedLocales;
             unset($locales[$this->currentLocale]);
-            
+
             return $locales;
         }
+
         return $this->supportedLocales;
     }
 
@@ -45,7 +46,6 @@ class Trans extends LaravelLocalization
      */
     public function to($url = null, $locale = null)
     {
-
         if (starts_with($url, 'http')) {
             return url($url);
         }
@@ -72,7 +72,7 @@ class Trans extends LaravelLocalization
     {
         return $this->configRepository->get('trans.useAcceptLanguageHeader');
     }
-    
+
     /**
      * Return an array of all supported Locales but in the order the user
      * has specified in the config file. Useful for the language selector.
@@ -88,6 +88,7 @@ class Trans extends LaravelLocalization
         uksort($locales, function ($a, $b) use ($order) {
             $pos_a = array_search($a, $order);
             $pos_b = array_search($b, $order);
+
             return $pos_a - $pos_b;
         });
 

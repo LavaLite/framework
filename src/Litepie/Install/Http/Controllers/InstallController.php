@@ -3,19 +3,14 @@
 namespace Litepie\Install\Http\Controllers;
 
 use App\Http\Controllers\PublicController as PublicController;
-use Form;
-use Response;
-use Illuminate\Http\Request;
-use Litepie\Install\Http\Controllers\InstallCommands;
 use Illuminate\Filesystem\Filesystem;
-use Illuminate\Console\Command;
-use Litepie\Install\Installers\SetupScript;
+use Illuminate\Http\Request;
+use Response;
 use Validator;
 
 class InstallController extends PublicController
 {
     use InstallCommands;
-
 
     /**
      * Display the first configuration checking view.
@@ -24,13 +19,10 @@ class InstallController extends PublicController
      */
     public function index(Request $request)
     {
-
         $this->response->title(trans('Welcome to lavalite instalation wizard.'));
-
 
         return $this->theme->layout('install')->of('install::index')->output();
     }
-
 
     /**
      * Display the first configuration checking view.
@@ -39,8 +31,8 @@ class InstallController extends PublicController
      */
     public function getDb(Request $request)
     {
-
         $this->response->title('Database setup:: Installation (step 1 of 4)');
+
         return $this->theme->layout('install')->of('install::db')->output();
     }
 
@@ -67,13 +59,10 @@ class InstallController extends PublicController
      */
     public function getPublish(Request $request)
     {
-
         $this->response->title('Publish files:: Installation (step 2 of 4)');
-
 
         return $this->theme->layout('install')->of('install::publish')->output();
     }
-
 
     /**
      * Display the first configuration checking view.
@@ -89,7 +78,6 @@ class InstallController extends PublicController
 
         return redirect('install/user');
     }
-
 
     /**
      * Display the first configuration checking view.
@@ -110,16 +98,16 @@ class InstallController extends PublicController
      */
     public function postUser(Request $request)
     {
-        $attributes     = $request->all();
-        $validator      = Validator::make($attributes, [
-                                'user.*.email' => 'required|email',
-                                'user.*.password' => 'min:6|max:30'
+        $attributes = $request->all();
+        $validator = Validator::make($attributes, [
+                                'user.*.email'    => 'required|email',
+                                'user.*.password' => 'min:6|max:30',
                             ]);
 
         if ($validator->fails()) {
             return redirect()->back()->withCode(400)->withMessage($validator->errors());
         }
-        
+
         $data = array_only($attributes['user'], ['superuser', 'admin', 'user', 'client']);
         foreach ($data as $key => $value) {
             $this->setCredentials($value, $this->model[$key]);
@@ -139,8 +127,4 @@ class InstallController extends PublicController
 
         return $this->theme->layout('install')->of('install::finished')->output();
     }
-
-
-
-
 }

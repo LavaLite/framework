@@ -25,7 +25,6 @@ if (!function_exists('theme')) {
     }
 }
 
-
 if (!function_exists('theme_asset')) {
     /**
      * Get translated url.

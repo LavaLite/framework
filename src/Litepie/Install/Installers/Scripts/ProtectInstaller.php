@@ -1,4 +1,5 @@
 <?php
+
 namespace Litepie\Install\Installers\Scripts;
 
 use Exception;
@@ -8,7 +9,6 @@ use Litepie\Install\Installers\SetupScript;
 
 class ProtectInstaller implements SetupScript
 {
-
     /**
      * @var Filesystem
      */
@@ -23,10 +23,13 @@ class ProtectInstaller implements SetupScript
     }
 
     /**
-     * Fire the install script
-     * @param  Command   $command
-     * @return mixed
+     * Fire the install script.
+     *
+     * @param Command $command
+     *
      * @throws Exception
+     *
+     * @return mixed
      */
     public function fire(Command $command)
     {
@@ -41,7 +44,5 @@ class ProtectInstaller implements SetupScript
 
             return;
         }
-
     }
-
 }

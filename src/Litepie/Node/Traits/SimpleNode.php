@@ -66,7 +66,7 @@ trait SimpleNode
 
         foreach ($this->getAllRoot() as $rootNode) {
             $collection[] = $rootNode;
-            $collection   = $collection + $rootNode->getAllChildren()->getDictionary();
+            $collection = $collection + $rootNode->getAllChildren()->getDictionary();
         }
 
         return new Collection($collection);
@@ -89,7 +89,7 @@ trait SimpleNode
      */
     public function getAllChildren()
     {
-        $result   = [];
+        $result = [];
         $children = $this->getChildren();
 
         foreach ($children as $child) {
@@ -100,7 +100,6 @@ trait SimpleNode
             foreach ($childResult as $subChild) {
                 $result[] = $subChild;
             }
-
         }
 
         return new Collection($result);
@@ -156,13 +155,12 @@ trait SimpleNode
             $indentString = str_repeat($indent, $depth);
 
             foreach ($items as $item) {
-
                 if ($key !== null) {
                     $result[$item->{$key}
 
-                    ] = $indentString . $item->{$column};
+                    ] = $indentString.$item->{$column};
                 } else {
-                    $result[] = $indentString . $item->{$column};
+                    $result[] = $indentString.$item->{$column};
                 }
 
                 /*
@@ -173,7 +171,6 @@ trait SimpleNode
                 if ($childItems->count() > 0) {
                     $result = $result + $buildCollection($childItems, $depth + 1);
                 }
-
             }
 
             return $result;
@@ -183,14 +180,14 @@ trait SimpleNode
          * Build a nested collection
          */
         $rootItems = $query->get()->toNested();
-        $result    = $buildCollection($rootItems);
+        $result = $buildCollection($rootItems);
 
         return $result;
     }
 
 //
 
-// Column getters
+    // Column getters
 
 //
 
@@ -211,7 +208,7 @@ trait SimpleNode
      */
     public function getQualifiedParentColumnName()
     {
-        return $this->getTable() . '.' . $this->getParentColumnName();
+        return $this->getTable().'.'.$this->getParentColumnName();
     }
 
     /**
@@ -231,5 +228,4 @@ trait SimpleNode
     {
         return new NodeCollection($models);
     }
-
 }

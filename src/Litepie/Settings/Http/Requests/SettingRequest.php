@@ -42,7 +42,6 @@ class SettingRequest extends FormRequest
 
         // Determine if the user is authorized to view the module.
         return $this->can('view');
-
     }
 
     /**

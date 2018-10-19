@@ -3,7 +3,6 @@
 namespace Litepie\Roles\Repositories\Presenter;
 
 use League\Fractal\TransformerAbstract;
-use Hashids;
 
 class PermissionItemTransformer extends TransformerAbstract
 {

@@ -3,6 +3,7 @@
 namespace Litepie\Form;
 
 use Former\FormerServiceProvider;
+
 /**
  * Register the Former package with the Laravel framework.
  */
@@ -24,7 +25,6 @@ class FormServiceProvider extends FormerServiceProvider
     {
         // Call pblish redources function
         $this->publishResources();
-
     }
 
     /**
@@ -57,8 +57,6 @@ class FormServiceProvider extends FormerServiceProvider
     private function publishResources()
     {
         // Publish configuration file
-        $this->publishes([__DIR__ . '/config.php' => config_path('form.php')], 'config');
-
+        $this->publishes([__DIR__.'/config.php' => config_path('form.php')], 'config');
     }
-
 }

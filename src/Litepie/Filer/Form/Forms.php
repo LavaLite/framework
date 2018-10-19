@@ -1,11 +1,11 @@
 <?php
+
 namespace Litepie\Filer\Form;
 
 class Forms
 {
-
     /**
-     * Number of files can be uploaded
+     * Number of files can be uploaded.
      */
     private $count = 10;
 
@@ -55,38 +55,41 @@ class Forms
      * @param type $field
      * @param type $files
      * @param type $config
-     *
      */
     public function __construct($field, $config, $files = [])
     {
         $this->field($field);
         $this->config($config);
         $this->files($files);
-
     }
 
     /**
-     * Generate html to diaplay files
+     * Generate html to diaplay files.
      *
      * @return string
      */
     public function show()
     {
         $this->view('filer::show', false);
+
         return $this;
     }
 
     /**
-     * Generate html to edit the images
+     * Generate html to edit the images.
+     *
      * @return string
      */
     public function editor()
     {
         $this->view('filer::editor', false);
+
         return $this;
     }
+
     /**
-     * Generate html to crop the images
+     * Generate html to crop the images.
+     *
      * @return string
      */
     public function cropper($src = null)
@@ -98,7 +101,8 @@ class Forms
     }
 
     /**
-     * Generate html to upload files
+     * Generate html to upload files.
+     *
      * @return type
      */
     public function dropzone($url = null)
@@ -106,22 +110,26 @@ class Forms
         $this->url($url, false);
         $this->view('filer::dropzone', false);
         $this->mime('image/*', false);
+
         return $this;
     }
 
     /**
-     * Generate html to upload files
+     * Generate html to upload files.
+     *
      * @return type
      */
     public function input()
     {
         $this->view('filer::input', false);
         $this->mime('image/*', false);
+
         return $this;
     }
 
     /**
-     * Generate html to upload files
+     * Generate html to upload files.
+     *
      * @return type
      */
     public function uploader($url = null)
@@ -129,24 +137,27 @@ class Forms
         $this->url($url, false);
         $this->view('filer::dropzone', false);
         $this->mime('image/*', false);
+
         return $this;
     }
 
     /**
-     * Render the output
+     * Render the output.
+     *
      * @return type
      */
     public function render()
     {
-        $view   = $this->getView();
-        $field  = $this->getField();
-        $files  = $this->getFiles();
-        $mime   = $this->getMime();
+        $view = $this->getView();
+        $field = $this->getField();
+        $files = $this->getFiles();
+        $mime = $this->getMime();
         $config = $this->getConfig();
-        $url    = $this->getUrl();
-        $src    = $this->getSrc();
-        $count  = $this->getCount();
-        $size   = $this->getSize();
+        $url = $this->getUrl();
+        $src = $this->getSrc();
+        $count = $this->getCount();
+        $size = $this->getSize();
+
         return view($view, compact('count', 'url', 'src', 'config', 'field', 'files', 'size', 'mime'))->render();
     }
 
@@ -179,7 +190,6 @@ class Forms
      */
     public function count($count)
     {
-
         if (is_numeric($count) && $count > 0) {
             $this->count = $count;
         }
@@ -206,7 +216,6 @@ class Forms
      */
     public function view($view, $force = true)
     {
-
         if (is_null($this->view) || $force) {
             $this->view = $view;
         }
@@ -281,7 +290,6 @@ class Forms
      */
     public function files($files)
     {
-
         if (!is_array($files) && !is_object($files)) {
             $files = json_decode($files, true);
         }
@@ -309,6 +317,7 @@ class Forms
         if (is_array($this->mime)) {
             return '.'.implode(', .', $this->mime);
         }
+
         return $this->mime;
     }
 
@@ -321,7 +330,6 @@ class Forms
      */
     public function mime($mime, $force = true)
     {
-
         if (is_null($this->mime) || $force) {
             $this->mime = $mime;
         }
@@ -348,13 +356,13 @@ class Forms
      */
     public function url($url, $force = true)
     {
-
         if (is_null($this->url) || $force) {
             $this->url = $url;
         }
 
         return $this;
     }
+
     /**
      * Gets the Upload url for file.
      *
@@ -404,5 +412,4 @@ class Forms
 
         return $this;
     }
-
 }

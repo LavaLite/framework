@@ -7,16 +7,14 @@ use Filer;
 
 class FileController extends Controller
 {
-
     /**
-     * Download file
+     * Download file.
      *
      * @param string $path
      */
     public function download($path)
     {
-
-        $file_path = base_path(config('filer.folder')) . '/' . str_replace('..', '', $path);
+        $file_path = base_path(config('filer.folder')).'/'.str_replace('..', '', $path);
 
         if (file_exists($file_path) && is_file($file_path)) {
             // file found
@@ -32,7 +30,7 @@ class FileController extends Controller
      */
     public function display($path)
     {
-        $file_path = base_path(config('filer.folder')) . '/' . str_replace('..', '', $path);
+        $file_path = base_path(config('filer.folder')).'/'.str_replace('..', '', $path);
 
         if (file_exists($file_path) && is_file($file_path)) {
             // file found
@@ -40,5 +38,4 @@ class FileController extends Controller
         }
         abort(404);
     }
-
 }

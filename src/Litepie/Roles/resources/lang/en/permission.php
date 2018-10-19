@@ -2,12 +2,12 @@
 
 return [
 
-    /**
+    /*
      * Singlular and plural name of the module
      */
     'name'          => 'Permission',
     'names'         => 'Permissions',
-    'title'       => [
+    'title'         => [
         'user'  => 'My Permissions',
         'admin' => 'Permissions',
         'sub'   => [
@@ -16,14 +16,14 @@ return [
         ],
     ],
 
-    /**
+    /*
      * Options for select/radio/check.
      */
     'options'       => [
-            
+
     ],
 
-    /**
+    /*
      * Placeholder for inputs
      */
     'placeholder'   => [
@@ -35,7 +35,7 @@ return [
         'updated_at'                 => 'Please select updated at',
     ],
 
-    /**
+    /*
      * Labels for inputs.
      */
     'label'         => [
@@ -47,7 +47,7 @@ return [
         'updated_at'                 => 'Updated at',
     ],
 
-    /**
+    /*
      * Columns array for show hide checkbox.
      */
     'cloumns'         => [
@@ -55,14 +55,14 @@ return [
         'slug'                       => ['name' => 'Slug', 'data-column' => 2, 'checked'],
     ],
 
-    /**
+    /*
      * Tab labels
      */
     'tab'           => [
         'name'  => 'Permissions',
     ],
 
-    /**
+    /*
      * Texts  for the module
      */
     'text'          => [

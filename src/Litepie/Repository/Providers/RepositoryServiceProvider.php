@@ -1,15 +1,14 @@
 <?php
+
 namespace Litepie\Repository\Providers;
 
 use Illuminate\Support\ServiceProvider;
 
 /**
- * Class RepositoryServiceProvider
- * @package Litepie\Repository\Providers
+ * Class RepositoryServiceProvider.
  */
 class RepositoryServiceProvider extends ServiceProvider
 {
-
     /**
      * Indicates if loading of the provider is deferred.
      *
@@ -17,22 +16,19 @@ class RepositoryServiceProvider extends ServiceProvider
      */
     protected $defer = false;
 
-
     /**
-     *
      * @return void
      */
     public function boot()
     {
         $this->publishes([
-            __DIR__ . '/../../../resources/config/repository.php' => config_path('repository.php')
+            __DIR__.'/../../../resources/config/repository.php' => config_path('repository.php'),
         ]);
 
-        $this->mergeConfigFrom(__DIR__ . '/../../../resources/config/repository.php', 'repository');
+        $this->mergeConfigFrom(__DIR__.'/../../../resources/config/repository.php', 'repository');
 
-        $this->loadTranslationsFrom(__DIR__ . '/../../../resources/lang', 'repository');
+        $this->loadTranslationsFrom(__DIR__.'/../../../resources/lang', 'repository');
     }
-
 
     /**
      * Register the service provider.
@@ -51,7 +47,6 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->commands('Litepie\Repository\Generators\Commands\CriteriaCommand');
         $this->app->register('Litepie\Repository\Providers\EventServiceProvider');
     }
-
 
     /**
      * Get the services provided by the provider.

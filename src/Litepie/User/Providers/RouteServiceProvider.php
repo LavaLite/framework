@@ -2,9 +2,8 @@
 
 namespace Litepie\User\Providers;
 
-use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
-use Illuminate\Routing\Router;
 use App\User;
+use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
 use Request;
 use Route;
 
@@ -22,7 +21,8 @@ class RouteServiceProvider extends ServiceProvider
     /**
      * Define your route model bindings, pattern filters, etc.
      *
-     * @param   \Illuminate\Routing\Router  $router
+     * @param \Illuminate\Routing\Router $router
+     *
      * @return void
      */
     public function boot()
@@ -32,6 +32,7 @@ class RouteServiceProvider extends ServiceProvider
         if (Request::is('admin/user/user/*')) {
             Route::bind('user', function ($user) {
                 $userrepo = $this->app->make('Litepie\User\Interfaces\UserRepositoryInterface');
+
                 return $userrepo->findorNew($user);
             });
         }
@@ -39,14 +40,15 @@ class RouteServiceProvider extends ServiceProvider
         if (Request::is('admin/user/team/*')) {
             Route::bind('team', function ($team) {
                 $teamrepo = $this->app->make('Litepie\User\Interfaces\TeamRepositoryInterface');
+
                 return $teamrepo->findorNew($team);
             });
         }
 
         if (Request::is('admin/user/*')) {
             Route::bind('client', function ($client) {
-
                 $userrepo = $this->app->make('Litepie\User\Interfaces\ClientRepositoryInterface');
+
                 return $userrepo->findorNew($client);
             });
         }
@@ -79,11 +81,8 @@ class RouteServiceProvider extends ServiceProvider
             'middleware' => 'web',
             'prefix'     => trans_setlocale(),
         ], function ($router) {
-            require (__DIR__ . '/../routes/auth.php');
-            require (__DIR__ . '/../routes/web.php');
+            require __DIR__.'/../routes/auth.php';
+            require __DIR__.'/../routes/web.php';
         });
-
     }
-
-
 }

@@ -21,7 +21,7 @@ class HashidsServiceProvider extends ServiceProvider
             // Read settings from config file
             $config = $app->config->get('hashids', []);
 
-               return new Hashids($config['salt'], $config['length']);
+            return new Hashids($config['salt'], $config['length']);
         });
     }
 

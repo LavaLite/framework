@@ -27,7 +27,6 @@ class CreateRolesTable extends Migration
             $table->softDeletes();
             $table->nullableTimestamps();
         });
-
     }
 
     /*

@@ -1,20 +1,19 @@
-<?php 
+<?php
+
 namespace Lavalite\Team;
 
 use Illuminate\Support\Facades\Config;
 use Lavalite\Team\Events\UserInvitedToTeam;
 
 /**
- * This file is part of Teamwork
+ * This file is part of Teamwork.
  *
  * @license MIT
- * @package Teamwork
  */
-
-class Teamwork
+class Team
 {
     /**
-     * Laravel application
+     * Laravel application.
      *
      * @var \Illuminate\Foundation\Application
      */
@@ -25,7 +24,7 @@ class Teamwork
      *
      * @param \Illuminate\Foundation\Application $app
      */
-    public function __construct( $app )
+    public function __construct($app)
     {
         $this->app = $app;
     }
@@ -45,73 +44,72 @@ class Teamwork
      * If no team is given, the current_team_id will be used instead.
      *
      * @param string|User $user
-     * @param null|Team $team
-     * @param callable $success
+     * @param null|Team   $team
+     * @param callable    $success
+     *
      * @throws \Exception
      */
-    public function inviteToTeam( $user, $team = null, callable $success = null )
+    public function inviteToTeam($user, $team = null, callable $success = null)
     {
-        if ( is_null( $team ) )
-        {
+        if (is_null($team)) {
             $team = $this->user()->current_team_id;
-        } elseif( is_object( $team ) )
-        {
+        } elseif (is_object($team)) {
             $team = $team->getKey();
-        }elseif( is_array( $team ) )
-        {
-            $team = $team["id"];
+        } elseif (is_array($team)) {
+            $team = $team['id'];
         }
 
-        if( is_object( $user ) && isset($user->email) )
-        {
+        if (is_object($user) && isset($user->email)) {
             $email = $user->email;
-        } elseif( is_string($user) ) {
+        } elseif (is_string($user)) {
             $email = $user;
         } else {
             throw new \Exception('The provided object has no "email" attribute and is not a string.');
         }
 
-        $invite               = $this->app->make(config('teamwork.invite_model'));
-        $invite->user_id      = $this->user()->getKey();
-        $invite->team_id      = $team;
-        $invite->type         = 'invite';
-        $invite->email        = $email;
-        $invite->accept_token = md5( uniqid( microtime() ) );
-        $invite->deny_token   = md5( uniqid( microtime() ) );
+        $invite = $this->app->make(config('teamwork.invite_model'));
+        $invite->user_id = $this->user()->getKey();
+        $invite->team_id = $team;
+        $invite->type = 'invite';
+        $invite->email = $email;
+        $invite->accept_token = md5(uniqid(microtime()));
+        $invite->deny_token = md5(uniqid(microtime()));
         $invite->save();
 
-        if ( !is_null( $success ) )
-        {
+        if (!is_null($success)) {
             event(new UserInvitedToTeam($invite));
-            return $success( $invite );
+
+            return $success($invite);
         }
     }
 
     /**
      * Checks if the given email address has a pending invite for the
-     * provided Team
+     * provided Team.
+     *
      * @param $email
-     * @param Team|array|integer $team
+     * @param Team|array|int $team
+     *
      * @return bool
      */
-    public function hasPendingInvite( $email, $team )
+    public function hasPendingInvite($email, $team)
     {
-        if( is_object( $team ) )
-        {
+        if (is_object($team)) {
             $team = $team->getKey();
         }
-        if( is_array( $team ) )
-        {
-            $team = $team["id"];
+        if (is_array($team)) {
+            $team = $team['id'];
         }
-        return $this->app->make(config('teamwork.invite_model'))->where('email', "=", $email)->where('team_id', "=", $team )->first() ? true : false;
+
+        return $this->app->make(config('teamwork.invite_model'))->where('email', '=', $email)->where('team_id', '=', $team)->first() ? true : false;
     }
 
     /**
      * @param $token
+     *
      * @return mixed
      */
-    public function getInviteFromAcceptToken( $token )
+    public function getInviteFromAcceptToken($token)
     {
         return $this->app->make(config('teamwork.invite_model'))->where('accept_token', '=', $token)->first();
     }
@@ -119,17 +117,18 @@ class Teamwork
     /**
      * @param TeamInvite $invite
      */
-    public function acceptInvite( TeamInvite $invite )
+    public function acceptInvite(TeamInvite $invite)
     {
-        $this->user()->attachTeam( $invite->team );
+        $this->user()->attachTeam($invite->team);
         $invite->delete();
     }
 
     /**
      * @param $token
+     *
      * @return mixed
      */
-    public function getInviteFromDenyToken( $token )
+    public function getInviteFromDenyToken($token)
     {
         return $this->app->make(config('teamwork.invite_model'))->where('deny_token', '=', $token)->first();
     }
@@ -137,7 +136,7 @@ class Teamwork
     /**
      * @param TeamInvite $invite
      */
-    public function denyInvite( TeamInvite $invite )
+    public function denyInvite(TeamInvite $invite)
     {
         $invite->delete();
     }

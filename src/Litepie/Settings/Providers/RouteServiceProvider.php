@@ -3,7 +3,6 @@
 namespace Litepie\Settings\Providers;
 
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
-use Illuminate\Routing\Router;
 use Litepie\Settings\Models\Settings;
 use Request;
 use Route;
@@ -22,21 +21,21 @@ class RouteServiceProvider extends ServiceProvider
     /**
      * Define your route model bindings, pattern filters, etc.
      *
-     * @param   \Illuminate\Routing\Router  $router
+     * @param \Illuminate\Routing\Router $router
+     *
      * @return void
      */
     public function boot()
     {
         parent::boot();
 
-        
         if (Request::is('*/settings/setting/*')) {
             Route::bind('setting', function ($setting) {
                 $settingrepo = $this->app->make('Litepie\Settings\Interfaces\SettingRepositoryInterface');
+
                 return $settingrepo->findorNew($setting);
             });
         }
-
     }
 
     /**
@@ -46,7 +45,6 @@ class RouteServiceProvider extends ServiceProvider
      */
     public function map()
     {
-
         $this->mapWebRoutes();
     }
 
@@ -61,11 +59,10 @@ class RouteServiceProvider extends ServiceProvider
     {
         Route::group([
             'middleware' => 'web',
-            'namespace' => $this->namespace,
-            'prefix' => trans_setlocale(),
+            'namespace'  => $this->namespace,
+            'prefix'     => trans_setlocale(),
         ], function ($router) {
-            require (__DIR__ . '/../routes/web.php');
+            require __DIR__.'/../routes/web.php';
         });
     }
-
 }

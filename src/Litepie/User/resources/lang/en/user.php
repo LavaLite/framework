@@ -2,7 +2,7 @@
 
 return [
 
-    /**
+    /*
      * Singlular and plural name of the module
      */
     'name'                  => 'User',
@@ -10,20 +10,20 @@ return [
     'updated'               => 'Profile updated',
     'user'                  => 'User',
 
-    /**
+    /*
      * Options for select/radio/check.
      */
     'options'               => [
         'sex'          => [
-            'male' => ['name' => 'sex', 'value' => 'male'],
+            'male'   => ['name' => 'sex', 'value' => 'male'],
             'female' => ['name' => 'sex', 'value' => 'female'],
         ],
-        'status'          => ['New'=>'New', 'Active'=>'Active','Suspended'=>'Suspended'],
-        'reporting_to' => ['1'],
-        'department'   => ['marketing' => 'Marketing', 'accounts' => 'Accounts', 'store' => 'Store'],
+        'status'          => ['New'=>'New', 'Active'=>'Active', 'Suspended'=>'Suspended'],
+        'reporting_to'    => ['1'],
+        'department'      => ['marketing' => 'Marketing', 'accounts' => 'Accounts', 'store' => 'Store'],
     ],
 
-    /**
+    /*
      * Placeholder for inputs
      */
     'placeholder'           => [
@@ -57,7 +57,7 @@ return [
         'minutes'                   => 'Minutes',
     ],
 
-    /**
+    /*
      * Labels for inputs.
      */
     'label'                 => [
@@ -94,14 +94,14 @@ return [
         'web'                       => 'Web',
     ],
 
-    /**
+    /*
      * Tab labels
      */
     'tab'                   => [
         'name' => 'Name',
     ],
 
-    /**
+    /*
      * Texts  for the module
      */
     'text'                  => [

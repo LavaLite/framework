@@ -2,17 +2,16 @@
 
 namespace Litepie\Menu\Policies;
 
-use Litepie\User\Contracts\UserPolicy;
 use Litepie\Menu\Models\Menu;
+use Litepie\User\Contracts\UserPolicy;
 
 class MenuPolicy
 {
-
     /**
      * Determine if the given user can view the menu.
      *
      * @param UserPolicy $user
-     * @param Menu $menu
+     * @param Menu       $menu
      *
      * @return bool
      */
@@ -25,7 +24,7 @@ class MenuPolicy
      * Determine if the given user can create a menu.
      *
      * @param UserPolicy $user
-     * @param Menu $menu
+     * @param Menu       $menu
      *
      * @return bool
      */
@@ -38,27 +37,25 @@ class MenuPolicy
      * Determine if the given user can update the given menu.
      *
      * @param UserPolicy $user
-     * @param Menu $menu
+     * @param Menu       $menu
      *
      * @return bool
      */
     public function update(UserPolicy $user, Menu $menu)
     {
         return false;
-
     }
 
     /**
      * Determine if the given user can delete the given menu.
      *
      * @param UserPolicy $user
-     * @param Menu $menu
+     * @param Menu       $menu
      *
      * @return bool
      */
     public function destroy(UserPolicy $user, Menu $menu)
     {
-
         return false;
     }
 
@@ -66,7 +63,7 @@ class MenuPolicy
      * Determine if the given user can verify the given menu.
      *
      * @param UserPolicy $user
-     * @param Menu $menu
+     * @param Menu       $menu
      *
      * @return bool
      */
@@ -79,7 +76,7 @@ class MenuPolicy
      * Determine if the given user can approve the given menu.
      *
      * @param UserPolicy $user
-     * @param Menu $menu
+     * @param Menu       $menu
      *
      * @return bool
      */

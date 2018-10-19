@@ -4,7 +4,6 @@ namespace Litepie\Theme;
 
 trait ThemeAndViews
 {
-
     /*
      * Store theme
      */
@@ -20,7 +19,6 @@ trait ThemeAndViews
      */
     public function setTheme($theme = null, $layout = null)
     {
-
         if (empty($theme)) {
             $theme = $this->getTheme();
         }
@@ -37,11 +35,10 @@ trait ThemeAndViews
      * Return current theme based on the route guard.
      *
      * @return string
-     *
      */
     protected function getTheme()
     {
-        return config("theme.themes." . $this->getViewFolder() . ".theme", config('theme.themes.default.theme'));
+        return config('theme.themes.'.$this->getViewFolder().'.theme', config('theme.themes.default.theme'));
     }
 
     /**
@@ -49,7 +46,6 @@ trait ThemeAndViews
      * his function in the derived controller idf required.
      *
      * @return string
-     *
      */
     protected function getLayout()
     {
@@ -60,12 +56,9 @@ trait ThemeAndViews
      * Return folder for current guard.
      *
      * @return type
-     *
      */
     protected function getViewFolder()
     {
         return substr($this->getGuard(), 0, strpos(getenv('guard'), '.'));
     }
-
-
 }

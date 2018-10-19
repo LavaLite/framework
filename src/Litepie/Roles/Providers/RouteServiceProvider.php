@@ -3,7 +3,6 @@
 namespace Litepie\Roles\Providers;
 
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
-use Illuminate\Routing\Router;
 use Litepie\Roles\Models\Roles;
 use Request;
 use Route;
@@ -22,7 +21,8 @@ class RouteServiceProvider extends ServiceProvider
     /**
      * Define your route model bindings, pattern filters, etc.
      *
-     * @param   \Illuminate\Routing\Router  $router
+     * @param \Illuminate\Routing\Router $router
+     *
      * @return void
      */
     public function boot()
@@ -32,6 +32,7 @@ class RouteServiceProvider extends ServiceProvider
         if (Request::is('*/roles/role/*')) {
             Route::bind('role', function ($role) {
                 $rolerepo = $this->app->make('Litepie\Roles\Interfaces\RoleRepositoryInterface');
+
                 return $rolerepo->findorNew($role);
             });
         }
@@ -39,10 +40,10 @@ class RouteServiceProvider extends ServiceProvider
         if (Request::is('*/roles/permission/*')) {
             Route::bind('permission', function ($permission) {
                 $permissionrepo = $this->app->make('Litepie\Roles\Interfaces\PermissionRepositoryInterface');
+
                 return $permissionrepo->findorNew($permission);
             });
         }
-
     }
 
     /**
@@ -67,14 +68,13 @@ class RouteServiceProvider extends ServiceProvider
         if (request()->segment(1) == 'api' || request()->segment(2) == 'api') {
             return;
         }
-        
+
         Route::group([
             'middleware' => 'web',
             'namespace'  => $this->namespace,
             'prefix'     => trans_setlocale(),
         ], function ($router) {
-            require (__DIR__ . '/../routes/web.php');
+            require __DIR__.'/../routes/web.php';
         });
     }
-
 }

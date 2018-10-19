@@ -2,17 +2,14 @@
 
 namespace Litepie\Roles\Repositories\Eloquent;
 
-use Litepie\Roles\Interfaces\PermissionRepositoryInterface;
 use Litepie\Repository\Eloquent\BaseRepository;
+use Litepie\Roles\Interfaces\PermissionRepositoryInterface;
 
 class PermissionRepository extends BaseRepository implements PermissionRepositoryInterface
 {
-
-
     public function boot()
     {
         $this->fieldSearchable = config('roles.permission.search');
-
     }
 
     /**
@@ -24,7 +21,6 @@ class PermissionRepository extends BaseRepository implements PermissionRepositor
     {
         return config('roles.permission.model.model');
     }
-
 
     /**
      * Returns all users with given role.
@@ -38,12 +34,12 @@ class PermissionRepository extends BaseRepository implements PermissionRepositor
         $array = [];
 
         foreach ($result as $key => $value) {
-            $key                      = explode('.', $key, 4);
+            $key = explode('.', $key, 4);
             @$array[$key[0]][$key[1]][$key[2]] = $value;
         }
+
         return $array;
     }
-
 
     /**
      * Create a new permission using the given name.
@@ -57,9 +53,8 @@ class PermissionRepository extends BaseRepository implements PermissionRepositor
      */
     public function createPermission($name, $slug = null)
     {
-
         if (!is_null($this->findByName($name))) {
-            throw new PermissionExistsException('The permission ' . $name . ' already exists'); // TODO: add translation support
+            throw new PermissionExistsException('The permission '.$name.' already exists'); // TODO: add translation support
         }
 
         // Do we have a display_name set?
@@ -93,12 +88,11 @@ class PermissionRepository extends BaseRepository implements PermissionRepositor
         $table = $user->permissions()->getTable();
 
         return $user->permissions()
-            ->where($table . '.value', true)
+            ->where($table.'.value', true)
             ->where(function ($q) use ($table) {
-                $q->where($table . '.expires', '>=', Carbon::now());
-                $q->orWhereNull($table . '.expires');
+                $q->where($table.'.expires', '>=', Carbon::now());
+                $q->orWhereNull($table.'.expires');
             })
             ->get();
     }
-
 }

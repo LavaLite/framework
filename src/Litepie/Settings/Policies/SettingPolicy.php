@@ -2,17 +2,16 @@
 
 namespace Litepie\Settings\Policies;
 
-use Litepie\User\Contracts\UserPolicy;
 use Litepie\Settings\Models\Setting;
+use Litepie\User\Contracts\UserPolicy;
 
 class SettingPolicy
 {
-
     /**
      * Determine if the given user can view the setting.
      *
      * @param UserPolicy $user
-     * @param Setting $setting
+     * @param Setting    $setting
      *
      * @return bool
      */
@@ -29,7 +28,7 @@ class SettingPolicy
      * Determine if the given user can create a setting.
      *
      * @param UserPolicy $user
-     * @param Setting $setting
+     * @param Setting    $setting
      *
      * @return bool
      */
@@ -42,7 +41,7 @@ class SettingPolicy
      * Determine if the given user can update the given setting.
      *
      * @param UserPolicy $user
-     * @param Setting $setting
+     * @param Setting    $setting
      *
      * @return bool
      */
@@ -59,7 +58,7 @@ class SettingPolicy
      * Determine if the given user can delete the given setting.
      *
      * @param UserPolicy $user
-     * @param Setting $setting
+     * @param Setting    $setting
      *
      * @return bool
      */

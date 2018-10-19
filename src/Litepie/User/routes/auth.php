@@ -6,10 +6,9 @@
  * @Last Modified by:   George John
  * @Last Modified time: 2018-01-19 18:12:19
  */
-
 Route::group([
     'namespace' => '\\App\\Http\\Controllers',
-    'prefix'    => trans_setlocale() . '/' . set_route_guard('web'),
+    'prefix'    => trans_setlocale().'/'.set_route_guard('web'),
 ], function () {
     Route::get('home', 'UserController@home');
     Route::get('locked', 'UserController@locked');
@@ -27,5 +26,4 @@ Route::group([
     Route::get('verify/{code?}', 'Auth\LoginController@verify');
 
     Route::get('logout', 'Auth\LoginController@logout');
-
 });

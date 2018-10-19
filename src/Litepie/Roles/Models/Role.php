@@ -9,7 +9,6 @@ use Litepie\Hashids\Traits\Hashids;
 use Litepie\Repository\Traits\PresentableTrait;
 use Litepie\Roles\Interfaces\RoleHasRelations as RoleHasRelationsContract;
 use Litepie\Roles\Traits\RoleHasRelations;
-use Litepie\Trans\Traits\Translatable;
 
 class Role extends Model implements RoleHasRelationsContract
 {
@@ -24,12 +23,10 @@ class Role extends Model implements RoleHasRelationsContract
 
     public function setLevelAttribute($value)
     {
-
         if (empty($value)) {
             return $this->level = 1;
         }
 
         return $this->level = $value;
     }
-
 }

@@ -32,5 +32,4 @@ class Roles
         return $this->repository
             ->findRoleBySlug($slug);
     }
-
 }

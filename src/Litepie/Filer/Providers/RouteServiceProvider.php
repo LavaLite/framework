@@ -28,9 +28,9 @@ class RouteServiceProvider extends ServiceProvider
         Route::group([
             'middleware' => 'web',
             'namespace'  => $this->namespace,
-            'prefix' => trans_setlocale(),
+            'prefix'     => trans_setlocale(),
             ], function () {
-            require __DIR__.'/../Http/routes.php';
-        });
+                require __DIR__.'/../Http/routes.php';
+            });
     }
 }

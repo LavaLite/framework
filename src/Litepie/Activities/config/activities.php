@@ -35,7 +35,7 @@ return [
      * it should be or extend the Lavalit\Activities\Models\Activity model.
      */
     'activity_model' => \Litepie\Activities\Models\Activity::class,
-    
+
     /*
      * This is the name of the table that will be created by the migration and
      * used by the Activity model shipped with this package.

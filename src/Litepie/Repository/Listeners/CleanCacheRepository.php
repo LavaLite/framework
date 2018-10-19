@@ -3,7 +3,6 @@
 namespace Litepie\Repository\Listeners;
 
 use Illuminate\Contracts\Cache\Repository as CacheRepository;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Log;
 use Prettus\Repository\Contracts\RepositoryInterface;
@@ -11,12 +10,10 @@ use Prettus\Repository\Events\RepositoryEventBase;
 use Prettus\Repository\Helpers\CacheKeys;
 
 /**
- * Class CleanCacheRepository
- * @package Litepie\Repository\Listeners
+ * Class CleanCacheRepository.
  */
 class CleanCacheRepository
 {
-
     /**
      * @var CacheRepository
      */
@@ -37,9 +34,6 @@ class CleanCacheRepository
      */
     protected $action = null;
 
-    /**
-     *
-     */
     public function __construct()
     {
         $this->cache = app(config('repository.cache.repository', 'cache'));
@@ -51,7 +45,7 @@ class CleanCacheRepository
     public function handle(RepositoryEventBase $event)
     {
         try {
-            $cleanEnabled = config("repository.cache.clean.enabled", true);
+            $cleanEnabled = config('repository.cache.clean.enabled', true);
 
             if ($cleanEnabled) {
                 $this->repository = $event->getRepository();

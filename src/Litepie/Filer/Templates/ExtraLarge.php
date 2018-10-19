@@ -10,7 +10,7 @@ class ExtraLarge implements FilterInterface
     public function applyFilter(Image $image)
     {
         $action = config('image.size.xl.action', 'fit');
-        $width  = config('image.size.xl.width', 2000);
+        $width = config('image.size.xl.width', 2000);
         $height = config('image.size.xl.height', 1500);
 
         if ($action == 'resize') {
@@ -27,5 +27,4 @@ class ExtraLarge implements FilterInterface
 
         return $image;
     }
-
 }

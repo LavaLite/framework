@@ -1,4 +1,5 @@
 <?php
+
 namespace Litepie\User\Traits;
 
 /**
@@ -22,7 +23,6 @@ trait User
     public function getPictureAttribute($value)
     {
         if (!empty($this->photo)) {
-
             return url($this->defaultImage('photo'));
         }
 
@@ -40,8 +40,7 @@ trait User
      */
     public function getBadgeAttribute($value)
     {
-        return "<a href='" . trans_url("user/".$this->slug) . "' ><img alt=' width='45' height='45' src='{$this->picture}' title='{$this->name}' class='img-circle'></a>";
-
+        return "<a href='".trans_url('user/'.$this->slug)."' ><img alt=' width='45' height='45' src='{$this->picture}' title='{$this->name}' class='img-circle'></a>";
     }
 
     /**
@@ -51,7 +50,7 @@ trait User
      */
     public function getJoinedAttribute()
     {
-        return format_date($this->created_at, 'd M Y')   ;
+        return format_date($this->created_at, 'd M Y');
     }
 
     /**
@@ -83,6 +82,4 @@ trait User
     {
         return $this->status != 'New' && $this->status != 'Active';
     }
-
-
 }

@@ -8,6 +8,7 @@ use Hash;
 use Illuminate\Http\Request;
 use Litepie\User\Traits\Auth\Common;
 use Response;
+
 /**
  * Trait for managing user profile.
  */
@@ -18,15 +19,15 @@ trait UserPages
     /**
      * List apis for a particular user.
      *
-     * @param Model   $user
+     * @param Model $user
      * @param step    next step for the workflow.
      *
      * @return Response
      */
-
     public function logout(Request $request)
     {
         Auth::logout(getenv('guard'));
+
         return redirect('/');
     }
 
@@ -87,7 +88,6 @@ trait UserPages
         } else {
             return redirect()->back()->withMessage('Error while resetting password.')->withCode(400);
         }
-
     }
 
     /**
@@ -130,7 +130,6 @@ trait UserPages
         } else {
             return redirect()->back()->withMessage('Error while updating profile.')->withCode(400);
         }
-
     }
 
     /**
@@ -140,7 +139,6 @@ trait UserPages
      */
     public function locked()
     {
-
         return $this->response
             ->setMetaTitle('Locked')
             ->layout('blank')
@@ -171,5 +169,4 @@ trait UserPages
             ->view('reports')
             ->output();
     }
-
 }

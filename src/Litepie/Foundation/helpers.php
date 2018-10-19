@@ -3,7 +3,6 @@
 use Illuminate\Support\Facades\Request;
 use Litepie\Support\Facades\Hashids;
 use Litepie\Support\Facades\Trans;
-use Litepie\Support\Facades\Theme;
 
 if (!function_exists('hashids_encode')) {
     /**
@@ -17,7 +16,6 @@ if (!function_exists('hashids_encode')) {
     {
         return Hashids::encode($idorarray);
     }
-
 }
 
 if (!function_exists('hashids_decode')) {
@@ -33,7 +31,7 @@ if (!function_exists('hashids_decode')) {
         $return = Hashids::decode($value);
 
         if (empty($return)) {
-            return null;
+            return;
         }
 
         if (count($return) == 1) {
@@ -42,7 +40,6 @@ if (!function_exists('hashids_decode')) {
 
         return $return;
     }
-
 }
 
 if (!function_exists('folder_new')) {
@@ -56,7 +53,8 @@ if (!function_exists('folder_new')) {
      */
     function folder_new($prefix = null, $sufix = null)
     {
-        $folder        = date('Y/m/d/His') . rand(100, 999);
+        $folder = date('Y/m/d/His').rand(100, 999);
+
         return $folder;
     }
 }
@@ -79,28 +77,26 @@ if (!function_exists('blade_compile')) {
 
         // so we can avoid any WSOD errors. If an exception occurs we
         // will throw it out to the exception handler.
-        try
-        {
-            eval('?>' . $compiled);
+        try {
+            eval('?>'.$compiled);
         }
 
         // If we caught an exception, we'll silently flush the output
 
         // buffer so that no partially rendered views get thrown out
         // to the client and confuse the user with junk.
-         catch (\Exception $e) {
-            ob_get_clean();throw $e;
+        catch (\Exception $e) {
+            ob_get_clean();
+
+            throw $e;
         }
 
         $content = ob_get_clean();
         $content = str_replace(['@param  ', '@return  ', '@var  ', '@throws  '], ['@param ', '@return ', '@var ', '@throws '], $content);
 
         return $content;
-
     }
-
 }
-
 
 if (!function_exists('trans_url')) {
     /**
@@ -114,7 +110,6 @@ if (!function_exists('trans_url')) {
     {
         return Trans::to($url, $lng);
     }
-
 }
 
 if (!function_exists('trans_dir')) {
@@ -122,18 +117,16 @@ if (!function_exists('trans_dir')) {
      * Return the direction of current language.
      *
      * @return string (ltr|rtl)
-     * 
      */
     function trans_dir()
     {
         return Trans::getCurrentTransDirection();
     }
-
 }
 
 if (!function_exists('trans_setlocale')) {
     /**
-     * Set local for the translation
+     * Set local for the translation.
      *
      * @param string $locale
      *
@@ -143,16 +136,15 @@ if (!function_exists('trans_setlocale')) {
     {
         return Trans::setLocale($locale);
     }
-
 }
 
 if (!function_exists('checkbox_array')) {
     /**
-     * Convert array to use in form check box
+     * Convert array to use in form check box.
      *
-     * @param array $array
+     * @param array  $array
      * @param string $name
-     * @param array $options
+     * @param array  $options
      *
      * @return array
      */
@@ -166,18 +158,16 @@ if (!function_exists('checkbox_array')) {
 
         return $return;
     }
-
 }
 
 if (!function_exists('pager_array')) {
     /**
-     * Return request values to be used in paginator
+     * Return request values to be used in paginator.
      *
      * @return array
      */
     function pager_array()
     {
-
         return Request::only(
             config('database.criteria.params.search', 'search'),
             config('database.criteria.params.searchFields', 'searchFields'),
@@ -187,7 +177,6 @@ if (!function_exists('pager_array')) {
             config('database.criteria.params.with', 'with')
         );
     }
-
 }
 
 if (!function_exists('user_type')) {
@@ -201,10 +190,10 @@ if (!function_exists('user_type')) {
     function user_type($guard = null)
     {
         $guard = is_null($guard) ? getenv('guard') : $guard;
-        $provider = config("auth.guards." . $guard . ".provider", 'users');
+        $provider = config('auth.guards.'.$guard.'.provider', 'users');
+
         return config("auth.providers.$provider.model", App\User::class);
     }
-
 }
 
 if (!function_exists('user_id')) {
@@ -217,15 +206,12 @@ if (!function_exists('user_id')) {
      */
     function user_id($guard = null)
     {
-
         $guard = is_null($guard) ? getenv('guard') : $guard;
 
         if (Auth::guard($guard)->check()) {
             return Auth::guard($guard)->user()->id;
         }
-        return null;
     }
-
 }
 
 if (!function_exists('get_guard')) {
@@ -240,20 +226,20 @@ if (!function_exists('get_guard')) {
     {
         switch ($property) {
             case 'url':
-                return empty(getenv('guard')) ? 'user' : current(explode(".", getenv('guard')));
+                return empty(getenv('guard')) ? 'user' : current(explode('.', getenv('guard')));
                 break;
             case 'route':
-                return empty(getenv('guard')) ? 'user' : current(explode(".", getenv('guard')));
+                return empty(getenv('guard')) ? 'user' : current(explode('.', getenv('guard')));
                 break;
             case 'model':
-                $provider = config("auth.guards." . getenv('guard') . ".provider", 'users');
+                $provider = config('auth.guards.'.getenv('guard').'.provider', 'users');
+
                 return config("auth.providers.$provider.model", App\User::class);
                 break;
             default:
                 return getenv('guard');
         }
     }
-
 }
 
 if (!function_exists('guard_url')) {
@@ -266,18 +252,18 @@ if (!function_exists('guard_url')) {
      */
     function guard_url($url, $translate = true)
     {
-        $prefix = empty(getenv('guard')) ? 'user' : current(explode(".", getenv('guard')));
-        if ($translate){
-            return trans_url($prefix . '/' . $url);
+        $prefix = empty(getenv('guard')) ? 'user' : current(explode('.', getenv('guard')));
+        if ($translate) {
+            return trans_url($prefix.'/'.$url);
         }
-        return $prefix . '/' . $url;
-    }
 
+        return $prefix.'/'.$url;
+    }
 }
 
 if (!function_exists('set_route_guard')) {
     /**
-     * Set local for the translation
+     * Set local for the translation.
      *
      * @param string $locale
      *
@@ -290,32 +276,33 @@ if (!function_exists('set_route_guard')) {
         //check whether guard is the first parameter of the route
         $guard = request()->segment($i);
 
-        if (!empty(config("auth.guards.$guard"))){
+        if (!empty(config("auth.guards.$guard"))) {
             putenv("guard={$guard}.{$sub}");
             app('auth')->shouldUse("{$guard}.{$sub}");
+
             return $guard;
         }
 
         //check whether guard is the second parameter of the route
         $guard = request()->segment(++$i);
-        if (!empty(config("auth.guards.$guard"))){
+        if (!empty(config("auth.guards.$guard"))) {
             putenv("guard={$guard}.{$sub}");
             app('auth')->shouldUse("{$guard}.{$sub}");
+
             return $guard;
         }
 
         $guard = request()->segment(++$i);
-        if (!empty(config("auth.guards.$guard"))){
+        if (!empty(config("auth.guards.$guard"))) {
             putenv("guard={$guard}.{$sub}");
             app('auth')->shouldUse("{$guard}.{$sub}");
+
             return $guard;
         }
 
         return 'client';
     }
-
 }
-
 
 if (!function_exists('users')) {
     /**
@@ -332,15 +319,15 @@ if (!function_exists('users')) {
         if (Auth::guard($guard)->check()) {
             return Auth::guard($guard)->user()->$property;
         }
-        return null;
     }
-
 }
 
 if (!function_exists('user')) {
     /**
-     * Return the user model
+     * Return the user model.
+     *
      * @param type|null $guard
+     *
      * @return type
      */
     function user($guard = null)
@@ -349,29 +336,28 @@ if (!function_exists('user')) {
         if (Auth::guard($guard)->check()) {
             return Auth::guard($guard)->user();
         }
-
-        return null;
     }
-
 }
 
 if (!function_exists('user_check')) {
     /**
-     * Check whether user is logged in
+     * Check whether user is logged in.
+     *
      * @param type|null $guard
+     *
      * @return type
      */
     function user_check($guard = null)
     {
         $guard = is_null($guard) ? getenv('guard') : $guard;
+
         return Auth::guard($guard)->check();
     }
-
 }
 
 if (!function_exists('format_date')) {
     /**
-     * Format date
+     * Format date.
      *
      * @param string $date
      * @param string $format
@@ -380,17 +366,19 @@ if (!function_exists('format_date')) {
      */
     function format_date($date, $format = 'd M Y')
     {
-        if (empty($date)) return null;
+        if (empty($date)) {
+            return;
+        }
+
         return date($format, strtotime($date));
     }
-
 }
 
 if (!function_exists('format_date_time')) {
     /**
-     * Format datetime
+     * Format datetime.
      *
-     * @param date $datetime
+     * @param date   $datetime
      * @param string $format
      *
      * @return datetime
@@ -399,7 +387,6 @@ if (!function_exists('format_date_time')) {
     {
         return date($format, strtotime($datetime));
     }
-
 }
 
 if (!function_exists('format_time')) {
@@ -415,5 +402,4 @@ if (!function_exists('format_time')) {
     {
         return date($format, strtotime($time));
     }
-
 }

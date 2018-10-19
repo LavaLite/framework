@@ -42,7 +42,6 @@ class RoleRequest extends FormRequest
 
         // Determine if the user is authorized to view the module.
         return $this->can('view');
-
     }
 
     /**
@@ -56,7 +55,7 @@ class RoleRequest extends FormRequest
             // validation rule for create request.
             return [
                 'name' => 'required',
-                'slug' => 'required'
+                'slug' => 'required',
             ];
         }
 
@@ -64,7 +63,7 @@ class RoleRequest extends FormRequest
             // Validation rule for update request.
             return [
                 'name' => 'required',
-                'slug' => 'required'
+                'slug' => 'required',
             ];
         }
 

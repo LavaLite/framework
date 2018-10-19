@@ -2,12 +2,10 @@
 
 namespace Litepie\Database;
 
-use Closure;
 use Illuminate\Database\Eloquent\Model as Eloquent;
 
 class Model extends Eloquent
 {
-
     /**
      * Initialiaze page modal.
      *
@@ -21,7 +19,7 @@ class Model extends Eloquent
     }
 
     /**
-     * Retuturn the public key value 
+     * Retuturn the public key value.
      */
     public function getPublicKey()
     {
@@ -39,19 +37,17 @@ class Model extends Eloquent
         $config = config($this->config);
 
         if (isset($config['presenter'])) {
-            $this->setPresenter(new $config['presenter']);
+            $this->setPresenter(new $config['presenter']());
             unset($config['presenter']);
         }
 
         foreach ($config as $key => $val) {
-
             if (property_exists(get_called_class(), $key)) {
                 $this->$key = $val;
             }
-
         }
-
     }
+
     /**
      * Gets an attribute value without running through the manipulators.
      *
@@ -61,10 +57,8 @@ class Model extends Eloquent
      */
     public function getOriginalAttribute($key)
     {
-
         return parent::getAttribute($key);
     }
-
 
     /**
      * Sets an attribute value without running through the manipulators.
@@ -76,6 +70,4 @@ class Model extends Eloquent
     {
         parent::setAttribute($key, $value);
     }
-
-
 }

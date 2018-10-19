@@ -42,7 +42,6 @@ class PermissionRequest extends FormRequest
 
         // Determine if the user is authorized to view the module.
         return $this->can('view');
-
     }
 
     /**
@@ -56,7 +55,7 @@ class PermissionRequest extends FormRequest
             // validation rule for create request.
             return [
                 'name' => 'required',
-                'slug' => 'required'
+                'slug' => 'required',
             ];
         }
 
@@ -64,7 +63,7 @@ class PermissionRequest extends FormRequest
             // Validation rule for update request.
             return [
                 'name' => 'required',
-                'slug' => 'required'
+                'slug' => 'required',
             ];
         }
 

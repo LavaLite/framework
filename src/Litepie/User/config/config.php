@@ -2,7 +2,7 @@
 
 return [
 
-    /**
+    /*
      * Provider.
      */
     'provider' => 'litepie',

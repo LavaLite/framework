@@ -11,8 +11,7 @@ return [
     |
      */
 
-    'views'                    =>
-    [
+    'views'                    => [
         'upload' => 'filer::upload',
         'show'   => 'filer::show',
         'edit'   => 'filer::edit',
@@ -50,7 +49,7 @@ return [
     'allowed_extensions_check' => true,
     // Case insensitive
     'allowed_extensions'       => ['png', 'gif', 'jpg', 'jpeg', 'doc',
-        'docx', 'pdf', 'xls', 'xlsx', 'mp3', 'txt', 'zip', 'bmp', 'jpeg'],
+        'docx', 'pdf', 'xls', 'xlsx', 'mp3', 'txt', 'zip', 'bmp', 'jpeg', ],
 
     // Max upload size - In BYTES. 1GB = 1073741824 bytes, 10 MB = 10485760, 1 MB = 1048576
     'max_upload_size'          => 10485760,

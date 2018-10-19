@@ -1,4 +1,5 @@
 <?php
+
 namespace Litepie;
 
 use DB;
@@ -34,7 +35,7 @@ class UserTableSeeder extends Seeder
                 'designation' => 'Admin',
                 'web'         => 'http://litepie.org',
                 'created_at'  => '2015-09-15',
-            ]
+            ],
         ]);
 
         DB::table('menus')->insert([
@@ -85,7 +86,7 @@ class UserTableSeeder extends Seeder
                 'target'      => null,
                 'order'       => 1202,
                 'status'      => 1,
-            ]
+            ],
         ]);
     }
 }

@@ -20,7 +20,7 @@ class FilerServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        $this->loadViewsFrom(__DIR__ . '/views', 'filer');
+        $this->loadViewsFrom(__DIR__.'/views', 'filer');
         $this->app->register('\Litepie\Filer\ImageServiceProvider');
         $this->publishResources();
     }
@@ -60,11 +60,11 @@ class FilerServiceProvider extends ServiceProvider
     {
         // Publish configuration file
         $this->publishes([
-            __DIR__ . '/config.php' => config_path('filer.php'),
-            __DIR__ . '/image.php' => config_path('image.php'),
+            __DIR__.'/config.php' => config_path('filer.php'),
+            __DIR__.'/image.php'  => config_path('image.php'),
         ], 'config');
 
         // Publish public view
-        $this->publishes([__DIR__ . '/views' => base_path('resources/views/vendor/filer')], 'view');
+        $this->publishes([__DIR__.'/views' => base_path('resources/views/vendor/filer')], 'view');
     }
 }

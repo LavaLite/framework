@@ -2,15 +2,15 @@
 
 namespace Litepie\Filer\Templates;
 
-use Intervention\Image\Image;
 use Intervention\Image\Filters\FilterInterface;
+use Intervention\Image\Image;
 
 class ExtraSmall implements FilterInterface
 {
     public function applyFilter(Image $image)
     {
         $action = config('filer.size.xs.action', 'fit');
-        $width  = config('filer.size.xs.width', 80);
+        $width = config('filer.size.xs.width', 80);
         $height = config('filer.size.xs.height', 60);
 
         if ($action == 'resize') {

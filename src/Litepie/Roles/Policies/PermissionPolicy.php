@@ -2,12 +2,11 @@
 
 namespace Litepie\Roles\Policies;
 
-use Litepie\User\Contracts\UserPolicy;
 use Litepie\Roles\Models\Permission;
+use Litepie\User\Contracts\UserPolicy;
 
 class PermissionPolicy
 {
-
     /**
      * Determine if the given user can view the permission.
      *
@@ -18,7 +17,6 @@ class PermissionPolicy
      */
     public function view(UserPolicy $user, Permission $permission)
     {
-
         return true;
     }
 
@@ -45,8 +43,6 @@ class PermissionPolicy
      */
     public function update(UserPolicy $user, Permission $permission)
     {
-
-
         return true;
     }
 
@@ -60,8 +56,6 @@ class PermissionPolicy
      */
     public function destroy(UserPolicy $user, Permission $permission)
     {
-
-
         return true;
     }
 
@@ -75,8 +69,6 @@ class PermissionPolicy
      */
     public function verify(UserPolicy $user, Permission $permission)
     {
-
-
         return false;
     }
 
@@ -90,8 +82,6 @@ class PermissionPolicy
      */
     public function approve(UserPolicy $user, Permission $permission)
     {
-
-
         return false;
     }
 

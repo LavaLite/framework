@@ -21,17 +21,16 @@ class MenuServiceProvider extends ServiceProvider
     public function boot()
     {
         // Load view
-        $this->loadViewsFrom(__DIR__ . '/resources/views', 'menu');
+        $this->loadViewsFrom(__DIR__.'/resources/views', 'menu');
 
         // Load translation
-        $this->loadTranslationsFrom(__DIR__ . '/resources/lang', 'menu');
+        $this->loadTranslationsFrom(__DIR__.'/resources/lang', 'menu');
 
         // Load migrations
-        $this->loadMigrationsFrom(__DIR__ . '/database/migrations');
+        $this->loadMigrationsFrom(__DIR__.'/database/migrations');
 
         // Call pblish redources function
         $this->publishResources();
-
     }
 
     /**
@@ -48,7 +47,7 @@ class MenuServiceProvider extends ServiceProvider
             return $this->app->make('Litepie\Menu\Menu');
         });
 
-                // Bind Menu to repository
+        // Bind Menu to repository
         $this->app->bind(
             'Litepie\Menu\Interfaces\MenuRepositoryInterface',
             \Litepie\Menu\Repositories\Eloquent\MenuRepository::class
@@ -56,7 +55,6 @@ class MenuServiceProvider extends ServiceProvider
 
         $this->app->register(\Litepie\Menu\Providers\AuthServiceProvider::class);
         $this->app->register(\Litepie\Menu\Providers\RouteServiceProvider::class);
-                
     }
 
     /**
@@ -77,15 +75,15 @@ class MenuServiceProvider extends ServiceProvider
     private function publishResources()
     {
         // Publish configuration file
-        $this->publishes([__DIR__ . '/config/menu.php' => config_path('menu.php')], 'config');
+        $this->publishes([__DIR__.'/config/menu.php' => config_path('menu.php')], 'config');
 
         // Publish admin view
-        $this->publishes([__DIR__ . '/resources/views' => base_path('resources/views/vendor/menu')], 'view');
+        $this->publishes([__DIR__.'/resources/views' => base_path('resources/views/vendor/menu')], 'view');
 
         // Publish language files
-        $this->publishes([__DIR__ . '/resources/lang' => base_path('resources/lang/vendor/menu')], 'lang');
+        $this->publishes([__DIR__.'/resources/lang' => base_path('resources/lang/vendor/menu')], 'lang');
 
         // Publish public files and assets.
-        $this->publishes([__DIR__ . '/public/' => public_path('/')], 'public');
+        $this->publishes([__DIR__.'/public/' => public_path('/')], 'public');
     }
 }

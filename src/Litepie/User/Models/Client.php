@@ -40,11 +40,9 @@ class Client extends Model implements UserPolicy
         $config = config($this->config);
 
         foreach ($config as $key => $val) {
-
             if (property_exists(get_called_class(), $key)) {
                 $this->$key = $val;
             }
-
         }
 
         $this->setRole($this->role);
@@ -59,13 +57,10 @@ class Client extends Model implements UserPolicy
 
     public function setPasswordAttribute($val)
     {
-
         if (Hash::needsRehash($val)) {
             $this->attributes['password'] = bcrypt($val);
         } else {
             $this->attributes['password'] = ($val);
         }
-
     }
-
 }

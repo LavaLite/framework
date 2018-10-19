@@ -9,7 +9,6 @@ use Auth;
  */
 trait Common
 {
-
     /**
      * Get the guard to be used during authentication.
      *
@@ -18,6 +17,7 @@ trait Common
     protected function guard()
     {
         $guard = $this->getGuard();
+
         return Auth::guard($guard);
     }
 
@@ -31,9 +31,8 @@ trait Common
         $guard = $this->getGuard();
 
         if (!empty($guard)) {
-            return $this->broker = current(explode(".", $guard));
+            return $this->broker = current(explode('.', $guard));
         }
-
     }
 
     /**
@@ -43,15 +42,12 @@ trait Common
      */
     public function setRedirectTo()
     {
-
         $guard = $this->getGuard();
 
         if (!empty($guard)) {
-            return $this->redirectTo = current(explode(".", $guard));
+            return $this->redirectTo = current(explode('.', $guard));
         }
 
         return $this->redirectTo = 'user';
     }
-
-
 }

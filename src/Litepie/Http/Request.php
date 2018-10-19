@@ -7,7 +7,6 @@ use Illuminate\Http\Request as IlluminateRequest;
 
 abstract class Request extends FormRequest
 {
-
     /**
      * User for the current request.
      *
@@ -22,9 +21,10 @@ abstract class Request extends FormRequest
     protected $model;
 
     /**
-     * Constructor
+     * Constructor.
      *
      * @return void
+     *
      * @author
      **/
     public function __construct(IlluminateRequest $request)
@@ -61,13 +61,11 @@ abstract class Request extends FormRequest
      **/
     protected function isWorkflow()
     {
-
         if ($this->formRequest->isMethod('PATCH') && $this->formRequest->has('status')) {
             return true;
         }
 
         return false;
-
     }
 
     /**
@@ -77,13 +75,11 @@ abstract class Request extends FormRequest
      **/
     protected function getStep()
     {
-
         if ($this->formRequest->isMethod('PATCH') && $this->formRequest->has('status')) {
             return true;
         }
 
         return false;
-
     }
 
     /**
@@ -93,13 +89,11 @@ abstract class Request extends FormRequest
      **/
     protected function isCreate()
     {
-
         if ($this->formRequest->is('*/create')) {
             return true;
         }
 
         return false;
-
     }
 
     /**
@@ -109,7 +103,6 @@ abstract class Request extends FormRequest
      **/
     protected function isStore()
     {
-
         if ($this->formRequest->isMethod('POST')) {
             return true;
         }
@@ -124,14 +117,12 @@ abstract class Request extends FormRequest
      **/
     protected function isEdit()
     {
-
         if (
             $this->formRequest->is('*/edit')) {
             return true;
         }
 
         return false;
-
     }
 
     /**
@@ -141,14 +132,12 @@ abstract class Request extends FormRequest
      **/
     protected function isUpdate()
     {
-
         if ($this->formRequest->isMethod('PUT') ||
             $this->formRequest->isMethod('PATCH')) {
             return true;
         }
 
         return false;
-
     }
 
     /**
@@ -158,13 +147,10 @@ abstract class Request extends FormRequest
      **/
     protected function isDelete()
     {
-
         if ($this->formRequest->isMethod('DELETE')) {
             return true;
         }
 
         return false;
-
     }
-
 }

@@ -31,23 +31,22 @@ abstract class Response
     protected $code = null;
 
     /**
-     * @var  Url for the redirect response.
+     * @var Url for the redirect response.
      */
     protected $url = null;
 
     /**
-     * @var  Url for the redirect response.
+     * @var Url for the redirect response.
      */
     protected $populate = true;
 
     /**
      * Return the type of response for the current request.
      *
-     * @return  string
+     * @return string
      */
     protected function getType()
     {
-
         if ($this->type) {
             return $this->type;
         }
@@ -61,14 +60,12 @@ abstract class Response
         }
 
         return 'http';
-
     }
 
     /**
      * Return json array for  json response.
      *
      * @return json string
-     *
      */
     protected function json()
     {
@@ -79,11 +76,9 @@ abstract class Response
      * Return view for the ajax response.
      *
      * @return view
-     *
      */
     protected function ajax()
     {
-
         if ($this->populate) {
             Form::populate($this->getFormData());
         }
@@ -101,7 +96,6 @@ abstract class Response
      * Return  whole page for the http request.
      *
      * @return theme page
-     *
      */
     protected function http()
     {
@@ -118,11 +112,9 @@ abstract class Response
      * Return  whole page for the http request.
      *
      * @return theme page
-     *
      */
     public function redirect()
     {
-
         if ($this->typeIs('json')) {
             return response()->json([
                 'message' => $this->getMessage(),
@@ -151,11 +143,9 @@ abstract class Response
      * Return the output for the current response.
      *
      * @return theme page
-     *
      */
     public function output()
     {
-
         if ($this->typeIs('json')) {
             return $this->json();
         }
@@ -242,14 +232,13 @@ abstract class Response
      */
     public function populate($status)
     {
-
         $this->populate = $status;
 
         return $this;
     }
 
     /**
-     * @return  View for the request
+     * @return View for the request
      */
     public function getUrl()
     {
@@ -257,7 +246,7 @@ abstract class Response
     }
 
     /**
-     * @param  View for the request $url
+     * @param View for the request $url
      *
      * @return self
      */
@@ -297,7 +286,6 @@ abstract class Response
      */
     public function getFormData()
     {
-
         if (is_array($this->data)) {
             return current($this->data);
         }
@@ -309,7 +297,6 @@ abstract class Response
      * Return auth guard for the current route.
      *
      * @return type
-     *
      */
     protected function getGuard()
     {
@@ -320,7 +307,8 @@ abstract class Response
      * Handle dynamic method calls.
      *
      * @param string $method
-     * @param array $parameters
+     * @param array  $parameters
+     *
      * @return mixed
      */
     public function __call($method, $parameters)
@@ -328,12 +316,11 @@ abstract class Response
         $callable = preg_split('|[A-Z]|', $method);
 
         if (in_array($callable[0], ['set', 'prepend', 'append', 'has', 'get'])) {
-            $value = lcfirst(preg_replace('|^' . $callable[0] . '|', '', $method));
+            $value = lcfirst(preg_replace('|^'.$callable[0].'|', '', $method));
             array_unshift($parameters, $value);
             call_user_func_array([$this->theme, $callable[0]], $parameters);
         }
 
         return $this;
     }
-
 }

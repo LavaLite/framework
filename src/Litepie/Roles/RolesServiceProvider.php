@@ -21,17 +21,16 @@ class RolesServiceProvider extends ServiceProvider
     public function boot()
     {
         // Load view
-        $this->loadViewsFrom(__DIR__ . '/resources/views', 'roles');
+        $this->loadViewsFrom(__DIR__.'/resources/views', 'roles');
 
         // Load translation
-        $this->loadTranslationsFrom(__DIR__ . '/resources/lang', 'roles');
+        $this->loadTranslationsFrom(__DIR__.'/resources/lang', 'roles');
 
         // Load migrations
-        $this->loadMigrationsFrom(__DIR__ . '/database/migrations');
+        $this->loadMigrationsFrom(__DIR__.'/database/migrations');
 
         // Call pblish redources function
         $this->publishResources();
-
     }
 
     /**
@@ -58,11 +57,10 @@ class RolesServiceProvider extends ServiceProvider
             'Litepie\Roles\Interfaces\PermissionRepositoryInterface',
             \Litepie\Roles\Repositories\Eloquent\PermissionRepository::class
         );
-        
+
         $this->registerBladeExtensions();
         $this->app->register(\Litepie\Roles\Providers\AuthServiceProvider::class);
         $this->app->register(\Litepie\Roles\Providers\RouteServiceProvider::class);
-                
     }
 
     /**
@@ -83,16 +81,16 @@ class RolesServiceProvider extends ServiceProvider
     private function publishResources()
     {
         // Publish configuration file
-        $this->publishes([__DIR__ . '/config/config.php' => config_path('roles.php')], 'config');
+        $this->publishes([__DIR__.'/config/config.php' => config_path('roles.php')], 'config');
 
         // Publish admin view
-        $this->publishes([__DIR__ . '/resources/views' => base_path('resources/views/vendor/roles')], 'view');
+        $this->publishes([__DIR__.'/resources/views' => base_path('resources/views/vendor/roles')], 'view');
 
         // Publish language files
-        $this->publishes([__DIR__ . '/resources/lang' => base_path('resources/lang/vendor/roles')], 'lang');
+        $this->publishes([__DIR__.'/resources/lang' => base_path('resources/lang/vendor/roles')], 'lang');
 
         // Publish public files and assets.
-        $this->publishes([__DIR__ . '/public/' => public_path('/')], 'public');
+        $this->publishes([__DIR__.'/public/' => public_path('/')], 'public');
     }
 
     /**
@@ -109,7 +107,7 @@ class RolesServiceProvider extends ServiceProvider
         });
 
         $blade->directive('endrole', function () {
-            return "<?php endif; ?>";
+            return '<?php endif; ?>';
         });
 
         $blade->directive('permission', function ($expression) {
@@ -117,7 +115,7 @@ class RolesServiceProvider extends ServiceProvider
         });
 
         $blade->directive('endpermission', function () {
-            return "<?php endif; ?>";
+            return '<?php endif; ?>';
         });
 
         $blade->directive('level', function ($expression) {
@@ -127,7 +125,7 @@ class RolesServiceProvider extends ServiceProvider
         });
 
         $blade->directive('endlevel', function () {
-            return "<?php endif; ?>";
+            return '<?php endif; ?>';
         });
 
         $blade->directive('allowed', function ($expression) {
@@ -135,7 +133,7 @@ class RolesServiceProvider extends ServiceProvider
         });
 
         $blade->directive('endallowed', function () {
-            return "<?php endif; ?>";
+            return '<?php endif; ?>';
         });
     }
 }

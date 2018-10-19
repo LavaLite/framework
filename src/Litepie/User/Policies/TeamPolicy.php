@@ -7,7 +7,6 @@ use Litepie\User\Models\Team;
 
 class TeamPolicy
 {
-
     /**
      * Determine if the given user can view the team.
      *
@@ -22,7 +21,7 @@ class TeamPolicy
             return true;
         }
 
-        if ($user->canDo('blocks.block.view') 
+        if ($user->canDo('blocks.block.view')
         && $user->is('manager')
         && $block->user->parent_id == $user->id) {
             return true;
