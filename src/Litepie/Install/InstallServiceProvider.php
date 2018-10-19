@@ -20,9 +20,8 @@ class InstallServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        $this->loadViewsFrom(__DIR__ . '/resources/views', 'install');
-        $this->loadTranslationsFrom(__DIR__ . '/resources/lang', 'install');
-
+        $this->loadViewsFrom(__DIR__.'/resources/views', 'install');
+        $this->loadTranslationsFrom(__DIR__.'/resources/lang', 'install');
     }
 
     /**
@@ -33,7 +32,7 @@ class InstallServiceProvider extends ServiceProvider
     public function register()
     {
         $this->commands([
-            \Litepie\Install\InstallCommand::class
+            \Litepie\Install\InstallCommand::class,
         ]);
 
         $this->app->register(\Litepie\Install\Providers\RouteServiceProvider::class);
@@ -48,6 +47,4 @@ class InstallServiceProvider extends ServiceProvider
     {
         return ['install'];
     }
-
-
 }

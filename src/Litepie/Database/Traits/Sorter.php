@@ -7,11 +7,8 @@ use Exception;
 /**
  * Sorter model trait.
  */
-
-
 trait Sorter
 {
-
     /**
      * @var variable to store sort order column name.
      *

@@ -6,23 +6,20 @@ use Auth;
 use Crypt;
 use Illuminate\Foundation\Auth\AuthenticatesUsers as IlluminateAuthenticatesUsers;
 use Mail;
-use Socialite;
 use User;
 
 trait AuthenticatesUsers
 {
-
     use IlluminateAuthenticatesUsers, Common {
          Common::guard insteadof IlluminateAuthenticatesUsers;
     }
-
 
     /**
      * Show the user login form.
      *
      * @return \Illuminate\Http\Response
      */
-    function showLoginForm()
+    public function showLoginForm()
     {
         $guard = $this->getGuardRoute();
 
@@ -34,7 +31,6 @@ trait AuthenticatesUsers
             ->output();
     }
 
-
     /**
      * Show email verification page.
      *
@@ -44,7 +40,6 @@ trait AuthenticatesUsers
      **/
     public function verify($code = null)
     {
-
         if (!is_null($code)) {
             if ($this->activate($code)) {
                 return redirect(guard_url('login'))->withCode(201)->withMessage('Your account is activated.');
@@ -57,12 +52,13 @@ trait AuthenticatesUsers
             return redirect(guard_url('login'));
         }
 
-       return $this->response
+        return $this->response
             ->setMetaTitle('Verify email address')
             ->layout('auth')
             ->view('auth.verify')
             ->output();
     }
+
     /**
      * Activate the user with given activation code.
      *
@@ -80,8 +76,10 @@ trait AuthenticatesUsers
     protected function sendVerification()
     {
         $this->sendVerificationMail(user());
+
         return redirect()->back()->withCode(201)->withMessage('Verification link send to your email please check the mail for activation mail.');
     }
+
     /**
      * Send email verification email to the user.
      *
@@ -90,7 +88,7 @@ trait AuthenticatesUsers
     protected function sendVerificationMail($user)
     {
         $data['confirmation_code'] = Crypt::encrypt($user->id);
-        $data['guard']             = $this->getGuard();
+        $data['guard'] = $this->getGuard();
         Mail::send('auth.emails.verify', $data, function ($message) use ($user) {
             $message->to($user->email, $user->name)
                 ->subject('Verify your email address');

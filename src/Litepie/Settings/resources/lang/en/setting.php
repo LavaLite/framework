@@ -2,12 +2,12 @@
 
 return [
 
-    /**
+    /*
      * Singlular and plural name of the module
      */
     'name'          => 'Setting',
     'names'         => 'Settings',
-    'title'       => [
+    'title'         => [
         'user'  => 'My Settings',
         'admin' => 'Settings',
         'sub'   => [
@@ -16,14 +16,14 @@ return [
         ],
     ],
 
-    /**
+    /*
      * Options for select/radio/check.
      */
     'options'       => [
-            'type'                => ['System','Default','User'],
+            'type'                => ['System', 'Default', 'User'],
     ],
 
-    /**
+    /*
      * Placeholder for inputs
      */
     'placeholder'   => [
@@ -37,7 +37,7 @@ return [
         'type'                       => 'Please enter type',
     ],
 
-    /**
+    /*
      * Labels for inputs.
      */
     'label'         => [
@@ -54,14 +54,14 @@ return [
         'updated_at'                 => 'Updated at',
     ],
 
-    /**
+    /*
      * Tab labels
      */
     'tab'           => [
         'name'  => 'Name',
     ],
 
-    /**
+    /*
      * Texts  for the module
      */
     'text'          => [

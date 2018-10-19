@@ -57,9 +57,9 @@ class User
         RoleRepositoryInterface       $role,
         PermissionRepositoryInterface $permission
     ) {
-        $this->app        = $app;
-        $this->user       = $user;
-        $this->role       = $role;
+        $this->app = $app;
+        $this->user = $user;
+        $this->role = $role;
         $this->permission = $permission;
     }
 
@@ -218,11 +218,9 @@ class User
      */
     public function users($field)
     {
-
         if (!is_null($this->getUser())) {
             return $this->getUser()->$field;
         }
-
     }
 
     /**
@@ -280,5 +278,4 @@ class User
     {
         return $this->user->count();
     }
-
 }

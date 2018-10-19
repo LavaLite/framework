@@ -11,13 +11,13 @@ return [
     |
      */
 
-    /**
+    /*
      * Singlular and plural name of the module
      */
     'name'        => ':Client',
     'names'       => ':Clients',
 
-    /**
+    /*
      * Singlular and plural name of the module
      */
     'title'       => [
@@ -28,7 +28,7 @@ return [
         'create' => 'Create new :client',
     ],
 
-    /**
+    /*
      * Options for select/radio/check.
      */
     'options'     => [
@@ -36,7 +36,7 @@ return [
         'status' => ['New', 'Active', 'Suspended', 'Locked'],
     ],
 
-    /**
+    /*
      * Placeholder for inputs
      */
     'placeholder' => [
@@ -65,7 +65,7 @@ return [
         'updated_at'     => 'Please select updated at',
     ],
 
-    /**
+    /*
      * Labels for inputs.
      */
     'label'       => [
@@ -94,7 +94,7 @@ return [
         'updated_at'     => 'Updated at',
     ],
 
-    /**
+    /*
      * Columns array for show hide checkbox.
      */
     'cloumns'     => [
@@ -114,14 +114,14 @@ return [
         'web'      => ['name' => 'Web', 'data-column' => 14, 'checked'],
     ],
 
-    /**
+    /*
      * Tab labels
      */
     'tab'         => [
         'name' => ':Clients',
     ],
 
-    /**
+    /*
      * Texts  for the module
      */
     'text'        => [

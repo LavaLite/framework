@@ -1,10 +1,9 @@
 <?php
 
 /**
- * This file is part of Team
+ * This file is part of Team.
  *
  * @license MIT
- * @package Team
  */
 
 return [

@@ -3,7 +3,6 @@
 namespace Litepie\Menu\Repositories\Presenter;
 
 use League\Fractal\TransformerAbstract;
-use Hashids;
 
 class MenuItemTransformer extends TransformerAbstract
 {

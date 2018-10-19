@@ -3,8 +3,6 @@
 namespace Litepie\Install\Providers;
 
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
-use Illuminate\Routing\Router;
-use Request;
 use Route;
 
 class RouteServiceProvider extends ServiceProvider
@@ -21,14 +19,13 @@ class RouteServiceProvider extends ServiceProvider
     /**
      * Define your route model bindings, pattern filters, etc.
      *
-     * @param   \Illuminate\Routing\Router  $router
+     * @param \Illuminate\Routing\Router $router
+     *
      * @return void
      */
     public function boot()
     {
         parent::boot();
-
-
     }
 
     /**
@@ -39,7 +36,6 @@ class RouteServiceProvider extends ServiceProvider
     public function map()
     {
         $this->mapWebRoutes();
-
     }
 
     /**
@@ -55,9 +51,7 @@ class RouteServiceProvider extends ServiceProvider
             'middleware' => 'web',
             'namespace'  => $this->namespace,
         ], function ($router) {
-            require (__DIR__ . '/../routes/web.php');
+            require __DIR__.'/../routes/web.php';
         });
     }
-
-
 }

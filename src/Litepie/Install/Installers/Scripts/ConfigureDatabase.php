@@ -1,4 +1,5 @@
 <?php
+
 namespace Litepie\Install\Installers\Scripts;
 
 use Exception;
@@ -33,8 +34,10 @@ class ConfigureDatabase implements SetupScript
     protected $command;
 
     /**
-     * Fire the install script
-     * @param  Command $command
+     * Fire the install script.
+     *
+     * @param Command $command
+     *
      * @return mixed
      */
     public function fire(Command $command)
@@ -44,7 +47,7 @@ class ConfigureDatabase implements SetupScript
         $connected = false;
 
         while (!$connected) {
-            $host     = $this->askDatabaseHost();
+            $host = $this->askDatabaseHost();
             $username = $this->askDatabaseUsername();
             $password = $this->askDatabasePassword();
             $database = $this->askDatabaseName();
@@ -56,9 +59,8 @@ class ConfigureDatabase implements SetupScript
                 config(['database.connections.mysql.database' => $database]);
                 $connected = true;
             } else {
-                $command->error("Please ensure your database credentials are valid.");
+                $command->error('Please ensure your database credentials are valid.');
             }
-
         }
 
         $this->env->write($database, $username, $password, $host);
@@ -80,24 +82,26 @@ class ConfigureDatabase implements SetupScript
      */
     protected function askDatabaseName()
     {
-
         $database = $this->command->ask('Enter your database name.', 'homestead');
+
         return $database;
     }
 
     /**
      * @param
+     *
      * @return string
      */
     protected function askDatabaseUsername()
     {
-
         $username = $this->command->ask('Enter your database username.', 'homestead');
+
         return $username;
     }
 
     /**
      * @param
+     *
      * @return string
      */
     protected function askDatabasePassword()
@@ -109,6 +113,7 @@ class ConfigureDatabase implements SetupScript
 
     /**
      * Is the database connection valid?
+     *
      * @return bool
      */
     protected function databaseConnectionIsValid($host, $username, $password, $database)
@@ -124,7 +129,5 @@ class ConfigureDatabase implements SetupScript
         } catch (Exception $e) {
             return false;
         }
-
     }
-
 }

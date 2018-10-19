@@ -1,8 +1,8 @@
 <?php
 
 use Illuminate\Database\Migrations\Migration;
-use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
 class CreateMenusTable extends Migration
 {
@@ -28,7 +28,7 @@ class CreateMenusTable extends Migration
             $table->string('role', 1000)->nullable();
             $table->text('name')->nullable();
             $table->text('description')->nullable();
-            $table->enum('target', ['_blank','_self'])->nullable();
+            $table->enum('target', ['_blank', '_self'])->nullable();
             $table->integer('order')->nullable();
             $table->string('uload_folder', 150)->nullable();
             $table->string('slug', 200)->nullable();

@@ -1,8 +1,8 @@
-<?php 
+<?php
 
 namespace Lavalite\Team;
 
-/**
+/*
  * This file is part of Team
  *
  */
@@ -28,20 +28,19 @@ class TeamServiceProvider extends ServiceProvider
         $this->publishConfig();
 
         // Load migrations
-        $this->loadMigrationsFrom(__DIR__ . '/database/migrations');
+        $this->loadMigrationsFrom(__DIR__.'/database/migrations');
     }
 
     /**
-     * Publish Team configuration
+     * Publish Team configuration.
      */
     protected function publishConfig()
     {
         // Publish config files
-        $this->publishes( [
-            __DIR__ . '/config/config.php' => config_path( 'team.php' ),
-        ] );
+        $this->publishes([
+            __DIR__.'/config/config.php' => config_path('team.php'),
+        ]);
     }
-
 
     /**
      * Register the service provider.
@@ -63,7 +62,7 @@ class TeamServiceProvider extends ServiceProvider
      */
     protected function registerTeam()
     {
-        $this->app->bind('team', function($app) {
+        $this->app->bind('team', function ($app) {
             return new Team($app);
         });
     }
@@ -73,9 +72,9 @@ class TeamServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function registerFacade() {
-        $this->app->booting(function()
-        {
+    public function registerFacade()
+    {
+        $this->app->booting(function () {
             $loader = \Illuminate\Foundation\AliasLoader::getInstance();
             $loader->alias('Team', 'Lavalite\Team\Facades\Team');
         });
@@ -89,12 +88,12 @@ class TeamServiceProvider extends ServiceProvider
     protected function mergeConfig()
     {
         $this->mergeConfigFrom(
-            __DIR__ . '/config/config.php', 'team'
+            __DIR__.'/config/config.php', 'team'
         );
     }
 
     /**
-     * Register scaffolding command
+     * Register scaffolding command.
      */
     protected function registerCommands()
     {

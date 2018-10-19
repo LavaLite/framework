@@ -12,15 +12,13 @@ use Prettus\Repository\Eloquent\BaseRepository as PrettusRepository;
  */
 abstract class BaseRepository extends PrettusRepository implements RepositoryInterface, RepositoryCriteriaInterface
 {
-
     /**
-     * Apply criteria in current Query
+     * Apply criteria in current Query.
      *
      * @return $this
      */
     protected function applyCriteria()
     {
-
         if ($this->skipCriteria === true) {
             return $this;
         }
@@ -28,40 +26,37 @@ abstract class BaseRepository extends PrettusRepository implements RepositoryInt
         $criteria = $this->getCriteria();
 
         if ($criteria) {
-
             foreach ($criteria as $c) {
-
                 if ($c instanceof CriteriaInterface) {
                     $this->model = $c->apply($this->model, $this);
                 }
-
             }
-
         }
 
         return $this;
     }
 
     /**
-     * Push Criteria for filter the query
+     * Push Criteria for filter the query.
      *
      * @param $criteria
      *
-     * @return $this
      * @throws \Prettus\Repository\Exceptions\RepositoryException
+     *
+     * @return $this
      */
     public function pushCriteria($criteria)
     {
-
         if (is_string($criteria)) {
-            $criteria = new $criteria;
+            $criteria = new $criteria();
         }
 
         if (!$criteria instanceof CriteriaInterface) {
-            throw new RepositoryException("Class " . get_class($criteria) . " must be an instance of Litepie\\Repository\\Contracts\\CriteriaInterface");
+            throw new RepositoryException('Class '.get_class($criteria).' must be an instance of Litepie\\Repository\\Contracts\\CriteriaInterface');
         }
 
         $this->criteria->push($criteria);
+
         return $this;
     }
 
@@ -80,6 +75,7 @@ abstract class BaseRepository extends PrettusRepository implements RepositoryInt
         $results = $this->model->count();
 
         $this->resetModel();
+
         return $results;
     }
 
@@ -97,6 +93,7 @@ abstract class BaseRepository extends PrettusRepository implements RepositoryInt
         $this->applyScope();
         $model = $this->model->findOrNew($id, $columns);
         $this->resetModel();
+
         return $this->parserResult($model);
     }
 
@@ -111,46 +108,49 @@ abstract class BaseRepository extends PrettusRepository implements RepositoryInt
     {
         $model = $this->model->newInstance($attributes);
         $this->resetModel();
+
         return $this->parserResult($model);
     }
 
     /**
-     * Return data for datatable
+     * Return data for datatable.
      *
-     * @return     array  array.
+     * @return array array.
      */
     public function getDataTable()
     {
         $data = $this->paginate();
 
-        $data['recordsTotal']    = $data['meta']['pagination']['total'];
+        $data['recordsTotal'] = $data['meta']['pagination']['total'];
         $data['recordsFiltered'] = $data['meta']['pagination']['total'];
-        $data['request']         = request()->all();
+        $data['request'] = request()->all();
+
         return $data;
     }
 
     /**
-     * Return data for bootstraptable
+     * Return data for bootstraptable.
      *
      *
-     * @return     array.
+     * @return array.
      */
     public function getBootstrapTable()
     {
         $data = $this->paginate();
 
         $data['total'] = count($data['data']);
-        $data['rows']  = $data['data'];
+        $data['rows'] = $data['data'];
         $data['request'] = request()->all();
+
         return $data;
     }
 
     /**
      * Delete multiple records.
      *
-     * @param      array  $ids    The identifiers
+     * @param array $ids The identifiers
      *
-     * @return     result
+     * @return result
      */
     public function delete($ids)
     {
@@ -160,9 +160,9 @@ abstract class BaseRepository extends PrettusRepository implements RepositoryInt
     /**
      * Permanetly delete multiple records.
      *
-     * @param      array  $ids    The identifiers
+     * @param array $ids The identifiers
      *
-     * @return     result
+     * @return result
      */
     public function purge($ids)
     {
@@ -170,11 +170,11 @@ abstract class BaseRepository extends PrettusRepository implements RepositoryInt
     }
 
     /**
-     * Restore multiple records
+     * Restore multiple records.
      *
-     * @param      array  $ids    The identifiers
+     * @param array $ids The identifiers
      *
-     * @return     result  retn result for the restore
+     * @return result retn result for the restore
      */
     public function restore($ids)
     {
@@ -182,12 +182,12 @@ abstract class BaseRepository extends PrettusRepository implements RepositoryInt
     }
 
     /**
-     * Change status of the records
+     * Change status of the records.
      *
-     * @param      string  $status  The status
-     * @param      array  $ids     The identifiers
+     * @param string $status The status
+     * @param array  $ids    The identifiers
      *
-     * @return     result  Result for the multiple updation
+     * @return result Result for the multiple updation
      */
     public function changeStatus($status, $ids)
     {
@@ -195,11 +195,11 @@ abstract class BaseRepository extends PrettusRepository implements RepositoryInt
     }
 
     /**
-     * Select multiple records
+     * Select multiple records.
      *
-     * @param      array  $ids    The identifiers
+     * @param array $ids The identifiers
      *
-     * @return     Collection  Return eloquesnt collection
+     * @return Collection Return eloquesnt collection
      */
     public function findIds($ids)
     {
@@ -220,6 +220,7 @@ abstract class BaseRepository extends PrettusRepository implements RepositoryInt
         $this->applyScope();
         $model = $this->model->whereSlug($value)->first($columns);
         $this->resetModel();
+
         return $this->parserResult($model);
     }
 
@@ -235,7 +236,7 @@ abstract class BaseRepository extends PrettusRepository implements RepositoryInt
     {
         $this->applyCriteria();
         $this->applyScope();
+
         return $this->model->toSql();
     }
-
 }

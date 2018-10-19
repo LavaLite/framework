@@ -4,19 +4,16 @@ namespace Litepie\User\Traits\Auth;
 
 use Auth;
 use Crypt;
+use Exception;
 use Illuminate\Foundation\Auth\RegistersUsers as IlluminateRegistersUsers;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
 use Illuminate\Http\Request;
-use InvalidArgumentException;
 use Mail;
 use Role;
-use Socialite;
 use Validator;
-use Exception;
 
 trait RegistersUsers
 {
-
     use IlluminateRegistersUsers, ThrottlesLogins, Common {
         Common::guard insteadof IlluminateRegistersUsers;
     }
@@ -26,7 +23,7 @@ trait RegistersUsers
      *
      * @return Response
      */
-    function showRegistrationForm()
+    public function showRegistrationForm()
     {
         $this->canRegister();
 
@@ -43,11 +40,11 @@ trait RegistersUsers
      *
      * @return \Illuminate\Contracts\Validation\Validator
      */
-    function validator(array $data)
+    public function validator(array $data)
     {
         $rules = [
             'name'     => 'required|max:255',
-            'email'    => 'required|email|max:255|unique:' . $this->getTable(),
+            'email'    => 'required|email|max:255|unique:'.$this->getTable(),
             'password' => 'required|min:6|confirmed',
         ];
 
@@ -65,14 +62,14 @@ trait RegistersUsers
      *
      * @return User
      */
-    function create(array $data)
+    public function create(array $data)
     {
         $this->canRegister();
 
         $data = [
             'name'      => $data['name'],
             'email'     => $data['email'],
-	    'password'  => $data['password'],
+        'password'      => $data['password'],
             'api_token' => str_random(60),
         ];
 
@@ -81,7 +78,7 @@ trait RegistersUsers
         }
 
         $model = $this->getAuthModel();
-        $user  = $model::create($data);
+        $user = $model::create($data);
         $this->attachRoles($user);
 
         if (config('auth.verify_email')) {
@@ -96,10 +93,10 @@ trait RegistersUsers
      *
      * @return Response
      */
-    function sendVerificationMail($user)
+    public function sendVerificationMail($user)
     {
         $data['confirmation_code'] = Crypt::encrypt($user->id);
-        $data['guard']             = $this->getGuard();
+        $data['guard'] = $this->getGuard();
 
         Mail::send('auth.emails.verify', $data, function ($message) use ($user) {
             $message->to($user->email, $user->name)
@@ -114,24 +111,21 @@ trait RegistersUsers
      *
      * @return view
      **/
-    function verify($code = null)
+    public function verify($code = null)
     {
         $guard = $this->getGuard();
 
         if (!is_null($code)) {
-
             if ($this->activate($code)) {
-                return redirect()->guest($guard . '/login')->withCode(201)->withMessage('Your account is activated.');
+                return redirect()->guest($guard.'/login')->withCode(201)->withMessage('Your account is activated.');
             } else {
-                return redirect()->guest($guard . '/login')->withCode(301)->withMessage('Activation link is invalid or expired.');
+                return redirect()->guest($guard.'/login')->withCode(301)->withMessage('Activation link is invalid or expired.');
             }
-
         }
 
         if (Auth::guard($guard)->guest()) {
-            return redirect()->guest($guard . '/login');
+            return redirect()->guest($guard.'/login');
         }
-
     }
 
     /**
@@ -141,23 +135,21 @@ trait RegistersUsers
      *
      * @return view
      **/
-    function activate($code)
+    public function activate($code)
     {
-
         $id = Crypt::decrypt($code);
-        return User::activate($id);
 
+        return User::activate($id);
     }
 
-
-    function sendVerification()
+    public function sendVerification()
     {
         $this->sendVerificationMail(user());
-        return redirect()->back()->withCode(201)->withMessage('Verification link send to your email please check the mail for actvation mail.');
 
+        return redirect()->back()->withCode(201)->withMessage('Verification link send to your email please check the mail for actvation mail.');
     }
 
-    function canRegister()
+    public function canRegister()
     {
         $guard = $this->getGuardRoute();
 
@@ -166,10 +158,9 @@ trait RegistersUsers
         }
 
         throw new Exception("You are not allowed to register as [$guard]");
-
     }
 
-    function attachRoles($user)
+    public function attachRoles($user)
     {
         $guard = $this->getGuardRoute();
         $roles = config('auth.register.roles.'.$guard, null);
@@ -185,5 +176,4 @@ trait RegistersUsers
 
         return true;
     }
-
 }

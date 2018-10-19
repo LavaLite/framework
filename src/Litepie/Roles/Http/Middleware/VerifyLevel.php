@@ -17,6 +17,7 @@ class VerifyLevel
      * Create a new filter instance.
      *
      * @param \Illuminate\Interfaces\Auth\Guard $auth
+     *
      * @return void
      */
     public function __construct(Guard $auth)
@@ -28,10 +29,12 @@ class VerifyLevel
      * Handle an incoming request.
      *
      * @param \Illuminate\Http\Request $request
-     * @param \Closure $next
-     * @param int $level
-     * @return mixed
+     * @param \Closure                 $next
+     * @param int                      $level
+     *
      * @throws \Litepie\Roles\Exceptions\LevelDeniedException
+     *
+     * @return mixed
      */
     public function handle($request, Closure $next, $level)
     {

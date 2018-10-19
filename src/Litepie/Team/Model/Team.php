@@ -1,10 +1,10 @@
-<?php 
+<?php
+
 namespace Lavalite\Team;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Config;
 use Lavalite\Team\Traits\TeamTrait;
-
 
 class Team extends Model
 {
@@ -27,9 +27,9 @@ class Team extends Model
      *
      * @param array $attributes
      */
-    public function __construct( array $attributes = [ ] )
+    public function __construct(array $attributes = [])
     {
-        parent::__construct( $attributes );
-        $this->table = config( 'team.teams_table' );
+        parent::__construct($attributes);
+        $this->table = config('team.teams_table');
     }
 }

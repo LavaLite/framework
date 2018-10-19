@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 namespace Lavalite\Team;
 
@@ -6,8 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Config;
 use Lavalite\Team\Traits\TeamInviteTrait;
 
-
-class TeamInvite extends Model
+class Invite extends Model
 {
     use TeamInviteTrait;
 
@@ -23,9 +22,9 @@ class TeamInvite extends Model
      *
      * @param array $attributes
      */
-    public function __construct( array $attributes = [ ] )
+    public function __construct(array $attributes = [])
     {
-        parent::__construct( $attributes );
-        $this->table = config( 'team.team_invites_table' );
+        parent::__construct($attributes);
+        $this->table = config('team.team_invites_table');
     }
 }

@@ -103,9 +103,9 @@ trait NestedNode
     public function storeNewParent()
     {
         $parentColumn = $this->getParentColumnName();
-        $isDirty      = $this->isDirty($parentColumn);
+        $isDirty = $this->isDirty($parentColumn);
 
-// Parent is not set or unchanged
+        // Parent is not set or unchanged
         if (!$isDirty) {
             $this->moveToNewParentId = false;
         }
@@ -119,7 +119,6 @@ trait NestedNode
         else {
             $this->moveToNewParentId = $this->getParentId();
         }
-
     }
 
     /**
@@ -136,7 +135,6 @@ trait NestedNode
         } elseif ($parentId !== false) {
             $this->makeChildOf($parentId);
         }
-
     }
 
     /**
@@ -147,17 +145,16 @@ trait NestedNode
      */
     public function deleteDescendants()
     {
-
         if ($this->getRight() === null || $this->getLeft() === null) {
             return;
         }
 
         $this->getConnection()->transaction(function () {
             //$this->reload();
-            $leftCol  = $this->getLeftColumnName();
+            $leftCol = $this->getLeftColumnName();
             $rightCol = $this->getRightColumnName();
-            $left     = $this->getLeft();
-            $right    = $this->getRight();
+            $left = $this->getLeft();
+            $right = $this->getRight();
             /*
              * Delete children
              */
@@ -180,7 +177,7 @@ trait NestedNode
 
 //
 
-// Alignment
+    // Alignment
 
 //
 
@@ -246,7 +243,7 @@ trait NestedNode
 
 //
 
-// Checkers
+    // Checkers
 
 //
 
@@ -310,7 +307,7 @@ trait NestedNode
 
 //
 
-// Scopes
+    // Scopes
 
 //
 
@@ -359,7 +356,6 @@ trait NestedNode
         } else {
             return $query->withoutSelf();
         }
-
     }
 
     /**
@@ -377,7 +373,6 @@ trait NestedNode
         } else {
             return $query->withoutSelf();
         }
-
     }
 
     /**
@@ -393,7 +388,6 @@ trait NestedNode
         } else {
             return $query->withoutSelf();
         }
-
     }
 
     /**
@@ -403,13 +397,13 @@ trait NestedNode
      */
     public function scopeLeaves($query)
     {
-        $grammar  = $this->getConnection()->getQueryGrammar();
+        $grammar = $this->getConnection()->getQueryGrammar();
         $rightCol = $grammar->wrap($this->getQualifiedRightColumnName());
-        $leftCol  = $grammar->wrap($this->getQualifiedLeftColumnName());
+        $leftCol = $grammar->wrap($this->getQualifiedLeftColumnName());
 
         return $query
             ->allChildren()
-            ->whereRaw($rightCol . ' - ' . $leftCol . ' = 1');
+            ->whereRaw($rightCol.' - '.$leftCol.' = 1');
     }
 
     /**
@@ -439,11 +433,11 @@ trait NestedNode
             $columns[] = $key;
         }
 
-        $results     = new Collection($query->getQuery()->get($columns));
-        $values      = $results->fetch($columns[1])->all();
+        $results = new Collection($query->getQuery()->get($columns));
+        $values = $results->fetch($columns[1])->all();
         $indentation = $results->fetch($columns[0])->all();
         foreach ($values as $_key => $value) {
-            $values[$_key] = str_repeat($indent, $indentation[$_key]) . $value;
+            $values[$_key] = str_repeat($indent, $indentation[$_key]).$value;
         }
 
         if ($key !== null && count($results) > 0) {
@@ -457,7 +451,7 @@ trait NestedNode
 
 //
 
-// Getters
+    // Getters
 
 //
 
@@ -492,9 +486,7 @@ trait NestedNode
             } else {
                 return $this;
             }
-
         }
-
     }
 
     /**
@@ -659,7 +651,7 @@ trait NestedNode
 
 //
 
-// Setters
+    // Setters
 
 //
 
@@ -706,7 +698,7 @@ trait NestedNode
 
 //
 
-// Column getters
+    // Column getters
 
 //
 
@@ -727,7 +719,7 @@ trait NestedNode
      */
     public function getQualifiedParentColumnName()
     {
-        return $this->getTable() . '.' . $this->getParentColumnName();
+        return $this->getTable().'.'.$this->getParentColumnName();
     }
 
     /**
@@ -757,7 +749,7 @@ trait NestedNode
      */
     public function getQualifiedLeftColumnName()
     {
-        return $this->getTable() . '.' . $this->getLeftColumnName();
+        return $this->getTable().'.'.$this->getLeftColumnName();
     }
 
     /**
@@ -787,7 +779,7 @@ trait NestedNode
      */
     public function getQualifiedRightColumnName()
     {
-        return $this->getTable() . '.' . $this->getRightColumnName();
+        return $this->getTable().'.'.$this->getRightColumnName();
     }
 
     /**
@@ -817,7 +809,7 @@ trait NestedNode
      */
     public function getQualifiedDepthColumnName()
     {
-        return $this->getTable() . '.' . $this->getDepthColumnName();
+        return $this->getTable().'.'.$this->getDepthColumnName();
     }
 
     /**
@@ -832,7 +824,7 @@ trait NestedNode
 
 //
 
-// Moving
+    // Moving
 
 //
 
@@ -856,9 +848,9 @@ trait NestedNode
             $target = $this->newQuery()->find($target);
         }
 
-/*
-         * Validate move
-         */
+        /*
+                 * Validate move
+                 */
         if (!$this->validateMove($this, $target, $position)) {
             return $this;
         }
@@ -892,9 +884,9 @@ trait NestedNode
     protected function performMove($node, $target, $position)
     {
         list($a, $b, $c, $d) = $this->getSortedBoundaries($node, $target, $position);
-        $connection          = $node->getConnection();
-        $grammar             = $connection->getQueryGrammar();
-        $parentId            = ($position == 'child')
+        $connection = $node->getConnection();
+        $grammar = $connection->getQueryGrammar();
+        $parentId = ($position == 'child')
         ? $target->getKey()
         : $target->getParentId();
 
@@ -902,15 +894,15 @@ trait NestedNode
             $parentId = 'NULL';
         }
 
-        $currentId     = $node->getKey();
-        $leftColumn    = $node->getLeftColumnName();
-        $rightColumn   = $node->getRightColumnName();
-        $parentColumn  = $node->getParentColumnName();
-        $wrappedLeft   = $grammar->wrap($leftColumn);
-        $wrappedRight  = $grammar->wrap($rightColumn);
+        $currentId = $node->getKey();
+        $leftColumn = $node->getLeftColumnName();
+        $rightColumn = $node->getRightColumnName();
+        $parentColumn = $node->getParentColumnName();
+        $wrappedLeft = $grammar->wrap($leftColumn);
+        $wrappedRight = $grammar->wrap($rightColumn);
         $wrappedParent = $grammar->wrap($parentColumn);
-        $wrappedId     = $grammar->wrap($node->getKeyName());
-        $leftSql       = "CASE
+        $wrappedId = $grammar->wrap($node->getKeyName());
+        $leftSql = "CASE
             WHEN $wrappedLeft BETWEEN $a AND $b THEN $wrappedLeft + $d - $b
             WHEN $wrappedLeft BETWEEN $c AND $d THEN $wrappedLeft + $a - $c
             ELSE $wrappedLeft
@@ -946,7 +938,6 @@ trait NestedNode
      */
     protected function validateMove($node, $target, $position)
     {
-
         if (!$node->exists) {
             throw new Exception('A new node cannot be moved.');
         }
@@ -956,13 +947,11 @@ trait NestedNode
         }
 
         if ($target === null) {
-
             if ($position == 'left' || $position == 'right') {
                 throw new Exception(sprintf('Cannot resolve target node. This node cannot move any further to the %s.', $position));
             } else {
                 throw new Exception('Cannot resolve target node.');
             }
-
         }
 
         if ($node == $target) {
@@ -1042,7 +1031,6 @@ trait NestedNode
      */
     public function reload()
     {
-
         if (!$this->exists) {
             $this->syncOriginal();
         } elseif ($fresh = static::find($this->getKey())) {
@@ -1051,5 +1039,4 @@ trait NestedNode
 
         return $this;
     }
-
 }

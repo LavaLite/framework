@@ -1,8 +1,7 @@
 <?php
-namespace Litepie\Database\Traits;
 
+namespace Litepie\Database\Traits;
 
 trait DateFormatter
 {
-
 }

@@ -2,12 +2,12 @@
 
 return [
 
-    /**
+    /*
      * Singlular and plural name of the module
      */
     'name'          => 'Role',
     'names'         => 'Roles',
-    'title'       => [
+    'title'         => [
         'user'  => 'My Roles',
         'admin' => 'Roles',
         'sub'   => [
@@ -16,14 +16,14 @@ return [
         ],
     ],
 
-    /**
+    /*
      * Options for select/radio/check.
      */
     'options'       => [
-            
+
     ],
 
-    /**
+    /*
      * Placeholder for inputs
      */
     'placeholder'   => [
@@ -36,7 +36,7 @@ return [
         'updated_at'                 => 'Please select updated at',
     ],
 
-    /**
+    /*
      * Labels for inputs.
      */
     'label'         => [
@@ -49,7 +49,7 @@ return [
         'updated_at'                 => 'Updated at',
     ],
 
-    /**
+    /*
      * Columns array for show hide checkbox.
      */
     'cloumns'         => [
@@ -58,14 +58,14 @@ return [
         'level'                      => ['name' => 'Level', 'data-column' => 3, 'checked'],
     ],
 
-    /**
+    /*
      * Tab labels
      */
     'tab'           => [
         'name'  => 'Roles',
     ],
 
-    /**
+    /*
      * Texts  for the module
      */
     'text'          => [

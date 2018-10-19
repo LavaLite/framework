@@ -7,11 +7,9 @@ use Litepie\Settings\Interfaces\SettingRepositoryInterface;
 
 class SettingRepository extends BaseRepository implements SettingRepositoryInterface
 {
-
     public function boot()
     {
         $this->fieldSearchable = config('settings.setting.search');
-
     }
 
     /**
@@ -49,6 +47,7 @@ class SettingRepository extends BaseRepository implements SettingRepositoryInter
 
         $setting->value = $value;
         $setting->save();
+
         return $value;
     }
 
@@ -58,7 +57,6 @@ class SettingRepository extends BaseRepository implements SettingRepositoryInter
             return $query->where('key', $key)
                 ->whereUserId(user_id())
                 ->whereUserType(user_type());
-
         })->first();
 
         if (!empty($row)) {
@@ -79,7 +77,7 @@ class SettingRepository extends BaseRepository implements SettingRepositoryInter
         );
         $setting->value = $value;
         $setting->save();
+
         return $value;
     }
-
 }

@@ -2,18 +2,16 @@
 
 namespace Litepie\User\Repositories\Eloquent;
 
-use Litepie\User\Interfaces\TeamRepositoryInterface;
 use Litepie\Repository\Eloquent\BaseRepository;
+use Litepie\User\Interfaces\TeamRepositoryInterface;
 
 class TeamRepository extends BaseRepository implements TeamRepositoryInterface
 {
     /**
      * @var array
      */
-
     public function boot()
     {
-
     }
 
     /**
@@ -24,9 +22,9 @@ class TeamRepository extends BaseRepository implements TeamRepositoryInterface
     public function model()
     {
         $this->fieldSearchable = config('litepie.user.user.search');
+
         return config('litepie.user.team.model');
     }
-
 
     /**
      * Find a agents.
@@ -37,8 +35,8 @@ class TeamRepository extends BaseRepository implements TeamRepositoryInterface
      */
     public function reportingTo($team_id)
     {
-        $temp = array();
-        $team = $this->model->select('id','name','manager_id')->whereId($team_id)->first();
+        $temp = [];
+        $team = $this->model->select('id', 'name', 'manager_id')->whereId($team_id)->first();
         foreach ($team->member as $key => $value) {
             $temp[$value->pivot->user_id] = $value->name;
         }

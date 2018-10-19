@@ -1,12 +1,12 @@
-<?php namespace Litepie\Repository\Traits;
+<?php
+
+namespace Litepie\Repository\Traits;
 
 /**
- * Class TransformableTrait
- * @package Litepie\Repository\Traits
+ * Class TransformableTrait.
  */
 trait TransformableTrait
 {
-
     /**
      * @return array
      */

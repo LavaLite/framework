@@ -8,9 +8,9 @@ use Intervention\Image\ImageManager;
 class ImageServiceProvider extends ServiceProvider
 {
     /**
-     * Determines if Intervention Imagecache is installed
+     * Determines if Intervention Imagecache is installed.
      *
-     * @return boolean
+     * @return bool
      */
     private function cacheIsInstalled()
     {
@@ -46,7 +46,7 @@ class ImageServiceProvider extends ServiceProvider
     }
 
     /**
-     * Bootstrap imagecache
+     * Bootstrap imagecache.
      *
      * @return void
      */
@@ -54,16 +54,14 @@ class ImageServiceProvider extends ServiceProvider
     {
         $app = $this->app;
 
-
         // imagecache route
         if (is_string(config('image.route'))) {
-
             $filename_pattern = '[ \w\\.\\/\\-\\@\(\)]+';
 
             // route to access template applied image file
             $app['router']->get(config('image.route').'/{template}/{filename}', [
                 'uses' => 'Litepie\Filer\ImageCacheController@getResponse',
-                'as' => 'imagecache'
+                'as'   => 'imagecache',
             ])->where(['filename' => $filename_pattern]);
         }
     }

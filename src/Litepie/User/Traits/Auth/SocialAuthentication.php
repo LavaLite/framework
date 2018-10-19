@@ -2,7 +2,6 @@
 
 namespace Litepie\User\Traits\Auth;
 
-use Auth;
 use Illuminate\Foundation\Auth\AuthenticatesUsers as IlluminateAuthenticatesUsers;
 use Socialite;
 use User;
@@ -20,9 +19,10 @@ trait SocialAuthentication
      *
      * @return Response
      */
-    function redirectToProvider($provider)
+    public function redirectToProvider($provider)
     {
         $this->setCallbackUrl($provider);
+
         return Socialite::driver($provider)->redirect();
     }
 
@@ -31,13 +31,13 @@ trait SocialAuthentication
      *
      * @return Response
      */
-    function handleProviderCallback($provider)
+    public function handleProviderCallback($provider)
     {
         $this->setCallbackUrl($provider);
         $guard = $this->getGuard();
         $user = Socialite::driver($provider)->user();
         $model = $this->getAuthModel();
-        $data  = [
+        $data = [
             'name'      => $user->getName(),
             'email'     => $user->getEmail(),
             'status'    => 'Active',
@@ -52,14 +52,16 @@ trait SocialAuthentication
             $user = $model::create($data);
             User::login($user, false, $guard);
         }
+
         return redirect($this->redirectTo);
     }
 
     /**
-     * undocumented function
+     * undocumented function.
      *
      * @return void
-     * @author 
+     *
+     * @author
      **/
     public function setCallbackUrl($provider)
     {

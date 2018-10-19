@@ -3,7 +3,6 @@
 namespace Litepie\Roles\Traits;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Str;
 use InvalidArgumentException;
 
 trait HasRoleAndPermission
@@ -46,17 +45,15 @@ trait HasRoleAndPermission
      * Check if the user has at least one role.
      *
      * @param int|string|array $role
+     *
      * @return bool
      */
     public function isOne($role)
     {
-
         foreach ($this->getArrayFrom($role) as $role) {
-
             if ($this->hasRole($role)) {
                 return true;
             }
-
         }
 
         return false;
@@ -66,6 +63,7 @@ trait HasRoleAndPermission
      * Check if the user has at least one role.
      *
      * @param int|string|array $role
+     *
      * @return bool
      */
     public function isA($role)
@@ -77,6 +75,7 @@ trait HasRoleAndPermission
      * Check if the user has at least one role.
      *
      * @param int|string|array $role
+     *
      * @return bool
      */
     public function isAn($role)
@@ -88,17 +87,15 @@ trait HasRoleAndPermission
      * Check if the user has all roles.
      *
      * @param int|string|array $role
+     *
      * @return bool
      */
     public function isAll($role)
     {
-
         foreach ($this->getArrayFrom($role) as $role) {
-
             if (!$this->hasRole($role)) {
                 return false;
             }
-
         }
 
         return true;
@@ -108,6 +105,7 @@ trait HasRoleAndPermission
      * Check if the user has role.
      *
      * @param int|string $role
+     *
      * @return bool
      */
     public function hasRole($role)
@@ -121,6 +119,7 @@ trait HasRoleAndPermission
      * Attach role to a user.
      *
      * @param int|\Litepie\Roles\Models\Role $role
+     *
      * @return null|bool
      */
     public function attachRole($role)
@@ -132,6 +131,7 @@ trait HasRoleAndPermission
      * Detach role from a user.
      *
      * @param int|\Litepie\Roles\Models\Role $role
+     *
      * @return int
      */
     public function detachRole($role)
@@ -208,12 +208,12 @@ trait HasRoleAndPermission
      * Check if the user has a permission or permissions.
      *
      * @param int|string|array $permission
-     * @param bool $all
+     * @param bool             $all
+     *
      * @return bool
      */
     public function canDo($permission, $all = false)
     {
-
         if ($this->isPretendEnabled()) {
             return $this->pretend('can');
         }
@@ -230,17 +230,15 @@ trait HasRoleAndPermission
      * Check if the user has at least one permission.
      *
      * @param int|string|array $permission
+     *
      * @return bool
      */
     public function canOne($permission)
     {
-
         foreach ($this->getArrayFrom($permission) as $permission) {
-
             if ($this->hasPermission($permission)) {
                 return true;
             }
-
         }
 
         return false;
@@ -250,17 +248,15 @@ trait HasRoleAndPermission
      * Check if the user has all permissions.
      *
      * @param int|string|array $permission
+     *
      * @return bool
      */
     public function canAll($permission)
     {
-
         foreach ($this->getArrayFrom($permission) as $permission) {
-
             if (!$this->hasPermission($permission)) {
                 return false;
             }
-
         }
 
         return true;
@@ -270,6 +266,7 @@ trait HasRoleAndPermission
      * Check if the user has a permission.
      *
      * @param int|string $permission
+     *
      * @return bool
      */
     public function hasPermission($permission)
@@ -282,15 +279,15 @@ trait HasRoleAndPermission
     /**
      * Check if the user is allowed to manipulate with entity.
      *
-     * @param string $providedPermission
+     * @param string                              $providedPermission
      * @param \Illuminate\Database\Eloquent\Model $entity
-     * @param bool $owner
-     * @param string $ownerIdColumn
+     * @param bool                                $owner
+     * @param string                              $ownerIdColumn
+     *
      * @return bool
      */
     public function allowed($providedPermission, Model $entity, $owner = true, $ownerIdColumn = 'user_id', $ownerTypeColumn = 'user_type')
     {
-
         if ($this->isPretendEnabled()) {
             return $this->pretend('allowed');
         }
@@ -312,21 +309,19 @@ trait HasRoleAndPermission
     /**
      * Check if the user is allowed to manipulate with provided entity.
      *
-     * @param string $providedPermission
+     * @param string                              $providedPermission
      * @param \Illuminate\Database\Eloquent\Model $entity
+     *
      * @return bool
      */
     protected function isAllowed($providedPermission, Model $entity)
     {
-
         foreach ($this->getPermissions() as $permission) {
-
             if ($permission->model != '' && get_class($entity) == $permission->model
                 && ($permission->id == $providedPermission || $permission->slug === $providedPermission)
             ) {
                 return true;
             }
-
         }
 
         return false;
@@ -336,6 +331,7 @@ trait HasRoleAndPermission
      * Attach permission to a user.
      *
      * @param int|\Litepie\Roles\Models\Permission $permission
+     *
      * @return null|bool
      */
     public function attachPermission($permission)
@@ -347,6 +343,7 @@ trait HasRoleAndPermission
      * Detach permission from a user.
      *
      * @param int|\Litepie\Roles\Models\Permission $permission
+     *
      * @return int
      */
     public function detachPermission($permission)
@@ -382,29 +379,32 @@ trait HasRoleAndPermission
      * Allows to pretend or simulate package behavior.
      *
      * @param string $option
+     *
      * @return bool
      */
     private function pretend($option)
     {
-        return (bool) config('roles.pretend.options.' . $option);
+        return (bool) config('roles.pretend.options.'.$option);
     }
 
     /**
      * Get method name.
      *
      * @param string $methodName
-     * @param bool $all
+     * @param bool   $all
+     *
      * @return string
      */
     private function getMethodName($methodName, $all)
     {
-        return ((bool) $all) ? $methodName . 'All' : $methodName . 'One';
+        return ((bool) $all) ? $methodName.'All' : $methodName.'One';
     }
 
     /**
      * Get an array from argument.
      *
      * @param int|string|array $argument
+     *
      * @return array
      */
     private function getArrayFrom($argument)
@@ -416,12 +416,12 @@ trait HasRoleAndPermission
      * Handle dynamic method calls.
      *
      * @param string $method
-     * @param array $parameters
+     * @param array  $parameters
+     *
      * @return mixed
      */
     public function __call($method, $parameters)
     {
-
         if (starts_with($method, 'is')) {
             return $this->hasRole(snake_case(substr($method, 2), config('roles.separator', '.')));
         } elseif (starts_with($method, 'can')) {
@@ -432,5 +432,4 @@ trait HasRoleAndPermission
 
         return parent::__call($method, $parameters);
     }
-
 }

@@ -2,7 +2,7 @@
 
 return [
 
-    /**
+    /*
      * Provider.
      */
     'provider'  => 'litepie',
@@ -35,10 +35,10 @@ return [
             'casts'                 => [],
             'revision'              => [],
             'perPage'               => '20',
-            'search'        => [
+            'search'                => [
                 'name'  => 'like',
                 'status',
-            ]
+            ],
         ],
 
         'controller' => [
@@ -67,10 +67,10 @@ return [
             'casts'                 => [],
             'revision'              => [],
             'perPage'               => '20',
-            'search'        => [
+            'search'                => [
                 'name'  => 'like',
                 'status',
-            ]
+            ],
         ],
 
         'controller' => [

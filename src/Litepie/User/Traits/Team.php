@@ -1,4 +1,5 @@
 <?php
+
 namespace Litepie\User\Traits;
 
 /**
@@ -6,12 +7,11 @@ namespace Litepie\User\Traits;
  */
 trait Team
 {
-
-
     /**
      * The users that belong to the team.
      */
-    public function users(){
+    public function users()
+    {
         return $this->hasManyThrough('User\Team\Models\User');
     }
 
@@ -20,8 +20,9 @@ trait Team
      */
     public function manager()
     {
-        return $this->belongsTo('App\User','manager_id');
+        return $this->belongsTo('App\User', 'manager_id');
     }
+
     /**
      * The member that belong to the team.
      */
@@ -37,14 +38,13 @@ trait Team
      */
     public function getReportedToAttribute()
     {
-        $user = $this->member() 
+        $user = $this->member()
                             ->wherePivot('user_id', user_id(getenv('guard')))
-                            ->first(); 
+                            ->first();
         if ($user->pivot->reporting_to == 0) {
             return $this->manager_id;
         }
 
         return $user->pivot->reporting_to;
     }
-
 }

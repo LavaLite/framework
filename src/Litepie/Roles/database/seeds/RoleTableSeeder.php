@@ -61,6 +61,5 @@ class RoleTableSeeder extends Seeder
                 'status'      => 1,
             ]
         );
-
     }
 }

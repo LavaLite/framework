@@ -12,7 +12,6 @@ trait Translatable
      *
      * protected $translatable = [];
      */
-
     public $translatable = [];
 
     /**
@@ -39,7 +38,6 @@ trait Translatable
                 $model->$key = $model->getTranslation($key);
             }
         });
-
     }
 
     /**
@@ -52,9 +50,9 @@ trait Translatable
     {
         $langs = $this->getOriginalAttribute($key);
 
-        $langs                  = $this->decodeLang($langs);
-        return $langs[$this->locale()];
+        $langs = $this->decodeLang($langs);
 
+        return $langs[$this->locale()];
     }
 
     /**
@@ -75,19 +73,16 @@ trait Translatable
      */
     public function setTranslation($key, $value = null)
     {
-
         $locale = $this->locale();
 
         $langs = $this->getOriginal($key);
 
-        $langs                  = $this->decodeLang($langs);
+        $langs = $this->decodeLang($langs);
         $langs[$this->locale()] = $value;
-        $value                  = $this->encodeLang($langs);
-        return $this->{$key}    = $value;
+        $value = $this->encodeLang($langs);
+
+        return $this->{$key} = $value;
     }
-
-
-
 
     /**
      * Encrypts an value.
@@ -129,5 +124,4 @@ trait Translatable
         return App::getLocale()
         ?: Lang::getLocale();
     }
-
 }

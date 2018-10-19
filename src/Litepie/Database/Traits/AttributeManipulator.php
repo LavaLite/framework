@@ -6,7 +6,6 @@ use Closure;
 
 trait AttributeManipulator
 {
-
     /**
      * @var array List of setters to be ran
      */
@@ -64,7 +63,6 @@ trait AttributeManipulator
      */
     public function getOriginalAttribute($key)
     {
-
         return parent::getAttribute($key);
     }
 
@@ -76,7 +74,6 @@ trait AttributeManipulator
      */
     public function setAttribute($key, $value)
     {
-
         foreach (static::$setter_manipulators as $manipulator) {
             $value = $manipulator($this, $key, $value);
         }
@@ -102,7 +99,6 @@ trait AttributeManipulator
      */
     public function checkGetSetAttribute($variable, $field)
     {
-
         if (!property_exists($this, $variable) && empty($this->$variable)) {
             return false;
         }
@@ -113,5 +109,4 @@ trait AttributeManipulator
 
         return false;
     }
-
 }

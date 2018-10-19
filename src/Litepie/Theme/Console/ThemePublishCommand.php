@@ -61,7 +61,8 @@ class ThemePublishCommand extends Command
     /**
      * Create a new command instance.
      *
-     * @param  \Illuminate\Filesystem\Filesystem  $files
+     * @param \Illuminate\Filesystem\Filesystem $files
+     *
      * @return void
      */
     public function __construct(Filesystem $files)
@@ -80,7 +81,7 @@ class ThemePublishCommand extends Command
     {
         $this->determineWhatShouldBePublished();
         $from = $this->folderFrom();
-        $to   = $this->folderTo();
+        $to = $this->folderTo();
         $this->publishDirectory($from, $to);
 
         $this->info('Publishing complete.');
@@ -94,8 +95,8 @@ class ThemePublishCommand extends Command
     protected function determineWhatShouldBePublished()
     {
         $this->provider = $this->option('provider');
-        $this->view     = $this->option('view');
-        $this->theme    = $this->option('theme');
+        $this->view = $this->option('view');
+        $this->theme = $this->option('theme');
 
         if (!$this->provider) {
             $this->promptForProvider();
@@ -108,7 +109,6 @@ class ThemePublishCommand extends Command
         if (!$this->theme) {
             $this->promptForTheme();
         }
-
     }
 
     /**
@@ -124,7 +124,7 @@ class ThemePublishCommand extends Command
         );
 
         if (is_null($choice)) {
-            $this->error("Please select one provider.");
+            $this->error('Please select one provider.');
             $this->promptForProvider();
         }
 
@@ -137,7 +137,6 @@ class ThemePublishCommand extends Command
             $this->provider = null;
             $this->promptForProvider();
         }
-
     }
 
     /**
@@ -155,12 +154,14 @@ class ThemePublishCommand extends Command
     /**
      * Parse the answer that was given via the prompt.
      *
-     * @param  string  $choice
+     * @param string $choice
+     *
      * @return void
      */
     protected function parseChoice($choice)
     {
         list($type, $value) = explode(': ', strip_tags($choice));
+
         return $value;
     }
 
@@ -172,7 +173,7 @@ class ThemePublishCommand extends Command
     protected function promptForTheme()
     {
         $choice = $this->choice(
-            "Into which theme the files to be published?",
+            'Into which theme the files to be published?',
             $choices = $this->themeChoice()
         );
 
@@ -205,7 +206,7 @@ class ThemePublishCommand extends Command
         $choices = $this->viewChoice();
 
         $choice = $this->choice(
-            "Which view folder you wish to publish?", $choices
+            'Which view folder you wish to publish?', $choices
         );
 
         if (is_null($choice)) {
@@ -225,7 +226,7 @@ class ThemePublishCommand extends Command
         $folder = key($this->pathsToView());
 
         if (is_null($folder)) {
-            return null;
+            return;
         }
 
         $folders = $this->files->directories($folder);
@@ -242,7 +243,8 @@ class ThemePublishCommand extends Command
     /**
      * Get all of the paths to publish.
      *
-     * @param  string  $tag
+     * @param string $tag
+     *
      * @return array
      */
     protected function pathsToView()
@@ -255,13 +257,14 @@ class ThemePublishCommand extends Command
     /**
      * Publish the directory to the given directory.
      *
-     * @param  string  $from
-     * @param  string  $to
+     * @param string $from
+     * @param string $to
+     *
      * @return void
      */
     protected function publishDirectory($from, $to)
     {
-        $this->info($from . '>' .  $to);
+        $this->info($from.'>'.$to);
 
         if (!$this->files->isDirectory($from)) {
             return $this->error("Can't locate path: <{$from}>");
@@ -278,28 +281,26 @@ class ThemePublishCommand extends Command
     /**
      * Move all the files in the given MountManager.
      *
-     * @param  \League\Flysystem\MountManager  $manager
+     * @param \League\Flysystem\MountManager $manager
+     *
      * @return void
      */
     protected function moveManagedFiles($manager)
     {
-
         foreach ($manager->listContents('from://', true) as $file) {
-
-            if ($file['type'] === 'file' && (!$manager->has('to://' . $file['path']) || $this->option('force'))) {
-                $manager->put('to://' . $file['path'], $manager->read('from://' . $file['path']));
+            if ($file['type'] === 'file' && (!$manager->has('to://'.$file['path']) || $this->option('force'))) {
+                $manager->put('to://'.$file['path'], $manager->read('from://'.$file['path']));
             }
-
         }
-
     }
 
     /**
      * Write a status message to the console.
      *
-     * @param  string  $from
-     * @param  string  $to
-     * @param  string  $type
+     * @param string $from
+     * @param string $to
+     * @param string $type
+     *
      * @return void
      */
     protected function status($from, $to, $type)
@@ -308,7 +309,7 @@ class ThemePublishCommand extends Command
 
         $to = str_replace(base_path(), '', realpath($to));
 
-        $this->line('<info>Copied ' . $type . '</info> <comment>[' . $from . ']</comment> <info>To</info> <comment>[' . $to . ']</comment>');
+        $this->line('<info>Copied '.$type.'</info> <comment>['.$from.']</comment> <info>To</info> <comment>['.$to.']</comment>');
     }
 
     /**
@@ -318,7 +319,7 @@ class ThemePublishCommand extends Command
      */
     protected function folderFrom()
     {
-        return key($this->pathsToView()) . '/' . $this->view;
+        return key($this->pathsToView()).'/'.$this->view;
     }
 
     /**
@@ -328,10 +329,10 @@ class ThemePublishCommand extends Command
      */
     protected function folderTo()
     {
-        $view   = array_values($this->pathsToView());
-        $view   = current($view);
+        $view = array_values($this->pathsToView());
+        $view = current($view);
         $folder = basename($view);
-        return  public_path(config('theme.themeDir')) . '/' . $this->theme . '/views/vendor/' . $folder;
-    }
 
+        return  public_path(config('theme.themeDir')).'/'.$this->theme.'/views/vendor/'.$folder;
+    }
 }

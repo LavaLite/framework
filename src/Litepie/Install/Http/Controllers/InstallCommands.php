@@ -6,16 +6,14 @@ use Artisan;
 
 trait InstallCommands
 {
-
-
     /**
      * @var array
      */
     protected $search = [
-        "DB_HOST=127.0.0.1",
-        "DB_DATABASE=homestead",
-        "DB_USERNAME=homestead",
-        "DB_PASSWORD=secret",
+        'DB_HOST=127.0.0.1',
+        'DB_DATABASE=homestead',
+        'DB_USERNAME=homestead',
+        'DB_PASSWORD=secret',
     ];
 
     /**
@@ -42,15 +40,15 @@ trait InstallCommands
         'Task'     => \Litepie\Task\TaskServiceProvider::class,
         'User'     => \Litepie\User\UserServiceProvider::class,
     ];
-        /**
+    /**
      * @var array
      */
     protected $model = [
-        'superuser' => '\App\User', 
-        'admin' 	=> '\App\User', 
-        'user' 		=> '\App\User', 
-        'client' 	=> '\App\Client'
-    ];        
+        'superuser' => '\App\User',
+        'admin' 	   => '\App\User',
+        'user' 		   => '\App\User',
+        'client' 	  => '\App\Client',
+    ];
 
     /**
      * @var array
@@ -58,10 +56,12 @@ trait InstallCommands
     protected $tags = [
         'config', 'view', 'seeds', 'lang', 'migrations', 'public',
     ];
+
     /**
      * @param $name
      * @param $username
      * @param $password
+     *
      * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
      */
     public function write($finder, $name, $username, $password, $host)
@@ -78,78 +78,84 @@ trait InstallCommands
         $newEnvironmentFile = str_replace($this->search, $replace, $environmentFile);
 
         $finder->put(base_path($this->file), $newEnvironmentFile);
-
     }
+
     /**
-     * Fire the install script
-     * @param  Command $command
+     * Fire the install script.
+     *
+     * @param Command $command
+     *
      * @return mixed
      */
     public function setAppKey()
     {
         Artisan::call('key:generate');
-        return;
     }
 
     /**
-     * Fire the install script
-     * @param  Command $command
+     * Fire the install script.
+     *
+     * @param Command $command
+     *
      * @return mixed
      */
     public function dbMigrate()
     {
         Artisan::call('migrate:refresh');
-        return;
     }
+
     /**
-     * Fire the install script
-     * @param  Command $command
+     * Fire the install script.
+     *
+     * @param Command $command
+     *
      * @return mixed
      */
     public function dbSeed()
     {
         Artisan::call('db:seed');
-        return;
     }
 
     /**
-     * Fire the install script
+     * Fire the install script.
+     *
      * @param  $tag
+     *
      * @return mixed
      */
     public function publish($tag)
     {
         $package = implode(',', array_keys($this->packages));
-    	foreach ($this->packages as $kp => $package) {
+        foreach ($this->packages as $kp => $package) {
             $this->call(['--provider' => $package, '--tag' => $tag, '--force' => true]);
         }
-
-    }
-	/**
-     * Fire the install script
-     * @param  $command
-     * @return mixed
-     */
-    public function call($option)
-    {    		
-        Artisan::call('vendor:publish', $option);
-        return;
     }
 
     /**
-     * Fire the install script
+     * Fire the install script.
      *
-     * @param  Command $command
+     * @param  $command
+     *
+     * @return mixed
+     */
+    public function call($option)
+    {
+        Artisan::call('vendor:publish', $option);
+    }
+
+    /**
+     * Fire the install script.
+     *
+     * @param Command $command
+     *
      * @return mixed
      */
     public function setCredentials($attributes, $model)
     {
-        $data['email']    	= $attributes['email'];
-        $data['password'] 	= bcrypt($attributes['password']);
-        $data['api_token']	= str_random(60);
+        $data['email'] = $attributes['email'];
+        $data['password'] = bcrypt($attributes['password']);
+        $data['api_token'] = str_random(60);
 
-        $user             	= $model::create($data);
+        $user = $model::create($data);
     }
-
-   
 }

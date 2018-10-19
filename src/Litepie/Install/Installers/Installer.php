@@ -1,4 +1,5 @@
 <?php
+
 namespace Litepie\Install\Installers;
 
 use Illuminate\Console\Command;
@@ -20,11 +21,12 @@ class Installer
     public function __construct(Application $app, Filesystem $finder)
     {
         $this->finder = $finder;
-        $this->app    = $app;
+        $this->app = $app;
     }
 
     /**
-     * @param  array $scripts
+     * @param array $scripts
+     *
      * @return $this
      */
     public function stack(array $scripts)
@@ -35,13 +37,14 @@ class Installer
     }
 
     /**
-     * Fire install scripts
-     * @param  Command $command
+     * Fire install scripts.
+     *
+     * @param Command $command
+     *
      * @return bool
      */
     public function install(Command $command)
     {
-
         foreach ($this->scripts as $script) {
             try {
                 $this->app->make($script)->fire($command);
@@ -50,10 +53,8 @@ class Installer
 
                 return false;
             }
-
         }
 
         return true;
     }
-
 }

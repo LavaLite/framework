@@ -9,12 +9,10 @@ trait Request
      */
     protected $type = null;
 
-
     /**
      * Return json array for  json response.
      *
      * @return json string
-     *
      */
     public function type($type)
     {
@@ -25,11 +23,9 @@ trait Request
      * Return json array for  json response.
      *
      * @return json string
-     *
      */
     public function typeIs($type)
     {
         return $this->getType() == $type;
     }
-
 }

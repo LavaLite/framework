@@ -33,6 +33,7 @@ class InstallCommand extends Command
      * Create a new command instance.
      *
      * @param Installer $installer
+     *
      * @internal param Filesystem $finder
      * @internal param Application $app
      * @internal param Composer $composer
@@ -41,11 +42,11 @@ class InstallCommand extends Command
     {
         parent::__construct();
         $this->getLaravel()['env'] = 'local';
-        $this->installer           = $installer;
+        $this->installer = $installer;
     }
 
     /**
-     * Execute the actions
+     * Execute the actions.
      *
      * @return mixed
      */
@@ -60,14 +61,12 @@ class InstallCommand extends Command
             \Litepie\Install\Installers\Scripts\PackageMigrators::class,
             \Litepie\Install\Installers\Scripts\PackageSeeders::class,
             \Litepie\Install\Installers\Scripts\SetSuperuserUser::class,
-            \Litepie\Install\Installers\Scripts\SetAppKey::class
+            \Litepie\Install\Installers\Scripts\SetAppKey::class,
         ])->install($this);
 
         if ($success) {
             $this->line('Lavalite is ready.');
             $this->info('You can now login with your username and password at ['.url('/admin').']');
         }
-
     }
-
 }

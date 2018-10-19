@@ -2,7 +2,7 @@
 
 return [
 
-    /**
+    /*
      * Provider.
      */
     'provider'  => 'litepie',
@@ -16,7 +16,7 @@ return [
      * Modules.
      */
     'modules'   => ['setting'],
-    
+
     'setting'       => [
         'model'             => 'Litepie\Settings\Models\Setting',
         'table'             => 'settings',
@@ -34,7 +34,7 @@ return [
         'casts'             => [],
         'revision'          => [],
         'perPage'           => '20',
-        'search'        => [
+        'search'            => [
             'name'  => 'like',
             'status',
         ],

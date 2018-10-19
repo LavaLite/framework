@@ -2,7 +2,7 @@
 
 return [
 
-    /**
+    /*
      * Provider.
      */
     'provider'  => 'litepie',
@@ -30,12 +30,12 @@ return [
         'translate'         => ['parent_id',  'key',  'url',  'icon',  'permission',  'role',  'name',  'description',  'target',  'order',  'uload_folder'],
         'upload_folder'     => 'menu/menu',
         'uploads'           => [],
-        'casts'         => [
+        'casts'             => [
             'role' => 'array',
         ],
         'revision'          => [],
         'perPage'           => '20',
-        'search'        => [
+        'search'            => [
             'name'  => 'like',
             'status',
         ],

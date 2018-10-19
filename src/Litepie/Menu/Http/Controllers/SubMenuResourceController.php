@@ -10,7 +10,6 @@ use Litepie\Menu\Models\Menu as Menu;
 
 class SubMenuResourceController extends ResourceController
 {
-
     public function __construct(MenuRepositoryInterface $menu)
     {
         $this->repository = $menu;
@@ -42,7 +41,7 @@ class SubMenuResourceController extends ResourceController
      */
     public function create(MenuRequest $request)
     {
-        $menu            = $this->repository->newInstance([]);
+        $menu = $this->repository->newInstance([]);
         $menu->parent_id = $request->get('parent_id', 0);
 
         Form::populate($menu);
@@ -60,18 +59,16 @@ class SubMenuResourceController extends ResourceController
     public function store(MenuRequest $request)
     {
         try {
-            $attributes              = $request->all();
+            $attributes = $request->all();
             $attributes['parent_id'] = hashids_decode($attributes['parent_id']);
-            $menu                    = $this->repository->create($attributes);
+            $menu = $this->repository->create($attributes);
 
             return $this->response
                 ->message(trans('messages.success.created', ['Module' => trans('menu::menu.name')]))
                 ->code(204)
                 ->status('success')
-                ->url(guard_url('menu/submenu/' . $menu->getRouteKey()))
+                ->url(guard_url('menu/submenu/'.$menu->getRouteKey()))
                 ->redirect();
-
-
         } catch (Exception $e) {
             return $this->response
                 ->message($e->getMessage())
@@ -110,7 +107,6 @@ class SubMenuResourceController extends ResourceController
     public function update(MenuRequest $request, $id)
     {
         try {
-
             $attributes = $request->all();
 
             $menu = $this->repository->update($attributes, $id);
@@ -118,17 +114,14 @@ class SubMenuResourceController extends ResourceController
             return $this->response->message(trans('messages.success.updated', ['Module' => trans('menu::menu.name')]))
                 ->code(204)
                 ->status('success')
-                ->url(guard_url('menu/submenu/' . $menu->getRouteKey()))
+                ->url(guard_url('menu/submenu/'.$menu->getRouteKey()))
                 ->redirect();
-
         } catch (Exception $e) {
-
             return $this->response->message($e->getMessage())
                 ->code(400)
                 ->status('error')
-                ->url(guard_url('menu/submenu/' . $menu->getRouteKey()))
+                ->url(guard_url('menu/submenu/'.$menu->getRouteKey()))
                 ->redirect();
         }
-
     }
 }

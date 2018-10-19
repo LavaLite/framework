@@ -36,18 +36,15 @@ class MenuRepository extends BaseRepository implements MenuRepositoryInterface
 
     public function updateTree($id, $json)
     {
-        $tree             = json_decode($json, true);
+        $tree = json_decode($json, true);
         $this->tempHolder = [];
         $this->getParentChild($id, $tree);
 
         foreach ($this->tempHolder as $parent => $children) {
-
             foreach ($children as $key => $val) {
                 $this->update(['parent_id' => $parent, 'order' => $key], $val);
             }
-
         }
-
     }
 
     /**
@@ -64,7 +61,7 @@ class MenuRepository extends BaseRepository implements MenuRepositoryInterface
         $_skipPresenter = $this->skipPresenter;
         $this->skipPresenter(true);
 
-        $model         = $this->find($id);
+        $model = $this->find($id);
         $originalModel = clone $model;
 
         $this->skipPresenter($_skipPresenter);
@@ -76,6 +73,7 @@ class MenuRepository extends BaseRepository implements MenuRepositoryInterface
 
         return $deleted;
     }
+
     /**
      * Delete a entity in repository by id.
      *
@@ -92,11 +90,11 @@ class MenuRepository extends BaseRepository implements MenuRepositoryInterface
 
     public function getParentChild($id, $array)
     {
-         foreach ($array as $node) {
+        foreach ($array as $node) {
             $this->tempHolder[hashids_decode($id)][] = array_get($node, 'id');
-             if (isset($node['children'])) {
+            if (isset($node['children'])) {
                 $this->getParentChild(array_get($node, 'id'), $node['children']);
             }
-         }
-     }
- }
+        }
+    }
+}

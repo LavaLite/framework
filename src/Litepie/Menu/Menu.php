@@ -1,6 +1,7 @@
 <?php
 
 namespace Litepie\Menu;
+
 use Litepie\Menu\Interfaces\MenuRepositoryInterface;
 
 class Menu
@@ -22,7 +23,7 @@ class Menu
         $menus = $this->model->getMenu($key);
 
         if (is_null($view)) {
-            $view = 'menu::menu.' . $key;
+            $view = 'menu::menu.'.$key;
         }
 
         if (!view()->exists($view)) {
@@ -31,6 +32,4 @@ class Menu
 
         return view($view, compact('menus'));
     }
-
-
 }

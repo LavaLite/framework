@@ -1,12 +1,12 @@
 <?php
+
 namespace Litepie\Repository\Events;
 
 use Illuminate\Database\Eloquent\Model;
 use Prettus\Repository\Contracts\RepositoryInterface;
 
 /**
- * Class RepositoryEventBase
- * @package Litepie\Repository\Events
+ * Class RepositoryEventBase.
  */
 abstract class RepositoryEventBase
 {

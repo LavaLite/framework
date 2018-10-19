@@ -13,7 +13,6 @@ use Response;
 
 class MenuResourceController extends BaseController
 {
-
     /**
      * Initialize page controller.
      *
@@ -25,7 +24,6 @@ class MenuResourceController extends BaseController
     {
         parent::__construct();
         $this->repository = $menu;
-
     }
 
     /**
@@ -35,8 +33,9 @@ class MenuResourceController extends BaseController
      */
     public function index(MenuRequest $request, $parent = 1)
     {
-        $parent   = $this->repository->find(hashids_encode($parent));
+        $parent = $this->repository->find(hashids_encode($parent));
         $rootMenu = $this->repository->rootMenues();
+
         return $this->response->setMetaTitle(trans('menu::menu.names'))
             ->view('menu::admin.index')
             ->data(compact('rootMenu', 'parent'))
@@ -62,6 +61,7 @@ class MenuResourceController extends BaseController
         }
 
         $rootMenu = $this->repository->rootMenues();
+
         return $this->response->setMetaTitle(trans('menu::menu.names'))
             ->view('menu::index', true)
             ->data(compact('rootMenu', 'parent'))
@@ -94,16 +94,15 @@ class MenuResourceController extends BaseController
     public function store(MenuRequest $request)
     {
         try {
-            $attributes            = $request->all();
-            $menu                  = $this->repository->create($attributes);
+            $attributes = $request->all();
+            $menu = $this->repository->create($attributes);
 
             return $this->response
                 ->message(trans('messages.success.created', ['Module' => trans('menu::menu.name')]))
                 ->code(204)
                 ->status('success')
-                ->url(guard_url('menu/menu/' . $menu->getRouteKey()))
+                ->url(guard_url('menu/menu/'.$menu->getRouteKey()))
                 ->redirect();
-
         } catch (Exception $e) {
             return $this->response
                 ->message($e->getMessage())
@@ -112,7 +111,6 @@ class MenuResourceController extends BaseController
                 ->url(guard_url('menu/menu'))
                 ->redirect();
         }
-
     }
 
     /**
@@ -142,7 +140,6 @@ class MenuResourceController extends BaseController
     public function update(MenuRequest $request, $menu)
     {
         try {
-
             $attributes = $request->all();
 
             $menu->update($attributes);
@@ -150,17 +147,15 @@ class MenuResourceController extends BaseController
             return $this->response->message(trans('messages.success.updated', ['Module' => trans('menu::menu.name')]))
                 ->code(204)
                 ->status('success')
-                ->url(guard_url('menu/menu/' . $menu->getRouteKey()))
+                ->url(guard_url('menu/menu/'.$menu->getRouteKey()))
                 ->redirect();
         } catch (Exception $e) {
             return $this->response->message($e->getMessage())
                 ->code(400)
                 ->status('error')
-                ->url(guard_url('menu/menu/' . $menu->getRouteKey()))
+                ->url(guard_url('menu/menu/'.$menu->getRouteKey()))
                 ->redirect();
-
         }
-
     }
 
     /**
@@ -183,30 +178,27 @@ class MenuResourceController extends BaseController
         }
 
         try {
-
             $menu->delete();
+
             return $this->response->message(trans('messages.success.deleted', ['Module' => trans('menu::menu.name')]))
                 ->code(202)
                 ->status('success')
                 ->url(guard_url('menu/menu'))
                 ->redirect();
-
         } catch (Exception $e) {
-
             return $this->response->message($e->getMessage())
                 ->code(400)
                 ->status('error')
-                ->url(guard_url('menu/menu/' . $menu->getRouteKey()))
+                ->url(guard_url('menu/menu/'.$menu->getRouteKey()))
                 ->redirect();
         }
-
     }
 
     /**
      * Update tree structure  of the menu.
      *
      * @param MenuRequest $request
-     * @param type $id
+     * @param type        $id
      *
      * @return type
      */
@@ -224,5 +216,4 @@ class MenuResourceController extends BaseController
     {
         $parent = $this->repository->all();
     }
-
 }

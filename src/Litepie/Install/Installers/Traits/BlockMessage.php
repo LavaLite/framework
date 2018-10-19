@@ -1,4 +1,6 @@
-<?php namespace Litepie\Install\Installers\Traits;
+<?php
+
+namespace Litepie\Install\Installers\Traits;
 
 trait BlockMessage
 {

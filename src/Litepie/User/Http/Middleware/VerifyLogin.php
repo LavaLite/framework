@@ -6,7 +6,6 @@ use Closure;
 
 class VerifyLogin
 {
-
     /**
      * Handle an incoming request.
      *
@@ -15,11 +14,11 @@ class VerifyLogin
      * @param int|string               $permission
      *
      * @throws \Litepie\User\Exceptions\PermissionDeniedException
+     *
      * @return mixed
      */
     public function handle($request, Closure $next, $guard = null)
     {
-
         if (user()->isNew && config('auth.verify_email')) {
             return redirect(guard_url('verify'));
         }
@@ -30,5 +29,4 @@ class VerifyLogin
 
         return $next($request);
     }
-
 }

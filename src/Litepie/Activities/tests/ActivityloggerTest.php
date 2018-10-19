@@ -5,8 +5,8 @@ namespace Litepie\Activities\Test;
 use Auth;
 use Illuminate\Support\Collection;
 use Litepie\Activities\Models\Activity;
-use Litepie\Activities\Test\Models\User;
 use Litepie\Activities\Test\Models\Article;
+use Litepie\Activities\Test\Models\User;
 use Spatie\Activitylog\Exceptions\CouldNotLogActivity;
 
 class ActivityloggerTest extends TestCase
@@ -232,7 +232,7 @@ class ActivityloggerTest extends TestCase
     /** @test */
     public function it_returns_an_instance_of_the_activity_log_after_logging_when_using_a_custom_model()
     {
-        $activityClass = new class extends Activity {
+        $activityClass = new class() extends Activity {
         };
 
         $activityClassName = get_class($activityClass);

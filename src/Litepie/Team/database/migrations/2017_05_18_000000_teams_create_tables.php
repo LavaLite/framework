@@ -1,11 +1,10 @@
 <?php
 
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
 
 class TeamworkSetupTables extends Migration
 {
-
     /**
      * Run the migrations.
      *
@@ -13,40 +12,35 @@ class TeamworkSetupTables extends Migration
      */
     public function up()
     {
-        Schema::table( \config( 'teamwork.users_table' ), function ( Blueprint $table )
-        {
-            $table->integer( 'current_team_id' )->unsigned()->nullable();
-        } );
+        Schema::table(\config('teamwork.users_table'), function (Blueprint $table) {
+            $table->integer('current_team_id')->unsigned()->nullable();
+        });
 
-
-        Schema::create( \config( 'teamwork.teams_table' ), function ( Blueprint $table )
-        {
-            $table->increments( 'id' )->unsigned();
-            $table->integer( 'owner_id' )->unsigned()->nullable();
-            $table->string( 'name' );
+        Schema::create(\config('teamwork.teams_table'), function (Blueprint $table) {
+            $table->increments('id')->unsigned();
+            $table->integer('owner_id')->unsigned()->nullable();
+            $table->string('name');
             $table->timestamps();
-        } );
+        });
 
-        Schema::create( \config( 'teamwork.team_user_table' ), function ( Blueprint $table )
-        {
-            $table->integer( 'user_id' )->unsigned();
-            $table->integer( 'team_id' )->unsigned();
+        Schema::create(\config('teamwork.team_user_table'), function (Blueprint $table) {
+            $table->integer('user_id')->unsigned();
+            $table->integer('team_id')->unsigned();
             $table->timestamps();
 
-            $table->foreign( 'user_id' )
-                ->references( \config( 'teamwork.user_foreign_key' ) )
-                ->on( \config( 'teamwork.users_table' ) )
-                ->onUpdate( 'cascade' )
-                ->onDelete( 'cascade' );
+            $table->foreign('user_id')
+                ->references(\config('teamwork.user_foreign_key'))
+                ->on(\config('teamwork.users_table'))
+                ->onUpdate('cascade')
+                ->onDelete('cascade');
 
-            $table->foreign( 'team_id' )
-                ->references( 'id' )
-                ->on( \config( 'teamwork.teams_table' ) )
-                ->onDelete( 'cascade' );
-        } );
+            $table->foreign('team_id')
+                ->references('id')
+                ->on(\config('teamwork.teams_table'))
+                ->onDelete('cascade');
+        });
 
-        Schema::create( \config( 'teamwork.team_invites_table' ), function(Blueprint $table)
-        {
+        Schema::create(\config('teamwork.team_invites_table'), function (Blueprint $table) {
             $table->increments('id');
             $table->integer('user_id')->unsigned();
             $table->integer('team_id')->unsigned();
@@ -55,10 +49,10 @@ class TeamworkSetupTables extends Migration
             $table->string('accept_token');
             $table->string('deny_token');
             $table->timestamps();
-            $table->foreign( 'team_id' )
-                ->references( 'id' )
-                ->on( \config( 'teamwork.teams_table' ) )
-                ->onDelete( 'cascade' );
+            $table->foreign('team_id')
+                ->references('id')
+                ->on(\config('teamwork.teams_table'))
+                ->onDelete('cascade');
         });
     }
 
@@ -69,8 +63,7 @@ class TeamworkSetupTables extends Migration
      */
     public function down()
     {
-        Schema::table(\config( 'teamwork.users_table' ), function(Blueprint $table)
-        {
+        Schema::table(\config('teamwork.users_table'), function (Blueprint $table) {
             $table->dropColumn('current_team_id');
         });
 
@@ -82,6 +75,5 @@ class TeamworkSetupTables extends Migration
         Schema::drop(\config('teamwork.team_user_table'));
         Schema::drop(\config('teamwork.team_invites_table'));
         Schema::drop(\config('teamwork.teams_table'));
-
     }
 }

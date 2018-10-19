@@ -1,8 +1,8 @@
-<?php 
+<?php
 
 namespace Lavalite\Team\Traits;
 
-/**
+/*
  * This file is part of Team
  *
  * @license MIT
@@ -20,7 +20,7 @@ trait TeamInviteTrait
      */
     public function team()
     {
-        return $this->hasOne( config( 'team.team_model' ), 'id', 'team_id' );
+        return $this->hasOne(config('team.team_model'), 'id', 'team_id');
     }
 
     /**
@@ -30,7 +30,7 @@ trait TeamInviteTrait
      */
     public function user()
     {
-        return $this->hasOne( config( 'team.user_model' ), 'email', 'email' );
+        return $this->hasOne(config('team.user_model'), 'email', 'email');
     }
 
     /**
@@ -40,7 +40,6 @@ trait TeamInviteTrait
      */
     public function inviter()
     {
-        return $this->hasOne( config( 'team.user_model' ), 'id', 'user_id' );
+        return $this->hasOne(config('team.user_model'), 'id', 'user_id');
     }
-
 }

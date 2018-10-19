@@ -1,16 +1,14 @@
 <?php
+
 namespace Litepie\Repository\Contracts;
 
-use Prettus\Repository\Contracts\CriteriaInterface as PrettusCriteriaInterface; 
-
 /**
- * Interface CriteriaInterface
- * @package Litepie\Repository\Contracts
+ * Interface CriteriaInterface.
  */
 interface CriteriaInterface
 {
     /**
-     * Apply criteria in query repository
+     * Apply criteria in query repository.
      *
      * @param                     $model
      * @param RepositoryInterface $repository

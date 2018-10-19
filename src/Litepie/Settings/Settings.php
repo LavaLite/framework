@@ -43,10 +43,10 @@ class Settings
     {
         if (is_array($key)) {
             $this->setForUser(key($key), value($key));
+
             return value($key);
         }
 
         return $this->getForuser($key, $default);
     }
-
 }

@@ -12,7 +12,6 @@ use Litepie\Settings\Models\Setting;
  */
 class SettingResourceController extends BaseController
 {
-
     /**
      * Initialize setting resource controller.
      *
@@ -35,12 +34,12 @@ class SettingResourceController extends BaseController
      */
     public function index(SettingRequest $request)
     {
-
         if ($this->response->typeIs('json')) {
             $pageLimit = $request->input('pageLimit');
-            $data      = $this->repository
+            $data = $this->repository
                 ->setPresenter(\Litepie\Settings\Repositories\Presenter\SettingPresenter::class)
                 ->getDataTable($pageLimit);
+
             return $this->response
                 ->data($data)
                 ->output();
@@ -67,11 +66,9 @@ class SettingResourceController extends BaseController
             $attributes = $request->all();
 
             if (user()->hasRole('superuser')) {
-
                 foreach ($attributes['main'] as $key => $value) {
                     $this->repository->setValue($key, $value);
                 }
-
             }
 
             foreach ($attributes['user'] as $key => $value) {
@@ -90,7 +87,6 @@ class SettingResourceController extends BaseController
                 ->url(guard_url('/settings/setting'))
                 ->redirect();
         }
-
     }
 
     /**
@@ -117,36 +113,31 @@ class SettingResourceController extends BaseController
     public function setValue($key, $value)
     {
         return $this->repository->setValue($key, $value);
-
     }
 
     /**
      * Remove the setting.
      *
-     * @param Model   $setting
+     * @param Model $setting
      *
      * @return Response
      */
     public function destroy(SettingRequest $request, Setting $setting)
     {
         try {
-
             $setting->delete();
+
             return $this->response->message(trans('messages.success.deleted', ['Module' => trans('settings::setting.name')]))
                 ->code(202)
                 ->status('success')
                 ->url(trans_url(guard_url('/settings/setting')))
                 ->redirect();
-
         } catch (Exception $e) {
-
             return $this->response->message($e->getMessage())
                 ->code(400)
                 ->status('error')
-                ->url(trans_url(guard_url('/settings/setting/' . $setting->getRouteKey())))
+                ->url(trans_url(guard_url('/settings/setting/'.$setting->getRouteKey())))
                 ->redirect();
         }
-
     }
-
 }

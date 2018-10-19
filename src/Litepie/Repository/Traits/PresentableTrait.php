@@ -6,12 +6,10 @@ use Illuminate\Support\Arr;
 use Prettus\Repository\Contracts\PresenterInterface;
 
 /**
- * Class PresentableTrait
- * @package Litepie\Repository\Traits
+ * Class PresentableTrait.
  */
 trait PresentableTrait
 {
-
     /**
      * @var PresenterInterface
      */

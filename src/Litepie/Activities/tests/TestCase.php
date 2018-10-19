@@ -2,11 +2,11 @@
 
 namespace Litepie\Activities\Test;
 
-use Litepie\Activities\Models\Activity;
-use Litepie\Activities\Test\Models\User;
 use Illuminate\Database\Schema\Blueprint;
-use Litepie\Activities\Test\Models\Article;
 use Litepie\Activities\ActivitylogServiceProvider;
+use Litepie\Activities\Models\Activity;
+use Litepie\Activities\Test\Models\Article;
+use Litepie\Activities\Test\Models\User;
 use Orchestra\Testbench\TestCase as OrchestraTestCase;
 
 abstract class TestCase extends OrchestraTestCase
@@ -41,9 +41,9 @@ abstract class TestCase extends OrchestraTestCase
         $app['config']->set('database.default', 'sqlite');
 
         $app['config']->set('database.connections.sqlite', [
-            'driver' => 'sqlite',
+            'driver'   => 'sqlite',
             'database' => $this->getTempDirectory().'/database.sqlite',
-            'prefix' => '',
+            'prefix'   => '',
         ]);
 
         $app['config']->set('auth.providers.users.model', User::class);

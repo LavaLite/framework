@@ -2,10 +2,10 @@
 
 namespace Litepie\Activities\Test;
 
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Litepie\Activities\Models\Activity;
 use Litepie\Activities\Test\Models\User;
 use Litepie\Activities\Traits\HasActivity;
-use Illuminate\Database\Eloquent\SoftDeletes;
 
 class HasActivityTest extends TestCase
 {

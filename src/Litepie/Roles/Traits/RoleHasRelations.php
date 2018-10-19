@@ -28,6 +28,7 @@ trait RoleHasRelations
      * Attach permission to a role.
      *
      * @param int|\Litepie\Roles\Models\Permission $permission
+     *
      * @return int|bool
      */
     public function attachPermission($permission)
@@ -39,6 +40,7 @@ trait RoleHasRelations
      * Detach permission from a role.
      *
      * @param int|\Litepie\Roles\Models\Permission $permission
+     *
      * @return int
      */
     public function detachPermission($permission)
@@ -55,7 +57,7 @@ trait RoleHasRelations
     {
         return $this->permissions()->detach();
     }
-    
+
     /**
      * Detach all permissions.
      *
@@ -67,5 +69,4 @@ trait RoleHasRelations
             return $permission == $value->id || str_is($permission, $value->slug);
         });
     }
-    
 }

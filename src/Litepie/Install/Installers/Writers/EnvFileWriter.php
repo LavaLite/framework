@@ -1,4 +1,6 @@
-<?php namespace Litepie\Install\Installers\Writers;
+<?php
+
+namespace Litepie\Install\Installers\Writers;
 
 use Illuminate\Filesystem\Filesystem;
 
@@ -13,10 +15,10 @@ class EnvFileWriter
      * @var array
      */
     protected $search = [
-        "DB_HOST=127.0.0.1",
-        "DB_DATABASE=homestead",
-        "DB_USERNAME=homestead",
-        "DB_PASSWORD=secret",
+        'DB_HOST=127.0.0.1',
+        'DB_DATABASE=homestead',
+        'DB_USERNAME=homestead',
+        'DB_PASSWORD=secret',
     ];
 
     /**
@@ -41,11 +43,11 @@ class EnvFileWriter
      * @param $name
      * @param $username
      * @param $password
+     *
      * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
      */
     public function write($name, $username, $password, $host)
     {
-
         $environmentFile = $this->finder->get($this->template);
 
         $replace = [
@@ -58,6 +60,5 @@ class EnvFileWriter
         $newEnvironmentFile = str_replace($this->search, $replace, $environmentFile);
 
         $this->finder->put($this->file, $newEnvironmentFile);
-
     }
 }

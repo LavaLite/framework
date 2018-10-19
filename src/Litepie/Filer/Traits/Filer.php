@@ -36,50 +36,39 @@ trait Filer
      */
     public function upload($model)
     {
-
         if (empty($model->uploads)) {
             return;
         }
 
         $model->uploadFiles();
-
     }
 
     /**
      * Upload single file save as single diamentional array.
      *
      * @return null
-     *
      */
     public function uploadFiles()
     {
-
         foreach ($this->uploads as $field => $settings) {
             $files = [];
 
             if (is_array(Request::file($field))) {
-
                 foreach (Request::file($field) as $file) {
-
                     if ($file instanceof UploadedFile) {
-                        $files[] = Uploader::upload($file, $this->upload_folder . DIRECTORY_SEPARATOR . $field);
+                        $files[] = Uploader::upload($file, $this->upload_folder.DIRECTORY_SEPARATOR.$field);
                     }
-
                 }
-
             } elseif (Request::hasFile($field)) {
-
                 $file = Request::file($field);
 
                 if ($file instanceof UploadedFile) {
-                    $files[] = Uploader::upload($file, $this->upload_folder . DIRECTORY_SEPARATOR . $field);
+                    $files[] = Uploader::upload($file, $this->upload_folder.DIRECTORY_SEPARATOR.$field);
                 }
-
             }
 
             $this->setFiles($field, $files);
         }
-
     }
 
     /**
@@ -91,55 +80,53 @@ trait Filer
      */
     public function getUploadFolderAttribute($value)
     {
-
         if (!empty($value)) {
             return $value;
         }
 
-        $folder                            = folder_new(null, null);
+        $folder = folder_new(null, null);
         $this->attributes['upload_folder'] = $folder;
 
         return $folder;
-
     }
 
     /**
      * Return url to upload the file.
      *
-     * @param srting $field
+     * @param srting        $field
      * @param srting|string $file
      *
      * @return null
      */
     public function getUploadURL($field, $file = 'file')
     {
-        return guard_url('upload/' . $this->config . '/' . ($this->upload_folder) . '/' . $field . '/' . $file);
+        return guard_url('upload/'.$this->config.'/'.($this->upload_folder).'/'.$field.'/'.$file);
     }
 
     /**
      * Return url to upload the file.
      *
-     * @param srting $field
+     * @param srting        $field
      * @param srting|string $file
      *
      * @return null
      */
     public function getCropURL($field, $file = 'file')
     {
-        return trans_url('crop/' . $this->config . '/' . ($this->upload_folder) . '/' . $field . '/' . $file);
+        return trans_url('crop/'.$this->config.'/'.($this->upload_folder).'/'.$field.'/'.$file);
     }
 
     /**
      * Return url to upload the file.
      *
-     * @param srting $field
+     * @param srting        $field
      * @param srting|string $file
      *
      * @return null
      */
     public function getFileURL($field, $file = 'file')
     {
-        return trans_url('file/' . $this->config . '/' . ($this->upload_folder) . '/' . $field . '/' . $file);
+        return trans_url('file/'.$this->config.'/'.($this->upload_folder).'/'.$field.'/'.$file);
     }
 
     /**
@@ -152,7 +139,6 @@ trait Filer
      */
     public function setFiles($field, $current)
     {
-
         if (empty($current)) {
             $current = [];
         }
@@ -217,12 +203,12 @@ trait Filer
         $image = $this->$field;
 
         if (!is_array($image) || empty($image)) {
-            return 'img/default/' . $size . '.jpg';
+            return 'img/default/'.$size.'.jpg';
         }
 
         $image = array_pull($image, $pos, head($image));
 
-        return "image/{$size}/" . ($image['path']);
+        return "image/{$size}/".($image['path']);
     }
 
     /**
@@ -238,11 +224,11 @@ trait Filer
         $image = $this->$field;
 
         if (!is_array($image) || empty($image)) {
-            return ['img/default/' . $size . '.jpg'];
+            return ['img/default/'.$size.'.jpg'];
         }
 
         foreach ($image as $key => $img) {
-            $image[$key] = url("image/{$size}/") . '/' . ($img['path']);
+            $image[$key] = url("image/{$size}/").'/'.($img['path']);
         }
 
         return $image;
@@ -267,7 +253,7 @@ trait Filer
         }
 
         foreach ($files as $key => $file) {
-            $files[$key]['url'] = url("{$prefix}/" . $file['path']);
+            $files[$key]['url'] = url("{$prefix}/".$file['path']);
         }
 
         return $files;
@@ -284,7 +270,7 @@ trait Filer
     {
         $form = new Forms($field, $this->config, $this->getFile($field));
         $form->url($this->getUploadUrl($field));
+
         return $form;
     }
-
 }

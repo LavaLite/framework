@@ -4,7 +4,6 @@ namespace Litepie\Hashids\Traits;
 
 trait Hashids
 {
-
     /**
      * Get the route key for the model.
      *
@@ -24,6 +23,7 @@ trait Hashids
     {
         $id = hashids_decode($id);
         $id = empty($id) ? 0 : $id;
+
         return parent::findOrNew($id, $columns);
     }
 

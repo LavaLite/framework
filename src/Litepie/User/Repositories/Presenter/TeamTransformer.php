@@ -3,9 +3,8 @@
 namespace Litepie\User\Repositories\Presenter;
 
 use League\Fractal\TransformerAbstract;
-use Hashids;
 
-class TeamListTransformer extends TransformerAbstract
+class TeamTransformer extends TransformerAbstract
 {
     public function transform(\Litepie\User\Models\Team $team)
     {

@@ -2,14 +2,14 @@
 
 namespace Litepie\User\Traits\Auth;
 
+use Illuminate\Foundation\Auth\SendsPasswordResetEmails as IlluminateSendsPasswordResetEmails;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Password;
-use Illuminate\Foundation\Auth\SendsPasswordResetEmails as IlluminateSendsPasswordResetEmails;
 
 trait SendsPasswordResetEmails
 {
-
     use Common, IlluminateSendsPasswordResetEmails;
+
     /**
      * Display the form to request a password reset link.
      *

@@ -2,20 +2,20 @@
 
 return [
 
-    /**
+    /*
      * Singlular and plural name of the module
      */
     'name'          => 'Team',
     'names'         => 'Teams',
 
-    /**
+    /*
      * Options for select/radio/check.
      */
     'options'       => [
-            
+
     ],
 
-    /**
+    /*
      * Placeholder for inputs
      */
     'placeholder'   => [
@@ -26,7 +26,7 @@ return [
         'description'                => 'Please enter description',
     ],
 
-    /**
+    /*
      * Labels for inputs.
      */
     'label'         => [
@@ -40,14 +40,14 @@ return [
         'updated_at'                 => 'Updated at',
     ],
 
-    /**
+    /*
      * Tab labels
      */
     'tab'           => [
         'name'  => 'Team',
     ],
 
-    /**
+    /*
      * Texts  for the module
      */
     'text'          => [

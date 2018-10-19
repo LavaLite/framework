@@ -1,13 +1,12 @@
 <?php
+
 namespace Litepie\Repository\Contracts;
 
-use Prettus\Repository\Contracts\CacheableInterface as PrettusCacheableInterface; 
+use Prettus\Repository\Contracts\CacheableInterface as PrettusCacheableInterface;
 
 /**
- * Interface CacheableInterface
- * @package Litepie\Repository\Contracts
+ * Interface CacheableInterface.
  */
 interface CacheableInterface extends PrettusCacheableInterface
 {
-
 }

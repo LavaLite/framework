@@ -21,17 +21,16 @@ class UserServiceProvider extends ServiceProvider
     public function boot()
     {
         // Load view
-        $this->loadViewsFrom(__DIR__ . '/resources/views', 'user');
+        $this->loadViewsFrom(__DIR__.'/resources/views', 'user');
 
         // Load translation
-        $this->loadTranslationsFrom(__DIR__ . '/resources/lang', 'user');
+        $this->loadTranslationsFrom(__DIR__.'/resources/lang', 'user');
 
         // Load migrations
-        $this->loadMigrationsFrom(__DIR__ . '/database/migrations');
+        $this->loadMigrationsFrom(__DIR__.'/database/migrations');
 
         // Call pblish redources function
         $this->publishResources();
-
     }
 
     /**
@@ -47,7 +46,6 @@ class UserServiceProvider extends ServiceProvider
         $this->app->bind('user', function ($app) {
             return $this->app->make('Litepie\User\User');
         });
-
 
         // Bind User to repository
         $this->app->bind(
@@ -91,15 +89,15 @@ class UserServiceProvider extends ServiceProvider
     private function publishResources()
     {
         // Publish configuration file
-        $this->publishes([__DIR__ . '/config/config.php' => config_path('users.php')], 'config');
+        $this->publishes([__DIR__.'/config/config.php' => config_path('users.php')], 'config');
 
         // Publish admin view
-        $this->publishes([__DIR__ . '/resources/views' => base_path('resources/views/vendor/user')], 'view');
+        $this->publishes([__DIR__.'/resources/views' => base_path('resources/views/vendor/user')], 'view');
 
         // Publish language files
-        $this->publishes([__DIR__ . '/resources/lang' => base_path('resources/lang/vendor/user')], 'lang');
+        $this->publishes([__DIR__.'/resources/lang' => base_path('resources/lang/vendor/user')], 'lang');
 
         // Publish public files
-        $this->publishes([__DIR__ . '/public' => base_path('public')], 'public');
+        $this->publishes([__DIR__.'/public' => base_path('public')], 'public');
     }
 }

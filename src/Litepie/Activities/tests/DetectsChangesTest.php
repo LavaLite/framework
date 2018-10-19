@@ -3,11 +3,11 @@
 namespace Litepie\Activities\Test;
 
 use Carbon\Carbon;
-use Spatie\Activitylog\Models\Activity;
-use Litepie\Activities\Test\Models\User;
-use Litepie\Activities\Test\Models\Article;
-use Litepie\Activities\Traits\LogsActivity;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Litepie\Activities\Test\Models\Article;
+use Litepie\Activities\Test\Models\User;
+use Litepie\Activities\Traits\LogsActivity;
+use Spatie\Activitylog\Models\Activity;
 
 class DetectsChangesTest extends TestCase
 {
@@ -56,8 +56,8 @@ class DetectsChangesTest extends TestCase
         ]);
 
         $article = $articleClass::create([
-            'name' => 'original name',
-            'text' => 'original text',
+            'name'    => 'original name',
+            'text'    => 'original text',
             'user_id' => $user->id,
         ]);
 
@@ -67,13 +67,13 @@ class DetectsChangesTest extends TestCase
 
         $expectedChanges = [
             'attributes' => [
-                'name' => 'updated name',
-                'text' => 'updated text',
+                'name'      => 'updated name',
+                'text'      => 'updated text',
                 'user.name' => 'user name',
             ],
             'old' => [
-                'name' => 'original name',
-                'text' => 'original text',
+                'name'      => 'original name',
+                'text'      => 'original text',
                 'user.name' => 'user name',
             ],
         ];
@@ -105,13 +105,13 @@ class DetectsChangesTest extends TestCase
 
         $expectedChanges = [
             'attributes' => [
-                'name' => 'updated name',
-                'text' => 'updated text',
+                'name'      => 'updated name',
+                'text'      => 'updated text',
                 'user.name' => null,
             ],
             'old' => [
-                'name' => 'original name',
-                'text' => 'original text',
+                'name'      => 'original name',
+                'text'      => 'original text',
                 'user.name' => null,
             ],
         ];
@@ -209,8 +209,8 @@ class DetectsChangesTest extends TestCase
         ]);
 
         $article = $articleClass::create([
-            'name' => 'name',
-            'text' => 'text',
+            'name'    => 'name',
+            'text'    => 'text',
             'user_id' => $user->id,
         ]);
 
@@ -218,13 +218,13 @@ class DetectsChangesTest extends TestCase
 
         $expectedChanges = [
             'attributes' => [
-                    'name' => 'name',
-                    'text' => 'text',
+                    'name'      => 'name',
+                    'text'      => 'text',
                     'user.name' => 'another name',
                 ],
             'old' => [
-                    'name' => 'name',
-                    'text' => 'text',
+                    'name'      => 'name',
+                    'text'      => 'text',
                     'user.name' => 'a name',
                 ],
         ];
@@ -252,8 +252,8 @@ class DetectsChangesTest extends TestCase
         ]);
 
         $article = $articleClass::create([
-            'name' => 'name',
-            'text' => 'text',
+            'name'    => 'name',
+            'text'    => 'text',
             'user_id' => $user->id,
         ]);
 
@@ -491,12 +491,12 @@ class DetectsChangesTest extends TestCase
 
         $expectedChanges = [
             'attributes' => [
-                'name' => 'my name',
-                'text' => null,
+                'name'       => 'my name',
+                'text'       => null,
                 'deleted_at' => null,
-                'id' => $article->id,
-                'user_id' => null,
-                'json' => null,
+                'id'         => $article->id,
+                'user_id'    => null,
+                'json'       => null,
                 'created_at' => '2017-01-01 12:00:00',
                 'updated_at' => '2017-01-01 12:00:00',
             ],
@@ -521,22 +521,22 @@ class DetectsChangesTest extends TestCase
         Carbon::setTestNow(Carbon::create(2017, 1, 1, 12, 0, 0));
 
         $article = $articleClass::create([
-            'name' => 'article name',
-            'text' => 'article text',
+            'name'    => 'article name',
+            'text'    => 'article text',
             'user_id' => $user->id,
         ]);
 
         $expectedChanges = [
             'attributes' => [
-                'id' => $article->id,
-                'name' => 'article name',
-                'text' => 'article text',
+                'id'         => $article->id,
+                'name'       => 'article name',
+                'text'       => 'article text',
                 'deleted_at' => null,
-                'user_id' => $user->id,
-                'json' => null,
+                'user_id'    => $user->id,
+                'json'       => null,
                 'created_at' => '2017-01-01 12:00:00',
                 'updated_at' => '2017-01-01 12:00:00',
-                'user.name' => 'user name',
+                'user.name'  => 'user name',
             ],
         ];
 
@@ -559,8 +559,8 @@ class DetectsChangesTest extends TestCase
 
         Carbon::setTestNow(Carbon::create(2017, 1, 1, 12, 0, 0));
         $article = $articleClass::create([
-            'name' => 'article name',
-            'text' => 'article text',
+            'name'    => 'article name',
+            'text'    => 'article text',
             'user_id' => $user->id,
         ]);
 
@@ -570,11 +570,11 @@ class DetectsChangesTest extends TestCase
 
         $expectedChanges = [
             'attributes' => [
-                'name' => 'changed name',
+                'name'       => 'changed name',
                 'updated_at' => '2018-01-01 12:00:00',
             ],
             'old' => [
-                'name' => 'article name',
+                'name'       => 'article name',
                 'updated_at' => '2017-01-01 12:00:00',
             ],
         ];

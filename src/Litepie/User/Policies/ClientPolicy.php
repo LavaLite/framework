@@ -3,8 +3,8 @@
 namespace Litepie\User\Policies;
 
 use App\User;
-use Litepie\User\Contracts\UserPolicy;
 use Illuminate\Auth\Access\HandlesAuthorization;
+use Litepie\User\Contracts\UserPolicy;
 
 class ClientPolicy
 {
@@ -20,11 +20,11 @@ class ClientPolicy
      */
     public function view(User $user, UserPolicy $usermodal)
     {
-        if ($user->canDo('user.' . request('type', 'client') . '.view') && $user->isAdmin()) {
+        if ($user->canDo('user.'.request('type', 'client').'.view') && $user->isAdmin()) {
             return true;
         }
 
-       return false;
+        return false;
     }
 
     /**
@@ -37,7 +37,7 @@ class ClientPolicy
      */
     public function create(User $user)
     {
-        if ($user->canDo('user.' . request('type', 'client') . '.view') && $user->isAdmin()) {
+        if ($user->canDo('user.'.request('type', 'client').'.view') && $user->isAdmin()) {
             return true;
         }
 
@@ -54,7 +54,7 @@ class ClientPolicy
      */
     public function update(User $user, UserModal $usermodal)
     {
-        if ($user->canDo('user.' . request('type', 'client') . '.view') && $user->isAdmin()) {
+        if ($user->canDo('user.'.request('type', 'client').'.view') && $user->isAdmin()) {
             return true;
         }
 
@@ -71,7 +71,7 @@ class ClientPolicy
      */
     public function destroy(User $user, UserModal $usermodal)
     {
-        if ($user->canDo('user.' . request('type', 'client') . '.view') && $user->isAdmin()) {
+        if ($user->canDo('user.'.request('type', 'client').'.view') && $user->isAdmin()) {
             return true;
         }
 
@@ -91,7 +91,5 @@ class ClientPolicy
         if ($user->isSuperuser()) {
             return true;
         }
-
     }
-
 }
