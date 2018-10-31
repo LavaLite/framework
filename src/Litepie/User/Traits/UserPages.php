@@ -39,7 +39,6 @@ trait UserPages
     public function getPassword(Request $request, $role = null)
     {
         return $this->response->setMetaTitle('Change Password')
-            ->layout('auth')
             ->view('user.password')
             ->output();
     }
