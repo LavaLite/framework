@@ -209,7 +209,7 @@ trait Uploader
 
     public function relativePath($path)
     {
-        $path = str_replace(public_path(), '', $path);
+        $path = str_replace(base_path(config('filer.folder')), '', $path);
 
         // Check to see if it begins in a slash
         if (substr($path, 0, 1) != DIRECTORY_SEPARATOR) {

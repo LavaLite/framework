@@ -52,18 +52,19 @@ trait Filer
     {
         foreach ($this->uploads as $field => $settings) {
             $files = [];
+            $rootFolder = $this->upload_folder_config;
 
             if (is_array(Request::file($field))) {
                 foreach (Request::file($field) as $file) {
                     if ($file instanceof UploadedFile) {
-                        $files[] = Uploader::upload($file, $this->upload_folder.DIRECTORY_SEPARATOR.$field);
+                        $files[] = Uploader::upload($file, $rootFolder . '/' . $this->upload_folder.DIRECTORY_SEPARATOR.$field);
                     }
                 }
             } elseif (Request::hasFile($field)) {
                 $file = Request::file($field);
 
                 if ($file instanceof UploadedFile) {
-                    $files[] = Uploader::upload($file, $this->upload_folder.DIRECTORY_SEPARATOR.$field);
+                    $files[] = Uploader::upload($file, $rootFolder . '/' . $this->upload_folder.DIRECTORY_SEPARATOR.$field);
                 }
             }
 
@@ -88,6 +89,18 @@ trait Filer
         $this->attributes['upload_folder'] = $folder;
 
         return $folder;
+    }
+
+    /**
+     * Return upload_folder attribute for the model.
+     *
+     * @param string $value
+     *
+     * @return string
+     */
+    public function getUploadFolderConfigAttribute($value)
+    {
+        return config($this->config . '.' . 'upload_folder');
     }
 
     /**
@@ -253,10 +266,23 @@ trait Filer
         }
 
         foreach ($files as $key => $file) {
-            $files[$key]['url'] = url("{$prefix}/".$file['path']);
+            $files[$key]['url'] = $this->getPublicUrl($file['folder'], $file['file'], $prefix);
         }
 
         return $files;
+    }
+
+    /**
+     * Return the main image for the record.
+     *
+     * @param type|string $size
+     * @param type|string $field
+     *
+     * @return string path
+     */
+    public function getPublicUrl($folder, $file, $prefix = 'download')
+    {
+        return url("{$prefix}" . '/' . $folder . '/' . $file);
     }
 
     /**

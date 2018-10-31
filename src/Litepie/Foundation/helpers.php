@@ -252,7 +252,7 @@ if (!function_exists('guard_url')) {
      */
     function guard_url($url, $translate = true)
     {
-        $prefix = empty(getenv('guard')) ? 'user' : current(explode('.', getenv('guard')));
+        $prefix = empty(getenv('guard')) ? config('auth.defaults.url', 'user') : current(explode('.', getenv('guard')));
         if ($translate) {
             return trans_url($prefix.'/'.$url);
         }
