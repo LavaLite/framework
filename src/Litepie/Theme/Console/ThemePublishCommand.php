@@ -249,6 +249,10 @@ class ThemePublishCommand extends Command
      */
     protected function pathsToView()
     {
+        if (!in_array($this->provider, ServiceProvider::publishableProviders())){
+            $this->error("Service provider [{$this->provider}] is invalid!");
+                $this->promptForProvider();
+        }
         return ServiceProvider::pathsToPublish(
             $this->provider, 'view'
         );
