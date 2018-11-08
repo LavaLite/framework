@@ -11,7 +11,7 @@
                             <p class="sub-title">{{ trans('app.add')  }} setting here...</p>
                         </div>
                         <div class="col-sm-1">
-                            <a href="{{trans_url(get_guard('url').'/settings/setting')}}" rel="tooltip" class="btn btn-white btn-round btn-simple btn-icon pull-right add-new" data-original-title="" title="">
+                            <a href="{{guard_url('/settings/setting')}}" rel="tooltip" class="btn btn-white btn-round btn-simple btn-icon pull-right add-new" data-original-title="" title="">
                                     <i class="fa fa-chevron-left"></i>
                             </a>
                         </div>
@@ -22,14 +22,14 @@
                 ->method('POST')
                 ->files('true')
                 ->class('dashboard-form')
-                ->action(trans_url(get_guard('url').'/settings/setting'))!!}
+                ->action(guard_url('/settings/setting'))!!}
                 <div class="content">                
                     @include('public::notifications')
                     @include('settings::user.setting.partial.entry')
                 </div>
                 <div class="footer">
                     <button class="btn-primary btn-raised btn btn-sm">{{ trans('app.create')  }} {!! trans('settings::setting.name') !!}</button>
-                     <a href="{{ trans_url(get_guard('url').'/settings/setting') }}" class="btn-danger btn-raised btn btn-sm"> {{ trans('app.back')  }}</a>
+                     <a href="{{ guard_url('/settings/setting') }}" class="btn-danger btn-raised btn btn-sm"> {{ trans('app.back')  }}</a>
                 </div>
                 {!! Form::close() !!}
             </div>
