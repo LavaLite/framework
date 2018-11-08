@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Password;
 
 trait SendsPasswordResetEmails
 {
-    use Common, IlluminateSendsPasswordResetEmails;
+    use IlluminateSendsPasswordResetEmails;
 
     /**
      * Display the form to request a password reset link.
@@ -30,6 +30,6 @@ trait SendsPasswordResetEmails
      */
     public function broker()
     {
-        return Password::broker(get_guard('route'));
+        return Password::broker($this->getPasswordBroker());
     }
 }

@@ -52,6 +52,14 @@ class RouteServiceProvider extends ServiceProvider
                 return $userrepo->findorNew($client);
             });
         }
+
+        if (Request::is('profile/*')) {
+            Route::bind('user', function ($user) {
+                $userrepo = $this->app->make('Litepie\User\Interfaces\UserRepositoryInterface');
+
+                return $userrepo->findorNew($user);
+            });
+        }
     }
 
     /**
@@ -78,6 +86,7 @@ class RouteServiceProvider extends ServiceProvider
     protected function mapWebRoutes()
     {
         Route::group([
+            'namespace' => $this->namespace,
             'middleware' => 'web',
             'prefix'     => trans_setlocale(),
         ], function ($router) {

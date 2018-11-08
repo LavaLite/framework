@@ -2,7 +2,6 @@
 
 namespace Litepie\User\Traits\Auth;
 
-use Illuminate\Foundation\Auth\RedirectsUsers;
 use Illuminate\Foundation\Auth\ResetsPasswords as IlluminateResetsPasswords;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -10,11 +9,7 @@ use Illuminate\Support\Facades\Password;
 
 trait ResetsPasswords
 {
-    use Common, RedirectsUsers, IlluminateResetsPasswords{
-        Common::guard insteadof IlluminateResetsPasswords;
-        RedirectsUsers::redirectPath insteadof IlluminateResetsPasswords;
-    }
-
+    use Common, IlluminateResetsPasswords
     /**
      * Display the password reset view for the given token.
      *

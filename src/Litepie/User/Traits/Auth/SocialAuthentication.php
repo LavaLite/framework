@@ -8,9 +8,7 @@ use User;
 
 trait SocialAuthentication
 {
-    use IlluminateAuthenticatesUsers, Common {
-         Common::guard insteadof IlluminateAuthenticatesUsers;
-    }
+    use IlluminateAuthenticatesUsers;
 
     //use IlluminateAuthenticatesUsers;
 
@@ -21,6 +19,10 @@ trait SocialAuthentication
      */
     public function redirectToProvider($provider)
     {
+        if (!config("services.{$provider}.client_id")) {
+            abort(404, "Please configure the [{$provider}] ids.");
+        }
+
         $this->setCallbackUrl($provider);
 
         return Socialite::driver($provider)->redirect();
@@ -35,9 +37,9 @@ trait SocialAuthentication
     {
         $this->setCallbackUrl($provider);
         $guard = $this->getGuard();
-        $user = Socialite::driver($provider)->user();
+        $user  = Socialite::driver($provider)->user();
         $model = $this->getAuthModel();
-        $data = [
+        $data  = [
             'name'      => $user->getName(),
             'email'     => $user->getEmail(),
             'status'    => 'Active',
@@ -65,9 +67,10 @@ trait SocialAuthentication
      **/
     public function setCallbackUrl($provider)
     {
-        $guard = $this->getGuardRoute();
+        $guard      = $this->getGuardRoute();
         $currentUrl = config("services.{$provider}.redirect");
-        $newUrl = str_replace('/user/', "/$guard/", $currentUrl);
+        $newUrl     = str_replace('/user/', "/$guard/", $currentUrl);
         config(["services.{$provider}.redirect" => $newUrl]);
     }
+
 }

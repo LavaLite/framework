@@ -14,8 +14,6 @@ use Response;
  */
 trait UserPages
 {
-    use Common;
-
     /**
      * List apis for a particular user.
      *
@@ -67,7 +65,7 @@ trait UserPages
      */
     public function postPassword(Request $request, $role = null)
     {
-        $user = $request->user($this->getGuard());
+        $user = $request->user(guard());
 
         $this->validate($request, [
             'password'     => 'required|confirmed|min:6',
@@ -98,7 +96,7 @@ trait UserPages
      */
     public function getProfile(Request $request)
     {
-        $user = $request->user($this->getGuard());
+        $user = $request->user(guard());
         Form::populate($user);
 
         return $this->response->setMetaTitle('Profile')

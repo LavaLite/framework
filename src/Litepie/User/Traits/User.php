@@ -40,7 +40,12 @@ trait User
      */
     public function getBadgeAttribute($value)
     {
-        return "<a href='".trans_url('user/'.$this->slug)."' ><img alt=' width='45' height='45' src='{$this->picture}' title='{$this->name}' class='img-circle'></a>";
+        return "<div class='user-badge'>
+        <a href='".trans_url('profile/'.$this->getRouteKey())."' >
+        <img alt=' width='45' height='45' src='{$this->picture}' title='{$this->name}' class='img-circle'>
+        <span class='name'>{$this->name}</span> <span class='joined'>Joined: {$this->joined}</span>
+        </a>
+        </div>";
     }
 
     /**
