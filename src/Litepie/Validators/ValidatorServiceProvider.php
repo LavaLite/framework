@@ -4,6 +4,7 @@ namespace Litepie\Validators;
 
 use Illuminate\Support\ServiceProvider;
 use Validator;
+
 class ValidatorServiceProvider extends ServiceProvider
 {
     /**
@@ -26,5 +27,4 @@ class ValidatorServiceProvider extends ServiceProvider
                'Litepie\\Validators\\ReCaptcha@validate'
         );
     }
-
 }
