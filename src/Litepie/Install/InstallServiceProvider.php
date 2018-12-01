@@ -36,6 +36,10 @@ class InstallServiceProvider extends ServiceProvider
      */
     public function register()
     {
+        $this->commands([
+            \Litepie\Install\InstallCommand::class,
+        ]);
+
         $this->mergeConfigFrom(__DIR__.'/config/installer.php', 'installer');
 
 
