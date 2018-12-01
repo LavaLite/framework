@@ -59,6 +59,6 @@ trait ThemeAndViews
      */
     protected function getViewFolder()
     {
-        return substr($this->getGuard(), 0, strpos(getenv('guard'), '.'));
+        return substr(guard(), 0, strpos(getenv('guard'), '.'));
     }
 }

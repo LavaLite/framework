@@ -5,5 +5,5 @@ Route::group(['prefix' => set_route_guard('web').'/upload'], function () {
     Route::post('{config}/{path?}', 'UploadController@upload')->where('path', '(.*)');
 });
 
-Route::get('download/{path?}', 'FileController@download')->where('path', '(.*)');
-Route::get('display/{path?}', 'FileController@display')->where('path', '(.*)');
+Route::get('filer/download/{path?}', 'FileController@download')->where('path', '(.*)');
+Route::get('filer/display/{path?}', 'FileController@display')->where('path', '(.*)');

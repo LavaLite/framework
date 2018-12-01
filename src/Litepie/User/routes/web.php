@@ -3,7 +3,6 @@
 
 // Admin  routes  for user
 Route::group([
-    'namespace' => 'Litepie\User\Http\Controllers',
     'prefix'    => set_route_guard('web').'/user',
 ], function () {
     Route::post('user/change/team', 'UserResourceController@changeTeam');
@@ -16,3 +15,5 @@ Route::group([
     ]]);
     // Route::resource('team', 'TeamResourceController');
 });
+
+Route::get('profile/{user}', 'UserPublicController@profile');

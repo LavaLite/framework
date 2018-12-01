@@ -39,6 +39,7 @@ class CreateClientsTable extends Migration
             $table->string('web', 100)->nullable();
             $table->longText('permissions')->nullable();
             $table->enum('status', ['New', 'Active', 'Suspended', 'Locked'])->default('New')->nullable();
+            $table->dateTime('email_verified_at')->nullable();
             $table->integer('user_id')->nullable();
             $table->string('user_type', 50)->nullable();
             $table->string('upload_folder', 100)->nullable();

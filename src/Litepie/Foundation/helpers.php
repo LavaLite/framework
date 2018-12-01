@@ -214,30 +214,22 @@ if (!function_exists('user_id')) {
     }
 }
 
-if (!function_exists('get_guard')) {
+
+if (!function_exists('guard')) {
     /**
-     * Return thr property of the guard for current request.
+     * Set the guard .
      *
      * @param string $property
      *
      * @return mixed
      */
-    function get_guard($property = 'guard')
+    function guard($guard = null)
     {
-        switch ($property) {
-            case 'url':
-                return empty(getenv('guard')) ? 'user' : current(explode('.', getenv('guard')));
-                break;
-            case 'route':
-                return empty(getenv('guard')) ? 'user' : current(explode('.', getenv('guard')));
-                break;
-            case 'model':
-                $provider = config('auth.guards.'.getenv('guard').'.provider', 'users');
-
-                return config("auth.providers.$provider.model", App\User::class);
-                break;
-            default:
-                return getenv('guard');
+        if(is_null($guard)) {
+            return getenv('guard');
+        } else {
+            putenv("guard={$guard}");
+            app('auth')->shouldUse("{$guard}");
         }
     }
 }
@@ -277,26 +269,19 @@ if (!function_exists('set_route_guard')) {
         $guard = request()->segment($i);
 
         if (!empty(config("auth.guards.$guard"))) {
-            putenv("guard={$guard}.{$sub}");
-            app('auth')->shouldUse("{$guard}.{$sub}");
-
-            return $guard;
-        }
-
-        //check whether guard is the second parameter of the route
-        $guard = request()->segment(++$i);
-        if (!empty(config("auth.guards.$guard"))) {
-            putenv("guard={$guard}.{$sub}");
-            app('auth')->shouldUse("{$guard}.{$sub}");
-
+            guard("{$guard}.{$sub}");
             return $guard;
         }
 
         $guard = request()->segment(++$i);
         if (!empty(config("auth.guards.$guard"))) {
-            putenv("guard={$guard}.{$sub}");
-            app('auth')->shouldUse("{$guard}.{$sub}");
+            guard("{$guard}.{$sub}");
+            return $guard;
+        }
 
+        $guard = request()->segment(++$i);
+        if (!empty(config("auth.guards.$guard"))) {
+            guard("{$guard}.{$sub}");
             return $guard;
         }
 
@@ -339,21 +324,6 @@ if (!function_exists('user')) {
     }
 }
 
-if (!function_exists('user_check')) {
-    /**
-     * Check whether user is logged in.
-     *
-     * @param type|null $guard
-     *
-     * @return type
-     */
-    function user_check($guard = null)
-    {
-        $guard = is_null($guard) ? getenv('guard') : $guard;
-
-        return Auth::guard($guard)->check();
-    }
-}
 
 if (!function_exists('format_date')) {
     /**

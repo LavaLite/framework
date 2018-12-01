@@ -15,13 +15,13 @@
                                     {!!Form::open()
                                    ->method('GET')
                                    ->class('form pn')
-                                   ->action(trans_url(get_guard('url').'/settings/setting'))!!}
+                                   ->action(guard_url('/settings/setting'))!!}
                                     <div class="form-group form-white mn">
                                       {!!Form::text('search')->type('text')->placeholder('Search')->raw()!!}
                                     </div>
                                     <button type="submit" class="btn btn-icon btn-round btn-white btn-raised search-btn"><i class="fa fa-search"></i></button>
                                     {!! Form::close()!!}
-                                    <a href="{!!trans_url(get_guard('url').'/settings/setting/create')!!}" rel="tooltip" class="btn btn-white btn-round btn-simple btn-icon pull-right add-new" data-original-title="" title="">
+                                    <a href="{!!guard_url('/settings/setting/create')!!}" rel="tooltip" class="btn btn-white btn-round btn-simple btn-icon pull-right add-new" data-original-title="" title="">
                                         <i class="fa fa-plus-circle"></i>
                                     </a>
                                 </div>
@@ -71,10 +71,10 @@
                                         <a href="{{trans_url('setting')}}/{!!$setting->getRouteKey()!!}" rel="tooltip" data-toggle="tooltip" data-placement="top" title="View Setting" class="btn btn-info btn-simple">
                                             <i class="material-icons">panorama</i>
                                         </a>
-                                        <a href="{!! trans_url(get_guard('url').'/settings/setting') !!}/{!! $setting->getRouteKey() !!}/edit" rel="tooltip" data-toggle="tooltip" data-placement="top" title="Edit Setting" class="btn btn-success btn-simple">
+                                        <a href="{!! guard_url('/settings/setting') !!}/{!! $setting->getRouteKey() !!}/edit" rel="tooltip" data-toggle="tooltip" data-placement="top" title="Edit Setting" class="btn btn-success btn-simple">
                                             <i class="material-icons">edit</i>
                                         </a>
-                                        <a rel="tooltip" data-toggle="tooltip" data-placement="top" title="Remove Setting" class="btn btn-danger btn-simple" data-action="DELETE" data-href="{!! trans_url(get_guard('url').'/settings/setting') !!}/{!! $setting->getRouteKey() !!}" data-remove="{!! $setting->getRouteKey() !!}">
+                                        <a rel="tooltip" data-toggle="tooltip" data-placement="top" title="Remove Setting" class="btn btn-danger btn-simple" data-action="DELETE" data-href="{!! guard_url('/settings/setting') !!}/{!! $setting->getRouteKey() !!}" data-remove="{!! $setting->getRouteKey() !!}">
                                             <i class="material-icons">close</i>
                                         </a>
                                     </td>

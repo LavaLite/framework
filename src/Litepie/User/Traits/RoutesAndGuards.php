@@ -6,6 +6,7 @@ use Auth;
 
 trait RoutesAndGuards
 {
+
     /**
      * Get the model for the current guard.
      *
@@ -13,24 +14,37 @@ trait RoutesAndGuards
      */
     public function getAuthModel()
     {
-        $provider = config('auth.guards.'.$this->getGuard().'.provider', 'users');
-
-        return config("auth.providers.$provider.model", App\User::class);
+        $guard    = guard();
+        $guard    = ($guard == null) ? $guard : config('auth.defaults.guard');
+        $provider = config('auth.guards.' . $guard . '.provider');
+        return config("auth.providers.$provider.model");
     }
 
     /**
-     * Return authguardroute for the controller.
+     * Return auth guard route for the controller.
      *
      * @return type
      */
     protected function getGuardRoute()
     {
-        $guard = $this->getGuard();
+        $guard = guard();
 
         if (empty($guard)) {
-            return 'user';
+            config('auth.defaults.passwords');
         }
 
+        return current(explode('.', $guard));
+    }
+
+    /**
+     * Return auth guard route for the controller.
+     *
+     * @return type
+     */
+    protected function getPasswordBroker()
+    {
+        $guard = guard();
+        $guard = ($guard == null) ? $guard : config('auth.defaults.guard');
         return current(explode('.', $guard));
     }
 
@@ -39,21 +53,26 @@ trait RoutesAndGuards
      *
      * @return type
      */
-    protected function getGuard()
+    protected function getGuardTable()
     {
-        return getenv('guard');
+        $model = $this->getAuthModel();
+
+        return with(new $model)->getTable();
     }
 
     /**
-     * Return auth guard for the controller.
+     * Return homepage for the user.
      *
-     * @return type
+     * @return Response
      */
-    protected function getTable()
+    public function redirectTo()
     {
-        $guard = $this->getGuard();
-        $provider = config("auth.guards.$guard.provider", 'users');
+        $guard = guard();
 
-        return config("auth.providers.$provider.table", 'users');
+        if (!empty($guard)) {
+            return current(explode('.', $guard));
+        }
+
+        return config('auth.defaults.url');
     }
 }
