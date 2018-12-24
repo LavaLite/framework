@@ -263,8 +263,11 @@ if (!function_exists('set_route_guard')) {
      */
     function set_route_guard($sub = 'web')
     {
-        $i = ($sub == 'web') ? 1 : 2;
 
+        if (request()->is('*api/*')) {
+            $sub = 'api';
+        }
+        $i = ($sub == 'web') ? 1 : 2;
         //check whether guard is the first parameter of the route
         $guard = request()->segment($i);
 
@@ -288,6 +291,7 @@ if (!function_exists('set_route_guard')) {
         return 'client';
     }
 }
+
 
 if (!function_exists('users')) {
     /**
