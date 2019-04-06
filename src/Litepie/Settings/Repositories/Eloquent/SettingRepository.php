@@ -80,4 +80,67 @@ class SettingRepository extends BaseRepository implements SettingRepositoryInter
 
         return $value;
     }
+
+    /**
+     * Update the setting.
+     *
+     * @param Request $request
+     * @param Model   $setting
+     *
+     * @return Response
+     */
+    public function upload($request, $key)
+    {
+        dd($request->file('upload.' . $key.'.file'));
+        if ($request->hasFile($key."[file]")) {
+            $path   = $request->get($key."['path']");
+            $folder = substr("$path", 0, strrpos($path, '/'));
+            $file   = substr("$path", (strrpos($path, '_') + 1));
+
+            $res = $request->file($key['file'])->storeAs($folder, $file);
+
+            dd($res);
+        }
+
+    }
+
+    /**
+     * Update the setting.
+     *
+     * @param Request $request
+     * @param Model   $setting
+     *
+     * @return Response
+     */
+    public function theme($value)
+    {
+        dd($value);
+    }
+
+    /**
+     * Update the setting.
+     *
+     * @param Request $request
+     * @param Model   $setting
+     *
+     * @return Response
+     */
+    public function env($value)
+    {
+        dd($value);
+    }
+
+    /**
+     * Update the setting.
+     *
+     * @param Request $request
+     * @param Model   $setting
+     *
+     * @return Response
+     */
+    public function commands($value)
+    {
+        dd($value);
+    }
+
 }

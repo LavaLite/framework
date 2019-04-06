@@ -34,19 +34,6 @@ class SettingResourceController extends BaseController
      */
     public function index(SettingRequest $request)
     {
-        if ($this->response->typeIs('json')) {
-            $pageLimit = $request->input('pageLimit');
-            $data = $this->repository
-                ->setPresenter(\Litepie\Settings\Repositories\Presenter\SettingPresenter::class)
-                ->getDataTable($pageLimit);
-
-            return $this->response
-                ->data($data)
-                ->output();
-        }
-
-        $settings = $this->repository->paginate();
-
         return $this->response->setMetaTitle(trans('settings::setting.names'))
             ->view('settings::admin.setting.index')
             ->data(compact('settings'))
@@ -60,18 +47,54 @@ class SettingResourceController extends BaseController
      *
      * @return Response
      */
-    public function saveSettings(SettingRequest $request)
+    public function show($slug)
+    {
+        return view('settings::admin.setting.partial.' . $slug);
+    }
+
+    /**
+     * Create new setting.
+     *
+     * @param Request $request
+     *
+     * @return Response
+     */
+    public function store(SettingRequest $request)
     {
         try {
             $attributes = $request->all();
 
             if (user()->hasRole('superuser')) {
-                foreach ($attributes['main'] as $key => $value) {
-                    $this->repository->setValue($key, $value);
+
+                if (isset($attributes['settings']) && is_array($attributes['settings'])) {
+
+                    foreach ($attributes['settings'] as $key => $value) {
+                        $this->repository->setValue($key, $value);
+                    }
+
                 }
+
+                if (isset($attributes['upload']) && is_array($attributes['upload'])) {
+
+                    foreach ($attributes['upload'] as $key => $value) {
+                        $this->repository->upload($request, $key);
+                    }
+
+                }
+
+// foreach ($attributes['env'] as $value) {
+
+//     $this->repository->env($value);
+
+// }
+
+// foreach ($attributes['theme'] as $value) {
+
+//     $this->repository->theme($value);
+                // }
             }
 
-            foreach ($attributes['user'] as $key => $value) {
+            foreach ($attributes['settings'] as $key => $value) {
                 $this->repository->setForuser($key, $value);
             }
 
@@ -87,6 +110,7 @@ class SettingResourceController extends BaseController
                 ->url(guard_url('/settings/setting'))
                 ->redirect();
         }
+
     }
 
     /**
@@ -115,29 +139,4 @@ class SettingResourceController extends BaseController
         return $this->repository->setValue($key, $value);
     }
 
-    /**
-     * Remove the setting.
-     *
-     * @param Model $setting
-     *
-     * @return Response
-     */
-    public function destroy(SettingRequest $request, Setting $setting)
-    {
-        try {
-            $setting->delete();
-
-            return $this->response->message(trans('messages.success.deleted', ['Module' => trans('settings::setting.name')]))
-                ->code(202)
-                ->status('success')
-                ->url(trans_url(guard_url('/settings/setting')))
-                ->redirect();
-        } catch (Exception $e) {
-            return $this->response->message($e->getMessage())
-                ->code(400)
-                ->status('error')
-                ->url(trans_url(guard_url('/settings/setting/'.$setting->getRouteKey())))
-                ->redirect();
-        }
-    }
 }

@@ -3,6 +3,7 @@
 namespace Litepie\Settings\Http\Requests;
 
 use App\Http\Requests\Request as FormRequest;
+use Litepie\Settings\Models\Setting;
 
 class SettingRequest extends FormRequest
 {
@@ -17,7 +18,7 @@ class SettingRequest extends FormRequest
 
         if (is_null($this->model)) {
             // Determine if the user is authorized to access setting module,
-            return $this->formRequest->user()->canDo('settings.setting.view');
+            return $this->formRequest->user()->can('view', Setting::class);
         }
 
         if ($this->isWorkflow()) {

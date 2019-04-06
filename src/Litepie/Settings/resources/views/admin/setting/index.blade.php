@@ -12,31 +12,68 @@
     </section>
 
     <section class="content">
-        <!-- Main content -->
-            {!!Form::vertical_open()
-            ->id('settings-setting-create')
-            ->method('POST')
-            ->files('true')
-            ->action(URL::to('admin/settings/setting'))!!}
-        <div class="nav-tabs-custom">
-        <!-- Nav tabs -->
-            <ul class="nav nav-tabs primary">
-                <li class="active"><a href="#main" data-toggle="tab">Main</a></li>
-                <li><a href="#user" data-toggle="tab">User</a></li>
-                <div class="box-tools pull-right">
-                    <button type="button" class="btn btn-primary btn-sm" data-action='CREATE' data-form='#settings-setting-create'  data-load-to='#settings-setting-entry' data-datatable='#settings-setting-list'><i class="fa fa-floppy-o"></i> {{ trans('app.save') }}</button>
-                    <button type="reset" class="btn btn-default btn-sm"><i class="fa fa-times-circle"></i> {{ trans('app.close') }}</button>
+        <div class="row">
+            <div class="col-md-3">
+                <div class="box box-primary">
+                    <div class="box-header with-border">
+                      <h3 class="box-title">General</h3>
+                    </div>
+                      <ul class="nav nav-stacked">
+                        <li><a  href='{{guard_url('settings/main')}}' data-href="{{guard_url('settings/main')}}" data-action='LOAD' data-load-to='#settings-setting-entry'>Main</a></li> 
+                         
+                        <li><a href='{{guard_url('settings/main')}}' data-href="{{guard_url('settings/company')}}" data-action='LOAD' data-load-to='#settings-setting-entry'>Company</a></li> 
+
+                        <li><a href='{{guard_url('settings/theme')}}' data-href="{{guard_url('settings/theme')}}" data-action='LOAD' data-load-to='#settings-setting-entry'>Theme</a></li>  
+                      </ul>
+                    <div class="box-header with-border">
+                      <h3 class="box-title">Subscription</h3>
+                    </div>
+                      <ul class="nav nav-stacked">
+                        <li><a href="#">Team</a></li>  
+                        <li><a href="#">Subscriptions</a></li>  
+                      </ul>
+
+                    <div class="box-header with-border">
+                      <h3 class="box-title">Integrations</h3>
+                    </div>
+                      <ul class="nav nav-stacked">
+                        <li><a href="#">Social logins</a></li>  
+                        <li><a href="#">Payment</a></li>  
+                        <li><a href="#">Email</a></li>  
+                        <li><a href="#">SMS</a></li>  
+                        <li><a href="#">Chat</a></li>  
+                        <li><a href="#">Google</a></li>  
+                      </ul>
+
+                      <div class="box-footer">
+                      </div>
                 </div>
-            </ul>
-            <div class="tab-content clearfix">
-                <div class="tab-pane active" id="main">
-                    @include('settings::admin.setting.partial.main')
-                </div>
-                <div class="tab-pane" id="user">
-                    @include('settings::admin.setting.partial.user')
-                </div>          
+          </div>
+            <div class="col-md-9">
+                <!-- Main content -->
+                    <div class="nav-tabs-custom">
+                    <!-- Nav tabs -->
+                        <ul class="nav nav-tabs primary">
+                            <li class="active"><a href="#main" data-toggle="tab">Settings</a></li>
+                            <div class="box-tools pull-right">
+                                <button type="button" class="btn btn-primary btn-sm" data-action='CREATE' data-form='#settings-setting-create'  data-load-to='#settings-setting-entry'><i class="fa fa-floppy-o"></i> {{ trans('app.save') }}</button>
+                                <button type="reset" class="btn btn-default btn-sm"><i class="fa fa-times-circle"></i> {{ trans('app.reset') }}</button>
+                            </div>
+                        </ul>
+                        <div class="tab-content clearfix">
+                            <div class="tab-pane active" id="settings-setting-entry">
+                                {!!Form::vertical_open()
+                                ->id('settings-setting-create')
+                                ->method('POST')
+                                ->files('true')
+                                ->action(URL::to('admin/settings/setting'))!!}
+                                @include('settings::admin.setting.partial.main')
+                                {!! Form::close() !!}
+                            </div>         
+                        </div>
+                    </div>
+
             </div>
         </div>
-            {!! Form::close() !!}
     </section>
 </div>
