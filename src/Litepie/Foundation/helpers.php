@@ -225,12 +225,7 @@ if (!function_exists('guard')) {
      */
     function guard($guard = null)
     {
-        if(is_null($guard)) {
-            return getenv('guard');
-        } else {
-            putenv("guard={$guard}");
-            app('auth')->shouldUse("{$guard}");
-        }
+        return User::getSetGuard($guard);
     }
 }
 
@@ -244,12 +239,12 @@ if (!function_exists('guard_url')) {
      */
     function guard_url($url, $translate = true)
     {
-        $prefix = empty(getenv('guard')) ? config('auth.defaults.url', 'user') : current(explode('.', getenv('guard')));
+        
         if ($translate) {
-            return trans_url($prefix.'/'.$url);
+            return trans_url(User::urlPrefixGuard($url));
         }
 
-        return $prefix.'/'.$url;
+        return User::urlPrefixGuard($url);
     }
 }
 
@@ -263,31 +258,10 @@ if (!function_exists('set_route_guard')) {
      */
     function set_route_guard($sub = 'web')
     {
-        $i = ($sub == 'web') ? 1 : 2;
-
-        //check whether guard is the first parameter of the route
-        $guard = request()->segment($i);
-
-        if (!empty(config("auth.guards.$guard"))) {
-            guard("{$guard}.{$sub}");
-            return $guard;
-        }
-
-        $guard = request()->segment(++$i);
-        if (!empty(config("auth.guards.$guard"))) {
-            guard("{$guard}.{$sub}");
-            return $guard;
-        }
-
-        $guard = request()->segment(++$i);
-        if (!empty(config("auth.guards.$guard"))) {
-            guard("{$guard}.{$sub}");
-            return $guard;
-        }
-
-        return 'client';
+        return User::setRouteGuard();
     }
 }
+
 
 if (!function_exists('users')) {
     /**
