@@ -46,9 +46,9 @@ return [
     |
      */
     'permissions'            => [
-        'storage/framework/' => '775',
-        'storage/logs/'      => '775',
-        'bootstrap/cache/'   => '775',
+        'storage/framework' => '0755',
+        'storage/logs'      => '0755',
+        'bootstrap/cache'   => '0755',
     ],
 
     /*

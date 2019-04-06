@@ -28,7 +28,7 @@
                 {!! trans('install::messages.environment.classic.back') !!}
             </a>
             <a class="button float-right" href="{{ route('LaravelInstaller::database') }}">
-                <i class="fa fa-check fa-fw" aria-hidden="true"></i>
+                <i class="far fa-check-circle fa-fw" aria-hidden="true"></i>
                 {!! trans('install::messages.environment.classic.install') !!}
                 <i class="fa fa-angle-double-right fa-fw" aria-hidden="true"></i>
             </a>
