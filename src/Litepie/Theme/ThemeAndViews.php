@@ -27,7 +27,8 @@ trait ThemeAndViews
             $layout = $this->getLayout();
         }
 
-        $this->response->theme($theme)
+        $this->response
+            ->theme($theme)
             ->layout($layout);
     }
 
@@ -38,7 +39,8 @@ trait ThemeAndViews
      */
     protected function getTheme()
     {
-        return config('theme.themes.'.$this->getViewFolder().'.theme', config('theme.themes.default.theme'));
+        return config('theme.themes.' . $this->getViewFolder() . '.theme',
+            config('theme.themes.default.theme'));
     }
 
     /**
@@ -49,7 +51,7 @@ trait ThemeAndViews
      */
     protected function getLayout()
     {
-        return 'default';
+        return $this->layout ?: 'default';
     }
 
     /**
@@ -59,6 +61,7 @@ trait ThemeAndViews
      */
     protected function getViewFolder()
     {
-        return substr(guard(), 0, strpos(getenv('guard'), '.'));
+        return substr(guard(), 0, strpos(guard(), '.'));
     }
+
 }

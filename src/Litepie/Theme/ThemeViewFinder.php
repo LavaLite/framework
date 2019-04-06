@@ -58,7 +58,6 @@ class ThemeViewFinder extends FileViewFinder implements ViewFinderInterface
     {
         $location = public_path(app('theme')->path().'/views');
         array_unshift($paths, $location);
-
         foreach ((array) $paths as $path) {
             if (!$this->files->exists($path)) {
                 continue;
@@ -81,7 +80,7 @@ class ThemeViewFinder extends FileViewFinder implements ViewFinderInterface
      */
     private function getViewFolder()
     {
-        $guard = substr(getenv('guard'), 0, strpos(getenv('guard'), '.'));
+        $guard = substr(guard(), 0, strpos(guard(), '.'));
 
         return config('theme.themes.'.$guard.'.view', config('theme.themes.default.view', $guard));
     }
@@ -93,7 +92,7 @@ class ThemeViewFinder extends FileViewFinder implements ViewFinderInterface
      */
     private function getDefaultFolder()
     {
-        $guard = substr(getenv('guard'), 0, strpos(getenv('guard'), '.'));
+        $guard = substr(guard(), 0, strpos(guard(), '.'));
 
         return config('theme.themes.'.$guard.'.default', config('theme.themes.default.default', 'default'));
     }
