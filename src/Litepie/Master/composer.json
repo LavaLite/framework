@@ -1,0 +1,24 @@
+{
+    "name": "litepie/master",
+    "description": "Master package for litepie.",
+    "keywords": ["lavalite", "Master"],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Lavalite",
+            "email": "info@lavalite.org"
+        }
+    ],
+    "require": {
+        "php": ">=5.6.4"
+    },
+    "autoload": {
+        "classmap": [
+            "database/seeds"
+        ],
+        "psr-4": {
+            "Litepie\\Master\\": "src"
+        }
+    },
+    "minimum-stability": "dev"
+}
