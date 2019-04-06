@@ -3,7 +3,7 @@
         @foreach ($menus as $menu)
         @if ($children = $menu->getChildren())
         <li class="dd-item dd3-item" data-id="{!!$menu->getRouteKey()!!}">
-            <div class="dd-handle dd3-handle">Drag</div>
+            <div class="dd-handle dd3-handle"></div>
             <div class="dd3-content">
                 <a href="#" data-action="LOAD" data-load-to='#menu-entry' data-href='{{guard_url('menu/submenu')}}/{!!$menu->getRouteKey()!!}'>
                     <i class="{!! !empty($menu->icon) ?  $menu->icon : '' !!}"></i> {!!$menu->name!!}
@@ -16,7 +16,7 @@
         </li>
         @else
         <li class="dd-item dd3-item" data-id="{!!$menu->getRouteKey()!!}">
-            <div class="dd-handle dd3-handle">Drag</div>
+            <div class="dd-handle dd3-handle"></div>
             <div class="dd3-content">
                 <a href="#" data-action="LOAD" data-load-to='#menu-entry' data-href='{{guard_url('menu/submenu')}}/{!!$menu->getRouteKey()!!}'>
                     <i class="{!! !empty($menu->icon) ?  $menu->icon : '' !!}"></i> {!!$menu->name!!}
