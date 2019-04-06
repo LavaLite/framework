@@ -3,6 +3,7 @@
 namespace Litepie\Roles\Http\Requests;
 
 use App\Http\Requests\Request as FormRequest;
+use Litepie\Roles\Models\Permission;
 
 class PermissionRequest extends FormRequest
 {
@@ -17,7 +18,7 @@ class PermissionRequest extends FormRequest
 
         if (is_null($this->model)) {
             // Determine if the user is authorized to access permission module,
-            return $this->formRequest->user()->canDo('roles.permission.view');
+            return $this->formRequest->user()->can('view', Permission::class);
         }
 
         if ($this->isWorkflow()) {

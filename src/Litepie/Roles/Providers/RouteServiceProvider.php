@@ -72,7 +72,6 @@ class RouteServiceProvider extends ServiceProvider
         Route::group([
             'middleware' => 'web',
             'namespace'  => $this->namespace,
-            'prefix'     => trans_setlocale(),
         ], function ($router) {
             require __DIR__.'/../routes/web.php';
         });
