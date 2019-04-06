@@ -1,6 +1,6 @@
 <?php
 
-Route::group(['prefix' => set_route_guard('web').'/upload'], function () {
+Route::group(['prefix' => '{guard}/upload'], function () {
     // File upload routes
     Route::post('{config}/{path?}', 'UploadController@upload')->where('path', '(.*)');
 });

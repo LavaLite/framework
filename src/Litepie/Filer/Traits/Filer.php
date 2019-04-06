@@ -57,14 +57,14 @@ trait Filer
             if (is_array(Request::file($field))) {
                 foreach (Request::file($field) as $file) {
                     if ($file instanceof UploadedFile) {
-                        $files[] = Uploader::upload($file, $rootFolder.'/'.$this->upload_folder.DIRECTORY_SEPARATOR.$field);
+                        $files[] = Uploader::upload($file, $rootFolder . '/' . $this->upload_folder.DIRECTORY_SEPARATOR.$field);
                     }
                 }
             } elseif (Request::hasFile($field)) {
                 $file = Request::file($field);
 
                 if ($file instanceof UploadedFile) {
-                    $files[] = Uploader::upload($file, $rootFolder.'/'.$this->upload_folder.DIRECTORY_SEPARATOR.$field);
+                    $files[] = Uploader::upload($file, $rootFolder . '/' . $this->upload_folder.DIRECTORY_SEPARATOR.$field);
                 }
             }
 
@@ -100,7 +100,7 @@ trait Filer
      */
     public function getUploadFolderConfigAttribute($value)
     {
-        return config($this->config.'.'.'upload_folder');
+        return config($this->config . '.' . 'upload_folder');
     }
 
     /**
@@ -282,7 +282,7 @@ trait Filer
      */
     public function getPublicUrl($folder, $file, $prefix = 'download')
     {
-        return url("{$prefix}".'/'.$folder.'/'.$file);
+        return url("{$prefix}" . '/' . $folder . '/' . $file);
     }
 
     /**
