@@ -52,7 +52,7 @@ trait Translatable
 
         $langs = $this->decodeLang($langs);
 
-        return $langs[$this->locale()];
+        return @$langs[$this->locale()];
     }
 
     /**
@@ -74,9 +74,7 @@ trait Translatable
     public function setTranslation($key, $value = null)
     {
         $locale = $this->locale();
-
         $langs = $this->getOriginal($key);
-
         $langs = $this->decodeLang($langs);
         $langs[$this->locale()] = $value;
         $value = $this->encodeLang($langs);

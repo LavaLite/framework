@@ -18,12 +18,15 @@ class Trans extends LaravelLocalization
      */
     public function getSupportedLocales($excludeCurrent = false)
     {
+
         if (empty($this->supportedLocales)) {
             $this->supportedLocales = $this->configRepository->get('trans.supportedLocales');
         }
+
         if (empty($this->supportedLocales) || !is_array($this->supportedLocales)) {
             throw new SupportedLocalesNotDefined();
         }
+
         if ($excludeCurrent) {
             $locales = $this->supportedLocales;
             unset($locales[$this->currentLocale]);
@@ -46,6 +49,7 @@ class Trans extends LaravelLocalization
      */
     public function to($url = null, $locale = null)
     {
+
         if (starts_with($url, 'http')) {
             return url($url);
         }
@@ -94,4 +98,35 @@ class Trans extends LaravelLocalization
 
         return $locales;
     }
+
+    /**
+     * Return an array of all supported Locales but in the order the user
+     * has specified in the config file. Useful for the language selector.
+     *
+     * @return array
+     */
+    public function isMultilingual()
+    {
+        $locales = $this->getSupportedLocales();
+
+        return count($locales) > 1;
+    }
+
+    /**
+     * Return an array of all supported Locales but in the order the user
+     * has specified in the config file. Useful for the language selector.
+     *
+     * @return array
+     */
+    public function keys($seperator = null)
+    {
+        $locales = $this->getSupportedLocales();
+
+        if ($seperator == null) {
+            return array_keys($locales);
+        } else {
+            return implode($seperator, array_keys($locales));
+        }
+    }
+
 }
