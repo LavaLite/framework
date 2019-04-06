@@ -3,6 +3,7 @@
 namespace Litepie\User\Http\Requests;
 
 use App\Http\Requests\Request as FormRequest;
+use App\Client;
 
 class ClientRequest extends FormRequest
 {
@@ -17,7 +18,7 @@ class ClientRequest extends FormRequest
 
         if (is_null($this->model)) {
             // Determine if the user is authorized to access client module,
-            return $this->canAccess();
+            return $this->formRequest->user()->can('view', Client::class);
         }
 
         if ($this->isWorkflow()) {
@@ -69,15 +70,5 @@ class ClientRequest extends FormRequest
         return [
 
         ];
-    }
-
-    /**
-     * Check whether the user can access the module.
-     *
-     * @return bool
-     **/
-    protected function canAccess()
-    {
-        return user()->canDo('user.client.view');
     }
 }

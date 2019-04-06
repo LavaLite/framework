@@ -81,6 +81,7 @@ class UserResourceController extends BaseController
      */
     public function show(UserRequest $request, User $user)
     {
+        
         if ($user->exists) {
             $view = 'user::user.show';
         } else {

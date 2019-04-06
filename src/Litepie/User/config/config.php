@@ -26,7 +26,6 @@ return [
         \App\User::class                 => \Litepie\User\Policies\UserPolicy::class,
         \App\Client::class               => \Litepie\User\Policies\ClientPolicy::class,
         // Bind Team policy
-        \Litepie\User\Models\Team::class => \Litepie\User\Policies\TeamPolicy::class,
     ],
 
     'user'     => [
@@ -34,7 +33,7 @@ return [
             'model'         => \App\User::class,
             'table'         => 'users',
             'presenter'     => \Litepie\User\Repositories\Presenter\UserPresenter::class,
-            'hidden'        => ['password', 'deleted_at', 'remember_token', 'upload_folder', 'id'],
+            'hidden'        => ['status', 'email_verified_at', 'user_id', 'user_type', 'created_at', 'updated_at','password', 'deleted_at', 'remember_token', 'upload_folder', 'id'],
             'visible'       => [],
             'guarded'       => ['*'],
             'slugs'         => [],
@@ -78,7 +77,7 @@ return [
             'model'         => \App\Client::class,
             'table'         => 'clients',
             'presenter'     => \Litepie\User\Repositories\Presenter\ClientPresenter::class,
-            'hidden'        => ['password', 'deleted_at', 'remember_token', 'upload_folder', 'id'],
+            'hidden'        => ['status', 'email_verified_at', 'user_id', 'user_type', 'created_at', 'updated_at','password', 'deleted_at', 'remember_token', 'upload_folder', 'id'],
             'visible'       => [],
             'guarded'       => ['*'],
             'slugs'         => ['slug' => 'name'],

@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Password;
 
 trait ResetsPasswords
 {
-    use IlluminateResetsPasswords;
+    use Common, IlluminateResetsPasswords;
     /**
      * Display the password reset view for the given token.
      *

@@ -29,35 +29,24 @@ class RouteServiceProvider extends ServiceProvider
     {
         parent::boot();
 
-        if (Request::is('admin/user/user/*')) {
+        if (Request::is('*admin/user/user/*')) {
             Route::bind('user', function ($user) {
-                $userrepo = $this->app->make('Litepie\User\Interfaces\UserRepositoryInterface');
-
-                return $userrepo->findorNew($user);
+                $repos = $this->app->make('Litepie\User\Interfaces\UserRepositoryInterface');
+                return $repos->findorNew($user);
             });
         }
 
-        if (Request::is('admin/user/team/*')) {
-            Route::bind('team', function ($team) {
-                $teamrepo = $this->app->make('Litepie\User\Interfaces\TeamRepositoryInterface');
-
-                return $teamrepo->findorNew($team);
-            });
-        }
-
-        if (Request::is('admin/user/*')) {
+        if (Request::is('*admin/user/*')) {
             Route::bind('client', function ($client) {
-                $userrepo = $this->app->make('Litepie\User\Interfaces\ClientRepositoryInterface');
-
-                return $userrepo->findorNew($client);
+                $repos = $this->app->make('Litepie\User\Interfaces\ClientRepositoryInterface');
+                return $repos->findorNew($client);
             });
         }
 
         if (Request::is('profile/*')) {
             Route::bind('user', function ($user) {
-                $userrepo = $this->app->make('Litepie\User\Interfaces\UserRepositoryInterface');
-
-                return $userrepo->findorNew($user);
+                $repos = $this->app->make('Litepie\User\Interfaces\UserRepositoryInterface');
+                return $repos->findorNew($user);
             });
         }
     }
@@ -88,7 +77,6 @@ class RouteServiceProvider extends ServiceProvider
         Route::group([
             'namespace' => $this->namespace,
             'middleware' => 'web',
-            'prefix'     => trans_setlocale(),
         ], function ($router) {
             require __DIR__.'/../routes/auth.php';
             require __DIR__.'/../routes/web.php';

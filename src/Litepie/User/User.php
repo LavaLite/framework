@@ -57,9 +57,9 @@ class User
         RoleRepositoryInterface       $role,
         PermissionRepositoryInterface $permission
     ) {
-        $this->app = $app;
-        $this->user = $user;
-        $this->role = $role;
+        $this->app        = $app;
+        $this->user       = $user;
+        $this->role       = $role;
         $this->permission = $permission;
     }
 
@@ -218,9 +218,11 @@ class User
      */
     public function users($field)
     {
+
         if (!is_null($this->getUser())) {
             return $this->getUser()->$field;
         }
+
     }
 
     /**
@@ -270,6 +272,56 @@ class User
     }
 
     /**
+     * Set guard form the requested uri.
+     *
+     * @return bool
+     */
+    public function setRouteGuard()
+    {
+        $segments = request()->segments();
+        $guard    = array_intersect(array_keys(config('auth.guards')), $segments);
+
+        if (!empty($guard)) {
+            $guard = current($guard);
+        } else {
+            $guard = 'client';
+        }
+        $sub = in_array('api', $segments) ? 'api' : 'web';
+
+        $this->getSetGuard("{$guard}.{$sub}");
+        return $guard;
+
+    }
+
+    /**
+     * Set guard form the requested uri.
+     *
+     * @return bool
+     */
+    public function urlPrefixGuard($url)
+    {
+        $guards = $this->getSetGuard() ?: config('auth.defaults.guard');
+        $prefix = current(explode('.', $guards));
+        return $prefix . '/' . trim($url, '/\\');
+    }
+
+    /**
+     * Get or set current guard.
+     *
+     * @return bool
+     */
+    public function getSetGuard($guard = null)
+    {
+        if (empty($guard)) {
+            return getenv('guard');
+        } else {
+            putenv("guard={$guard}");
+            app('auth')->shouldUse("{$guard}");
+        }
+
+    }
+
+    /**
      * Return the count of records.
      *
      * @return Response
@@ -278,4 +330,5 @@ class User
     {
         return $this->user->count();
     }
+
 }

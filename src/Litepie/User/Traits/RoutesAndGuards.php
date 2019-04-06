@@ -30,7 +30,7 @@ trait RoutesAndGuards
         $guard = guard();
 
         if (empty($guard)) {
-            config('auth.defaults.passwords');
+            config('auth.defaults.guard');
         }
 
         return current(explode('.', $guard));

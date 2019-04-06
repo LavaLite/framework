@@ -3,6 +3,7 @@
 namespace Litepie\User\Http\Requests;
 
 use App\Http\Requests\Request as FormRequest;
+use App\User;
 
 class UserRequest extends FormRequest
 {
@@ -16,7 +17,7 @@ class UserRequest extends FormRequest
         $this->model = $this->route('user');
         if (is_null($this->model)) {
             // Determine if the user is authorized to access user module,
-            return $this->formRequest->user()->canDo('user.user.view');
+            return $this->formRequest->user()->can('view', User::class);
         }
 
         if ($this->isWorkflow()) {
