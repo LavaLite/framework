@@ -62,4 +62,18 @@ class User extends Model implements UserPolicy
             $this->attributes['photo'] = $val;
         } 
     }
+
+    public function setPhotoAttribute($val)
+    {
+        if (!empty($val[0]['file'])) {
+            $this->attributes['photo'] = $val;
+        } 
+    }
+    
+    public function setaApiTokenAttribute($val)
+    {
+        if (empty($$val)) {
+            $this->attributes['api_token'] = Str::random(60);
+        }
+    }
 }

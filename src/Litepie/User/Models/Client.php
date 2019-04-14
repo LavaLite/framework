@@ -11,6 +11,7 @@ use Litepie\Repository\Traits\PresentableTrait;
 use Litepie\Roles\Traits\CheckRoleAndPermission;
 use Litepie\User\Contracts\UserPolicy;
 use Litepie\User\Traits\User as UserProfile;
+use Str;
 
 class Client extends Model implements UserPolicy
 {
@@ -63,10 +64,10 @@ class Client extends Model implements UserPolicy
         }
     }
 
-    public function setPhotoAttribute($val)
+    public function setaApiTokenAttribute($val)
     {
-        if (!empty($val[0]['file'])) {
-            $this->attributes['photo'] = $val;
-        } 
+        if (empty($$val)) {
+            $this->attributes['api_token'] = Str::random(60);
+        }
     }
 }
