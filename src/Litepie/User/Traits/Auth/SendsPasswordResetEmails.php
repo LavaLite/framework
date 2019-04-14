@@ -19,17 +19,9 @@ trait SendsPasswordResetEmails
     {
         return $this->response->setMetaTitle('Forgot Password')
             ->layout('auth')
-            ->view('auth.password')
+            ->view('auth.passwords.email')
             ->output();
     }
 
-    /**
-     * Get the broker to be used during password reset.
-     *
-     * @return \Illuminate\Contracts\Auth\PasswordBroker
-     */
-    public function broker()
-    {
-        return Password::broker($this->getPasswordBroker());
-    }
+
 }

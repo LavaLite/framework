@@ -144,18 +144,6 @@ trait UserPages
     }
 
     /**
-     * Show master table lists.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function masters()
-    {
-        return $this->response->setMetaTitle('Masters')
-            ->view('masters')
-            ->output();
-    }
-
-    /**
      * Show reports homepage.
      *
      * @return \Illuminate\Http\Response

@@ -62,4 +62,11 @@ class Client extends Model implements UserPolicy
             $this->attributes['password'] = ($val);
         }
     }
+
+    public function setPhotoAttribute($val)
+    {
+        if (!empty($val[0]['file'])) {
+            $this->attributes['photo'] = $val;
+        } 
+    }
 }
