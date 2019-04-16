@@ -313,7 +313,8 @@ class User
     public function getSetGuard($guard = null)
     {
         if (empty($guard)) {
-            return getenv('guard');
+            $guard = getenv('guard');
+            return empty($guard) ? config('auth.defaults.guard') : $guard;
         } else {
             putenv("guard={$guard}");
             app('auth')->shouldUse("{$guard}");

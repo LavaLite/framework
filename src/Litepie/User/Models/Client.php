@@ -66,7 +66,7 @@ class Client extends Model implements UserPolicy
 
     public function setaApiTokenAttribute($val)
     {
-        if (empty($$val)) {
+        if (empty($val)) {
             $this->attributes['api_token'] = Str::random(60);
         }
     }

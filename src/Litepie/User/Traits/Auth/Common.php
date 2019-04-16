@@ -9,17 +9,6 @@ use Auth;
  */
 trait Common
 {
-    /**
-     * Get the guard to be used during authentication.
-     *
-     * @return string|null
-     */
-    protected function guard()
-    {
-        $guard = $this->getGuard();
-
-        return Auth::guard($guard);
-    }
 
     /**
      * Set guard for the auth controller.
