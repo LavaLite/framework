@@ -22,10 +22,29 @@ trait ResetsPasswords
     public function showResetForm(Request $request, $token = null)
     {
         $email = $request->email;
-
         return $this->response->setMetaTitle('Reset')
             ->view('auth.passwords.reset')
+            ->layout('auth')
             ->data(compact('token', 'email'))
             ->output();
+    }
+    /**
+     * Get the broker to be used during password reset.
+     *
+     * @return \Illuminate\Contracts\Auth\PasswordBroker
+     */
+    public function broker()
+    {
+        return Password::broker(current(explode('.', guard())));
+    }
+
+    /**
+     * Get the broker to be used during password reset.
+     *
+     * @return \Illuminate\Contracts\Auth\PasswordBroker
+     */
+    public function redirectTo()
+    {
+        return current(explode('.', guard()));
     }
 }
