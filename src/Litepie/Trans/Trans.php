@@ -58,6 +58,19 @@ class Trans extends LaravelLocalization
     }
 
     /**
+     * Return locales mapping.
+     *
+     * @return array
+     */
+    public function getLocalesMapping()
+    {
+        if (empty($this->localesMapping)) {
+            $this->localesMapping = $this->configRepository->get('trans.localesMapping');
+        }
+        return $this->localesMapping;
+    }
+
+    /**
      * Returns the translation key for a given path.
      *
      * @return bool Returns value of hideDefaultTransInURL in config.
