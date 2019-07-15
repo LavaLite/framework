@@ -3,6 +3,7 @@
 namespace Litepie\User\Http\Requests;
 
 use App\Http\Requests\Request as FormRequest;
+use Litepie\User\Models\Team;
 
 class TeamRequest extends FormRequest
 {
@@ -17,7 +18,7 @@ class TeamRequest extends FormRequest
 
         if (is_null($this->model)) {
             // Determine if the user is authorized to access team module,
-            return $this->formRequest->user()->canDo('user.team.view');
+            return $this->user()->can('view', Team::class);
         }
 
         if ($this->isWorkflow()) {
@@ -25,23 +26,24 @@ class TeamRequest extends FormRequest
             return $this->can($this->getStatus());
         }
 
-        if ($this->isCreate()) {
+        if ($this->isCreate() || $this->isStore()) {
             // Determine if the user is authorized to create an entry,
             return $this->can('create');
         }
 
-        if ($this->isUpdate()) {
+        if ($this->isEdit() || $this->isUpdate()) {
             // Determine if the user is authorized to update an entry,
             return $this->can('update');
         }
 
         if ($this->isDelete()) {
             // Determine if the user is authorized to delete an entry,
-            return $this->can('delete');
+            return $this->can('destroy');
         }
 
         // Determine if the user is authorized to view the module.
         return $this->can('view');
+
     }
 
     /**
@@ -51,7 +53,7 @@ class TeamRequest extends FormRequest
      */
     public function rules()
     {
-        if ($this->isCreate()) {
+        if ($this->isStore()) {
             // validation rule for create request.
             return [
 
@@ -70,4 +72,5 @@ class TeamRequest extends FormRequest
 
         ];
     }
+
 }

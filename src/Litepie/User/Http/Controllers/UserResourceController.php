@@ -32,9 +32,9 @@ class UserResourceController extends BaseController
      * @return null
      */
     public function __construct(
-        UserRepositoryInterface       $user,
+        UserRepositoryInterface $user,
         PermissionRepositoryInterface $permissions,
-        RoleRepositoryInterface       $roles
+        RoleRepositoryInterface $roles
     ) {
         parent::__construct();
         $this->permissions = $permissions;
@@ -81,7 +81,7 @@ class UserResourceController extends BaseController
      */
     public function show(UserRequest $request, User $user)
     {
-        
+
         if ($user->exists) {
             $view = 'user::user.show';
         } else {
@@ -91,7 +91,7 @@ class UserResourceController extends BaseController
         $roles = $this->roles->all();
         $permissions = $this->permissions->groupedPermissions();
 
-        return $this->response->setMetaTitle(trans('app.view').' '.trans('user::user.name'))
+        return $this->response->setMetaTitle(trans('app.view') . ' ' . trans('user::user.name'))
             ->data(compact('user', 'roles', 'permissions'))
             ->view($view)
             ->output();
@@ -110,7 +110,7 @@ class UserResourceController extends BaseController
         $roles = $this->roles->all();
         $permissions = $this->permissions->groupedPermissions();
 
-        return $this->response->setMetaTitle(trans('app.new').' '.trans('user::user.name'))
+        return $this->response->setMetaTitle(trans('app.new') . ' ' . trans('user::user.name'))
             ->view('user::user.create')
             ->data(compact('user', 'roles', 'permissions'))
             ->output();
@@ -135,7 +135,7 @@ class UserResourceController extends BaseController
             return $this->response->message(trans('messages.success.created', ['Module' => trans('user::user.name')]))
                 ->code(204)
                 ->status('success')
-                ->url(guard_url('user/user/'.$user->getRouteKey()))
+                ->url(guard_url('user/user/' . $user->getRouteKey()))
                 ->redirect();
         } catch (Exception $e) {
             return $this->response->message($e->getMessage())
@@ -159,7 +159,7 @@ class UserResourceController extends BaseController
         $roles = $this->roles->all();
         $permissions = $this->permissions->groupedPermissions();
 
-        return $this->response->setMetaTitle(trans('app.edit').' '.trans('user::user.name'))
+        return $this->response->setMetaTitle(trans('app.edit') . ' ' . trans('user::user.name'))
             ->view('user::user.edit')
             ->data(compact('user', 'roles', 'permissions'))
             ->output();
@@ -186,13 +186,13 @@ class UserResourceController extends BaseController
             return $this->response->message(trans('messages.success.updated', ['Module' => trans('user::user.name')]))
                 ->code(204)
                 ->status('success')
-                ->url(guard_url('user/user/'.$user->getRouteKey()))
+                ->url(guard_url('user/user/' . $user->getRouteKey()))
                 ->redirect();
         } catch (Exception $e) {
             return $this->response->message($e->getMessage())
                 ->code(400)
                 ->status('error')
-                ->url(guard_url('user/user/'.$user->getRouteKey()))
+                ->url(guard_url('user/user/' . $user->getRouteKey()))
                 ->redirect();
         }
     }
@@ -218,7 +218,7 @@ class UserResourceController extends BaseController
             return $this->response->message($e->getMessage())
                 ->code(400)
                 ->status('error')
-                ->url(guard_url('user/user/'.$user->getRouteKey()))
+                ->url(guard_url('user/user/' . $user->getRouteKey()))
                 ->redirect();
         }
     }
@@ -231,24 +231,21 @@ class UserResourceController extends BaseController
      *
      * @return Response
      */
-    public function changeTeam(Request $request)
-    {
-        try {
-            $attributes = $request->all();
-            $user = $request->user($this->getGuard());
-            $user->update($attributes);
-
-            return response()->json([
-                'message'  => trans('messages.success.updated', ['Module' => trans('user::user.name')]),
-                'code'     => 204,
-                'redirect' => trans_url('/admin/user/user/'.$user->getRouteKey()),
-            ], 201);
-        } catch (Exception $e) {
-            return response()->json([
-                'message'  => $e->getMessage(),
-                'code'     => 400,
-                'redirect' => trans_url('/admin/user/user/'.$user->getRouteKey()),
-            ], 400);
-        }
+    function switch (UserRequest $request) {
+            try {
+                $attributes = $request->all();
+                $user = $this->repository->switch($attributes);
+                return $this->response->message(trans('messages.success.detached', ['Module' => trans('user::team.name')]))
+                    ->code(204)
+                    ->status('success')
+                    ->url(guard_url('user/user/' . $user->getRouteKey()))
+                    ->redirect();
+            } catch (Exception $e) {
+                return $this->response->message($e->getMessage())
+                    ->code(400)
+                    ->status('error')
+                    ->url(guard_url('user/user/' . $user->getRouteKey()))
+                    ->redirect();
+            }
     }
 }

@@ -2,20 +2,16 @@
 
 namespace Litepie\User\Models;
 
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Litepie\Database\Model;
-use Litepie\Database\Traits\Slugger;
 use Litepie\Filer\Traits\Filer;
 use Litepie\Hashids\Traits\Hashids;
 use Litepie\Repository\Traits\PresentableTrait;
 use Litepie\Trans\Traits\Translatable;
-use Litepie\User\Traits\Team as TeamTrait;
-
-// use Litepie\Workflow\Model\Workflow;
 
 class Team extends Model
 {
-    use Filer, Hashids, Slugger, Translatable,  PresentableTrait, TeamTrait;
-    // use Workflow;
+    use Filer, SoftDeletes, Hashids, Translatable, PresentableTrait;
 
     /**
      * Configuartion for the model.
@@ -23,4 +19,15 @@ class Team extends Model
      * @var array
      */
     protected $config = 'users.team.model';
+
+    /**
+     * The User that belong to the team.
+     */
+    public function users()
+    {
+        return $this->belongsToMany('App\User')
+            ->withPivot([
+                'id', 'role',
+            ]);
+    }
 }

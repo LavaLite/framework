@@ -1,56 +1,80 @@
 <?php
 
 return [
-
     /*
+    |--------------------------------------------------------------------------
+    | Language files for team in teams package
+    |--------------------------------------------------------------------------
+    |
+    | The following language lines are  for  team module in teams package
+    | and it is used by the template/view files in this module
+    |
+     */
+
+    /**
      * Singlular and plural name of the module
      */
-    'name'          => 'Team',
-    'names'         => 'Teams',
+    'name' => 'Team',
+    'names' => 'Teams',
 
-    /*
+    /**
+     * Singlular and plural name of the module
+     */
+    'title' => [
+        'main' => 'Teams',
+        'sub' => 'Teams',
+        'list' => 'List of teams',
+        'edit' => 'Edit team',
+        'create' => 'Create new team',
+    ],
+
+    /**
      * Options for select/radio/check.
      */
-    'options'       => [
-
+    'options' => [
+        'role' => ['Admin' => 'Admin', 'Manager' => 'Manager', 'User' => 'User'],
     ],
 
-    /*
+    /**
      * Placeholder for inputs
      */
-    'placeholder'   => [
-        'name'                       => 'Please enter name',
-        'manager'                    => 'Select manager',
-        'member'                     => 'Member',
-        'reporting_to'               => 'Reporting to',
-        'description'                => 'Please enter description',
+    'placeholder' => [
+        'id' => '',
+        'name' => 'Please enter name',
+        'team_id' => 'Team',
+        'user_id' => 'User',
+        'role' => 'Role',
     ],
 
-    /*
+    /**
      * Labels for inputs.
      */
-    'label'         => [
-        'name'                       => 'Name',
-        'manager'                    => 'Manager',
-        'description'                => 'Description',
-        'status'                     => 'Status',
-        'member'                     => 'Member',
-        'reporting_to'               => 'Reporting To',
-        'created_at'                 => 'Created at',
-        'updated_at'                 => 'Updated at',
+    'label' => [
+        'id' => '',
+        'name' => 'Name',
+        'team_id' => 'Team',
+        'user_id' => 'User',
+        'role' => 'Role',
     ],
 
-    /*
+    /**
+     * Columns array for show hide checkbox.
+     */
+    'cloumns' => [
+        'name' => ['name' => 'Name', 'data-column' => 1, 'checked'],
+    ],
+
+    /**
      * Tab labels
      */
-    'tab'           => [
-        'name'  => 'Team',
+    'tab' => [
+        'name' => 'Teams',
     ],
 
-    /*
+    /**
      * Texts  for the module
      */
-    'text'          => [
+    'text' => [
         'preview' => 'Click on the below list for preview',
     ],
 ];
