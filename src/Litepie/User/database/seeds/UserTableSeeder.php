@@ -1,6 +1,6 @@
 <?php
 
-namespace lavalite;
+namespace Litepie;
 
 use DB;
 use Illuminate\Database\Seeder;
