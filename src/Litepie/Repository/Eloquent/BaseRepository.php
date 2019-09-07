@@ -61,25 +61,6 @@ abstract class BaseRepository extends PrettusRepository implements RepositoryInt
     }
 
     /**
-     * Retrieve count of records.
-     *
-     * @param array $columns
-     *
-     * @return mixed
-     */
-    public function count()
-    {
-        $this->applyCriteria();
-        $this->applyScope();
-
-        $results = $this->model->count();
-
-        $this->resetModel();
-
-        return $results;
-    }
-
-    /**
      * Find data by id or return new if not exists.
      *
      * @param $id
