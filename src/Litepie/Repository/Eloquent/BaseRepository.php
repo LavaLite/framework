@@ -52,31 +52,12 @@ abstract class BaseRepository extends PrettusRepository implements RepositoryInt
         }
 
         if (!$criteria instanceof CriteriaInterface) {
-            throw new RepositoryException('Class '.get_class($criteria).' must be an instance of Litepie\\Repository\\Contracts\\CriteriaInterface');
+            throw new RepositoryException('Class ' . get_class($criteria) . ' must be an instance of Litepie\\Repository\\Contracts\\CriteriaInterface');
         }
 
         $this->criteria->push($criteria);
 
         return $this;
-    }
-
-    /**
-     * Retrieve count of records.
-     *
-     * @param array $columns
-     *
-     * @return mixed
-     */
-    public function count()
-    {
-        $this->applyCriteria();
-        $this->applyScope();
-
-        $results = $this->model->count();
-
-        $this->resetModel();
-
-        return $results;
     }
 
     /**
