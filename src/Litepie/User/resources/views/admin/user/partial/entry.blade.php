@@ -1,6 +1,6 @@
 
 <div class="row disabled">
-    <div class='col-md-3 col-sm-3'>
+  <div class='col-md-3 col-sm-3'>
         <div class='col-md-12 col-sm-12'>
             {!! Form::text('name')
             -> label(trans('user::user.label.name'))
@@ -26,57 +26,90 @@
             {!! Form::tel('mobile')
             -> label(trans('user::user.label.mobile'))
             -> placeholder(trans('user::user.placeholder.mobile')) !!}
-        </div>        </div>
-    <div  class='col-md-9 col-sm-9'>
-    <div class='col-md-12 col-sm-12'>
-    <strong>Roles</strong><br/>
-    @foreach ($roles as $role)
-        <div class="col-md-2">
-            <div class="checkbox checkbox-danger" >
-              <input name="roles[{{ $role->id }}]" id="roles.{{ $role->id }}" type="checkbox" {{ !($user->hasRole($role->slug)) ? :'checked'}} value='{{ $role->id }}'>
-              <label for="roles.{{ $role->id }}">{{ $role->name }}</label>
+        </div>        
+    </div>
+    <div  class='col-md-5 col-sm-12'>
+      <div class="row">
+      <div class='col-md-12 col-sm-12'>
+      <strong>Roles</strong><br/>
+      @foreach ($roles as $role)
+          <div style="float:left">
+              <div class="checkbox checkbox-danger" >
+                <input name="roles[{{ $role->id }}]" id="roles.{{ $role->id }}" type="checkbox" {{ !($user->hasRole($role->slug)) ? :'checked'}} value='{{ $role->id }}'>
+                <label for="roles.{{ $role->id }}">{{ $role->name }}</label>
+              </div>
+          </div>
+      @endforeach
+      </div>
+
+      <div class='col-md-12 col-sm-12'>
+        <br/> <strong>Permissions</strong><br/>
+        <div class="treeview" style="height:300px;overflow:auto;">
+            <ul style="margin-left:-40px;">
+                @foreach($permissions as $package => $modules)
+                    <li>
+                    <input name="permissions[{{$package}}]" id="permissions_{{$package}}" type="checkbox" {{ @array_key_exists($package, $role->permissions) ? 'checked' : '' }} value='1'>
+                    <label for="permissions_{{$package}}">{{ucfirst($package)}}</label>
+                    <ul>
+                    @foreach($modules as $module => $permissions)
+                        <li>
+                        <input name="permissions[{{$package}}.{{$module}}]" id="permissions_{{$package}}_{{$module}}" type="checkbox" {{ @array_key_exists($package. '.' . $module, $user->permissions) ? 'checked' : '' }} value='1'>
+                        <label for="permissions_{{$package}}_{{$module}}">{{ucfirst($module)}}</label>
+                            <ul class="clearfix">
+                            @foreach($permissions as $permission => $value)
+                                <li style="float:left; margin-right: 10px;">
+                                    <input name="permissions[]" id="permissions_{{$package}}_{{$module}}_{{$permission}}" type="checkbox" {{ (!$user->hasPermission($package. '.' . $module . '.' . $permission)) ? : 'checked'}} value='{{$value}}'>
+                                    <label for="permissions_{{$package}}_{{$module}}_{{$permission}}">{{ucfirst($permission)}} </label>
+                                </li>
+                            @endforeach
+                            </ul>
+                        </li>
+                    @endforeach
+                    </ul>
+                    <hr />
+                </li>
+            @endforeach
+            </ul>
+        </div>
+      </div>
+      </div>
+  </div>
+  <div class='col-md-4 col-sm-12'>
+        <br/> <strong>Team</strong><br/>
+    @foreach($user->teams as $team)
+        <div class="member" data-team='{{$team->id}}'>
+            <div class="item">
+                <div class="inline-block name">{{$team->name}}</div>
+                <div class="inline-block role">{{$team->pivot->role}}</div>
+                <div class="inline-block pull-right">
+                  @if($user->team_id == $team->id)
+                    Current
+                  @else
+                    <a title="Change" class="red switch">Switch</a>
+                  @endif
+                </div>
             </div>
         </div>
     @endforeach
-    </div>
-
-    <div class='col-md-6 col-sm-12'>
-    <br/> <strong>Permissions</strong><br/>
-      <div class="treeview" style="height:250px;overflow:auto;">
-          <ul style="margin-left:-40px;">
-              @foreach($permissions as $package => $modules)
-                  <li>
-                  <input name="permissions[{{$package}}]" id="permissions_{{$package}}" type="checkbox" {{ @array_key_exists($package, $role->permissions) ? 'checked' : '' }} value='1'>
-                  <label for="permissions_{{$package}}">{{ucfirst($package)}}</label>
-                  <ul>
-                  @foreach($modules as $module => $permissions)
-                      <li>
-                      <input name="permissions[{{$package}}.{{$module}}]" id="permissions_{{$package}}_{{$module}}" type="checkbox" {{ @array_key_exists($package. '.' . $module, $user->permissions) ? 'checked' : '' }} value='1'>
-                      <label for="permissions_{{$package}}_{{$module}}">{{ucfirst($module)}}</label>
-                          <ul class="clearfix">
-                          @foreach($permissions as $permission => $value)
-                              <li style="float:left; margin-right: 10px;">
-                                  <input name="permissions[]" id="permissions_{{$package}}_{{$module}}_{{$permission}}" type="checkbox" {{ (!$user->hasPermission($package. '.' . $module . '.' . $permission)) ? : 'checked'}} value='{{$value}}'>
-                                  <label for="permissions_{{$package}}_{{$module}}_{{$permission}}">{{ucfirst($permission)}} </label>
-                              </li>
-                          @endforeach
-                          </ul>
-                      </li>
-                  @endforeach
-                  </ul>
-                  <hr />
-              </li>
-          @endforeach
-          </ul>
-      </div>
-    </div>
   </div>
 </div>
 
-
-
 <style type="text/css">
-
+.item {
+    border-bottom: #999 dashed 1px;
+    padding: 0px 0px 5px 0px;
+    margin: 5px 5px 0px 5px;
+}
+.item .red{
+    color:red;
+    cursor:pointer;
+}
+.inline-block {
+    display: inline-block !important;
+}
+.name {
+    width:40%;
+}
 .treeview {
   margin: 10px 0 0 0px;
 }
@@ -100,6 +133,30 @@
 
 
 $(function() {
+      $(".switch").click(function(e) {
+        e.preventDefault();
+        var formData = new FormData();
+            formData.append('user_id', {{$user->id}});
+            formData.append('team_id', $(this).parents('.member').data('team'));
+
+        var url  = '{{guard_url('user/user/switch')}}';
+
+        $.ajax( {
+            url: url,
+            type: 'POST',
+            data: formData,
+            cache: false,
+            processData: false,
+            contentType: false,
+            dataType: 'json',
+            async: false,
+            success:function(data, textStatus, jqXHR)
+            {
+                app.load($('#user-user-entry'), data.url);
+            }
+        });
+    });
+
     $(".pwdedit").click(function(){
       console.log('dsfdsf');
       $("#password").removeAttr('disabled');

@@ -60,13 +60,24 @@ class User extends Model implements UserPolicy
     {
         if (!empty($val[0]['file'])) {
             $this->attributes['photo'] = $val;
-        } 
+        }
     }
-    
+
     public function setaApiTokenAttribute($val)
     {
         if (empty($val)) {
             $this->attributes['api_token'] = Str::random(60);
         }
+    }
+
+    /**
+     * The User that belong to the team.
+     */
+    public function teams()
+    {
+        return $this->belongsToMany('Litepie\User\Models\Team')
+            ->withPivot([
+                'id', 'role',
+            ]);
     }
 }

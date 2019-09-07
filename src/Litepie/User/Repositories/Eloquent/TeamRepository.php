@@ -7,11 +7,11 @@ use Litepie\User\Interfaces\TeamRepositoryInterface;
 
 class TeamRepository extends BaseRepository implements TeamRepositoryInterface
 {
-    /**
-     * @var array
-     */
+
     public function boot()
     {
+        $this->fieldSearchable = config('users.team.model.search');
+
     }
 
     /**
@@ -21,26 +21,31 @@ class TeamRepository extends BaseRepository implements TeamRepositoryInterface
      */
     public function model()
     {
-        $this->fieldSearchable = config('litepie.user.user.search');
-
-        return config('litepie.user.team.model');
+        return config('users.team.model.model');
     }
 
     /**
-     * Find a agents.
+     * Attach a user to a team.
      *
-     * @param type $id
-     *
-     * @return type
+     * @return string
      */
-    public function reportingTo($team_id)
+    public function attach($data)
     {
-        $temp = [];
-        $team = $this->model->select('id', 'name', 'manager_id')->whereId($team_id)->first();
-        foreach ($team->member as $key => $value) {
-            $temp[$value->pivot->user_id] = $value->name;
-        }
-
-        return $temp;
+        $team = $this->model->find($data['team_id']);
+        $team->users()->sync([$data['user_id'] => ['role' => $data['role']]], false);
+        return $team;
     }
+
+    /**
+     * Detach a user to a team.
+     *
+     * @return string
+     */
+    public function detach($data)
+    {
+        $team = $this->model->find($data['team_id']);
+        $team->users()->detach($data['user_id']);
+        return $team;
+    }
+
 }

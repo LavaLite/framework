@@ -2,16 +2,15 @@
 
 namespace Litepie\User\Http\Controllers;
 
-use App\Http\Controllers\ResourceController as BaseController;
-use Form;
+use App\Http\Controllers\APIController as BaseController;
 use Litepie\User\Http\Requests\TeamRequest;
 use Litepie\User\Interfaces\TeamRepositoryInterface;
 use Litepie\User\Models\Team;
 
 /**
- * Resource controller class for team.
+ * APIController  class for team.
  */
-class TeamResourceController extends BaseController
+class TeamAPIController extends BaseController
 {
 
     /**
@@ -37,7 +36,143 @@ class TeamResourceController extends BaseController
      */
     public function index(TeamRequest $request)
     {
+        return $this->repository
+            ->setPresenter(\Litepie\User\Repositories\Presenter\TeamListPresenter::class)
+            ->paginate();
+    }
+
+    /**
+     * Display team.
+     *
+     * @param Request $request
+     * @param Model   $team
+     *
+     * @return Response
+     */
+    public function show(TeamRequest $request, Team $team)
+    {
+        return $team->setPresenter(\Litepie\User\Repositories\Presenter\TeamListPresenter::class);
+
+    }
+
+    /**
+     * Create new team.
+     *
+     * @param Request $request
+     *
+     * @return Response
+     */
+    public function store(TeamRequest $request)
+    {
+        try {
+            $data = $request->all();
+            $data['user_id'] = user_id();
+            $data['user_type'] = user_type();
+            $data = $this->repository->create($data);
+            $message = trans('messages.success.created', ['Module' => trans('teams::user.name')]);
+            $code = 204;
+            $status = 'success';
+            $url = guard_url('user/team/' . $team->getRouteKey());
+        } catch (Exception $e) {
+            $message = $e->getMessage();
+            $code = 400;
+            $status = 'error';
+            $url = guard_url('teams/team');
+        }
+        return compact('data', 'message', 'code', 'status', 'url');
+    }
+
+    /**
+     * Update the team.
+     *
+     * @param Request $request
+     * @param Model   $team
+     *
+     * @return Response
+     */
+    public function update(TeamRequest $request, Team $team)
+    {
+        try {
+            $data = $request->all();
+
+            $team->update($data);
+            $message = trans('messages.success.updated', ['Module' => trans('teams::user.name')]);
+            $code = 204;
+            $status = 'success';
+            $url = guard_url('user/team/' . $team->getRouteKey());
+        } catch (Exception $e) {
+            $message = $e->getMessage();
+            $code = 400;
+            $status = 'error';
+            $url = guard_url('user/team/' . $team->getRouteKey());
+        }
+        return compact('data', 'message', 'code', 'status', 'url');
+    }
+
+    /**
+     * Remove the team.
+     *
+     * @param Model   $team
+     *
+     * @return Response
+     */
+    public function destroy(TeamRequest $request, Team $team)
+    {
+        try {
+            $team->delete();
+            $message = trans('messages.success.deleted', ['Module' => trans('teams::user.name')]);
+            $code = 202;
+            $status = 'success';
+            $url = guard_url('user/team/0');
+        } catch (Exception $e) {
+            $message = $e->getMessage();
+            $code = 400;
+            $status = 'error';
+            $url = guard_url('user/team/' . $team->getRouteKey());
+        }
+        return compact('message', 'code', 'status', 'url');
+    }
+}
+
+namespace Litepie\User\Http\Controllers;
+
+use App\Http\Controllers\APIController as BaseController;
+use Form;
+use Litepie\User\Http\Requests\TeamRequest;
+use Litepie\User\Interfaces\TeamRepositoryInterface;
+use Litepie\User\Models\Team;
+
+/**
+ * API controller class for team.
+ */
+class TeamAPIController extends BaseController
+{
+
+    /**
+     * Initialize team API controller.
+     *
+     * @param type TeamRepositoryInterface $team
+     *
+     * @return null
+     */
+    public function __construct(TeamRepositoryInterface $team)
+    {
+        parent::__construct();
+        $this->repository = $team;
+        $this->repository
+            ->pushCriteria(\Litepie\Repository\Criteria\RequestCriteria::class)
+            ->pushCriteria(\Litepie\User\Repositories\Criteria\TeamAPICriteria::class);
+    }
+
+    /**
+     * Display a list of team.
+     *
+     * @return Response
+     */
+    public function index(TeamRequest $request)
+    {
         $view = $this->response->theme->listView();
+
         if ($this->response->typeIs('json')) {
             $function = camel_case('get-' . $view);
             return $this->repository
@@ -47,8 +182,8 @@ class TeamResourceController extends BaseController
 
         $teams = $this->repository->paginate();
 
-        return $this->response->setMetaTitle(trans('user::team.names'))
-            ->view('user::team.index', true)
+        return $this->response->setMetaTitle(trans('teams::user.names'))
+            ->view('teams::user.index', true)
             ->data(compact('teams', 'view'))
             ->output();
     }
@@ -65,12 +200,12 @@ class TeamResourceController extends BaseController
     {
 
         if ($team->exists) {
-            $view = 'user::team.show';
+            $view = 'teams::user.show';
         } else {
-            $view = 'user::team.new';
+            $view = 'teams::user.new';
         }
 
-        return $this->response->setMetaTitle(trans('app.view') . ' ' . trans('user::team.name'))
+        return $this->response->setMetaTitle(trans('app.view') . ' ' . trans('teams::user.name'))
             ->data(compact('team'))
             ->view($view, true)
             ->output();
@@ -87,8 +222,8 @@ class TeamResourceController extends BaseController
     {
 
         $team = $this->repository->newInstance([]);
-        return $this->response->setMetaTitle(trans('app.new') . ' ' . trans('user::team.name'))
-            ->view('user::team.create', true)
+        return $this->response->setMetaTitle(trans('app.new') . ' ' . trans('teams::user.name'))
+            ->view('teams::user.create', true)
             ->data(compact('team'))
             ->output();
     }
@@ -108,7 +243,7 @@ class TeamResourceController extends BaseController
             $attributes['user_type'] = user_type();
             $team = $this->repository->create($attributes);
 
-            return $this->response->message(trans('messages.success.created', ['Module' => trans('user::team.name')]))
+            return $this->response->message(trans('messages.success.created', ['Module' => trans('teams::user.name')]))
                 ->code(204)
                 ->status('success')
                 ->url(guard_url('user/team/' . $team->getRouteKey()))
@@ -133,8 +268,8 @@ class TeamResourceController extends BaseController
      */
     public function edit(TeamRequest $request, Team $team)
     {
-        return $this->response->setMetaTitle(trans('app.edit') . ' ' . trans('user::team.name'))
-            ->view('user::team.edit', true)
+        return $this->response->setMetaTitle(trans('app.edit') . ' ' . trans('teams::user.name'))
+            ->view('teams::user.edit', true)
             ->data(compact('team'))
             ->output();
     }
@@ -153,7 +288,7 @@ class TeamResourceController extends BaseController
             $attributes = $request->all();
 
             $team->update($attributes);
-            return $this->response->message(trans('messages.success.updated', ['Module' => trans('user::team.name')]))
+            return $this->response->message(trans('messages.success.updated', ['Module' => trans('teams::user.name')]))
                 ->code(204)
                 ->status('success')
                 ->url(guard_url('user/team/' . $team->getRouteKey()))
@@ -180,7 +315,7 @@ class TeamResourceController extends BaseController
         try {
 
             $team->delete();
-            return $this->response->message(trans('messages.success.deleted', ['Module' => trans('user::team.name')]))
+            return $this->response->message(trans('messages.success.deleted', ['Module' => trans('teams::user.name')]))
                 ->code(202)
                 ->status('success')
                 ->url(guard_url('user/team/0'))
@@ -215,7 +350,7 @@ class TeamResourceController extends BaseController
                 $this->repository->delete($ids);
             }
 
-            return $this->response->message(trans('messages.success.deleted', ['Module' => trans('user::team.name')]))
+            return $this->response->message(trans('messages.success.deleted', ['Module' => trans('teams::user.name')]))
                 ->status("success")
                 ->code(202)
                 ->url(guard_url('teams/team'))
@@ -245,7 +380,7 @@ class TeamResourceController extends BaseController
             $ids = hashids_decode($request->input('ids'));
             $this->repository->restore($ids);
 
-            return $this->response->message(trans('messages.success.restore', ['Module' => trans('user::team.name')]))
+            return $this->response->message(trans('messages.success.restore', ['Module' => trans('teams::user.name')]))
                 ->status("success")
                 ->code(202)
                 ->url(guard_url('/teams/team'))
@@ -262,59 +397,4 @@ class TeamResourceController extends BaseController
 
     }
 
-    /**
-     * Attach a user to a team.
-     *
-     * @param Request $request
-     * @param Model   $team
-     *
-     * @return Response
-     */
-    public function attach(TeamRequest $request)
-    {
-        try {
-            $attributes = $request->all();
-
-            $team = $this->repository->attach($attributes);
-            return $this->response->message(trans('messages.success.attached', ['Module' => trans('user::team.name')]))
-                ->code(204)
-                ->status('success')
-                ->url(guard_url('user/team/' . $team->getRouteKey()))
-                ->redirect();
-        } catch (Exception $e) {
-            return $this->response->message($e->getMessage())
-                ->code(400)
-                ->status('error')
-                ->url(guard_url('user/team/' . $team->getRouteKey()))
-                ->redirect();
-        }
-
-    }
-    /**
-     * Detach a user from a team.
-     *
-     * @param Request $request
-     * @param Model   $team
-     *
-     * @return Response
-     */
-    public function detach(TeamRequest $request)
-    {
-        try {
-            $attributes = $request->all();
-            $team = $this->repository->detach($attributes);
-            return $this->response->message(trans('messages.success.detached', ['Module' => trans('user::team.name')]))
-                ->code(204)
-                ->status('success')
-                ->url(guard_url('user/team/' . $team->getRouteKey()))
-                ->redirect();
-        } catch (Exception $e) {
-            return $this->response->message($e->getMessage())
-                ->code(400)
-                ->status('error')
-                ->url(guard_url('user/team/' . $team->getRouteKey()))
-                ->redirect();
-        }
-
-    }
 }
