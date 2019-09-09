@@ -3,13 +3,16 @@
 namespace Litepie\Repository\Traits;
 
 use Illuminate\Support\Arr;
-use Prettus\Repository\Contracts\PresenterInterface;
+use Litepie\Repository\Contracts\PresenterInterface;
 
 /**
- * Class PresentableTrait.
+ * Class PresentableTrait
+ * @package Litepie\Repository\Traits
+ * @author Renfos Technologies Pvt. Ltd. <info@info@renfos.com>
  */
 trait PresentableTrait
 {
+
     /**
      * @var PresenterInterface
      */

@@ -1,12 +1,22 @@
 <?php
-
 namespace Litepie\Repository\Contracts;
 
-use Prettus\Repository\Contracts\Presentable as PrettusPresentable;
-
 /**
- * Interface Presentable.
+ * Interface Presentable
+ * @package Litepie\Repository\Contracts
+ * @author Renfos Technologies Pvt. Ltd. <info@info@renfos.com>
  */
-interface Presentable extends PrettusPresentable
+interface Presentable
 {
+    /**
+     * @param PresenterInterface $presenter
+     *
+     * @return mixed
+     */
+    public function setPresenter(PresenterInterface $presenter);
+
+    /**
+     * @return mixed
+     */
+    public function presenter();
 }

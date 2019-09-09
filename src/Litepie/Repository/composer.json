@@ -1,22 +1,19 @@
 {
     "name": "litepie/repository",
     "description": "Repository bundle for Lavalite",
-    "keywords": ["lavalite", "repository"],
+    "keywords": ["lavalite", "litepie", "repository"],
     "license": "MIT",
     "homepage": "https://github.com/Litepie/Repository",
-    "authors": [
-        {
-            "name": "Renfos Technologies Pvt. Ltd.",
-            "email": "info@renfos.com"
-        }
-    ],
+    "authors": [{
+        "name": "Renfos Technologies Pvt. Ltd.",
+        "email": "info@renfos.com"
+    }],
     "require": {
-        "php": "^7.0",
-        "prettus/l5-repository": "~2.6"
+        "php": "^7.2"
     },
     "autoload": {
-        "psr-4": { 
-            "Litepie\\Repository\\": "" 
+        "psr-4": {
+            "Litepie\\Repository\\": ""
         }
     }
 }

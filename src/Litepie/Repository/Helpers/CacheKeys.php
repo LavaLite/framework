@@ -3,14 +3,17 @@
 namespace Litepie\Repository\Helpers;
 
 /**
- * Class CacheKeys.
+ * Class CacheKeys
+ * @package Litepie\Repository\Helpers
+ * @author Renfos Technologies Pvt. Ltd. <info@info@renfos.com>
  */
 class CacheKeys
 {
+
     /**
      * @var string
      */
-    protected static $storeFile = 'repository-cache-keys.json';
+    protected static $storeFile = "repository-cache-keys.json";
 
     /**
      * @var array
@@ -62,7 +65,7 @@ class CacheKeys
      */
     public static function getFileKeys()
     {
-        $file = storage_path('framework/cache/'.self::$storeFile);
+        $file = storage_path("framework/cache/" . self::$storeFile);
 
         return $file;
     }
@@ -100,11 +103,11 @@ class CacheKeys
      */
     public static function __callStatic($method, $parameters)
     {
-        $instance = new static();
+        $instance = new static;
 
         return call_user_func_array([
             $instance,
-            $method,
+            $method
         ], $parameters);
     }
 
@@ -116,11 +119,11 @@ class CacheKeys
      */
     public function __call($method, $parameters)
     {
-        $instance = new static();
+        $instance = new static;
 
         return call_user_func_array([
             $instance,
-            $method,
+            $method
         ], $parameters);
     }
 }

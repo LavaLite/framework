@@ -1,12 +1,64 @@
 <?php
-
 namespace Litepie\Repository\Contracts;
 
-use Prettus\Repository\Contracts\RepositoryCriteriaInterface as PrettusRepositoryCriteriaInterface;
+use Illuminate\Support\Collection;
+
 
 /**
- * Interface RepositoryCriteriaInterface.
+ * Interface RepositoryCriteriaInterface
+ * @package Litepie\Repository\Contracts
+ * @author Renfos Technologies Pvt. Ltd. <info@info@renfos.com>
  */
-interface RepositoryCriteriaInterface extends PrettusRepositoryCriteriaInterface
+interface RepositoryCriteriaInterface
 {
+
+    /**
+     * Push Criteria for filter the query
+     *
+     * @param $criteria
+     *
+     * @return $this
+     */
+    public function pushCriteria($criteria);
+
+    /**
+     * Pop Criteria
+     *
+     * @param $criteria
+     *
+     * @return $this
+     */
+    public function popCriteria($criteria);
+
+    /**
+     * Get Collection of Criteria
+     *
+     * @return Collection
+     */
+    public function getCriteria();
+
+    /**
+     * Find data by Criteria
+     *
+     * @param CriteriaInterface $criteria
+     *
+     * @return mixed
+     */
+    public function getByCriteria(CriteriaInterface $criteria);
+
+    /**
+     * Skip Criteria
+     *
+     * @param bool $status
+     *
+     * @return $this
+     */
+    public function skipCriteria($status = true);
+
+    /**
+     * Reset all Criterias
+     *
+     * @return $this
+     */
+    public function resetCriteria();
 }

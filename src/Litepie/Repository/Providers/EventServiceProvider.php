@@ -1,11 +1,16 @@
 <?php
-
 namespace Litepie\Repository\Providers;
 
 use Illuminate\Support\ServiceProvider;
 
+/**
+ * Class EventServiceProvider
+ * @package Litepie\Repository\Providers
+ * @author Renfos Technologies Pvt. Ltd. <info@info@renfos.com>
+ */
 class EventServiceProvider extends ServiceProvider
 {
+
     /**
      * The event handler mappings for the application.
      *
@@ -13,14 +18,14 @@ class EventServiceProvider extends ServiceProvider
      */
     protected $listen = [
         'Litepie\Repository\Events\RepositoryEntityCreated' => [
-            'Litepie\Repository\Listeners\CleanCacheRepository',
+            'Litepie\Repository\Listeners\CleanCacheRepository'
         ],
         'Litepie\Repository\Events\RepositoryEntityUpdated' => [
-            'Litepie\Repository\Listeners\CleanCacheRepository',
+            'Litepie\Repository\Listeners\CleanCacheRepository'
         ],
         'Litepie\Repository\Events\RepositoryEntityDeleted' => [
-            'Litepie\Repository\Listeners\CleanCacheRepository',
-        ],
+            'Litepie\Repository\Listeners\CleanCacheRepository'
+        ]
     ];
 
     /**

@@ -2,24 +2,27 @@
 
 namespace Litepie\Repository\Traits;
 
-use Exception;
 use Illuminate\Contracts\Cache\Repository as CacheRepository;
-use Prettus\Repository\Contracts\CriteriaInterface;
-use Prettus\Repository\Helpers\CacheKeys;
+use Litepie\Repository\Contracts\CriteriaInterface;
+use Litepie\Repository\Helpers\CacheKeys;
 use ReflectionObject;
+use Exception;
 
 /**
- * Class CacheableRepository.
+ * Class CacheableRepository
+ * @package Litepie\Repository\Traits
+ * @author Renfos Technologies Pvt. Ltd. <info@info@renfos.com>
  */
 trait CacheableRepository
 {
+
     /**
      * @var CacheRepository
      */
     protected $cacheRepository = null;
 
     /**
-     * Set Cache Repository.
+     * Set Cache Repository
      *
      * @param CacheRepository $repository
      *
@@ -33,7 +36,7 @@ trait CacheableRepository
     }
 
     /**
-     * Return instance of Cache Repository.
+     * Return instance of Cache Repository
      *
      * @return CacheRepository
      */
@@ -47,7 +50,7 @@ trait CacheableRepository
     }
 
     /**
-     * Skip Cache.
+     * Skip Cache
      *
      * @param bool $status
      *
@@ -108,7 +111,7 @@ trait CacheableRepository
     }
 
     /**
-     * Get Cache key for the method.
+     * Get Cache key for the method
      *
      * @param $method
      * @param $args
@@ -117,14 +120,16 @@ trait CacheableRepository
      */
     public function getCacheKey($method, $args = null)
     {
+
         $request = app('Illuminate\Http\Request');
         $args = serialize($args);
         $criteria = $this->serializeCriteria();
-        $key = sprintf('%s@%s-%s', get_called_class(), $method, md5($args.$criteria.$request->fullUrl()));
+        $key = sprintf('%s@%s-%s', get_called_class(), $method, md5($args . $criteria . $request->fullUrl()));
 
         CacheKeys::putKey(get_called_class(), $key);
 
         return $key;
+
     }
 
     /**
@@ -146,11 +151,10 @@ trait CacheableRepository
     /**
      * Serialize single criterion with customized serialization of Closures.
      *
-     * @param \Litepie\Repository\Contracts\CriteriaInterface $criterion
+     * @param  \Litepie\Repository\Contracts\CriteriaInterface $criterion
+     * @return \Litepie\Repository\Contracts\CriteriaInterface|array
      *
      * @throws \Exception
-     *
-     * @return \Litepie\Repository\Contracts\CriteriaInterface|array
      */
     protected function serializeCriterion($criterion)
     {
@@ -168,14 +172,14 @@ trait CacheableRepository
             $r = new ReflectionObject($criterion);
 
             return [
-                'hash'       => md5((string) $r),
+                'hash' => md5((string) $r),
                 'properties' => $r->getProperties(),
             ];
         }
     }
 
     /**
-     * Get cache minutes.
+     * Get cache minutes
      *
      * @return int
      */
@@ -187,7 +191,7 @@ trait CacheableRepository
     }
 
     /**
-     * Retrieve all data of repository.
+     * Retrieve all data of repository
      *
      * @param array $columns
      *
@@ -205,35 +209,40 @@ trait CacheableRepository
             return parent::all($columns);
         });
 
+        $this->resetModel();
+        $this->resetScope();
         return $value;
     }
 
     /**
-     * Retrieve all data of repository, paginated.
+     * Retrieve all data of repository, paginated
      *
      * @param null  $limit
      * @param array $columns
+     * @param string $method
      *
      * @return mixed
      */
-    public function paginate($limit = null, $columns = ['*'])
+    public function paginate($limit = null, $columns = ['*'], $method = 'paginate')
     {
         if (!$this->allowedCache('paginate') || $this->isSkippedCache()) {
-            return parent::paginate($limit, $columns);
+            return parent::paginate($limit, $columns, $method);
         }
 
         $key = $this->getCacheKey('paginate', func_get_args());
 
         $minutes = $this->getCacheMinutes();
-        $value = $this->getCacheRepository()->remember($key, $minutes, function () use ($limit, $columns) {
-            return parent::paginate($limit, $columns);
+        $value = $this->getCacheRepository()->remember($key, $minutes, function () use ($limit, $columns, $method) {
+            return parent::paginate($limit, $columns, $method);
         });
 
+        $this->resetModel();
+        $this->resetScope();
         return $value;
     }
 
     /**
-     * Find data by id.
+     * Find data by id
      *
      * @param       $id
      * @param array $columns
@@ -252,11 +261,13 @@ trait CacheableRepository
             return parent::find($id, $columns);
         });
 
+        $this->resetModel();
+        $this->resetScope();
         return $value;
     }
 
     /**
-     * Find data by field and value.
+     * Find data by field and value
      *
      * @param       $field
      * @param       $value
@@ -276,11 +287,13 @@ trait CacheableRepository
             return parent::findByField($field, $value, $columns);
         });
 
+        $this->resetModel();
+        $this->resetScope();
         return $value;
     }
 
     /**
-     * Find data by multiple fields.
+     * Find data by multiple fields
      *
      * @param array $where
      * @param array $columns
@@ -299,11 +312,13 @@ trait CacheableRepository
             return parent::findWhere($where, $columns);
         });
 
+        $this->resetModel();
+        $this->resetScope();
         return $value;
     }
 
     /**
-     * Find data by Criteria.
+     * Find data by Criteria
      *
      * @param CriteriaInterface $criteria
      *
@@ -321,6 +336,8 @@ trait CacheableRepository
             return parent::getByCriteria($criteria);
         });
 
+        $this->resetModel();
+        $this->resetScope();
         return $value;
     }
 }
