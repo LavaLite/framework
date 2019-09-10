@@ -11,8 +11,8 @@
         }
     ],
     "require": {
-        "php": "^7.0",
-        "laravel/socialite": "~3.1",
+        "php": "^7.2",
+        "laravel/socialite": "~4.2"
     },
     "autoload": {
         "classmap": [
