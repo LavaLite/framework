@@ -1,21 +1,22 @@
 <?php
-
 namespace Litepie\Repository\Presenter;
 
 use Exception;
-use Prettus\Repository\Transformer\ModelTransformer;
+use Litepie\Repository\Transformer\ModelTransformer;
 
 /**
- * Class ModelFractalPresenter.
+ * Class ModelFractalPresenter
+ * @package Litepie\Repository\Presenter
+ * @author Renfos Technologies Pvt. Ltd. <info@info@renfos.com>
  */
 class ModelFractalPresenter extends FractalPresenter
 {
+
     /**
-     * Transformer.
-     *
-     * @throws Exception
+     * Transformer
      *
      * @return ModelTransformer
+     * @throws Exception
      */
     public function getTransformer()
     {

@@ -1,22 +1,19 @@
 {
     "name": "litepie/trans",
     "description": "Trans bundle for Lavalite",
-    "keywords": ["lavalite", "trans"],
+    "keywords": ["lavalite", "litepie", "trans"],
     "license": "MIT",
     "homepage": "https://github.com/Litepie/Trans",
-    "authors": [
-        {
-            "name": "Renfos Technologies Pvt. Ltd.",
-            "email": "info@renfos.com"
-        }
-    ],
+    "authors": [{
+        "name": "Renfos Technologies Pvt. Ltd.",
+        "email": "info@renfos.com"
+    }],
     "require": {
-        "php": "^7.0",
-        "mcamara/laravel-localization": "1.3.*"
+        "php": "^7.2"
     },
     "autoload": {
-        "psr-4": { 
-            "Litepie\\Trans\\": "" 
+        "psr-4": {
+            "Litepie\\Trans\\": ""
         }
     }
 }

@@ -3,6 +3,7 @@
 namespace Litepie\Activities\Test;
 
 use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Arr;
 use Litepie\Activities\ActivitylogServiceProvider;
 use Litepie\Activities\Models\Activity;
 use Litepie\Activities\Test\Models\Article;
@@ -23,7 +24,7 @@ abstract class TestCase extends OrchestraTestCase
         parent::checkRequirements();
 
         collect($this->getAnnotations())->filter(function ($location) {
-            return in_array('!Travis', array_get($location, 'requires', []));
+            return in_array('!Travis', Arr::get($location, 'requires', []));
         })->each(function ($location) {
             getenv('TRAVIS') && $this->markTestSkipped('Travis will not run this test.');
         });
@@ -41,9 +42,9 @@ abstract class TestCase extends OrchestraTestCase
         $app['config']->set('database.default', 'sqlite');
 
         $app['config']->set('database.connections.sqlite', [
-            'driver'   => 'sqlite',
-            'database' => $this->getTempDirectory().'/database.sqlite',
-            'prefix'   => '',
+            'driver' => 'sqlite',
+            'database' => $this->getTempDirectory() . '/database.sqlite',
+            'prefix' => '',
         ]);
 
         $app['config']->set('auth.providers.users.model', User::class);
@@ -63,19 +64,19 @@ abstract class TestCase extends OrchestraTestCase
 
     protected function resetDatabase()
     {
-        file_put_contents($this->getTempDirectory().'/database.sqlite', null);
+        file_put_contents($this->getTempDirectory() . '/database.sqlite', null);
     }
 
     protected function createActivityLogTable()
     {
-        include_once '__DIR__'.'/../migrations/create_activity_log_table.php.stub';
+        include_once '__DIR__' . '/../migrations/create_activity_log_table.php.stub';
 
         (new \CreateActivityLogTable())->up();
     }
 
     public function getTempDirectory(): string
     {
-        return __DIR__.'/temp';
+        return __DIR__ . '/temp';
     }
 
     protected function createTables(...$tableNames)

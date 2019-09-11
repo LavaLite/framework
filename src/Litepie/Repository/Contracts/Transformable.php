@@ -1,12 +1,15 @@
 <?php
-
 namespace Litepie\Repository\Contracts;
 
-use Prettus\Repository\Contracts\Transformableas as PrettusTransformable;
-
 /**
- * Interface Transformable.
+ * Interface Transformable
+ * @package Litepie\Repository\Contracts
+ * @author Renfos Technologies Pvt. Ltd. <info@info@renfos.com>
  */
-interface Transformable extends PrettusTransformable
+interface Transformable
 {
+    /**
+     * @return array
+     */
+    public function transform();
 }

@@ -2,6 +2,7 @@
 
 namespace Litepie\Menu\Repositories\Eloquent;
 
+use Illuminate\Support\Arr;
 use Litepie\Menu\Interfaces\MenuRepositoryInterface;
 use Litepie\Repository\Eloquent\BaseRepository;
 
@@ -84,16 +85,16 @@ class MenuRepository extends BaseRepository implements MenuRepositoryInterface
     public function getMenu($key)
     {
         return $menus = $this->orderBy('order', 'ASC')
-        ->all()
-        ->toMenu($key);
+            ->all()
+            ->toMenu($key);
     }
 
     public function getParentChild($id, $array)
     {
         foreach ($array as $node) {
-            $this->tempHolder[hashids_decode($id)][] = array_get($node, 'id');
+            $this->tempHolder[hashids_decode($id)][] = Arr::get($node, 'id');
             if (isset($node['children'])) {
-                $this->getParentChild(array_get($node, 'id'), $node['children']);
+                $this->getParentChild(Arr::get($node, 'id'), $node['children']);
             }
         }
     }

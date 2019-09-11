@@ -5,6 +5,7 @@ namespace Litepie\Install\Http\Controllers;
 use App\Http\Controllers\PublicController as PublicController;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
 use Response;
 use Validator;
 
@@ -71,7 +72,7 @@ class InstallController extends PublicController
      */
     public function postPublish(Request $request)
     {
-        $attributes = array_only($request->all(), $this->tags);
+        $attributes = Arr::only($request->all(), $this->tags);
         foreach ($attributes as $key => $value) {
             $this->publish($key);
         }
@@ -100,15 +101,15 @@ class InstallController extends PublicController
     {
         $attributes = $request->all();
         $validator = Validator::make($attributes, [
-                                'user.*.email'    => 'required|email',
-                                'user.*.password' => 'min:6|max:30',
-                            ]);
+            'user.*.email' => 'required|email',
+            'user.*.password' => 'min:6|max:30',
+        ]);
 
         if ($validator->fails()) {
             return redirect()->back()->withCode(400)->withMessage($validator->errors());
         }
 
-        $data = array_only($attributes['user'], ['superuser', 'admin', 'user', 'client']);
+        $data = Arr::only($attributes['user'], ['superuser', 'admin', 'user', 'client']);
         foreach ($data as $key => $value) {
             $this->setCredentials($value, $this->model[$key]);
         }

@@ -4,7 +4,7 @@ namespace Litepie\Roles\Traits;
 
 use Illuminate\Database\Eloquent\Model;
 use InvalidArgumentException;
-
+use Illuminate\Support\Str;
 trait HasRoleAndPermission
 {
     /**
@@ -111,7 +111,7 @@ trait HasRoleAndPermission
     public function hasRole($role)
     {
         return $this->getRoles()->contains(function ($value, $key) use ($role) {
-            return $role == $value->id || str_is($role, $value->slug);
+            return $role == $value->id || Str::is($role, $value->slug);
         });
     }
 
@@ -272,7 +272,7 @@ trait HasRoleAndPermission
     public function hasPermission($permission)
     {
         return $this->getPermissions()->contains(function ($value, $key) use ($permission) {
-            return $permission == $value->id || str_is($permission, $value->slug);
+            return $permission == $value->id || Str::is($permission, $value->slug);
         });
     }
 
@@ -422,12 +422,12 @@ trait HasRoleAndPermission
      */
     public function __call($method, $parameters)
     {
-        if (starts_with($method, 'is')) {
-            return $this->hasRole(snake_case(substr($method, 2), config('roles.separator', '.')));
-        } elseif (starts_with($method, 'can')) {
-            return $this->canDo(snake_case(substr($method, 3), config('roles.separator', '.')));
-        } elseif (starts_with($method, 'allowed')) {
-            return $this->allowed(snake_case(substr($method, 7), config('roles.separator', '.')), $parameters[0], (isset($parameters[1])) ? $parameters[1] : true, (isset($parameters[2])) ? $parameters[2] : 'user_id');
+        if (Str::startsWith($method, 'is')) {
+            return $this->hasRole(Str::snake(substr($method, 2), config('roles.separator', '.')));
+        } elseif (Str::startsWith($method, 'can')) {
+            return $this->canDo(Str::snake(substr($method, 3), config('roles.separator', '.')));
+        } elseif (Str::startsWith($method, 'allowed')) {
+            return $this->allowed(Str::snake(substr($method, 7), config('roles.separator', '.')), $parameters[0], (isset($parameters[1])) ? $parameters[1] : true, (isset($parameters[2])) ? $parameters[2] : 'user_id');
         }
 
         return parent::__call($method, $parameters);

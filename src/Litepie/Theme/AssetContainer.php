@@ -5,6 +5,7 @@ namespace Litepie\Theme;
 use Illuminate\Support\Facades\HTML;
 use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\URL;
+use Illuminate\Support\Str;
 
 class AssetContainer
 {
@@ -78,7 +79,7 @@ class AssetContainer
             $base = rtrim($assetUrl, '/');
 
             // Asset URL without index.
-            $basePath = str_contains($base, $i) ? str_replace('/'.$i, '', $base) : $base;
+            $basePath = Str::contains($base, $i) ? str_replace('/'.$i, '', $base) : $base;
         } else {
             if (is_null($secure)) {
                 $scheme = Request::getScheme().'://';
@@ -88,11 +89,11 @@ class AssetContainer
 
             // Get root URL.
             $root = Request::root();
-            $start = starts_with($root, 'http://') ? 'http://' : 'https://';
+            $start = Str::startsWith($root, 'http://') ? 'http://' : 'https://';
             $root = preg_replace('~'.$start.'~', $scheme, $root, 1);
 
             // Asset URL without index.
-            $basePath = str_contains($root, $i) ? str_replace('/'.$i, '', $root) : $root;
+            $basePath = Str::contains($root, $i) ? str_replace('/'.$i, '', $root) : $root;
         }
 
         return $basePath.'/'.$path;
