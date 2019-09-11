@@ -11,7 +11,7 @@
         }
     ],
     "require": {
-        "rachidlaasri/laravel-installer ": "~4.0"
+        "rachidlaasri/laravel-installer": "~4.0"
     },
     "autoload": {
         "psr-4": { 
