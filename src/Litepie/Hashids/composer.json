@@ -11,7 +11,7 @@
         }
     ],
     "require": {
-        "hashids/hashids": "~2.0"
+        "hashids/hashids": "~4.0"
     },
     "autoload": {
         "psr-4": { 
