@@ -3,10 +3,10 @@
 namespace Litepie\Filer\Traits;
 
 use File;
+use Illuminate\Support\Str;
 use Intervention\Image\Facades\Image as Intervention;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
-
 trait Uploader
 {
     /**
@@ -47,10 +47,10 @@ trait Uploader
 
         // If it returns an array it's a successful upload. Otherwise an exception will be thrown.
         $array = [
-            'folder'  => $this->relativePath($folder),
-            'file'    => $file->fileSystemName,
+            'folder' => $this->relativePath($folder),
+            'file' => $file->fileSystemName,
             'caption' => $this->getName($file),
-            'time'    => date('Y-m-d H:i:s'),
+            'time' => date('Y-m-d H:i:s'),
         ];
 
         return $array;
@@ -68,16 +68,16 @@ trait Uploader
     public function resolveFileName($folder, UploadedFile $file, $enableObfuscation = true)
     {
         if (!isset($file->fileSystemName)) {
-            $file->fileSystemName = str_slug(basename($file->getClientOriginalName(), $file->getClientOriginalExtension())).'.'.strtolower($file->getClientOriginalExtension());
+            $file->fileSystemName = Str::slug(basename($file->getClientOriginalName(), $file->getClientOriginalExtension())) . '.' . strtolower($file->getClientOriginalExtension());
         }
 
         if (config('filer.obfuscate_filenames') && $enableObfuscation) {
-            $fileName = basename($file->fileSystemName, $file->getClientOriginalExtension()).'_'.md5(uniqid(mt_rand(), true)).'.'.$file->getClientOriginalExtension();
+            $fileName = basename($file->fileSystemName, $file->getClientOriginalExtension()) . '_' . md5(uniqid(mt_rand(), true)) . '.' . $file->getClientOriginalExtension();
         } else {
             $fileName = $file->fileSystemName;
         }
 
-        if (File::isFile($folder.$fileName)) {
+        if (File::isFile($folder . $fileName)) {
             $basename = $this->getBasename($file);
             $pose = strrpos($basename, '_');
 
@@ -95,7 +95,7 @@ trait Uploader
                 $s = 1;
             }
 
-            $file->fileSystemName = $basename.'_'.$s.'.'.$file->getClientOriginalExtension();
+            $file->fileSystemName = $basename . '_' . $s . '.' . $file->getClientOriginalExtension();
 
             return $this->resolveFileName($folder, $file, false);
         }
@@ -114,8 +114,8 @@ trait Uploader
      */
     public function checkUploadFolder($folder)
     {
-        $folder = base_path(config('filer.folder', 'storage/uploads').DIRECTORY_SEPARATOR.$folder);
-        $folder = str_finish($folder, DIRECTORY_SEPARATOR);
+        $folder = base_path(config('filer.folder', 'storage/uploads') . DIRECTORY_SEPARATOR . $folder);
+        $folder = Str::finish($folder, DIRECTORY_SEPARATOR);
 
         // Check to see if the upload folder exists
         if (!File::exists($folder)) {
@@ -174,7 +174,7 @@ trait Uploader
     public function getName($file)
     {
         // Get the file bits
-        $basename = basename($file->getClientOriginalName(), '.'.$file->getClientOriginalExtension());
+        $basename = basename($file->getClientOriginalName(), '.' . $file->getClientOriginalExtension());
         // Remove trailing period
         $name = ucfirst(strtolower(preg_replace('/[^A-Za-z0-9]/', ' ', $basename)));
 
@@ -188,21 +188,21 @@ trait Uploader
         }
 
         if (is_string($file)) {
-            $uFile = new UploadedFile($folder.$file, $file);
+            $uFile = new UploadedFile($folder . $file, $file);
         }
 
         /*
          * Check the image type is valid by extension and mimetype
          */
         if ($this->verifyImageType($uFile)) {
-            $image = $this->image->make($folder.$file);
+            $image = $this->image->make($folder . $file);
 
             if ($image->width() > config('filer.image_max_size.w') || $image->height() > config('filer.image_max_size.h')) {
                 $image->resize(config('filer.image_max_size.w'), config('filer.image_max_size.h'), function ($constraint) {
                     $constraint->aspectRatio();
                     $constraint->upsize();
                 });
-                $image->save($folder.$file);
+                $image->save($folder . $file);
             }
         }
     }
@@ -213,7 +213,7 @@ trait Uploader
 
         // Check to see if it begins in a slash
         if (substr($path, 0, 1) != DIRECTORY_SEPARATOR) {
-            $path = DIRECTORY_SEPARATOR.$path;
+            $path = DIRECTORY_SEPARATOR . $path;
         }
 
         // Check to see if it ends in a slash
@@ -238,9 +238,9 @@ trait Uploader
     public function allowedExtensions($type = 'image')
     {
         if ($type == 'image') {
-            return '.'.implode(',.', config('filer.image_extensions'));
+            return '.' . implode(',.', config('filer.image_extensions'));
         }
 
-        return '.'.implode(',.', config('filer.allowed_extensions'));
+        return '.' . implode(',.', config('filer.allowed_extensions'));
     }
 }

@@ -5,6 +5,7 @@ namespace Litepie\Trans;
 use Illuminate\Config\Repository;
 use Illuminate\Contracts\Routing\UrlRoutable;
 use Illuminate\Support\Str;
+use Illuminate\Support\Arr;
 
 
 use Litepie\Trans\Exceptions\SupportedLocalesNotDefined;

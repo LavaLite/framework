@@ -3,7 +3,7 @@
 namespace Litepie\Database\Traits;
 
 use Exception;
-
+use  Illuminate\Support\Str;
 trait Slugger
 {
     /**
@@ -68,7 +68,7 @@ trait Slugger
 
             $slug = implode(' ', $slugArr);
             $slug = substr($slug, 0, $maxLength);
-            $slug = str_slug($slug, $this->getSluggableSeparator());
+            $slug = Str::slug($slug, $this->getSluggableSeparator());
         } else {
             $slug = $this->{$slugAttribute};
         }
