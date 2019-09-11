@@ -16,7 +16,7 @@
                                         </a>
                                     </div>
                                     <div class="content">
-                                        <h4><a href="{{trans_url('master')}}/{{$master['slug']}}">{{str_limit($master['title'], 300)}}</a> 
+                                        <h4><a href="{{trans_url('master')}}/{{$master['slug']}}">{{Str::limit($master['title'], 300)}}</a> 
                                         </h4>
                                         <div class="metas mt20">
                                             <div class="tag pull-left">

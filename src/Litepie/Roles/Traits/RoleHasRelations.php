@@ -2,6 +2,7 @@
 
 namespace Litepie\Roles\Traits;
 
+use Illuminate\Support\Str;
 trait RoleHasRelations
 {
     /**
@@ -66,7 +67,7 @@ trait RoleHasRelations
     public function hasPermission($permission)
     {
         return $this->permissions()->get()->contains(function ($value, $key) use ($permission) {
-            return $permission == $value->id || str_is($permission, $value->slug);
+            return $permission == $value->id || Str::is($permission, $value->slug);
         });
     }
 }

@@ -4,6 +4,7 @@ namespace Litepie;
 
 use DB;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Str;
 
 class UserTableSeeder extends Seeder
 {
@@ -18,7 +19,7 @@ class UserTableSeeder extends Seeder
                 'name' => 'Administrator',
                 'sex' => 'Male',
                 'dob' => '2014-05-15',
-                'api_token' => str_random(60),
+                'api_token' => Str::random(60),
                 'email_verified_at' => '2019-04-15 00:00:00',
                 'designation' => 'Super User',
                 'web' => 'http://lavalite.org',
@@ -32,7 +33,7 @@ class UserTableSeeder extends Seeder
                 'name' => 'User',
                 'sex' => 'Male',
                 'dob' => '2015-05-15',
-                'api_token' => str_random(60),
+                'api_token' => Str::random(60),
                 'email_verified_at' => '2019-04-15 00:00:00',
                 'designation' => 'Admin',
                 'web' => 'http://lavalite.org',

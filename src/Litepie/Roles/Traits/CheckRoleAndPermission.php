@@ -2,6 +2,7 @@
 
 namespace Litepie\Roles\Traits;
 
+use Illuminate\Support\Str;
 trait CheckRoleAndPermission
 {
     /**
@@ -55,7 +56,7 @@ trait CheckRoleAndPermission
      */
     public function __call($method, $parameters)
     {
-        if (starts_with($method, 'is')) {
+        if (Str::startsWith($method, 'is')) {
             return $this->hasRole(snake_case(substr($method, 2), config('roles.separator', '.')));
         }
 

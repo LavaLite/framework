@@ -117,7 +117,7 @@ $moderatorRole = Role::create([
 ]);
 ```
 
-> Because of `Slugable` trait, if you make a mistake and for example leave a space in slug parameter, it'll be replaced with a dot automatically, because of `str_slug` function.
+> Because of `Slugable` trait, if you make a mistake and for example leave a space in slug parameter, it'll be replaced with a dot automatically, because of `Arr::slug` function.
 
 ### Attaching And Detaching Roles
 

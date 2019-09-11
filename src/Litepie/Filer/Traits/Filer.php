@@ -3,11 +3,11 @@
 namespace Litepie\Filer\Traits;
 
 use Filer as Uploader;
+use Illuminate\Support\Arr;
 use Litepie\Filer\Form\Forms;
 use Request;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use URL;
-
 trait Filer
 {
     /**
@@ -57,14 +57,14 @@ trait Filer
             if (is_array(Request::file($field))) {
                 foreach (Request::file($field) as $file) {
                     if ($file instanceof UploadedFile) {
-                        $files[] = Uploader::upload($file, $rootFolder . '/' . $this->upload_folder.DIRECTORY_SEPARATOR.$field);
+                        $files[] = Uploader::upload($file, $rootFolder . '/' . $this->upload_folder . DIRECTORY_SEPARATOR . $field);
                     }
                 }
             } elseif (Request::hasFile($field)) {
                 $file = Request::file($field);
 
                 if ($file instanceof UploadedFile) {
-                    $files[] = Uploader::upload($file, $rootFolder . '/' . $this->upload_folder.DIRECTORY_SEPARATOR.$field);
+                    $files[] = Uploader::upload($file, $rootFolder . '/' . $this->upload_folder . DIRECTORY_SEPARATOR . $field);
                 }
             }
 
@@ -113,7 +113,7 @@ trait Filer
      */
     public function getUploadURL($field, $file = 'file')
     {
-        return guard_url('upload/'.$this->config.'/'.($this->upload_folder).'/'.$field.'/'.$file);
+        return guard_url('upload/' . $this->config . '/' . ($this->upload_folder) . '/' . $field . '/' . $file);
     }
 
     /**
@@ -126,7 +126,7 @@ trait Filer
      */
     public function getCropURL($field, $file = 'file')
     {
-        return trans_url('crop/'.$this->config.'/'.($this->upload_folder).'/'.$field.'/'.$file);
+        return trans_url('crop/' . $this->config . '/' . ($this->upload_folder) . '/' . $field . '/' . $file);
     }
 
     /**
@@ -139,7 +139,7 @@ trait Filer
      */
     public function getFileURL($field, $file = 'file')
     {
-        return trans_url('file/'.$this->config.'/'.($this->upload_folder).'/'.$field.'/'.$file);
+        return trans_url('file/' . $this->config . '/' . ($this->upload_folder) . '/' . $field . '/' . $file);
     }
 
     /**
@@ -216,12 +216,12 @@ trait Filer
         $image = $this->$field;
 
         if (!is_array($image) || empty($image)) {
-            return 'img/default/'.$size.'.jpg';
+            return 'img/default/' . $size . '.jpg';
         }
 
-        $image = array_pull($image, $pos, head($image));
+        $image = Arr::pull($image, $pos, head($image));
 
-        return "image/{$size}/".($image['path']);
+        return "image/{$size}/" . ($image['path']);
     }
 
     /**
@@ -237,11 +237,11 @@ trait Filer
         $image = $this->$field;
 
         if (!is_array($image) || empty($image)) {
-            return ['img/default/'.$size.'.jpg'];
+            return ['img/default/' . $size . '.jpg'];
         }
 
         foreach ($image as $key => $img) {
-            $image[$key] = url("image/{$size}/").'/'.($img['path']);
+            $image[$key] = url("image/{$size}/") . '/' . ($img['path']);
         }
 
         return $image;
