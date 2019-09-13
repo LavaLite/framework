@@ -4,6 +4,7 @@ namespace Litepie\User\Http\Controllers;
 
 use App\Http\Controllers\ResourceController as BaseController;
 use Form;
+use Illuminate\Support\Str;
 use Litepie\User\Http\Requests\ClientRequest;
 use Litepie\User\Interfaces\ClientRepositoryInterface;
 use Litepie\User\Models\Client;
@@ -42,7 +43,7 @@ class ClientResourceController extends BaseController
         $view = $this->response->theme->listView();
 
         if ($this->response->typeIs('json')) {
-            $function = camel_case('get-'.$view);
+            $function = Str::camel('get-' . $view);
 
             return $this->repository
                 ->setPresenter(\Litepie\User\Repositories\Presenter\ClientPresenter::class)
@@ -73,7 +74,7 @@ class ClientResourceController extends BaseController
             $view = ["user::{$type}.new", 'user::default.new'];
         }
 
-        return $this->response->setMetaTitle(trans('app.view').' '.trans('user::client.name', ['client' => $type]))
+        return $this->response->setMetaTitle(trans('app.view') . ' ' . trans('user::client.name', ['client' => $type]))
             ->data(compact('client', 'type'))
             ->view($view)
             ->output();
@@ -90,7 +91,7 @@ class ClientResourceController extends BaseController
     {
         $client = $this->repository->newInstance([]);
 
-        return $this->response->setMetaTitle(trans('app.new').' '.trans('user::client.name', ['client' => $type]))
+        return $this->response->setMetaTitle(trans('app.new') . ' ' . trans('user::client.name', ['client' => $type]))
             ->view(["user::{$type}.create", 'user::default.create'])
             ->data(compact('client', 'type'))
             ->output();
@@ -115,13 +116,13 @@ class ClientResourceController extends BaseController
             return $this->response->message(trans('messages.success.created', ['Module' => trans('user::client.name', ['client' => $type])]))
                 ->code(204)
                 ->status('success')
-                ->url(guard_url('user/'.$type.'/'.$client->getRouteKey()))
+                ->url(guard_url('user/' . $type . '/' . $client->getRouteKey()))
                 ->redirect();
         } catch (Exception $e) {
             return $this->response->message($e->getMessage())
                 ->code(400)
                 ->status('error')
-                ->url(guard_url('/user/'.$type))
+                ->url(guard_url('/user/' . $type))
                 ->redirect();
         }
     }
@@ -136,7 +137,7 @@ class ClientResourceController extends BaseController
      */
     public function edit(ClientRequest $request, String $type, Client $client)
     {
-        return $this->response->setMetaTitle(trans('app.edit').' '.trans('user::client.name', ['client' => $type]))
+        return $this->response->setMetaTitle(trans('app.edit') . ' ' . trans('user::client.name', ['client' => $type]))
             ->view(["user::{$type}.edit", 'user::default.edit'])
             ->data(compact('client', 'type'))
             ->output();
@@ -160,13 +161,13 @@ class ClientResourceController extends BaseController
             return $this->response->message(trans('messages.success.updated', ['Module' => trans('user::client.name', ['client' => $type])]))
                 ->code(204)
                 ->status('success')
-                ->url(guard_url('user/'.$type.'/'.$client->getRouteKey()))
+                ->url(guard_url('user/' . $type . '/' . $client->getRouteKey()))
                 ->redirect();
         } catch (Exception $e) {
             return $this->response->message($e->getMessage())
                 ->code(400)
                 ->status('error')
-                ->url(guard_url('user/'.$type.'/'.$client->getRouteKey()))
+                ->url(guard_url('user/' . $type . '/' . $client->getRouteKey()))
                 ->redirect();
         }
     }
@@ -186,13 +187,13 @@ class ClientResourceController extends BaseController
             return $this->response->message(trans('messages.success.deleted', ['Module' => trans('user::client.name', ['client' => $type])]))
                 ->code(202)
                 ->status('success')
-                ->url(guard_url('user/'.$type.'/0'))
+                ->url(guard_url('user/' . $type . '/0'))
                 ->redirect();
         } catch (Exception $e) {
             return $this->response->message($e->getMessage())
                 ->code(400)
                 ->status('error')
-                ->url(guard_url('user/'.$type.'/'.$client->getRouteKey()))
+                ->url(guard_url('user/' . $type . '/' . $client->getRouteKey()))
                 ->redirect();
         }
     }
@@ -218,13 +219,13 @@ class ClientResourceController extends BaseController
             return $this->response->message(trans('messages.success.deleted', ['Module' => trans('user::client.name', ['client' => $type])]))
                 ->status('success')
                 ->code(202)
-                ->url(guard_url('user/'.$type))
+                ->url(guard_url('user/' . $type))
                 ->redirect();
         } catch (Exception $e) {
             return $this->response->message($e->getMessage())
                 ->status('error')
                 ->code(400)
-                ->url(guard_url('/user/'.$type))
+                ->url(guard_url('/user/' . $type))
                 ->redirect();
         }
     }
@@ -245,13 +246,13 @@ class ClientResourceController extends BaseController
             return $this->response->message(trans('messages.success.restore', ['Module' => trans('user::client.name', ['client' => $type])]))
                 ->status('success')
                 ->code(202)
-                ->url(guard_url('/user/'.$type))
+                ->url(guard_url('/user/' . $type))
                 ->redirect();
         } catch (Exception $e) {
             return $this->response->message($e->getMessage())
                 ->status('error')
                 ->code(400)
-                ->url(guard_url('/user/'.$type))
+                ->url(guard_url('/user/' . $type))
                 ->redirect();
         }
     }

@@ -57,7 +57,7 @@ trait CheckRoleAndPermission
     public function __call($method, $parameters)
     {
         if (Str::startsWith($method, 'is')) {
-            return $this->hasRole(snake_case(substr($method, 2), config('roles.separator', '.')));
+            return $this->hasRole(Str::snake(substr($method, 2), config('roles.separator', '.')));
         }
 
         return parent::__call($method, $parameters);
