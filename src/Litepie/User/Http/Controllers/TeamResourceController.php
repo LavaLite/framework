@@ -4,6 +4,7 @@ namespace Litepie\User\Http\Controllers;
 
 use App\Http\Controllers\ResourceController as BaseController;
 use Form;
+use Illuminate\Support\Str;
 use Litepie\User\Http\Requests\TeamRequest;
 use Litepie\User\Interfaces\TeamRepositoryInterface;
 use Litepie\User\Models\Team;
@@ -39,7 +40,7 @@ class TeamResourceController extends BaseController
     {
         $view = $this->response->theme->listView();
         if ($this->response->typeIs('json')) {
-            $function = camel_case('get-' . $view);
+            $function = Str::camel('get-' . $view);
             return $this->repository
                 ->setPresenter(\Litepie\User\Repositories\Presenter\TeamPresenter::class)
                 ->$function();

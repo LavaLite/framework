@@ -4,6 +4,7 @@ namespace Litepie\Master\Http\Controllers;
 
 use App\Http\Controllers\ResourceController as BaseController;
 use Form;
+use Illuminate\Support\Str;
 use Litepie\Master\Http\Requests\MasterRequest;
 use Litepie\Master\Interfaces\MasterRepositoryInterface;
 use Litepie\Master\Models\Master;
@@ -14,7 +15,6 @@ use Litepie\Master\Models\Master;
 class MasterResourceController extends BaseController
 {
 
-    
     /**
      * Initialize master resource controller.
      *
@@ -43,7 +43,7 @@ class MasterResourceController extends BaseController
         $view = $this->response->theme->listView();
 
         if ($this->response->typeIs('json')) {
-            $function = camel_case('get-' . $view);
+            $function = Str::camel('get-' . $view);
             return $this->repository
                 ->setPresenter(\Litepie\Master\Repositories\Presenter\MasterPresenter::class)
                 ->$function();
@@ -114,10 +114,10 @@ class MasterResourceController extends BaseController
     public function store(MasterRequest $request)
     {
         try {
-            $attributes              = $request->all();
-            $attributes['user_id']   = user_id();
+            $attributes = $request->all();
+            $attributes['user_id'] = user_id();
             $attributes['user_type'] = user_type();
-            $attributes['type']      = $this->type;
+            $attributes['type'] = $this->type;
 
             if (empty($attributes['parent_id'])) {
                 $attributes['parent_id'] = 0;
@@ -202,6 +202,5 @@ class MasterResourceController extends BaseController
         return view('master::default.master.suboptions', compact('options'));
 
     }
-
 
 }
