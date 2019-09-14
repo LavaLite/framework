@@ -3,6 +3,7 @@
 namespace Litepie\Install\Http\Controllers;
 
 use Artisan;
+use Illuminate\Support\Str;
 
 trait InstallCommands
 {
@@ -29,25 +30,25 @@ trait InstallCommands
      * @var array
      */
     protected $packages = [
-        'Block'    => \Litepie\Block\BlockServiceProvider::class,
+        'Block' => \Litepie\Block\BlockServiceProvider::class,
         'Calendar' => \Litepie\Calendar\CalendarServiceProvider::class,
-        'Contact'  => \Litepie\Contact\ContactServiceProvider::class,
-        'Menu'     => \Litepie\Menu\MenuServiceProvider::class,
-        'Message'  => \Litepie\Message\MessageServiceProvider::class,
-        'News'     => \Litepie\News\NewsServiceProvider::class,
-        'Page'     => \Litepie\Page\PageServiceProvider::class,
+        'Contact' => \Litepie\Contact\ContactServiceProvider::class,
+        'Menu' => \Litepie\Menu\MenuServiceProvider::class,
+        'Message' => \Litepie\Message\MessageServiceProvider::class,
+        'News' => \Litepie\News\NewsServiceProvider::class,
+        'Page' => \Litepie\Page\PageServiceProvider::class,
         'Settings' => \Litepie\Settings\SettingsServiceProvider::class,
-        'Task'     => \Litepie\Task\TaskServiceProvider::class,
-        'User'     => \Litepie\User\UserServiceProvider::class,
+        'Task' => \Litepie\Task\TaskServiceProvider::class,
+        'User' => \Litepie\User\UserServiceProvider::class,
     ];
     /**
      * @var array
      */
     protected $model = [
         'superuser' => '\App\User',
-        'admin' 	   => '\App\User',
-        'user' 		   => '\App\User',
-        'client' 	  => '\App\Client',
+        'admin' => '\App\User',
+        'user' => '\App\User',
+        'client' => '\App\Client',
     ];
 
     /**
@@ -154,7 +155,7 @@ trait InstallCommands
     {
         $data['email'] = $attributes['email'];
         $data['password'] = bcrypt($attributes['password']);
-        $data['api_token'] = str_random(60);
+        $data['api_token'] = Str::random(60);
 
         $user = $model::create($data);
     }

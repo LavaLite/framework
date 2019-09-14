@@ -3,9 +3,9 @@
 namespace Litepie\User\Traits\Auth;
 
 use Illuminate\Foundation\Auth\AuthenticatesUsers as IlluminateAuthenticatesUsers;
+use Illuminate\Support\Str;
 use Socialite;
 use User;
-
 trait SocialAuthentication
 {
     use IlluminateAuthenticatesUsers;
@@ -37,14 +37,14 @@ trait SocialAuthentication
     {
         $this->setCallbackUrl($provider);
         $guard = $this->getGuard();
-        $user  = Socialite::driver($provider)->user();
+        $user = Socialite::driver($provider)->user();
         $model = $this->getAuthModel();
-        $data  = [
-            'name'      => $user->getName(),
-            'email'     => $user->getEmail(),
-            'status'    => 'Active',
-            'password'  => bcrypt(str_random(8)),
-            'api_token' => str_random(60),
+        $data = [
+            'name' => $user->getName(),
+            'email' => $user->getEmail(),
+            'status' => 'Active',
+            'password' => bcrypt(Str::random(8)),
+            'api_token' => Str::random(60),
         ];
         $user = $model::whereEmail($data['email'])->first();
 
@@ -67,9 +67,9 @@ trait SocialAuthentication
      **/
     public function setCallbackUrl($provider)
     {
-        $guard      = $this->getGuardRoute();
+        $guard = $this->getGuardRoute();
         $currentUrl = config("services.{$provider}.redirect");
-        $newUrl     = str_replace('/user/', "/$guard/", $currentUrl);
+        $newUrl = str_replace('/user/', "/$guard/", $currentUrl);
         config(["services.{$provider}.redirect" => $newUrl]);
     }
 

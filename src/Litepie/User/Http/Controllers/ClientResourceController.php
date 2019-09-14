@@ -8,7 +8,6 @@ use Illuminate\Support\Str;
 use Litepie\User\Http\Requests\ClientRequest;
 use Litepie\User\Interfaces\ClientRepositoryInterface;
 use Litepie\User\Models\Client;
-
 /**
  * Resource controller class for client.
  */
@@ -110,7 +109,7 @@ class ClientResourceController extends BaseController
             $attributes = $request->all();
             $attributes['user_id'] = user_id();
             $attributes['user_type'] = user_type();
-            $attributes['api_token'] = str_random(60);
+            $attributes['api_token'] = Str::random(60);
             $client = $this->repository->create($attributes);
 
             return $this->response->message(trans('messages.success.created', ['Module' => trans('user::client.name', ['client' => $type])]))
