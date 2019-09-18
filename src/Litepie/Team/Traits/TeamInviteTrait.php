@@ -1,6 +1,6 @@
 <?php
 
-namespace Lavalite\Team\Traits;
+namespace Litepie\Team\Traits;
 
 /*
  * This file is part of Team

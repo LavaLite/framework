@@ -36,7 +36,7 @@ return [
     | the team if it is in a different namespace.
     |
     */
-    'team_model' => Lavalite\Team\Model\Team::class,
+    'team_model' => Litepie\Team\Model\Team::class,
 
     /*
     |--------------------------------------------------------------------------
@@ -75,7 +75,7 @@ return [
     | Update the team if it is in a different namespace.
     |
     */
-    'invite_model' => Lavalite\Team\Model\Invite::class,
+    'invite_model' => Litepie\Team\Model\Invite::class,
 
     /*
     |--------------------------------------------------------------------------

@@ -1,6 +1,6 @@
 <?php
 
-namespace Lavalite\Team;
+namespace Litepie\Team;
 
 /*
  * This file is part of Team
@@ -51,8 +51,6 @@ class TeamServiceProvider extends ServiceProvider
     {
         $this->mergeConfig();
         $this->registerTeam();
-        $this->registerFacade();
-        $this->registerCommands();
     }
 
     /**
@@ -67,18 +65,6 @@ class TeamServiceProvider extends ServiceProvider
         });
     }
 
-    /**
-     * Register the vault facade without the user having to add it to the app.php file.
-     *
-     * @return void
-     */
-    public function registerFacade()
-    {
-        $this->app->booting(function () {
-            $loader = \Illuminate\Foundation\AliasLoader::getInstance();
-            $loader->alias('Team', 'Lavalite\Team\Facades\Team');
-        });
-    }
 
     /**
      * Merges user's and teams's configs.
@@ -92,15 +78,4 @@ class TeamServiceProvider extends ServiceProvider
         );
     }
 
-    /**
-     * Register scaffolding command.
-     */
-    protected function registerCommands()
-    {
-        if ($this->app->runningInConsole()) {
-            $this->commands([
-                Commands\MakeTeam::class,
-            ]);
-        }
-    }
 }
