@@ -1,9 +1,9 @@
 <?php
 
-namespace Lavalite\Team;
+namespace Litepie\Team;
 
 use Illuminate\Support\Facades\Config;
-use Lavalite\Team\Events\UserInvitedToTeam;
+use Litepie\Team\Events\UserInvitedToTeam;
 
 /**
  * This file is part of Teamwork.
