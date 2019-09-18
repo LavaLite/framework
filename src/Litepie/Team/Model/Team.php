@@ -1,10 +1,10 @@
 <?php
 
-namespace Lavalite\Team;
+namespace Litepie\Team;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Config;
-use Lavalite\Team\Traits\TeamTrait;
+use Litepie\Team\Traits\TeamTrait;
 
 class Team extends Model
 {

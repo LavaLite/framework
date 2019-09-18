@@ -1,6 +1,6 @@
 <?php
 
-namespace Mpociot\Teamwork\Traits;
+namespace Litepie\Team\Traits;
 
 /*
  * This file is part of Teamwork
