@@ -1,5 +1,5 @@
 {
-    "name": "litepie/installer",
+    "name": "litepie/install",
     "description": "Installer for Lavalite",
     "keywords": ["lavalite", "install", "installer"],
     "license": "MIT",
