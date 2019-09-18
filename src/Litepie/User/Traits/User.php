@@ -27,10 +27,10 @@ trait User
         }
 
         if ($this->sex == 'female') {
-            return theme_asset('img/avatar/female.png');
+            return asset('img/avatar/female.png');
         }
 
-        return theme_asset('img/avatar/male.png');
+        return asset('img/avatar/male.png');
     }
 
     /**
