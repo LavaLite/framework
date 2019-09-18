@@ -11,7 +11,7 @@
                     <div class="wizard-card" id="wizard">
                         <div class="wizard-header">
                             <a>
-                                <img alt="" class="img-responsive center-block mb10" src="{{theme_asset('img/logo/logo.svg')}}"/>
+                                <img alt="" class="img-responsive center-block mb10" src="{{asset('img/logo/logo.svg')}}"/>
                             </a>
                             <p class="category">
                                 Lavalite Installation Wizard
