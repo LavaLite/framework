@@ -10,7 +10,7 @@
                         <div class="wizard-container">
                             <div class="wizard-card" id="wizard">
                                 <div class="wizard-header">
-                                    <a><img src="{{theme_asset('img/logo/logo.svg')}}" class="img-responsive center-block mb10" alt=""></a>
+                                    <a><img src="{{asset('img/logo/logo.svg')}}" class="img-responsive center-block mb10" alt=""></a>
                                     <p class="category">Lavalite Installation Wizard</p>
                                 </div>
                                 <div class="wizard-navigation">

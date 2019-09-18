@@ -5,7 +5,7 @@
                         <div class="wizard-container">
                             <div class="wizard-card" id="wizard">
                                 <div class="wizard-content text-center">
-                                    <a href="index.html"><img src="{{theme_asset('img/logo/logo.svg')}}" class="img-responsive center-block mb10" alt=""></a>
+                                    <a href="index.html"><img src="{{asset('img/logo/logo.svg')}}" class="img-responsive center-block mb10" alt=""></a>
                                     <h1>Installation Wizard</h1>
                                     <p>Nevertheless of what programming talent level you have, Lavalite will guide you in creating cool and professional websites - through the stages of design, innovate and manage, irrespective of what audience they are built for.</p>
                                     <ul>
