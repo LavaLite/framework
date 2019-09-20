@@ -2,22 +2,20 @@
     "name": "litepie/activities",
     "description": "A very simple activity logger to monitor the users of your website or application",
     "homepage": "https://github.com/litepie/activities",
-    "keywords":
-    [
+    "keywords": [
         "lavalite",
         "log",
         "user",
         "activity",
         "laravel"
     ],
-    "authors": [
-        {
-            "name": "Renfos Technologies Pvt. Ltd.",
-            "email": "info@renfos.com"
-        }
-    ],
+    "authors": [{
+        "name": "Renfos Technologies Pvt. Ltd.",
+        "email": "info@renfos.com"
+    }],
     "require": {
-        "php" : "^7.2"
+        "php": "^7.2",
+        "spatie/laravel-activitylog": "~3.8"
     },
     "autoload": {
         "psr-4": {

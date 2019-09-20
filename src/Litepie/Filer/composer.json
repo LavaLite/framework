@@ -4,18 +4,17 @@
     "keywords": ["lavalite", "filer"],
     "license": "MIT",
     "homepage": "https://github.com/Litepie/Filer",
-    "authors": [
-        {
-            "name": "Renfos Technologies Pvt. Ltd.",
-            "email": "info@renfos.com"
-        }
-    ],
+    "authors": [{
+        "name": "Renfos Technologies Pvt. Ltd.",
+        "email": "info@renfos.com"
+    }],
     "require": {
-        "php" : "^7.2"
+        "php": "^7.2",
+        "intervention/imagecache": "~2.3"
     },
     "autoload": {
-        "psr-4": { 
-            "Litepie\\Filer\\": "" 
+        "psr-4": {
+            "Litepie\\Filer\\": ""
         }
     }
 }
