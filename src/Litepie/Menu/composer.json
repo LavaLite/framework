@@ -17,7 +17,7 @@
             "database/seeds"
         ],
         "psr-4": {
-            "Litepie\\Menu\\": "src/Litepie/Menu"
+            "Litepie\\Menu\\": ""
         }
     },
     "minimum-stability": "dev"

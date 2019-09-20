@@ -17,7 +17,7 @@
             "database/seeds"
         ],
         "psr-4": {
-            "Litepie\\Master\\": "src"
+            "Litepie\\Master\\": ""
         }
     },
     "minimum-stability": "dev"

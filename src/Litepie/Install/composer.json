@@ -15,7 +15,7 @@
     },
     "autoload": {
         "psr-4": { 
-            "Litepie\\Installer\\": "" 
+            "Litepie\\Install\\": "" 
         }
     }
 }
