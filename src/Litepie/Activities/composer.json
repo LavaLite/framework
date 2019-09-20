@@ -20,8 +20,11 @@
         "php" : "^7.2"
     },
     "autoload": {
+        "classmap": [
+            "database/seeds"
+        ],
         "psr-4": {
-            "Lavalite\\Activities\\": ""
+            "Litepie\\Activities\\": ""
         },
         "files": [
             "helpers.php"
