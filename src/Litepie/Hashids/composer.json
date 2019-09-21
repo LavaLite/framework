@@ -4,18 +4,17 @@
     "keywords": ["lavalite", "hashids"],
     "license": "MIT",
     "homepage": "https://github.com/Litepie/Hashids",
-    "authors": [
-        {
-            "name": "Renfos Technologies Pvt. Ltd.",
-            "email": "info@renfos.com"
-        }
-    ],
+    "authors": [{
+        "name": "Renfos Technologies Pvt. Ltd.",
+        "email": "info@renfos.com"
+    }],
     "require": {
+        "php": "^7.2",
         "hashids/hashids": "~4.0"
     },
     "autoload": {
-        "psr-4": { 
-            "Litepie\\Hashids\\": "" 
+        "psr-4": {
+            "Litepie\\Hashids\\": ""
         }
     }
 }

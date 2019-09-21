@@ -4,19 +4,22 @@
     "keywords": ["lavalite", "form"],
     "license": "MIT",
     "homepage": "https://github.com/Litepie/Form",
-    "authors": [
-        {
+    "authors": [{
             "name": "Renfos Technologies Pvt. Ltd.",
             "email": "info@renfos.com"
+        },
+        {
+            "name": "George John",
+            "email": "george@renfos.com"
         }
     ],
     "require": {
-        "php" : "^7.2",
+        "php": "^7.2",
         "anahkiasen/former": "~4.3"
     },
     "autoload": {
-        "psr-4": { 
-            "Litepie\\Form\\": "" 
+        "psr-4": {
+            "Litepie\\Form\\": ""
         }
     }
 }

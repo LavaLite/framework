@@ -4,18 +4,19 @@
     "keywords": ["lavalite", "node"],
     "license": "MIT",
     "homepage": "https://github.com/Litepie/Node",
-    "authors": [
-        {
-            "name": "Renfos Technologies Pvt. Ltd.",
-            "email": "info@renfos.com"
-        }
-    ],
+    "authors": [{
+        "name": "Renfos Technologies Pvt. Ltd.",
+        "email": "info@renfos.com"
+    }, {
+        "name": "George John",
+        "email": "george@renfos.org"
+    }],
     "require": {
         "php": "^7.2"
     },
     "autoload": {
-        "psr-4": { 
-            "Litepie\\Node\\": "" 
+        "psr-4": {
+            "Litepie\\Node\\": ""
         }
     }
 }
