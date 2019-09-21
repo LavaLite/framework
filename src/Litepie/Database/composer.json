@@ -4,18 +4,19 @@
     "keywords": ["lavalite", "database"],
     "license": "MIT",
     "homepage": "https://github.com/Litepie/Database",
-    "authors": [
-        {
-            "name": "Renfos Technologies Pvt. Ltd.",
-            "email": "info@renfos.com"
-        }
-    ],
+    "authors": [{
+        "name": "Renfos Technologies Pvt. Ltd.",
+        "email": "info@renfos.com"
+    }, {
+        "name": "George John",
+        "email": "george@renfos.com"
+    }],
     "require": {
-        "php" : "^7.2"
+        "php": "^7.2"
     },
     "autoload": {
-        "psr-4": { 
-            "Litepie\\Database\\": "" 
+        "psr-4": {
+            "Litepie\\Database\\": ""
         }
     }
 }

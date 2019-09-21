@@ -13,6 +13,9 @@
         "php": "^7.2"
     },
     "autoload": {
+        "files": [
+            "helpers.php"
+        ],
         "classmap": [
             "database/seeds"
         ],

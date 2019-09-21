@@ -14,6 +14,9 @@
         "php": "^7.2"
     },
     "autoload": {
+        "files": [
+            "helpers.php"
+        ],
         "psr-4": { 
             "Litepie\\Theme\\": "" 
         }

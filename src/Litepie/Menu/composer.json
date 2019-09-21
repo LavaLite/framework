@@ -3,12 +3,13 @@
     "description": "Menu package for litepie.",
     "keywords": ["lavalite", "Menu"],
     "license": "MIT",
-    "authors": [
-        {
-            "name": "Lavalite",
-            "email": "info@lavalite.org"
-        }
-    ],
+    "authors": [{
+        "name": "Renfos Technologies Pvt. Ltd.",
+        "email": "info@renfos.com"
+    }, {
+        "name": "George John",
+        "email": "george@renfos.com"
+    }],
     "require": {
         "php": "^7.2"
     },
