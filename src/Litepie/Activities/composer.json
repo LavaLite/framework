@@ -12,6 +12,9 @@
     "authors": [{
         "name": "Renfos Technologies Pvt. Ltd.",
         "email": "info@renfos.com"
+    }, {
+        "name": "George John",
+        "email": "george@renfos.com"
     }],
     "require": {
         "php": "^7.2",

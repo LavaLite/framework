@@ -3,14 +3,15 @@
     "description": "Master package for litepie.",
     "keywords": ["lavalite", "Master"],
     "license": "MIT",
-    "authors": [
-        {
-            "name": "Lavalite",
-            "email": "info@lavalite.org"
-        }
-    ],
+    "authors": [{
+        "name": "Renfos Technologies Pvt. Ltd.",
+        "email": "info@renfos.com"
+    }, {
+        "name": "George John",
+        "email": "george@renfos.com"
+    }],
     "require": {
-        "php": ">=5.6.4"
+        "php": "^7.2"
     },
     "autoload": {
         "classmap": [

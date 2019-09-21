@@ -5,9 +5,14 @@
     "license": "MIT",
     "homepage": "https://github.com/Litepie/Filer",
     "authors": [{
-        "name": "Renfos Technologies Pvt. Ltd.",
-        "email": "info@renfos.com"
-    }],
+            "name": "Renfos Technologies Pvt. Ltd.",
+            "email": "info@renfos.com"
+        },
+        {
+            "name": "George John",
+            "email": "george@renfos.com"
+        }
+    ],
     "require": {
         "php": "^7.2",
         "intervention/imagecache": "~2.3"
