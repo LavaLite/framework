@@ -1,0 +1,19 @@
+{
+    "name": "litepie/http",
+    "description": "Http package for Lavalite",
+    "keywords": ["lavalite", "http", "litepie"],
+    "license": "MIT",
+    "homepage": "https://github.com/Litepie/Http",
+    "authors": [{
+        "name": "Renfos Technologies Pvt. Ltd.",
+        "email": "info@renfos.com"
+    }],
+    "require": {
+        "php": "^7.2"
+    },
+    "autoload": {
+        "psr-4": {
+            "Litepie\\Http\\": ""
+        }
+    }
+}
