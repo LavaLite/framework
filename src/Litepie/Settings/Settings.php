@@ -19,6 +19,26 @@ class Settings
         $this->setting = $setting;
     }
 
+    /*
+    Get and set the value of settings table
+     */
+    public function setting($value, $default = null)
+    {
+
+        if (is_array($value)) {
+            $key = array_key_first($value);
+            $val = $value[$key];
+            return $this->setting->setForUser($key, $val);
+        } elseif (is_array($value)) {
+            $ret = $this->setting->getForUser($key);
+            if (is_null($ret)) {
+                $ret = $this->setting->getValue($key, $default);
+            }
+        }
+        return;
+
+    }
+
     public function get($key, $default = null)
     {
         return $this->setting->getValue($key, $default);
