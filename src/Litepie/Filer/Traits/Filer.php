@@ -152,26 +152,26 @@ trait Filer
      */
     public function setFiles($field, $current)
     {
-        if (empty($current)) {
-            $current = [];
-        }
 
-        if (empty($current) && !Request::has($field)) {
+        if (!is_array($current) && !Request::has($field)) {
             return;
         }
 
         if (Request::has($field)) {
-            $prev = Request::get($field);
-        } else {
-            $prev = $this->getOriginalFile($field);
+            $current = Request::get($field);
         }
 
-        if (empty($prev)) {
+        $prev = $this->getOriginalFile($field);
+
+        if (!is_array($prev)) {
             $prev = [];
         }
 
-        $files = array_merge($current, $prev);
+        if (!is_array($current)) {
+            $current = [];
+        }
 
+        $files = array_merge($current, $prev);
         $files = array_slice($files, 0, $this->getUploadFileCount($field));
 
         $this->setAttribute($field, $files);
