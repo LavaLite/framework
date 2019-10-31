@@ -8,10 +8,11 @@
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <section class="content-header">
-       <h1> Masters <small>Masters home</small> </h1>
+       <h1> {!! trans('master::master.name') !!} <small>{!! trans('master::master.masters.'.$type) !!}</small> </h1>
         <ol class="breadcrumb">
-            <li><a href="/admin"><i class="fa fa-dashboard"></i> Home</a></li>
-            <li class="active">Masters</li>
+            <li><a href="/admin"><i class="fa fa-dashboard"></i> {!! trans('app.home') !!}</a></li>
+            <li class="active"><a href="/admin/masters">{!! trans('master::master.names') !!}</a></li>
+            <li class="active">{!! trans('master::master.masters.'.$type) !!}</li>
         </ol>
     </section>
 
@@ -22,7 +23,7 @@
 
                 <!-- Widget: user widget style 1 -->
                 <div class="box box-widget widget-user">
-                    @includeFirst(['master::admin.master.partial.menu.'.$group,'master::admin.master.partial.menu.default', ])
+                    @include('master::menu', ['group'=> $groups[$group], 'key' => $group])
                 </div>
 
             </div>
@@ -31,7 +32,7 @@
                 <div id='masters-entry'>
                 </div>
                 <div class="nav-tabs-custom">
-                    @includeFirst(['master::admin.master.partial.list.'.$type, 'master::admin.master.partial.list.default'])
+                    @include('master::' . config("master.masters.$type.view", 'master.default'))
                 </div>
             </div>
         </div>
@@ -43,7 +44,7 @@
 var oTable;
 var oSearch;
 $(document).ready(function(){
-    app.load('#masters-entry', '{!!guard_url('masters/' . $group . '/' . $type . '/0')!!}');
+    app.load('#masters-entry', '{!!guard_url("masters/{$group}/{$type}/master/0")!!}');
     oTable = $('#masters-list').dataTable( {
         'columnDefs': [{
             'targets': 0,
@@ -60,7 +61,7 @@ $(document).ready(function(){
         "bProcessing": true,
         "sDom": 'R<>rt<ilp><"clear">',
         "bServerSide": true,
-        "sAjaxSource": '{!! guard_url('masters/'.$type) !!}',
+        "sAjaxSource": '{!! guard_url("masters/{$group}/{$type}/master") !!}',
         "fnServerData" : function ( sSource, aoData, fnCallback ) {
 
             $.each(oSearch, function(key, val){
@@ -80,6 +81,7 @@ $(document).ready(function(){
             {data :'id'},
             {data :'name'},
             {data :'slug'},
+            {data :'status'},
         ],
         "pageLength": 25
     });
@@ -90,7 +92,7 @@ $(document).ready(function(){
         oTable.$('tr.selected').removeClass('selected');
         $(this).addClass('selected');
         var d = $('#masters-list').DataTable().row( this ).data();
-        $('#masters-entry').load('{!!guard_url('masters/' . $group . '/' .$type)!!}' + '/' + d.id);
+        $('#masters-entry').load('{!!guard_url("masters/{$group}/{$type}/master")!!}' + '/' + d.id);
     });
 
     $('#masters-list tbody').on( 'change', "input[name^='id[]']", function (e) {

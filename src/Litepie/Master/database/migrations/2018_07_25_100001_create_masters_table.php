@@ -2,7 +2,6 @@
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 
 class CreateMastersTable extends Migration
 {
@@ -23,9 +22,17 @@ class CreateMastersTable extends Migration
             $table->integer('parent_id')->nullable();
             $table->string('type', 255)->nullable();
             $table->string('name', 255)->nullable();
+            $table->string('code', 20)->nullable();
+            $table->double('amount', 10, 2)->nullable();
+            $table->string('abbr', 50)->nullable();
             $table->string('description', 255)->nullable();
             $table->string('icon', 255)->nullable();
             $table->text('image')->nullable();
+            $table->text('images')->nullable();
+            $table->text('file')->nullable();
+            $table->integer('order')->nullable();
+            $table->enum('status', ['Show', 'Hide'])->default('Show')->nullable();
+            $table->text('extras')->nullable();
             $table->string('slug', 255)->nullable();
             $table->softDeletes();
             $table->nullableTimestamps();
@@ -33,10 +40,10 @@ class CreateMastersTable extends Migration
     }
 
     /*
-    * Reverse the migrations.
-    *
-    * @return void
-    */
+     * Reverse the migrations.
+     *
+     * @return void
+     */
 
     public function down()
     {

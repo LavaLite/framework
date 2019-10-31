@@ -29,7 +29,7 @@ class RouteServiceProvider extends ServiceProvider
     {
         parent::boot();
 
-        if (Request::is('*/masters/master/*')) {
+        if (Request::is('*admin/masters/*')) {
             Route::bind('master', function ($master) {
                 $masterrepo = $this->app->make('Litepie\Master\Interfaces\MasterRepositoryInterface');
                 return $masterrepo->findorNew($master);
