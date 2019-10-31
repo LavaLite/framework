@@ -1233,7 +1233,7 @@ class Theme
      */
     public function themes()
     {
-        return array_unique(array_pluck(config('theme.themes'), 'theme'));
+        return array_unique(Arr::pluck(config('theme.themes'), 'theme'));
     }
 
     /**

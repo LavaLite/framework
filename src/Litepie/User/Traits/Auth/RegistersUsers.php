@@ -60,12 +60,7 @@ trait RegistersUsers
     {
         $this->canRegister();
 
-        $data = [
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'password' => $data['password'],
-            'api_token' => Str::random(60),
-        ];
+        $data['api_token'] = Str::random(60);
 
         $model = $this->getAuthModel();
         $user = $model::create($data);

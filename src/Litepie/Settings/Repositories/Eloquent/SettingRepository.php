@@ -26,7 +26,6 @@ class SettingRepository extends BaseRepository implements SettingRepositoryInter
     {
         $row = $this->scopeQuery(function ($query) use ($key) {
             return $query
-                ->whereNull('user_id')
                 ->where('key', $key);
         })->first();
 
@@ -39,14 +38,16 @@ class SettingRepository extends BaseRepository implements SettingRepositoryInter
 
     public function setValue($key, $value)
     {
-        $setting = $this->firstOrCreate(
+        $setting = $this->updateOrCreate(
             [
                 'key' => $key,
+            ],
+            [
+                'value' => $value,
+                'key' => $key,
+                'user_type' => 'main',
             ]
         );
-
-        $setting->value = $value;
-        $setting->save();
 
         return $value;
     }
@@ -68,53 +69,54 @@ class SettingRepository extends BaseRepository implements SettingRepositoryInter
 
     public function setForuser($key, $value)
     {
-        $setting = $this->firstOrCreate(
+        $setting = $this->updateOrCreate(
             [
-                'key'       => $key,
-                'user_id'   => user_id(),
+                'key' => $key,
+                'user_id' => user_id(),
                 'user_type' => user_type(),
+            ],
+            [
+                'key' => $key,
+                'user_id' => user_id(),
+                'user_type' => user_type(),
+                'value' => $value,
             ]
         );
-        $setting->value = $value;
-        $setting->save();
 
         return $value;
     }
 
     /**
-     * Update the setting.
+     * Upload the file to a specific path.
      *
      * @param Request $request
-     * @param Model   $setting
+     * @param String   $key
      *
-     * @return Response
+     * @return Void
      */
     public function upload($request, $key)
     {
-        dd($request->file('upload.' . $key.'.file'));
-        if ($request->hasFile($key."[file]")) {
-            $path   = $request->get($key."['path']");
+        if ($request->hasFile($key . "[file]")) {
+            $path = $request->get($key . "['path']");
             $folder = substr("$path", 0, strrpos($path, '/'));
-            $file   = substr("$path", (strrpos($path, '_') + 1));
-
+            $file = substr("$path", (strrpos($path, '_') + 1));
             $res = $request->file($key['file'])->storeAs($folder, $file);
-
-            dd($res);
         }
 
     }
 
     /**
-     * Update the setting.
+     * Set theme variable.
      *
-     * @param Request $request
-     * @param Model   $setting
+     * @param String $request
+     * @param String $key
+     * @param String $value
      *
-     * @return Response
+     * @return Void
      */
-    public function theme($value)
+    public function theme($theme, $key, $value)
     {
-        dd($value);
+        // Todo: Update the theme config variable.
     }
 
     /**
@@ -125,22 +127,31 @@ class SettingRepository extends BaseRepository implements SettingRepositoryInter
      *
      * @return Response
      */
-    public function env($value)
+    public function env($key, $value)
     {
-        dd($value);
+        $this->setEnvironmentValue($key, $value);
     }
 
     /**
-     * Update the setting.
+     * Execute commands.
      *
-     * @param Request $request
-     * @param Model   $setting
+     * @param String $string
+     * @param String   $value
      *
-     * @return Response
+     * @return Void
      */
-    public function commands($value)
+    public function commands($string, $value)
     {
-        dd($value);
+        // Todo: Execute the command string based on value.
     }
 
+    private function setEnvironmentValue($envKey, $envValue)
+    {
+        $envFile = app()->environmentFilePath();
+        $str = file_get_contents($envFile);
+
+        $oldValue = env($envKey);
+        $str = str_replace("{$envKey}={$oldValue}", "{$envKey}={$envValue}", $str);
+        return file_put_contents($envFile, $str);
+    }
 }
