@@ -1,9 +1,12 @@
 <?php
 
-// Resource routes  for master
+// Resource routes for master
 Route::group(['prefix' => '{guard}/masters'], function () {
-    Route::get('{group}/{type}/{master}', 'MasterResourceController@show');
-    Route::get('{group?}/{type?}', 'MasterResourceController@index');
+    Route::get('/', 'MasterResourceController@index');
+    Route::group(['prefix' => '{group}/{type}'], function () {
+        Route::get('/', 'MasterResourceController@index');
+        Route::resource('master', 'MasterResourceController');
+    });
 });
 
 // Route::get('masters/{type?}', 'MasterPublicController@options');
@@ -11,13 +14,15 @@ if (Trans::isMultilingual()) {
     Route::group(
         [
             'prefix' => '{trans}',
-            'where'  => ['trans' => Trans::keys('|')],
         ],
         function () {
-			Route::group(['prefix' => '{guard}/masters'], function () {
-			    Route::get('{group}/{type}/{master}', 'MasterResourceController@show');
-			    Route::get('{group?}/{type?}', 'MasterResourceController@index');
-			});
+            Route::group(['prefix' => '{guard}/masters'], function () {
+                Route::get('/', 'MasterResourceController@index');
+                Route::group(['prefix' => '{group}/{type}'], function () {
+                    Route::get('/', 'MasterResourceController@index');
+                    Route::resource('master', 'MasterResourceController');
+                });
+            });
         }
     );
 }
