@@ -1,6 +1,6 @@
 <?php
 
-namespace Litepie\Team;
+namespace Litepie\Team\Model;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Config;
