@@ -72,13 +72,7 @@
                         </ul>
                         <div class="tab-content clearfix">
                             <div class="tab-pane active" id="settings-setting-entry">
-                                {!!Form::vertical_open()
-                                ->id('settings-setting-create')
-                                ->method('POST')
-                                ->files('true')
-                                ->action(URL::to('admin/settings/setting'))!!}
                                 @include('settings::partial.main')
-                                {!! Form::close() !!}
                             </div>         
                         </div>
                     </div>

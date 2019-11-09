@@ -2,7 +2,7 @@
               ->id('settings-setting-create')
               ->method('POST')
               ->files('true')
-              ->action(trans_url('settings/theme'))!!}
+              ->action(guard_url('settings/theme'))!!}
               <div class='row'>
                 <div class='col-md-12 col-sm-12'>
                       <fieldset>
