@@ -2,7 +2,7 @@
               ->id('settings-setting-create')
               ->method('POST')
               ->files('true')
-              ->action(trans_url('settings/company'))!!}
+              ->action(guard_url('settings/company'))!!}
               <div class='row'>
                 <div class='col-md-12 col-sm-12'>
                        {!! Form::text('settings[main.company.name]')
