@@ -206,9 +206,9 @@ class User
     /**
      * @return \Illuminate\Database\Eloquent\Collection
      */
-    public function roles($guard = null)
+    public function roles($title = 'name,',$key = 'id')
     {
-        return $this->role->pluck('name', 'id')->all();
+        return $this->role->pluck($title, $key)->all();
     }
 
     /**
