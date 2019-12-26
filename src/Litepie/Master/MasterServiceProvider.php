@@ -78,7 +78,7 @@ class MasterServiceProvider extends ServiceProvider
     private function publishResources()
     {
         // Publish configuration file
-        $this->publishes([__DIR__ . '/config/config.php' => config_path('litepie/master.php')], 'config');
+        $this->publishes([__DIR__ . '/config/config.php' => config_path('master.php')], 'config');
 
         // Publish admin view
         $this->publishes([__DIR__ . '/resources/views' => base_path('resources/views/vendor/master')], 'view');

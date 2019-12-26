@@ -92,7 +92,7 @@ $(document).ready(function(){
 
         oTable.$('tr.selected').removeClass('selected');
         $(this).addClass('selected');
-        var d = $('#teams-team-list').DataTable().row( this ).data();
+        var d = $('#teams-team-list').DataTable().row( this.closest('tr') ).data();
         $('#teams-team-entry').load('{!!guard_url('user/team')!!}' + '/' + d.id);
     });
 

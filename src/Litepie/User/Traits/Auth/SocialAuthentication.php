@@ -55,7 +55,8 @@ trait SocialAuthentication
             User::login($user, false, $guard);
         }
 
-        return redirect($this->redirectTo);
+        
+        return redirect()->intented($this->redirectTo);
     }
 
     /**

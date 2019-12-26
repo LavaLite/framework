@@ -29,7 +29,7 @@ class SubMenuResourceController extends ResourceController
         $menu = $this->repository->find($id);
         Form::populate($menu);
 
-        return view('menu::admin.sub.show', compact('parent', 'menu'));
+        return view('menu::sub.show', compact('parent', 'menu'));
     }
 
     /**
@@ -46,7 +46,7 @@ class SubMenuResourceController extends ResourceController
 
         Form::populate($menu);
 
-        return view('menu::admin.sub.create', compact('menu'));
+        return view('menu::sub.create', compact('menu'));
     }
 
     /**
@@ -93,7 +93,7 @@ class SubMenuResourceController extends ResourceController
 
         Form::populate($menu);
 
-        return view('menu::admin.sub.edit', compact('menu'));
+        return view('menu::sub.edit', compact('menu'));
     }
 
     /**

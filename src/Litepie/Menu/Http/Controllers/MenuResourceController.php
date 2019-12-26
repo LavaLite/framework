@@ -37,7 +37,7 @@ class MenuResourceController extends BaseController
         $rootMenu = $this->repository->rootMenues();
 
         return $this->response->setMetaTitle(trans('menu::menu.names'))
-            ->view('menu::admin.index')
+            ->view('menu::index')
             ->data(compact('rootMenu', 'parent'))
             ->output();
     }
@@ -58,7 +58,7 @@ class MenuResourceController extends BaseController
 
             Form::populate($menu);
 
-            return view('menu::admin.show', compact('menu'));
+            return view('menu::show', compact('menu'));
         }
 
         $rootMenu = $this->repository->rootMenues();
@@ -82,7 +82,7 @@ class MenuResourceController extends BaseController
 
         Form::populate($menu);
 
-        return view('menu::admin.create', compact('menu'));
+        return view('menu::create', compact('menu'));
     }
 
     /**
@@ -128,7 +128,7 @@ class MenuResourceController extends BaseController
         $data['menu'] = $menu;
         Form::populate($data['menu']);
 
-        return view('menu::admin.edit', $data);
+        return view('menu::edit', $data);
     }
 
     /**

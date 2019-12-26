@@ -19,7 +19,6 @@
                                   {!! Form::text('env[PAYPAL_SECRET]')
                                   -> label(trans('settings::setting.label.payment.paypal_client_secret'))
                                   -> value(env('PAYPAL_SECRET'))
-                                  ->
                                   placeholder(trans('settings::setting.placeholder.payment.paypal_client_secret'))!!}
                               </div>
                           </div>
