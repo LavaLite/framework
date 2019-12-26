@@ -23,9 +23,7 @@
                         <li {{($parent->getRouteKey() == $menu->getRouteKey()) ? ' class=active ' : ''}}><a href="{{ guard_url('menu/menu') }}/{{$menu->getRouteKey()}}">{{$menu->name}}</a></li>
                         @endforeach
                         <li class="dropdown">
-                            <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                              More <span class="caret"></span>
-                            </a>
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="#">More <span class="caret"></span></a>
                             <ul class="dropdown-menu">
                             @foreach($rootMenu->except([1,2,3]) as $menu)
                               <li role="presentation"><a role="menuitem" tabindex="-1" href="{{ guard_url('menu/menu') }}/{{$menu->getRouteKey()}}">{{$menu->name}} menu</a></li>
