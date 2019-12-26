@@ -2,8 +2,6 @@
 
 namespace Litepie\Master;
 
-use User;
-
 class Master
 {
     /**
@@ -37,14 +35,19 @@ class Master
      */
     public function options($type)
     {
-
-        $options = $this->master->scopeQuery(function ($query) use ($status) {
-            return $query->where('type', $type)
-                ->where('status', 'show')
-                ->orderBy('name', 'ASC');
-        })->pluck('name', 'id');
-
+        $options = $this->master->options($type);
         return $options;
-
     }
+
+    /**
+     * Return parent categories for a given type
+     *
+     * @param string $type
+     * @return array
+     */
+    public function parents($type)
+    {
+        return $this->master->options($type, 0);
+    }
+
 }

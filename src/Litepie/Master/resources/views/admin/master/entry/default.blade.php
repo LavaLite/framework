@@ -1,6 +1,7 @@
 <div class='row'>
     <div class='col-md-6 col-sm-12'>
         {!! Form::text('name')
+        -> required('required')
         -> label(trans('master::master.label.name'))
         -> placeholder(trans('master::master.placeholder.name'))!!}
     </div>
@@ -24,6 +25,7 @@
         -> placeholder(trans('master::master.placeholder.amount'))!!}
     </div>
     @endif
+
     @if(in_array('parent_id', config("master.masters.$type.fields", [])))
     <div class='col-md-6 col-sm-12'>
         {!! Form::select('parent_id')
