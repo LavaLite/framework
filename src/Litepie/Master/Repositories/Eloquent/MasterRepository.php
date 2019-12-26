@@ -29,18 +29,33 @@ class MasterRepository extends BaseRepository implements MasterRepositoryInterfa
      *
      * @return string
      */
-    public function options($type, $id = 0)
+    public function options($type, $parent = null)
     {
-        return $this->model
-            ->where('parent_id', 0)
-            ->where('type', $type)
-            ->pluck('name', 'id');
+        $options = $this->model
+            ->where('type', $type);
+        if (!empty($parent)) {
+            $options->where('parent_id', $parent);
+        }
+        $options->orderBy('order', 'DESC');
+
+        return $options->pluck('name', 'id');
     }
 
+
     /**
-     * Return the parent categories.
+     * Return the category groups.
      *
      * @return string
+     */
+    public function groups()
+    {
+        return collect(config('master.masters'))->groupBy('group')->toArray();
+    }
+    
+    /**
+     * Return the group count
+     *
+     * @return array
      */
     public function typeCount()
     {
@@ -49,16 +64,6 @@ class MasterRepository extends BaseRepository implements MasterRepositoryInterfa
             ->groupBy('type')
             ->pluck('count', 'type')
             ->toArray();
-    }
-
-    /**
-     * Return the parent categories.
-     *
-     * @return string
-     */
-    public function groups()
-    {
-        return collect(config('master.masters'))->groupBy('group')->toArray();
     }
 
 }

@@ -98,9 +98,9 @@ class MasterResourceController extends BaseController
      */
     public function create(MasterRequest $request, $group, $type)
     {
-
         $master = $this->repository->newInstance([]);
-        $parents = $this->repository->options($type)->toArray();
+        $parent_id = $request->get('parent_id', 0);
+        $parents = $this->repository->options($type, $parent_id)->toArray();
 
         return $this->response->title(trans('app.new') . ' ' . trans('master::master.name'))
             ->view('master::create')
