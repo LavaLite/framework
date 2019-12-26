@@ -93,7 +93,7 @@ $(document).ready(function(){
 
         oTable.$('tr.selected').removeClass('selected');
         $(this).addClass('selected');
-        var d = $('#roles-permission-list').DataTable().row( this ).data();
+        var d = $('#roles-permission-list').DataTable().row( this.closest('tr') ).data();
         $('#roles-permission-entry').load('{!!guard_url('roles/permission')!!}' + '/' + d.id);
     });
 

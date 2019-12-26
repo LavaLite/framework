@@ -7,19 +7,19 @@
                 <div class='col-md-12 col-sm-12'>
                        {!! Form::text('settings[main.company.name]')
                        -> label(trans('settings::setting.label.company.name'))
-                       -> value(setting('company.name'))
+                       -> value(setting('main.company.name'))
                        -> placeholder(trans('settings::setting.placeholder.company.name'))!!}
                       <div class="row clearfix">
                         <div class="col-md-6">
                        {!! Form::email('settings[main.company.email]')
                        -> label(trans('settings::setting.label.company.email'))
-                       -> value(setting('company.email'))
+                       -> value(setting('main.company.email'))
                        -> placeholder(trans('settings::setting.placeholder.company.email'))!!}
                         </div>
                         <div class="col-md-6">
                        {!! Form::text('settings[main.company.phone]')
                        -> label(trans('settings::setting.label.company.phone'))
-                       -> value(setting('company.phone'))
+                       -> value(setting('main.company.phone'))
                        -> placeholder(trans('settings::setting.placeholder.company.phone'))!!}
                         </div>
                       </div>
@@ -39,7 +39,7 @@
 
                        {!! Form::textarea('settings[main.company.address]')
                        -> label(trans('settings::setting.label.company.address'))
-                       -> value(setting('company.address'))
+                       -> value(setting('main.company.address'))
                        -> placeholder(trans('settings::setting.placeholder.company.address'))!!}
 
                 </div>

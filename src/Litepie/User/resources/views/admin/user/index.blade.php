@@ -116,7 +116,7 @@ $(document).ready(function(){
 
         oTable.$('tr.selected').removeClass('selected');
         $(this).addClass('selected');
-        var d = $('#user-user-list').DataTable().row( this ).data();
+        var d = $('#user-user-list').DataTable().row( this.closest('tr') ).data();
         $('#user-user-entry').load('{!!guard_url('user/user')!!}' + '/' + d.id);
     });
 
