@@ -93,7 +93,7 @@ $(document).ready(function(){
 
         oTable.$('tr.selected').removeClass('selected');
         $(this).addClass('selected');
-        var d = $('#roles-role-list').DataTable().row( this ).data();
+        var d = $('#roles-role-list').DataTable().row( this.closest('tr') ).data();
         $('#roles-role-entry').load('{!!guard_url('roles/role')!!}' + '/' + d.id);
     });
 
