@@ -39,4 +39,19 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
             return $user;
     }
 
+    /**
+     * List of users for select.
+     *
+     * @return string
+     */
+    public function select($q = '', $count = 25, $key = 'id', $name = 'name')
+    {
+        dd($name);
+        return $this->model
+        // ->where('name', 'like', '%' . $q . '%')
+            ->select("$name as name", "$key as key")
+            ->take($count)
+            ->get();
+    }
+
 }
