@@ -55,13 +55,13 @@ class User extends Model implements UserPolicy
             $this->attributes['password'] = ($val);
         }
     }
-
-    public function setPhotoAttribute($val)
+    
+    public function setPhotoAttribute($val) 
     {
-        if (!empty($val[0]['file'])) {
-            $this->attributes['photo'] = $val;
-        }
-    }
+		if (isset($val[0]) && !empty($val[0])) {
+			$this->attributes['photo'] = json_encode($val);
+		}
+	}
 
     public function setaApiTokenAttribute($val)
     {
