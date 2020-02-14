@@ -58,8 +58,8 @@ class User extends Model implements UserPolicy
 
     public function setPhotoAttribute($val)
     {
-        if (!empty($val[0]['file'])) {
-            $this->attributes['photo'] = $val;
+        if (isset($val[0]) && !empty($val[0])) {
+            $this->attributes['photo'] = json_encode($val);
         }
     }
 

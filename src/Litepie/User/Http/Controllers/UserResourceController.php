@@ -4,11 +4,12 @@ namespace Litepie\User\Http\Controllers;
 
 use App\Http\Controllers\ResourceController as BaseController;
 use App\User;
+use Illuminate\Support\Str;
 use Litepie\Roles\Interfaces\PermissionRepositoryInterface;
 use Litepie\Roles\Interfaces\RoleRepositoryInterface;
 use Litepie\User\Http\Requests\UserRequest;
 use Litepie\User\Interfaces\UserRepositoryInterface;
-use Illuminate\Support\Str;
+
 /**
  * Resource controller class for user.
  */

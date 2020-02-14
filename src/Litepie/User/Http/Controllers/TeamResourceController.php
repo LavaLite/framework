@@ -152,12 +152,11 @@ class TeamResourceController extends BaseController
     {
         try {
             $attributes = $request->all();
-
             $team->update($attributes);
             return $this->response->message(trans('messages.success.updated', ['Module' => trans('user::team.name')]))
                 ->code(204)
                 ->status('success')
-                ->url(guard_url('user/team/' . $team->getRouteKey()))
+                ->url(guard_url('user/team/'))
                 ->redirect();
         } catch (Exception $e) {
             return $this->response->message($e->getMessage())

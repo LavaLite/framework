@@ -17,6 +17,7 @@ use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Support\Facades\Auth;
 use Litepie\Roles\Interfaces\PermissionRepositoryInterface;
 use Litepie\Roles\Interfaces\RoleRepositoryInterface;
+use Litepie\User\Interfaces\TeamRepositoryInterface;
 use Litepie\User\Interfaces\UserRepositoryInterface;
 
 /**
@@ -52,14 +53,16 @@ class User
      * @param \Litepie\Contracts\User\PermissionRepository $permission
      */
     public function __construct(
-        Application                   $app,
-        UserRepositoryInterface       $user,
-        RoleRepositoryInterface       $role,
+        Application $app,
+        UserRepositoryInterface $user,
+        TeamRepositoryInterface $team,
+        RoleRepositoryInterface $role,
         PermissionRepositoryInterface $permission
     ) {
-        $this->app        = $app;
-        $this->user       = $user;
-        $this->role       = $role;
+        $this->app = $app;
+        $this->user = $user;
+        $this->team = $team;
+        $this->role = $role;
         $this->permission = $permission;
     }
 
@@ -206,9 +209,17 @@ class User
     /**
      * @return \Illuminate\Database\Eloquent\Collection
      */
-    public function roles($title = 'name,',$key = 'id')
+    public function roles($guard = null)
     {
-        return $this->role->pluck($title, $key)->all();
+        return $this->role->pluck('name', 'id')->all();
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Collection
+     */
+    public function teams($guard = null)
+    {
+        return $this->team->pluck('name', 'id')->all();
     }
 
     /**
@@ -279,7 +290,7 @@ class User
     public function setRouteGuard()
     {
         $segments = request()->segments();
-        $guard    = array_intersect(array_keys(config('auth.guards')), $segments);
+        $guard = array_intersect(array_keys(config('auth.guards')), $segments);
 
         if (!empty($guard)) {
             $guard = current($guard);
