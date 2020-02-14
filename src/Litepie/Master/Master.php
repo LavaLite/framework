@@ -30,24 +30,23 @@ class Master
     }
 
     /**
-     * get options for various fields
-     * @return [type] [description]
+     * Returns count of master types.
+     *
+     * @param array $filter
+     *
+     * @return int
      */
-    public function options($type)
+    public function typeCount()
     {
-        $options = $this->master->options($type);
-        return $options;
+        return $this->master->typeCount();
     }
 
     /**
-     * Return parent categories for a given type
-     *
-     * @param string $type
-     * @return array
+     * get options for various fields
+     * @return [type] [description]
      */
-    public function parents($type)
+    public function options($type, $id = 0)
     {
-        return $this->master->options($type, 0);
+        return $this->master->options($type, $id);
     }
-
 }
