@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\HTML;
 use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Str;
+use App;
 
 class AssetContainer
 {
@@ -336,7 +337,7 @@ class AssetContainer
 
         // Make theme to use few features.
         if (!$theme) {
-            $theme = \App::make('theme');
+            $theme = App::make('theme');
         }
 
         // Switch path to another theme.
