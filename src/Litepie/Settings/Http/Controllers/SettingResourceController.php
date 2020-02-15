@@ -49,7 +49,7 @@ class SettingResourceController extends BaseController
      */
     public function show($slug)
     {
-        return view('settings::partial.' . $slug);
+        return view('settings::partial.'.$slug);
     }
 
     /**
