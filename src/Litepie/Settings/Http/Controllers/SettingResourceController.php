@@ -129,5 +129,4 @@ class SettingResourceController extends BaseController
     {
         return $this->repository->setValue($key, $value);
     }
-
 }
