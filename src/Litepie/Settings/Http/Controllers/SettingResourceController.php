@@ -65,7 +65,6 @@ class SettingResourceController extends BaseController
             $attributes = $request->all();
 
             if (user()->hasRole('superuser')) {
-
                 if (isset($attributes['settings']) && is_array($attributes['settings'])) {
                     foreach ($attributes['settings'] as $key => $value) {
                         $this->repository->setValue($key, $value);
@@ -103,7 +102,6 @@ class SettingResourceController extends BaseController
                 ->url(guard_url("/settings/$type"))
                 ->redirect();
         }
-
     }
 
     /**
