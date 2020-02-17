@@ -343,4 +343,9 @@ class User
         return $this->user->count();
     }
 
+    public function getUserByRole($role) {
+
+        return $this->user->getUserByRole();
+    }
+
 }
