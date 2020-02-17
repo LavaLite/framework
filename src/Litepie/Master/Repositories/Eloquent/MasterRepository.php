@@ -68,4 +68,11 @@ class MasterRepository extends BaseRepository implements MasterRepositoryInterfa
             ->pluck('name', 'id');
     }
 
+    public function search($string, $type, $key, $value) {
+		return $this->model->where('type', 'like', '%' . $type . '%')
+			->where('status', 'Show')
+			->where('name', 'like', '%' . $string . '%')
+			->select("$value as name", "$key as key")->take(50)->get();
+	}
+
 }
