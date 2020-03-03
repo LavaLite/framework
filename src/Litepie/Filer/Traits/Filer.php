@@ -57,14 +57,14 @@ trait Filer
             if (is_array(Request::file($field))) {
                 foreach (Request::file($field) as $file) {
                     if ($file instanceof UploadedFile) {
-                        $files[] = Uploader::upload($file, $rootFolder . '/' . $this->upload_folder . DIRECTORY_SEPARATOR . $field);
+                        $files[] = Uploader::upload($file, $rootFolder . DIRECTORY_SEPARATOR . $this->upload_folder . DIRECTORY_SEPARATOR . $field);
                     }
                 }
             } elseif (Request::hasFile($field)) {
                 $file = Request::file($field);
 
                 if ($file instanceof UploadedFile) {
-                    $files[] = Uploader::upload($file, $rootFolder . '/' . $this->upload_folder . DIRECTORY_SEPARATOR . $field);
+                    $files[] = Uploader::upload($file, $rootFolder . DIRECTORY_SEPARATOR . $this->upload_folder . DIRECTORY_SEPARATOR . $field);
                 }
             }
 
@@ -113,7 +113,7 @@ trait Filer
      */
     public function getUploadURL($field, $file = 'file')
     {
-        return guard_url('upload/' . $this->config . '/' . ($this->upload_folder) . '/' . $field . '/' . $file);
+        return guard_url('upload/' . $this->config . DIRECTORY_SEPARATOR . ($this->upload_folder) . DIRECTORY_SEPARATOR . $field . DIRECTORY_SEPARATOR . $file);
     }
 
     /**
@@ -126,7 +126,7 @@ trait Filer
      */
     public function getCropURL($field, $file = 'file')
     {
-        return trans_url('crop/' . $this->config . '/' . ($this->upload_folder) . '/' . $field . '/' . $file);
+        return trans_url('crop/' . $this->config . DIRECTORY_SEPARATOR . ($this->upload_folder) . DIRECTORY_SEPARATOR . $field . DIRECTORY_SEPARATOR . $file);
     }
 
     /**
@@ -139,7 +139,7 @@ trait Filer
      */
     public function getFileURL($field, $file = 'file')
     {
-        return trans_url('file/' . $this->config . '/' . ($this->upload_folder) . '/' . $field . '/' . $file);
+        return trans_url('file/' . $this->config . DIRECTORY_SEPARATOR . ($this->upload_folder) . DIRECTORY_SEPARATOR . $field . DIRECTORY_SEPARATOR . $file);
     }
 
     /**
@@ -153,27 +153,17 @@ trait Filer
     public function setFiles($field, $current)
     {
 
-        if (!is_array($current) && !Request::has($field)) {
+        if (!is_array($current)) {
             return;
         }
-
-        if (Request::has($field)) {
-            $current = Request::get($field);
-        }
-
         $prev = $this->getOriginalFile($field);
 
         if (!is_array($prev)) {
             $prev = [];
         }
 
-        if (!is_array($current)) {
-            $current = [];
-        }
-
         $files = array_merge($current, $prev);
         $files = array_slice($files, 0, $this->getUploadFileCount($field));
-
         $this->setAttribute($field, $files);
     }
 
@@ -241,7 +231,7 @@ trait Filer
         }
 
         foreach ($image as $key => $img) {
-            $image[$key] = url("image/{$size}/") . '/' . ($img['path']);
+            $image[$key] = url("image/{$size}/") . DIRECTORY_SEPARATOR . ($img['path']);
         }
 
         return $image;
@@ -282,7 +272,7 @@ trait Filer
      */
     public function getPublicUrl($folder, $file, $prefix = 'download')
     {
-        return url("{$prefix}" . '/' . $folder . '/' . $file);
+        return url("{$prefix}" . DIRECTORY_SEPARATOR . $folder . DIRECTORY_SEPARATOR . $file);
     }
 
     /**

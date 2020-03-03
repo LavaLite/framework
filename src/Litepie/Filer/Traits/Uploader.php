@@ -50,9 +50,17 @@ trait Uploader
             'folder' => $this->relativePath($folder),
             'file' => $file->fileSystemName,
             'caption' => $this->getName($file),
+            'path' => $path . DIRECTORY_SEPARATOR . $file->fileSystemName,
             'time' => date('Y-m-d H:i:s'),
         ];
 
+        $ext = pathinfo($array['file'], PATHINFO_EXTENSION);
+
+        if (in_array($ext, config('filer.image_extensions'))) {
+            $array['url'] = url('image/original/' . $path . DIRECTORY_SEPARATOR . $array['file']);
+        } else {
+            $array['url'] = url('file/display/' . $path . DIRECTORY_SEPARATOR . $array['file']);
+        }
         return $array;
     }
 
