@@ -30,4 +30,13 @@ class Team extends Model
                 'id', 'role',
             ]);
     }
+
+    public function getManagersAttribute()
+    {
+        return $this->users()->where('role', 'manager')->get();
+    }
+    public function getAdminsAttribute()
+    {
+        return $this->users()->where('role', 'admin')->get();
+    }
 }

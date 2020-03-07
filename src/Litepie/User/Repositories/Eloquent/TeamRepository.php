@@ -48,4 +48,22 @@ class TeamRepository extends BaseRepository implements TeamRepositoryInterface
         return $team;
     }
 
+    public function options($key = 'id', $value = 'name')
+    {
+        return $this->model
+            ->select("$value as name", "$key as key")->get();
+    }
+    public function getAllUserForOpporunity($id)
+    {
+        $team = $this->model->find($id);
+        $result = $team->users()->orderBy(DB::raw('((team_user.lead_count+1)/team_user.lead_weight)*100'), 'ASC')
+            ->pluck('users.id');
+        return $result;
+    }
+    public function leadCountIncrement($user_id, $team_id)
+    {
+        $team = $this->model->find($team_id);
+        $result = $team->users()->where('team_user.user_id', $user_id)->increment('team_user.lead_count');
+        return $result;
+    }
 }

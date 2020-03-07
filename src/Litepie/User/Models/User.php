@@ -80,4 +80,28 @@ class User extends Model implements UserPolicy
                 'id', 'role',
             ]);
     }
+    public function teamOptions($key, $value)
+    {
+        return $this->team->options($key, $value);
+    }
+    public function getAllUserById($team_id)
+    {
+        return $this->team->getAllUserForOpporunity($team_id);
+    }
+    /**
+     * get options for various fields
+     * @return [key] [name]
+     */
+    public function leadCountIncrement($user_id, $team_id)
+    {
+        return $this->team->leadCountIncrement($user_id, $team_id);
+    }
+    /**
+     * get options for various fields
+     * @return [key] [name]
+     */
+    public function getUserIdByName($name)
+    {
+        return $this->user->userIdByName($name);
+    }
 }
