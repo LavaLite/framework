@@ -29,12 +29,12 @@ class MasterRepository extends BaseRepository implements MasterRepositoryInterfa
      *
      * @return string
      */
-    public function options($type, $id = 0)
+    public function options($type, $key='id', $value = 'name', $id = 0)
     {
         return $this->model
-            ->where('parent_id', 0)
+            ->where('parent_id', $id)
             ->where('type', $type)
-            ->pluck('name', 'id');
+            ->pluck($value, $key);
     }
 
     /**
