@@ -153,16 +153,14 @@ trait Filer
     public function setFiles($field, $current)
     {
 
-        if (!is_array($current)) {
+        if (!is_array($files) && !Request::has($field)) {
             return;
         }
-        $prev = $this->getOriginalFile($field);
 
-        if (!is_array($prev)) {
-            $prev = [];
+        if (Request::has($field)) {
+            $files = Request::get($field);
         }
 
-        $files = array_merge($current, $prev);
         $files = array_slice($files, 0, $this->getUploadFileCount($field));
         $this->setAttribute($field, $files);
     }
