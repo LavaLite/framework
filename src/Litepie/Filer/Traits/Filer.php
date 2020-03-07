@@ -150,7 +150,7 @@ trait Filer
      *
      * @return null
      */
-    public function setFiles($field, $current)
+    public function setFiles($field, $files)
     {
 
         if (!is_array($files) && !Request::has($field)) {
