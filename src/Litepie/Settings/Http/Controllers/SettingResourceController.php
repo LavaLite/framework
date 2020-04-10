@@ -34,7 +34,7 @@ class SettingResourceController extends BaseController
      */
     public function index(SettingRequest $request)
     {
-        return $this->response->setMetaTitle(trans('settings::setting.names'))
+        return $this->response->setMetaTitle($settings = trans('settings::setting.names'))
             ->view('settings::index')
             ->data(compact('settings'))
             ->output();
