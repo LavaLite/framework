@@ -36,7 +36,6 @@ return [
             'Show' => 'Show',
             'Hide' => 'Hide',
         ],
-
     ],
 
     /**
@@ -60,15 +59,13 @@ return [
      */
 
     'groups' => [
-        'master' => [
-            'name' => 'Master',
-            'title' => 'List of masters',
-            'color' => 'blue',
+        'default' => [
+            'name' => 'Default',
+            'title' => 'Default masters',
         ],
         'project' => [
-            'name' => 'Master',
+            'name' => 'Projects',
             'title' => 'Project masters',
-            'color' => 'red',
         ],
     ],
 

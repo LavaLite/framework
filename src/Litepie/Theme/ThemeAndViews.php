@@ -2,6 +2,9 @@
 
 namespace Litepie\Theme;
 
+use Litepie\Theme\Exceptions\UnknownThemeException;
+Use Theme;
+
 trait ThemeAndViews
 {
     /*
@@ -39,8 +42,11 @@ trait ThemeAndViews
      */
     protected function getTheme()
     {
-        return config('theme.themes.' . $this->getViewFolder() . '.theme',
-            config('theme.themes.default.theme'));
+        $this->theme = config('theme.themes.' . $this->getViewFolder() . '.theme', 'default');
+        if(!Theme::exists($this->theme)) {
+            throw new UnknownThemeException("Unknown theme {$this->theme}", 505);
+        }
+        return $this->theme;
     }
 
     /**
@@ -63,5 +69,4 @@ trait ThemeAndViews
     {
         return substr(guard(), 0, strpos(guard(), '.'));
     }
-
 }

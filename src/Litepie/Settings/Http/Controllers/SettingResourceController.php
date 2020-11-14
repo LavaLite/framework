@@ -2,7 +2,7 @@
 
 namespace Litepie\Settings\Http\Controllers;
 
-use App\Http\Controllers\ResourceController as BaseController;
+use Litepie\Http\Controllers\ResourceController as BaseController;
 use Litepie\Settings\Http\Requests\SettingRequest;
 use Litepie\Settings\Interfaces\SettingRepositoryInterface;
 use Litepie\Settings\Models\Setting;
@@ -36,7 +36,6 @@ class SettingResourceController extends BaseController
     {
         return $this->response->setMetaTitle(trans('settings::setting.names'))
             ->view('settings::index')
-            ->data(compact('settings'))
             ->output();
     }
 

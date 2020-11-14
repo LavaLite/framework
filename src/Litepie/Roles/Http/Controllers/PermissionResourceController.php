@@ -2,7 +2,7 @@
 
 namespace Litepie\Roles\Http\Controllers;
 
-use App\Http\Controllers\ResourceController as BaseController;
+use Litepie\Http\Controllers\ResourceController as BaseController;
 use Litepie\Roles\Http\Requests\PermissionRequest;
 use Litepie\Roles\Interfaces\PermissionRepositoryInterface;
 use Litepie\Roles\Models\Permission;
@@ -35,22 +35,18 @@ class PermissionResourceController extends BaseController
      */
     public function index(PermissionRequest $request)
     {
-        if ($this->response->typeIs('json')) {
-            $pageLimit = $request->input('pageLimit');
-            $data = $this->repository
-                ->setPresenter(\Litepie\Roles\Repositories\Presenter\PermissionListPresenter::class)
-                ->getDataTable($pageLimit);
-
-            return $this->response
-                ->data($data)
-                ->output();
+        $pageLimit = $request->input('pageLimit', 10);
+        $data = $this->repository
+            ->setPresenter(\Litepie\Roles\Repositories\Presenter\PermissionListPresenter::class)
+            ->paginate($pageLimit);
+        extract($data);
+        $view = 'roles::permission.index';
+        if ($request->ajax()) {
+            $view = 'roles::permission.more';
         }
-
-        $permissions = $this->repository->paginate();
-
         return $this->response->setMetaTitle(trans('roles::permission.names'))
-            ->view('roles::permission.index', true)
-            ->data(compact('permissions'))
+            ->view($view)
+            ->data(compact('data', 'meta'))
             ->output();
     }
 

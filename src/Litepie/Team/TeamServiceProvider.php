@@ -2,12 +2,9 @@
 
 namespace Litepie\Team;
 
-/*
- * This file is part of Team
- *
- */
-
 use Illuminate\Support\ServiceProvider;
+use Litepie\Team\Providers\RouteServiceProvider;
+use Litepie\Team\Providers\AuthServiceProvider;
 
 class TeamServiceProvider extends ServiceProvider
 {
@@ -25,22 +22,21 @@ class TeamServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        $this->publishConfig();
+        // Load view
+        $this->loadViewsFrom(__DIR__.'/resources/views', 'team');
+
+        // Load translation
+        $this->loadTranslationsFrom(__DIR__.'/resources/lang', 'team');
 
         // Load migrations
         $this->loadMigrationsFrom(__DIR__.'/database/migrations');
+
+        // Call pblish redources function
+        $this->publishResources();
+
+        $this->mergeConfigFrom(__DIR__.'/config/config.php', 'teams');
     }
 
-    /**
-     * Publish Team configuration.
-     */
-    protected function publishConfig()
-    {
-        // Publish config files
-        $this->publishes([
-            __DIR__.'/config/config.php' => config_path('team.php'),
-        ]);
-    }
 
     /**
      * Register the service provider.
@@ -49,33 +45,45 @@ class TeamServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->mergeConfig();
-        $this->registerTeam();
+
+            // Bind Team to repository
+            $this->app->bind(
+                'Litepie\Team\Interfaces\TeamRepositoryInterface',
+                \Litepie\Team\Repositories\Eloquent\TeamRepository::class
+            );
+    
+            $this->app->register(AuthServiceProvider::class);
+            $this->app->register(RouteServiceProvider::class);
+    
+    }
+    
+    /**
+     * Get the services provided by the provider.
+     *
+     * @return array
+     */
+    public function provides()
+    {
+        return ['team'];
     }
 
     /**
-     * Register the application bindings.
+     * Publish resources.
      *
      * @return void
      */
-    protected function registerTeam()
+    private function publishResources()
     {
-        $this->app->bind('team', function ($app) {
-            return new Team($app);
-        });
+        // Publish configuration file
+        $this->publishes([__DIR__.'/config/config.php' => config_path('teams.php')], 'config');
+
+        // Publish admin view
+        $this->publishes([__DIR__.'/resources/views' => base_path('resources/views/vendor/team')], 'view');
+
+        // Publish language files
+        $this->publishes([__DIR__.'/resources/lang' => base_path('resources/lang/vendor/team')], 'lang');
+
+        // Publish public files
+        $this->publishes([__DIR__.'/public' => base_path('public')], 'public');
     }
-
-
-    /**
-     * Merges user's and teams's configs.
-     *
-     * @return void
-     */
-    protected function mergeConfig()
-    {
-        $this->mergeConfigFrom(
-            __DIR__.'/config/config.php', 'team'
-        );
-    }
-
 }

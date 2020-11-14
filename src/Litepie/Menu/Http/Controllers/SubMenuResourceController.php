@@ -2,7 +2,7 @@
 
 namespace Litepie\Menu\Http\Controllers;
 
-use App\Http\Controllers\ResourceController as ResourceController;
+use Litepie\Http\Controllers\ResourceController as ResourceController;
 use Form;
 use Litepie\Menu\Http\Requests\MenuRequest;
 use Litepie\Menu\Interfaces\MenuRepositoryInterface;
@@ -29,7 +29,7 @@ class SubMenuResourceController extends ResourceController
         $menu = $this->repository->find($id);
         Form::populate($menu);
 
-        return view('menu::sub.show', compact('parent', 'menu'));
+        return view('menu::sub.show', compact( 'menu'));
     }
 
     /**
@@ -124,4 +124,5 @@ class SubMenuResourceController extends ResourceController
                 ->redirect();
         }
     }
+   
 }

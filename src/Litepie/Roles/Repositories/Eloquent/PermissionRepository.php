@@ -9,7 +9,7 @@ class PermissionRepository extends BaseRepository implements PermissionRepositor
 {
     public function boot()
     {
-        $this->fieldSearchable = config('roles.permission.search');
+        $this->fieldSearchable = config('roles.permission.model.search');
     }
 
     /**

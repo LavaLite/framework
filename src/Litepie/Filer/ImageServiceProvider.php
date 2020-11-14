@@ -53,14 +53,13 @@ class ImageServiceProvider extends ServiceProvider
     private function bootstrapImageCache()
     {
         $app = $this->app;
-
         // imagecache route
         if (is_string(config('image.route'))) {
             $filename_pattern = '[ \w\\.\\/\\-\\@\(\)]+';
 
             // route to access template applied image file
             $app['router']->get(config('image.route').'/{template}/{filename}', [
-                'uses' => 'Litepie\Filer\ImageCacheController@getResponse',
+                'uses' => 'Litepie\Filer\Http\Controllers\ImageCacheController@getResponse',
                 'as'   => 'imagecache',
             ])->where(['filename' => $filename_pattern]);
         }

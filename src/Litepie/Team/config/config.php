@@ -1,90 +1,62 @@
 <?php
 
-/**
- * This file is part of Team.
- *
- * @license MIT
- */
-
 return [
-    /*
-    |--------------------------------------------------------------------------
-    | Auth Model
-    |--------------------------------------------------------------------------
-    |
-    | This is the Auth model used by Team.
-    |
-    */
-    'user_model' => config('auth.providers.users.model', App\User::class),
 
     /*
-    |--------------------------------------------------------------------------
-    | Team users Table
-    |--------------------------------------------------------------------------
-    |
-    | This is the users table name used by Team.
-    |
-    */
-    'users_table' => 'users',
+     * Provider.
+     */
+    'provider' => 'litepie',
 
     /*
-    |--------------------------------------------------------------------------
-    | Team Team Model
-    |--------------------------------------------------------------------------
-    |
-    | This is the Team model used by Team to create correct relations.  Update
-    | the team if it is in a different namespace.
-    |
-    */
-    'team_model' => Litepie\Team\Model\Team::class,
+     * Package.
+     */
+    'package' => 'user',
 
     /*
-    |--------------------------------------------------------------------------
-    | Team teams Table
-    |--------------------------------------------------------------------------
-    |
-    | This is the teams table name used by Team to save teams to the database.
-    |
-    */
-    'teams_table' => 'teams',
+     * Modules.
+     */
+    'modules' => ['team'],
 
-    /*
-    |--------------------------------------------------------------------------
-    | Team team_user Table
-    |--------------------------------------------------------------------------
-    |
-    | This is the team_user table used by Team to save assigned teams to the
-    | database.
-    |
-    */
-    'team_user_table' => 'team_user',
+    'team' => [
+        'model' => [
+            'model' => \Litepie\Team\Models\Team::class,
+            'table' => 'teams',
+            'presenter' => \Litepie\Team\Repositories\Presenter\TeamPresenter::class,
+            'hidden' => [],
+            'visible' => [],
+            'guarded' => ['*'],
+            'slugs' => ['slug' => 'name'],
+            'dates' => ['deleted_at', 'createdat', 'updated_at'],
+            'appends' => [],
+            'fillable' => ['name'],
+            'translatables' => [],
+            'upload_folder' => 'user/team',
+            'uploads' => [
+                /*
+            'images' => [
+            'count' => 10,
+            'type'  => 'image',
+            ],
+            'file' => [
+            'count' => 1,
+            'type'  => 'file',
+            ],
+             */
+            ],
 
-    /*
-    |--------------------------------------------------------------------------
-    | User Foreign key on Team's team_user Table (Pivot)
-    |--------------------------------------------------------------------------
-    */
-    'user_foreign_key' => 'id',
+            'casts' => [
+                /*
+            'images'    => 'array',
+            'file'      => 'array',
+             */
+            ],
 
-    /*
-    |--------------------------------------------------------------------------
-    | Team Team Invite Model
-    |--------------------------------------------------------------------------
-    |
-    | This is the Team Invite model used by Team to create correct relations.
-    | Update the team if it is in a different namespace.
-    |
-    */
-    'invite_model' => Litepie\Team\Model\Invite::class,
-
-    /*
-    |--------------------------------------------------------------------------
-    | Team team invites Table
-    |--------------------------------------------------------------------------
-    |
-    | This is the team invites table name used by Team to save sent/pending
-    | invitation into teams to the database.
-    |
-    */
-    'team_invites_table' => 'team_invites',
+            'revision' => [],
+            'perPage' => '20',
+            'search' => [
+                'name' => 'like',
+                'status',
+            ],
+        ]
+    ],
 ];
