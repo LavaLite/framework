@@ -3,7 +3,7 @@
 namespace Litepie\Settings\Policies;
 
 use Litepie\Settings\Models\Setting;
-use Litepie\User\Contracts\UserPolicy;
+use Litepie\User\Interfaces\UserPolicyInterface as UserPolicy;
 
 class SettingPolicy
 {
@@ -17,11 +17,7 @@ class SettingPolicy
      */
     public function view(UserPolicy $user, Setting $setting)
     {
-        if ($user->canDo('settings.setting.view') && $user->isAdmin()) {
-            return true;
-        }
-
-        return $user->id == $setting->user_id;
+        return false;
     }
 
     /**
@@ -34,7 +30,7 @@ class SettingPolicy
      */
     public function create(UserPolicy $user)
     {
-        return  $user->canDo('settings.setting.create');
+        return false;
     }
 
     /**
@@ -47,11 +43,7 @@ class SettingPolicy
      */
     public function update(UserPolicy $user, Setting $setting)
     {
-        if ($user->canDo('settings.setting.update') && $user->isAdmin()) {
-            return true;
-        }
-
-        return $user->id == $setting->user_id;
+        return false;
     }
 
     /**
@@ -64,11 +56,8 @@ class SettingPolicy
      */
     public function destroy(UserPolicy $user, Setting $setting)
     {
-        if ($user->canDo('settings.setting.delete') && $user->isAdmin()) {
-            return true;
-        }
+        return false;
 
-        return $user->id == $setting->user_id;
     }
 
     /**

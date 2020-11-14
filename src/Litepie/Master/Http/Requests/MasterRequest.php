@@ -2,10 +2,10 @@
 
 namespace Litepie\Master\Http\Requests;
 
-use App\Http\Requests\Request as FormRequest;
+use Litepie\Http\Request\AbstractRequest;
 use Litepie\Master\Models\Master;
 
-class MasterRequest extends FormRequest
+class MasterRequest extends AbstractRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -18,7 +18,7 @@ class MasterRequest extends FormRequest
 
         if (is_null($this->model)) {
             // Determine if the user is authorized to access master module,
-            return $this->formRequest->user()->can('view', Master::class);
+            return $this->formRequest->user()->can('view', app(Master::class));
         }
 
         if ($this->isCreate() || $this->isStore()) {

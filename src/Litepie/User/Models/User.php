@@ -5,17 +5,17 @@ namespace Litepie\User\Models;
 use Hash;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Notifications\Notifiable;
-use Litepie\Database\Traits\Slugger;
+use Litepie\Database\Traits\Sluggable;
 use Litepie\Filer\Traits\Filer;
 use Litepie\Hashids\Traits\Hashids;
 use Litepie\Repository\Traits\PresentableTrait;
 use Litepie\Roles\Traits\HasRoleAndPermission;
-use Litepie\User\Contracts\UserPolicy;
 use Litepie\User\Traits\User as UserProfile;
+use Litepie\User\Interfaces\UserPolicyInterface;
 
-class User extends Model implements UserPolicy
+class User extends Model implements UserPolicyInterface
 {
-    use Filer, Notifiable, HasRoleAndPermission, UserProfile, SoftDeletes, Hashids, Slugger, PresentableTrait;
+    use Filer, Notifiable, HasRoleAndPermission, UserProfile, SoftDeletes, Hashids, Sluggable, PresentableTrait;
 
     /**
      * Configuartion for the model.
@@ -42,52 +42,27 @@ class User extends Model implements UserPolicy
         parent::__construct($attributes);
     }
 
-    public function messages()
-    {
-        return $this->morphMany('\Litepie\Message\Models\Message', 'user');
-    }
-
-    public function setPasswordAttribute($val)
-    {
-        if (Hash::needsRehash($val)) {
-            $this->attributes['password'] = bcrypt($val);
-        } else {
-            $this->attributes['password'] = ($val);
-        }
-    }
-
-    public function setPhotoAttribute($val)
-    {
-        if (isset($val[0]) && !empty($val[0])) {
-            $this->attributes['photo'] = json_encode($val);
-        }
-    }
-
-    public function setaApiTokenAttribute($val)
-    {
-        if (empty($val)) {
-            $this->attributes['api_token'] = Str::random(60);
-        }
-    }
-
     /**
      * The User that belong to the team.
      */
     public function teams()
     {
-        return $this->belongsToMany('Litepie\User\Models\Team')
+        return $this->belongsToMany('Litepie\Team\Models\Team')
             ->withPivot([
                 'id', 'role',
             ]);
     }
+
     public function teamOptions($key, $value)
     {
         return $this->team->options($key, $value);
     }
+
     public function getAllUserById($team_id)
     {
         return $this->team->getAllUserForOpporunity($team_id);
     }
+
     /**
      * get options for various fields
      * @return [key] [name]
@@ -96,6 +71,7 @@ class User extends Model implements UserPolicy
     {
         return $this->team->leadCountIncrement($user_id, $team_id);
     }
+ 
     /**
      * get options for various fields
      * @return [key] [name]

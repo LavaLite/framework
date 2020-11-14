@@ -36,7 +36,7 @@ class ClientTransformer extends TransformerAbstract
                 'public' => trans_url('user/'.$client->getPublicKey()),
                 'user'   => guard_url('user/client/'.$client->getRouteKey()),
             ],
-            'status'            => trans('app.'.$client->status),
+            'status'            => trans($client->status),
             'created_at'        => format_date($client->created_at),
             'updated_at'        => format_date($client->updated_at),
         ];

@@ -2,7 +2,7 @@
 
 namespace Litepie\Filer\Http\Controllers;
 
-use App\Http\Controllers\Controller;
+use Litepie\Http\Controllers\Controller;
 use Filer;
 
 class FileController extends Controller

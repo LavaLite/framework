@@ -24,6 +24,10 @@ class RequestCriteria implements CriteriaInterface
         $fieldsSearchable = $repository->getFieldsSearchable();
 
         $search = request()->get(config('repository.criteria.params.search', 'search'), null);
+        $q = request()->get('q', null);
+        if($q != null) {
+            $search['q'] = $q;
+        }
         $searchFields = request()->get(config('repository.criteria.params.searchFields', 'searchFields'), null);
         $columns = request()->get(config('repository.criteria.params.columns', 'columns'), null);
         $sortBy = request()->get(config('repository.criteria.params.sortBy', 'sortBy'), null);

@@ -2,7 +2,7 @@
 
 namespace Litepie\Master\Policies;
 
-use Litepie\User\Contracts\UserPolicy;
+use Litepie\User\Interfaces\UserPolicyInterface as UserPolicy;
 use Litepie\Master\Models\Master;
 
 class MasterPolicy

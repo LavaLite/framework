@@ -2,7 +2,7 @@
 
 namespace Litepie\Install\Http\Controllers;
 
-use App\Http\Controllers\PublicController;
+use Litepie\Http\Controllers\PublicController;
 
 class WelcomeController extends PublicController
 {

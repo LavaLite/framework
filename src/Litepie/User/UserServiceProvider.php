@@ -31,45 +31,10 @@ class UserServiceProvider extends ServiceProvider
 
         // Call pblish redources function
         $this->publishResources();
-    }
 
-    /**
-     * Register the service provider.
-     *
-     * @return void
-     */
-    public function register()
-    {
         $this->mergeConfigFrom(__DIR__.'/config/config.php', 'users');
-
-        // Bind facade
-        $this->app->bind('user', function ($app) {
-            return $this->app->make('Litepie\User\User');
-        });
-
-        // Bind User to repository
-        $this->app->bind(
-            'Litepie\User\Interfaces\UserRepositoryInterface',
-            \Litepie\User\Repositories\Eloquent\UserRepository::class
-        );
-
-        // Bind User to repository
-        $this->app->bind(
-            'Litepie\User\Interfaces\ClientRepositoryInterface',
-            \Litepie\User\Repositories\Eloquent\ClientRepository::class
-        );
-
-        // Bind Team to repository
-        $this->app->bind(
-            'Litepie\User\Interfaces\TeamRepositoryInterface',
-            \Litepie\User\Repositories\Eloquent\TeamRepository::class
-        );
-
-        $this->app->register(\Litepie\User\Providers\AuthServiceProvider::class);
-        $this->app->register(\Litepie\User\Providers\EventServiceProvider::class);
-        $this->app->register(\Litepie\User\Providers\RouteServiceProvider::class);
-        $this->app->register(\Laravel\Socialite\SocialiteServiceProvider::class);
     }
+
 
     /**
      * Get the services provided by the provider.
@@ -79,6 +44,19 @@ class UserServiceProvider extends ServiceProvider
     public function provides()
     {
         return ['user'];
+    }
+
+    /**
+     * Register any application services.
+     *
+     * @return void
+     */
+    public function register()
+    {
+        // Bind facade
+        $this->app->bind('user', function ($app) {
+            return $this->app->make('Litepie\User\User');
+        });
     }
 
     /**

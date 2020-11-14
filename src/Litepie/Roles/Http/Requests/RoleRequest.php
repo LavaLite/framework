@@ -2,10 +2,10 @@
 
 namespace Litepie\Roles\Http\Requests;
 
-use App\Http\Requests\Request as FormRequest;
+use Litepie\Http\Request\AbstractRequest;
 use Litepie\Roles\Models\Role;
 
-class RoleRequest extends FormRequest
+class RoleRequest extends AbstractRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -17,7 +17,7 @@ class RoleRequest extends FormRequest
         $this->model = $this->route('role');
         if (is_null($this->model)) {
             // Determine if the user is authorized to access role module,
-            return $this->formRequest->user()->can('view', Role::class);
+            return $this->formRequest->user()->can('view', app(Role::class));
         }
 
         if ($this->isWorkflow()) {

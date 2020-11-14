@@ -3,7 +3,7 @@
 namespace Litepie\Menu\Policies;
 
 use Litepie\Menu\Models\Menu;
-use Litepie\User\Contracts\UserPolicy;
+use Litepie\User\Interfaces\UserPolicyInterface as UserPolicy;
 
 class MenuPolicy
 {

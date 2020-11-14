@@ -1,11 +1,9 @@
 <?php
 
-namespace Litepie;
 
-use DB;
 use Illuminate\Database\Seeder;
 
-class SettingTableSeeder extends Seeder
+class LitepieSettingTableSeeder extends Seeder
 {
     public function run()
     {

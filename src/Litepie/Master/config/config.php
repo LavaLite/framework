@@ -22,29 +22,29 @@ return [
      */
     'masters' => [
         'single' => [
-            'group' => 'master',
+            'group' => 'default',
             'type' => 'single',
             'fields' => [],
         ],
         'category' => [
-            'group' => 'master',
+            'group' => 'default',
             'type' => 'category',
             'fields' => ['parent_id'],
         ],
         'image' => [
-            'group' => 'master',
+            'group' => 'default',
             'type' => 'image',
             'fields' => ['image'],
         ],
         'icon' => [
-            'group' => 'master',
+            'group' => 'default',
             'type' => 'icon',
             'fields' => ['icon'],
         ],
         'project' => [
-            'view' => 'project.default',
             'type' => 'project',
             'group' => 'project',
+            'fields' => ['image', 'icon'],
         ],
     ],
 

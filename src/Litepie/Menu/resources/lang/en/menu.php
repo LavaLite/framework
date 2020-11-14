@@ -15,10 +15,7 @@ return [
     'subname'     => 'Sub Menu',
 
     'options'     => [
-        'status' => [
-            '1' => 'Show',
-            '0' => 'Hide',
-        ],
+        'status' => ['Hide' => 'Hide', 'Show' => 'Show'],
         'target' => [
             '_self'  => 'Same window',
             '_blank' => 'New window',

@@ -2,7 +2,7 @@
 
 namespace Litepie\Install\Http\Controllers;
 
-use App\Http\Controllers\PublicController;
+use Litepie\Http\Controllers\PublicController;
 use RachidLaasri\LaravelInstaller\Helpers\DatabaseManager;
 
 class DatabaseController extends PublicController
