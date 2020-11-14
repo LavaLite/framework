@@ -1,11 +1,9 @@
 <?php
 
-namespace Litepie;
 
-use DB;
 use Illuminate\Database\Seeder;
 
-class MenuTableSeeder extends Seeder
+class LitepieMenuTableSeeder extends Seeder
 {
     public function run()
     {
@@ -92,20 +90,6 @@ class MenuTableSeeder extends Seeder
                 'icon'        => null,
                 'target'      => null,
                 'order'       => 3,
-                'status'      => 1,
-            ],
-
-            [
-                'id'          => null,
-                'parent_id'   => 1,
-                'key'         => null,
-                'url'         => 'admin/menu/menu',
-                'name'        => 'Menu',
-                'role'        => '["superuser"]',
-                'description' => null,
-                'icon'        => 'fa fa-bars',
-                'target'      => null,
-                'order'       => 6,
                 'status'      => 1,
             ],
 

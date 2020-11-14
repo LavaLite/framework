@@ -3,7 +3,7 @@
 namespace Litepie\Roles\Policies;
 
 use Litepie\Roles\Models\Role;
-use Litepie\User\Contracts\UserPolicy;
+use Litepie\User\Interfaces\UserPolicyInterface as UserPolicy;
 
 class RolePolicy
 {

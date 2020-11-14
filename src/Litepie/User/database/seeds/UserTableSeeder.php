@@ -1,12 +1,10 @@
 <?php
 
-namespace Litepie;
 
-use DB;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Str;
 
-class UserTableSeeder extends Seeder
+class LitepieUserTableSeeder extends Seeder
 {
     public function run()
     {
@@ -18,7 +16,7 @@ class UserTableSeeder extends Seeder
                 'status' => 'Active',
                 'name' => 'Administrator',
                 'sex' => 'Male',
-                'dob' => '2014-05-15',
+                'dob' => '2000-01-01',
                 'api_token' => Str::random(60),
                 'email_verified_at' => '2019-04-15 00:00:00',
                 'designation' => 'Super User',
@@ -32,7 +30,7 @@ class UserTableSeeder extends Seeder
                 'status' => 'Active',
                 'name' => 'User',
                 'sex' => 'Male',
-                'dob' => '2015-05-15',
+                'dob' => '2000-01-01',
                 'api_token' => Str::random(60),
                 'email_verified_at' => '2019-04-15 00:00:00',
                 'designation' => 'Admin',

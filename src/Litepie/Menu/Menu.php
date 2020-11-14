@@ -32,4 +32,10 @@ class Menu
 
         return view($view, compact('menus'));
     }
+    public function allMenus($menu)
+    {
+        
+        $menu=$this->model->findByField('id',hashids_decode($menu))->first();
+        return $menu->key;
+    }
 }

@@ -29,12 +29,20 @@ class MasterRepository extends BaseRepository implements MasterRepositoryInterfa
      *
      * @return string
      */
+<<<<<<< Updated upstream
     public function options($type, $id = 0)
+=======
+    public function options($type, $key = 'id', $value = 'name', $id = 0)
+>>>>>>> Stashed changes
     {
         return $this->model
             ->where('parent_id', 0)
             ->where('type', $type)
+<<<<<<< Updated upstream
             ->pluck('name', 'id');
+=======
+            ->pluck($value, 'id');
+>>>>>>> Stashed changes
     }
 
     /**

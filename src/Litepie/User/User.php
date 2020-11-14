@@ -11,14 +11,12 @@ namespace Litepie\User;
  * @version    5.1.0
  */
 
+use App\Interfaces\User\UserRepositoryInterface;
 use Form;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Contracts\Foundation\Application;
-use Illuminate\Support\Facades\Auth;
 use Litepie\Roles\Interfaces\PermissionRepositoryInterface;
 use Litepie\Roles\Interfaces\RoleRepositoryInterface;
-use Litepie\User\Interfaces\TeamRepositoryInterface;
-use Litepie\User\Interfaces\UserRepositoryInterface;
 
 /**
  * User wrapper class.
@@ -55,13 +53,11 @@ class User
     public function __construct(
         Application $app,
         UserRepositoryInterface $user,
-        TeamRepositoryInterface $team,
         RoleRepositoryInterface $role,
         PermissionRepositoryInterface $permission
     ) {
         $this->app = $app;
         $this->user = $user;
-        $this->team = $team;
         $this->role = $role;
         $this->permission = $permission;
     }
@@ -323,6 +319,7 @@ class User
      */
     public function getSetGuard($guard = null)
     {
+
         if (empty($guard)) {
             $guard = getenv('guard');
             return empty($guard) ? config('auth.defaults.guard') : $guard;
@@ -343,7 +340,8 @@ class User
         return $this->user->count();
     }
 
-    public function getUserByRole($role) {
+    public function getUserByRole($role)
+    {
 
         return $this->user->getUserByRole();
     }

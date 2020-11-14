@@ -4,8 +4,7 @@ namespace Litepie\Master\Models;
 
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Litepie\Database\Model;
-use Litepie\Database\Traits\DateFormatter;
-use Litepie\Database\Traits\Slugger;
+use Litepie\Database\Traits\Sluggable;
 use Litepie\Filer\Traits\Filer;
 use Litepie\Hashids\Traits\Hashids;
 use Litepie\Repository\Traits\PresentableTrait;
@@ -13,7 +12,7 @@ use Litepie\Trans\Traits\Translatable;
 
 class Master extends Model
 {
-    use Filer, SoftDeletes, Hashids, Slugger, DateFormatter, Translatable, PresentableTrait;
+    use Filer, SoftDeletes, Hashids, Sluggable, Translatable, PresentableTrait;
 
     /**
      * Configuartion for the model.

@@ -6,7 +6,6 @@ use Auth;
 use Form;
 use Hash;
 use Illuminate\Http\Request;
-use Litepie\User\Traits\Auth\Common;
 use Response;
 
 /**
@@ -37,6 +36,7 @@ trait UserPages
     public function getPassword(Request $request, $role = null)
     {
         return $this->response->setMetaTitle('Change Password')
+            ->layout('user')
             ->view('user.password')
             ->output();
     }
@@ -68,7 +68,7 @@ trait UserPages
         $user = $request->user(guard());
 
         $this->validate($request, [
-            'password'     => 'required|confirmed|min:6',
+            'password' => 'required|confirmed|min:6',
             'old_password' => 'required',
         ]);
 
@@ -100,6 +100,7 @@ trait UserPages
         Form::populate($user);
 
         return $this->response->setMetaTitle('Profile')
+            ->layout('user')
             ->view('user.profile')
             ->data(compact('user'))
             ->output();

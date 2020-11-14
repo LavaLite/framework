@@ -2,7 +2,7 @@
 
 namespace Litepie\Filer\Http\Controllers;
 
-use App\Http\Controllers\Controller;
+use Litepie\Http\Controllers\Controller;
 use Filer;
 use Request;
 
@@ -32,9 +32,15 @@ class UploadController extends Controller
             $ext = pathinfo($array['file'], PATHINFO_EXTENSION);
 
             if (in_array($ext, config('filer.image_extensions'))) {
+<<<<<<< Updated upstream
                 $array['url'] = url('image/original'.$ufolder.'/'.$array['file']);
             } else {
                 $array['url'] = url('file/display'.$ufolder.'/'.$array['file']);
+=======
+                $array['url'] = url('image/original/'.$ufolder.'/'.$array['file']);
+            } else {
+                $array['url'] = url('file/display/'.$ufolder.'/'.$array['file']);
+>>>>>>> Stashed changes
             }
 
             return response()->json($array)

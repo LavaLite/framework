@@ -186,9 +186,7 @@ trait Filer
      */
     public function getOriginalFile($field)
     {
-        $original = parent::getOriginal($field);
-
-        return json_decode($original);
+        return parent::getOriginal($field);
     }
 
     /**

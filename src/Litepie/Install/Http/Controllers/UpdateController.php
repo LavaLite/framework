@@ -2,7 +2,7 @@
 
 namespace Litepie\Install\Http\Controllers;
 
-use App\Http\Controllers\PublicController;
+use Litepie\Http\Controllers\PublicController;
 use RachidLaasri\LaravelInstaller\Helpers\InstalledFileManager;
 use RachidLaasri\LaravelInstaller\Helpers\DatabaseManager;
 use Litepie\Install\Helpers\MigrationsHelper;

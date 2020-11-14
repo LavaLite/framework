@@ -22,9 +22,7 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
      */
     public function model()
     {
-        $provider = config('auth.guards.' . getenv('guard') . '.web.provider', 'users');
-
-        return config("auth.providers.$provider.model", App\User::class);
+        return config('users.user.model.model');
     }
 
     /**

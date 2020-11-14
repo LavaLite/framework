@@ -4,7 +4,7 @@ namespace Litepie\Menu\Http\Controllers;
 
 namespace Litepie\Menu\Http\Controllers;
 
-use App\Http\Controllers\ResourceController as BaseController;
+use Litepie\Http\Controllers\ResourceController as BaseController;
 use Form;
 use Litepie\Menu\Http\Requests\MenuRequest;
 use Litepie\Menu\Interfaces\MenuRepositoryInterface;
@@ -33,13 +33,17 @@ class MenuResourceController extends BaseController
      */
     public function index(MenuRequest $request, $parent = 1)
     {
-        $parent   = $this->repository->find(hashids_encode($parent));
-        $rootMenu = $this->repository->rootMenues();
-
-        return $this->response->setMetaTitle(trans('menu::menu.names'))
-            ->view('menu::index')
-            ->data(compact('rootMenu', 'parent'))
-            ->output();
+            $pageLimit = $request->input('pageLimit', 10);
+            $parent   = $this->repository->find(hashids_encode($parent));
+            $rootMenu = $this->repository->rootMenues();
+            $view = 'menu::index';
+            if ($request->ajax()) {
+                $view = 'menu::more';
+            }
+            return $this->response->setMetaTitle(trans('menu::menu.names'))
+                ->view($view)
+                ->data(compact('rootMenu','parent'))
+                ->output();
     }
 
     /**
@@ -50,9 +54,9 @@ class MenuResourceController extends BaseController
      *
      * @return Response
      */
-    public function show(MenuRequest $request, $parent)
+    public function show(MenuRequest $request, $parent= 1)
     {
-
+        
         if ($request->ajax()) {
             $menu = $parent;
 
@@ -186,7 +190,7 @@ class MenuResourceController extends BaseController
             return $this->response->message(trans('messages.success.deleted', ['Module' => trans('menu::menu.name')]))
                 ->code(202)
                 ->status('success')
-                ->url(guard_url('menu/menu'))
+                ->url(guard_url('menu/menu/'. $menu->getRouteKey()))
                 ->redirect();
         } catch (Exception $e) {
             return $this->response->message($e->getMessage())

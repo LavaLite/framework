@@ -3,7 +3,7 @@
 namespace Litepie\Roles\Policies;
 
 use Litepie\Roles\Models\Permission;
-use Litepie\User\Contracts\UserPolicy;
+use Litepie\User\Interfaces\UserPolicyInterface as UserPolicy;
 
 class PermissionPolicy
 {
@@ -17,7 +17,7 @@ class PermissionPolicy
      */
     public function view(UserPolicy $user, Permission $permission)
     {
-        return true;
+        return false;
     }
 
     /**
@@ -30,7 +30,7 @@ class PermissionPolicy
      */
     public function create(UserPolicy $user)
     {
-        return  true;
+        return false;
     }
 
     /**
@@ -43,7 +43,7 @@ class PermissionPolicy
      */
     public function update(UserPolicy $user, Permission $permission)
     {
-        return true;
+        return false;
     }
 
     /**
@@ -56,7 +56,7 @@ class PermissionPolicy
      */
     public function destroy(UserPolicy $user, Permission $permission)
     {
-        return true;
+        return false;
     }
 
     /**

@@ -16,8 +16,7 @@
         <div class="tab-content clearfix">
             <div class="tab-pane active" id="master">
                 <div class="tab-pan-title">  {{ trans('app.edit') }}  {!! trans('master::master.name') !!} [{!!$master->name!!}] </div>
-                @include('master::'. config("master.masters.$type.view", 'master.default'), ['mode' => 'create', 'type'
-                => $type])
+                @include('master::create', ['mode' => 'create'])
             </div>
         </div>
         {!!Form::close()!!}

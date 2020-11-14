@@ -1,12 +1,10 @@
 <?php
 
-namespace Litepie;
 
-use DB;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Str;
 
-class ClientTableSeeder extends Seeder
+class LitepieClientTableSeeder extends Seeder
 {
     public function run()
     {

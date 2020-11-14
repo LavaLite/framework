@@ -432,7 +432,7 @@ class Trans
      */
     public function getInversedLocaleFromMapping($locale)
     {
-        return \array_flip($this->getLocalesMapping())[$locale] ?? $locale;
+        return array_flip($this->getLocalesMapping())[$locale] ?? $locale;
     }
 
     /**

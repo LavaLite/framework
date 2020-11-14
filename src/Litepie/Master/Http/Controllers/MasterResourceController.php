@@ -2,9 +2,8 @@
 
 namespace Litepie\Master\Http\Controllers;
 
-use App\Http\Controllers\ResourceController as BaseController;
+use Litepie\Http\Controllers\ResourceController as BaseController;
 use Form;
-use Illuminate\Support\Str;
 use Litepie\Master\Http\Requests\MasterRequest;
 use Litepie\Master\Interfaces\MasterRepositoryInterface;
 use Litepie\Master\Models\Master;
@@ -37,32 +36,19 @@ class MasterResourceController extends BaseController
      *
      * @return Response
      */
-    public function index(MasterRequest $request, $group = 'masters', $type = null)
+    public function index(MasterRequest $request)
     {
-
-        $view = $this->response->theme->listView();
-
-        if ($this->response->typeIs('json')) {
-            $function = Str::camel('get-' . $view);
-            return $this->repository
-                ->setPresenter(\Litepie\Master\Repositories\Presenter\MasterPresenter::class)
-                ->$function();
-        }
-
-        if ($type == null) {
-            $view = 'master::masters';
-        } else {
-            $view = 'master::index';
-        }
-
-        $masters = $this->repository->paginate();
-        $count = $this->repository->typeCount();
+        $type = $request->get('type');
+        $data = $this->repository
+            ->setPresenter(\Litepie\Master\Repositories\Presenter\MasterPresenter::class)
+            ->paginate();
+        
         $groups = $this->repository->groups();
         $mode = 'list';
 
         return $this->response->setMetaTitle(trans('master::master.names'))
-            ->view($view)
-            ->data(compact('masters', 'group', 'groups', 'type', 'count', 'mode'))
+            ->view('master::index')
+            ->data(compact('data', 'groups', 'mode', 'type'))
             ->output();
     }
 
