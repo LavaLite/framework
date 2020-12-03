@@ -14,7 +14,7 @@ namespace Litepie\Team;
 use Litepie\Team\Interfaces\TeamRepositoryInterface;
 
 /**
- * User wrapper class.
+ * team wrapper class.
  */
 class Team
 {

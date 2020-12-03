@@ -24,8 +24,8 @@ class CreateTeamsTable extends Migration
          */
         Schema::create('teams', function ($table) {
             $table->increments('id');
-            $table->string('name', 50)->nullable();
-            $table->string('status', 50)->nullable();
+            $table->text('name')->nullable();
+            $table->text('status')->nullable();
             $table->softDeletes();
             $table->nullableTimestamps();
         });

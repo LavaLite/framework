@@ -2,7 +2,7 @@
 
 namespace Litepie\Install\Http\Controllers;
 
-use Litepie\Http\Controllers\PublicController;
+use App\Http\Controllers\PublicController;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Redirector;
 use Litepie\Install\Helpers\EnvironmentManager;

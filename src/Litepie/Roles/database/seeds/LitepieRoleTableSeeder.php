@@ -43,7 +43,7 @@ class LitepieRoleTableSeeder extends Seeder
                 'role_id' => 3,
             ],
         ]);
-
+/*
         DB::table('menus')->insertGetId(
             [
                 'parent_id'   => 1,
@@ -58,5 +58,6 @@ class LitepieRoleTableSeeder extends Seeder
                 'status'      => 1,
             ]
         );
+*/
     }
 }

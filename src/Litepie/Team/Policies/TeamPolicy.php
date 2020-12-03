@@ -2,7 +2,7 @@
 
 namespace Litepie\Team\Policies;
 
-use Litepie\User\Interfaces\UserPolicyInterface as UserPolicy;
+use Litepie\User\Contracts\UserPolicy;
 use Litepie\User\Models\Team;
 
 class TeamPolicy

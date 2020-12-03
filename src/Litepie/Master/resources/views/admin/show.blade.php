@@ -20,8 +20,8 @@
         <div class="tab-content clearfix disabled">
             <div class="tab-pan-title"> {{ trans('app.view') }}   {!! trans('master::master.masters.'.$type) !!}  [{!! $master->name !!}] </div>
             <div class="tab-pane active" id="details">
-            @include('master::show', ['mode' => 'create'])
-
+                @include('master::'. config("master.masters.$type.view", 'master.default'), 
+                ['mode' => 'show', 'type' => $master->type])
             </div>
         </div>
     {!! Form::close() !!}

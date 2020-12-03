@@ -2,7 +2,7 @@
 
 namespace Litepie\Master\Http\Controllers;
 
-use Litepie\Http\Controllers\APIController as BaseController;
+use App\Http\Controllers\APIController as BaseController;
 use Litepie\Master\Forms\Master as Form;
 use Litepie\Master\Http\Requests\MasterRequest;
 use Litepie\Master\Interfaces\MasterRepositoryInterface;

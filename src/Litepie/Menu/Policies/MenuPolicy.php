@@ -3,7 +3,7 @@
 namespace Litepie\Menu\Policies;
 
 use Litepie\Menu\Models\Menu;
-use Litepie\User\Interfaces\UserPolicyInterface as UserPolicy;
+use Litepie\User\Contracts\UserPolicy;
 
 class MenuPolicy
 {
@@ -17,7 +17,12 @@ class MenuPolicy
      */
     public function view(UserPolicy $user, Menu $menu)
     {
-        return false;
+        if (($user->canDo('menu.menu.view') && $user->isAdmin())||
+        ($user->canDo('menu.menu.view') && !$menu->exists)) {
+            return true;
+        }
+
+        return $user->id == $menu->user_id;
     }
 
     /**

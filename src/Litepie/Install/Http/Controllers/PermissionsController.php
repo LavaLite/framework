@@ -2,7 +2,7 @@
 
 namespace Litepie\Install\Http\Controllers;
 
-use Litepie\Http\Controllers\PublicController;
+use App\Http\Controllers\PublicController;
 use RachidLaasri\LaravelInstaller\Helpers\PermissionsChecker;
 
 class PermissionsController extends PublicController

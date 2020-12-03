@@ -192,7 +192,7 @@ if (!function_exists('user_type')) {
         $guard = is_null($guard) ? getenv('guard') : $guard;
         $provider = config('auth.guards.' . $guard . '.provider', 'users');
 
-        return config("auth.providers.$provider.model", App\User::class);
+        return config("auth.providers.$provider.model", \App\Models\User::class);
     }
 }
 

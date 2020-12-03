@@ -11,9 +11,8 @@ use Litepie\Hashids\Traits\Hashids;
 use Litepie\Repository\Traits\PresentableTrait;
 use Litepie\Roles\Traits\HasRoleAndPermission;
 use Litepie\User\Traits\User as UserProfile;
-use Litepie\User\Interfaces\UserPolicyInterface;
 
-class User extends Model implements UserPolicyInterface
+class User extends Model
 {
     use Filer, Notifiable, HasRoleAndPermission, UserProfile, SoftDeletes, Hashids, Sluggable, PresentableTrait;
 

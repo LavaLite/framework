@@ -16,7 +16,7 @@ class LitepieUserTableSeeder extends Seeder
                 'status' => 'Active',
                 'name' => 'Administrator',
                 'sex' => 'Male',
-                'dob' => '2000-01-01',
+                'dob' => '2014-05-15',
                 'api_token' => Str::random(60),
                 'email_verified_at' => '2019-04-15 00:00:00',
                 'designation' => 'Super User',
@@ -30,7 +30,7 @@ class LitepieUserTableSeeder extends Seeder
                 'status' => 'Active',
                 'name' => 'User',
                 'sex' => 'Male',
-                'dob' => '2000-01-01',
+                'dob' => '2015-05-15',
                 'api_token' => Str::random(60),
                 'email_verified_at' => '2019-04-15 00:00:00',
                 'designation' => 'Admin',
@@ -50,7 +50,7 @@ class LitepieUserTableSeeder extends Seeder
             'order' => 50,
             'status' => 1,
         ]);
-
+/*
         $id = DB::table('menus')->insertGetId([
             'parent_id' => 1,
             'key' => 'admin.user',
@@ -99,5 +99,6 @@ class LitepieUserTableSeeder extends Seeder
                 'status' => 1,
             ],
         ]);
+*/
     }
 }

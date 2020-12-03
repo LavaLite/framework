@@ -34,6 +34,7 @@ class MenuResourceController extends BaseController
     public function index(MenuRequest $request, $parent = 1)
     {
             $pageLimit = $request->input('pageLimit', 10);
+
             $parent   = $this->repository->find(hashids_encode($parent));
             $rootMenu = $this->repository->rootMenues();
             $view = 'menu::index';

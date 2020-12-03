@@ -18,7 +18,7 @@ class MasterRequest extends AbstractRequest
 
         if (is_null($this->model)) {
             // Determine if the user is authorized to access master module,
-            return $this->formRequest->user()->can('view', app(Master::class));
+            return $this->formRequest->user()->can('view', Master::class);
         }
 
         if ($this->isCreate() || $this->isStore()) {

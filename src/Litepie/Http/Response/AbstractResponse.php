@@ -52,7 +52,7 @@ abstract class AbstractResponse
             return $this->type;
         }
 
-        if ($this->isJson() || $this->isApi()) {
+        if (request()->wantsJson()) {
             return 'json';
         }
 

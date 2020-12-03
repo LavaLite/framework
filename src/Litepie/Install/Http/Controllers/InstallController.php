@@ -2,7 +2,7 @@
 
 namespace Litepie\Install\Http\Controllers;
 
-use Litepie\Http\Controllers\PublicController as PublicController;
+use Litepie\Http\Controllers\PublicController;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;

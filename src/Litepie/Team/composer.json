@@ -1,22 +1,23 @@
 {
     "name": "litepie/user",
-    "description": "Theme bundle for Lavalite",
-    "keywords": ["lavalite", "theme"],
+    "description": "User bundle for Lavalite",
+    "keywords": ["lavalite", "user"],
     "license": "MIT",
-    "homepage": "https://github.com/Litepie/Team",
+    "homepage": "https://github.com/Litepie/User",
     "authors": [{
         "name": "Renfos Technologies Pvt. Ltd.",
         "email": "info@renfos.com"
     }],
     "require": {
-        "php": "^7.2"
+        "php": "^7.2",
+        "laravel/socialite": "~4.2"
     },
     "autoload": {
         "classmap": [
             "database/seeds"
         ],
         "psr-4": {
-            "Litepie\\Theme\\": ""
+            "Litepie\\User\\": ""
         }
     }
 }

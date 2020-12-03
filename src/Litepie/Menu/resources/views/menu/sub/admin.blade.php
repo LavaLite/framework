@@ -1,22 +1,22 @@
-<ul class="treeview-menu">
-    @foreach ($menus as $menu)
-        @if($menu->has_role)
-            @if ($menu->hasChildren())
-            <li class="treeview {{ $menu->active ?? '' }}">
-                <a href="{{trans_url($menu->url)}}" >
-                    <i class="{{{ !empty($menu->icon) ?  $menu->icon : 'fa fa-angle-double-right' }}}"></i> <span>{{$menu->name}}</span>
-                    <i class="fa fa-angle-left pull-right"></i>
+<div class="dropright {{ $menu->active ?? '' }}">
+        <a class="nav-link dropdown-toggle" href="{{trans_url($menu->url)}}" 
+        data-toggle="dropdown" 
+        aria-haspopup="true" 
+        aria-expanded="false">
+            <i class="{{ $menu->icon ?? 'las la-ellipsis-v' }}"></i>
+        </a>
+        <div class="dropdown-menu main-nav-dropdown">
+        @foreach ($menus as $menu)
+            @if($menu->has_role)
+                @if ($menu->hasChildren())
+                    @include('menu::menu.sub.admin', array('menus' => $menu->getChildren()))
+                @else
+                <a class="nav-link {{ $menu->active ?? '' }}" href="{{trans_url($menu->url)}}" data-toggle="tooltip" data-placement="right" title="{{$menu->name}}">
+                    <i class="{{ $menu->icon ?? 'fa fa-angle-double-right' }}"></i>
                 </a>
-                @include('menu::menu.sub.admin', array('menus' => $menu->getChildren()))
-            </li>
-            @else
-            <li  class="{{ $menu->active ?? '' }}">
-                <a href="{{trans_url($menu->url)}}">
-                    <i class="{{{ !empty($menu->icon) ?  $menu->icon : 'fa fa-angle-double-right' }}}"></i>
-                    <span>{{$menu->name}}</span>
-                </a>
-            </li>
+                @endif
             @endif
-        @endif
-    @endforeach
-</ul>
+        @endforeach
+    </div>
+</div>
+    

@@ -28,41 +28,4 @@ trait RequestTrait
     {
         return $this->getType() == $type;
     }
-
-    /**
-     * Return the type of response for the current request.
-     *
-     * @return string
-     */
-    protected function isJson()
-    {
-        if (request()->wantsJson()) {
-            return true;
-        }
-    }
-
-    /**
-     * Return the type of response for the current request.
-     *
-     * @return string
-     */
-    protected function isApi()
-    {
-        if (request()->is('api/*')) {
-            return true;
-        }
-    }
-
-    /**
-     * Return the type of response for the current request.
-     *
-     * @return string
-     */
-    protected function isAjax()
-    {
-        if (request()->ajax()) {
-            return true;
-        }
-    }
-
 }

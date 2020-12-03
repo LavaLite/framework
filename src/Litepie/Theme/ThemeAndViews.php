@@ -2,9 +2,6 @@
 
 namespace Litepie\Theme;
 
-use Litepie\Theme\Exceptions\UnknownThemeException;
-Use Theme;
-
 trait ThemeAndViews
 {
     /*
@@ -42,11 +39,8 @@ trait ThemeAndViews
      */
     protected function getTheme()
     {
-        $this->theme = config('theme.themes.' . $this->getViewFolder() . '.theme', 'default');
-        if(!Theme::exists($this->theme)) {
-            throw new UnknownThemeException("Unknown theme {$this->theme}", 505);
-        }
-        return $this->theme;
+        return $this->theme ?: 'default';
+
     }
 
     /**
@@ -60,13 +54,4 @@ trait ThemeAndViews
         return $this->layout ?: 'default';
     }
 
-    /**
-     * Return folder for current guard.
-     *
-     * @return type
-     */
-    protected function getViewFolder()
-    {
-        return substr(guard(), 0, strpos(guard(), '.'));
-    }
 }

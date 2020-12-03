@@ -59,9 +59,9 @@ return [
      */
 
     'groups' => [
-        'default' => [
-            'name' => 'Default',
-            'title' => 'Default masters',
+        'master' => [
+            'name' => 'Master',
+            'title' => 'List of masters',
         ],
         'project' => [
             'name' => 'Projects',

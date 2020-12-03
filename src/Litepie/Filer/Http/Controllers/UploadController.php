@@ -32,9 +32,9 @@ class UploadController extends Controller
             $ext = pathinfo($array['file'], PATHINFO_EXTENSION);
 
             if (in_array($ext, config('filer.image_extensions'))) {
-                $array['url'] = url('image/original/'.$ufolder.'/'.$array['file']);
+                $array['url'] = url('image/original'.$ufolder.'/'.$array['file']);
             } else {
-                $array['url'] = url('file/display/'.$ufolder.'/'.$array['file']);
+                $array['url'] = url('file/display'.$ufolder.'/'.$array['file']);
             }
 
             return response()->json($array)

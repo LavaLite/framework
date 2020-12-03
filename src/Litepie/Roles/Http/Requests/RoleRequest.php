@@ -17,7 +17,7 @@ class RoleRequest extends AbstractRequest
         $this->model = $this->route('role');
         if (is_null($this->model)) {
             // Determine if the user is authorized to access role module,
-            return $this->formRequest->user()->can('view', app(Role::class));
+            return $this->formRequest->user()->can('view', Role::class);
         }
 
         if ($this->isWorkflow()) {
