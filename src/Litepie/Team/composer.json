@@ -1,21 +1,23 @@
 {
-    "name": "litepie/team",
-    "description": "Team management package for Lavalite",
-    "keywords": ["lavalite", "roles"],
+    "name": "litepie/user",
+    "description": "User bundle for Lavalite",
+    "keywords": ["lavalite", "user"],
     "license": "MIT",
-    "homepage": "https://github.com/Lavalite/Team",
-    "authors": [
-        {
-            "name": "Renfos Technologies Pvt. Ltd.",
-            "email": "info@renfos.com"
-        }
-    ],
+    "homepage": "https://github.com/Litepie/User",
+    "authors": [{
+        "name": "Renfos Technologies Pvt. Ltd.",
+        "email": "info@renfos.com"
+    }],
     "require": {
-        "php": "^7.2"
+        "php": "^7.2",
+        "laravel/socialite": "~4.2"
     },
     "autoload": {
-        "psr-4": { 
-            "Lavalite\\Team\\": "" 
+        "classmap": [
+            "database/seeds"
+        ],
+        "psr-4": {
+            "Litepie\\User\\": ""
         }
     }
 }

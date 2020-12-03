@@ -9,11 +9,10 @@ use Litepie\Filer\Traits\Filer;
 use Litepie\Hashids\Traits\Hashids;
 use Litepie\Repository\Traits\PresentableTrait;
 use Litepie\Roles\Traits\CheckRoleAndPermission;
-use Litepie\User\Contracts\UserPolicy;
 use Litepie\User\Traits\User as UserProfile;
 use Str;
 
-class Client extends Model implements UserPolicy
+class Client extends Model
 {
     use Filer, Notifiable, CheckRoleAndPermission, UserProfile, SoftDeletes, Hashids, PresentableTrait;
     /**
@@ -48,26 +47,5 @@ class Client extends Model implements UserPolicy
         $this->setRole($this->role);
 
         parent::__construct($attributes);
-    }
-
-    public function messages()
-    {
-        return $this->morphMany('\Litepie\Message\Models\Message', 'user');
-    }
-
-    public function setPasswordAttribute($val)
-    {
-        if (Hash::needsRehash($val)) {
-            $this->attributes['password'] = bcrypt($val);
-        } else {
-            $this->attributes['password'] = ($val);
-        }
-    }
-
-    public function setaApiTokenAttribute($val)
-    {
-        if (empty($val)) {
-            $this->attributes['api_token'] = Str::random(60);
-        }
     }
 }

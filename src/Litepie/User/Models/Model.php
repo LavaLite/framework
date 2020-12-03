@@ -16,4 +16,16 @@ AuthorizableContract,
 CanResetPasswordContract
 {
     use Authenticatable, Authorizable, CanResetPassword;
+
+    /**
+     * Encrypt user passwords.
+     */
+    public function setPasswordAttribute($val)
+    {
+        if (Hash::needsRehash($val)) {
+            $this->attributes['password'] = bcrypt($val);
+        } else {
+            $this->attributes['password'] = ($val);
+        }
+    }
 }

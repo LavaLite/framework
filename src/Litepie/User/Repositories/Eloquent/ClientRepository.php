@@ -20,8 +20,6 @@ class ClientRepository extends BaseRepository implements ClientRepositoryInterfa
      */
     public function model()
     {
-        $type = request('type', 'client');
-
-        return config('users.'.$type.'.model.model');
+        return config('users.client.model.model');
     }
 }

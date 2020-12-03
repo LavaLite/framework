@@ -36,7 +36,6 @@ return [
             'Show' => 'Show',
             'Hide' => 'Hide',
         ],
-
     ],
 
     /**
@@ -63,12 +62,10 @@ return [
         'master' => [
             'name' => 'Master',
             'title' => 'List of masters',
-            'color' => 'blue',
         ],
         'project' => [
-            'name' => 'Master',
+            'name' => 'Projects',
             'title' => 'Project masters',
-            'color' => 'red',
         ],
     ],
 

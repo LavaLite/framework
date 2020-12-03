@@ -6,6 +6,7 @@
 
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
+
     <!-- Content Header (Page header) -->
     <section class="content-header">
        <h1> {!! trans('master::master.name') !!} <small>{!! trans('master::master.masters.'.$type) !!}</small> </h1>
@@ -40,7 +41,7 @@
 </div>
 
 <script type="text/javascript">
-
+var module_link = "{{guard_url('master/master')}}";
 var oTable;
 var oSearch;
 $(document).ready(function(){

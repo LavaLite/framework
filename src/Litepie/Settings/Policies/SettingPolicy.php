@@ -17,7 +17,7 @@ class SettingPolicy
      */
     public function view(UserPolicy $user, Setting $setting)
     {
-        if ($user->canDo('settings.setting.view') && $user->isAdmin()) {
+        if ($user->canDo('settings.setting.view')) {
             return true;
         }
 

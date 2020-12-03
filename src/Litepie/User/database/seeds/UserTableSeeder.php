@@ -1,12 +1,10 @@
 <?php
 
-namespace Litepie;
 
-use DB;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Str;
 
-class UserTableSeeder extends Seeder
+class LitepieUserTableSeeder extends Seeder
 {
     public function run()
     {
@@ -52,7 +50,7 @@ class UserTableSeeder extends Seeder
             'order' => 50,
             'status' => 1,
         ]);
-
+/*
         $id = DB::table('menus')->insertGetId([
             'parent_id' => 1,
             'key' => 'admin.user',
@@ -101,5 +99,6 @@ class UserTableSeeder extends Seeder
                 'status' => 1,
             ],
         ]);
+*/
     }
 }

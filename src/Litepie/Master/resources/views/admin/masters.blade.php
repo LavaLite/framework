@@ -1,30 +1,33 @@
-<style type="text/css">
-    .widget-user .widget-user-header {
-        height: auto !important;
-    }
+<div class="app-list-wrap">
+    <div class="app-list-inner">
+        <div class="app-list-header d-flex align-items-center justify-content-between">
+            <h3>{{__('Masters')}}</h3>
+        </div>
 
-</style>
-<!-- Content Wrapper. Contains page content -->
-<div class="content-wrapper">
-    <!-- Content Header (Page header) -->
-    <section class="content-header">
-        <h1>
-            {!! trans('master::master.name') !!}
-            <small>Masters home</small>
-        </h1>
-        <ol class="breadcrumb">
-            <li><a href="/admin"><i class="fa fa-dashboard"></i> {!! trans('app.home') !!}</a></li>
-            <li class="active">{!! trans('master::master.name') !!}</li>
-        </ol>
-    </section>
-    <!-- Main content -->
-    <section class="content">
-        <div class="row">
+        <div class="app-list-wrap-inner">
             @foreach($groups as $key => $group)
-            <div class="col-md-4">
-                @include('master::menu', compact('group', 'key'))
+            <div class="app-list-head">
+                {{__("master::master.groups.{$key}.name")}}
             </div>
+                @foreach($group as $k => $v)
+                <div class="app-item" data-id="task_{{$k}}" style="height: 50px;">
+                    <div class="app-info">
+                        <input type="checkbox" name="tasks_list" id="task_1">
+                        <label class="app-project-name bg-secondary" for="task_1">{{__("master::master.masters.{$v['type']}")[0]}}</label>
+                        <h3>
+                            <a href="{{guard_url("masters/{$key}/{$v['type']}")}}">{{__("master::master.masters.{$v['type']}")}}
+                                <span class="pull-right badge bg-blue">{{@$count[$v['type']]}}</span>
+                            </a>
+                        </h3>
+                    </div>
+                </div>
+                @endforeach
             @endforeach
         </div>
-    </section>
+    </div>
+    <div class="app-detail-wrap" id="app-content"></div>
 </div>
+<script type="">
+
+
+</script>

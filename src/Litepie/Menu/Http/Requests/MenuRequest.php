@@ -2,9 +2,9 @@
 
 namespace Litepie\Menu\Http\Requests;
 
-use App\Http\Requests\Request as FormRequest;
+use Litepie\Http\Request\AbstractRequest;
 
-class MenuRequest extends FormRequest
+class MenuRequest extends AbstractRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -16,7 +16,7 @@ class MenuRequest extends FormRequest
         $this->model = $this->route('menu');
         if (is_null($this->model)) {
             // Determine if the user is authorized to access menu module,
-            return $this->formRequest->user()->can('view', config('menu.menu.model'));
+            return $this->user()->can('view', app(config('menu.menu.model')));
         }
 
         if ($this->isWorkflow()) {

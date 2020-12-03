@@ -2,10 +2,10 @@
 
 namespace Litepie\User\Http\Requests;
 
-use App\Http\Requests\Request as FormRequest;
-use App\User;
+use Litepie\Http\Request\AbstractRequest;
+use App\Models\User;
 
-class UserRequest extends FormRequest
+class UserRequest extends AbstractRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -17,7 +17,8 @@ class UserRequest extends FormRequest
         $this->model = $this->route('user');
         if (is_null($this->model)) {
             // Determine if the user is authorized to access user module,
-            return $this->formRequest->user()->can('view', User::class);
+            // return $this->formRequest->user()->can('view', User::class);
+            return $this->user()->can('view', app(User::class));
         }
 
         if ($this->isWorkflow()) {
@@ -25,19 +26,19 @@ class UserRequest extends FormRequest
             return $this->can($this->getStatus());
         }
 
-        if ($this->isCreate()) {
+       if ($this->isCreate() || $this->isStore()) {
             // Determine if the user is authorized to create an entry,
             return $this->can('create');
         }
 
-        if ($this->isUpdate()) {
+        if ($this->isEdit() || $this->isUpdate()) {
             // Determine if the user is authorized to update an entry,
             return $this->can('update');
         }
 
         if ($this->isDelete()) {
             // Determine if the user is authorized to delete an entry,
-            return $this->can('delete');
+            return $this->can('destroy');
         }
         // Determine if the user is authorized to view the module.
         return $this->can('view');
@@ -53,13 +54,16 @@ class UserRequest extends FormRequest
         if ($this->isCreate()) {
             // validation rule for create request.
             return [
-
+                // 'phone' => 'required|integer',
             ];
         }
 
         if ($this->isUpdate()) {
             // Validation rule for update request.
             return [
+                'email' => 'required|email:rfc,dns',
+                'phone' => 'integer',
+                'mobile' => 'integer',
 
             ];
         }

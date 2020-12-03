@@ -512,7 +512,7 @@ abstract class BaseRepository implements RepositoryInterface, RepositoryCriteria
      *
      * @return mixed
      */
-    public function findByField($field, $value = null, $columns = ['*'])
+    public function findByField($field, $value, $columns = ['*'])
     {
         $this->applyCriteria();
         $this->applyScope();

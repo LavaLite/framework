@@ -2,7 +2,7 @@
 
 namespace Litepie\Master\Http\Controllers;
 
-use App\Http\Controllers\ResourceController as BaseController;
+use Litepie\Http\Controllers\ResourceController as BaseController;
 use Form;
 use Illuminate\Support\Str;
 use Litepie\Master\Http\Requests\MasterRequest;
@@ -40,17 +40,14 @@ class MasterResourceController extends BaseController
     public function index(MasterRequest $request, $group = 'masters', $type = null)
     {
 
-        $view = $this->response->theme->listView();
-
         if ($this->response->typeIs('json')) {
-            $function = Str::camel('get-' . $view);
             return $this->repository
                 ->setPresenter(\Litepie\Master\Repositories\Presenter\MasterPresenter::class)
-                ->$function();
+                ->paginate();
         }
 
         if ($type == null) {
-            $view = 'master::masters';
+            $view = 'master::admin.masters';
         } else {
             $view = 'master::index';
         }

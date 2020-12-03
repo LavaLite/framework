@@ -53,7 +53,7 @@ if (!function_exists('folder_new')) {
      */
     function folder_new($prefix = null, $sufix = null)
     {
-        $folder = date('Y/m/d/His').rand(100, 999);
+        $folder = date('Y/m/d/His') . rand(100, 999);
 
         return $folder;
     }
@@ -78,7 +78,7 @@ if (!function_exists('blade_compile')) {
         // so we can avoid any WSOD errors. If an exception occurs we
         // will throw it out to the exception handler.
         try {
-            eval('?>'.$compiled);
+            eval('?>' . $compiled);
         }
 
         // If we caught an exception, we'll silently flush the output
@@ -190,9 +190,9 @@ if (!function_exists('user_type')) {
     function user_type($guard = null)
     {
         $guard = is_null($guard) ? getenv('guard') : $guard;
-        $provider = config('auth.guards.'.$guard.'.provider', 'users');
+        $provider = config('auth.guards.' . $guard . '.provider', 'users');
 
-        return config("auth.providers.$provider.model", App\User::class);
+        return config("auth.providers.$provider.model", \App\Models\User::class);
     }
 }
 
@@ -229,6 +229,20 @@ if (!function_exists('guard')) {
     }
 }
 
+if (!function_exists('guards')) {
+    /**
+     * Return the current guards.
+     *
+     * @param string $property
+     *
+     * @return mixed
+     */
+    function guards()
+    {
+        return User::getGuards();
+    }
+}
+
 if (!function_exists('guard_url')) {
     /**
      * Return thr property of the guard for current request.
@@ -239,7 +253,7 @@ if (!function_exists('guard_url')) {
      */
     function guard_url($url, $translate = true)
     {
-        
+
         if ($translate) {
             return trans_url(User::urlPrefixGuard($url));
         }

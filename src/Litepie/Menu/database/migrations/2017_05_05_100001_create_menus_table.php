@@ -32,7 +32,7 @@ class CreateMenusTable extends Migration
             $table->integer('order')->nullable();
             $table->string('uload_folder', 150)->nullable();
             $table->string('slug', 200)->nullable();
-            $table->boolean('status')->default('1')->nullable();
+            $table->enum('status', ['Show', 'Hide'])->default('Show')->nullable();
             $table->string('upload_folder', 100)->nullable();
             $table->softDeletes();
             $table->nullableTimestamps();

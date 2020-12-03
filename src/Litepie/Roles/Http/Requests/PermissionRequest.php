@@ -2,10 +2,10 @@
 
 namespace Litepie\Roles\Http\Requests;
 
-use App\Http\Requests\Request as FormRequest;
+use Litepie\Http\Request\AbstractRequest;
 use Litepie\Roles\Models\Permission;
 
-class PermissionRequest extends FormRequest
+class PermissionRequest extends AbstractRequest
 {
     /**
      * Determine if the user is authorized to make this request.

@@ -2,10 +2,10 @@
 
 namespace Litepie\User\Http\Requests;
 
-use App\Http\Requests\Request as FormRequest;
-use App\Client;
+use Litepie\Http\Request\AbstractRequest;
+use App\Models\Client;
 
-class ClientRequest extends FormRequest
+class ClientRequest extends AbstractRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -18,7 +18,7 @@ class ClientRequest extends FormRequest
 
         if (is_null($this->model)) {
             // Determine if the user is authorized to access client module,
-            return $this->formRequest->user()->can('view', Client::class);
+            return $this->user()->can('view', app(Client::class));
         }
 
         if ($this->isWorkflow()) {
@@ -55,14 +55,18 @@ class ClientRequest extends FormRequest
         if ($this->isStore()) {
             // validation rule for create request.
             return [
-
+                'email' => 'required|email',
+                'phone' => 'numeric',
+                'mobile' => 'numeric',
             ];
         }
 
         if ($this->isUpdate()) {
             // Validation rule for update request.
             return [
-
+                'email' => 'required|email',
+                'phone' => 'numeric',
+                'mobile' => 'numeric',
             ];
         }
 

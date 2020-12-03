@@ -9,7 +9,7 @@ class RoleRepository extends BaseRepository implements RoleRepositoryInterface
 {
     public function boot()
     {
-        $this->fieldSearchable = config('roles.role.search');
+        $this->fieldSearchable = config('roles.role.model.search');
     }
 
     /**

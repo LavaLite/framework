@@ -2,7 +2,7 @@
 
 namespace Litepie\Roles\Http\Controllers;
 
-use App\Http\Controllers\ResourceController as BaseController;
+use Litepie\Http\Controllers\ResourceController as BaseController;
 use Litepie\Roles\Http\Requests\RoleRequest;
 use Litepie\Roles\Interfaces\PermissionRepositoryInterface;
 use Litepie\Roles\Interfaces\RoleRepositoryInterface;
@@ -39,22 +39,19 @@ class RoleResourceController extends BaseController
      */
     public function index(RoleRequest $request)
     {
-        if ($this->response->typeIs('json')) {
-            $pageLimit = $request->input('pageLimit');
-            $data = $this->repository
-                ->setPresenter(\Litepie\Roles\Repositories\Presenter\RoleListPresenter::class)
-                ->getDataTable($pageLimit);
 
-            return $this->response
-                ->data($data)
-                ->output();
+        $pageLimit = $request->input('pageLimit', 10);
+        $data = $this->repository
+            ->setPresenter(\Litepie\Roles\Repositories\Presenter\RoleListPresenter::class)
+            ->paginate($pageLimit);
+        extract($data);
+        $view = 'roles::role.index';
+        if ($request->ajax()) {
+            $view = 'roles::role.more';
         }
-
-        $roles = $this->repository->paginate();
-
         return $this->response->setMetaTitle(trans('roles::role.names'))
-            ->view('roles::role.index', true)
-            ->data(compact('roles'))
+            ->view($view)
+            ->data(compact('data', 'meta'))
             ->output();
     }
 

@@ -22,7 +22,7 @@ trait Translatable
     public static function bootTranslatable()
     {
         /*
-         * Set slugged attributes on new records
+         * Set Translated attributes on new records
          */
         static::saving(function ($model) {
             foreach ($model->translatable as $key) {
@@ -31,13 +31,23 @@ trait Translatable
         });
 
         /*
-         * Set slugged attributes on new records
+         * Retrive Translated attributes on new records
          */
         static::retrieved(function ($model) {
             foreach ($model->translatable as $key) {
                 $model->$key = $model->getTranslation($key);
             }
         });
+
+        /*
+         * Retrive Translated attributes on new records
+         */
+        static::saved(function ($model) {
+            foreach ($model->translatable as $key) {
+                $model->$key = $model->getTranslation($key);
+            }
+        });
+        
     }
 
     /**
@@ -73,7 +83,6 @@ trait Translatable
      */
     public function setTranslation($key, $value = null)
     {
-        $locale = $this->locale();
         $langs = $this->getOriginal($key);
         $langs = $this->decodeLang($langs);
         $langs[$this->locale()] = $value;
