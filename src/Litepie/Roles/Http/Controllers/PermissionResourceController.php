@@ -44,6 +44,7 @@ class PermissionResourceController extends BaseController
         if ($request->ajax()) {
             $view = 'roles::permission.more';
         }
+
         return $this->response->setMetaTitle(trans('roles::permission.names'))
             ->view($view)
             ->data(compact('data', 'meta'))

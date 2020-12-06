@@ -1,4 +1,5 @@
 <?php
+
 namespace Litepie\Repository\Presenter;
 
 use Exception;
@@ -14,8 +15,8 @@ use League\Fractal\Serializer\SerializerAbstract;
 use Litepie\Repository\Contracts\PresenterInterface;
 
 /**
- * Class FractalPresenter
- * @package Litepie\Repository\Presenter
+ * Class FractalPresenter.
+ *
  * @author Renfos Technologies Pvt. Ltd. <info@info@renfos.com>
  */
 abstract class FractalPresenter implements PresenterInterface
@@ -73,7 +74,6 @@ abstract class FractalPresenter implements PresenterInterface
      */
     protected function parseIncludes()
     {
-
         $request = app('Illuminate\Http\Request');
         $paramIncludes = config('repository.fractal.params.include', 'include');
 
@@ -85,7 +85,7 @@ abstract class FractalPresenter implements PresenterInterface
     }
 
     /**
-     * Get Serializer
+     * Get Serializer.
      *
      * @return SerializerAbstract
      */
@@ -97,19 +97,20 @@ abstract class FractalPresenter implements PresenterInterface
     }
 
     /**
-     * Transformer
+     * Transformer.
      *
      * @return \League\Fractal\TransformerAbstract
      */
     abstract public function getTransformer();
 
     /**
-     * Prepare data to present
+     * Prepare data to present.
      *
      * @param $data
      *
-     * @return mixed
      * @throws Exception
+     *
+     * @return mixed
      */
     public function present($data)
     {

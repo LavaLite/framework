@@ -5,4 +5,3 @@ namespace Litepie\Activities\Interfaces;
 interface ActivityLogRepositoryInterface
 {
 }
-

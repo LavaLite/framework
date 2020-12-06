@@ -4,7 +4,6 @@ namespace Litepie\User\Traits;
 
 trait RoutesAndGuards
 {
-
     /**
      * Get the model for the current guard.
      *
@@ -14,7 +13,8 @@ trait RoutesAndGuards
     {
         $guard = guard();
         $guard = ($guard == null) ? $guard : config('auth.defaults.guard');
-        $provider = config('auth.guards.' . $guard . '.provider');
+        $provider = config('auth.guards.'.$guard.'.provider');
+
         return config("auth.providers.$provider.model");
     }
 
@@ -43,6 +43,7 @@ trait RoutesAndGuards
     {
         $guard = guard();
         $guard = ($guard == null) ? $guard : config('auth.defaults.guard');
+
         return current(explode('.', $guard));
     }
 
@@ -55,7 +56,7 @@ trait RoutesAndGuards
     {
         $model = $this->getAuthModel();
 
-        return with(new $model)->getTable();
+        return with(new $model())->getTable();
     }
 
     /**
@@ -73,15 +74,16 @@ trait RoutesAndGuards
 
         return config('auth.defaults.url');
     }
+
     /**
      * Sets guard for the controller.
      *
-     * @return NULL
+     * @return null
      */
     protected function setGuard()
     {
         $guard = request()->route('guard');
         $sub = request()->is('*api/*') ? 'api' : 'web';
-        guard($guard . '.' . $sub);
+        guard($guard.'.'.$sub);
     }
 }

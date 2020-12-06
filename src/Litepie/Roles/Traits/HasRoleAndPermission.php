@@ -3,8 +3,9 @@
 namespace Litepie\Roles\Traits;
 
 use Illuminate\Database\Eloquent\Model;
-use InvalidArgumentException;
 use Illuminate\Support\Str;
+use InvalidArgumentException;
+
 trait HasRoleAndPermission
 {
     /**

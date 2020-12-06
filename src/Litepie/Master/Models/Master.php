@@ -12,7 +12,12 @@ use Litepie\Trans\Traits\Translatable;
 
 class Master extends Model
 {
-    use Filer, SoftDeletes, Hashids, Sluggable, Translatable, PresentableTrait;
+    use Filer;
+    use SoftDeletes;
+    use Hashids;
+    use Sluggable;
+    use Translatable;
+    use PresentableTrait;
 
     /**
      * Configuartion for the model.
@@ -25,5 +30,4 @@ class Master extends Model
     {
         return $this->belongsTo('Litepie\Master\Models\Master', 'parent_id');
     }
-
 }

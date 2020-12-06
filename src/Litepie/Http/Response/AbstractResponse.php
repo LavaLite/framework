@@ -2,14 +2,16 @@
 
 namespace Litepie\Http\Response;
 
+use Form;
 use Litepie\Http\Traits\RequestTrait;
 use Litepie\Http\Traits\ThemeTrait;
 use Litepie\Http\Traits\ViewTrait;
-use Form;
 
 abstract class AbstractResponse
 {
-    use ViewTrait, RequestTrait, ThemeTrait;
+    use ViewTrait;
+    use RequestTrait;
+    use ThemeTrait;
 
     /**
      * @var store the response data.
@@ -118,21 +120,21 @@ abstract class AbstractResponse
     {
         if ($this->typeIs('json')) {
             return response()->json([
-                'data' => $this->getFormData(),
+                'data'    => $this->getFormData(),
                 'message' => $this->getMessage(),
-                'code' => $this->getCode(),
-                'status' => $this->getStatus(),
-                'url' => $this->getUrl(),
+                'code'    => $this->getCode(),
+                'status'  => $this->getStatus(),
+                'url'     => $this->getUrl(),
             ], $this->getStatusCode());
         }
 
         if ($this->typeIs('ajax')) {
             return response()->json([
-                'data' => $this->getFormData(),
+                'data'    => $this->getFormData(),
                 'message' => $this->getMessage(),
-                'code' => $this->getCode(),
-                'status' => $this->getStatus(),
-                'url' => $this->getUrl(),
+                'code'    => $this->getCode(),
+                'status'  => $this->getStatus(),
+                'url'     => $this->getUrl(),
             ], $this->getStatusCode());
         }
 
@@ -320,7 +322,7 @@ abstract class AbstractResponse
         $callable = preg_split('|[A-Z]|', $method);
 
         if (in_array($callable[0], ['set', 'prepend', 'append', 'has', 'get'])) {
-            $value = lcfirst(preg_replace('|^' . $callable[0] . '|', '', $method));
+            $value = lcfirst(preg_replace('|^'.$callable[0].'|', '', $method));
             array_unshift($parameters, $value);
             call_user_func_array([$this->theme, $callable[0]], $parameters);
         }

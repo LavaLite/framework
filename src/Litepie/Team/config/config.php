@@ -19,19 +19,19 @@ return [
 
     'team' => [
         'model' => [
-            'model' => \Litepie\Team\Models\Team::class,
-            'table' => 'teams',
-            'presenter' => \Litepie\Team\Repositories\Presenter\TeamPresenter::class,
-            'hidden' => [],
-            'visible' => [],
-            'guarded' => ['*'],
-            'slugs' => ['slug' => 'name'],
-            'dates' => ['deleted_at', 'createdat', 'updated_at'],
-            'appends' => [],
-            'fillable' => ['name'],
+            'model'         => \Litepie\Team\Models\Team::class,
+            'table'         => 'teams',
+            'presenter'     => \Litepie\Team\Repositories\Presenter\TeamPresenter::class,
+            'hidden'        => [],
+            'visible'       => [],
+            'guarded'       => ['*'],
+            'slugs'         => ['slug' => 'name'],
+            'dates'         => ['deleted_at', 'createdat', 'updated_at'],
+            'appends'       => [],
+            'fillable'      => ['name'],
             'translatables' => [],
             'upload_folder' => 'user/team',
-            'uploads' => [
+            'uploads'       => [
                 /*
             'images' => [
             'count' => 10,
@@ -52,11 +52,11 @@ return [
             ],
 
             'revision' => [],
-            'perPage' => '20',
-            'search' => [
+            'perPage'  => '20',
+            'search'   => [
                 'name' => 'like',
                 'status',
             ],
-        ]
+        ],
     ],
 ];

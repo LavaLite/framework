@@ -42,19 +42,21 @@ class Master
     }
 
     /**
-     * get options for various fields
+     * get options for various fields.
+     *
      * @return [type] [description]
      */
-    public function options($type, $key='id', $value = 'name', $id = 0)
+    public function options($type, $key = 'id', $value = 'name', $id = 0)
     {
         return $this->master->options($type, $key, $value, $id);
     }
 
     /**
-     * Get options as json
+     * Get options as json.
+     *
      * @return [json] [description]
      */
-    public function toJson($type, $key='id', $value = 'name', $id = 0)
+    public function toJson($type, $key = 'id', $value = 'name', $id = 0)
     {
         return $this->master->search('', $type, $key, $value, $id);
     }

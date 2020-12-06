@@ -3,7 +3,6 @@
 namespace Litepie\Install\Middleware;
 
 use Closure;
-use Litepie\Install\Middleware\canInstall;
 
 class canUpdate
 {
@@ -12,8 +11,9 @@ class canUpdate
     /**
      * Handle an incoming request.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \Closure  $next
+     * @param \Illuminate\Http\Request $request
+     * @param \Closure                 $next
+     *
      * @return mixed
      */
     public function handle($request, Closure $next)
@@ -21,7 +21,7 @@ class canUpdate
         $updateEnabled = filter_var(config('installer.updaterEnabled'), FILTER_VALIDATE_BOOLEAN);
         switch ($updateEnabled) {
             case true:
-                $canInstall = new canInstall;
+                $canInstall = new canInstall();
 
                 // if the application has not been installed,
                 // redirect to the installer
@@ -29,7 +29,7 @@ class canUpdate
                     return redirect()->route('LaravelInstaller::welcome');
                 }
 
-                if($this->alreadyUpdated()) {
+                if ($this->alreadyUpdated()) {
                     abort(404);
                 }
                 break;
@@ -62,5 +62,4 @@ class canUpdate
         // Continue, the app needs an update
         return false;
     }
-
 }

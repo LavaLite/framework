@@ -3,8 +3,8 @@
 namespace Litepie\Repository\Traits;
 
 /**
- * Class TransformableTrait
- * @package Litepie\Repository\Traits
+ * Class TransformableTrait.
+ *
  * @author Renfos Technologies Pvt. Ltd. <info@info@renfos.com>
  */
 trait TransformableTrait

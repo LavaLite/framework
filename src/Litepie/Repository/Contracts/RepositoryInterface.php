@@ -1,18 +1,18 @@
 <?php
+
 namespace Litepie\Repository\Contracts;
 
 /**
- * Interface RepositoryInterface
- * @package Litepie\Repository\Contracts
+ * Interface RepositoryInterface.
+ *
  * @author Renfos Technologies Pvt. Ltd. <info@info@renfos.com>
  */
 interface RepositoryInterface
 {
-
     /**
-     * Retrieve data array for populate field select
+     * Retrieve data array for populate field select.
      *
-     * @param string $column
+     * @param string      $column
      * @param string|null $key
      *
      * @return \Illuminate\Support\Collection|array
@@ -21,8 +21,9 @@ interface RepositoryInterface
 
     /**
      * Retrieve data array for populate field select
-     * Compatible with Laravel 5.3
-     * @param string $column
+     * Compatible with Laravel 5.3.
+     *
+     * @param string      $column
      * @param string|null $key
      *
      * @return \Illuminate\Support\Collection|array
@@ -30,28 +31,30 @@ interface RepositoryInterface
     public function pluck($column, $key = null);
 
     /**
-     * Sync relations
+     * Sync relations.
      *
      * @param $id
      * @param $relation
      * @param $attributes
      * @param bool $detaching
+     *
      * @return mixed
      */
     public function sync($id, $relation, $attributes, $detaching = true);
 
     /**
-     * SyncWithoutDetaching
+     * SyncWithoutDetaching.
      *
      * @param $id
      * @param $relation
      * @param $attributes
+     *
      * @return mixed
      */
     public function syncWithoutDetaching($id, $relation, $attributes);
 
     /**
-     * Retrieve all data of repository
+     * Retrieve all data of repository.
      *
      * @param array $columns
      *
@@ -60,9 +63,9 @@ interface RepositoryInterface
     public function all($columns = ['*']);
 
     /**
-     * Retrieve all data of repository, paginated
+     * Retrieve all data of repository, paginated.
      *
-     * @param null $limit
+     * @param null  $limit
      * @param array $columns
      *
      * @return mixed
@@ -70,9 +73,9 @@ interface RepositoryInterface
     public function paginate($limit = null, $columns = ['*']);
 
     /**
-     * Retrieve all data of repository, simple paginated
+     * Retrieve all data of repository, simple paginated.
      *
-     * @param null $limit
+     * @param null  $limit
      * @param array $columns
      *
      * @return mixed
@@ -80,7 +83,7 @@ interface RepositoryInterface
     public function simplePaginate($limit = null, $columns = ['*']);
 
     /**
-     * Find data by id
+     * Find data by id.
      *
      * @param       $id
      * @param array $columns
@@ -90,7 +93,7 @@ interface RepositoryInterface
     public function find($id, $columns = ['*']);
 
     /**
-     * Find data by field and value
+     * Find data by field and value.
      *
      * @param       $field
      * @param       $value
@@ -101,7 +104,7 @@ interface RepositoryInterface
     public function findByField($field, $value, $columns = ['*']);
 
     /**
-     * Find data by multiple fields
+     * Find data by multiple fields.
      *
      * @param array $where
      * @param array $columns
@@ -111,7 +114,7 @@ interface RepositoryInterface
     public function findWhere(array $where, $columns = ['*']);
 
     /**
-     * Find data by multiple values in one field
+     * Find data by multiple values in one field.
      *
      * @param       $field
      * @param array $values
@@ -122,7 +125,7 @@ interface RepositoryInterface
     public function findWhereIn($field, array $values, $columns = ['*']);
 
     /**
-     * Find data by excluding multiple values in one field
+     * Find data by excluding multiple values in one field.
      *
      * @param       $field
      * @param array $values
@@ -133,7 +136,7 @@ interface RepositoryInterface
     public function findWhereNotIn($field, array $values, $columns = ['*']);
 
     /**
-     * Find data by between values in one field
+     * Find data by between values in one field.
      *
      * @param       $field
      * @param array $values
@@ -144,7 +147,7 @@ interface RepositoryInterface
     public function findWhereBetween($field, array $values, $columns = ['*']);
 
     /**
-     * Save a new entity in repository
+     * Save a new entity in repository.
      *
      * @param array $attributes
      *
@@ -153,7 +156,7 @@ interface RepositoryInterface
     public function create(array $attributes);
 
     /**
-     * Update a entity in repository by id
+     * Update a entity in repository by id.
      *
      * @param array $attributes
      * @param       $id
@@ -163,19 +166,20 @@ interface RepositoryInterface
     public function update(array $attributes, $id);
 
     /**
-     * Update or Create an entity in repository
+     * Update or Create an entity in repository.
      *
-     * @throws ValidatorException
      *
      * @param array $attributes
      * @param array $values
+     *
+     * @throws ValidatorException
      *
      * @return mixed
      */
     public function updateOrCreate(array $attributes, array $values = []);
 
     /**
-     * Delete a entity in repository by id
+     * Delete a entity in repository by id.
      *
      * @param $id
      *
@@ -184,7 +188,7 @@ interface RepositoryInterface
     public function delete($id);
 
     /**
-     * Order collection by a given column
+     * Order collection by a given column.
      *
      * @param string $column
      * @param string $direction
@@ -194,7 +198,7 @@ interface RepositoryInterface
     public function orderBy($column, $direction = 'asc');
 
     /**
-     * Load relations
+     * Load relations.
      *
      * @param $relations
      *
@@ -203,9 +207,9 @@ interface RepositoryInterface
     public function with($relations);
 
     /**
-     * Load relation with closure
+     * Load relation with closure.
      *
-     * @param string $relation
+     * @param string  $relation
      * @param closure $closure
      *
      * @return $this
@@ -215,13 +219,14 @@ interface RepositoryInterface
     /**
      * Add subselect queries to count the relations.
      *
-     * @param  mixed $relations
+     * @param mixed $relations
+     *
      * @return $this
      */
     public function withCount($relations);
 
     /**
-     * Set hidden fields
+     * Set hidden fields.
      *
      * @param array $fields
      *
@@ -230,7 +235,7 @@ interface RepositoryInterface
     public function hidden(array $fields);
 
     /**
-     * Set visible fields
+     * Set visible fields.
      *
      * @param array $fields
      *
@@ -239,7 +244,7 @@ interface RepositoryInterface
     public function visible(array $fields);
 
     /**
-     * Query Scope
+     * Query Scope.
      *
      * @param \Closure $scope
      *
@@ -248,21 +253,21 @@ interface RepositoryInterface
     public function scopeQuery(\Closure $scope);
 
     /**
-     * Reset Query Scope
+     * Reset Query Scope.
      *
      * @return $this
      */
     public function resetScope();
 
     /**
-     * Get Searchable Fields
+     * Get Searchable Fields.
      *
      * @return array
      */
     public function getFieldsSearchable();
 
     /**
-     * Set Presenter
+     * Set Presenter.
      *
      * @param $presenter
      *
@@ -271,7 +276,7 @@ interface RepositoryInterface
     public function setPresenter($presenter);
 
     /**
-     * Skip Presenter Wrapper
+     * Skip Presenter Wrapper.
      *
      * @param bool $status
      *
@@ -280,7 +285,7 @@ interface RepositoryInterface
     public function skipPresenter($status = true);
 
     /**
-     * Retrieve first data of repository, or return new Entity
+     * Retrieve first data of repository, or return new Entity.
      *
      * @param array $attributes
      *
@@ -289,7 +294,7 @@ interface RepositoryInterface
     public function firstOrNew(array $attributes = []);
 
     /**
-     * Retrieve first data of repository, or create new Entity
+     * Retrieve first data of repository, or create new Entity.
      *
      * @param array $attributes
      *

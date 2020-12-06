@@ -11,7 +11,11 @@ use Litepie\Trans\Traits\Translatable;
 
 class Team extends Model
 {
-    use Filer, SoftDeletes, Hashids, Translatable, PresentableTrait;
+    use Filer;
+    use SoftDeletes;
+    use Hashids;
+    use Translatable;
+    use PresentableTrait;
 
     /**
      * Configuartion for the model.

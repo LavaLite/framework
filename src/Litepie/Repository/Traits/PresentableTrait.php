@@ -6,13 +6,12 @@ use Illuminate\Support\Arr;
 use Litepie\Repository\Contracts\PresenterInterface;
 
 /**
- * Class PresentableTrait
- * @package Litepie\Repository\Traits
+ * Class PresentableTrait.
+ *
  * @author Renfos Technologies Pvt. Ltd. <info@info@renfos.com>
  */
 trait PresentableTrait
 {
-
     /**
      * @var PresenterInterface
      */

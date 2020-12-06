@@ -7,11 +7,9 @@ use Litepie\Team\Interfaces\TeamRepositoryInterface;
 
 class TeamRepository extends BaseRepository implements TeamRepositoryInterface
 {
-
     public function boot()
     {
         $this->fieldSearchable = config('teams.team.model.search');
-
     }
 
     /**
@@ -33,6 +31,7 @@ class TeamRepository extends BaseRepository implements TeamRepositoryInterface
     {
         $team = $this->model->find($data['team_id']);
         $team->users()->sync([$data['user_id'] => ['role' => $data['role']]], false);
+
         return $team;
     }
 
@@ -45,6 +44,7 @@ class TeamRepository extends BaseRepository implements TeamRepositoryInterface
     {
         $team = $this->model->find($data['team_id']);
         $team->users()->detach($data['user_id']);
+
         return $team;
     }
 }
