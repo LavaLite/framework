@@ -8,7 +8,8 @@ use Litepie\User\Traits\RoutesAndGuards;
 
 class ResourceController extends Controller
 {
-    use RoutesAndGuards, ThemeAndViews;
+    use RoutesAndGuards;
+    use ThemeAndViews;
 
     /**
      * Initialize public controller.
@@ -19,9 +20,8 @@ class ResourceController extends Controller
     {
         $this->setGuard();
         $this->response = app(ResourceResponse::class);
-        $this->middleware("auth:" . guard());
+        $this->middleware('auth:'.guard());
         $this->layout = 'app';
         $this->setTheme();
     }
-
 }

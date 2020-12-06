@@ -12,7 +12,12 @@ use Litepie\Trans\Traits\Translatable;
 
 class Permission extends Model
 {
-    use Filer, Hashids, Sluggable, Translatable,  PresentableTrait, PermissionHasRelations;
+    use Filer;
+    use Hashids;
+    use Sluggable;
+    use Translatable;
+    use PresentableTrait;
+    use PermissionHasRelations;
 
     /**
      * Configuartion for the model.

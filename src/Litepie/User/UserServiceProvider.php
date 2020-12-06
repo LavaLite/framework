@@ -35,7 +35,6 @@ class UserServiceProvider extends ServiceProvider
         $this->mergeConfigFrom(__DIR__.'/config/config.php', 'users');
     }
 
-
     /**
      * Get the services provided by the provider.
      *

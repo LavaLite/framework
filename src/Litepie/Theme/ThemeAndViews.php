@@ -40,7 +40,6 @@ trait ThemeAndViews
     protected function getTheme()
     {
         return $this->theme ?: 'default';
-
     }
 
     /**
@@ -53,5 +52,4 @@ trait ThemeAndViews
     {
         return $this->layout ?: 'default';
     }
-
 }

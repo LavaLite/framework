@@ -3,10 +3,10 @@
 namespace Litepie\Install;
 
 use Illuminate\Routing\Router;
-
 use Illuminate\Support\ServiceProvider;
 use Litepie\Install\Middleware\canInstall;
 use Litepie\Install\Middleware\CanUpdate;
+
 class InstallServiceProvider extends ServiceProvider
 {
     /**
@@ -23,10 +23,10 @@ class InstallServiceProvider extends ServiceProvider
      */
     public function boot(Router $router)
     {
-        $this->loadViewsFrom(__DIR__ . '/resources/views', 'install');
-        $this->loadTranslationsFrom(__DIR__ . '/resources/lang', 'install');
-        $router->middlewareGroup('install',[CanInstall::class]);
-        $router->middlewareGroup('update',[CanUpdate::class]);
+        $this->loadViewsFrom(__DIR__.'/resources/views', 'install');
+        $this->loadTranslationsFrom(__DIR__.'/resources/lang', 'install');
+        $router->middlewareGroup('install', [CanInstall::class]);
+        $router->middlewareGroup('update', [CanUpdate::class]);
     }
 
     /**
@@ -42,7 +42,6 @@ class InstallServiceProvider extends ServiceProvider
 
         $this->mergeConfigFrom(__DIR__.'/config/installer.php', 'installer');
 
-
         $this->app->register(\Litepie\Install\Providers\RouteServiceProvider::class);
     }
 
@@ -55,6 +54,4 @@ class InstallServiceProvider extends ServiceProvider
     {
         return ['install'];
     }
-
-
 }

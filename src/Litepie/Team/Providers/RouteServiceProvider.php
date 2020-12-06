@@ -3,8 +3,8 @@
 namespace Litepie\Team\Providers;
 
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
-use Route;
 use Request;
+use Route;
 
 class RouteServiceProvider extends ServiceProvider
 {
@@ -31,10 +31,10 @@ class RouteServiceProvider extends ServiceProvider
         if (Request::is('*admin/teams/team/*')) {
             Route::bind('team', function ($team) {
                 $repos = $this->app->make('Litepie\Team\Interfaces\TeamRepositoryInterface');
+
                 return $repos->findorNew($team);
             });
         }
-
     }
 
     /**
@@ -61,15 +61,14 @@ class RouteServiceProvider extends ServiceProvider
     protected function mapWebRoutes()
     {
         Route::group([
-            'namespace' => $this->namespace,
+            'namespace'  => $this->namespace,
             'middleware' => 'web',
         ], function ($router) {
-            require __DIR__ . '/../routes/web.php';
+            require __DIR__.'/../routes/web.php';
         });
     }
 
     /**
-     *
      * Define the "api" routes for the package.
      *
      * These routes are typically stateless.
@@ -80,11 +79,10 @@ class RouteServiceProvider extends ServiceProvider
     {
         Route::group([
             'middleware' => 'api',
-            'namespace' => $this->namespace,
-            'prefix' => 'api',
+            'namespace'  => $this->namespace,
+            'prefix'     => 'api',
         ], function ($router) {
-            require (__DIR__ . '/../routes/api.php');
+            require __DIR__.'/../routes/api.php';
         });
     }
-
 }

@@ -2,17 +2,16 @@
 
 namespace Litepie\Master\Policies;
 
-use Litepie\User\Contracts\UserPolicy;
 use Litepie\Master\Models\Master;
+use Litepie\User\Contracts\UserPolicy;
 
 class MasterPolicy
 {
-
     /**
      * Determine if the given user can view the master.
      *
      * @param UserPolicy $user
-     * @param Master $master
+     * @param Master     $master
      *
      * @return bool
      */
@@ -21,6 +20,7 @@ class MasterPolicy
         if ($user->canDo('master.master.view') && $user->isAdmin()) {
             return true;
         }
+
         return $master->user_id == user_id() && $master->user_type == user_type();
     }
 
@@ -28,7 +28,7 @@ class MasterPolicy
      * Determine if the given user can create a master.
      *
      * @param UserPolicy $user
-     * @param Master $master
+     * @param Master     $master
      *
      * @return bool
      */
@@ -41,7 +41,7 @@ class MasterPolicy
      * Determine if the given user can update the given master.
      *
      * @param UserPolicy $user
-     * @param Master $master
+     * @param Master     $master
      *
      * @return bool
      */
@@ -58,7 +58,7 @@ class MasterPolicy
      * Determine if the given user can delete the given master.
      *
      * @param UserPolicy $user
-     * @param Master $master
+     * @param Master     $master
      *
      * @return bool
      */
@@ -71,7 +71,7 @@ class MasterPolicy
      * Determine if the given user can verify the given master.
      *
      * @param UserPolicy $user
-     * @param Master $master
+     * @param Master     $master
      *
      * @return bool
      */
@@ -88,7 +88,7 @@ class MasterPolicy
      * Determine if the given user can approve the given master.
      *
      * @param UserPolicy $user
-     * @param Master $master
+     * @param Master     $master
      *
      * @return bool
      */

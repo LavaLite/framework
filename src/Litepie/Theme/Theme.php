@@ -7,10 +7,10 @@ use Config;
 use Illuminate\Events\Dispatcher;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Http\Response;
+use Illuminate\Support\Arr;
 use Illuminate\View\Compilers\BladeCompiler;
 use ReflectionClass;
 use Symfony\Component\HttpFoundation\Cookie;
-use Illuminate\Support\Arr;
 
 class Theme
 {
@@ -131,9 +131,10 @@ class Theme
      * @return \Litepie\Theme\Theme
      */
     public function __construct(
-        Dispatcher                             $events,
-        Asset                                  $asset,
-        Filesystem                             $files)
+        Dispatcher $events,
+        Asset $asset,
+        Filesystem $files
+    )
     {
         $this->events = $events;
 
@@ -570,7 +571,7 @@ class Theme
         // If callback pass, so put in a queue.
         if (!empty($callback)) {
             // Preparing callback in to queues.
-            $this->events->listen($name, function () use ($callback, $variable) {
+            $this->events->listen($name, function () use ($callback) {
                 return ($callback instanceof Closure) ? $callback() : $callback;
             });
         }

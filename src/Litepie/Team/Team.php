@@ -18,7 +18,6 @@ use Litepie\Team\Interfaces\TeamRepositoryInterface;
  */
 class Team
 {
-
     /**
      * @var Team repository variable
      */
@@ -32,10 +31,8 @@ class Team
      * @return void
      */
     public function __construct(
-
         TeamRepositoryInterface $team
     ) {
-
         $this->team = $team;
     }
 

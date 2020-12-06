@@ -11,7 +11,11 @@ use Litepie\Trans\Traits\Translatable;
 
 class Menu extends Model
 {
-    use Hashids, Sluggable, Translatable, SoftDeletes, SimpleNode;
+    use Hashids;
+    use Sluggable;
+    use Translatable;
+    use SoftDeletes;
+    use SimpleNode;
 
     /**
      * Configuartion for the model.

@@ -3,8 +3,8 @@
 namespace Litepie\Team\Http\Controllers;
 
 use Litepie\Http\Controllers\ResourceController as BaseController;
-use Litepie\Team\Interfaces\TeamRepositoryInterface;
 use Litepie\Team\Http\Requests\TeamRequest;
+use Litepie\Team\Interfaces\TeamRepositoryInterface;
 use Litepie\Team\Models\Team;
 
 /**
@@ -35,7 +35,6 @@ class TeamResourceController extends BaseController
      */
     public function index(TeamRequest $request)
     {
-
         $pageLimit = $request->input('pageLimit', 10);
         $data = $this->repository
             ->setPresenter(\Litepie\Team\Repositories\Presenter\TeamPresenter::class)
@@ -45,6 +44,7 @@ class TeamResourceController extends BaseController
         if ($request->ajax()) {
             $view = 'team::team.more';
         }
+
         return $this->response->setMetaTitle(trans('team::team.names'))
             ->view($view)
             ->data(compact('data', 'meta'))
@@ -61,14 +61,13 @@ class TeamResourceController extends BaseController
      */
     public function show(TeamRequest $request, Team $team)
     {
-
         if ($team->exists) {
             $view = 'team::team.show';
         } else {
             $view = 'team::team.new';
         }
 
-        return $this->response->setMetaTitle(trans('app.view') . ' ' . trans('team::team.name'))
+        return $this->response->setMetaTitle(trans('app.view').' '.trans('team::team.name'))
             ->data(compact('team'))
             ->view($view, true)
             ->output();
@@ -83,9 +82,9 @@ class TeamResourceController extends BaseController
      */
     public function create(TeamRequest $request)
     {
-
         $team = $this->repository->newInstance([]);
-        return $this->response->setMetaTitle(trans('app.new') . ' ' . trans('team::team.name'))
+
+        return $this->response->setMetaTitle(trans('app.new').' '.trans('team::team.name'))
             ->view('team::team.create', true)
             ->data(compact('team'))
             ->output();
@@ -109,7 +108,7 @@ class TeamResourceController extends BaseController
             return $this->response->message(trans('messages.success.created', ['Module' => trans('team::team.name')]))
                 ->code(204)
                 ->status('success')
-                ->url(guard_url('teams/team/' . $team->getRouteKey()))
+                ->url(guard_url('teams/team/'.$team->getRouteKey()))
                 ->redirect();
         } catch (Exception $e) {
             return $this->response->message($e->getMessage())
@@ -118,7 +117,6 @@ class TeamResourceController extends BaseController
                 ->url(guard_url('/teams/team'))
                 ->redirect();
         }
-
     }
 
     /**
@@ -131,7 +129,7 @@ class TeamResourceController extends BaseController
      */
     public function edit(TeamRequest $request, Team $team)
     {
-        return $this->response->setMetaTitle(trans('app.edit') . ' ' . trans('team::team.name'))
+        return $this->response->setMetaTitle(trans('app.edit').' '.trans('team::team.name'))
             ->view('team::team.edit', true)
             ->data(compact('team'))
             ->output();
@@ -150,54 +148,51 @@ class TeamResourceController extends BaseController
         try {
             $attributes = $request->all();
             $team->update($attributes);
+
             return $this->response->message(trans('messages.success.updated', ['Module' => trans('team::team.name')]))
                 ->code(204)
                 ->status('success')
-                ->url(guard_url('teams/team/' . $team->getRouteKey()))
+                ->url(guard_url('teams/team/'.$team->getRouteKey()))
                 ->redirect();
         } catch (Exception $e) {
             return $this->response->message($e->getMessage())
                 ->code(400)
                 ->status('error')
-                ->url(guard_url('teams/team/' . $team->getRouteKey()))
+                ->url(guard_url('teams/team/'.$team->getRouteKey()))
                 ->redirect();
         }
-
     }
 
     /**
      * Remove the team.
      *
-     * @param Model   $team
+     * @param Model $team
      *
      * @return Response
      */
     public function destroy(TeamRequest $request, Team $team)
     {
         try {
-
             $team->delete();
+
             return $this->response->message(trans('messages.success.deleted', ['Module' => trans('team::team.name')]))
                 ->code(202)
                 ->status('success')
                 ->url(guard_url('teams/team/0'))
                 ->redirect();
-
         } catch (Exception $e) {
-
             return $this->response->message($e->getMessage())
                 ->code(400)
                 ->status('error')
-                ->url(guard_url('teams/team/' . $team->getRouteKey()))
+                ->url(guard_url('teams/team/'.$team->getRouteKey()))
                 ->redirect();
         }
-
     }
 
     /**
      * Remove multiple team.
      *
-     * @param Model   $team
+     * @param Model $team
      *
      * @return Response
      */
@@ -213,26 +208,23 @@ class TeamResourceController extends BaseController
             }
 
             return $this->response->message(trans('messages.success.deleted', ['Module' => trans('team::team.name')]))
-                ->status("success")
+                ->status('success')
                 ->code(202)
                 ->url(guard_url('teams/team'))
                 ->redirect();
-
         } catch (Exception $e) {
-
             return $this->response->message($e->getMessage())
-                ->status("error")
+                ->status('error')
                 ->code(400)
                 ->url(guard_url('/teams/team'))
                 ->redirect();
         }
-
     }
 
     /**
      * Restore deleted teams.
      *
-     * @param Model   $team
+     * @param Model $team
      *
      * @return Response
      */
@@ -243,20 +235,17 @@ class TeamResourceController extends BaseController
             $this->repository->restore($ids);
 
             return $this->response->message(trans('messages.success.restore', ['Module' => trans('team::team.name')]))
-                ->status("success")
+                ->status('success')
                 ->code(202)
                 ->url(guard_url('/teams/team'))
                 ->redirect();
-
         } catch (Exception $e) {
-
             return $this->response->message($e->getMessage())
-                ->status("error")
+                ->status('error')
                 ->code(400)
                 ->url(guard_url('/teams/team/'))
                 ->redirect();
         }
-
     }
 
     /**
@@ -273,20 +262,21 @@ class TeamResourceController extends BaseController
             $attributes = $request->all();
 
             $team = $this->repository->attach($attributes);
+
             return $this->response->message(trans('messages.success.attached', ['Module' => trans('team::team.name')]))
                 ->code(204)
                 ->status('success')
-                ->url(guard_url('teams/team/' . $team->getRouteKey()))
+                ->url(guard_url('teams/team/'.$team->getRouteKey()))
                 ->redirect();
         } catch (Exception $e) {
             return $this->response->message($e->getMessage())
                 ->code(400)
                 ->status('error')
-                ->url(guard_url('teams/team/' . $team->getRouteKey()))
+                ->url(guard_url('teams/team/'.$team->getRouteKey()))
                 ->redirect();
         }
-
     }
+
     /**
      * Detach a teams from a team.
      *
@@ -300,18 +290,18 @@ class TeamResourceController extends BaseController
         try {
             $attributes = $request->all();
             $team = $this->repository->detach($attributes);
+
             return $this->response->message(trans('messages.success.detached', ['Module' => trans('team::team.name')]))
                 ->code(204)
                 ->status('success')
-                ->url(guard_url('teams/team/' . $team->getRouteKey()))
+                ->url(guard_url('teams/team/'.$team->getRouteKey()))
                 ->redirect();
         } catch (Exception $e) {
             return $this->response->message($e->getMessage())
                 ->code(400)
                 ->status('error')
-                ->url(guard_url('teams/team/' . $team->getRouteKey()))
+                ->url(guard_url('teams/team/'.$team->getRouteKey()))
                 ->redirect();
         }
-
     }
 }

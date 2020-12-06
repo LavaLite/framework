@@ -68,7 +68,7 @@ trait UserPages
         $user = $request->user(guard());
 
         $this->validate($request, [
-            'password' => 'required|confirmed|min:6',
+            'password'     => 'required|confirmed|min:6',
             'old_password' => 'required',
         ]);
 

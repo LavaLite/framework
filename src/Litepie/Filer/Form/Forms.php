@@ -166,7 +166,7 @@ class Forms
      *
      * @return type
      */
-    public function __tostring()
+    public function __toString()
     {
         return $this->render();
     }

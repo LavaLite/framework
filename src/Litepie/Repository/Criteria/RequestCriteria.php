@@ -25,7 +25,7 @@ class RequestCriteria implements CriteriaInterface
 
         $search = request()->get(config('repository.criteria.params.search', 'search'), null);
         $q = request()->get('q', null);
-        if($q != null) {
+        if ($q != null) {
             $search['q'] = $q;
         }
         $searchFields = request()->get(config('repository.criteria.params.searchFields', 'searchFields'), null);

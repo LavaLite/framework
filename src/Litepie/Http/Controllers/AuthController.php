@@ -2,13 +2,13 @@
 
 namespace Litepie\Http\Controllers;
 
-use Litepie\Http\Response\AuthResponse;
 use Litepie\Theme\ThemeAndViews;
 use Litepie\User\Traits\RoutesAndGuards;
 
 class AuthController extends Controller
 {
-    use RoutesAndGuards, ThemeAndViews;
+    use RoutesAndGuards;
+    use ThemeAndViews;
 
     /**
      * Initialize public controller.
@@ -19,9 +19,8 @@ class AuthController extends Controller
     {
         $this->setGuard();
         $this->response = app(ResourceResponse::class);
-        $this->middleware("auth:" . guard());
+        $this->middleware('auth:'.guard());
         $this->layout = 'app';
         $this->setTheme();
     }
-
 }

@@ -7,10 +7,6 @@
     "authors": [{
             "name": "Renfos Technologies",
             "email": "info@renfos.com"
-        },
-        {
-            "name": "George John",
-            "email": "george@renfos.com"
         }
     ],
     "require": {

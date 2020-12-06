@@ -8,7 +8,8 @@ use Litepie\Filer\Traits\Uploader;
 
 class Filer
 {
-    use FileDisplay, Uploader;
+    use FileDisplay;
+    use Uploader;
 
     public function __construct()
     {

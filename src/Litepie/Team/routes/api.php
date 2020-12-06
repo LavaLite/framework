@@ -2,7 +2,7 @@
 
 // API routes  for user
 Route::prefix('{guard}/teams')->group(function () {
-	Route::get('teams/select', 'TeamResourceController@select');
+    Route::get('teams/select', 'TeamResourceController@select');
     Route::apiResource('team', 'TeamResourceController');
 });
 
@@ -10,7 +10,7 @@ if (Trans::isMultilingual()) {
     Route::group(
         [
             'prefix' => '{trans}',
-            'where' => ['trans' => Trans::keys('|')],
+            'where'  => ['trans' => Trans::keys('|')],
         ],
         function () {
             // Guard routes for pages

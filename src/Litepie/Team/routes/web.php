@@ -13,7 +13,7 @@ if (Trans::isMultilingual()) {
     Route::group(
         [
             'prefix' => '{trans}',
-            'where' => ['trans' => Trans::keys('|')],
+            'where'  => ['trans' => Trans::keys('|')],
         ],
         function () {
             Route::group(['prefix' => '{guard}/teams'], function () {

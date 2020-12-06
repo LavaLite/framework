@@ -1,12 +1,13 @@
 <?php
+
 namespace Litepie\Repository\Events;
 
 use Illuminate\Database\Eloquent\Model;
 use Litepie\Repository\Contracts\RepositoryInterface;
 
 /**
- * Class RepositoryEventBase
- * @package Litepie\Repository\Events
+ * Class RepositoryEventBase.
+ *
  * @author Renfos Technologies Pvt. Ltd. <info@info@renfos.com>
  */
 abstract class RepositoryEventBase

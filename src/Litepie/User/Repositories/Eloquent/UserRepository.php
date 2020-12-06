@@ -30,11 +30,13 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
      *
      * @return string
      */
-    function switch ($data) {
-            $user = $this->model->find($data['user_id']);
-            $user->team_id = $data['team_id'];
-            $user->save();
-            return $user;
+    public function switch($data)
+    {
+        $user = $this->model->find($data['user_id']);
+        $user->team_id = $data['team_id'];
+        $user->save();
+
+        return $user;
     }
 
     /**
@@ -45,7 +47,7 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
     public function select($q = '', $count = 25, $key = 'id', $name = 'name')
     {
         return $this->model
-            ->where('name', 'like', '%' . $q . '%')
+            ->where('name', 'like', '%'.$q.'%')
             ->select("$name as name", "$key as key")
             ->take($count)
             ->get();
@@ -54,6 +56,7 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
     public function getUserByRole()
     {
         $users = $this->model->select('name', 'id as key')->get();
+
         return $this->encriptArray($users, 'key');
     }
 
@@ -62,14 +65,17 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
         $arrayToEncript = collect($array->toArray());
         $encriptedArray = $arrayToEncript->map(function ($item, $key) use ($field) {
             $item[$field] = hashids_encode($item[$field]);
+
             return $item;
         });
+
         return $encriptedArray;
     }
+
     public function userIdByName($name)
     {
         return $this->model
-            ->where('name', 'like', '%' . $name . '%')
-            ->pluck("id")->first();
+            ->where('name', 'like', '%'.$name.'%')
+            ->pluck('id')->first();
     }
 }

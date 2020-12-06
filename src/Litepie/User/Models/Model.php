@@ -15,7 +15,9 @@ AuthenticatableContract,
 AuthorizableContract,
 CanResetPasswordContract
 {
-    use Authenticatable, Authorizable, CanResetPassword;
+    use Authenticatable;
+    use Authorizable;
+    use CanResetPassword;
 
     /**
      * Encrypt user passwords.
