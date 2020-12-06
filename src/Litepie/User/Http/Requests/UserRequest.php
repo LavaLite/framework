@@ -2,8 +2,8 @@
 
 namespace Litepie\User\Http\Requests;
 
-use Litepie\Http\Request\AbstractRequest;
 use App\Models\User;
+use Litepie\Http\Request\AbstractRequest;
 
 class UserRequest extends AbstractRequest
 {
@@ -26,7 +26,7 @@ class UserRequest extends AbstractRequest
             return $this->can($this->getStatus());
         }
 
-       if ($this->isCreate() || $this->isStore()) {
+        if ($this->isCreate() || $this->isStore()) {
             // Determine if the user is authorized to create an entry,
             return $this->can('create');
         }
@@ -61,8 +61,8 @@ class UserRequest extends AbstractRequest
         if ($this->isUpdate()) {
             // Validation rule for update request.
             return [
-                'email' => 'required|email:rfc,dns',
-                'phone' => 'integer',
+                'email'  => 'required|email:rfc,dns',
+                'phone'  => 'integer',
                 'mobile' => 'integer',
 
             ];

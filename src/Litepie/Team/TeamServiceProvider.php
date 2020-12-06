@@ -3,8 +3,8 @@
 namespace Litepie\Team;
 
 use Illuminate\Support\ServiceProvider;
-use Litepie\Team\Providers\RouteServiceProvider;
 use Litepie\Team\Providers\AuthServiceProvider;
+use Litepie\Team\Providers\RouteServiceProvider;
 
 class TeamServiceProvider extends ServiceProvider
 {
@@ -37,7 +37,6 @@ class TeamServiceProvider extends ServiceProvider
         $this->mergeConfigFrom(__DIR__.'/config/config.php', 'teams');
     }
 
-
     /**
      * Register the service provider.
      *
@@ -47,16 +46,15 @@ class TeamServiceProvider extends ServiceProvider
     {
 
             // Bind Team to repository
-            $this->app->bind(
-                'Litepie\Team\Interfaces\TeamRepositoryInterface',
-                \Litepie\Team\Repositories\Eloquent\TeamRepository::class
-            );
-    
-            $this->app->register(AuthServiceProvider::class);
-            $this->app->register(RouteServiceProvider::class);
-    
+        $this->app->bind(
+            'Litepie\Team\Interfaces\TeamRepositoryInterface',
+            \Litepie\Team\Repositories\Eloquent\TeamRepository::class
+        );
+
+        $this->app->register(AuthServiceProvider::class);
+        $this->app->register(RouteServiceProvider::class);
     }
-    
+
     /**
      * Get the services provided by the provider.
      *

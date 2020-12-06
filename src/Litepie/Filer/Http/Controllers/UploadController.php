@@ -2,8 +2,8 @@
 
 namespace Litepie\Filer\Http\Controllers;
 
-use Litepie\Http\Controllers\Controller;
 use Filer;
+use Litepie\Http\Controllers\Controller;
 use Request;
 
 class UploadController extends Controller

@@ -21,17 +21,16 @@ class MasterServiceProvider extends ServiceProvider
     public function boot()
     {
         // Load view
-        $this->loadViewsFrom(__DIR__ . '/resources/views', 'master');
+        $this->loadViewsFrom(__DIR__.'/resources/views', 'master');
 
         // Load translation
-        $this->loadTranslationsFrom(__DIR__ . '/resources/lang', 'master');
+        $this->loadTranslationsFrom(__DIR__.'/resources/lang', 'master');
 
         // Load migrations
-        $this->loadMigrationsFrom(__DIR__ . '/database/migrations');
+        $this->loadMigrationsFrom(__DIR__.'/database/migrations');
 
         // Call pblish redources function
         $this->publishResources();
-
     }
 
     /**
@@ -48,16 +47,15 @@ class MasterServiceProvider extends ServiceProvider
             return $this->app->make('Litepie\Master\Master');
         });
 
-                // Bind Master to repository
+        // Bind Master to repository
         $this->app->bind(
             'Litepie\Master\Interfaces\MasterRepositoryInterface',
             \Litepie\Master\Repositories\Eloquent\MasterRepository::class
         );
 
         $this->app->register(\Litepie\Master\Providers\AuthServiceProvider::class);
-        
+
         $this->app->register(\Litepie\Master\Providers\RouteServiceProvider::class);
-                
     }
 
     /**
@@ -78,15 +76,15 @@ class MasterServiceProvider extends ServiceProvider
     private function publishResources()
     {
         // Publish configuration file
-        $this->publishes([__DIR__ . '/config/config.php' => config_path('master.php')], 'config');
+        $this->publishes([__DIR__.'/config/config.php' => config_path('master.php')], 'config');
 
         // Publish admin view
-        $this->publishes([__DIR__ . '/resources/views' => base_path('resources/views/vendor/master')], 'view');
+        $this->publishes([__DIR__.'/resources/views' => base_path('resources/views/vendor/master')], 'view');
 
         // Publish language files
-        $this->publishes([__DIR__ . '/resources/lang' => base_path('resources/lang/vendor/master')], 'lang');
+        $this->publishes([__DIR__.'/resources/lang' => base_path('resources/lang/vendor/master')], 'lang');
 
         // Publish public files and assets.
-        $this->publishes([__DIR__ . '/public/' => public_path('/')], 'public');
+        $this->publishes([__DIR__.'/public/' => public_path('/')], 'public');
     }
 }

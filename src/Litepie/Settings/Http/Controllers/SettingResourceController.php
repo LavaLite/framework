@@ -48,7 +48,7 @@ class SettingResourceController extends BaseController
      */
     public function show($slug)
     {
-        return view('settings::partial.' . $slug);
+        return view('settings::partial.'.$slug);
     }
 
     /**
@@ -64,7 +64,6 @@ class SettingResourceController extends BaseController
             $attributes = $request->all();
 
             if (user()->hasRole('superuser')) {
-
                 if (isset($attributes['settings']) && is_array($attributes['settings'])) {
                     foreach ($attributes['settings'] as $key => $value) {
                         $this->repository->setValue($key, $value);
@@ -102,7 +101,6 @@ class SettingResourceController extends BaseController
                 ->url(guard_url("/settings/$type"))
                 ->redirect();
         }
-
     }
 
     /**
@@ -130,5 +128,4 @@ class SettingResourceController extends BaseController
     {
         return $this->repository->setValue($key, $value);
     }
-
 }

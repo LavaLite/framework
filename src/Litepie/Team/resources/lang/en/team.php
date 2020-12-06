@@ -12,19 +12,19 @@ return [
      */
 
     /**
-     * Singlular and plural name of the module
+     * Singlular and plural name of the module.
      */
-    'name' => 'Team',
+    'name'  => 'Team',
     'names' => 'Teams',
 
     /**
-     * Singlular and plural name of the module
+     * Singlular and plural name of the module.
      */
     'title' => [
-        'main' => 'Teams',
-        'sub' => 'Teams',
-        'list' => 'List of teams',
-        'edit' => 'Edit team',
+        'main'   => 'Teams',
+        'sub'    => 'Teams',
+        'list'   => 'List of teams',
+        'edit'   => 'Edit team',
         'create' => 'Create new team',
     ],
 
@@ -36,25 +36,25 @@ return [
     ],
 
     /**
-     * Placeholder for inputs
+     * Placeholder for inputs.
      */
     'placeholder' => [
-        'id' => '',
-        'name' => 'Please enter name',
+        'id'      => '',
+        'name'    => 'Please enter name',
         'team_id' => 'Team',
         'user_id' => 'Select User',
-        'role' => 'Select Role',
+        'role'    => 'Select Role',
     ],
 
     /**
      * Labels for inputs.
      */
     'label' => [
-        'id' => '',
-        'name' => 'Name',
+        'id'      => '',
+        'name'    => 'Name',
         'team_id' => 'Team',
         'user_id' => 'User',
-        'role' => 'Role',
+        'role'    => 'Role',
     ],
 
     /**
@@ -65,14 +65,14 @@ return [
     ],
 
     /**
-     * Tab labels
+     * Tab labels.
      */
     'tab' => [
         'name' => 'Teams',
     ],
 
     /**
-     * Texts  for the module
+     * Texts  for the module.
      */
     'text' => [
         'preview' => 'Click on the below list for preview',

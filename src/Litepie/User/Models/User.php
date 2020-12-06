@@ -2,7 +2,6 @@
 
 namespace Litepie\User\Models;
 
-use Hash;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Notifications\Notifiable;
 use Litepie\Database\Traits\Sluggable;
@@ -14,7 +13,14 @@ use Litepie\User\Traits\User as UserProfile;
 
 class User extends Model
 {
-    use Filer, Notifiable, HasRoleAndPermission, UserProfile, SoftDeletes, Hashids, Sluggable, PresentableTrait;
+    use Filer;
+    use Notifiable;
+    use HasRoleAndPermission;
+    use UserProfile;
+    use SoftDeletes;
+    use Hashids;
+    use Sluggable;
+    use PresentableTrait;
 
     /**
      * Configuartion for the model.
@@ -63,16 +69,18 @@ class User extends Model
     }
 
     /**
-     * get options for various fields
+     * get options for various fields.
+     *
      * @return [key] [name]
      */
     public function leadCountIncrement($user_id, $team_id)
     {
         return $this->team->leadCountIncrement($user_id, $team_id);
     }
- 
+
     /**
-     * get options for various fields
+     * get options for various fields.
+     *
      * @return [key] [name]
      */
     public function getUserIdByName($name)

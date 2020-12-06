@@ -3,7 +3,6 @@
 namespace Litepie\Filer\Http\Controllers;
 
 use Litepie\Http\Controllers\Controller;
-use Filer;
 
 class FileController extends Controller
 {

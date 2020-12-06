@@ -2,8 +2,8 @@
 
 namespace Litepie\User\Http\Requests;
 
-use Litepie\Http\Request\AbstractRequest;
 use App\Models\Client;
+use Litepie\Http\Request\AbstractRequest;
 
 class ClientRequest extends AbstractRequest
 {
@@ -55,8 +55,8 @@ class ClientRequest extends AbstractRequest
         if ($this->isStore()) {
             // validation rule for create request.
             return [
-                'email' => 'required|email',
-                'phone' => 'numeric',
+                'email'  => 'required|email',
+                'phone'  => 'numeric',
                 'mobile' => 'numeric',
             ];
         }
@@ -64,8 +64,8 @@ class ClientRequest extends AbstractRequest
         if ($this->isUpdate()) {
             // Validation rule for update request.
             return [
-                'email' => 'required|email',
-                'phone' => 'numeric',
+                'email'  => 'required|email',
+                'phone'  => 'numeric',
                 'mobile' => 'numeric',
             ];
         }

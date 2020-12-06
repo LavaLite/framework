@@ -21,7 +21,7 @@ class RoleResourceController extends BaseController
      * @return null
      */
     public function __construct(
-        RoleRepositoryInterface       $role,
+        RoleRepositoryInterface $role,
         PermissionRepositoryInterface $permission
     ) {
         parent::__construct();
@@ -39,7 +39,6 @@ class RoleResourceController extends BaseController
      */
     public function index(RoleRequest $request)
     {
-
         $pageLimit = $request->input('pageLimit', 10);
         $data = $this->repository
             ->setPresenter(\Litepie\Roles\Repositories\Presenter\RoleListPresenter::class)
@@ -49,6 +48,7 @@ class RoleResourceController extends BaseController
         if ($request->ajax()) {
             $view = 'roles::role.more';
         }
+
         return $this->response->setMetaTitle(trans('roles::role.names'))
             ->view($view)
             ->data(compact('data', 'meta'))

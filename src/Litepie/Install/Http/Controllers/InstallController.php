@@ -2,10 +2,10 @@
 
 namespace Litepie\Install\Http\Controllers;
 
-use Litepie\Http\Controllers\PublicController;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
+use Litepie\Http\Controllers\PublicController;
 use Response;
 use Validator;
 
@@ -101,7 +101,7 @@ class InstallController extends PublicController
     {
         $attributes = $request->all();
         $validator = Validator::make($attributes, [
-            'user.*.email' => 'required|email',
+            'user.*.email'    => 'required|email',
             'user.*.password' => 'min:6|max:30',
         ]);
 

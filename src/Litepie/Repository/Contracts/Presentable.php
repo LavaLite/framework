@@ -1,9 +1,10 @@
 <?php
+
 namespace Litepie\Repository\Contracts;
 
 /**
- * Interface Presentable
- * @package Litepie\Repository\Contracts
+ * Interface Presentable.
+ *
  * @author Renfos Technologies Pvt. Ltd. <info@info@renfos.com>
  */
 interface Presentable

@@ -3,9 +3,9 @@
 namespace Litepie\Install\Http\Controllers;
 
 use App\Http\Controllers\PublicController;
-use RachidLaasri\LaravelInstaller\Helpers\InstalledFileManager;
-use RachidLaasri\LaravelInstaller\Helpers\DatabaseManager;
 use Litepie\Install\Helpers\MigrationsHelper;
+use RachidLaasri\LaravelInstaller\Helpers\DatabaseManager;
+use RachidLaasri\LaravelInstaller\Helpers\InstalledFileManager;
 
 class UpdateController extends PublicController
 {
@@ -50,7 +50,7 @@ class UpdateController extends PublicController
      */
     public function database()
     {
-        $databaseManager = new DatabaseManager;
+        $databaseManager = new DatabaseManager();
         $response = $databaseManager->migrateAndSeed();
 
         return redirect()->route('LaravelUpdater::final')
@@ -61,6 +61,7 @@ class UpdateController extends PublicController
      * Update installed file and display finished view.
      *
      * @param InstalledFileManager $fileManager
+     *
      * @return \Illuminate\View\View
      */
     public function finish(InstalledFileManager $fileManager)

@@ -24,10 +24,10 @@ class Settings
      */
     public function setting($value, $default = null)
     {
-
         if (is_array($value)) {
             $key = array_key_first($value);
             $val = $value[$key];
+
             return $this->setting->setForUser($key, $val);
         } elseif (is_array($value)) {
             $ret = $this->setting->getForUser($key);
@@ -35,8 +35,6 @@ class Settings
                 $ret = $this->setting->getValue($key, $default);
             }
         }
-        return;
-
     }
 
     public function get($key, $default = null)

@@ -7,11 +7,9 @@ use Litepie\Repository\Eloquent\BaseRepository;
 
 class MasterRepository extends BaseRepository implements MasterRepositoryInterface
 {
-
     public function boot()
     {
         $this->fieldSearchable = config('master.master.model.search');
-
     }
 
     /**
@@ -68,11 +66,11 @@ class MasterRepository extends BaseRepository implements MasterRepositoryInterfa
             ->pluck('name', 'id');
     }
 
-    public function search($string, $type, $key, $value) {
-		return $this->model->where('type', 'like', '%' . $type . '%')
-			->where('status', 'Show')
-			->where('name', 'like', '%' . $string . '%')
-			->select("$value as name", "$key as key")->take(50)->get();
-	}
-
+    public function search($string, $type, $key, $value)
+    {
+        return $this->model->where('type', 'like', '%'.$type.'%')
+            ->where('status', 'Show')
+            ->where('name', 'like', '%'.$string.'%')
+            ->select("$value as name", "$key as key")->take(50)->get();
+    }
 }

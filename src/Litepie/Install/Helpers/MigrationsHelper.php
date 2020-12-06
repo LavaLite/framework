@@ -2,13 +2,12 @@
 
 namespace Litepie\Install\Helpers;
 
-use RachidLaasri\LaravelInstaller\Helpers\MigrationsHelper as BaseMigrationsHelper;
 use Illuminate\Support\Facades\DB;
 
-trait MigrationsHelper {
-
+trait MigrationsHelper
+{
     /**
-     * Get the migrations in /database/migrations
+     * Get the migrations in /database/migrations.
      *
      * @return array Array of migrations name, empty if no migrations are existing
      */

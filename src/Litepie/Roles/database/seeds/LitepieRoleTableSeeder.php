@@ -43,21 +43,21 @@ class LitepieRoleTableSeeder extends Seeder
                 'role_id' => 3,
             ],
         ]);
-/*
-        DB::table('menus')->insertGetId(
-            [
-                'parent_id'   => 1,
-                'key'         => 'role',
-                'url'         => 'admin/roles/role',
-                'name'        => 'Roles & Permissions',
-                'description' => null,
-                'icon'        => 'fa fa-check-circle-o',
-                'target'      => null,
-                'role'        => '["superuser"]',
-                'order'       => 190,
-                'status'      => 1,
-            ]
-        );
-*/
+        /*
+                DB::table('menus')->insertGetId(
+                    [
+                        'parent_id'   => 1,
+                        'key'         => 'role',
+                        'url'         => 'admin/roles/role',
+                        'name'        => 'Roles & Permissions',
+                        'description' => null,
+                        'icon'        => 'fa fa-check-circle-o',
+                        'target'      => null,
+                        'role'        => '["superuser"]',
+                        'order'       => 190,
+                        'status'      => 1,
+                    ]
+                );
+        */
     }
 }

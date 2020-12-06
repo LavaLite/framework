@@ -8,7 +8,8 @@ use Litepie\User\Traits\RoutesAndGuards;
 
 class PublicController extends Controller
 {
-    use ThemeAndViews, RoutesAndGuards;
+    use ThemeAndViews;
+    use RoutesAndGuards;
 
     /**
      * Initialize public controller.
