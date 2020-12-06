@@ -2,16 +2,13 @@
 
 namespace Litepie\Database\Traits;
 
-use Illuminate\Support\Facades\Schema;
-
 trait Searchable
 {
     /**
      * @param \Illuminate\Database\Eloquent\Builder|static $query
-     * @param string $keyword
-     * @param boolean $matchAllFields
+     * @param string                                       $keyword
+     * @param bool                                         $matchAllFields
      */
-
     public static function scopeSearch($query, $keyword, $matchAllFields = false)
     {
         $fieldsSearchable = $this->getFieldsSearchable();
@@ -123,7 +120,6 @@ trait Searchable
 
         return $model;
     }
-
 
     /**
      * @param $search

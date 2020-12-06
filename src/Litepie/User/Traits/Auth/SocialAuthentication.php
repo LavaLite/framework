@@ -6,6 +6,7 @@ use Illuminate\Foundation\Auth\AuthenticatesUsers as IlluminateAuthenticatesUser
 use Illuminate\Support\Str;
 use Socialite;
 use User;
+
 trait SocialAuthentication
 {
     use IlluminateAuthenticatesUsers;
@@ -40,10 +41,10 @@ trait SocialAuthentication
         $user = Socialite::driver($provider)->user();
         $model = $this->getAuthModel();
         $data = [
-            'name' => $user->getName(),
-            'email' => $user->getEmail(),
-            'status' => 'Active',
-            'password' => bcrypt(Str::random(8)),
+            'name'      => $user->getName(),
+            'email'     => $user->getEmail(),
+            'status'    => 'Active',
+            'password'  => bcrypt(Str::random(8)),
             'api_token' => Str::random(60),
         ];
         $user = $model::whereEmail($data['email'])->first();
@@ -55,7 +56,6 @@ trait SocialAuthentication
             User::login($user, false, $guard);
         }
 
-        
         return redirect()->intented($this->redirectTo);
     }
 
@@ -73,5 +73,4 @@ trait SocialAuthentication
         $newUrl = str_replace('/user/', "/$guard/", $currentUrl);
         config(["services.{$provider}.redirect" => $newUrl]);
     }
-
 }

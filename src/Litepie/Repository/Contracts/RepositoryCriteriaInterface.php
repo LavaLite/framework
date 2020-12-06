@@ -1,19 +1,18 @@
 <?php
+
 namespace Litepie\Repository\Contracts;
 
 use Illuminate\Support\Collection;
 
-
 /**
- * Interface RepositoryCriteriaInterface
- * @package Litepie\Repository\Contracts
+ * Interface RepositoryCriteriaInterface.
+ *
  * @author Renfos Technologies Pvt. Ltd. <info@info@renfos.com>
  */
 interface RepositoryCriteriaInterface
 {
-
     /**
-     * Push Criteria for filter the query
+     * Push Criteria for filter the query.
      *
      * @param $criteria
      *
@@ -22,7 +21,7 @@ interface RepositoryCriteriaInterface
     public function pushCriteria($criteria);
 
     /**
-     * Pop Criteria
+     * Pop Criteria.
      *
      * @param $criteria
      *
@@ -31,14 +30,14 @@ interface RepositoryCriteriaInterface
     public function popCriteria($criteria);
 
     /**
-     * Get Collection of Criteria
+     * Get Collection of Criteria.
      *
      * @return Collection
      */
     public function getCriteria();
 
     /**
-     * Find data by Criteria
+     * Find data by Criteria.
      *
      * @param CriteriaInterface $criteria
      *
@@ -47,7 +46,7 @@ interface RepositoryCriteriaInterface
     public function getByCriteria(CriteriaInterface $criteria);
 
     /**
-     * Skip Criteria
+     * Skip Criteria.
      *
      * @param bool $status
      *
@@ -56,7 +55,7 @@ interface RepositoryCriteriaInterface
     public function skipCriteria($status = true);
 
     /**
-     * Reset all Criterias
+     * Reset all Criterias.
      *
      * @return $this
      */

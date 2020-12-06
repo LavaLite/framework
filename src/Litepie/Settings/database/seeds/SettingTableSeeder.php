@@ -1,6 +1,5 @@
 <?php
 
-
 use Illuminate\Database\Seeder;
 
 class LitepieSettingTableSeeder extends Seeder

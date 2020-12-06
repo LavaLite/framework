@@ -8,8 +8,8 @@ class LitepieTeamTableSeeder extends Seeder
     {
         DB::table('teams')->insert([
             [
-                'id' => 1,
-                'name' => 'Default',
+                'id'     => 1,
+                'name'   => 'Default',
                 'status' => 'Active',
             ],
         ]);

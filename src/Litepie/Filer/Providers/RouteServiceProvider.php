@@ -29,7 +29,7 @@ class RouteServiceProvider extends ServiceProvider
             'middleware' => 'web',
             'namespace'  => $this->namespace,
             'prefix'     => trans_setlocale(),
-            ], function () {
+        ], function () {
                 require __DIR__.'/../Http/routes.php';
             });
     }

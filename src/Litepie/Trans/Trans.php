@@ -5,9 +5,6 @@ namespace Litepie\Trans;
 use Illuminate\Config\Repository;
 use Illuminate\Contracts\Routing\UrlRoutable;
 use Illuminate\Support\Str;
-use Illuminate\Support\Arr;
-
-
 use Litepie\Trans\Exceptions\SupportedLocalesNotDefined;
 
 class Trans
@@ -116,7 +113,7 @@ class Trans
     protected $routeName;
 
     /**
-     * An array that contains all translated routes by url
+     * An array that contains all translated routes by url.
      *
      * @var array
      */
@@ -198,24 +195,23 @@ class Trans
         $regional = $this->getCurrentLocaleRegional();
         $suffix = $this->configRepository->get('laravellocalization.utf8suffix');
         if ($regional) {
-            setlocale(LC_TIME, $regional . $suffix);
-            setlocale(LC_MONETARY, $regional . $suffix);
+            setlocale(LC_TIME, $regional.$suffix);
+            setlocale(LC_MONETARY, $regional.$suffix);
         }
 
         return $this->getLocaleFromMapping($locale);
     }
 
     /**
-     * Check if $locale is default locale and supposed to be hidden in url
+     * Check if $locale is default locale and supposed to be hidden in url.
      *
      * @param string $locale Locale to be checked
      *
-     * @return boolean Returns true if above requirement are met, otherwise false
+     * @return bool Returns true if above requirement are met, otherwise false
      */
-
     public function isHiddenDefault($locale)
     {
-        return ($this->getDefaultLocale() === $locale && $this->hideDefaultLocaleInURL());
+        return $this->getDefaultLocale() === $locale && $this->hideDefaultLocaleInURL();
     }
 
     /**
@@ -247,9 +243,9 @@ class Trans
      * Returns an URL adapted to $locale.
      *
      *
-     * @param string|bool  $locale     Locale to adapt, false to remove locale
-     * @param string|false $url        URL to adapt in the current language. If not passed, the current url would be taken.
-     * @param array        $attributes Attributes to add to the route, if empty, the system would try to extract them from the url.
+     * @param string|bool  $locale               Locale to adapt, false to remove locale
+     * @param string|false $url                  URL to adapt in the current language. If not passed, the current url would be taken.
+     * @param array        $attributes           Attributes to add to the route, if empty, the system would try to extract them from the url.
      * @param bool         $forceDefaultLocation Force to show default location even hideDefaultLocaleInURL set as TRUE
      *
      * @throws SupportedLocalesNotDefined
@@ -264,14 +260,14 @@ class Trans
         }
 
         if (!$this->checkLocaleInSupportedLocales($locale)) {
-            throw new UnsupportedLocaleException('Locale \'' . $locale . '\' is not in the list of supported locales.');
+            throw new UnsupportedLocaleException('Locale \''.$locale.'\' is not in the list of supported locales.');
         }
 
         if (empty($attributes)) {
             $attributes = $this->extractAttributes($url, $locale);
         }
         $urlQuery = parse_url($url, PHP_URL_QUERY);
-        $urlQuery = $urlQuery ? '?' . $urlQuery : '';
+        $urlQuery = $urlQuery ? '?'.$urlQuery : '';
 
         if (empty($url)) {
             if (!empty($this->routeName)) {
@@ -281,11 +277,11 @@ class Trans
             $url = $this->request->fullUrl();
         } else {
             $url = $this->url->to($url);
-            $url = preg_replace('/' . preg_quote($urlQuery, '/') . '$/', '', $url);
+            $url = preg_replace('/'.preg_quote($urlQuery, '/').'$/', '', $url);
         }
 
         if ($locale && $translatedRoute = $this->findTranslatedRouteByUrl($url, $attributes, $this->currentLocale)) {
-            return $this->getURLFromRouteNameTranslated($locale, $translatedRoute, $attributes, $forceDefaultLocation) . $urlQuery;
+            return $this->getURLFromRouteNameTranslated($locale, $translatedRoute, $attributes, $forceDefaultLocation).$urlQuery;
         }
 
         $base_path = $this->request->getBaseUrl();
@@ -295,18 +291,18 @@ class Trans
         if (!$parsed_url || empty($parsed_url['path'])) {
             $path = $parsed_url['path'] = '';
         } else {
-            $parsed_url['path'] = str_replace($base_path, '', '/' . ltrim($parsed_url['path'], '/'));
+            $parsed_url['path'] = str_replace($base_path, '', '/'.ltrim($parsed_url['path'], '/'));
             $path = $parsed_url['path'];
             foreach ($this->getSupportedLocales() as $localeCode => $lang) {
                 $localeCode = $this->getLocaleFromMapping($localeCode);
 
-                $parsed_url['path'] = preg_replace('%^/?' . $localeCode . '/%', '$1', $parsed_url['path']);
+                $parsed_url['path'] = preg_replace('%^/?'.$localeCode.'/%', '$1', $parsed_url['path']);
                 if ($parsed_url['path'] !== $path) {
                     $url_locale = $localeCode;
                     break;
                 }
 
-                $parsed_url['path'] = preg_replace('%^/?' . $localeCode . '$%', '$1', $parsed_url['path']);
+                $parsed_url['path'] = preg_replace('%^/?'.$localeCode.'$%', '$1', $parsed_url['path']);
                 if ($parsed_url['path'] !== $path) {
                     $url_locale = $localeCode;
                     break;
@@ -317,40 +313,40 @@ class Trans
         $parsed_url['path'] = ltrim($parsed_url['path'], '/');
 
         if ($translatedRoute = $this->findTranslatedRouteByPath($parsed_url['path'], $url_locale)) {
-            return $this->getURLFromRouteNameTranslated($locale, $translatedRoute, $attributes, $forceDefaultLocation) . $urlQuery;
+            return $this->getURLFromRouteNameTranslated($locale, $translatedRoute, $attributes, $forceDefaultLocation).$urlQuery;
         }
 
         $locale = $this->getLocaleFromMapping($locale);
 
         if (!empty($locale)) {
             if ($forceDefaultLocation || $locale != $this->getDefaultLocale() || !$this->hideDefaultLocaleInURL()) {
-                $parsed_url['path'] = $locale . '/' . ltrim($parsed_url['path'], '/');
+                $parsed_url['path'] = $locale.'/'.ltrim($parsed_url['path'], '/');
             }
         }
-        $parsed_url['path'] = ltrim(ltrim($base_path, '/') . '/' . $parsed_url['path'], '/');
+        $parsed_url['path'] = ltrim(ltrim($base_path, '/').'/'.$parsed_url['path'], '/');
 
         //Make sure that the pass path is returned with a leading slash only if it come in with one.
         if (Str::startsWith($path, '/') === true) {
-            $parsed_url['path'] = '/' . $parsed_url['path'];
+            $parsed_url['path'] = '/'.$parsed_url['path'];
         }
         $parsed_url['path'] = rtrim($parsed_url['path'], '/');
 
         $url = $this->unparseUrl($parsed_url);
 
         if ($this->checkUrl($url)) {
-            return $url . $urlQuery;
+            return $url.$urlQuery;
         }
 
-        return $this->createUrlFromUri($url) . $urlQuery;
+        return $this->createUrlFromUri($url).$urlQuery;
     }
 
     /**
      * Returns an URL adapted to the route name and the locale given.
      *
      *
-     * @param string|bool $locale       Locale to adapt
-     * @param string      $transKeyName Translation key name of the url to adapt
-     * @param array       $attributes   Attributes for the route (only needed if transKeyName needs them)
+     * @param string|bool $locale               Locale to adapt
+     * @param string      $transKeyName         Translation key name of the url to adapt
+     * @param array       $attributes           Attributes for the route (only needed if transKeyName needs them)
      * @param bool        $forceDefaultLocation Force to show default location even hideDefaultLocaleInURL set as TRUE
      *
      * @throws SupportedLocalesNotDefined
@@ -361,7 +357,7 @@ class Trans
     public function getURLFromRouteNameTranslated($locale, $transKeyName, $attributes = [], $forceDefaultLocation = false)
     {
         if (!$this->checkLocaleInSupportedLocales($locale)) {
-            throw new UnsupportedLocaleException('Locale \'' . $locale . '\' is not in the list of supported locales.');
+            throw new UnsupportedLocaleException('Locale \''.$locale.'\' is not in the list of supported locales.');
         }
 
         if (!\is_string($locale)) {
@@ -371,11 +367,11 @@ class Trans
         $route = '';
 
         if ($forceDefaultLocation || !($locale === $this->defaultLocale && $this->hideDefaultLocaleInURL())) {
-            $route = '/' . $locale;
+            $route = '/'.$locale;
         }
         if (\is_string($locale) && $this->translator->has($transKeyName, $locale)) {
             $translation = $this->translator->trans($transKeyName, [], $locale);
-            $route .= '/' . $translation;
+            $route .= '/'.$translation;
 
             $route = $this->substituteAttributesInRoute($attributes, $route);
         }
@@ -580,7 +576,7 @@ class Trans
             if ($value instanceof UrlRoutable) {
                 $value = $value->getRouteKey();
             }
-            $route = str_replace(array('{' . $key . '}', '{' . $key . '?}'), $value, $route);
+            $route = str_replace(['{'.$key.'}', '{'.$key.'?}'], $value, $route);
         }
 
         // delete empty optional arguments that are not in the $attributes array
@@ -637,7 +633,7 @@ class Trans
         $attributes = $this->extractAttributes($path);
 
         $path = parse_url($path)['path'];
-        $path = trim(str_replace('/' . $this->currentLocale . '/', '', $path), "/");
+        $path = trim(str_replace('/'.$this->currentLocale.'/', '', $path), '/');
 
         foreach ($this->translatedRoutes as $route) {
             if (trim($this->substituteAttributesInRoute($attributes, $this->translator->trans($route)), '/') === $path) {
@@ -748,7 +744,7 @@ class Trans
             return app('url')->to($uri);
         }
 
-        return $this->baseUrl . $uri;
+        return $this->baseUrl.$uri;
     }
 
     /**
@@ -804,7 +800,7 @@ class Trans
             $attributes = [];
             $parse = parse_url($url);
             if (isset($parse['path'])) {
-                $parse['path'] = trim(str_replace('/' . $this->currentLocale . '/', '', $parse['path']), "/");
+                $parse['path'] = trim(str_replace('/'.$this->currentLocale.'/', '', $parse['path']), '/');
                 $url = explode('/', trim($parse['path'], '/'));
             } else {
                 $url = [];
@@ -911,21 +907,21 @@ class Trans
         }
 
         $url = '';
-        $url .= isset($parsed_url['scheme']) ? $parsed_url['scheme'] . '://' : '';
+        $url .= isset($parsed_url['scheme']) ? $parsed_url['scheme'].'://' : '';
         $url .= $parsed_url['host'] ?? '';
-        $url .= isset($parsed_url['port']) ? ':' . $parsed_url['port'] : '';
+        $url .= isset($parsed_url['port']) ? ':'.$parsed_url['port'] : '';
         $user = $parsed_url['user'] ?? '';
-        $pass = isset($parsed_url['pass']) ? ':' . $parsed_url['pass'] : '';
-        $url .= $user . (($user || $pass) ? "$pass@" : '');
+        $pass = isset($parsed_url['pass']) ? ':'.$parsed_url['pass'] : '';
+        $url .= $user.(($user || $pass) ? "$pass@" : '');
 
         if (!empty($url)) {
-            $url .= isset($parsed_url['path']) ? '/' . ltrim($parsed_url['path'], '/') : '';
+            $url .= isset($parsed_url['path']) ? '/'.ltrim($parsed_url['path'], '/') : '';
         } else {
             $url .= $parsed_url['path'] ?? '';
         }
 
-        $url .= isset($parsed_url['query']) ? '?' . $parsed_url['query'] : '';
-        $url .= isset($parsed_url['fragment']) ? '#' . $parsed_url['fragment'] : '';
+        $url .= isset($parsed_url['query']) ? '?'.$parsed_url['query'] : '';
+        $url .= isset($parsed_url['fragment']) ? '#'.$parsed_url['fragment'] : '';
 
         return $url;
     }
@@ -933,15 +929,18 @@ class Trans
     /**
      * Normalize attributes gotten from request parameters.
      *
-     * @param      array  $attributes  The attributes
-     * @return     array  The normalized attributes
+     * @param array $attributes The attributes
+     *
+     * @return array The normalized attributes
      */
     protected function normalizeAttributes($attributes)
     {
         if (array_key_exists('data', $attributes) && \is_array($attributes['data']) && !\count($attributes['data'])) {
             $attributes['data'] = null;
+
             return $attributes;
         }
+
         return $attributes;
     }
 
@@ -972,7 +971,6 @@ class Trans
      */
     public function getSupportedLocales($excludeCurrent = false)
     {
-
         if (empty($this->supportedLocales)) {
             $this->supportedLocales = $this->configRepository->get('trans.supportedLocales');
         }
@@ -1003,7 +1001,6 @@ class Trans
      */
     public function to($url = null, $locale = null)
     {
-
         if (Str::startsWith($url, 'http')) {
             return url($url);
         }
@@ -1021,6 +1018,7 @@ class Trans
         if (empty($this->localesMapping)) {
             $this->localesMapping = $this->configRepository->get('trans.localesMapping');
         }
+
         return $this->localesMapping;
     }
 
@@ -1095,5 +1093,4 @@ class Trans
             return implode($seperator, array_keys($locales));
         }
     }
-
 }

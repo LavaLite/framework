@@ -17,7 +17,7 @@ class MenuPolicy
      */
     public function view(UserPolicy $user, Menu $menu)
     {
-        if (($user->canDo('menu.menu.view') && $user->isAdmin())||
+        if (($user->canDo('menu.menu.view') && $user->isAdmin()) ||
         ($user->canDo('menu.menu.view') && !$menu->exists)) {
             return true;
         }

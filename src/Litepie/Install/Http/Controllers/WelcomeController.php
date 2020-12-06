@@ -6,7 +6,6 @@ use App\Http\Controllers\PublicController;
 
 class WelcomeController extends PublicController
 {
-
     /**
      * Display the installer welcome page.
      *
@@ -19,5 +18,4 @@ class WelcomeController extends PublicController
             ->view('install::welcome')
             ->output();
     }
-
 }

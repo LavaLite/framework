@@ -8,7 +8,8 @@ use Litepie\Repository\Traits\PresentableTrait;
 
 class Setting extends Model
 {
-    use Filer,  PresentableTrait;
+    use Filer;
+    use PresentableTrait;
 
     /**
      * Configuartion for the model.

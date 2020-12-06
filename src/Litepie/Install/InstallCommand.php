@@ -9,7 +9,8 @@ use Litepie\Install\Installers\Traits\SectionMessage;
 
 class InstallCommand extends Command
 {
-    use BlockMessage, SectionMessage;
+    use BlockMessage;
+    use SectionMessage;
     /**
      * The name and signature of the console command.
      *

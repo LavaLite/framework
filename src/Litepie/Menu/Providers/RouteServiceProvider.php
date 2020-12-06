@@ -3,7 +3,6 @@
 namespace Litepie\Menu\Providers;
 
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
-use Litepie\Menu\Models\Menu;
 use Request;
 use Route;
 

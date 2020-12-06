@@ -206,7 +206,8 @@ class ThemePublishCommand extends Command
         $choices = $this->viewChoice();
 
         $choice = $this->choice(
-            'Which view folder you wish to publish?', $choices
+            'Which view folder you wish to publish?',
+            $choices
         );
 
         if (is_null($choice)) {
@@ -255,7 +256,8 @@ class ThemePublishCommand extends Command
         }
 
         return ServiceProvider::pathsToPublish(
-            $this->provider, 'view'
+            $this->provider,
+            'view'
         );
     }
 

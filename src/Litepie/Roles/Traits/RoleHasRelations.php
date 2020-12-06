@@ -3,6 +3,7 @@
 namespace Litepie\Roles\Traits;
 
 use Illuminate\Support\Str;
+
 trait RoleHasRelations
 {
     /**

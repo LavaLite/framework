@@ -12,7 +12,11 @@ use Litepie\Roles\Traits\RoleHasRelations;
 
 class Role extends Model implements RoleHasRelationsContract
 {
-    use Filer, Hashids, Sluggable, PresentableTrait, RoleHasRelations;
+    use Filer;
+    use Hashids;
+    use Sluggable;
+    use PresentableTrait;
+    use RoleHasRelations;
 
     /**
      * Configuartion for the model.

@@ -12,19 +12,19 @@ return [
      */
 
     /**
-     * Singlular and plural name of the module
+     * Singlular and plural name of the module.
      */
-    'name' => 'Master',
+    'name'  => 'Master',
     'names' => 'Masters',
 
     /**
-     * Singlular and plural name of the module
+     * Singlular and plural name of the module.
      */
     'title' => [
-        'main' => 'Masters',
-        'sub' => 'Masters',
-        'list' => 'List of masters',
-        'edit' => 'Edit master',
+        'main'   => 'Masters',
+        'sub'    => 'Masters',
+        'list'   => 'List of masters',
+        'edit'   => 'Edit master',
         'create' => 'Create new master',
     ],
 
@@ -39,72 +39,70 @@ return [
     ],
 
     /**
-     * List of masters used in the project
+     * List of masters used in the project.
      */
-
     'masters' => [
-        'single' => 'Single',
+        'single'   => 'Single',
         'category' => 'Category Style',
-        'image' => 'With Image',
-        'icon' => 'With Icon',
-        'country' => 'country',
-        'state' => 'State',
-        'city' => 'City',
+        'image'    => 'With Image',
+        'icon'     => 'With Icon',
+        'country'  => 'country',
+        'state'    => 'State',
+        'city'     => 'City',
         'location' => 'Location',
-        'project' => 'Project',
+        'project'  => 'Project',
     ],
 
     /**
-     * Groups of masters
+     * Groups of masters.
      */
-
     'groups' => [
         'master' => [
-            'name' => 'Master',
+            'name'  => 'Master',
             'title' => 'List of masters',
         ],
         'project' => [
-            'name' => 'Projects',
+            'name'  => 'Projects',
             'title' => 'Project masters',
         ],
     ],
 
     /**
-     * Placeholder for inputs
+     * Placeholder for inputs.
      */
     'placeholder' => [
-        'id' => 'Please enter id',
-        'parent_id' => 'Please select parent',
-        'type' => 'Please select type',
-        'name' => 'Please enter name',
+        'id'          => 'Please enter id',
+        'parent_id'   => 'Please select parent',
+        'type'        => 'Please select type',
+        'name'        => 'Please enter name',
         'description' => 'Please enter description',
-        'icon' => 'Please enter icon',
-        'amount' => 'Please enter amount',
-        'status' => 'Please enter status',
-        'image' => 'Please enter image',
-        'slug' => 'Please enter slug',
-        'created_at' => 'Please select created at',
-        'updated_at' => 'Please select updated at',
-        'deleted_at' => 'Please select deleted at',
+        'icon'        => 'Please enter icon',
+        'amount'      => 'Please enter amount',
+        'status'      => 'Please enter status',
+        'image'       => 'Please enter image',
+        'slug'        => 'Please enter slug',
+        'created_at'  => 'Please select created at',
+        'updated_at'  => 'Please select updated at',
+        'deleted_at'  => 'Please select deleted at',
     ],
 
     /**
      * Labels for inputs.
      */
     'label' => [
-        'id' => 'Id',
-        'parent_id' => 'Parent',
-        'type' => 'Type',
-        'name' => 'Name',
+        'id'          => 'Id',
+        'parent_id'   => 'Parent',
+        'type'        => 'Type',
+        'name'        => 'Name',
         'description' => 'Description',
-        'icon' => 'Icon',
-        'amount' => 'Amount',
-        'status' => 'Status',
-        'image' => 'Image',
-        'slug' => 'Slug',
-        'created_at' => 'Created at',
-        'updated_at' => 'Updated at',
-        'deleted_at' => 'Deleted at',
+        'icon'        => 'Icon',
+        'amount'      => 'Amount',
+        'status'      => 'Status',
+        'image'       => 'Image',
+        'slug'        => 'Slug',
+        'created_at'  => 'Created at',
+        'updated_at'  => 'Updated at',
+        'deleted_at'  => 'Deleted at',
     ],
 
     /**
@@ -112,20 +110,20 @@ return [
      */
     'cloumns' => [
         'parent_id' => ['name' => 'Parent', 'data-column' => 1, 'checked'],
-        'type' => ['name' => 'Type', 'data-column' => 2, 'checked'],
-        'name' => ['name' => 'Name', 'data-column' => 3, 'checked'],
-        'image' => ['name' => 'Image', 'data-column' => 4, 'checked'],
+        'type'      => ['name' => 'Type', 'data-column' => 2, 'checked'],
+        'name'      => ['name' => 'Name', 'data-column' => 3, 'checked'],
+        'image'     => ['name' => 'Image', 'data-column' => 4, 'checked'],
     ],
 
     /**
-     * Tab labels
+     * Tab labels.
      */
     'tab' => [
         'name' => 'Masters',
     ],
 
     /**
-     * Texts  for the module
+     * Texts  for the module.
      */
     'text' => [
         'preview' => 'Click on the below list for preview',

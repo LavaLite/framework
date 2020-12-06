@@ -43,8 +43,8 @@ class SettingRepository extends BaseRepository implements SettingRepositoryInter
                 'key' => $key,
             ],
             [
-                'value' => $value,
-                'key' => $key,
+                'value'     => $value,
+                'key'       => $key,
                 'user_type' => 'main',
             ]
         );
@@ -71,15 +71,15 @@ class SettingRepository extends BaseRepository implements SettingRepositoryInter
     {
         $setting = $this->updateOrCreate(
             [
-                'key' => $key,
-                'user_id' => user_id(),
+                'key'       => $key,
+                'user_id'   => user_id(),
                 'user_type' => user_type(),
             ],
             [
-                'key' => $key,
-                'user_id' => user_id(),
+                'key'       => $key,
+                'user_id'   => user_id(),
                 'user_type' => user_type(),
-                'value' => $value,
+                'value'     => $value,
             ]
         );
 
@@ -90,29 +90,28 @@ class SettingRepository extends BaseRepository implements SettingRepositoryInter
      * Upload the file to a specific path.
      *
      * @param Request $request
-     * @param String   $key
+     * @param string  $key
      *
-     * @return Void
+     * @return void
      */
     public function upload($request, $key)
     {
-        if ($request->hasFile($key . "[file]")) {
-            $path = $request->get($key . "['path']");
+        if ($request->hasFile($key.'[file]')) {
+            $path = $request->get($key."['path']");
             $folder = substr("$path", 0, strrpos($path, '/'));
             $file = substr("$path", (strrpos($path, '_') + 1));
             $res = $request->file($key['file'])->storeAs($folder, $file);
         }
-
     }
 
     /**
      * Set theme variable.
      *
-     * @param String $request
-     * @param String $key
-     * @param String $value
+     * @param string $request
+     * @param string $key
+     * @param string $value
      *
-     * @return Void
+     * @return void
      */
     public function theme($theme, $key, $value)
     {
@@ -135,10 +134,10 @@ class SettingRepository extends BaseRepository implements SettingRepositoryInter
     /**
      * Execute commands.
      *
-     * @param String $string
-     * @param String   $value
+     * @param string $string
+     * @param string $value
      *
-     * @return Void
+     * @return void
      */
     public function commands($string, $value)
     {
@@ -152,6 +151,7 @@ class SettingRepository extends BaseRepository implements SettingRepositoryInter
 
         $oldValue = env($envKey);
         $str = str_replace("{$envKey}={$oldValue}", "{$envKey}={$envValue}", $str);
+
         return file_put_contents($envFile, $str);
     }
 }

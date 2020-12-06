@@ -76,8 +76,9 @@ class EnvironmentController extends PublicController
     /**
      * Processes the newly saved environment configuration (Classic).
      *
-     * @param Request $input
+     * @param Request    $input
      * @param Redirector $redirect
+     *
      * @return \Illuminate\Http\RedirectResponse
      */
     public function saveClassic(Request $input, Redirector $redirect)
@@ -93,8 +94,9 @@ class EnvironmentController extends PublicController
     /**
      * Processes the newly saved environment configuration (Form Wizard).
      *
-     * @param Request $request
+     * @param Request    $request
      * @param Redirector $redirect
+     *
      * @return \Illuminate\Http\RedirectResponse
      */
     public function saveWizard(Request $request, Redirector $redirect)
@@ -108,6 +110,7 @@ class EnvironmentController extends PublicController
 
         if ($validator->fails()) {
             $errors = $validator->errors();
+
             return $this->response
                 ->setMetaTitle(trans('install::messages.environment.classic.templateTitle'))
                 ->layout('blank')

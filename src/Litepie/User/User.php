@@ -225,11 +225,9 @@ class User
      */
     public function users($field)
     {
-
         if (!is_null($this->getUser())) {
             return $this->getUser()->$field;
         }
-
     }
 
     /**
@@ -296,8 +294,8 @@ class User
         $sub = in_array('api', $segments) ? 'api' : 'web';
 
         $this->getSetGuard("{$guard}.{$sub}");
-        return $guard;
 
+        return $guard;
     }
 
     /**
@@ -309,7 +307,8 @@ class User
     {
         $guards = $this->getSetGuard() ?: config('auth.defaults.guard');
         $prefix = current(explode('.', $guards));
-        return $prefix . '/' . trim($url, '/\\');
+
+        return $prefix.'/'.trim($url, '/\\');
     }
 
     /**
@@ -319,15 +318,14 @@ class User
      */
     public function getSetGuard($guard = null)
     {
-
         if (empty($guard)) {
             $guard = getenv('guard');
+
             return empty($guard) ? config('auth.defaults.guard') : $guard;
         } else {
             putenv("guard={$guard}");
             app('auth')->shouldUse("{$guard}");
         }
-
     }
 
     /**
@@ -342,8 +340,6 @@ class User
 
     public function getUserByRole($role)
     {
-
         return $this->user->getUserByRole();
     }
-
 }

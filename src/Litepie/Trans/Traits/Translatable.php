@@ -47,7 +47,6 @@ trait Translatable
                 $model->$key = $model->getTranslation($key);
             }
         });
-        
     }
 
     /**

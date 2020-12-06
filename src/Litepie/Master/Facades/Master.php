@@ -15,5 +15,4 @@ class Master extends Facade
     {
         return 'litepie.master';
     }
-
 }

@@ -23,8 +23,8 @@ class ValidatorServiceProvider extends ServiceProvider
     {
         // Load view
         Validator::extend(
-               'recaptcha',
-               'Litepie\\Validators\\ReCaptcha@validate'
+            'recaptcha',
+            'Litepie\\Validators\\ReCaptcha@validate'
         );
     }
 }
