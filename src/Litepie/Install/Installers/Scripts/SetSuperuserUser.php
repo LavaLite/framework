@@ -2,7 +2,7 @@
 
 namespace Litepie\Install\Installers\Scripts;
 
-use App\Model\User;
+use App\Models\User;
 use Illuminate\Console\Command;
 use Litepie\Install\Installers\SetupScript;
 use Validator;

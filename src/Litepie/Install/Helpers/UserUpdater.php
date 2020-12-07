@@ -2,8 +2,8 @@
 
 namespace Litepie\Install\Helpers;
 
-use App\Model\Client;
-use App\Model\User;
+use App\Models\Client;
+use App\Models\User;
 use RachidLaasri\LaravelInstaller\Helpers\EnvironmentManager as BaseEnvironmentManager;
 
 class UserUpdater extends BaseEnvironmentManager
