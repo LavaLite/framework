@@ -2,7 +2,7 @@
 
 namespace Litepie\Install\Installers\Scripts;
 
-use App\User;
+use App\Model\User;
 use Illuminate\Console\Command;
 use Litepie\Install\Installers\SetupScript;
 use Validator;
@@ -25,7 +25,7 @@ class SetSuperuserUser implements SetupScript
         $this->command = $command;
 
         config(['litepie.user.user' => [
-            'table'    => 'users',
+            'table' => 'users',
             'fillable' => ['password', 'email'],
         ]]);
 

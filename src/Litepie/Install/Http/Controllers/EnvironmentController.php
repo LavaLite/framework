@@ -2,9 +2,9 @@
 
 namespace Litepie\Install\Http\Controllers;
 
-use App\Http\Controllers\PublicController;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Redirector;
+use Litepie\Http\Controllers\PublicController;
 use Litepie\Install\Helpers\EnvironmentManager;
 use RachidLaasri\LaravelInstaller\Events\EnvironmentSaved;
 use Validator;
@@ -88,7 +88,7 @@ class EnvironmentController extends PublicController
         event(new EnvironmentSaved($input));
 
         return $redirect->route('LaravelInstaller::environmentClassic')
-                        ->with(['message' => $message]);
+            ->with(['message' => $message]);
     }
 
     /**
@@ -124,6 +124,6 @@ class EnvironmentController extends PublicController
         event(new EnvironmentSaved($request));
 
         return $redirect->route('LaravelInstaller::database')
-                        ->with(['results' => $results]);
+            ->with(['results' => $results]);
     }
 }
