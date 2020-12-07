@@ -2,7 +2,7 @@
 
 namespace Litepie\Install\Http\Controllers;
 
-use App\Http\Controllers\PublicController;
+use Litepie\Http\Controllers\PublicController;
 use Litepie\Install\Helpers\MigrationsHelper;
 use RachidLaasri\LaravelInstaller\Helpers\DatabaseManager;
 use RachidLaasri\LaravelInstaller\Helpers\InstalledFileManager;
@@ -54,7 +54,7 @@ class UpdateController extends PublicController
         $response = $databaseManager->migrateAndSeed();
 
         return redirect()->route('LaravelUpdater::final')
-                         ->with(['message' => $response]);
+            ->with(['message' => $response]);
     }
 
     /**
