@@ -19,7 +19,7 @@ class PublicController extends Controller
     public function __construct()
     {
         $this->response = app(PublicResponse::class);
-        $this->setTheme('public');
+        $this->setTheme('default');
     }
 
     /**
