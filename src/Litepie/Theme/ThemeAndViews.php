@@ -39,7 +39,8 @@ trait ThemeAndViews
      */
     protected function getTheme()
     {
-        return $this->theme ?: 'default';
+        return config('theme.themes.' . $this->getViewFolder() . '.theme',
+            config('theme.themes.default.theme'));
     }
 
     /**
@@ -51,5 +52,15 @@ trait ThemeAndViews
     protected function getLayout()
     {
         return $this->layout ?: 'default';
+    }
+
+    /**
+     * Return folder for current guard.
+     *
+     * @return type
+     */
+    protected function getViewFolder()
+    {
+        return substr(guard(), 0, strpos(guard(), '.'));
     }
 }
