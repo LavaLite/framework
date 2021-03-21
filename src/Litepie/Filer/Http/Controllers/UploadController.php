@@ -3,8 +3,8 @@
 namespace Litepie\Filer\Http\Controllers;
 
 use Filer;
+use Illuminate\Http\Request;
 use Litepie\Http\Controllers\Controller;
-use Request;
 
 class UploadController extends Controller
 {
@@ -16,25 +16,24 @@ class UploadController extends Controller
      *
      * @return array|json
      */
-    public function upload($config, $path)
+    public function upload(Request $request, $config, $path)
     {
         $path = explode('/', $path);
         $file = array_pop($path);
         $field = array_pop($path);
         $folder = implode('/', $path);
-
-        if (Request::hasFile($file)) {
+        if ($request->hasFile($file)) {
             $ufolder = $this->uploadFolder($config, $folder, $field);
-            $array = Filer::upload(Request::file($file), $ufolder);
-            $array['folder'] = $folder.'/'.$field;
-            $array['path'] = $ufolder.'/'.$array['file'];
+            $array = Filer::upload($request->file($file), $ufolder);
+            $array['folder'] = $folder . '/' . $field;
+            $array['path'] = $ufolder . '/' . $array['file'];
 
             $ext = pathinfo($array['file'], PATHINFO_EXTENSION);
 
             if (in_array($ext, config('filer.image_extensions'))) {
-                $array['url'] = url('image/original'.$ufolder.'/'.$array['file']);
+                $array['url'] = url('image/original' . $ufolder . '/' . $array['file']);
             } else {
-                $array['url'] = url('file/display'.$ufolder.'/'.$array['file']);
+                $array['url'] = url('file/display' . $ufolder . '/' . $array['file']);
             }
 
             return response()->json($array)
@@ -53,7 +52,7 @@ class UploadController extends Controller
      */
     public function uploadFolder($config, $folder, $field)
     {
-        $path = config($config.'.upload_folder');
+        $path = config($config . '.upload_folder');
 
         if (empty($path)) {
             throw new FileNotFoundException('Invalid upload configuration value.');
