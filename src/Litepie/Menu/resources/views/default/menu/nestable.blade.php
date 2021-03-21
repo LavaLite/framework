@@ -5,16 +5,16 @@
         <li class="dd-item dd3-item" data-id="{!!$menu->getRouteKey()!!}">
             <div class="dd-handle dd3-handle"><i class="las la-arrows-alt"></i></div>
             <div class="dd3-content">
-                <a href="#" class="app-submenu-edit" data-action="LOAD" data-load-to='#menu-entry'
+                <a href="#" class="app-submenu-edit" data-action="LOAD" data-load-to='#sub-menu-edit'
                     data_val="{!!$menu->getRouteKey()!!}"
-                    data-href='{{guard_url('menu/submenu')}}/{!!$menu->getRouteKey()!!}'>
+                    data-href="{{guard_url('menu/submenu')}}/{!!$menu->getRouteKey()!!}">
                     <span><i class="{!! !empty($menu->icon) ?  $menu->icon : '' !!}"></i> {!!$menu->name!!}</span>
                 </a>
             </div>
             <div class="actions">
-                <a href="#" class="btn las la-pencil-alt app-submenu-edit" data-action="LOAD" data-load-to='#menu-entry'
+                <a href="#" class="btn las la-pencil-alt app-submenu-edit" data-action="LOAD" data-load-to='#sub-menu-edit'
                     data_val="{!!$menu->getRouteKey()!!}"
-                    data-href='{{guard_url('menu/submenu')}}/{!!$menu->getRouteKey()!!}'></a>
+                    data-href="{{guard_url('menu/submenu')}}/{!!$menu->getRouteKey()!!}"></a>
                 <a href="#" class="btn las la-trash" data-action='DELETE'
                 data-load-to="#app-entry" data-list="#item-list"
                 data-url="{{guard_url('menu/menu')}}/{!!$menu->getRouteKey()!!}"></a>
@@ -25,16 +25,16 @@
         <li class="dd-item dd3-item" data-id="{!!$menu->getRouteKey()!!}">
             <div class="dd-handle dd3-handle"><i class="las la-arrows-alt"></i></div>
             <div class="dd3-content">
-                <a href="#" class="app-submenu-edit" data-action="LOAD" data-load-to='#menu-entry'
+                <a href="#" class="app-submenu-edit" data-action="LOAD" data-load-to='#sub-menu-edit'
                     data_val="{!!$menu->getRouteKey()!!}"
-                    data-href='{{guard_url('menu/submenu')}}/{!!$menu->getRouteKey()!!}'>
+                    data-href="{{guard_url('menu/submenu')}}/{!!$menu->getRouteKey()!!}">
                     <span><i class="{!! !empty($menu->icon) ?  $menu->icon : '' !!}"></i> {!!$menu->name!!}</span>
                 </a>
             </div>
             <div class="actions">
-                <a href="#" class="btn las la-pencil-alt app-submenu-edit" data-action="LOAD" data-load-to='#menu-entry'
+                <a href="#" class="btn las la-pencil-alt app-submenu-edit" data-action="LOAD" data-load-to='#sub-menu-edit'
                     data_val="{!!$menu->getRouteKey()!!}"
-                    data-href='{{guard_url('menu/submenu')}}/{!!$menu->getRouteKey()!!}'></a>
+                    data-href="{{guard_url('menu/submenu')}}/{!!$menu->getRouteKey()!!}"></a>
                 <a href="#" class="btn las la-trash" data-action='DELETE'
                 data-load-to="#app-entry" data-list="#app-entry"
                 data-url="{{guard_url('menu/menu')}}/{!!$menu->getRouteKey()!!}"></a>
@@ -48,16 +48,6 @@
                 <span> No menus added</span>
             </div>
         </li>
-
         @endif
     </ol>
 </div>
-<script>
-$(document).ready(function() {
-    $(".app-submenu-edit").click(function(e) {
-        e.preventDefault();
-        var id = $(this).attr('data_val');
-        $("#app-entry").load('{{guard_url('menu/submenu')}}'+'/'+id+'/edit');
-    });
-});
-</script>

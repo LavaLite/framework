@@ -4,7 +4,7 @@
 <div class="app-entry-form-wrap">
     <div class="app-sec-title app-sec-title-with-icon app-sec-title-with-action">
         <i class="lab la-product-hunt app-sec-title-icon"></i>
-        <h2>{{__('Show')}} {!!$menu->name!!}</h2>
+        <h2>{!!$menu->name!!} {{__('Menu')}}</h2>
         <div class="actions">
             <button type="button" class="btn btn-success btn-sm app-submenu-create" data_val="{{$menu->getRouteKey()}}"
                 data-action="NEW" data-load-to='#app-entry'
@@ -15,11 +15,13 @@
     </div>
     <div class="container-fluid">
         <div class="row">
-            <div class="col-12">
-                <div class="col-md-6">
+            <div class="col-md-6">
+                <div id="item-menu-list" data-url="{!! guard_url('menu/menu/'.$menu->getRouteKey()) !!}/submenu">
                     {!!Menu::menu($menu->key, 'menu::menu.nestable')!!}
-                </div>   
-            </div>
+                </div>
+            </div>   
+            <div class="col-md-6" id="sub-menu-edit" data-url="{!! guard_url('menu/menu/'.$menu->getRouteKey()) !!}">
+            </div>   
         </div>
     </div>
 </div>
@@ -29,12 +31,8 @@ $(document).ready(function() {
     $(".app-submenu-create").click(function(e) {
         e.preventDefault();
         var id = $(this).attr('data_val');
-        $("#app-entry").load('{{guard_url('menu/submenu/create?parent_id=')}}'+id);
+        $("#sub-menu-edit").load("{{guard_url('menu/submenu/create?parent_id=')}}"+id);
     });
-});
-</script>
-<script type="text/javascript">
-$(document).ready(function() {
 
     var updateMenu = function(e) {
         var out = $(e.target).nestable('serialize');
@@ -43,7 +41,7 @@ $(document).ready(function() {
         var formData = new FormData();
         formData.append('tree', out);
 
-        var url = '{!! guard_url('menu/menu/'.$menu->getRouteKey().'/tree') !!}';
+        var url = "{!! guard_url('menu/menu/'.$menu->getRouteKey().'/tree') !!}";
 
         $.ajax({
             url: url,

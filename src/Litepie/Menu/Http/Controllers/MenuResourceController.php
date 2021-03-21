@@ -39,7 +39,7 @@ class MenuResourceController extends BaseController
         $rootMenu = $this->repository->rootMenues();
         $view = 'menu::index';
         if ($request->ajax()) {
-            $view = 'menu::more';
+            $view = 'menu::list';
         }
 
         return $this->response->setMetaTitle(trans('menu::menu.names'))

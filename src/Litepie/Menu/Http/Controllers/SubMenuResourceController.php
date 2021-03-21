@@ -15,6 +15,22 @@ class SubMenuResourceController extends ResourceController
         parent::__construct();
     }
 
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return Response
+     */
+    public function index(MenuRequest $request, $id)
+    {
+
+        $menus = $this->repository->find($id)->getChildren();
+        return $this->response->setMetaTitle(trans('menu::menu.names'))
+                ->view('menu::menu.nestable')
+                ->data(compact('menus'))
+                ->output();
+    }
+
     /**
      * Display the specified resource.
      *

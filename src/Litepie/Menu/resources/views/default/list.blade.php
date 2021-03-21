@@ -1,4 +1,3 @@
-
 @foreach($rootMenu as $menu)
 <div class="app-item {{$menu->getRouteKey()}} app-item-flex">
     <div class="app-avatar">
@@ -18,17 +17,10 @@
         <a href="{{guard_url('menu/menu')}}/{{$menu->getRouteKey()}}" class="btn las la-pencil-alt" data-action='EDIT'
             data-load-to="#app-entry" data-url="{{guard_url('menu/menu')}}/{{$menu->getRouteKey()}}/edit">
         </a>
-        <div class="dropdown">
-            <a href="#" class="btn fas fa-ellipsis-h dropdown-toggle" href="#" role="button"
-                id="app_quick_menu_{{$menu->getRouteKey()}}" data-toggle="dropdown" aria-haspopup="true"
-                aria-expanded="false"></a>
-            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="app_quick_menu_{{$menu->getRouteKey()}}">
-                <!-- <a class="dropdown-item" href="#"><i class="las la-copy"></i>Copy</a> -->
-                <a class="dropdown-item" href="{{guard_url('menu/menu')}}/{{$menu->getRouteKey()}}" data-action='DELETE'
-                data-load-to="#app-entry" data-list="#item-list"
-                data-url="{{guard_url('menu/menu')}}/{{$menu->getRouteKey()}}"><i class="las la-times text-danger"></i>Delete</a>
-            </div>
-        </div>
+        <a href="{{guard_url('menu/menu')}}/{{$menu->getRouteKey()}}" class="btn las la-times text-danger"
+            data-action='DELETE' data-load-to="#app-entry" data-list="#item-list"
+            data-url="{{guard_url('menu/menu')}}/{{$menu->getRouteKey()}}">
+        </a>
     </div>
 </div>
 @endforeach

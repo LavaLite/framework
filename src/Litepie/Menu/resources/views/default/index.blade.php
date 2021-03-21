@@ -8,15 +8,12 @@
             </button>
         </div>
 
-        <div class="app-list-wrap-inner ps ps--active-y" id="app-list">
-            <div class="app-items" data-url="{{guard_url('menu/menu')}}" id="item-list">
-                @include('menu::more', ['mode' => 'list'])
+        <div class="app-list-wrap-inner" id="app-list">
+            <div class="app-items perfect-scroll" data-url="{{guard_url('menu/menu')}}" id="item-list">
+                @include('menu::list', ['mode' => 'list'])
             </div>
         </div>
     </div>
     <div class="app-detail-wrap" id="app-entry">
     </div>
 </div>
-<script type="">
-    var module_link = "{{guard_url('menu/menu')}}";
-</script>
