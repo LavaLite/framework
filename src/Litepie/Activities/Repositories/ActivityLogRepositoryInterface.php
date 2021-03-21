@@ -1,6 +1,6 @@
 <?php
 
-namespace Litepie\Activities\Interfaces;
+namespace Litepie\Activities\Repositories;
 
 interface ActivityLogRepositoryInterface
 {

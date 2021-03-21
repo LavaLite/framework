@@ -7,6 +7,7 @@ use Spatie\Activitylog\Models\Activity as SpatieModel;
 class Activity extends SpatieModel
 {
     protected static $logFillable = true;
+
     protected static $logOnlyDirty = true;
 
     public function activities()

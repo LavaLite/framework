@@ -37,8 +37,20 @@ return [
     'activity_model' => \Litepie\Activities\Models\Activity::class,
 
     /*
+     * This model will be used to log action. The only requirement is that
+     * it should be or extend the Lavalit\Activities\Models\Activity model.
+     */
+    'action_model' => \Litepie\Activities\Models\Action::class,
+
+    /*
      * This is the name of the table that will be created by the migration and
      * used by the Activity model shipped with this package.
      */
     'table_name' => 'activity_log',
+
+    /*
+     * This is the name of the table that will be created by the migration and
+     * used by the Action model shipped with this package.
+     */
+    'action_table_name' => 'action_log',
 ];
