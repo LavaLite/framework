@@ -3,7 +3,7 @@
 namespace Litepie\Repository\Presenter;
 
 use Exception;
-use Litepie\Repository\Transformer\ModelTransformer;
+use Prettus\Repository\Transformer\ModelTransformer;
 
 /**
  * Class ModelFractalPresenter.

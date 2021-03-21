@@ -2,7 +2,6 @@
 
 namespace Litepie\Repository\Criteria;
 
-use Illuminate\Http\Request;
 use Litepie\Repository\Contracts\CriteriaInterface;
 use Litepie\Repository\Contracts\RepositoryInterface;
 
