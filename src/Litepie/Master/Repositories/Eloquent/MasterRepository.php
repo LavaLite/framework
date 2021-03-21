@@ -40,6 +40,21 @@ class MasterRepository extends BaseRepository implements MasterRepositoryInterfa
      *
      * @return string
      */
+    public function index($type)
+    {
+        if (!empty($type)) {
+            $this->model = $this->model
+                ->where('type', $type);
+        }
+
+        return $this;
+    }
+
+    /**
+     * Return the parent categories.
+     *
+     * @return string
+     */
     public function typeCount()
     {
         return $this->model
@@ -68,9 +83,9 @@ class MasterRepository extends BaseRepository implements MasterRepositoryInterfa
 
     public function search($string, $type, $key, $value)
     {
-        return $this->model->where('type', 'like', '%'.$type.'%')
+        return $this->model->where('type', 'like', '%' . $type . '%')
             ->where('status', 'Show')
-            ->where('name', 'like', '%'.$string.'%')
+            ->where('name', 'like', '%' . $string . '%')
             ->select("$value as name", "$key as key")->take(50)->get();
     }
 }

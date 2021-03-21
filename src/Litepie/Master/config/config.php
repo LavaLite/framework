@@ -21,72 +21,69 @@ return [
      * Type of masters used in the project.
      */
     'masters' => [
-        'single' => [
-            'group'  => 'master',
-            'type'   => 'single',
+        [
+            'group' => 'master',
+            'type' => 'default',
             'fields' => [],
         ],
-        'category' => [
-            'group'  => 'master',
-            'type'   => 'category',
-            'fields' => ['parent_id'],
+        [
+            'group' => 'master',
+            'type' => 'test',
+            'fields' => [],
         ],
-        'image' => [
-            'group'  => 'master',
-            'type'   => 'image',
-            'fields' => ['image'],
-        ],
-        'icon' => [
-            'group'  => 'master',
-            'type'   => 'icon',
-            'fields' => ['icon'],
-        ],
-        'project' => [
-            'view'  => 'project.default',
-            'type'  => 'project',
+        [
             'group' => 'project',
+            'type' => 'project',
+            'fields' => [],
         ],
+    ],
+
+    /**
+     * Type of masters used in the project.
+     */
+    'groups' => [
+        'default',
     ],
 
     'master' => [
         'model' => [
-            'model'     => \Litepie\Master\Models\Master::class,
-            'table'     => 'masters',
+            'model' => \Litepie\Master\Models\Master::class,
+            'table' => 'masters',
             'presenter' => \Litepie\Master\Repositories\Presenter\MasterPresenter::class,
-            'hidden'    => [],
-            'visible'   => [],
-            'guarded'   => ['*'],
-            'slugs'     => ['slug' => 'name'],
-            'dates'     => ['deleted_at', 'createdat', 'updated_at'],
-            'appends'   => [],
-            'fillable'  => ['id', 'parent_id', 'type', 'name', 'code', 'amount', 'abbr',
+            'hidden' => [],
+            'visible' => [],
+            'guarded' => ['*'],
+            'slugs' => ['slug' => 'name'],
+            'dates' => ['deleted_at', 'createdat', 'updated_at'],
+            'appends' => [],
+            'fillable' => ['id', 'parent_id', 'type', 'name', 'code', 'amount', 'abbr',
                 'description', 'icon', 'image', 'images', 'files', 'extras',
-                'slug', 'order', 'status', 'created_at', 'updated_at', 'deleted_at', ],
+                'slug', 'order', 'status', 'created_at', 'updated_at', 'deleted_at'],
             'translatables' => [],
             'upload_folder' => 'master/master',
-            'uploads'       => [
+            'uploads' => [
                 'image' => [
                     'count' => 1,
-                    'type'  => 'image',
+                    'type' => 'image',
                 ],
                 'images' => [
                     'count' => 10,
-                    'type'  => 'image',
+                    'type' => 'image',
                 ],
                 'file' => [
                     'count' => 10,
-                    'type'  => 'file',
+                    'type' => 'file',
                 ],
             ],
             'casts' => [
-                'image'  => 'array',
+                'image' => 'array',
                 'images' => 'array',
-                'file'   => 'array',
+                'file' => 'array',
                 'extras' => 'array',
             ],
             'revision' => [],
-            'perPage'  => '20',
-            'search'   => [
+            'perPage' => '20',
+            'search' => [
                 'name' => 'like',
                 'status',
             ],
@@ -94,8 +91,8 @@ return [
 
         'controller' => [
             'provider' => 'Litepie',
-            'package'  => 'Master',
-            'module'   => 'Master',
+            'package' => 'Master',
+            'module' => 'Master',
         ],
 
     ],

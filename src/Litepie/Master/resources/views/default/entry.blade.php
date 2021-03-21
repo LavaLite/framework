@@ -1,6 +1,16 @@
+
+<nav aria-label="breadcrumb" class="mt-20">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="#">Masters</a></li>
+    <li class="breadcrumb-item"><a href="#">Projects</a></li>
+    <li class="breadcrumb-item active" aria-current="page">Project</li>
+  </ol>
+</nav>
+
 <div class='row'>
     <div class='col-md-6 col-sm-12'>
         {!! Form::text('name')
+        -> required('required')
         -> label(trans('master::master.label.name'))
         -> placeholder(trans('master::master.placeholder.name'))!!}
     </div>
@@ -10,21 +20,22 @@
         -> options(trans('master::master.options.status'))
         -> placeholder(trans('master::master.placeholder.status'))!!}
     </div>
-    @if(in_array('icon', config("master.masters.$type.fields", [])))
+    @if(in_array('icon', config("master.masters.$master.fields", [])))
     <div class='col-md-6 col-sm-12'>
         {!! Form::text('icon')
         -> label(trans('master::master.label.icon'))
         -> placeholder(trans('master::master.placeholder.icon'))!!}
     </div>
     @endif
-    @if(in_array('amount', config("master.masters.$type.fields", [])))
+    @if(in_array('amount', config("master.masters.$master.fields", [])))
     <div class='col-md-6 col-sm-12'>
         {!! Form::text('amount')
         -> label(trans('master::master.label.amount'))
         -> placeholder(trans('master::master.placeholder.amount'))!!}
     </div>
     @endif
-    @if(in_array('parent_id', config("master.masters.$type.fields", [])))
+
+    @if(in_array('parent_id', config("master.masters.$master.fields", [])))
     <div class='col-md-6 col-sm-12'>
         {!! Form::select('parent_id')
         -> label(trans('master::master.label.parent_id'))

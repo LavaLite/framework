@@ -23,6 +23,7 @@ class MasterResourceController extends BaseController
     public function __construct()
     {
         parent::__construct();
+
         $this->repository = app()->make(MasterRepositoryInterface::class);
         $this->repository
             ->pushCriteria(\Litepie\Repository\Criteria\RequestCriteria::class)
@@ -34,28 +35,15 @@ class MasterResourceController extends BaseController
      *
      * @return Response
      */
-    public function index(MasterRequest $request, $group = 'masters', $type = null)
+    public function index(MasterRequest $request, $master = null)
     {
-        if ($this->response->typeIs('json')) {
-            return $this->repository
-                ->setPresenter(\Litepie\Master\Repositories\Presenter\MasterPresenter::class)
-                ->paginate();
-        }
-
-        if ($type == null) {
-            $view = 'master::admin.masters';
-        } else {
-            $view = 'master::index';
-        }
-
-        $masters = $this->repository->paginate();
-        $count = $this->repository->typeCount();
         $groups = $this->repository->groups();
-        $mode = 'list';
-
+        $datas = $this->repository
+            ->index($master)
+            ->paginate();
         return $this->response->setMetaTitle(trans('master::master.names'))
-            ->view($view)
-            ->data(compact('masters', 'group', 'groups', 'type', 'count', 'mode'))
+            ->view("master::index")
+            ->data(compact('groups', 'datas', 'master'))
             ->output();
     }
 
@@ -76,7 +64,7 @@ class MasterResourceController extends BaseController
         }
         $parents = $this->repository->options($type)->toArray();
 
-        return $this->response->setMetaTitle(trans('app.view').' '.trans('master::master.name'))
+        return $this->response->setMetaTitle(trans('app.view') . ' ' . trans('master::master.name'))
             ->data(compact('master', 'group', 'type', 'parents'))
             ->view($view)
             ->output();
@@ -89,15 +77,14 @@ class MasterResourceController extends BaseController
      *
      * @return Response
      */
-    public function create(MasterRequest $request, $group, $type)
+    public function create(MasterRequest $request, $group)
     {
         $master = $this->repository->newInstance([]);
-        $parent_id = $request->get('parent_id', 0);
-        $parents = $this->repository->options($type, $parent_id)->toArray();
+        $groups = $this->repository->groups();
 
-        return $this->response->title(trans('app.new').' '.trans('master::master.name'))
+        return $this->response->title(trans('app.new') . ' ' . trans('master::master.name'))
             ->view('master::create')
-            ->data(compact('master', 'group', 'type', 'parents'))
+            ->data(compact('master', 'group', 'groups'))
             ->output();
     }
 
@@ -121,7 +108,7 @@ class MasterResourceController extends BaseController
             return $this->response->message(trans('messages.success.created', ['Module' => trans('master::master.name')]))
                 ->code(204)
                 ->status('success')
-                ->url(guard_url("masters/{$group}/{$type}/master/".$master->getRouteKey()))
+                ->url(guard_url("masters/{$group}/{$type}/master/" . $master->getRouteKey()))
                 ->redirect();
         } catch (Exception $e) {
             return $this->response->message($e->getMessage())
@@ -143,10 +130,11 @@ class MasterResourceController extends BaseController
     public function edit(MasterRequest $request, $group, $type, Master $master)
     {
         $parents = $this->repository->options($type)->toArray();
+        $groups = $this->repository->groups();
 
-        return $this->response->title(trans('app.edit').' '.trans('master::master.name'))
+        return $this->response->title(trans('app.edit') . ' ' . trans('master::master.name'))
             ->view('master::edit')
-            ->data(compact('master', 'group', 'type', 'parents'))
+            ->data(compact('master', 'group', 'groups'))
             ->output();
     }
 
@@ -168,13 +156,13 @@ class MasterResourceController extends BaseController
             return $this->response->message(trans('messages.success.updated', ['Module' => trans('master::master.name')]))
                 ->code(204)
                 ->status('success')
-                ->url(guard_url("masters/{$group}/{$type}/master/".$master->getRouteKey()))
+                ->url(guard_url("masters/{$group}/{$type}/master/" . $master->getRouteKey()))
                 ->redirect();
         } catch (Exception $e) {
             return $this->response->message($e->getMessage())
                 ->code(400)
                 ->status('error')
-                ->url(guard_url("masters/{$group}/{$type}/master/".$master->getRouteKey()))
+                ->url(guard_url("masters/{$group}/{$type}/master/" . $master->getRouteKey()))
                 ->redirect();
         }
     }
@@ -194,13 +182,13 @@ class MasterResourceController extends BaseController
             return $this->response->message(trans('messages.success.deleted', ['Module' => trans('page::page.name')]))
                 ->code(202)
                 ->status('success')
-                ->url(guard_url("masters/{$group}/{$type}/master/".$master->getRouteKey()))
+                ->url(guard_url("masters/{$group}/{$type}/master/" . $master->getRouteKey()))
                 ->redirect();
         } catch (Exception $e) {
             return $this->response->message($e->getMessage())
                 ->code(400)
                 ->status('error')
-                ->url(guard_url("masters/{$group}/{$type}/master/".$page->getRouteKey()))
+                ->url(guard_url("masters/{$group}/{$type}/master/" . $page->getRouteKey()))
                 ->redirect();
         }
     }
