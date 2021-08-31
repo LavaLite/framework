@@ -2,12 +2,14 @@
 
 namespace Litepie\Form;
 
-use Former\FormerServiceProvider;
+use Illuminate\Container\Container;
+use Illuminate\Support\ServiceProvider;
+
 
 /**
  * Register the Former package with the Laravel framework.
  */
-class FormServiceProvider extends FormerServiceProvider
+class FormServiceProvider extends ServiceProvider
 {
     /**
      * Indicates if loading of the provider is deferred.
@@ -23,7 +25,8 @@ class FormServiceProvider extends FormerServiceProvider
      */
     public function boot()
     {
-        // Call pblish redources function
+        $this->loadViewsFrom(__DIR__ . '/resources/views/', 'form');
+
         $this->publishResources();
     }
 
@@ -34,7 +37,7 @@ class FormServiceProvider extends FormerServiceProvider
      */
     public function register()
     {
-        $this->mergeConfigFrom(__DIR__.'/config.php', 'former');
+        $this->mergeConfigFrom(__DIR__.'/config.php', 'form');
 
         $this->app = static::make($this->app);
     }
@@ -46,7 +49,7 @@ class FormServiceProvider extends FormerServiceProvider
      */
     public function provides()
     {
-        return ['form', 'former', 'Former\Former'];
+        return ['form'];
     }
 
     /**
@@ -57,6 +60,27 @@ class FormServiceProvider extends FormerServiceProvider
     private function publishResources()
     {
         // Publish configuration file
-        $this->publishes([__DIR__.'/config.php' => config_path('form.php')], 'config');
+        $this->publishes([__DIR__ . '/config.php' => config_path('form.php')], 'config');
+    }
+
+    /**
+     * Create a Former container
+     *
+     * @param  Container $app
+     *
+     * @return Container
+     */
+    public static function make($app = null)
+    {
+        $app->singleton('form.populator', function ($app) {
+            return new Populator();
+        });
+        $app->singleton('form.field', function ($app) {
+            return new Fields($app);
+        });
+        $app->singleton('form.form', function ($app) {
+            return new Form($app, $app->make('form.populator'), $app->make('form.field'));
+        });
+        return $app;
     }
 }
