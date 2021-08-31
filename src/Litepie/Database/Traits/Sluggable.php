@@ -135,4 +135,14 @@ trait Sluggable
     {
         return defined('static::SLUG_SEPARATOR') ? static::SLUG_SEPARATOR : '-';
     }
+
+    /**
+     * Override the default slug separator.
+     *
+     * @return string
+     */
+    public function findBySlug($slug, $columns = ['*'])
+    {
+        return $this->whereSlug($slug)->first($columns);
+    }
 }
