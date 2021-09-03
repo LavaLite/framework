@@ -14,16 +14,6 @@ trait CheckRoleAndPermission
     protected $role;
 
     /**
-     * Set role for the model.
-     *
-     * @return \Illuminate\Database\Eloquent\Collection
-     */
-    public function setRole($role)
-    {
-        $this->role = app('Litepie\Roles\Interfaces\RoleRepositoryInterface')->findRoleBySlug($role);
-    }
-
-    /**
      * Check if the user has at least one role.
      *
      * @param int|string|array $role
@@ -58,7 +48,7 @@ trait CheckRoleAndPermission
     public function __call($method, $parameters)
     {
         if (Str::startsWith($method, 'is')) {
-            return $this->hasRole(Str::snake(substr($method, 2), config('roles.separator', '.')));
+            return $this->hasRole(Str::snake(substr($method, 2), config('role.separator', '.')));
         }
 
         return parent::__call($method, $parameters);

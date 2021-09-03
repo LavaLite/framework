@@ -15,6 +15,6 @@ trait Slugable
      */
     public function setSlugAttribute($value)
     {
-        $this->attributes['slug'] = Str::slug($value, config('roles.separator'));
+        $this->attributes['slug'] = Str::slug($value, config('role.separator'));
     }
 }

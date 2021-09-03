@@ -2,87 +2,117 @@
 
 namespace Litepie\Roles\Policies;
 
-use Litepie\Roles\Models\Role;
-use Litepie\User\Contracts\UserPolicy;
+use Litepie\User\Interfaces\UserPolicyInterface;
+use Litepie\Roles\Interfaces\RoleRepositoryInterface;
 
 class RolePolicy
 {
+
     /**
      * Determine if the given user can view the role.
      *
-     * @param UserPolicy $user
-     * @param Role       $role
+     * @param UserPolicyInterface $authUser
+     * @param RoleRepositoryInterface $role
      *
      * @return bool
      */
-    public function view(UserPolicy $user, Role $role)
+    public function view(UserPolicyInterface $authUser, RoleRepositoryInterface $role)
     {
-        return false;
+        if ($authUser->canDo('role.role.view')) {
+            return true;
+        }
+
+        return $role->user_id == user_id() && $role->user_type == user_type();
     }
 
     /**
      * Determine if the given user can create a role.
      *
-     * @param UserPolicy $user
-     * @param Role       $role
+     * @param UserPolicyInterface $authUser
+     * @param RoleRepositoryInterface $role
      *
      * @return bool
      */
-    public function create(UserPolicy $user)
+    public function create(UserPolicyInterface $authUser)
     {
-        return  false;
+        return  $authUser->canDo('role.role.create');
     }
 
     /**
      * Determine if the given user can update the given role.
      *
-     * @param UserPolicy $user
-     * @param Role       $role
+     * @param UserPolicyInterface $authUser
+     * @param RoleRepositoryInterface $role
      *
      * @return bool
      */
-    public function update(UserPolicy $user, Role $role)
+    public function update(UserPolicyInterface $authUser, RoleRepositoryInterface $role)
     {
-        return false;
+        if ($authUser->canDo('role.role.edit')) {
+            return true;
+        }
+
+        return $role->user_id == user_id() && $role->user_type == user_type();
     }
 
     /**
      * Determine if the given user can delete the given role.
      *
-     * @param UserPolicy $user
-     * @param Role       $role
+     * @param UserPolicyInterface $authUser
+     * @param RoleRepositoryInterface $role
      *
      * @return bool
      */
-    public function destroy(UserPolicy $user, Role $role)
+    public function destroy(UserPolicyInterface $authUser, RoleRepositoryInterface $role)
     {
-        return false;
+        return $role->user_id == user_id() && $role->user_type == user_type();
     }
 
     /**
      * Determine if the given user can verify the given role.
      *
-     * @param UserPolicy $user
-     * @param Role       $role
+     * @param UserPolicyInterface $authUser
+     * @param RoleRepositoryInterface $role
      *
      * @return bool
      */
-    public function verify(UserPolicy $user, Role $role)
+    public function verify(UserPolicyInterface $authUser, RoleRepositoryInterface $role)
     {
+        if ($authUser->canDo('role.role.verify')) {
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
+     * Determine if the given user can approve the given role.
+     *
+     * @param UserPolicyInterface $authUser
+     * @param RoleRepositoryInterface $role
+     *
+     * @return bool
+     */
+    public function approve(UserPolicyInterface $authUser, RoleRepositoryInterface $role)
+    {
+        if ($authUser->canDo('role.role.approve')) {
+            return true;
+        }
+
         return false;
     }
 
     /**
      * Determine if the user can perform a given action ve.
      *
-     * @param [type] $user    [description]
+     * @param [type] $authUser    [description]
      * @param [type] $ability [description]
      *
      * @return [type] [description]
      */
-    public function before($user, $ability)
+    public function before($authUser, $ability)
     {
-        if ($user->isSuperuser()) {
+        if ($authUser->isSuperuser()) {
             return true;
         }
     }

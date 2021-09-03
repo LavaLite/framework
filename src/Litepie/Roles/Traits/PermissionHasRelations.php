@@ -11,7 +11,7 @@ trait PermissionHasRelations
      */
     public function roles()
     {
-        return $this->belongsToMany(config('roles.role.model.model'))->withTimestamps();
+        return $this->belongsToMany(config('role.role.model.model'))->withTimestamps();
     }
 
     /**
