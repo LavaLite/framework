@@ -6,16 +6,14 @@ use Litepie\Settings\Interfaces\SettingRepositoryInterface;
 
 class Settings
 {
-    /**
-     * $setting object.
-     */
-    protected $setting;
+    
 
     /**
      * Constructor.
      */
-    public function __construct(SettingRepositoryInterface $setting)
-    {
+    public function __construct(
+        SettingRepositoryInterface $setting
+    ) {
         $this->setting = $setting;
     }
 

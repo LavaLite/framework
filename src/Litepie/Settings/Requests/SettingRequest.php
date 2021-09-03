@@ -1,9 +1,8 @@
 <?php
 
-namespace Litepie\Settings\Http\Requests;
+namespace Litepie\Settings\Requests;
 
 use Litepie\Http\Request\AbstractRequest;
-use Litepie\Settings\Models\Setting;
 
 class SettingRequest extends AbstractRequest
 {
@@ -18,12 +17,12 @@ class SettingRequest extends AbstractRequest
 
         if (is_null($this->model)) {
             // Determine if the user is authorized to access setting module,
-            return $this->formRequest->user()->can('view', app(Setting::class));
+            return $this->user()->can('view', app(config('setting.setting.model.repository')));
         }
 
         if ($this->isWorkflow()) {
             // Determine if the user is authorized to change status of an entry,
-            return $this->can($this->getStatus());
+            return $this->can($this->getTransition());
         }
 
         if ($this->isCreate() || $this->isStore()) {
@@ -38,11 +37,12 @@ class SettingRequest extends AbstractRequest
 
         if ($this->isDelete()) {
             // Determine if the user is authorized to delete an entry,
-            return $this->can('delete');
+            return $this->can('destroy');
         }
 
         // Determine if the user is authorized to view the module.
         return $this->can('view');
+
     }
 
     /**
@@ -71,4 +71,5 @@ class SettingRequest extends AbstractRequest
 
         ];
     }
+
 }

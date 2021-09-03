@@ -2,86 +2,113 @@
 
 namespace Litepie\Settings\Policies;
 
-use Litepie\Settings\Models\Setting;
-use Litepie\User\Contracts\UserPolicy;
+use Litepie\User\Interfaces\UserPolicyInterface;
+use Litepie\Settings\Interfaces\SettingRepositoryInterface;
 
 class SettingPolicy
 {
+
     /**
      * Determine if the given user can view the setting.
      *
-     * @param UserPolicy $user
-     * @param Setting    $setting
+     * @param UserPolicyInterface $authUser
+     * @param SettingRepositoryInterface $setting
      *
      * @return bool
      */
-    public function view(UserPolicy $user, Setting $setting)
+    public function view(UserPolicyInterface $authUser, SettingRepositoryInterface $setting)
     {
-        if ($user->canDo('settings.setting.view')) {
+        if ($authUser->canDo('settings.setting.view')) {
             return true;
         }
 
-        return $user->id == $setting->user_id;
+        return $setting->user_id == user_id() && $setting->user_type == user_type();
     }
 
     /**
      * Determine if the given user can create a setting.
      *
-     * @param UserPolicy $user
-     * @param Setting    $setting
+     * @param UserPolicyInterface $authUser
      *
      * @return bool
      */
-    public function create(UserPolicy $user)
+    public function create(UserPolicyInterface $authUser)
     {
-        return  $user->canDo('settings.setting.create');
+        return  $authUser->canDo('settings.setting.create');
     }
 
     /**
      * Determine if the given user can update the given setting.
      *
-     * @param UserPolicy $user
-     * @param Setting    $setting
+     * @param UserPolicyInterface $authUser
+     * @param SettingRepositoryInterface $setting
      *
      * @return bool
      */
-    public function update(UserPolicy $user, Setting $setting)
+    public function update(UserPolicyInterface $authUser, SettingRepositoryInterface $setting)
     {
-        if ($user->canDo('settings.setting.update') && $user->isAdmin()) {
+        if ($authUser->canDo('settings.setting.edit')) {
             return true;
         }
 
-        return $user->id == $setting->user_id;
+        return $setting->user_id == user_id() && $setting->user_type == user_type();
     }
 
     /**
      * Determine if the given user can delete the given setting.
      *
-     * @param UserPolicy $user
-     * @param Setting    $setting
+     * @param UserPolicyInterface $authUser
      *
      * @return bool
      */
-    public function destroy(UserPolicy $user, Setting $setting)
+    public function destroy(UserPolicyInterface $authUser, SettingRepositoryInterface $setting)
     {
-        if ($user->canDo('settings.setting.delete') && $user->isAdmin()) {
+        return $setting->user_id == user_id() && $setting->user_type == user_type();
+    }
+
+    /**
+     * Determine if the given user can verify the given setting.
+     *
+     * @param UserPolicyInterface $authUser
+     *
+     * @return bool
+     */
+    public function verify(UserPolicyInterface $authUser, SettingRepositoryInterface $setting)
+    {
+        if ($authUser->canDo('settings.setting.verify')) {
             return true;
         }
 
-        return $user->id == $setting->user_id;
+        return false;
+    }
+
+    /**
+     * Determine if the given user can approve the given setting.
+     *
+     * @param UserPolicyInterface $authUser
+     *
+     * @return bool
+     */
+    public function approve(UserPolicyInterface $authUser, SettingRepositoryInterface $setting)
+    {
+        if ($authUser->canDo('settings.setting.approve')) {
+            return true;
+        }
+
+        return false;
     }
 
     /**
      * Determine if the user can perform a given action ve.
      *
-     * @param [type] $user    [description]
+     * @param [type] $authUser    [description]
      * @param [type] $ability [description]
      *
      * @return [type] [description]
      */
-    public function before($user, $ability)
+    public function before($authUser, $ability)
     {
-        if ($user->isSuperuser()) {
+        if ($authUser->isSuperuser()) {
             return true;
         }
     }
