@@ -45,10 +45,10 @@ trait InstallCommands
      * @var array
      */
     protected $model = [
-        'superuser' => '\App\Models\User',
-        'admin' => '\App\Models\User',
-        'user' => '\App\Models\User',
-        'client' => '\App\Models\Client',
+        'superuser' => '\Litepie\PackageR\Models\User',
+        'admin' => '\Litepie\PackageR\Models\User',
+        'user' => '\Litepie\PackageR\Models\User',
+        'client' => '\Litepie\PackageR\Models\Client',
     ];
 
     /**
