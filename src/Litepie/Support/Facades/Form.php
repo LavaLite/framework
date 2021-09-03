@@ -13,6 +13,6 @@ class Form extends Facade
      */
     protected static function getFacadeAccessor()
     {
-        return 'former';
+        return 'form.form';
     }
 }
