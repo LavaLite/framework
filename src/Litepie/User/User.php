@@ -2,6 +2,7 @@
 
 namespace Litepie\User;
 
+
 /*
  *
  * Part of the Litepie package.
@@ -11,12 +12,11 @@ namespace Litepie\User;
  * @version    5.1.0
  */
 
-use App\Interfaces\User\UserRepositoryInterface;
-use Form;
 use Illuminate\Contracts\Auth\Authenticatable;
-use Illuminate\Contracts\Foundation\Application;
 use Litepie\Roles\Interfaces\PermissionRepositoryInterface;
 use Litepie\Roles\Interfaces\RoleRepositoryInterface;
+use Litepie\User\Interfaces\UserRepositoryInterface;
+use Illuminate\Contracts\Foundation\Application;
 
 /**
  * User wrapper class.
@@ -42,8 +42,7 @@ class User
      * @var role repository variable
      */
     protected $role;
-
-    /**
+        /**
      *  Initialize User.
      *
      * @param \Litepie\Contracts\User\User                 $user
@@ -137,7 +136,7 @@ class User
      *
      * @return bool
      */
-    public function once(array $user, $guard = null)
+    public function once(Authenticatable $user, $guard = null)
     {
         return $this->app['auth']->guard($guard)->once($user);
     }
@@ -177,29 +176,11 @@ class User
     }
 
     /**
-     * Get the current authenticated user.
-     *
-     * @return \Illuminate\Contracts\Auth\Authenticatable|null
-     */
-    public function getUser($guard = null)
-    {
-        return $this->app['auth']->guard($guard)->user();
-    }
-
-    /**
      * @return \Illuminate\Database\Eloquent\Collection
      */
-    public function permissionsList()
+    public function permissions()
     {
         return $this->permission->getList('name', 'id');
-    }
-
-    /**
-     * @return \Illuminate\Database\Eloquent\Collection
-     */
-    public function rolesList()
-    {
-        return $this->role->pluck('name', 'id')->all();
     }
 
     /**
@@ -225,45 +206,19 @@ class User
      */
     public function users($field)
     {
-        if (!is_null($this->getUser())) {
-            return $this->getUser()->$field;
+        if (!is_null($this->user())) {
+            return $this->user()->$field;
         }
     }
 
     /**
-     * Return the profile update page.
+     * Return all users.
      *
-     * @return Response
-     */
-    public function profile($view, $guard = null)
-    {
-        $user = $this->getUser($guard);
-
-        Form::populate($user);
-
-        return view($view, compact('user'));
-    }
-
-    /**
-     * Return the profile update page.
-     *
-     * @return Response
+     * @return Collection
      */
     public function all()
     {
         return $this->user->all();
-    }
-
-    /**
-     * Return change password form.
-     *
-     * @return Response
-     */
-    public function password($view, $guard = null)
-    {
-        $user = $this->getUser($guard);
-
-        return view($view, compact('user'));
     }
 
     /**
@@ -283,17 +238,13 @@ class User
      */
     public function setRouteGuard()
     {
-        $segments = request()->segments();
+        $segments = request()->route('guard');
         $guard = array_intersect(array_keys(config('auth.guards')), $segments);
 
-        if (!empty($guard)) {
-            $guard = current($guard);
-        } else {
-            $guard = 'client';
-        }
+        $guard = (!empty($guard)) ? current($guard) : 'client';
         $sub = in_array('api', $segments) ? 'api' : 'web';
 
-        $this->getSetGuard("{$guard}.{$sub}");
+        $this->guard("{$guard}.{$sub}");
 
         return $guard;
     }
@@ -305,10 +256,10 @@ class User
      */
     public function urlPrefixGuard($url)
     {
-        $guards = $this->getSetGuard() ?: config('auth.defaults.guard');
+        $guards = $this->guard();
         $prefix = current(explode('.', $guards));
 
-        return $prefix.'/'.trim($url, '/\\');
+        return $prefix . '/' . trim($url, '/\\');
     }
 
     /**
@@ -316,30 +267,18 @@ class User
      *
      * @return bool
      */
-    public function getSetGuard($guard = null)
+    public function guard($guard = null)
     {
         if (empty($guard)) {
-            $guard = getenv('guard');
-
-            return empty($guard) ? config('auth.defaults.guard') : $guard;
+            return config('guard', config('auth.defaults.guard'));
         } else {
-            putenv("guard={$guard}");
-            app('auth')->shouldUse("{$guard}");
+            config(['guard' => $guard]);
+            app('auth')->shouldUse($guard);
         }
-    }
-
-    /**
-     * Return the count of records.
-     *
-     * @return Response
-     */
-    public function count()
-    {
-        return $this->user->count();
     }
 
     public function getUserByRole($role)
     {
-        return $this->user->getUserByRole();
+        return $this->user->getUserByRole($role);
     }
 }
