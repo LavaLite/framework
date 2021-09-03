@@ -2,82 +2,80 @@
 
 namespace Litepie\Team\Policies;
 
-use Litepie\User\Contracts\UserPolicy;
-use Litepie\User\Models\Team;
+use Litepie\User\Interfaces\UserPolicyInterface;
+use Litepie\Team\Interfaces\TeamRepositoryInterface;
 
 class TeamPolicy
 {
+
     /**
      * Determine if the given user can view the team.
      *
-     * @param UserPolicy $user
-     * @param Team       $team
+     * @param UserPolicyInterface $authUser
+     * @param TeamRepositoryInterface $team
      *
      * @return bool
      */
-    public function view(UserPolicy $user, Team $team)
+    public function view(UserPolicyInterface $authUser, TeamRepositoryInterface $team)
     {
-        if ($user->canDo('teams.team.view') && $user->isAdmin()) {
+        if ($authUser->canDo('team.team.view')) {
             return true;
         }
 
-        return false;
+        return $team->user_id == user_id() && $team->user_type == user_type();
     }
 
     /**
      * Determine if the given user can create a team.
      *
-     * @param UserPolicy $user
-     * @param Team       $team
+     * @param UserPolicyInterface $authUser
      *
      * @return bool
      */
-    public function create(UserPolicy $user)
+    public function create(UserPolicyInterface $authUser)
     {
-        return $user->canDo('teams.team.create');
+        return  $authUser->canDo('team.team.create');
     }
 
     /**
      * Determine if the given user can update the given team.
      *
-     * @param UserPolicy $user
-     * @param Team       $team
+     * @param UserPolicyInterface $authUser
+     * @param TeamRepositoryInterface $team
      *
      * @return bool
      */
-    public function update(UserPolicy $user, Team $team)
+    public function update(UserPolicyInterface $authUser, TeamRepositoryInterface $team)
     {
-        if ($user->canDo('teams.team.edit') && $user->isAdmin()) {
+        if ($authUser->canDo('team.team.edit')) {
             return true;
         }
 
-        return false;
+        return $team->user_id == user_id() && $team->user_type == user_type();
     }
 
     /**
      * Determine if the given user can delete the given team.
      *
-     * @param UserPolicy $user
-     * @param Team       $team
+     * @param UserPolicyInterface $authUser
      *
      * @return bool
      */
-    public function destroy(UserPolicy $user, Team $team)
+    public function destroy(UserPolicyInterface $authUser, TeamRepositoryInterface $team)
     {
-        return false;
+        return $team->user_id == user_id() && $team->user_type == user_type();
     }
 
     /**
      * Determine if the given user can verify the given team.
      *
-     * @param UserPolicy $user
-     * @param Team       $team
+     * @param UserPolicyInterface $authUser
      *
      * @return bool
      */
-    public function verify(UserPolicy $user, Team $team)
+    public function verify(UserPolicyInterface $authUser, TeamRepositoryInterface $team)
     {
-        if ($user->canDo('teams.team.verify')) {
+        if ($authUser->canDo('team.team.verify')) {
             return true;
         }
 
@@ -87,14 +85,13 @@ class TeamPolicy
     /**
      * Determine if the given user can approve the given team.
      *
-     * @param UserPolicy $user
-     * @param Team       $team
+     * @param UserPolicyInterface $authUser
      *
      * @return bool
      */
-    public function approve(UserPolicy $user, Team $team)
+    public function approve(UserPolicyInterface $authUser, TeamRepositoryInterface $team)
     {
-        if ($user->canDo('teams.team.approve')) {
+        if ($authUser->canDo('team.team.approve')) {
             return true;
         }
 
@@ -104,14 +101,14 @@ class TeamPolicy
     /**
      * Determine if the user can perform a given action ve.
      *
-     * @param [type] $user    [description]
+     * @param [type] $authUser    [description]
      * @param [type] $ability [description]
      *
      * @return [type] [description]
      */
-    public function before($user, $ability)
+    public function before($authUser, $ability)
     {
-        if ($user->isSuperuser()) {
+        if ($authUser->isSuperuser()) {
             return true;
         }
     }

@@ -1,9 +1,8 @@
 <?php
 
-namespace Litepie\Team\Http\Requests;
+namespace Litepie\Team\Requests;
 
 use Litepie\Http\Request\AbstractRequest;
-use Litepie\Team\Models\Team;
 
 class TeamRequest extends AbstractRequest
 {
@@ -18,12 +17,12 @@ class TeamRequest extends AbstractRequest
 
         if (is_null($this->model)) {
             // Determine if the user is authorized to access team module,
-            return $this->user()->can('view', app(Team::class));
+            return $this->user()->can('view', app(config('team.team.model.repository')));
         }
 
         if ($this->isWorkflow()) {
             // Determine if the user is authorized to change status of an entry,
-            return $this->can($this->getStatus());
+            return $this->can($this->getTransition());
         }
 
         if ($this->isCreate() || $this->isStore()) {
@@ -43,6 +42,7 @@ class TeamRequest extends AbstractRequest
 
         // Determine if the user is authorized to view the module.
         return $this->can('view');
+
     }
 
     /**
@@ -71,4 +71,5 @@ class TeamRequest extends AbstractRequest
 
         ];
     }
+
 }
