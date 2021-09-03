@@ -138,27 +138,6 @@ if (!function_exists('trans_setlocale')) {
     }
 }
 
-if (!function_exists('checkbox_array')) {
-    /**
-     * Convert array to use in form check box.
-     *
-     * @param array  $array
-     * @param string $name
-     * @param array  $options
-     *
-     * @return array
-     */
-    function checkbox_array(array $array, $name, $options = [])
-    {
-        $return = [];
-
-        foreach ($array as $key => $val) {
-            $return[$val] = array_merge(['name' => "{$name}[{$key}]"], $options);
-        }
-
-        return $return;
-    }
-}
 
 if (!function_exists('pager_array')) {
     /**
@@ -192,7 +171,7 @@ if (!function_exists('user_type')) {
         $guard = is_null($guard) ? getenv('guard') : $guard;
         $provider = config('auth.guards.'.$guard.'.provider', 'users');
 
-        return config("auth.providers.$provider.model", \App\Models\User::class);
+        return config("auth.providers.$provider.model", \Litepie\PackageR\Models\User::class);
     }
 }
 
@@ -224,21 +203,7 @@ if (!function_exists('guard')) {
      */
     function guard($guard = null)
     {
-        return User::getSetGuard($guard);
-    }
-}
-
-if (!function_exists('guards')) {
-    /**
-     * Return the current guards.
-     *
-     * @param string $property
-     *
-     * @return mixed
-     */
-    function guards()
-    {
-        return User::getGuards();
+        return User::guard($guard);
     }
 }
 
@@ -332,7 +297,7 @@ if (!function_exists('format_date_time')) {
     /**
      * Format datetime.
      *
-     * @param date   $datetime
+     * @param string $datetime
      * @param string $format
      *
      * @return datetime
