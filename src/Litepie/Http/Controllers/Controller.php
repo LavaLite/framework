@@ -2,16 +2,10 @@
 
 namespace Litepie\Http\Controllers;
 
-use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
-use Illuminate\Foundation\Bus\DispatchesJobs;
-use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Routing\Controller as BaseController;
 
 class Controller extends BaseController
 {
-    use AuthorizesRequests;
-    use DispatchesJobs;
-    use ValidatesRequests;
 
     /**
      * @var store response object
@@ -19,10 +13,12 @@ class Controller extends BaseController
     public $response;
 
     /**
-     * @var store repository object
+     * Unset guard and trans route elements.
+     *
+     * @var method
+     *
+     * @return void
      */
-    public $repository;
-
     public function callAction($method, $parameters)
     {
         unset($parameters['guard']);
@@ -30,4 +26,5 @@ class Controller extends BaseController
 
         return parent::callAction($method, $parameters);
     }
+
 }
