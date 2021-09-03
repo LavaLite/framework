@@ -19,7 +19,7 @@ if (Trans::isMultilingual()) {
         function () {
             Route::group(['prefix' => '{guard}/menu'], function () {
                 Route::post('menu/{id}/tree', 'MenuResourceController@tree');
-                // Route::get('menu/{id}/test', 'MenuResourceController@test');
+                Route::get('menu/{id}/test', 'MenuResourceController@test');
                 Route::get('menu/{id}/nested', 'MenuResourceController@nested');
 
                 Route::resource('menu', 'MenuResourceController');

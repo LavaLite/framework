@@ -6,6 +6,7 @@ namespace Litepie\Menu\Http\Controllers;
 
 use Form;
 use Litepie\Http\Controllers\ResourceController as BaseController;
+use Litepie\Menu\Forms\Menu as MenuForm;
 use Litepie\Menu\Http\Requests\MenuRequest;
 use Litepie\Menu\Interfaces\MenuRepositoryInterface;
 use Litepie\Menu\Models\Menu;
@@ -23,6 +24,8 @@ class MenuResourceController extends BaseController
     public function __construct(MenuRepositoryInterface $menu)
     {
         parent::__construct();
+        $this->form = MenuForm::setAttributes()->toArray();
+        $this->modules = $this->modules(config('menu.modules'), 'menu', guard_url('menu'));
         $this->repository = $menu;
     }
 
@@ -37,15 +40,14 @@ class MenuResourceController extends BaseController
 
         $parent = $this->repository->find(hashids_encode($parent));
         $rootMenu = $this->repository->rootMenues();
-        $view = 'menu::index';
-        if ($request->ajax()) {
-            $view = 'menu::list';
-        }
+
+        $form = $this->form;
+        $modules = $this->modules;
 
         return $this->response->setMetaTitle(trans('menu::menu.names'))
-                ->view($view)
-                ->data(compact('rootMenu', 'parent'))
-                ->output();
+            ->view('litepie.menu.admin.list')
+            ->data(compact('rootMenu', 'parent', 'modules', 'form'))
+            ->output();
     }
 
     /**
@@ -59,17 +61,17 @@ class MenuResourceController extends BaseController
     public function show(MenuRequest $request, $parent = 1)
     {
         if ($request->ajax()) {
-            $menu = $parent;
+            $menu = $parent->model;
 
             Form::populate($menu);
 
-            return view('menu::show', compact('menu'));
+            return view('litepie.menu.admin.show', compact('menu'));
         }
 
         $rootMenu = $this->repository->rootMenues();
 
         return $this->response->setMetaTitle(trans('menu::menu.names'))
-            ->view('menu::index', true)
+            ->view('litepie.menu.admin.index')
             ->data(compact('rootMenu', 'parent'))
             ->output();
     }
@@ -81,13 +83,13 @@ class MenuResourceController extends BaseController
      *
      * @return Response
      */
-    public function create(MenuRequest $request, Menu $menu)
+    public function create(MenuRequest $request, MenuRepositoryInterface $menu)
     {
         $menu = $this->repository->newInstance([]);
 
         Form::populate($menu);
 
-        return view('menu::create', compact('menu'));
+        return view('litepie.menu.admin.create', compact('menu'));
     }
 
     /**
@@ -107,7 +109,7 @@ class MenuResourceController extends BaseController
                 ->message(trans('messages.success.created', ['Module' => trans('menu::menu.name')]))
                 ->code(204)
                 ->status('success')
-                ->url(guard_url('menu/menu/'.$menu->getRouteKey()))
+                ->url(guard_url('menu/menu/' . $menu->getRouteKey()))
                 ->redirect();
         } catch (Exception $e) {
             return $this->response
@@ -127,12 +129,12 @@ class MenuResourceController extends BaseController
      *
      * @return Response
      */
-    public function edit(MenuRequest $request, $menu)
+    public function edit(MenuRequest $request, MenuRepositoryInterface $menu)
     {
         $data['menu'] = $menu;
         Form::populate($data['menu']);
 
-        return view('menu::edit', $data);
+        return view('litepie.menu.admin.edit', $data);
     }
 
     /**
@@ -143,7 +145,7 @@ class MenuResourceController extends BaseController
      *
      * @return Response
      */
-    public function update(MenuRequest $request, $menu)
+    public function update(MenuRequest $request, MenuRepositoryInterface $menu)
     {
         try {
             $attributes = $request->all();
@@ -153,13 +155,13 @@ class MenuResourceController extends BaseController
             return $this->response->message(trans('messages.success.updated', ['Module' => trans('menu::menu.name')]))
                 ->code(204)
                 ->status('success')
-                ->url(guard_url('menu/menu/'.$menu->getRouteKey()))
+                ->url(guard_url('menu/menu/' . $menu->getRouteKey()))
                 ->redirect();
         } catch (Exception $e) {
             return $this->response->message($e->getMessage())
                 ->code(400)
                 ->status('error')
-                ->url(guard_url('menu/menu/'.$menu->getRouteKey()))
+                ->url(guard_url('menu/menu/' . $menu->getRouteKey()))
                 ->redirect();
         }
     }
@@ -171,17 +173,18 @@ class MenuResourceController extends BaseController
      *
      * @return Response
      */
-    public function destroy(MenuRequest $request, Menu $menu)
+    public function destroy(MenuRequest $request, MenuRepositoryInterface $menu)
     {
         $cid = $menu->id;
 
-        if ($this->repository->findByField('parent_id', $cid)->count() > 0) {
+        if ($this->repository->where('parent_id', $cid)->count() > 0) {
             return response()->json([
                 'message' => 'Child menu exists.',
-                'type'    => 'warning',
-                'title'   => 'Warning',
+                'type' => 'warning',
+                'title' => 'Warning',
             ], 409);
         }
+        $data = $menu->toArray();
 
         try {
             $menu->delete();
@@ -189,13 +192,13 @@ class MenuResourceController extends BaseController
             return $this->response->message(trans('messages.success.deleted', ['Module' => trans('menu::menu.name')]))
                 ->code(202)
                 ->status('success')
-                ->url(guard_url('menu/menu/'.$menu->getRouteKey()))
+                ->url(guard_url('menu/menu/' . $data['id']))
                 ->redirect();
         } catch (Exception $e) {
             return $this->response->message($e->getMessage())
                 ->code(400)
                 ->status('error')
-                ->url(guard_url('menu/menu/'.$menu->getRouteKey()))
+                ->url(guard_url('menu/menu/' . $data['id']))
                 ->redirect();
         }
     }

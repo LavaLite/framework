@@ -26,7 +26,7 @@ class SubMenuResourceController extends ResourceController
 
         $menus = $this->repository->find($id)->getChildren();
         return $this->response->setMetaTitle(trans('menu::menu.names'))
-                ->view('menu::menu.nestable')
+                ->view('litepie.menu.admin.menu.nestable')
                 ->data(compact('menus'))
                 ->output();
     }
@@ -39,12 +39,12 @@ class SubMenuResourceController extends ResourceController
      *
      * @return Response
      */
-    public function show(MenuRequest $request, $id)
+    public function show(MenuRequest $request, MenuRepositoryInterface $menu)
     {
-        $menu = $this->repository->find($id);
+
         Form::populate($menu);
 
-        return view('menu::sub.show', compact('menu'));
+        return view('litepie.menu.admin.sub.show', compact('menu'));
     }
 
     /**
@@ -61,7 +61,7 @@ class SubMenuResourceController extends ResourceController
 
         Form::populate($menu);
 
-        return view('menu::sub.create', compact('menu'));
+        return view('litepie.menu.admin.sub.create', compact('menu'));
     }
 
     /**
@@ -102,13 +102,12 @@ class SubMenuResourceController extends ResourceController
      *
      * @return Response
      */
-    public function edit(MenuRequest $request, $id)
+    public function edit(MenuRequest $request, MenuRepositoryInterface $menu)
     {
-        $menu = $this->repository->find($id);
 
         Form::populate($menu);
 
-        return view('menu::sub.edit', compact('menu'));
+        return view('litepie.menu.admin.sub.edit', compact('menu'));
     }
 
     /**
@@ -119,23 +118,22 @@ class SubMenuResourceController extends ResourceController
      *
      * @return Response
      */
-    public function update(MenuRequest $request, $id)
+    public function update(MenuRequest $request, MenuRepositoryInterface $menu)
     {
         try {
             $attributes = $request->all();
-
-            $menu = $this->repository->update($attributes, $id);
-
+            
+            $menu->update($attributes);
             return $this->response->message(trans('messages.success.updated', ['Module' => trans('menu::menu.name')]))
                 ->code(204)
                 ->status('success')
-                ->url(guard_url('menu/submenu/'.$menu->getRouteKey()))
+                ->url(guard_url('menu/submenu/'.$menu->parent->getRouteKey()))
                 ->redirect();
         } catch (Exception $e) {
             return $this->response->message($e->getMessage())
                 ->code(400)
                 ->status('error')
-                ->url(guard_url('menu/submenu/'.$menu->getRouteKey()))
+                ->url(guard_url('menu/submenu/'.$menu->parent->getRouteKey()))
                 ->redirect();
         }
     }

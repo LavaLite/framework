@@ -4,11 +4,18 @@ namespace Litepie\Menu\Repositories\Eloquent;
 
 use Illuminate\Support\Arr;
 use Litepie\Menu\Interfaces\MenuRepositoryInterface;
-use Litepie\Repository\Eloquent\BaseRepository;
+use Litepie\Menu\Repositories\Eloquent\Presenters\MenuItemPresenter;
+use Litepie\Repository\BaseRepository;
 
 class MenuRepository extends BaseRepository implements MenuRepositoryInterface
 {
+
     public $tempHolder;
+
+    public function boot()
+    {
+        $this->fieldSearchable = config('menu.menu.model.search');
+    }
 
     /**
      * Specify Model class name.
@@ -17,7 +24,17 @@ class MenuRepository extends BaseRepository implements MenuRepositoryInterface
      */
     public function model()
     {
-        return config('menu.menu.model');
+        return config('menu.menu.model.model');
+    }
+
+    /**
+     * Returns the default presenter if none is availabale.
+     *
+     * @return void
+     */
+    public function presenter()
+    {
+        return MenuItemPresenter::class;
     }
 
     /**
@@ -40,10 +57,11 @@ class MenuRepository extends BaseRepository implements MenuRepositoryInterface
         $tree = json_decode($json, true);
         $this->tempHolder = [];
         $this->getParentChild($id, $tree);
-
         foreach ($this->tempHolder as $parent => $children) {
             foreach ($children as $key => $val) {
-                $this->update(['parent_id' => $parent, 'order' => $key], $val);
+                $model = $this->find(hashids_decode($val));
+                $model->fill(['parent_id' => $parent, 'order' => $key]);
+                $model->save();
             }
         }
     }
@@ -55,36 +73,9 @@ class MenuRepository extends BaseRepository implements MenuRepositoryInterface
      *
      * @return int
      */
-    public function delete($id)
-    {
-        $this->applyScope();
-
-        $_skipPresenter = $this->skipPresenter;
-        $this->skipPresenter(true);
-
-        $model = $this->find($id);
-        $originalModel = clone $model;
-
-        $this->skipPresenter($_skipPresenter);
-        $this->resetModel();
-
-        $deleted = $model->delete();
-
-        event(new RepositoryEntityDeleted($this, $originalModel));
-
-        return $deleted;
-    }
-
-    /**
-     * Delete a entity in repository by id.
-     *
-     * @param $id
-     *
-     * @return int
-     */
     public function getMenu($key)
     {
-        return $menus = $this->orderBy('order', 'ASC')
+        return $this->orderBy('order', 'ASC')
             ->all()
             ->toMenu($key);
     }

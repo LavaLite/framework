@@ -5,6 +5,7 @@ namespace Litepie\Menu\Models;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Litepie\Database\Model;
 use Litepie\Database\Traits\Sluggable;
+use Litepie\Filer\Traits\Filer;
 use Litepie\Hashids\Traits\Hashids;
 use Litepie\Node\Traits\SimpleNode;
 use Litepie\Trans\Traits\Translatable;
@@ -15,6 +16,7 @@ class Menu extends Model
     use Sluggable;
     use Translatable;
     use SoftDeletes;
+    use Filer;
     use SimpleNode;
 
     /**
@@ -22,7 +24,7 @@ class Menu extends Model
      *
      * @var array
      */
-    protected $config = 'menu.menu';
+    protected $config = 'menu.menu.model';
 
     public function getHasRoleAttribute($value)
     {
@@ -35,5 +37,10 @@ class Menu extends Model
         }
 
         return false;
+    }
+
+    public function parentRouteKey()
+    {
+        return hashids_encode($this->parent_id);
     }
 }
