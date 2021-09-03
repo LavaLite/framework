@@ -2,14 +2,16 @@
 
 namespace Litepie\Team\Repositories\Eloquent;
 
-use Litepie\Repository\Eloquent\BaseRepository;
 use Litepie\Team\Interfaces\TeamRepositoryInterface;
+use Litepie\Repository\BaseRepository;
+
 
 class TeamRepository extends BaseRepository implements TeamRepositoryInterface
 {
+
     public function boot()
     {
-        $this->fieldSearchable = config('teams.team.model.search');
+        $this->fieldSearchable = config('team.team.model.search');
     }
 
     /**
@@ -19,9 +21,9 @@ class TeamRepository extends BaseRepository implements TeamRepositoryInterface
      */
     public function model()
     {
-        return config('teams.team.model.model');
+        return config('team.team.model.model');
     }
-
+    
     /**
      * Attach a user to a team.
      *

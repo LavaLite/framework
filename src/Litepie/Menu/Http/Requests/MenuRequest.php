@@ -13,10 +13,12 @@ class MenuRequest extends AbstractRequest
      */
     public function authorize()
     {
+
         $this->model = $this->route('menu');
+
         if (is_null($this->model)) {
             // Determine if the user is authorized to access menu module,
-            return $this->user()->can('view', app(config('menu.menu.model')));
+            return $this->user()->can('view', app(config('menu.menu.model.repository')));
         }
 
         if ($this->isWorkflow()) {

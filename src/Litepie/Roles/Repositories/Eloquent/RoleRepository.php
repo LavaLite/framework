@@ -2,14 +2,16 @@
 
 namespace Litepie\Roles\Repositories\Eloquent;
 
-use Litepie\Repository\Eloquent\BaseRepository;
 use Litepie\Roles\Interfaces\RoleRepositoryInterface;
+use Litepie\Repository\BaseRepository;
 
 class RoleRepository extends BaseRepository implements RoleRepositoryInterface
 {
+
+
     public function boot()
     {
-        $this->fieldSearchable = config('roles.role.model.search');
+
     }
 
     /**
@@ -19,18 +21,6 @@ class RoleRepository extends BaseRepository implements RoleRepositoryInterface
      */
     public function model()
     {
-        return config('roles.role.model.model');
-    }
-
-    /**
-     * Find a user by its key.
-     *
-     * @param type $key
-     *
-     * @return type
-     */
-    public function findRoleBySlug($key)
-    {
-        return $this->model->whereSlug($key)->first();
+        return config('role.role.model.model');
     }
 }

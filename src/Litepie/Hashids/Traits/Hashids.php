@@ -9,9 +9,10 @@ trait Hashids
      *
      * @return string
      */
-    public function findOrFail($id, $columns = ['*'])
+    public static function findOrFail($id, $columns = ['*'])
     {
-        return parent::findOrFail(hashids_decode($id), $columns);
+        $id = hashids_decode($id);
+        return parent::findOrFail($id, $columns);
     }
 
     /**
@@ -19,12 +20,11 @@ trait Hashids
      *
      * @return string
      */
-    public function findOrNew($id, $columns = ['*'])
+    public static function findOrNew($id, $columns = ['*'])
     {
         $id = hashids_decode($id);
         $id = empty($id) ? 0 : $id;
-
-        return parent::findOrNew($id, $columns);
+        return parent::firstOrNew([['id', $id]]);
     }
 
     /**

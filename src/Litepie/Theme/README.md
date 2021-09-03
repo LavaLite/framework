@@ -155,7 +155,7 @@ Example:
 ### Basic usage
 
 ~~~php
-namespace App\Http\Controllers;
+namespace Litepie\PackageR\Http\Controllers;
 
 use Theme;
 
@@ -599,7 +599,7 @@ echo Theme::widget('demo', array('label' => 'Demo Widget'))->output();
 ### Using theme global
 ~~~php
 use Litepie\Theme\Contracts\Theme;
-use App\Http\Controllers\Controller;
+use Litepie\PackageR\Http\Controllers\Controller;
 
 class BaseController extends Controller {
 

@@ -23,7 +23,7 @@ class Role extends Model implements RoleHasRelationsContract
      *
      * @var array
      */
-    protected $config = 'roles.role.model';
+    protected $config = 'role.role.model';
 
     public function setLevelAttribute($value)
     {

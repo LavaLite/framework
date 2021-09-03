@@ -2,36 +2,35 @@
 
 namespace Litepie\User\Models;
 
+use Illuminate\Contracts\Auth\MustVerifyEmail as ContractMustVerifyEmail;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Notifications\Notifiable;
+use Litepie\Database\Traits\Sluggable;
+use Litepie\Database\Traits\Sortable;
 use Litepie\Filer\Traits\Filer;
 use Litepie\Hashids\Traits\Hashids;
-use Litepie\Repository\Traits\PresentableTrait;
+use Litepie\Trans\Traits\Translatable;
+use Litepie\User\Models\Model as BaseModel;
+use Litepie\User\Traits\Auth\MustVerifyEmail;
+use Litepie\User\Interfaces\UserPolicyInterface;
 use Litepie\Roles\Traits\CheckRoleAndPermission;
-use Litepie\User\Traits\User as UserProfile;
 
-class Client extends Model
+class Client extends BaseModel implements ContractMustVerifyEmail, UserPolicyInterface
 {
-    use Filer;
-    use Notifiable;
-    use CheckRoleAndPermission;
-    use UserProfile;
-    use SoftDeletes;
-    use Hashids;
-    use PresentableTrait;
-    /**
-     * Configuartion for the model.
-     *
-     * @var array
-     */
-    protected $config = null;
 
+    use MustVerifyEmail;
+    use Filer;
+    use Hashids;
+    use Sluggable;
+    use SoftDeletes;
+    use Sortable;
+    use Translatable;
+    use CheckRoleAndPermission;
     /**
      * Configuartion for the model.
      *
      * @var array
      */
-    protected $role = null;
+    protected $config = 'user.client.model';
 
     /**
      * Initialiaze client modal.
@@ -48,8 +47,20 @@ class Client extends Model
             }
         }
 
-        $this->setRole($this->role);
+        $this->setRole('client');
 
         parent::__construct($attributes);
     }
+
+        /**
+     * Set role for the model.
+     *
+     * @return \Illuminate\Database\Eloquent\Collection
+     */
+    public function setRole($role)
+    {
+        $this->role = app('Litepie\Roles\Interfaces\RoleRepositoryInterface')->findBySlug($role);
+    }
+
+
 }

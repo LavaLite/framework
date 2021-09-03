@@ -12,6 +12,11 @@ class PublicController extends Controller
     use RoutesAndGuards;
 
     /**
+     * @var store other modules in the package
+     */
+    public $modules;
+
+    /**
      * Initialize public controller.
      *
      * @return null
@@ -19,25 +24,30 @@ class PublicController extends Controller
     public function __construct()
     {
         $this->response = app(PublicResponse::class);
-        $this->setTheme('default');
+        $this->setTheme(config('theme.themes.public.theme'));
     }
-
+    
     /**
-     * Show dashboard for each user.
+     * Prepare the modules for the list.
      *
-     * @return \Illuminate\Http\Response
+     * @var $modules array - Modules
+     * @var $ns string - Language  namespace
+     *
+     * @return array
      */
-    public function home()
+    public function modules($modules, $ns, $url = null)
     {
-        $page = app(\Litecms\Page\Interfaces\PageRepositoryInterface::class)->getPage('home');
+        $arr = [];
+        $rUrl = request()->fullUrl();
+        foreach ($modules as $key => $module) {
+            $arr[$key]['module'] = $module;
+            $arr[$key]['name'] = trans("{$ns}::{$module}.names");
+            $arr[$key]['url'] = $url . '/' . $module;
+            $arr[$key]['status'] = strpos($rUrl, $arr[$key]['url']) !== false ? 'active' : '';
+            $arr[$key]['icon'] = trans("{$ns}::{$module}.icon");
+        }
+        return $arr;
 
-        return $this->response
-            ->setMetaKeyword(strip_tags($page->meta_keyword))
-            ->setMetaDescription(strip_tags($page->meta_description))
-            ->setMetaTitle(strip_tags($page->meta_title))
-            ->layout('home')
-            ->view('home')
-            ->data(compact('page'))
-            ->output();
     }
+
 }

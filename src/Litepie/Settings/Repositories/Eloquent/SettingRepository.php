@@ -2,14 +2,15 @@
 
 namespace Litepie\Settings\Repositories\Eloquent;
 
-use Litepie\Repository\Eloquent\BaseRepository;
+use Litepie\Repository\BaseRepository;
 use Litepie\Settings\Interfaces\SettingRepositoryInterface;
 
 class SettingRepository extends BaseRepository implements SettingRepositoryInterface
 {
+
     public function boot()
     {
-        $this->fieldSearchable = config('settings.setting.search');
+        $this->fieldSearchable = config('setting.setting.model.search');
     }
 
     /**
@@ -19,16 +20,15 @@ class SettingRepository extends BaseRepository implements SettingRepositoryInter
      */
     public function model()
     {
-        return config('settings.setting.model');
+        return config('setting.setting.model.model');
     }
 
     public function getValue($key, $default = null)
     {
-        $row = $this->scopeQuery(function ($query) use ($key) {
-            return $query
-                ->where('key', $key);
-        })->first();
-
+        $row = $this->where('key', $key)
+            ->first()
+            ->toArray();
+            
         if (!empty($row)) {
             return $row['value'];
         }
@@ -43,8 +43,8 @@ class SettingRepository extends BaseRepository implements SettingRepositoryInter
                 'key' => $key,
             ],
             [
-                'value'     => $value,
-                'key'       => $key,
+                'value' => $value,
+                'key' => $key,
                 'user_type' => 'main',
             ]
         );
@@ -71,15 +71,15 @@ class SettingRepository extends BaseRepository implements SettingRepositoryInter
     {
         $setting = $this->updateOrCreate(
             [
-                'key'       => $key,
-                'user_id'   => user_id(),
+                'key' => $key,
+                'user_id' => user_id(),
                 'user_type' => user_type(),
             ],
             [
-                'key'       => $key,
-                'user_id'   => user_id(),
+                'key' => $key,
+                'user_id' => user_id(),
                 'user_type' => user_type(),
-                'value'     => $value,
+                'value' => $value,
             ]
         );
 
@@ -96,8 +96,8 @@ class SettingRepository extends BaseRepository implements SettingRepositoryInter
      */
     public function upload($request, $key)
     {
-        if ($request->hasFile($key.'[file]')) {
-            $path = $request->get($key."['path']");
+        if ($request->hasFile($key . '[file]')) {
+            $path = $request->get($key . "['path']");
             $folder = substr("$path", 0, strrpos($path, '/'));
             $file = substr("$path", (strrpos($path, '_') + 1));
             $res = $request->file($key['file'])->storeAs($folder, $file);

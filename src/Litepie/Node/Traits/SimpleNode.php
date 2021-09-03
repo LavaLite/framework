@@ -44,7 +44,7 @@ trait SimpleNode
      */
     public function parent()
     {
-        return $this->belongsTo(get_class($model), $this->getParentColumnName());
+        return $this->belongsTo(get_class($this), $this->getParentColumnName());
     }
 
     /**

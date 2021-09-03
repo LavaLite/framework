@@ -87,8 +87,8 @@ return [
     // Image size
     'size'      => [
         'xs' => [
-            'width'  => '80',
-            'height' => '60',
+            'width'  => '100',
+            'height' => '80',
             'action' => 'fit',
             // 'default'   => 'img/noimage.jpg',
             // 'watermark' => public_path('assets/img/watermark.png'),

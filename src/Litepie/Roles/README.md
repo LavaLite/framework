@@ -124,7 +124,7 @@ $moderatorRole = Role::create([
 It's really simple. You fetch a user from database and call `attachRole` method. There is `BelongsToMany` relationship between `User` and `Role` model.
 
 ```php
-use App\User;
+use Litepie\Roles\User;
 
 $user = User::find($id);
 
@@ -216,7 +216,7 @@ $deleteUsersPermission = Permission::create([
 You can attach permissions to a role or directly to a specific user (and of course detach them as well).
 
 ```php
-use App\User;
+use Litepie\Roles\User;
 use Litepie\Roles\Models\Role;
 
 $role = Role::find($roleId);
@@ -263,13 +263,13 @@ You have three roles: `user`, `moderator` and `admin`. User has a permission to 
 Let's say you have an article and you want to edit it. This article belongs to a user (there is a column `user_id` in articles table).
 
 ```php
-use App\Article;
+use Litepie\Roles\Article;
 use Litepie\Roles\Models\Permission;
 
 $editArticlesPermission = Permission::create([
     'name' => 'Edit articles',
     'slug' => 'edit.articles',
-    'model' => 'App\Article',
+    'model' => 'Litepie\Roles\Article',
 ]);
 
 $user->attachPermission($editArticlesPermission);
@@ -328,9 +328,9 @@ This package comes with `VerifyRole`, `VerifyPermission` and `VerifyLevel` middl
  * @var array
  */
 protected $routeMiddleware = [
-    'auth' => \App\Http\Middleware\Authenticate::class,
+    'auth' => \Litepie\Roles\Http\Middleware\Authenticate::class,
     'auth.basic' => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
-    'guest' => \App\Http\Middleware\RedirectIfAuthenticated::class,
+    'guest' => \Litepie\Roles\Http\Middleware\RedirectIfAuthenticated::class,
     'role' => \Litepie\Roles\Middleware\VerifyRole::class,
     'permission' => \Litepie\Roles\Middleware\VerifyPermission::class,
     'level' => \Litepie\Roles\Middleware\VerifyLevel::class,

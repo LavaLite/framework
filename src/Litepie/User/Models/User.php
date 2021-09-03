@@ -2,32 +2,38 @@
 
 namespace Litepie\User\Models;
 
+use Illuminate\Contracts\Auth\MustVerifyEmail as ContractMustVerifyEmail;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Notifications\Notifiable;
+use Laravel\Sanctum\HasApiTokens;
 use Litepie\Database\Traits\Sluggable;
+use Litepie\Database\Traits\Sortable;
 use Litepie\Filer\Traits\Filer;
 use Litepie\Hashids\Traits\Hashids;
-use Litepie\Repository\Traits\PresentableTrait;
 use Litepie\Roles\Traits\HasRoleAndPermission;
-use Litepie\User\Traits\User as UserProfile;
+use Litepie\Trans\Traits\Translatable;
+use Litepie\User\Models\Model as BaseModel;
+use Litepie\User\Traits\Auth\MustVerifyEmail;
+use Litepie\User\Interfaces\UserPolicyInterface;
 
-class User extends Model
+class User extends BaseModel implements ContractMustVerifyEmail, UserPolicyInterface
 {
+
     use Filer;
-    use Notifiable;
     use HasRoleAndPermission;
-    use UserProfile;
-    use SoftDeletes;
+    use HasApiTokens;
     use Hashids;
+    use MustVerifyEmail;
     use Sluggable;
-    use PresentableTrait;
+    use SoftDeletes;
+    use Sortable;
+    use Translatable;
 
     /**
      * Configuartion for the model.
      *
      * @var array
      */
-    protected $config = 'users.user.model';
+    protected $config = 'user.user.model';
 
     /**
      * Initialiaze page modal.
@@ -56,35 +62,5 @@ class User extends Model
             ->withPivot([
                 'id', 'role',
             ]);
-    }
-
-    public function teamOptions($key, $value)
-    {
-        return $this->team->options($key, $value);
-    }
-
-    public function getAllUserById($team_id)
-    {
-        return $this->team->getAllUserForOpporunity($team_id);
-    }
-
-    /**
-     * get options for various fields.
-     *
-     * @return [key] [name]
-     */
-    public function leadCountIncrement($user_id, $team_id)
-    {
-        return $this->team->leadCountIncrement($user_id, $team_id);
-    }
-
-    /**
-     * get options for various fields.
-     *
-     * @return [key] [name]
-     */
-    public function getUserIdByName($name)
-    {
-        return $this->user->userIdByName($name);
     }
 }

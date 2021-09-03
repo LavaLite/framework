@@ -29,7 +29,7 @@ trait HasRoleAndPermission
      */
     public function roles()
     {
-        return $this->belongsToMany(config('roles.role.model.model'))->withTimestamps();
+        return $this->belongsToMany(config('role.role.model.model'))->withTimestamps();
     }
 
     /**
@@ -171,7 +171,7 @@ trait HasRoleAndPermission
      */
     public function rolePermissions()
     {
-        $permissionModel = app(config('roles.permission.model.model'));
+        $permissionModel = app(config('role.permission.model.model'));
 
         if (!$permissionModel instanceof Model) {
             throw new InvalidArgumentException('[roles.permission.model.model] must be an instance of \Illuminate\Database\Eloquent\Model');
@@ -192,7 +192,7 @@ trait HasRoleAndPermission
      */
     public function userPermissions()
     {
-        return $this->belongsToMany(config('roles.permission.model.model'))->withTimestamps();
+        return $this->belongsToMany(config('role.permission.model.model'))->withTimestamps();
     }
 
     /**
@@ -373,7 +373,7 @@ trait HasRoleAndPermission
      */
     private function isPretendEnabled()
     {
-        return (bool) config('roles.pretend.enabled', false);
+        return (bool) config('role.pretend.enabled', false);
     }
 
     /**
@@ -385,7 +385,7 @@ trait HasRoleAndPermission
      */
     private function pretend($option)
     {
-        return (bool) config('roles.pretend.options.'.$option);
+        return (bool) config('role.pretend.options.'.$option);
     }
 
     /**
@@ -424,11 +424,11 @@ trait HasRoleAndPermission
     public function __call($method, $parameters)
     {
         if (Str::startsWith($method, 'is')) {
-            return $this->hasRole(Str::snake(substr($method, 2), config('roles.separator', '.')));
+            return $this->hasRole(Str::snake(substr($method, 2), config('role.separator', '.')));
         } elseif (Str::startsWith($method, 'can')) {
-            return $this->canDo(Str::snake(substr($method, 3), config('roles.separator', '.')));
+            return $this->canDo(Str::snake(substr($method, 3), config('role.separator', '.')));
         } elseif (Str::startsWith($method, 'allowed')) {
-            return $this->allowed(Str::snake(substr($method, 7), config('roles.separator', '.')), $parameters[0], (isset($parameters[1])) ? $parameters[1] : true, (isset($parameters[2])) ? $parameters[2] : 'user_id');
+            return $this->allowed(Str::snake(substr($method, 7), config('role.separator', '.')), $parameters[0], (isset($parameters[1])) ? $parameters[1] : true, (isset($parameters[2])) ? $parameters[2] : 'user_id');
         }
 
         return parent::__call($method, $parameters);

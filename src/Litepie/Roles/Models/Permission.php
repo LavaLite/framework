@@ -24,7 +24,7 @@ class Permission extends Model
      *
      * @var array
      */
-    protected $config = 'roles.permission.model';
+    protected $config = 'role.permission.model';
 
     public function getSlugIdAttribute()
     {

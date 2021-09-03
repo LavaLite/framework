@@ -2,100 +2,117 @@
 
 namespace Litepie\Roles\Policies;
 
-use Litepie\Roles\Models\Permission;
-use Litepie\User\Contracts\UserPolicy;
+use Litepie\User\Interfaces\UserPolicyInterface;
+use Litepie\Roles\Interfaces\PermissionRepositoryInterface;
 
 class PermissionPolicy
 {
+
     /**
      * Determine if the given user can view the permission.
      *
-     * @param UserPolicy $user
-     * @param Permission $permission
+     * @param UserPolicyInterface $authUser
+     * @param PermissionRepositoryInterface $permission
      *
      * @return bool
      */
-    public function view(UserPolicy $user, Permission $permission)
+    public function view(UserPolicyInterface $authUser, PermissionRepositoryInterface $permission)
     {
-        return true;
+        if ($authUser->canDo('role.permission.view')) {
+            return true;
+        }
+
+        return $permission->user_id == user_id() && $permission->user_type == user_type();
     }
 
     /**
      * Determine if the given user can create a permission.
      *
-     * @param UserPolicy $user
-     * @param Permission $permission
+     * @param UserPolicyInterface $authUser
+     * @param PermissionRepositoryInterface $permission
      *
      * @return bool
      */
-    public function create(UserPolicy $user)
+    public function create(UserPolicyInterface $authUser)
     {
-        return  true;
+        return  $authUser->canDo('role.permission.create');
     }
 
     /**
      * Determine if the given user can update the given permission.
      *
-     * @param UserPolicy $user
-     * @param Permission $permission
+     * @param UserPolicyInterface $authUser
+     * @param PermissionRepositoryInterface $permission
      *
      * @return bool
      */
-    public function update(UserPolicy $user, Permission $permission)
+    public function update(UserPolicyInterface $authUser, PermissionRepositoryInterface $permission)
     {
-        return true;
+        if ($authUser->canDo('role.permission.edit')) {
+            return true;
+        }
+
+        return $permission->user_id == user_id() && $permission->user_type == user_type();
     }
 
     /**
      * Determine if the given user can delete the given permission.
      *
-     * @param UserPolicy $user
-     * @param Permission $permission
+     * @param UserPolicyInterface $authUser
+     * @param PermissionRepositoryInterface $permission
      *
      * @return bool
      */
-    public function destroy(UserPolicy $user, Permission $permission)
+    public function destroy(UserPolicyInterface $authUser, PermissionRepositoryInterface $permission)
     {
-        return true;
+        return $permission->user_id == user_id() && $permission->user_type == user_type();
     }
 
     /**
      * Determine if the given user can verify the given permission.
      *
-     * @param UserPolicy $user
-     * @param Permission $permission
+     * @param UserPolicyInterface $authUser
+     * @param PermissionRepositoryInterface $permission
      *
      * @return bool
      */
-    public function verify(UserPolicy $user, Permission $permission)
+    public function verify(UserPolicyInterface $authUser, PermissionRepositoryInterface $permission)
     {
+        if ($authUser->canDo('role.permission.verify')) {
+            return true;
+        }
+
         return false;
     }
 
     /**
      * Determine if the given user can approve the given permission.
      *
-     * @param UserPolicy $user
-     * @param Permission $permission
+     * @param UserPolicyInterface $authUser
+     * @param PermissionRepositoryInterface $permission
      *
      * @return bool
      */
-    public function approve(UserPolicy $user, Permission $permission)
+    public function approve(UserPolicyInterface $authUser, PermissionRepositoryInterface $permission)
     {
+        if ($authUser->canDo('role.permission.approve')) {
+            return true;
+        }
+
         return false;
     }
 
     /**
      * Determine if the user can perform a given action ve.
      *
-     * @param [type] $user    [description]
+     * @param [type] $authUser    [description]
      * @param [type] $ability [description]
      *
      * @return [type] [description]
      */
-    public function before($user, $ability)
+    public function before($authUser, $ability)
     {
-        if ($user->isSuperuser()) {
+        if ($authUser->isSuperuser()) {
             return true;
         }
     }

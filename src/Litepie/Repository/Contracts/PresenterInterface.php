@@ -2,19 +2,14 @@
 
 namespace Litepie\Repository\Contracts;
 
+use Prettus\Repository\Contracts\PresenterInterface as PrettusPresenterInterface;
+
 /**
  * Interface PresenterInterface.
  *
  * @author Renfos Technologies Pvt. Ltd. <info@info@renfos.com>
  */
-interface PresenterInterface
+interface PresenterInterface extends PrettusPresenterInterface
 {
-    /**
-     * Prepare data to present.
-     *
-     * @param $data
-     *
-     * @return mixed
-     */
-    public function present($data);
+    
 }

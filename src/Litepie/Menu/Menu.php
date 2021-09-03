@@ -23,11 +23,11 @@ class Menu
         $menus = $this->model->getMenu($key);
 
         if (is_null($view)) {
-            $view = 'menu::menu.'.$key;
+            $view = 'litepie.menu.menu.'.$key;
         }
 
         if (!view()->exists($view)) {
-            $view = 'menu::menu.default';
+            $view = 'litepie.menu.menu.default';
         }
 
         return view($view, compact('menus'));

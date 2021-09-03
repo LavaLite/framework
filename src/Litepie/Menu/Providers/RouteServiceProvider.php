@@ -28,11 +28,17 @@ class RouteServiceProvider extends ServiceProvider
     {
         parent::boot();
 
-        if (Request::is('*/menu/menu/*')) {
+        if (Request::is('*admin/menu/menu/*')) {
             Route::bind('menu', function ($menu) {
-                $menurepo = $this->app->make('Litepie\Menu\Interfaces\MenuRepositoryInterface');
+                $menuRepo = $this->app->make('Litepie\Menu\Interfaces\MenuRepositoryInterface');
+                return $menuRepo->findorNew($menu);
+            });
+        }
 
-                return $menurepo->findorNew($menu);
+        if (Request::is('*admin/menu/submenu/*')) {
+            Route::bind('submenu', function ($submenu) {
+                $menuRepo = $this->app->make('Litepie\Menu\Interfaces\MenuRepositoryInterface');
+                return $menuRepo->findorNew($submenu);
             });
         }
     }
@@ -45,6 +51,7 @@ class RouteServiceProvider extends ServiceProvider
     public function map()
     {
         $this->mapWebRoutes();
+        // $this->mapApiRoutes();
     }
 
     /**
@@ -58,9 +65,26 @@ class RouteServiceProvider extends ServiceProvider
     {
         Route::group([
             'middleware' => 'web',
-            'namespace'  => $this->namespace,
+            'namespace' => $this->namespace,
         ], function ($router) {
-            require __DIR__.'/../routes/web.php';
+            require __DIR__ . '/../routes/web.php';
+        });
+    }
+
+    /**
+     * Define the "web" routes for the package.
+     *
+     * These routes all receive session state, CSRF protection, etc.
+     *
+     * @return void
+     */
+    protected function mapApiRoutes()
+    {
+        Route::group([
+            'middleware' => 'api',
+            'namespace' => $this->namespace,
+        ], function ($router) {
+            require __DIR__ . '/../routes/api.php';
         });
     }
 }

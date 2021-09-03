@@ -1,20 +1,16 @@
 {
     "name": "litepie/filer",
-    "description": "Filer bundle for Lavalite",
+    "description": "File upload and display package for Lavalite",
     "keywords": ["lavalite", "filer"],
     "license": "MIT",
     "homepage": "https://github.com/Litepie/Filer",
     "authors": [{
             "name": "Renfos Technologies Pvt. Ltd.",
             "email": "info@renfos.com"
-        },
-        {
-            "name": "George John",
-            "email": "george@renfos.com"
         }
     ],
     "require": {
-        "php": "^7.2",
+        "php": "^7.3|^8.0",
         "intervention/imagecache": "~2.3"
     },
     "autoload": {

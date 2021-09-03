@@ -20,7 +20,7 @@ trait Team
      */
     public function manager()
     {
-        return $this->belongsTo('App\User', 'manager_id');
+        return $this->belongsTo('Litepie\Team\User', 'manager_id');
     }
 
     /**
@@ -28,7 +28,7 @@ trait Team
      */
     public function member()
     {
-        return $this->belongsToMany('App\User')->withPivot('reporting_to');
+        return $this->belongsToMany('Litepie\Team\User')->withPivot('reporting_to');
     }
 
     /**
