@@ -3,10 +3,12 @@
 namespace Litepie\Master\Repositories\Eloquent;
 
 use Litepie\Master\Interfaces\MasterRepositoryInterface;
-use Litepie\Repository\Eloquent\BaseRepository;
+use Litepie\Repository\BaseRepository;
+
 
 class MasterRepository extends BaseRepository implements MasterRepositoryInterface
 {
+
     public function boot()
     {
         $this->fieldSearchable = config('master.master.model.search');
@@ -40,21 +42,6 @@ class MasterRepository extends BaseRepository implements MasterRepositoryInterfa
      *
      * @return string
      */
-    public function index($type)
-    {
-        if (!empty($type)) {
-            $this->model = $this->model
-                ->where('type', $type);
-        }
-
-        return $this;
-    }
-
-    /**
-     * Return the parent categories.
-     *
-     * @return string
-     */
     public function typeCount()
     {
         return $this->model
@@ -79,13 +66,5 @@ class MasterRepository extends BaseRepository implements MasterRepositoryInterfa
         return $this->model->where('type', $type)
             ->where('status', 'Show')
             ->pluck('name', 'id');
-    }
-
-    public function search($string, $type, $key, $value)
-    {
-        return $this->model->where('type', 'like', '%' . $type . '%')
-            ->where('status', 'Show')
-            ->where('name', 'like', '%' . $string . '%')
-            ->select("$value as name", "$key as key")->take(50)->get();
     }
 }

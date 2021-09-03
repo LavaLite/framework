@@ -1,9 +1,8 @@
 <?php
 
-namespace Litepie\Master\Http\Requests;
+namespace Litepie\Master\Requests;
 
 use Litepie\Http\Request\AbstractRequest;
-use Litepie\Master\Models\Master;
 
 class MasterRequest extends AbstractRequest
 {
@@ -18,7 +17,12 @@ class MasterRequest extends AbstractRequest
 
         if (is_null($this->model)) {
             // Determine if the user is authorized to access master module,
-            return $this->formRequest->user()->can('view', Master::class);
+            return $this->user()->can('view', app(config('master.master.model.repository')));
+        }
+
+        if ($this->isWorkflow()) {
+            // Determine if the user is authorized to change status of an entry,
+            return $this->can($this->getTransition());
         }
 
         if ($this->isCreate() || $this->isStore()) {
@@ -38,6 +42,7 @@ class MasterRequest extends AbstractRequest
 
         // Determine if the user is authorized to view the module.
         return $this->can('view');
+
     }
 
     /**
@@ -67,13 +72,4 @@ class MasterRequest extends AbstractRequest
         ];
     }
 
-    /**
-     * Check whether the user can access the module.
-     *
-     * @return bool
-     **/
-    protected function canAccess()
-    {
-        return user()->canDo('master.master.view');
-    }
 }
