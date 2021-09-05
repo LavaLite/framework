@@ -9,7 +9,7 @@
         "email": "info@renfos.com"
     }],
     "require": {
-        "php": "^7.2",
+        "php": "^7.3|^8.0",
         "hashids/hashids": "~4.0"
     },
     "autoload": {
