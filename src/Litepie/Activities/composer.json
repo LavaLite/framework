@@ -17,7 +17,7 @@
         "email": "george@renfos.com"
     }],
     "require": {
-        "php": "^7.2",
+        "php": "^7.3|^8.0",
         "spatie/laravel-activitylog": "~3.8"
     },
     "autoload": {

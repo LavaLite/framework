@@ -7,7 +7,7 @@
         "lavalite"
     ],
     "license": "MIT",
-    "homepage": "http://lavalite.org",
+    "homepage": "https://lavalite.org",
     "authors": [
         {
             "name": "Renfos Technologies",
@@ -56,13 +56,6 @@
         "laravel/framework": "^8.40"
     },
     "autoload": {
-        "classmap": [
-            "src/Litepie/Menu/database/seeds",
-            "src/Litepie/Roles/database/seeds",
-            "src/Litepie/Settings/database/seeds",
-            "src/Litepie/Team/database/seeds",
-            "src/Litepie/User/database/seeds"
-        ],
         "files": [
             "src/Litepie/Foundation/helpers.php",
             "src/Litepie/Settings/helpers.php",
@@ -73,9 +66,6 @@
         }
     },
     "autoload-dev": {
-        "files": [
-            "tests/Database/stubs/MigrationCreatorFakeMigration.php"
-        ],
         "psr-4": {
             "Illuminate\\Tests\\": "tests/"
         }
