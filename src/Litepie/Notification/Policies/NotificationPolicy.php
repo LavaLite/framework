@@ -2,7 +2,7 @@
 
 namespace Litepie\Notification\Policies;
 
-use Litepie\PackageR\User;
+use Litepie\User\Models\User;
 use Litepie\Notification\Models\Notification;
 
 class NotificationPolicy

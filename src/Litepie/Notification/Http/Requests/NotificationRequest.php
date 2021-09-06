@@ -2,7 +2,7 @@
 
 namespace Litepie\Notification\Http\Requests;
 
-use Litepie\PackageR\Http\Requests\Request as FormRequest;
+use Litepie\Notification\Http\Requests\Request as FormRequest;
 
 class NotificationRequest extends FormRequest
 {
