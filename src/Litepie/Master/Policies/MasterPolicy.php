@@ -3,7 +3,7 @@
 namespace Litepie\Master\Policies;
 
 use Litepie\User\Interfaces\UserPolicyInterface;
-use Litepie\PackageRRepositories\Eloquent\MasterRepository;
+use Litepie\Master\Repositories\Eloquent\MasterRepository;
 
 class MasterPolicy
 {

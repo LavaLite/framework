@@ -171,7 +171,7 @@ if (!function_exists('user_type')) {
         $guard = is_null($guard) ? getenv('guard') : $guard;
         $provider = config('auth.guards.'.$guard.'.provider', 'users');
 
-        return config("auth.providers.$provider.model", \Litepie\PackageR\Models\User::class);
+        return config("auth.providers.$provider.model", \Litepie\User\Models\User::class);
     }
 }
 
