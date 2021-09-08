@@ -18,11 +18,7 @@ class PermissionPolicy
      */
     public function view(UserPolicyInterface $authUser, PermissionRepositoryInterface $permission)
     {
-        if ($authUser->canDo('role.permission.view')) {
-            return true;
-        }
-
-        return $permission->user_id == user_id() && $permission->user_type == user_type();
+        return false;
     }
 
     /**
@@ -35,7 +31,7 @@ class PermissionPolicy
      */
     public function create(UserPolicyInterface $authUser)
     {
-        return  $authUser->canDo('role.permission.create');
+        return false;
     }
 
     /**
@@ -48,11 +44,7 @@ class PermissionPolicy
      */
     public function update(UserPolicyInterface $authUser, PermissionRepositoryInterface $permission)
     {
-        if ($authUser->canDo('role.permission.edit')) {
-            return true;
-        }
-
-        return $permission->user_id == user_id() && $permission->user_type == user_type();
+        return false;
     }
 
     /**
@@ -65,42 +57,9 @@ class PermissionPolicy
      */
     public function destroy(UserPolicyInterface $authUser, PermissionRepositoryInterface $permission)
     {
-        return $permission->user_id == user_id() && $permission->user_type == user_type();
-    }
-
-    /**
-     * Determine if the given user can verify the given permission.
-     *
-     * @param UserPolicyInterface $authUser
-     * @param PermissionRepositoryInterface $permission
-     *
-     * @return bool
-     */
-    public function verify(UserPolicyInterface $authUser, PermissionRepositoryInterface $permission)
-    {
-        if ($authUser->canDo('role.permission.verify')) {
-            return true;
-        }
-
         return false;
     }
 
-    /**
-     * Determine if the given user can approve the given permission.
-     *
-     * @param UserPolicyInterface $authUser
-     * @param PermissionRepositoryInterface $permission
-     *
-     * @return bool
-     */
-    public function approve(UserPolicyInterface $authUser, PermissionRepositoryInterface $permission)
-    {
-        if ($authUser->canDo('role.permission.approve')) {
-            return true;
-        }
-
-        return false;
-    }
 
     /**
      * Determine if the user can perform a given action ve.

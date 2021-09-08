@@ -43,8 +43,8 @@ class Role extends FormInterpreter
         self::$search = [
             'name' => [
                 "type" => 'text',
-                "label" => trans('role::role.label.name'),
-                "placeholder" => trans('role::role.placeholder.name'),
+                "label" => trans('role.role.label.name'),
+                "placeholder" => trans('role.role.placeholder.name'),
                 "rules" => '',
                 "group" => "main",
                 "section" => "first",
@@ -53,33 +53,33 @@ class Role extends FormInterpreter
             ]
         ];
         self::$groups = [
-            'main' => trans('role::role.groups.main'),
-            'details' => trans('role::role.groups.details'),
-            'images' => trans('role::role.groups.images'),
-            'settings' => trans('role::role.groups.settings'),
+            'main' => trans('role.role.groups.main'),
+            'details' => trans('role.role.groups.details'),
+            'images' => trans('role.role.groups.images'),
+            'settings' => trans('role.role.groups.settings'),
         ];
         self::$list = [
             [
                 'key' => "ref",
-                'label' => trans('role::role.label.ref'),
+                'label' => trans('role.role.label.ref'),
                 'sortable' => 'true',
                 'roles' => [],
             ],
             [
                 'key' => "id",
-                'label' => trans('role::role.label.id'),
+                'label' => trans('role.role.label.id'),
                 'sortable' => 'true',
                 'roles' => [],
             ],
             [
                 'key' => "name",
-                'label' => trans('role::role.label.name'),
+                'label' => trans('role.role.label.name'),
                 'sortable' => 'true',
                 'roles' => [],
             ],
             [
                 'key' => "status",
-                'label' => trans('role::role.label.status'),
+                'label' => trans('role.role.label.status'),
                 'sortable' => 'true',
                 'roles' => [],
             ],
@@ -88,8 +88,8 @@ class Role extends FormInterpreter
                 'name' => [
                 "element" => 'text',
                 "type" => 'text',
-                "label" => trans('role::role.label.name'),
-                "placeholder" => trans('role::role.placeholder.name'),
+                "label" => trans('role.role.label.name'),
+                "placeholder" => trans('role.role.placeholder.name'),
                 "rules" => '',
                 "group" => "main",
                 "section" => "first",
@@ -107,8 +107,8 @@ class Role extends FormInterpreter
             'description' => [
                 "element" => 'text',
                 "type" => 'text',
-                "label" => trans('role::role.label.description'),
-                "placeholder" => trans('role::role.placeholder.description'),
+                "label" => trans('role.role.label.description'),
+                "placeholder" => trans('role.role.placeholder.description'),
                 "rules" => '',
                 "group" => "main",
                 "section" => "first",
@@ -126,8 +126,8 @@ class Role extends FormInterpreter
             'level' => [
                 "element" => 'numeric',
                 "type" => 'numeric',
-                "label" => trans('role::role.label.level'),
-                "placeholder" => trans('role::role.placeholder.level'),
+                "label" => trans('role.role.label.level'),
+                "placeholder" => trans('role.role.placeholder.level'),
                 "rules" => '',
                 "group" => "main",
                 "section" => "first",

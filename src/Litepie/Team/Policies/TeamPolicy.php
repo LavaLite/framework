@@ -18,11 +18,7 @@ class TeamPolicy
      */
     public function view(UserPolicyInterface $authUser, TeamRepositoryInterface $team)
     {
-        if ($authUser->canDo('team.team.view')) {
-            return true;
-        }
-
-        return $team->user_id == user_id() && $team->user_type == user_type();
+        return false;
     }
 
     /**
@@ -34,7 +30,7 @@ class TeamPolicy
      */
     public function create(UserPolicyInterface $authUser)
     {
-        return  $authUser->canDo('team.team.create');
+        return false;
     }
 
     /**
@@ -47,11 +43,7 @@ class TeamPolicy
      */
     public function update(UserPolicyInterface $authUser, TeamRepositoryInterface $team)
     {
-        if ($authUser->canDo('team.team.edit')) {
-            return true;
-        }
-
-        return $team->user_id == user_id() && $team->user_type == user_type();
+        return false;
     }
 
     /**
@@ -63,38 +55,6 @@ class TeamPolicy
      */
     public function destroy(UserPolicyInterface $authUser, TeamRepositoryInterface $team)
     {
-        return $team->user_id == user_id() && $team->user_type == user_type();
-    }
-
-    /**
-     * Determine if the given user can verify the given team.
-     *
-     * @param UserPolicyInterface $authUser
-     *
-     * @return bool
-     */
-    public function verify(UserPolicyInterface $authUser, TeamRepositoryInterface $team)
-    {
-        if ($authUser->canDo('team.team.verify')) {
-            return true;
-        }
-
-        return false;
-    }
-
-    /**
-     * Determine if the given user can approve the given team.
-     *
-     * @param UserPolicyInterface $authUser
-     *
-     * @return bool
-     */
-    public function approve(UserPolicyInterface $authUser, TeamRepositoryInterface $team)
-    {
-        if ($authUser->canDo('team.team.approve')) {
-            return true;
-        }
-
         return false;
     }
 

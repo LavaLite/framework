@@ -18,11 +18,7 @@ class UserPolicy
      */
     public function view(UserPolicyInterface $authUser, UserRepositoryInterface $user)
     {
-        if ($authUser->canDo('users.user.view')) {
-            return true;
-        }
-
-        return $user->user_id == user_id() && $user->user_type == user_type();
+        return false;
     }
 
     /**
@@ -34,7 +30,7 @@ class UserPolicy
      */
     public function create(UserPolicyInterface $authUser)
     {
-        return  $authUser->canDo('users.user.create');
+        return  false;
     }
 
     /**
@@ -47,11 +43,7 @@ class UserPolicy
      */
     public function update(UserPolicyInterface $authUser, UserRepositoryInterface $user)
     {
-        if ($authUser->canDo('users.user.edit')) {
-            return true;
-        }
-
-        return $user->user_id == user_id() && $user->user_type == user_type();
+        return false;
     }
 
     /**
@@ -63,7 +55,7 @@ class UserPolicy
      */
     public function destroy(UserPolicyInterface $authUser, UserRepositoryInterface $user)
     {
-        return $user->user_id == user_id() && $user->user_type == user_type();
+        return false;
     }
 
     /**
