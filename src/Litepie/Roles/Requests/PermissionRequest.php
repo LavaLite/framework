@@ -17,7 +17,7 @@ class PermissionRequest extends AbstractRequest
 
         if (is_null($this->model)) {
             // Determine if the user is authorized to access permission module,
-            return $this->user()->can('view', app(config('role.permission.repository')));
+            return $this->user()->can('view', app(config('role.permission.model.repository')));
         }
 
         if ($this->isWorkflow()) {

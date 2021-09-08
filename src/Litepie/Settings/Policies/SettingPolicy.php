@@ -18,11 +18,7 @@ class SettingPolicy
      */
     public function view(UserPolicyInterface $authUser, SettingRepositoryInterface $setting)
     {
-        if ($authUser->canDo('settings.setting.view')) {
-            return true;
-        }
-
-        return $setting->user_id == user_id() && $setting->user_type == user_type();
+        return false;
     }
 
     /**
@@ -34,7 +30,7 @@ class SettingPolicy
      */
     public function create(UserPolicyInterface $authUser)
     {
-        return  $authUser->canDo('settings.setting.create');
+        return false;
     }
 
     /**
@@ -47,11 +43,7 @@ class SettingPolicy
      */
     public function update(UserPolicyInterface $authUser, SettingRepositoryInterface $setting)
     {
-        if ($authUser->canDo('settings.setting.edit')) {
-            return true;
-        }
-
-        return $setting->user_id == user_id() && $setting->user_type == user_type();
+        return false;
     }
 
     /**
@@ -63,7 +55,7 @@ class SettingPolicy
      */
     public function destroy(UserPolicyInterface $authUser, SettingRepositoryInterface $setting)
     {
-        return $setting->user_id == user_id() && $setting->user_type == user_type();
+        return false;
     }
 
     /**
@@ -75,10 +67,6 @@ class SettingPolicy
      */
     public function verify(UserPolicyInterface $authUser, SettingRepositoryInterface $setting)
     {
-        if ($authUser->canDo('settings.setting.verify')) {
-            return true;
-        }
-
         return false;
     }
 
@@ -91,10 +79,6 @@ class SettingPolicy
      */
     public function approve(UserPolicyInterface $authUser, SettingRepositoryInterface $setting)
     {
-        if ($authUser->canDo('settings.setting.approve')) {
-            return true;
-        }
-
         return false;
     }
 

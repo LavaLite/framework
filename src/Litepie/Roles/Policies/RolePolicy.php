@@ -2,8 +2,8 @@
 
 namespace Litepie\Roles\Policies;
 
-use Litepie\User\Interfaces\UserPolicyInterface;
 use Litepie\Roles\Interfaces\RoleRepositoryInterface;
+use Litepie\User\Interfaces\UserPolicyInterface;
 
 class RolePolicy
 {
@@ -18,11 +18,7 @@ class RolePolicy
      */
     public function view(UserPolicyInterface $authUser, RoleRepositoryInterface $role)
     {
-        if ($authUser->canDo('role.role.view')) {
-            return true;
-        }
-
-        return $role->user_id == user_id() && $role->user_type == user_type();
+        return false;
     }
 
     /**
@@ -35,7 +31,7 @@ class RolePolicy
      */
     public function create(UserPolicyInterface $authUser)
     {
-        return  $authUser->canDo('role.role.create');
+        return false;
     }
 
     /**
@@ -48,11 +44,7 @@ class RolePolicy
      */
     public function update(UserPolicyInterface $authUser, RoleRepositoryInterface $role)
     {
-        if ($authUser->canDo('role.role.edit')) {
-            return true;
-        }
-
-        return $role->user_id == user_id() && $role->user_type == user_type();
+        return false;
     }
 
     /**
@@ -65,40 +57,6 @@ class RolePolicy
      */
     public function destroy(UserPolicyInterface $authUser, RoleRepositoryInterface $role)
     {
-        return $role->user_id == user_id() && $role->user_type == user_type();
-    }
-
-    /**
-     * Determine if the given user can verify the given role.
-     *
-     * @param UserPolicyInterface $authUser
-     * @param RoleRepositoryInterface $role
-     *
-     * @return bool
-     */
-    public function verify(UserPolicyInterface $authUser, RoleRepositoryInterface $role)
-    {
-        if ($authUser->canDo('role.role.verify')) {
-            return true;
-        }
-
-        return false;
-    }
-
-    /**
-     * Determine if the given user can approve the given role.
-     *
-     * @param UserPolicyInterface $authUser
-     * @param RoleRepositoryInterface $role
-     *
-     * @return bool
-     */
-    public function approve(UserPolicyInterface $authUser, RoleRepositoryInterface $role)
-    {
-        if ($authUser->canDo('role.role.approve')) {
-            return true;
-        }
-
         return false;
     }
 

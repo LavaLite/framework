@@ -17,7 +17,7 @@ class ClientRequest extends AbstractRequest
 
         if (is_null($this->model)) {
             // Determine if the user is authorized to access client module,
-            return $this->user()->can('view', app(config('user.client.model.model')));
+            return $this->user()->can('view', app(config('user.client.model.repository')));
         }
 
         if ($this->isWorkflow()) {

@@ -18,11 +18,7 @@ class ClientPolicy
      */
     public function view(UserPolicyInterface $authUser, ClientRepositoryInterface $client)
     {
-        if ($authUser->canDo('users.client.view')) {
-            return true;
-        }
-
-        return $client->user_id == user_id() && $client->user_type == user_type();
+        return false;
     }
 
     /**
@@ -34,7 +30,7 @@ class ClientPolicy
      */
     public function create(UserPolicyInterface $authUser)
     {
-        return  $authUser->canDo('users.client.create');
+        return false;
     }
 
     /**
@@ -47,11 +43,7 @@ class ClientPolicy
      */
     public function update(UserPolicyInterface $authUser, ClientRepositoryInterface $client)
     {
-        if ($authUser->canDo('users.client.edit')) {
-            return true;
-        }
-
-        return $client->user_id == user_id() && $client->user_type == user_type();
+        return false;
     }
 
     /**
@@ -63,40 +55,9 @@ class ClientPolicy
      */
     public function destroy(UserPolicyInterface $authUser, ClientRepositoryInterface $client)
     {
-        return $client->user_id == user_id() && $client->user_type == user_type();
-    }
-
-    /**
-     * Determine if the given user can verify the given client.
-     *
-     * @param UserPolicyInterface $authUser
-     *
-     * @return bool
-     */
-    public function verify(UserPolicyInterface $authUser, ClientRepositoryInterface $client)
-    {
-        if ($authUser->canDo('users.client.verify')) {
-            return true;
-        }
-
         return false;
     }
 
-    /**
-     * Determine if the given user can approve the given client.
-     *
-     * @param UserPolicyInterface $authUser
-     *
-     * @return bool
-     */
-    public function approve(UserPolicyInterface $authUser, ClientRepositoryInterface $client)
-    {
-        if ($authUser->canDo('users.client.approve')) {
-            return true;
-        }
-
-        return false;
-    }
 
     /**
      * Determine if the user can perform a given action ve.
