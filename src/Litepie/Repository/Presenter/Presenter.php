@@ -40,8 +40,7 @@ abstract class Presenter extends ArrayObject implements Arrayable, Jsonable
     {
         if ($model instanceof LengthAwarePaginator) {
             return self::pagination($model);
-        }
-        if ($model instanceof Paginator) {
+        } else if ($model instanceof Paginator) {
             return self::simplePagination($model);
         }
 

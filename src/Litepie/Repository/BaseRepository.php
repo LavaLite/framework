@@ -427,17 +427,11 @@ abstract class BaseRepository implements RepositoryInterface
         if ($this->presenter && !$this->skipPresenter) {
             if (is_subclass_of($result, LengthAwarePaginator::class)) {
                 $result = $this->presenter::present($result);
-            }
-
-            if (is_subclass_of($result, Paginator::class)) {
+            }else if (is_subclass_of($result, Paginator::class)) {
                 $result = $this->presenter::present($result);
-            }
-
-            if (is_a($result, Collection::class)) {
+            }else if (is_a($result, Collection::class)) {
                 $result = $this->presenter::present($result);
-            }
-
-            if (is_a($result, Model::class)) {
+            }else if (is_a($result, Model::class)) {
                 $result = $this->presenter::make($result);
             }
         }
