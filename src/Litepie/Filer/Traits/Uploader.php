@@ -136,10 +136,14 @@ trait Uploader
      *
      * @return string
      */
-    public function checkUploadFolder($folder)
+    public function checkUploadFolder($folder, $isLocal = true)
     {
         $folder = base_path(config('filer.folder', 'storage/uploads') . DIRECTORY_SEPARATOR . $folder);
         $folder = Str::finish($folder, DIRECTORY_SEPARATOR);
+
+        if (!$isLocal) {
+            return $folder;
+        }
 
         // Check to see if the upload folder exists
         if (!File::exists($folder)) {
@@ -268,6 +272,3 @@ trait Uploader
         return '.' . implode(',.', config('filer.allowed_extensions'));
     }
 }
-
-aws s3 sync s3://drivenproperties s3://drivencrm
-aws s3 sync s3://drivenproperties s3://drivencrm

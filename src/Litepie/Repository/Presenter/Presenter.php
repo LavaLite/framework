@@ -80,6 +80,7 @@ abstract class Presenter extends ArrayObject implements Arrayable, Jsonable
                 'current_page' => (int) $paginator->currentPage(),
                 'from' => (int) $paginator->firstItem(),
                 'last_page' => (int) $paginator->lastPage(),
+                'links' => $paginator->toArray()['links'],
                 'path' => $paginator->path(),
                 'per_page' => (int) $paginator->perPage(),
                 'to' => (int) $paginator->lastItem(),
