@@ -194,9 +194,17 @@ class Fields
     {
         foreach ($attributes as $key => $value) {
             if (method_exists($this, $key)) {
-                $this->$key($value);
+                if ($value instanceof Closure) {
+                    $this->$key($value());
+                } else {
+                    $this->$key($value);
+                }
             } elseif (property_exists($this, $key)) {
-                $this->$key = $value;
+                if ($value instanceof Closure) {
+                    $this->$key = $value();
+                } else {
+                    $this->$key = $value;
+                }
             } elseif ($value instanceof Closure) {
                 $value($this);
             } else {
