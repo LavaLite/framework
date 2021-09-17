@@ -46,19 +46,15 @@ trait Selectable
         if (empty($value)) {
             return $options;
         }
-        if (is_string($value)) {
+        if (!is_array($value)) {
             $value = [$value];
         }
 
-        if (!is_array($value)) {
-            return $options;
-        }
         foreach ($options as $key => $option) {
             if (in_array($option[$this->select_value], $value)) {
                 $options[$key]['selected'] = true;
             }
         }
-        
         return $options;
     }
 

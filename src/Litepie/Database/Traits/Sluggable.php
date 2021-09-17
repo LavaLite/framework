@@ -19,7 +19,7 @@ trait Sluggable
      *
      * @return void
      */
-    public static function bootSlugger()
+    public static function bootSluggable()
     {
         if (!property_exists(get_called_class(), 'slugs')) {
             throw new Exception(sprintf('You must define a $slugs property in %s to use the Sluggable trait.', get_called_class()));
