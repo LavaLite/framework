@@ -69,7 +69,7 @@ abstract class BaseRepository implements RepositoryInterface
     public function __construct(Application $app)
     {
         $this->app = $app;
-        $this->filter = new Collection();
+        $this->filters = new Collection();
         $this->makeModel();
         $this->makePresenter();
         $this->boot();
@@ -86,8 +86,11 @@ abstract class BaseRepository implements RepositoryInterface
     /**
      * @throws RepositoryException
      */
-    public function resetModel()
+    public function resetRepository()
     {
+        $this->result = null;
+        $this->makePresenter();
+        $this->filters = new Collection();
         $this->makeModel();
     }
 
@@ -207,12 +210,11 @@ abstract class BaseRepository implements RepositoryInterface
     public function toArray()
     {
         if (is_null($this->result)) {
-            if (!($this->model instanceof Model)){
+            if (!($this->model instanceof Model)) {
                 return null;
             }
             $this->result = $this->model;
         }
-        $this->resetModel();
 
         return $this->parserResult($this->result)->toArray();
     }
@@ -228,12 +230,11 @@ abstract class BaseRepository implements RepositoryInterface
     public function toJson()
     {
         if (is_null($this->result)) {
-            if (!($this->model instanceof Model)){
+            if (!($this->model instanceof Model)) {
                 return null;
             }
             $this->result = $this->model;
         }
-        $this->resetModel();
 
         return $this->parserResult($this->result)->toJson();
     }
@@ -255,7 +256,7 @@ abstract class BaseRepository implements RepositoryInterface
             throw new RepositoryException("Class " . $filter . " must be an instance of Litepie\\Repository\\Interfaces\\FilterInterface");
         }
 
-        $this->filter->push($filter);
+        $this->filters->push($filter);
 
         return $this;
     }
@@ -291,7 +292,7 @@ abstract class BaseRepository implements RepositoryInterface
      */
     public function getFilter()
     {
-        return $this->filter;
+        return $this->filters;
     }
 
     /**
@@ -368,7 +369,6 @@ abstract class BaseRepository implements RepositoryInterface
      */
     protected function applyFilter()
     {
-
         if ($this->skipFilter === true) {
             return $this;
         }
@@ -427,15 +427,16 @@ abstract class BaseRepository implements RepositoryInterface
         if ($this->presenter && !$this->skipPresenter) {
             if (is_subclass_of($result, LengthAwarePaginator::class)) {
                 $result = $this->presenter::present($result);
-            }else if (is_subclass_of($result, Paginator::class)) {
+            } else if (is_subclass_of($result, Paginator::class)) {
                 $result = $this->presenter::present($result);
-            }else if (is_a($result, Collection::class)) {
+            } else if (is_a($result, Collection::class)) {
                 $result = $this->presenter::present($result);
-            }else if (is_a($result, Model::class)) {
+            } else if (is_a($result, Model::class)) {
                 $result = $this->presenter::make($result);
             }
         }
 
+        $this->resetRepository();
         return $result;
     }
 
@@ -449,20 +450,28 @@ abstract class BaseRepository implements RepositoryInterface
         if ($this->isGetMethod($method)) {
             $this->applyFilter();
             $this->applyScope();
+
             $result = call_user_func_array([$this->model, $method], $args);
             $this->result = $result;
+
             if ($result instanceof Builder || $result instanceof Model) {
                 $this->model = $result;
             }
+
             return $this;
         }
 
-        $result = call_user_func_array([$this->model, $method], $args);
+        if (!empty($this->result)) {
+            $result = call_user_func_array([$this->result, $method], $args);
+        } else {
+            $result = call_user_func_array([$this->model, $method], $args);
+        }
+
         if ($result instanceof Builder || $result instanceof Model) {
             $this->model = $result;
             return $this;
         }
-        return $result;
+        return $this;
     }
 
     /**
@@ -494,7 +503,9 @@ abstract class BaseRepository implements RepositoryInterface
      */
     public function isGetMethod($method)
     {
-        if (in_array($method, ['get', 'first', 'find', 'simplePaginate', 'paginate'])) {
+        $method = strtolower($method);
+
+        if (in_array($method, ['get', 'first', 'find', 'simplepaginate', 'paginate'])) {
             return true;
         }
 
