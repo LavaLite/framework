@@ -75,9 +75,12 @@ class MenuRepository extends BaseRepository implements MenuRepositoryInterface
      */
     public function getMenu($key)
     {
-        return $this->orderBy('order', 'ASC')
+        $t = $this->resetRepository()
+            ->orderBy('order', 'ASC')
             ->all()
+            ->getResult()
             ->toMenu($key);
+            return $t;
     }
 
     public function getParentChild($id, $array)
