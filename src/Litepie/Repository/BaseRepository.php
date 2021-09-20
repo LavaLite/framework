@@ -29,12 +29,12 @@ abstract class BaseRepository implements RepositoryInterface
     /**
      * @var Model
      */
-    public $model;
+    protected $model;
 
     /**
      * @var Collection
      */
-    public $result;
+    protected $result;
 
     /**
      * @var array
@@ -92,6 +92,7 @@ abstract class BaseRepository implements RepositoryInterface
         $this->makePresenter();
         $this->filters = new Collection();
         $this->makeModel();
+        return $this;
     }
 
     /**
@@ -109,6 +110,26 @@ abstract class BaseRepository implements RepositoryInterface
     public function presenter()
     {
         return null;
+    }
+
+    /**
+     * Return the model
+     *
+     * @return Model
+     */
+    public function getModel()
+    {
+        return $this->model;
+    }
+
+    /**
+     * Return the result
+     *
+     * @return Collection
+     */
+    public function getResult()
+    {
+        return $this->result;
     }
 
     /**
