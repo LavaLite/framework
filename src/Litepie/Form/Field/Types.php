@@ -5,11 +5,12 @@ namespace Litepie\Form\Field;
 use Litepie\Form\Field\Types\Checkable;
 use Litepie\Form\Field\Types\Files;
 use Litepie\Form\Field\Types\InputGroup;
-use Litepie\Form\Field\Types\Selectable;
 use Litepie\Form\Field\Types\Map;
+use Litepie\Form\Field\Types\Selectable;
+
 /**
  * Abstracts general fields parameters (type, value, name) and
- * reforms a correct form field depending on what was asked
+ * reforms a correct form field depending on what was asked.
  */
 trait Types
 {
@@ -20,14 +21,14 @@ trait Types
     use Map;
 
     /**
-     * Whether the Field is self-closing or not
+     * Whether the Field is self-closing or not.
      *
-     * @var boolean
+     * @var bool
      */
     public $options = [];
 
     /**
-     * Sets attribute for the field
+     * Sets attribute for the field.
      *
      * @param  array options
      *
@@ -35,33 +36,33 @@ trait Types
      */
     public function options($options = [], $value = null)
     {
-        if(!is_null($value)){
+        if (!is_null($value)) {
             $this->value = $value;
         }
         $this->options = $options;
+
         return $this;
     }
 
     /**
-     * Sets attribute for the field
+     * Sets attribute for the field.
      *
      * @return array options
      */
     public function prepareOptions()
     {
-
         if (!in_array($this->element, $this->selectElements) && !in_array($this->element, $this->checkElements)) {
             return;
         }
 
         if (empty($this->options) || !is_array($this->options)) {
             $this->options = [];
+
             return;
         }
 
-        $function = 'prepare' . ucfirst($this->element);
+        $function = 'prepare'.ucfirst($this->element);
         $this->options = $this->$function($this->options);
-
     }
 
     protected function prepareOptionsArray($options, $value, $text)
@@ -70,10 +71,11 @@ trait Types
             foreach ($options as $key => $val) {
                 $options[$key] = [
                     $value => $key,
-                    $text => $val,
+                    $text  => $val,
                 ];
             }
         }
+
         return $options;
     }
 }

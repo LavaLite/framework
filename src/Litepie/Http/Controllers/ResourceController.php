@@ -31,7 +31,7 @@ class ResourceController extends Controller
     {
         $this->setGuard();
         $this->response = app(ResourceResponse::class);
-        $this->middleware('auth:' . guard());
+        $this->middleware('auth:'.guard());
         $this->layout = 'app';
         $this->setTheme();
     }
@@ -43,8 +43,8 @@ class ResourceController extends Controller
      */
     public function home(Request $request)
     {
-
         $user = $request->user()->toArray();
+
         return $this->response->setMetaTitle(__('Dashboard'))
             ->view('user.home')
             ->data(compact('user'))
@@ -55,8 +55,8 @@ class ResourceController extends Controller
     /**
      * Prepare the modules for the list.
      *
-     * @var $modules array - Modules
-     * @var $ns string - Language  namespace
+     * @var array  - Modules
+     * @var string - Language  namespace
      *
      * @return array
      */
@@ -68,12 +68,12 @@ class ResourceController extends Controller
             foreach ($modules as $key => $module) {
                 $arr[$key]['module'] = $module;
                 $arr[$key]['name'] = trans("{$ns}{$seperator}{$module}.names");
-                $arr[$key]['url'] = $url . '/' . $module;
+                $arr[$key]['url'] = $url.'/'.$module;
                 $arr[$key]['status'] = strpos($rUrl, $arr[$key]['url']) !== false ? 'active' : '';
                 $arr[$key]['icon'] = trans("{$ns}{$seperator}{$module}.icon");
             }
         }
-        return $arr;
 
+        return $arr;
     }
 }

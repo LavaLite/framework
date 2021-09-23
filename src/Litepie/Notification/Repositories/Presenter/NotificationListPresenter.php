@@ -4,10 +4,10 @@ namespace Litepie\Notification\Repositories\Presenter;
 
 use Litepie\Repository\Presenter\FractalPresenter;
 
-class NotificationListPresenter extends FractalPresenter {
-
+class NotificationListPresenter extends FractalPresenter
+{
     /**
-     * Prepare data to present
+     * Prepare data to present.
      *
      * @return \League\Fractal\TransformerAbstract
      */

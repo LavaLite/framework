@@ -31,6 +31,7 @@ class RouteServiceProvider extends ServiceProvider
         if (Request::is('*admin/menu/menu/*')) {
             Route::bind('menu', function ($menu) {
                 $menuRepo = $this->app->make('Litepie\Menu\Interfaces\MenuRepositoryInterface');
+
                 return $menuRepo->findorNew($menu);
             });
         }
@@ -38,6 +39,7 @@ class RouteServiceProvider extends ServiceProvider
         if (Request::is('*admin/menu/submenu/*')) {
             Route::bind('submenu', function ($submenu) {
                 $menuRepo = $this->app->make('Litepie\Menu\Interfaces\MenuRepositoryInterface');
+
                 return $menuRepo->findorNew($submenu);
             });
         }
@@ -65,9 +67,9 @@ class RouteServiceProvider extends ServiceProvider
     {
         Route::group([
             'middleware' => 'web',
-            'namespace' => $this->namespace,
+            'namespace'  => $this->namespace,
         ], function ($router) {
-            require __DIR__ . '/../routes/web.php';
+            require __DIR__.'/../routes/web.php';
         });
     }
 
@@ -82,9 +84,9 @@ class RouteServiceProvider extends ServiceProvider
     {
         Route::group([
             'middleware' => 'api',
-            'namespace' => $this->namespace,
+            'namespace'  => $this->namespace,
         ], function ($router) {
-            require __DIR__ . '/../routes/api.php';
+            require __DIR__.'/../routes/api.php';
         });
     }
 }

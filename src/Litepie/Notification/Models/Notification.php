@@ -9,14 +9,16 @@ use Litepie\Repository\Traits\PresentableTrait;
 
 class Notification extends Model
 {
-    use SoftDeletes, Hashids, PresentableTrait;
+    use SoftDeletes;
+    use Hashids;
+    use PresentableTrait;
 
     /**
      * Configuartion for the model.
      *
      * @var array
      */
-     protected $config = 'litepie.alerts.notification';
+    protected $config = 'litepie.alerts.notification';
 
     /**
      * Get the notifiable entity that the notification belongs to.
@@ -25,5 +27,4 @@ class Notification extends Model
     {
         return $this->morphTo();
     }
-
 }

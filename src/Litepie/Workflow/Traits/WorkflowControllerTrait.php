@@ -12,7 +12,6 @@ trait WorkflowControllerTrait
         return app('workflow')->get($this, $workflowName);
     }
 
-
     public function getTransissions()
     {
         return $this->workflow($workflowName)->getEnabledTransitions($this);

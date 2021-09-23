@@ -11,5 +11,4 @@ use Prettus\Repository\Contracts\Presentable as PrettusPresentable;
  */
 interface Presentable extends PrettusPresentable
 {
-    
 }

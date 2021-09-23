@@ -47,7 +47,7 @@ abstract class BaseRepository implements RepositoryInterface
     protected $presenter;
 
     /**
-     * Collection of Filter
+     * Collection of Filter.
      *
      * @var Collection
      */
@@ -75,9 +75,6 @@ abstract class BaseRepository implements RepositoryInterface
         $this->boot();
     }
 
-    /**
-     *
-     */
     public function boot()
     {
         //
@@ -92,18 +89,19 @@ abstract class BaseRepository implements RepositoryInterface
         $this->makePresenter();
         $this->filters = new Collection();
         $this->makeModel();
+
         return $this;
     }
 
     /**
-     * Specify Model class name
+     * Specify Model class name.
      *
      * @return string
      */
     abstract public function model();
 
     /**
-     * Specify Presenter class name
+     * Specify Presenter class name.
      *
      * @return string
      */
@@ -113,7 +111,7 @@ abstract class BaseRepository implements RepositoryInterface
     }
 
     /**
-     * Return the model
+     * Return the model.
      *
      * @return Model
      */
@@ -123,7 +121,7 @@ abstract class BaseRepository implements RepositoryInterface
     }
 
     /**
-     * Return the result
+     * Return the result.
      *
      * @return Collection
      */
@@ -133,7 +131,7 @@ abstract class BaseRepository implements RepositoryInterface
     }
 
     /**
-     * Specify Presenter class name
+     * Specify Presenter class name.
      *
      * @return string
      */
@@ -143,7 +141,7 @@ abstract class BaseRepository implements RepositoryInterface
     }
 
     /**
-     * Set Presenter
+     * Set Presenter.
      *
      * @param $presenter
      *
@@ -151,15 +149,15 @@ abstract class BaseRepository implements RepositoryInterface
      */
     public function setPresenter($presenter)
     {
-
         $this->makePresenter($presenter);
 
         return $this;
     }
 
     /**
-     * @return Model
      * @throws RepositoryException
+     *
+     * @return Model
      */
     public function makeModel()
     {
@@ -175,15 +173,14 @@ abstract class BaseRepository implements RepositoryInterface
     /**
      * @param null $presenter
      *
-     * @return Presenter
      * @throws RepositoryException
+     *
+     * @return Presenter
      */
     public function makePresenter($presenter = null)
     {
-
         $presenter = !is_null($presenter) ? $presenter : $this->presenter();
         if (!is_null($presenter)) {
-
             $this->presenter = $presenter;
 
             if (!is_subclass_of($this->presenter, Presenter::class)) {
@@ -197,7 +194,7 @@ abstract class BaseRepository implements RepositoryInterface
     }
 
     /**
-     * Get Searchable Fields
+     * Get Searchable Fields.
      *
      * @return array
      */
@@ -207,7 +204,7 @@ abstract class BaseRepository implements RepositoryInterface
     }
 
     /**
-     * Query Scope
+     * Query Scope.
      *
      * @param \Closure $scope
      *
@@ -221,9 +218,9 @@ abstract class BaseRepository implements RepositoryInterface
     }
 
     /**
-     * Retrieve all data of repository, simple paginated
+     * Retrieve all data of repository, simple paginated.
      *
-     * @param null $limit
+     * @param null  $limit
      * @param array $columns
      *
      * @return mixed
@@ -241,9 +238,9 @@ abstract class BaseRepository implements RepositoryInterface
     }
 
     /**
-     * Retrieve all data of repository, simple paginated
+     * Retrieve all data of repository, simple paginated.
      *
-     * @param null $limit
+     * @param null  $limit
      * @param array $columns
      *
      * @return mixed
@@ -261,20 +258,21 @@ abstract class BaseRepository implements RepositoryInterface
     }
 
     /**
-     * Push Filter for filter the query
+     * Push Filter for filter the query.
      *
      * @param $filter
      *
-     * @return $this
      * @throws \Prettus\Repository\Exceptions\RepositoryException
+     *
+     * @return $this
      */
     public function pushFilter($filter)
     {
         if (is_string($filter)) {
-            $filter = new $filter;
+            $filter = new $filter();
         }
         if (!$filter instanceof FilterInterface) {
-            throw new RepositoryException("Class " . $filter . " must be an instance of Litepie\\Repository\\Interfaces\\FilterInterface");
+            throw new RepositoryException('Class '.$filter.' must be an instance of Litepie\\Repository\\Interfaces\\FilterInterface');
         }
 
         $this->filters->push($filter);
@@ -283,7 +281,7 @@ abstract class BaseRepository implements RepositoryInterface
     }
 
     /**
-     * Pop Filter
+     * Pop Filter.
      *
      * @param $filter
      *
@@ -307,7 +305,7 @@ abstract class BaseRepository implements RepositoryInterface
     }
 
     /**
-     * Get Collection of Filter
+     * Get Collection of Filter.
      *
      * @return Collection
      */
@@ -317,7 +315,7 @@ abstract class BaseRepository implements RepositoryInterface
     }
 
     /**
-     * Find data by Filter
+     * Find data by Filter.
      *
      * @param FilterInterface $filter
      *
@@ -327,11 +325,12 @@ abstract class BaseRepository implements RepositoryInterface
     {
         $this->model = $filter->apply($this->model, $this);
         $this->result = $this->model->get();
+
         return $this;
     }
 
     /**
-     * Skip Filter
+     * Skip Filter.
      *
      * @param bool $status
      *
@@ -345,7 +344,7 @@ abstract class BaseRepository implements RepositoryInterface
     }
 
     /**
-     * Reset all Filters
+     * Reset all Filters.
      *
      * @return $this
      */
@@ -357,7 +356,7 @@ abstract class BaseRepository implements RepositoryInterface
     }
 
     /**
-     * Reset Query Scope
+     * Reset Query Scope.
      *
      * @return $this
      */
@@ -369,7 +368,7 @@ abstract class BaseRepository implements RepositoryInterface
     }
 
     /**
-     * Apply scope in current Query
+     * Apply scope in current Query.
      *
      * @return $this
      */
@@ -384,7 +383,7 @@ abstract class BaseRepository implements RepositoryInterface
     }
 
     /**
-     * Apply filter in current Query
+     * Apply filter in current Query.
      *
      * @return $this
      */
@@ -401,6 +400,7 @@ abstract class BaseRepository implements RepositoryInterface
                 }
             }
         }
+
         return $this;
     }
 
@@ -408,6 +408,7 @@ abstract class BaseRepository implements RepositoryInterface
      * Applies the given where conditions to the model.
      *
      * @param array $where
+     *
      * @return void
      */
     protected function applyConditions(array $where)
@@ -423,7 +424,7 @@ abstract class BaseRepository implements RepositoryInterface
     }
 
     /**
-     * Skip Presenter Wrapper
+     * Skip Presenter Wrapper.
      *
      * @param bool $status
      *
@@ -437,7 +438,7 @@ abstract class BaseRepository implements RepositoryInterface
     }
 
     /**
-     * Wrapper result data
+     * Wrapper result data.
      *
      * @param mixed $result
      *
@@ -448,22 +449,24 @@ abstract class BaseRepository implements RepositoryInterface
         if ($this->presenter && !$this->skipPresenter) {
             if (is_subclass_of($result, LengthAwarePaginator::class)) {
                 $result = $this->presenter::present($result);
-            } else if (is_subclass_of($result, Paginator::class)) {
+            } elseif (is_subclass_of($result, Paginator::class)) {
                 $result = $this->presenter::present($result);
-            } else if (is_a($result, Collection::class)) {
+            } elseif (is_a($result, Collection::class)) {
                 $result = $this->presenter::present($result);
-            } else if (is_a($result, Model::class)) {
+            } elseif (is_a($result, Model::class)) {
                 $result = $this->presenter::make($result);
             }
         }
 
         $this->resetRepository();
+
         return $result;
     }
 
     /**
      * @param $method
      * @param $args
+     *
      * @return mixed
      */
     public function __call($method, $args)
@@ -490,8 +493,10 @@ abstract class BaseRepository implements RepositoryInterface
 
         if ($result instanceof Builder || $result instanceof Model) {
             $this->model = $result;
+
             return $this;
         }
+
         return $this;
     }
 
@@ -504,7 +509,6 @@ abstract class BaseRepository implements RepositoryInterface
      */
     public function all($columns = ['*'])
     {
-
         $this->applyFilter();
         $this->applyScope();
         if ($this->model instanceof Builder) {
@@ -515,11 +519,11 @@ abstract class BaseRepository implements RepositoryInterface
         $this->model = $this->result;
 
         return $this;
-
     }
 
     /**
      * @param $method
+     *
      * @return mixed
      */
     public function isGetMethod($method)
@@ -539,6 +543,5 @@ abstract class BaseRepository implements RepositoryInterface
         }
 
         return false;
-
     }
 }

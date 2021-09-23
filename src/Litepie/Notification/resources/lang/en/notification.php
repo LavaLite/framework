@@ -3,11 +3,11 @@
 return [
 
     /**
-     * Singlular and plural name of the module
+     * Singlular and plural name of the module.
      */
     'name'          => 'Notification',
     'names'         => 'Notifications',
-    'title'       => [
+    'title'         => [
         'user'  => 'My Notifications',
         'admin' => 'Notifications',
         'sub'   => [
@@ -20,11 +20,11 @@ return [
      * Options for select/radio/check.
      */
     'options'       => [
-            
+
     ],
 
     /**
-     * Placeholder for inputs
+     * Placeholder for inputs.
      */
     'placeholder'   => [
         'type'                       => 'Please enter type',
@@ -49,14 +49,14 @@ return [
     ],
 
     /**
-     * Tab labels
+     * Tab labels.
      */
     'tab'           => [
         'name'  => 'Name',
     ],
 
     /**
-     * Texts  for the module
+     * Texts  for the module.
      */
     'text'          => [
         'preview' => 'Click on the below list for preview',

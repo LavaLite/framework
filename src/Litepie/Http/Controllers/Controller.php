@@ -6,7 +6,6 @@ use Illuminate\Routing\Controller as BaseController;
 
 class Controller extends BaseController
 {
-
     /**
      * @var store response object
      */
@@ -26,5 +25,4 @@ class Controller extends BaseController
 
         return parent::callAction($method, $parameters);
     }
-
 }

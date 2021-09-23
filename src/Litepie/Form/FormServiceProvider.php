@@ -5,7 +5,6 @@ namespace Litepie\Form;
 use Illuminate\Container\Container;
 use Illuminate\Support\ServiceProvider;
 
-
 /**
  * Register the Former package with the Laravel framework.
  */
@@ -25,7 +24,7 @@ class FormServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        $this->loadViewsFrom(__DIR__ . '/resources/views/', 'form');
+        $this->loadViewsFrom(__DIR__.'/resources/views/', 'form');
 
         $this->publishResources();
     }
@@ -60,13 +59,13 @@ class FormServiceProvider extends ServiceProvider
     private function publishResources()
     {
         // Publish configuration file
-        $this->publishes([__DIR__ . '/config.php' => config_path('form.php')], 'config');
+        $this->publishes([__DIR__.'/config.php' => config_path('form.php')], 'config');
     }
 
     /**
-     * Create a Former container
+     * Create a Former container.
      *
-     * @param  Container $app
+     * @param Container $app
      *
      * @return Container
      */
@@ -81,6 +80,7 @@ class FormServiceProvider extends ServiceProvider
         $app->singleton('form.form', function ($app) {
             return new Form($app, $app->make('form.populator'), $app->make('form.field'));
         });
+
         return $app;
     }
 }

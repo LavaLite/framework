@@ -63,14 +63,14 @@ return [
 
         'upload_folder'     => 'alerts/notification',
         'uploads'           => [
-                                    'single'    => [],
-                                    'multiple'  => [],
-                               ],
+            'single'    => [],
+            'multiple'  => [],
+        ],
         'casts'             => [
-                               ],
+        ],
         'revision'          => [],
         'perPage'           => '20',
-        'search'        => [
+        'search'            => [
             'name'  => 'like',
             'status',
         ],

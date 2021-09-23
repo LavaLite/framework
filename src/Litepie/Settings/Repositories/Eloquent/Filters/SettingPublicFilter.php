@@ -7,7 +7,6 @@ use Litepie\Repository\Interfaces\RepositoryInterface;
 
 class SettingPublicFilter implements FilterInterface
 {
-    
     public function onlyPublished($model)
     {
         return $model->where('status', 'Published');

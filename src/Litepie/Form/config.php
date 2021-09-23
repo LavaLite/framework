@@ -52,33 +52,33 @@ return [
 
     'Nude' => [ // No-framework markup
         'icon' => [
-            'tag' => 'i',
-            'set' => null,
+            'tag'    => 'i',
+            'set'    => null,
             'prefix' => 'icon',
         ],
     ],
 
     'Bootstrap4' => [ // Twitter Bootstrap version 4
         'icon' => [
-            'tag' => 'i',
-            'set' => null,
+            'tag'    => 'i',
+            'set'    => null,
             'prefix' => 'icon',
         ],
         'attributes' => [
             'class' => [
                 'default' => [
                     'element' => 'form-control',
-                    'label' => 'form-group',
+                    'label'   => 'form-group',
                     'wrapper' => 'col-sm-6',
                 ],
                 'check' => [
                     'element' => 'form-check-input',
-                    'label' => 'form-check-label',
+                    'label'   => 'form-check-label',
                     'wrapper' => 'form-check',
                 ],
                 'select' => [
                     'element' => 'custom-select',
-                ]
+                ],
             ],
         ],
     ],
@@ -86,10 +86,10 @@ return [
     'ZurbFoundation5' => [
         // Map Former-supported viewports to Foundation 5 equivalents
         'viewports' => [
-            'large' => 'large',
+            'large'  => 'large',
             'medium' => null,
-            'small' => 'small',
-            'mini' => null,
+            'small'  => 'small',
+            'mini'   => null,
         ],
         // Width of labels for horizontal forms expressed as viewport => grid columns
         'labelWidths' => [
@@ -99,8 +99,8 @@ return [
         'wrappedLabelClasses' => ['right', 'inline'],
         // HTML markup and classes used by Foundation 5 for icons
         'icon' => [
-            'tag' => 'i',
-            'set' => null,
+            'tag'    => 'i',
+            'set'    => null,
             'prefix' => 'fi',
         ],
         // CSS for inline validation errors

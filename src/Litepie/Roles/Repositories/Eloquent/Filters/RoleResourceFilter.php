@@ -20,5 +20,4 @@ class RoleResourceFilter implements FilterInterface
     {
         return $this->onlyShowDeletedForAdmins($model);
     }
-
 }

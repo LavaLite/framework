@@ -138,7 +138,6 @@ if (!function_exists('trans_setlocale')) {
     }
 }
 
-
 if (!function_exists('pager_array')) {
     /**
      * Return request values to be used in paginator.

@@ -8,15 +8,14 @@ use Litepie\Database\Traits\Sluggable;
 use Litepie\Database\Traits\Sortable;
 use Litepie\Filer\Traits\Filer;
 use Litepie\Hashids\Traits\Hashids;
+use Litepie\Roles\Traits\CheckRoleAndPermission;
 use Litepie\Trans\Traits\Translatable;
+use Litepie\User\Interfaces\UserPolicyInterface;
 use Litepie\User\Models\Model as BaseModel;
 use Litepie\User\Traits\Auth\MustVerifyEmail;
-use Litepie\User\Interfaces\UserPolicyInterface;
-use Litepie\Roles\Traits\CheckRoleAndPermission;
 
 class Client extends BaseModel implements ContractMustVerifyEmail, UserPolicyInterface
 {
-
     use MustVerifyEmail;
     use Filer;
     use Hashids;
@@ -52,7 +51,7 @@ class Client extends BaseModel implements ContractMustVerifyEmail, UserPolicyInt
         parent::__construct($attributes);
     }
 
-        /**
+    /**
      * Set role for the model.
      *
      * @return \Illuminate\Database\Eloquent\Collection
@@ -61,6 +60,4 @@ class Client extends BaseModel implements ContractMustVerifyEmail, UserPolicyInt
     {
         $this->role = app('Litepie\Roles\Interfaces\RoleRepositoryInterface')->findBySlug($role);
     }
-
-
 }

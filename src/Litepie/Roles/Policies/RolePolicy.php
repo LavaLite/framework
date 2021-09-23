@@ -7,11 +7,10 @@ use Litepie\User\Interfaces\UserPolicyInterface;
 
 class RolePolicy
 {
-
     /**
      * Determine if the given user can view the role.
      *
-     * @param UserPolicyInterface $authUser
+     * @param UserPolicyInterface     $authUser
      * @param RoleRepositoryInterface $role
      *
      * @return bool
@@ -24,7 +23,7 @@ class RolePolicy
     /**
      * Determine if the given user can create a role.
      *
-     * @param UserPolicyInterface $authUser
+     * @param UserPolicyInterface     $authUser
      * @param RoleRepositoryInterface $role
      *
      * @return bool
@@ -37,7 +36,7 @@ class RolePolicy
     /**
      * Determine if the given user can update the given role.
      *
-     * @param UserPolicyInterface $authUser
+     * @param UserPolicyInterface     $authUser
      * @param RoleRepositoryInterface $role
      *
      * @return bool
@@ -50,7 +49,7 @@ class RolePolicy
     /**
      * Determine if the given user can delete the given role.
      *
-     * @param UserPolicyInterface $authUser
+     * @param UserPolicyInterface     $authUser
      * @param RoleRepositoryInterface $role
      *
      * @return bool

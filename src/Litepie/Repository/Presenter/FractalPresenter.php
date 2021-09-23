@@ -12,5 +12,4 @@ use Prettus\Repository\Presenter\FractalPresenter as PrettusFractalPresenter;
  */
 abstract class FractalPresenter extends PrettusFractalPresenter implements PresenterInterface
 {
-
 }
