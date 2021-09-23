@@ -2,16 +2,13 @@
 
 namespace Litepie\Roles\Repositories\Eloquent;
 
-use Litepie\Roles\Interfaces\RoleRepositoryInterface;
 use Litepie\Repository\BaseRepository;
+use Litepie\Roles\Interfaces\RoleRepositoryInterface;
 
 class RoleRepository extends BaseRepository implements RoleRepositoryInterface
 {
-
-
     public function boot()
     {
-
     }
 
     /**

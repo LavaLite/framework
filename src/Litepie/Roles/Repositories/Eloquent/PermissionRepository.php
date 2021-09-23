@@ -2,16 +2,13 @@
 
 namespace Litepie\Roles\Repositories\Eloquent;
 
-use Litepie\Roles\Interfaces\PermissionRepositoryInterface;
 use Litepie\Repository\BaseRepository;
+use Litepie\Roles\Interfaces\PermissionRepositoryInterface;
 
 class PermissionRepository extends BaseRepository implements PermissionRepositoryInterface
 {
-
-
     public function boot()
     {
-
     }
 
     /**

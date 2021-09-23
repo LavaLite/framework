@@ -2,8 +2,8 @@
 
 namespace Litepie\Notification\Repositories\Presenter;
 
-use Litepie\Notification\Models\Notification;
 use League\Fractal\TransformerAbstract;
+use Litepie\Notification\Models\Notification;
 
 class NotificationListTransformer extends TransformerAbstract
 {

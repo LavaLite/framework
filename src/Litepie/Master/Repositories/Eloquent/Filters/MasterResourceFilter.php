@@ -7,7 +7,6 @@ use Litepie\Repository\Interfaces\RepositoryInterface;
 
 class MasterResourceFilter implements FilterInterface
 {
-
     public function apply($model, RepositoryInterface $repository)
     {
         return $this->filterByGroup($model);
@@ -16,6 +15,7 @@ class MasterResourceFilter implements FilterInterface
     public function filterByGroup($model)
     {
         $group = request()->route('type', 'master');
+
         return $model->where('type', $group);
     }
 }

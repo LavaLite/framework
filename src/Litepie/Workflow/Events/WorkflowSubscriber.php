@@ -2,9 +2,9 @@
 
 namespace Litepie\Workflow\Events;
 
+use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Workflow\Event\Event;
 use Symfony\Component\Workflow\Event\GuardEvent as SymfonyGuardEvent;
-use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 /**
  * @author Boris Koumondji <brexis@yahoo.fr>
@@ -13,7 +13,7 @@ class WorkflowSubscriber implements EventSubscriberInterface
 {
     public function guardEvent(SymfonyGuardEvent $event)
     {
-        $workflowName   = $event->getWorkflowName();
+        $workflowName = $event->getWorkflowName();
         $transitionName = $event->getTransition()->getName();
 
         event(new GuardEvent($event));
@@ -24,7 +24,7 @@ class WorkflowSubscriber implements EventSubscriberInterface
 
     public function leaveEvent(Event $event)
     {
-        $places       = $event->getTransition()->getFroms();
+        $places = $event->getTransition()->getFroms();
         $workflowName = $event->getWorkflowName();
 
         event(new LeaveEvent($event));
@@ -38,7 +38,7 @@ class WorkflowSubscriber implements EventSubscriberInterface
 
     public function transitionEvent(Event $event)
     {
-        $workflowName   = $event->getWorkflowName();
+        $workflowName = $event->getWorkflowName();
         $transitionName = $event->getTransition()->getName();
 
         event(new TransitionEvent($event));
@@ -49,7 +49,7 @@ class WorkflowSubscriber implements EventSubscriberInterface
 
     public function enterEvent(Event $event)
     {
-        $places       = $event->getTransition()->getTos();
+        $places = $event->getTransition()->getTos();
         $workflowName = $event->getWorkflowName();
 
         event(new EnterEvent($event));
@@ -63,7 +63,7 @@ class WorkflowSubscriber implements EventSubscriberInterface
 
     public function enteredEvent(Event $event)
     {
-        $places       = $event->getTransition()->getTos();
+        $places = $event->getTransition()->getTos();
         $workflowName = $event->getWorkflowName();
 
         event(new EnteredEvent($event));
@@ -77,7 +77,7 @@ class WorkflowSubscriber implements EventSubscriberInterface
 
     public function completedEvent(Event $event)
     {
-        $workflowName   = $event->getWorkflowName();
+        $workflowName = $event->getWorkflowName();
         $transitionName = $event->getTransition()->getName();
 
         event(new CompletedEvent($event));

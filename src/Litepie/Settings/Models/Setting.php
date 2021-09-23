@@ -24,7 +24,5 @@ class Setting extends Model
      *
      * @var array
      */
-     protected $config = 'setting.setting.model';
-
-
+    protected $config = 'setting.setting.model';
 }

@@ -2,13 +2,11 @@
 
 namespace Litepie\User\Repositories\Eloquent;
 
-use Litepie\User\Interfaces\ClientRepositoryInterface;
 use Litepie\Repository\BaseRepository;
-
+use Litepie\User\Interfaces\ClientRepositoryInterface;
 
 class ClientRepository extends BaseRepository implements ClientRepositoryInterface
 {
-
     public function boot()
     {
         $this->fieldSearchable = config('user.client.model.search');
@@ -23,5 +21,4 @@ class ClientRepository extends BaseRepository implements ClientRepositoryInterfa
     {
         return config('user.client.model.model');
     }
-
 }

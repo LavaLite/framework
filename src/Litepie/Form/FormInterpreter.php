@@ -49,61 +49,41 @@ abstract class FormInterpreter
      */
     public static $fields;
 
-    /**
-     *
-     */
-
     public static function fields()
     {
         $item = collect(self::$fields);
+
         return $item->groupBy(['group'], true);
     }
-
-    /**
-     *
-     */
 
     public static function groups()
     {
         return self::$groups;
     }
-    /**
-     *
-     */
 
     public static function search()
     {
         return self::$search;
     }
-    /**
-     *
-     */
 
-    public static function list() {
+    public static function list()
+    {
         return self::$list;
     }
-
-    /**
-     *
-     */
 
     public static function urls()
     {
         return self::$urls;
     }
 
-    /**
-     *
-     */
     public static function toArray()
     {
-
         return [
-            'urls' => self::urls(),
-            'list' => self::list(),
+            'urls'   => self::urls(),
+            'list'   => self::list(),
             'search' => self::search(),
             'groups' => self::groups(),
-            'fields' => self::fields()->toArray()
+            'fields' => self::fields()->toArray(),
         ];
     }
 }

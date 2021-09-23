@@ -82,11 +82,11 @@ abstract class AbstractResponse
      */
     protected function ajax()
     {
-        header("Last-Modified: " . gmdate("D, d M Y H:i:s") . " GMT");
-        header("Cache-Control: no-store, no-cache, must-revalidate"); // HTTP/1.1
-        header("Cache-Control: post-check=0, pre-check=0", false);
-        header("Pragma: no-cache"); // HTTP/1.0
-        header("Expires: Sat, 26 Jul 1997 05:00:00 GMT"); // Date in the past
+        header('Last-Modified: '.gmdate('D, d M Y H:i:s').' GMT');
+        header('Cache-Control: no-store, no-cache, must-revalidate'); // HTTP/1.1
+        header('Cache-Control: post-check=0, pre-check=0', false);
+        header('Pragma: no-cache'); // HTTP/1.0
+        header('Expires: Sat, 26 Jul 1997 05:00:00 GMT'); // Date in the past
 
         if ($this->populate) {
             Form::populate($this->getFormData());
@@ -126,21 +126,21 @@ abstract class AbstractResponse
     {
         if ($this->typeIs('json')) {
             return response()->json([
-                'data' => $this->getFormData(),
+                'data'    => $this->getFormData(),
                 'message' => $this->getMessage(),
-                'code' => $this->getCode(),
-                'status' => $this->getStatus(),
-                'url' => $this->getUrl(),
+                'code'    => $this->getCode(),
+                'status'  => $this->getStatus(),
+                'url'     => $this->getUrl(),
             ], $this->getStatusCode());
         }
 
         if ($this->typeIs('ajax')) {
             return response()->json([
-                'data' => $this->getFormData(),
+                'data'    => $this->getFormData(),
                 'message' => $this->getMessage(),
-                'code' => $this->getCode(),
-                'status' => $this->getStatus(),
-                'url' => $this->getUrl(),
+                'code'    => $this->getCode(),
+                'status'  => $this->getStatus(),
+                'url'     => $this->getUrl(),
             ], $this->getStatusCode());
         }
 
@@ -298,7 +298,6 @@ abstract class AbstractResponse
      */
     public function getFormData()
     {
-
         if (isset($this->data['data']) && is_array($this->data['data'])) {
             return $this->data['data'];
         }
@@ -307,7 +306,7 @@ abstract class AbstractResponse
             return $this->data;
         }
 
-        return [ ];
+        return [];
     }
 
     /**
@@ -333,7 +332,7 @@ abstract class AbstractResponse
         $callable = preg_split('|[A-Z]|', $method);
 
         if (in_array($callable[0], ['set', 'prepend', 'append', 'has', 'get'])) {
-            $value = lcfirst(preg_replace('|^' . $callable[0] . '|', '', $method));
+            $value = lcfirst(preg_replace('|^'.$callable[0].'|', '', $method));
             array_unshift($parameters, $value);
             call_user_func_array([$this->theme, $callable[0]], $parameters);
         }

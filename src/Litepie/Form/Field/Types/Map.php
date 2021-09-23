@@ -4,7 +4,7 @@ namespace Litepie\Form\Field\Types;
 
 /**
  * Abstracts general fields parameters (type, value, name) and
- * reforms a correct form field depending on what was asked
+ * reforms a correct form field depending on what was asked.
  */
 trait Map
 {
@@ -15,20 +15,16 @@ trait Map
 
     /**
      * Default longitude.
-     *
      */
     public $longitude = 0;
 
     /**
-     * Latitude field name
-     *
+     * Latitude field name.
      */
     public $latField = 'latitude';
 
     /**
-     * Longitude field name
-     *
+     * Longitude field name.
      */
     public $lngField = 'longitude';
-
 }

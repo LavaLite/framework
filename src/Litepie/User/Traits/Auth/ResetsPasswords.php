@@ -4,12 +4,13 @@ namespace Litepie\User\Traits\Auth;
 
 use Illuminate\Foundation\Auth\ResetsPasswords as IlluminateResetsPasswords;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Password;
 
 trait ResetsPasswords
 {
-    use Common, IlluminateResetsPasswords;
+    use Common;
+    use IlluminateResetsPasswords;
+
     /**
      * Display the password reset view for the given token.
      *
@@ -22,12 +23,14 @@ trait ResetsPasswords
     public function showResetForm(Request $request, $token = null)
     {
         $email = $request->email;
+
         return $this->response->setMetaTitle('Reset')
             ->view('auth.passwords.reset')
             ->layout('auth')
             ->data(compact('token', 'email'))
             ->output();
     }
+
     /**
      * Get the broker to be used during password reset.
      *

@@ -41,6 +41,7 @@ class WhatsAppMessage
         }
         $number = preg_replace('/[^0-9]/', '', $number);
         $this->to = $number;
+
         return $this;
     }
 
@@ -50,6 +51,7 @@ class WhatsAppMessage
             return $this->template;
         }
         $this->template = $template;
+
         return $this;
     }
 
@@ -59,6 +61,7 @@ class WhatsAppMessage
             return $this->namespace;
         }
         $this->namespace = $namespace;
+
         return $this;
     }
 
@@ -68,6 +71,7 @@ class WhatsAppMessage
             return $this->params;
         }
         $this->params = $params;
+
         return $this;
     }
 }

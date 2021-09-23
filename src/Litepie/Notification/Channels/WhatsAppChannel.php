@@ -8,12 +8,12 @@ use Litepie\Notification\Messages\WhatsAppMessage;
 
 class WhatsAppChannel
 {
-
     /**
      * Send the given notification.
      *
-     * @param  mixed  $notifiable
-     * @param  \Illuminate\Notifications\Notification  $notification
+     * @param mixed                                  $notifiable
+     * @param \Illuminate\Notifications\Notification $notification
+     *
      * @return void
      */
     public function send($notifiable, Notification $notification)
@@ -26,7 +26,6 @@ class WhatsAppChannel
 
     private function sendNotification(WhatsAppMessage $message)
     {
-
         $data = Http::withHeaders([
             'Content-Type' => 'application/json',
         ])
@@ -35,48 +34,50 @@ class WhatsAppChannel
             ->withBody($this->prepareBody($message), 'application/json')
             ->post($this->getUrl());
         dd($data->body());
+
         return $data;
     }
 
     private function getUrl()
     {
-        return config('services.whatsapp.url') . '/' .
-        config('services.whatsapp.version') . '/api/whatsapp/' .
-        config('services.whatsapp.appid') . '/notification';
+        return config('services.whatsapp.url').'/'.
+        config('services.whatsapp.version').'/api/whatsapp/'.
+        config('services.whatsapp.appid').'/notification';
     }
 
     private function prepareBody(WhatsAppMessage $message)
     {
         $array = [
-            "storage" => "full",
-            "destination" => [
-                "integrationId" => config('services.whatsapp.integrationid'),
-                "destinationId" => $message->to(),
+            'storage'     => 'full',
+            'destination' => [
+                'integrationId' => config('services.whatsapp.integrationid'),
+                'destinationId' => $message->to(),
             ],
-            "author" => [
-                "name" => config('app.name'),
-                "email" => config('mail.from.address'),
-                "role" => "appMaker",
+            'author' => [
+                'name'  => config('app.name'),
+                'email' => config('mail.from.address'),
+                'role'  => 'appMaker',
             ],
-            "messageSchema" => "whatsapp",
-            "message" => [
-                "type" => "template",
-                "template" => [
-                    "namespace" => $message->namespace(),
-                    "name" => $message->template(),
-                    "language" => [
-                        "policy" => "deterministic",
-                        "code" => "en",
+            'messageSchema' => 'whatsapp',
+            'message'       => [
+                'type'     => 'template',
+                'template' => [
+                    'namespace' => $message->namespace(),
+                    'name'      => $message->template(),
+                    'language'  => [
+                        'policy' => 'deterministic',
+                        'code'   => 'en',
                     ],
-                    "components" => [
+                    'components' => [
                         [
-                            "type" => "body",
-                            "parameters" => $message->params(),
+                            'type'       => 'body',
+                            'parameters' => $message->params(),
                         ],
                     ],
                 ],
             ],
         ];
+
         return json_encode($array);
     }
 }

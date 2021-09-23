@@ -1,20 +1,21 @@
 <?php
+
 namespace Tests;
 
-use PHPUnit\Framework\TestCase;
 use Litepie\Workflow\WorkflowRegistry;
+use PHPUnit\Framework\TestCase;
 use ReflectionProperty;
 use Symfony\Component\Workflow\MarkingStore\MultipleStateMarkingStore;
 use Symfony\Component\Workflow\MarkingStore\SingleStateMarkingStore;
-use Symfony\Component\Workflow\Workflow;
 use Symfony\Component\Workflow\StateMachine;
+use Symfony\Component\Workflow\Workflow;
 use Tests\Fixtures\TestObject;
 
 class WorkflowRegistryTest extends TestCase
 {
     public function testIfWorkflowIsRegistered()
     {
-        $config     = [
+        $config = [
             'straight'   => [
                 'supports'      => ['Tests\Fixtures\TestObject'],
                 'places'        => ['a', 'b', 'c'],
@@ -26,14 +27,14 @@ class WorkflowRegistryTest extends TestCase
                     't2' => [
                         'from' => 'b',
                         'to'   => 'c',
-                    ]
+                    ],
                 ],
-            ]
+            ],
         ];
 
-        $registry   = new WorkflowRegistry($config);
-        $subject    = new TestObject;
-        $workflow   = $registry->get($subject);
+        $registry = new WorkflowRegistry($config);
+        $subject = new TestObject();
+        $workflow = $registry->get($subject);
 
         $markingStoreProp = new ReflectionProperty(Workflow::class, 'markingStore');
         $markingStoreProp->setAccessible(true);
@@ -46,7 +47,7 @@ class WorkflowRegistryTest extends TestCase
 
     public function testIfStateMachineIsRegistered()
     {
-        $config     = [
+        $config = [
             'straight'   => [
                 'type'          => 'state_machine',
                 'marking_store' => [
@@ -62,14 +63,14 @@ class WorkflowRegistryTest extends TestCase
                     't2' => [
                         'from' => 'b',
                         'to'   => 'c',
-                    ]
+                    ],
                 ],
-            ]
+            ],
         ];
 
-        $registry   = new WorkflowRegistry($config);
-        $subject     = new TestObject;
-        $workflow   = $registry->get($subject);
+        $registry = new WorkflowRegistry($config);
+        $subject = new TestObject();
+        $workflow = $registry->get($subject);
 
         $markingStoreProp = new ReflectionProperty(Workflow::class, 'markingStore');
         $markingStoreProp->setAccessible(true);
@@ -80,8 +81,8 @@ class WorkflowRegistryTest extends TestCase
         $this->assertTrue($markingStore instanceof MultipleStateMarkingStore);
     }
 
-	public function testIfTransitionsWithSameNameCanBothBeUsed()
-	{
+    public function testIfTransitionsWithSameNameCanBothBeUsed()
+    {
         $config = [
             'straight' => [
                 'type'        => 'state_machine',
@@ -102,13 +103,13 @@ class WorkflowRegistryTest extends TestCase
                         'name' => 't2',
                         'from' => 'b',
                         'to'   => 'c',
-                    ]
+                    ],
                 ],
-            ]
+            ],
         ];
 
         $registry = new WorkflowRegistry($config);
-        $subject  = new TestObject;
+        $subject = new TestObject();
         $workflow = $registry->get($subject);
 
         $markingStoreProp = new ReflectionProperty(Workflow::class, 'markingStore');
@@ -143,7 +144,7 @@ class WorkflowRegistryTest extends TestCase
                         'name' => 't2',
                         'from' => [
                             'a',
-                            'b'
+                            'b',
                         ],
                         'to'   => 'c',
                     ],
@@ -152,7 +153,7 @@ class WorkflowRegistryTest extends TestCase
         ];
 
         $registry = new WorkflowRegistry($config);
-        $subject = new TestObject;
+        $subject = new TestObject();
         $workflow = $registry->get($subject);
 
         $markingStoreProp = new ReflectionProperty(Workflow::class, 'markingStore');

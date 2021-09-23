@@ -24,7 +24,5 @@ class Team extends Model
      *
      * @var array
      */
-     protected $config = 'team.team.model';
-
-
+    protected $config = 'team.team.model';
 }

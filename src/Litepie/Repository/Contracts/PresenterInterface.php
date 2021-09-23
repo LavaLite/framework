@@ -11,5 +11,4 @@ use Prettus\Repository\Contracts\PresenterInterface as PrettusPresenterInterface
  */
 interface PresenterInterface extends PrettusPresenterInterface
 {
-    
 }

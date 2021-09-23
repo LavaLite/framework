@@ -21,17 +21,16 @@ class AlertsServiceProvider extends ServiceProvider
     public function boot()
     {
         // Load view
-        $this->loadViewsFrom(__DIR__ . '/resources/views', 'alerts');
+        $this->loadViewsFrom(__DIR__.'/resources/views', 'alerts');
 
         // Load translation
-        $this->loadTranslationsFrom(__DIR__ . '/resources/lang', 'alerts');
+        $this->loadTranslationsFrom(__DIR__.'/resources/lang', 'alerts');
 
         // Load migrations
-        $this->loadMigrationsFrom(__DIR__ . '/database/migrations');
+        $this->loadMigrationsFrom(__DIR__.'/database/migrations');
 
         // Call pblish redources function
         $this->publishResources();
-
     }
 
     /**
@@ -74,15 +73,15 @@ class AlertsServiceProvider extends ServiceProvider
     private function publishResources()
     {
         // Publish configuration file
-        $this->publishes([__DIR__ . '/config/config.php' => config_path('litepie/alerts.php')], 'config');
+        $this->publishes([__DIR__.'/config/config.php' => config_path('litepie/alerts.php')], 'config');
 
         // Publish admin view
-        $this->publishes([__DIR__ . '/resources/views' => base_path('resources/views/vendor/alerts')], 'view');
+        $this->publishes([__DIR__.'/resources/views' => base_path('resources/views/vendor/alerts')], 'view');
 
         // Publish language files
-        $this->publishes([__DIR__ . '/resources/lang' => base_path('resources/lang/vendor/alerts')], 'lang');
+        $this->publishes([__DIR__.'/resources/lang' => base_path('resources/lang/vendor/alerts')], 'lang');
 
         // Publish public files and assets.
-        $this->publishes([__DIR__ . '/public/' => public_path('/')], 'public');
+        $this->publishes([__DIR__.'/public/' => public_path('/')], 'public');
     }
 }

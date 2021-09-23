@@ -1,7 +1,7 @@
 <?php
 
 // Admin routes  for notification
-Route::group(['prefix' => set_route_guard('web') . '/alerts'], function () {
+Route::group(['prefix' => set_route_guard('web').'/alerts'], function () {
     Route::resource('notification', 'NotificationResourceController');
 });
 
@@ -15,4 +15,3 @@ Route::group(['prefix' => 'alerts'], function () {
     Route::get('/', 'NotificationPublicController@index');
     Route::get('/{slug?}', 'NotificationPublicController@show');
 });
-

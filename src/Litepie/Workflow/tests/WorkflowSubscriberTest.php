@@ -2,15 +2,14 @@
 
 namespace Tests {
 
-    use Litepie\Workflow\Events\AnnounceEvent;
     use Litepie\Workflow\Events\CompletedEvent;
     use Litepie\Workflow\Events\EnteredEvent;
     use Litepie\Workflow\Events\EnterEvent;
     use Litepie\Workflow\Events\GuardEvent;
     use Litepie\Workflow\Events\LeaveEvent;
     use Litepie\Workflow\Events\TransitionEvent;
-    use PHPUnit\Framework\TestCase;
     use Litepie\Workflow\WorkflowRegistry;
+    use PHPUnit\Framework\TestCase;
     use Tests\Fixtures\TestObject;
 
     class WorkflowSubscriberTest extends TestCase
@@ -39,7 +38,7 @@ namespace Tests {
             ];
 
             $registry = new WorkflowRegistry($config);
-            $object = new TestObject;
+            $object = new TestObject();
             $workflow = $registry->get($object);
 
             $workflow->apply($object, 't1');

@@ -73,6 +73,5 @@ class MenuServiceProvider extends ServiceProvider
 
         // Publish language files
         $this->publishes([__DIR__.'/resources/lang' => base_path('resources/lang/vendor/menu')], 'lang');
-
     }
 }

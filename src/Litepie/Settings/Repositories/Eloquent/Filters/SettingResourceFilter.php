@@ -20,5 +20,4 @@ class SettingResourceFilter implements FilterInterface
     {
         return $this->onlyShowDeletedForAdmins($model);
     }
-
 }

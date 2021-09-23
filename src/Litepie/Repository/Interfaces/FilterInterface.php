@@ -4,12 +4,11 @@ namespace Litepie\Repository\Interfaces;
 
 /**
  * Interface FilterInterface.
- *
  */
 interface FilterInterface
 {
     /**
-     * Apply filter in query repository
+     * Apply filter in query repository.
      *
      * @param                     $model
      * @param RepositoryInterface $repository
@@ -17,5 +16,4 @@ interface FilterInterface
      * @return mixed
      */
     public function apply($model, RepositoryInterface $repository);
-
 }

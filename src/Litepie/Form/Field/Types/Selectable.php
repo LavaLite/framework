@@ -4,33 +4,33 @@ namespace Litepie\Form\Field\Types;
 
 /**
  * Abstracts general fields parameters (type, value, name) and
- * reforms a correct form field depending on what was asked
+ * reforms a correct form field depending on what was asked.
  */
 trait Selectable
 {
     /**
-     * Value name for the select field
+     * Value name for the select field.
      *
      * @var text
      */
     public $select_value = 'value';
 
     /**
-     * Key name for the select field
+     * Key name for the select field.
      *
      * @var text
      */
     public $select_text = 'text';
 
     /**
-     * Select element name for the field
+     * Select element name for the field.
      *
      * @var array
      */
     protected $selectElements = ['select'];
 
     /**
-     * Sets attribute for the field
+     * Sets attribute for the field.
      *
      * @return array options
      */
@@ -39,8 +39,8 @@ trait Selectable
         $options = $this->prepareOptionsArray($options, $this->select_value, $this->select_text);
         data_fill($options, '*.selected', false);
         data_fill($options, '*.selected', false);
-        data_fill($options, '*.' . $this->select_value, '');
-        data_fill($options, '*.' . $this->select_text, '');
+        data_fill($options, '*.'.$this->select_value, '');
+        data_fill($options, '*.'.$this->select_text, '');
 
         $value = $this->value;
         if (empty($value)) {
@@ -55,7 +55,7 @@ trait Selectable
                 $options[$key]['selected'] = true;
             }
         }
+
         return $options;
     }
-
 }

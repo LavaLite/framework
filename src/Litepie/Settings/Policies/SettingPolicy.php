@@ -2,16 +2,15 @@
 
 namespace Litepie\Settings\Policies;
 
-use Litepie\User\Interfaces\UserPolicyInterface;
 use Litepie\Settings\Interfaces\SettingRepositoryInterface;
+use Litepie\User\Interfaces\UserPolicyInterface;
 
 class SettingPolicy
 {
-
     /**
      * Determine if the given user can view the setting.
      *
-     * @param UserPolicyInterface $authUser
+     * @param UserPolicyInterface        $authUser
      * @param SettingRepositoryInterface $setting
      *
      * @return bool
@@ -36,7 +35,7 @@ class SettingPolicy
     /**
      * Determine if the given user can update the given setting.
      *
-     * @param UserPolicyInterface $authUser
+     * @param UserPolicyInterface        $authUser
      * @param SettingRepositoryInterface $setting
      *
      * @return bool
