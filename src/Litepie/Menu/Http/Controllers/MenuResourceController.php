@@ -61,7 +61,7 @@ class MenuResourceController extends BaseController
     public function show(MenuRequest $request, $parent = 1)
     {
         if ($request->ajax()) {
-            $menu = $parent->model;
+            $menu = $parent->getModel();
 
             Form::populate($menu);
 
@@ -104,7 +104,7 @@ class MenuResourceController extends BaseController
         try {
             $attributes = $request->all();
             $menu = $this->repository->create($attributes);
-
+            $menu = $menu->getModel();
             return $this->response
                 ->message(trans('messages.success.created', ['Module' => trans('menu::menu.name')]))
                 ->code(204)
@@ -131,7 +131,7 @@ class MenuResourceController extends BaseController
      */
     public function edit(MenuRequest $request, MenuRepositoryInterface $menu)
     {
-        $data['menu'] = $menu;
+        $data['menu'] = $menu->getModel();
         Form::populate($data['menu']);
 
         return view('litepie.menu.admin.edit', $data);
@@ -151,7 +151,7 @@ class MenuResourceController extends BaseController
             $attributes = $request->all();
 
             $menu->update($attributes);
-
+            $menu = $menu->getModel();
             return $this->response->message(trans('messages.success.updated', ['Module' => trans('menu::menu.name')]))
                 ->code(204)
                 ->status('success')

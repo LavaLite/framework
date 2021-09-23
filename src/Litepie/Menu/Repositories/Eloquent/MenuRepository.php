@@ -44,10 +44,11 @@ class MenuRepository extends BaseRepository implements MenuRepositoryInterface
      */
     public function rootMenues()
     {
-        $menu = $this->model
+        $menu = $this
             ->whereParentId(0)
-            ->get();
-        $this->resetModel();
+            ->get()
+            ->getResult();
+        $this->resetRepository();
 
         return $menu;
     }
