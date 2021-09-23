@@ -204,6 +204,25 @@ abstract class BaseRepository implements RepositoryInterface
     }
 
     /**
+     * Return the array for dropdown and checkboxes.
+     *
+     * @return array
+     */
+    public function options($key, $value)
+    {
+        $options = $this->all()->getModel();
+        $ret = [];
+        foreach ($options as $k => $option) {
+            $ret[$k] = [
+                'text' => $option[$value],
+                'value' => $option[$key],
+            ];
+        }
+
+        return $ret;
+    }
+
+    /**
      * Query Scope.
      *
      * @param \Closure $scope
@@ -272,7 +291,7 @@ abstract class BaseRepository implements RepositoryInterface
             $filter = new $filter();
         }
         if (!$filter instanceof FilterInterface) {
-            throw new RepositoryException('Class '.$filter.' must be an instance of Litepie\\Repository\\Interfaces\\FilterInterface');
+            throw new RepositoryException('Class ' . $filter . ' must be an instance of Litepie\\Repository\\Interfaces\\FilterInterface');
         }
 
         $this->filters->push($filter);
