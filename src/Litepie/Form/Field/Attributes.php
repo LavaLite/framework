@@ -6,7 +6,7 @@ use Illuminate\Support\Str;
 
 /**
  * Abstracts general fields parameters (type, value, name) and
- * reforms a correct form field depending on what was asked
+ * reforms a correct form field depending on what was asked.
  */
 trait Attributes
 {
@@ -18,16 +18,16 @@ trait Attributes
     public $attributes = [];
 
     /**
-     * Sets attribute for the field
+     * Sets attribute for the field.
      *
-     * @param  string $label A label
-     * @param  string $name  A field name
+     * @param string $label A label
+     * @param string $name  A field name
      *
-     * @return false|null         A label and a field name
+     * @return false|null A label and a field name
      */
     private function initAttributes()
     {
-        $attributes = config('form.' . $this->framework() . '.attributes.class.default');
+        $attributes = config('form.'.$this->framework().'.attributes.class.default');
         $attribute['element']['class'] = $attributes['element'];
         $attribute['label']['class'] = $attributes['label'];
         $attribute['wrapper']['class'] = $attributes['wrapper'];
@@ -35,23 +35,24 @@ trait Attributes
     }
 
     /**
-     * Ponders a label and a field name, and tries to get the best out of it
+     * Ponders a label and a field name, and tries to get the best out of it.
      *
-     * @param  string $label A label
-     * @param  string $name  A field name
+     * @param string $label A label
+     * @param string $name  A field name
      *
-     * @return false|null         A label and a field name
+     * @return false|null A label and a field name
      */
     private function addAttribute($name, $value, $target = 'element')
     {
         $attribute = Str::snake($name, '-');
         $target = empty($target) ? 'element' : $target;
         $this->attributes[$target][$attribute] = $value;
+
         return $this;
     }
 
     /**
-     * Ponders a label and a field name, and tries to get the best out of it
+     * Ponders a label and a field name, and tries to get the best out of it.
      *
      * @return false|null A label and a field name
      */
@@ -59,11 +60,11 @@ trait Attributes
     {
         $attributes = [
             'element.attribute' => null,
-            'element.class' => null,
-            'label.attribute' => null,
-            'label.class' => null,
+            'element.class'     => null,
+            'label.attribute'   => null,
+            'label.class'       => null,
             'wrapper.attribute' => null,
-            'wrapper.class' => null,
+            'wrapper.class'     => null,
         ];
 
         $attr = @$this->attributes['element'];
@@ -86,9 +87,10 @@ trait Attributes
                         return;
                     }
 
-                    return $k . '="' . htmlspecialchars($v) . '"';
+                    return $k.'="'.htmlspecialchars($v).'"';
                 },
-                array_keys($attr), $attr
+                array_keys($attr),
+                $attr
             ));
         }
 
@@ -99,8 +101,9 @@ trait Attributes
                 unset($attr['class']);
             }
             $attributes['label.attribute'] = implode(' ', array_map(
-                function ($k, $v) {return $k . '="' . htmlspecialchars($v) . '"';},
-                array_keys($attr), $attr
+                function ($k, $v) {return $k.'="'.htmlspecialchars($v).'"'; },
+                array_keys($attr),
+                $attr
             ));
         }
 
@@ -111,29 +114,31 @@ trait Attributes
                 unset($attr['class']);
             }
             $attributes['wrapper.attribute'] = implode(' ', array_map(
-                function ($k, $v) {return $k . '="' . htmlspecialchars($v) . '"';},
-                array_keys($attr), $attr
+                function ($k, $v) {return $k.'="'.htmlspecialchars($v).'"'; },
+                array_keys($attr),
+                $attr
             ));
         }
+
         return $attributes;
     }
 
     /**
-     * Ponders a label and a field name, and tries to get the best out of it
+     * Ponders a label and a field name, and tries to get the best out of it.
      *
-     * @param  string $label A label
-     * @param  string $name  A field name
+     * @param string $label A label
+     * @param string $name  A field name
      *
-     * @return false|null         A label and a field name
+     * @return false|null A label and a field name
      */
     public function addClass($class, $target = 'element')
     {
         if (!empty($this->attributes[$target]['class'])) {
-            $framework = strtolower(config('form.framework', 'bootstrap4') . '.');
-            $this->attributes[$target]['class'] = config('form.' . $framework);
+            $framework = strtolower(config('form.framework', 'bootstrap4').'.');
+            $this->attributes[$target]['class'] = config('form.'.$framework);
         }
         $this->attributes[$target]['class'] = $class;
+
         return $this;
     }
-
 }

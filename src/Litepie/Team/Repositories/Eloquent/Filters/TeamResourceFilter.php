@@ -20,5 +20,4 @@ class TeamResourceFilter implements FilterInterface
     {
         return $this->onlyShowDeletedForAdmins($model);
     }
-
 }

@@ -20,5 +20,4 @@ class MenuResourceFilter implements FilterInterface
     {
         return $this->onlyShowDeletedForAdmins($model);
     }
-
 }

@@ -11,13 +11,12 @@ use Litepie\Filer\Traits\Filer;
 use Litepie\Hashids\Traits\Hashids;
 use Litepie\Roles\Traits\HasRoleAndPermission;
 use Litepie\Trans\Traits\Translatable;
+use Litepie\User\Interfaces\UserPolicyInterface;
 use Litepie\User\Models\Model as BaseModel;
 use Litepie\User\Traits\Auth\MustVerifyEmail;
-use Litepie\User\Interfaces\UserPolicyInterface;
 
 class User extends BaseModel implements ContractMustVerifyEmail, UserPolicyInterface
 {
-
     use Filer;
     use HasRoleAndPermission;
     use HasApiTokens;

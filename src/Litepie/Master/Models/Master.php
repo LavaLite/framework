@@ -24,7 +24,5 @@ class Master extends Model
      *
      * @var array
      */
-     protected $config = 'master.master.model';
-
-
+    protected $config = 'master.master.model';
 }

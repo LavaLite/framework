@@ -11,5 +11,4 @@ use Prettus\Repository\Contracts\CacheableInterface as PrettusCacheableInterface
  */
 interface CacheableInterface extends PrettusCacheableInterface
 {
-    
 }

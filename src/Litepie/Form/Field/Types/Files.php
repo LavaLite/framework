@@ -4,7 +4,7 @@ namespace Litepie\Form\Field\Types;
 
 /**
  * Abstracts general fields parameters (type, value, name) and
- * reforms a correct form field depending on what was asked
+ * reforms a correct form field depending on what was asked.
  */
 trait Files
 {
@@ -14,30 +14,30 @@ trait Files
     public $count = 10;
 
     /**
-     * The app instance
+     * The app instance.
      *
-     * @var Object
+     * @var object
      */
     public $url = null;
 
     /**
-     * The size of the image
+     * The size of the image.
      *
-     * @var String
+     * @var string
      */
     public $thumbSize = 'xs';
 
     /**
-     * The size of the image
+     * The size of the image.
      *
-     * @var String
+     * @var string
      */
     public $largeSize = 'lg';
 
     /**
-     * Instance count for files
+     * Instance count for files.
      *
-     * @var Int
+     * @var int
      */
     public $fileInstanceCount = 1;
 
@@ -47,19 +47,19 @@ trait Files
     public $mime = 'audio/*,image/*,application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document';
 
     /**
-     * Redirect calls to the group if necessary
+     * Redirect calls to the group if necessary.
      *
      * @param string $method
      */
     public function url($url)
     {
         $this->url = $url;
-        return $this;
 
+        return $this;
     }
 
     /**
-     * Redirect calls to the group if necessary
+     * Redirect calls to the group if necessary.
      *
      * @param string $method
      */
@@ -68,11 +68,10 @@ trait Files
         if ($this->element == 'file') {
             $this->fileInstanceCount += $count;
         }
-
     }
 
     /**
-     * Set the thumbnail size
+     * Set the thumbnail size.
      *
      * @param string $size
      */
@@ -82,7 +81,7 @@ trait Files
     }
 
     /**
-     * Set the thumbnail size
+     * Set the thumbnail size.
      *
      * @param string $size
      */
@@ -106,6 +105,7 @@ trait Files
 
         return $this;
     }
+
     /**
      * Gets the Number of files can be uploaded.
      *
@@ -146,7 +146,7 @@ trait Files
         }
         $populator = $this->form ? $this->form->getPopulator() : $this->app['form.populator'];
         $uploadUrl = @$populator->get('meta')['upload_url'];
-        $uploadUrl = str_replace('//file', '/' . $this->name . '/file', $uploadUrl);
+        $uploadUrl = str_replace('//file', '/'.$this->name.'/file', $uploadUrl);
         $this->url($uploadUrl);
     }
 }

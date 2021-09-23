@@ -39,8 +39,10 @@ trait ThemeAndViews
      */
     protected function getTheme()
     {
-        return config('theme.themes.' . $this->getViewFolder() . '.theme',
-            config('theme.themes.default.theme'));
+        return config(
+            'theme.themes.'.$this->getViewFolder().'.theme',
+            config('theme.themes.default.theme')
+        );
     }
 
     /**

@@ -26,12 +26,12 @@ class PublicController extends Controller
         $this->response = app(PublicResponse::class);
         $this->setTheme(config('theme.themes.public.theme'));
     }
-    
+
     /**
      * Prepare the modules for the list.
      *
-     * @var $modules array - Modules
-     * @var $ns string - Language  namespace
+     * @var array  - Modules
+     * @var string - Language  namespace
      *
      * @return array
      */
@@ -42,12 +42,11 @@ class PublicController extends Controller
         foreach ($modules as $key => $module) {
             $arr[$key]['module'] = $module;
             $arr[$key]['name'] = trans("{$ns}::{$module}.names");
-            $arr[$key]['url'] = $url . '/' . $module;
+            $arr[$key]['url'] = $url.'/'.$module;
             $arr[$key]['status'] = strpos($rUrl, $arr[$key]['url']) !== false ? 'active' : '';
             $arr[$key]['icon'] = trans("{$ns}::{$module}.icon");
         }
+
         return $arr;
-
     }
-
 }

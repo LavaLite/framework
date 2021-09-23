@@ -2,8 +2,6 @@
 
 namespace Litepie\Notification;
 
-use User;
-
 class Alerts
 {
     /**
@@ -32,11 +30,10 @@ class Alerts
     }
 
     /**
-     * Make gadget View
+     * Make gadget View.
      *
      * @param string $view
-     *
-     * @param int $count
+     * @param int    $count
      *
      * @return View
      */
@@ -44,6 +41,6 @@ class Alerts
     {
         $notifications = user('admin.web')->unreadNotifications;
 
-        return view('alerts::' . $view, compact('notifications'))->render();
+        return view('alerts::'.$view, compact('notifications'))->render();
     }
 }

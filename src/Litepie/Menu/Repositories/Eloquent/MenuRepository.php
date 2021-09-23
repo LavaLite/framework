@@ -9,7 +9,6 @@ use Litepie\Repository\BaseRepository;
 
 class MenuRepository extends BaseRepository implements MenuRepositoryInterface
 {
-
     public $tempHolder;
 
     public function boot()
@@ -44,10 +43,11 @@ class MenuRepository extends BaseRepository implements MenuRepositoryInterface
      */
     public function rootMenues()
     {
-        $menu = $this->model
+        $menu = $this
             ->whereParentId(0)
-            ->get();
-        $this->resetModel();
+            ->get()
+            ->getResult();
+        $this->resetRepository();
 
         return $menu;
     }
@@ -80,7 +80,8 @@ class MenuRepository extends BaseRepository implements MenuRepositoryInterface
             ->all()
             ->getResult()
             ->toMenu($key);
-            return $t;
+
+        return $t;
     }
 
     public function getParentChild($id, $array)

@@ -11,5 +11,4 @@ use Prettus\Repository\Contracts\RepositoryCriteriaInterface as PrettusRepositor
  */
 interface RepositoryCriteriaInterface extends PrettusRepositoryCriteriaInterface
 {
-
 }

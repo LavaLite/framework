@@ -11,5 +11,4 @@ use Prettus\Repository\Contracts\Transformable as PrettusTransformable;
  */
 interface Transformable extends PrettusTransformable
 {
-    
 }

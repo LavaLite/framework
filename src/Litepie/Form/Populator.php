@@ -1,4 +1,5 @@
 <?php
+
 namespace Litepie\Form;
 
 use Illuminate\Database\Eloquent\Model;
@@ -7,18 +8,18 @@ use Illuminate\Support\Str;
 
 /**
  * Populates the class with values, and fetches them
- * from various places
+ * from various places.
  */
 class Populator extends Collection
 {
     /**
      * Create a new collection.
      *
-     * @param  array|Model $items
+     * @param array|Model $items
      *
      * @return void
      */
-    public function __construct($items = array())
+    public function __construct($items = [])
     {
         $this->items = $items;
     }
@@ -28,7 +29,7 @@ class Populator extends Collection
     ////////////////////////////////////////////////////////////////////
 
     /**
-     * Get the value of a field
+     * Get the value of a field.
      *
      * @param string $field The field's name
      *
@@ -91,9 +92,9 @@ class Populator extends Collection
     ////////////////////////////////////////////////////////////////////
 
     /**
-     * Replace the items
+     * Replace the items.
      *
-     * @param  mixed $items
+     * @param mixed $items
      *
      * @return void
      */
@@ -103,13 +104,13 @@ class Populator extends Collection
     }
 
     /**
-     * Reset the current values array
+     * Reset the current values array.
      *
      * @return void
      */
     public function reset()
     {
-        $this->items = array();
+        $this->items = [];
     }
 
     ////////////////////////////////////////////////////////////////////
@@ -117,7 +118,7 @@ class Populator extends Collection
     ////////////////////////////////////////////////////////////////////
 
     /**
-     * Parses the name of a field to a tree of fields
+     * Parses the name of a field to a tree of fields.
      *
      * @param string $field The field's name
      *
@@ -147,7 +148,7 @@ class Populator extends Collection
     }
 
     /**
-     * Get an attribute from a model
+     * Get an attribute from a model.
      *
      * @param object $model     The model
      * @param string $attribute The attribute's name
@@ -160,6 +161,7 @@ class Populator extends Collection
         if ($model instanceof Model) {
             // Return fallback if attribute is null
             $value = $model->getAttribute($attribute);
+
             return is_null($value) ? $fallback : $value;
         }
 

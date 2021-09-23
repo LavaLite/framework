@@ -9,7 +9,6 @@ use Auth;
  */
 trait Common
 {
-
     /**
      * Set guard for the auth controller.
      *

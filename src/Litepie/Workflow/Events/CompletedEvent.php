@@ -7,5 +7,5 @@ namespace Litepie\Workflow\Events;
  */
 class CompletedEvent extends BaseEvent
 {
-  //
+    //
 }

@@ -5,10 +5,8 @@ namespace Litepie\Master\Repositories\Eloquent;
 use Litepie\Master\Interfaces\MasterRepositoryInterface;
 use Litepie\Repository\BaseRepository;
 
-
 class MasterRepository extends BaseRepository implements MasterRepositoryInterface
 {
-
     public function boot()
     {
         $this->fieldSearchable = config('master.master.model.search');

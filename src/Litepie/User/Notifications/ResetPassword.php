@@ -5,25 +5,23 @@ namespace Litepie\User\Notifications;
 use Illuminate\Auth\Notifications\ResetPassword as IlluminateResetPassword;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
-use Illuminate\Support\Facades\Lang;
 
 class ResetPassword extends IlluminateResetPassword
 {
-
     /**
      * Build the mail representation of the notification.
      *
-     * @param  mixed  $notifiable
+     * @param mixed $notifiable
+     *
      * @return \Illuminate\Notifications\Messages\MailMessage
      */
     public function toMail($notifiable)
     {
-
         if (static::$toMailCallback) {
             return call_user_func(static::$toMailCallback, $notifiable, $this->token);
         }
 
-        return (new MailMessage)
+        return (new MailMessage())
             ->subject(__('Reset Password Notification'))
             ->line(__('You are receiving this email because we received a password reset request for your account.'))
             ->action(
@@ -37,21 +35,21 @@ class ResetPassword extends IlluminateResetPassword
     /**
      * Get the verification URL for the given notifiable.
      *
-     * @param  mixed  $notifiable
+     * @param mixed $notifiable
+     *
      * @return string
      */
     protected function passwordUrl()
     {
         return url(
-            trans_url('/') . route(
+            trans_url('/').route(
                 'guard.password.reset',
                 [
                     'token' => $this->token,
                     'guard' => current(explode('.', guard())),
-                ]
-                , false
+                ],
+                false
             )
         );
     }
-
 }

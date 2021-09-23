@@ -2,16 +2,15 @@
 
 namespace Litepie\User\Policies;
 
-use Litepie\User\Interfaces\UserPolicyInterface;
 use Litepie\User\Interfaces\ClientRepositoryInterface;
+use Litepie\User\Interfaces\UserPolicyInterface;
 
 class ClientPolicy
 {
-
     /**
      * Determine if the given user can view the client.
      *
-     * @param UserPolicyInterface $authUser
+     * @param UserPolicyInterface       $authUser
      * @param ClientRepositoryInterface $client
      *
      * @return bool
@@ -36,7 +35,7 @@ class ClientPolicy
     /**
      * Determine if the given user can update the given client.
      *
-     * @param UserPolicyInterface $authUser
+     * @param UserPolicyInterface       $authUser
      * @param ClientRepositoryInterface $client
      *
      * @return bool
@@ -57,7 +56,6 @@ class ClientPolicy
     {
         return false;
     }
-
 
     /**
      * Determine if the user can perform a given action ve.

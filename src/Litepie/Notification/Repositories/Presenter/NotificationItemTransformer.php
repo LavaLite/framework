@@ -3,7 +3,6 @@
 namespace Litepie\Notification\Repositories\Presenter;
 
 use League\Fractal\TransformerAbstract;
-use Hashids;
 
 class NotificationItemTransformer extends TransformerAbstract
 {

@@ -134,8 +134,7 @@ class Theme
         Dispatcher $events,
         Asset $asset,
         Filesystem $files
-    )
-    {
+    ) {
         $this->events = $events;
 
         $this->laravelViewsPath = config('view.paths');

@@ -7,12 +7,9 @@ use Litepie\Repository\Eloquent\BaseRepository;
 
 class NotificationRepository extends BaseRepository implements NotificationRepositoryInterface
 {
-
-
     public function boot()
     {
         $this->fieldSearchable = config('litepie.alerts.notification.search');
-
     }
 
     /**

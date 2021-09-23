@@ -4,9 +4,6 @@ namespace Litepie\Workflow\Providers;
 
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\ServiceProvider;
-use Litepie\Workflow\Events\WorkflowSubscriber;
-use Symfony\Component\EventDispatcher\EventDispatcher;
-use Symfony\Component\Workflow\Workflow;
 
 class WorkflowServiceProvider extends ServiceProvider
 {
@@ -24,11 +21,9 @@ class WorkflowServiceProvider extends ServiceProvider
      */
     public function registerWorkflows()
     {
-
         foreach ($this->workflows() as $name => $value) {
             $this->app['workflow']->addFromArray($name, $value);
         }
-
     }
 
     /**
@@ -48,5 +43,4 @@ class WorkflowServiceProvider extends ServiceProvider
     {
         return $this->workflow;
     }
-
 }

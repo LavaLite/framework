@@ -41,7 +41,6 @@ class UserRequest extends AbstractRequest
 
         // Determine if the user is authorized to view the module.
         return $this->can('view');
-
     }
 
     /**
@@ -70,5 +69,4 @@ class UserRequest extends AbstractRequest
 
         ];
     }
-
 }

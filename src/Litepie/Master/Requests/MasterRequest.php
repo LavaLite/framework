@@ -42,7 +42,6 @@ class MasterRequest extends AbstractRequest
 
         // Determine if the user is authorized to view the module.
         return $this->can('view');
-
     }
 
     /**
@@ -71,5 +70,4 @@ class MasterRequest extends AbstractRequest
 
         ];
     }
-
 }

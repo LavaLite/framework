@@ -20,5 +20,4 @@ class UserResourceFilter implements FilterInterface
     {
         return $this->onlyShowDeletedForAdmins($model);
     }
-
 }

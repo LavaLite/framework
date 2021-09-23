@@ -11,7 +11,7 @@ use View;
 
 /**
  * Abstracts general fields parameters (type, value, name) and
- * reforms a correct form field depending on what was asked
+ * reforms a correct form field depending on what was asked.
  */
 class Fields
 {
@@ -20,112 +20,112 @@ class Fields
     use Types;
 
     /**
-     * The app instance
+     * The app instance.
      *
-     * @var Object
+     * @var object
      */
     public $app;
 
     /**
-     * The form instance
+     * The form instance.
      *
-     * @var Object
+     * @var object
      */
     public $form;
 
     /**
-     * A label for the field (if not using Bootstrap)
+     * A label for the field (if not using Bootstrap).
      *
      * @var string
      */
     public $label;
 
     /**
-     * The field's group
+     * The field's group.
      *
      * @var Group
      */
     protected $group;
 
     /**
-     * The field's value
+     * The field's value.
      *
      * @var Value
      */
     public $value;
 
     /**
-     * The field isRaw
+     * The field isRaw.
      *
      * @var isRaw
      */
     public $isRaw = false;
 
     /**
-     * The field's placeholder
+     * The field's placeholder.
      *
      * @var Placeholder
      */
     public $placeholder;
 
     /**
-     * The field's name
+     * The field's name.
      *
      * @var Name
      */
     public $name;
 
     /**
-     * The field is multiple
+     * The field is multiple.
      *
      * @var isMultiple
      */
     public $isMultiple = false;
 
     /**
-     * The is the field disabled
+     * The is the field disabled.
      *
      * @var isDisabled
      */
     public $isDisabled = false;
 
     /**
-     * The is the field wrap elements
+     * The is the field wrap elements.
      *
      * @var wrap
      */
     private $wrap = false;
 
     /**
-     * The icol Width for the field
+     * The icol Width for the field.
      *
      * @var column
      */
     public $column = 6;
 
     /**
-     * The field's id
+     * The field's id.
      *
      * @var Id
      */
     public $id;
 
     /**
-     * The field's default element
+     * The field's default element.
      *
      * @var string
      */
     protected $element = 'input';
 
     /**
-     * The field's default element
+     * The field's default element.
      *
      * @var string
      */
     public $mode = null;
 
     /**
-     * The field's default type
+     * The field's default type.
      *
      * @var string
      */
@@ -135,7 +135,7 @@ class Fields
     ///////////////////////////// INTERFACE ////////////////////////////
     ////////////////////////////////////////////////////////////////////
     /**
-     * Set up a Field instance
+     * Set up a Field instance.
      *
      * @param string $type A field type
      */
@@ -144,8 +144,9 @@ class Fields
         // Set base parameters
         $this->app = $app;
     }
+
     /**
-     * Redirect calls to the group if necessary
+     * Redirect calls to the group if necessary.
      *
      * @param string $method
      */
@@ -163,15 +164,15 @@ class Fields
         if (@$parameters['type'] != 'password' && @$parameters['name'] !== '_token') {
             $this->value = $this->repopulate();
         }
-        return $this;
 
+        return $this;
     }
 
     /**
      * Redirect calls to to the attributes array.
      *
      * @param string $method
-     * @param  array $parameters
+     * @param array  $parameters
      *
      * @return object $this
      */
@@ -179,14 +180,14 @@ class Fields
     {
         // Set base parameters
         $this->addAttribute($method, @$parameters[0], @$parameters[1]);
-        return $this;
 
+        return $this;
     }
 
     /**
      * Apply the attributes to field's objects.
      *
-     * @param  array $attributes
+     * @param array $attributes
      *
      * @return object $this
      */
@@ -210,15 +211,15 @@ class Fields
             } else {
                 $this->addAttribute($key, $value);
             }
-        };
-        return $this;
+        }
 
+        return $this;
     }
 
     /**
      * Apply the attributes to field's objects.
      *
-     * @param  array $attributes
+     * @param array $attributes
      *
      * @return object $this
      */
@@ -235,7 +236,7 @@ class Fields
     }
 
     /**
-     * Prints out the field
+     * Prints out the field.
      *
      * @return string
      */
@@ -247,7 +248,7 @@ class Fields
         $data = $this->toArray();
         $this->incrementFileInstanceCount();
 
-        $element = View::first(["form::$view." . $this->element, "form::{$view}.input"], $data)->render();
+        $element = View::first(["form::$view.".$this->element, "form::{$view}.input"], $data)->render();
         if ($this->isRaw || $this->element == 'hidden') {
             return $element;
         }
@@ -259,6 +260,7 @@ class Fields
             return $labeled;
         }
         $data['labeled'] = $labeled;
+
         return view("form::{$view}._wrapper", $data)->render();
     }
 
@@ -274,6 +276,7 @@ class Fields
         $array = (array) $this;
         $array['attributes'] = $this->prepapareAttribute();
         $array['isInputGroup'] = $this->isInputGroup();
+
         return $array;
     }
 
@@ -282,7 +285,7 @@ class Fields
     ////////////////////////////////////////////////////////////////////
 
     /**
-     * Return the current frame work used
+     * Return the current frame work used.
      *
      * @return string
      */
@@ -292,18 +295,19 @@ class Fields
     }
 
     /**
-     * Whether the current field is type of raw
+     * Whether the current field is type of raw.
      *
      * @return object $this
      */
     public function raw($raw = true)
     {
         $this->isRaw = $raw;
+
         return $this;
     }
 
     /**
-     * Set display mode of the element
+     * Set display mode of the element.
      *
      *
      * @return object $this
@@ -311,13 +315,14 @@ class Fields
     public function mode($mode = null)
     {
         $this->mode = $mode;
+
         return $this;
     }
 
     /**
-     * Check if the field get a floating label
+     * Check if the field get a floating label.
      *
-     * @return boolean
+     * @return bool
      */
     public function withFloatingLabel()
     {
@@ -325,74 +330,79 @@ class Fields
     }
 
     /**
-     * Adds a label to the group/field
+     * Adds a label to the group/field.
      *
-     * @param  boolean $disabled is the field disabled or not
+     * @param bool $disabled is the field disabled or not
      *
-     * @return Object  $this
+     * @return object $this
      */
     public function multiple($multiple = true)
     {
         $this->isMultiple = $multiple;
+
         return $this;
     }
 
     /**
-     * Adds a label to the group/field
+     * Adds a label to the group/field.
      *
-     * @param  string $text       A label
+     * @param string $text A label
      *
-     * @return Field              A field
+     * @return Field A field
      */
     public function label($label)
     {
         $this->label = $label;
+
         return $this;
     }
 
     /**
-     * Adds a type to the group/field
+     * Adds a type to the group/field.
      *
-     * @param  string $$type A type
+     * @param string $$type A type
      *
      * @return Field A field
      */
     public function type($type)
     {
         $this->type = $type;
+
         return $this;
     }
 
     /**
-     * Adds a wrap to the group/field
+     * Adds a wrap to the group/field.
      *
-     * @param  string $$wrap A wrap
+     * @param string $$wrap A wrap
      *
      * @return Field A field
      */
     public function wrap($wrap = true)
     {
         $this->wrap = $wrap;
+
         return $this;
     }
 
     /**
-     * Adds a col to the group/field
+     * Adds a col to the group/field.
      *
-     * @param  string $$col A col
+     * @param string $$col A col
      *
      * @return Field A field
      */
     public function col($column)
     {
         $this->column = $column;
+
         return $this;
     }
 
     /**
-     * Adds a element to the group/field
+     * Adds a element to the group/field.
      *
-     * @param  string $element A element
+     * @param string $element A element
      *
      * @return Field A field
      */
@@ -400,37 +410,40 @@ class Fields
     {
         $this->element = $element;
         $this->type = $element;
+
         return $this;
     }
 
     /**
-     * Adds a placeholder to the field
+     * Adds a placeholder to the field.
      *
-     * @param  string $text       A placeholder
+     * @param string $text A placeholder
      *
-     * @return Field              A field
+     * @return Field A field
      */
     public function placeholder($placeholder)
     {
         $this->placeholder = $placeholder;
+
         return $this;
     }
 
     /**
-     * Set the Field value no matter what
+     * Set the Field value no matter what.
      *
      * @param string $value A new value
      */
     public function forceValue($value)
     {
         $this->value = $value;
+
         return $this;
     }
 
     /**
-     * Classic setting of attribute, won't overwrite any populate() attempt
+     * Classic setting of attribute, won't overwrite any populate() attempt.
      *
-     * @param  string $value A new value
+     * @param string $value A new value
      */
     public function value($value)
     {
@@ -440,13 +453,14 @@ class Fields
         if (!$already) {
             $this->value = $value;
         }
+
         return $this;
     }
 
     /**
-     * Change the field's name
+     * Change the field's name.
      *
-     * @param  string $name The new name
+     * @param string $name The new name
      */
     public function name($name)
     {
@@ -455,22 +469,24 @@ class Fields
         // Also relink the label to the new name
         $this->setLabel($name);
         $this->setId($name);
+
         return $this;
     }
 
     /**
-     * Change the field's id
+     * Change the field's id.
      *
-     * @param  string $id The new id
+     * @param string $id The new id
      */
     public function id($id)
     {
         $this->id = $id;
+
         return $this;
     }
 
     /**
-     * Get the field's labels
+     * Get the field's labels.
      *
      * @return string
      */
@@ -480,7 +496,7 @@ class Fields
     }
 
     /**
-     * Retrurn the value of a field
+     * Retrurn the value of a field.
      *
      * @return string
      */
@@ -500,6 +516,7 @@ class Fields
         if (!is_null($populate)) {
             return $populate;
         }
+
         return $fallback ?: $this->value;
     }
 
@@ -508,7 +525,7 @@ class Fields
     ////////////////////////////////////////////////////////////////////
 
     /**
-     * Use values stored in Former to populate the current field
+     * Use values stored in Former to populate the current field.
      */
     private function repopulate($fallback = null)
     {
@@ -526,32 +543,34 @@ class Fields
         if (!is_null($populate)) {
             return $populate;
         }
+
         return $fallback ?: $this->value;
     }
 
     /**
-     * Fetch a field value from both the new and old POST array
+     * Fetch a field value from both the new and old POST array.
      *
-     * @param  string $name     A field name
-     * @param  string $fallback A fallback if nothing was found
+     * @param string $name     A field name
+     * @param string $fallback A fallback if nothing was found
      *
-     * @return string           The results
+     * @return string The results
      */
     public function getPost($name, $fallback = null)
     {
-        $name = str_replace(array('[', ']'), array('.', ''), $name);
+        $name = str_replace(['[', ']'], ['.', ''], $name);
         $name = trim($name, '.');
         $oldValue = request()->old($name, $fallback);
+
         return request()->input($name, $oldValue, true);
     }
 
     /**
-     * Ponders a label and a field name, and tries to get the best out of it
+     * Ponders a label and a field name, and tries to get the best out of it.
      *
-     * @param  string $label A label
-     * @param  string $name  A field name
+     * @param string $label A label
+     * @param string $name  A field name
      *
-     * @return false|null         A label and a field name
+     * @return false|null A label and a field name
      */
     private function setLabel($name = null, $label = null)
     {
@@ -570,9 +589,9 @@ class Fields
     }
 
     /**
-     * Private function to set Id if it is empty
+     * Private function to set Id if it is empty.
      *
-     * @param  string $id Id of the element
+     * @param string $id Id of the element
      *
      * @return false|null
      */

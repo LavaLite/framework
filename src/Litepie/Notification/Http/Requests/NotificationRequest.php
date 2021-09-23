@@ -42,7 +42,6 @@ class NotificationRequest extends FormRequest
 
         // Determine if the user is authorized to view the module.
         return $this->can('view');
-
     }
 
     /**
@@ -71,6 +70,7 @@ class NotificationRequest extends FormRequest
 
         ];
     }
+
     /**
      * Check whether the user can access the module.
      *

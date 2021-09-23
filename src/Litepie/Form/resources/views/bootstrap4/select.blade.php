@@ -6,4 +6,4 @@
         <option value="{{$option[$select_value]}}" {{$option['selected'] ? 'selected="selected"' : ''}}>{{$option[$select_text]}}</option>
         @empty
         @endforelse
-</select>
+    </select>
