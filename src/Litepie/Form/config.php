@@ -44,6 +44,21 @@ return [
     // should be capitalized (ex: email => Email) automatically
     'capitalize_translations' => true,
 
+    // Attributes for the input and form elements
+    'attributes' => [
+        'accept', 'alt', 'autocomplete', 'autofocus', 'checked', 'dirname', 'disabled', 'form', 'formaction',
+        'formenctype', 'formmethod', 'formnovalidate', 'formtarget', 'height', 'list', 'max', 'maxlength',
+        'min', 'minlength', 'multiple', 'name', 'pattern', 'placeholder', 'readonly', 'required', 'size',
+        'src', 'step', 'type', 'value', 'width', 'data',
+    ],
+
+    // Input types for the form
+    'types' => [
+        'button', 'checkbox', 'color', 'date', 'datetime-local', 'email', 'file', 'hidden', 'image',
+        'month', 'number', 'password', 'radio', 'range', 'reset', 'search', 'submit', 'tel', 'text',
+        'time', 'url', 'week',
+    ],
+
     // Framework
     ////////////////////////////////////////////////////////////////////
 
@@ -52,28 +67,28 @@ return [
 
     'Nude' => [ // No-framework markup
         'icon' => [
-            'tag'    => 'i',
-            'set'    => null,
+            'tag' => 'i',
+            'set' => null,
             'prefix' => 'icon',
         ],
     ],
 
     'Bootstrap4' => [ // Twitter Bootstrap version 4
         'icon' => [
-            'tag'    => 'i',
-            'set'    => null,
+            'tag' => 'i',
+            'set' => null,
             'prefix' => 'icon',
         ],
         'attributes' => [
             'class' => [
                 'default' => [
                     'element' => 'form-control',
-                    'label'   => 'form-group',
+                    'label' => 'form-group',
                     'wrapper' => 'col-sm-6',
                 ],
                 'check' => [
                     'element' => 'form-check-input',
-                    'label'   => 'form-check-label',
+                    'label' => 'form-check-label',
                     'wrapper' => 'form-check',
                 ],
                 'select' => [
@@ -86,10 +101,10 @@ return [
     'ZurbFoundation5' => [
         // Map Former-supported viewports to Foundation 5 equivalents
         'viewports' => [
-            'large'  => 'large',
+            'large' => 'large',
             'medium' => null,
-            'small'  => 'small',
-            'mini'   => null,
+            'small' => 'small',
+            'mini' => null,
         ],
         // Width of labels for horizontal forms expressed as viewport => grid columns
         'labelWidths' => [
@@ -99,8 +114,8 @@ return [
         'wrappedLabelClasses' => ['right', 'inline'],
         // HTML markup and classes used by Foundation 5 for icons
         'icon' => [
-            'tag'    => 'i',
-            'set'    => null,
+            'tag' => 'i',
+            'set' => null,
             'prefix' => 'fi',
         ],
         // CSS for inline validation errors

@@ -51,9 +51,6 @@ trait Types
      */
     public function prepareOptions()
     {
-        if (!in_array($this->element, $this->selectElements) && !in_array($this->element, $this->checkElements)) {
-            return;
-        }
 
         if (empty($this->options) || !is_array($this->options)) {
             $this->options = [];
@@ -61,8 +58,14 @@ trait Types
             return;
         }
 
-        $function = 'prepare'.ucfirst($this->element);
-        $this->options = $this->$function($this->options);
+        if (in_array($this->element, $this->selectElements)) {
+            $this->options = $this->prepareSelect($this->options);
+        }
+
+        if (in_array($this->element, $this->checkElements)) {
+            $this->options = $this->prepareChecks($this->options);
+        }
+        return;
     }
 
     protected function prepareOptionsArray($options, $value, $text)
@@ -71,7 +74,7 @@ trait Types
             foreach ($options as $key => $val) {
                 $options[$key] = [
                     $value => $key,
-                    $text  => $val,
+                    $text => $val,
                 ];
             }
         }

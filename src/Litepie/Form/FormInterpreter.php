@@ -47,6 +47,13 @@ abstract class FormInterpreter
      *
      * @var array
      */
+    public static $orderBy;
+
+    /**
+     * Variable to store form configuration.
+     *
+     * @var array
+     */
     public static $fields;
 
     public static function fields()
@@ -59,6 +66,11 @@ abstract class FormInterpreter
     public static function groups()
     {
         return self::$groups;
+    }
+
+    public static function orderBy()
+    {
+        return self::$orderBy;
     }
 
     public static function search()
@@ -83,6 +95,7 @@ abstract class FormInterpreter
             'list'   => self::list(),
             'search' => self::search(),
             'groups' => self::groups(),
+            'orderBy' => self::orderBy(),
             'fields' => self::fields()->toArray(),
         ];
     }

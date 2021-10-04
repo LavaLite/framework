@@ -27,7 +27,14 @@ trait Selectable
      *
      * @var array
      */
-    protected $selectElements = ['select'];
+    protected $selectElements = ['select', 'tags'];
+
+    /**
+     * Select element name for the field.
+     *
+     * @var array
+     */
+    public $maxItems = 5;
 
     /**
      * Sets attribute for the field.
@@ -39,8 +46,8 @@ trait Selectable
         $options = $this->prepareOptionsArray($options, $this->select_value, $this->select_text);
         data_fill($options, '*.selected', false);
         data_fill($options, '*.selected', false);
-        data_fill($options, '*.'.$this->select_value, '');
-        data_fill($options, '*.'.$this->select_text, '');
+        data_fill($options, '*.' . $this->select_value, '');
+        data_fill($options, '*.' . $this->select_text, '');
 
         $value = $this->value;
         if (empty($value)) {
