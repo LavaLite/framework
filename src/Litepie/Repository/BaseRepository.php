@@ -208,7 +208,7 @@ abstract class BaseRepository implements RepositoryInterface
      *
      * @return array
      */
-    public function options($key, $value)
+    public function options($key = 'id', $value = 'name')
     {
         $options = $this->all()->getModel();
         $ret = [];
