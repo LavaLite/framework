@@ -76,20 +76,6 @@ class Fields
     public $name;
 
     /**
-     * The field is multiple.
-     *
-     * @var isMultiple
-     */
-    public $isMultiple = false;
-
-    /**
-     * The is the field disabled.
-     *
-     * @var isDisabled
-     */
-    public $isDisabled = false;
-
-    /**
      * The is the field wrap elements.
      *
      * @var wrap
@@ -179,7 +165,7 @@ class Fields
     public function __call($method, $parameters)
     {
         // Set base parameters
-        $this->addAttribute($method, @$parameters[0], @$parameters[1]);
+        $this->attribute($method, @$parameters[0], @$parameters[1]);
 
         return $this;
     }
@@ -194,22 +180,15 @@ class Fields
     public function apply($attributes)
     {
         foreach ($attributes as $key => $value) {
+            if ($value instanceof Closure) {
+                $value = $value();
+            }
             if (method_exists($this, $key)) {
-                if ($value instanceof Closure) {
-                    $this->$key($value());
-                } else {
-                    $this->$key($value);
-                }
+                $this->$key($value);
             } elseif (property_exists($this, $key)) {
-                if ($value instanceof Closure) {
-                    $this->$key = $value();
-                } else {
-                    $this->$key = $value;
-                }
-            } elseif ($value instanceof Closure) {
-                $value($this);
+                $this->$key = $value;
             } else {
-                $this->addAttribute($key, $value);
+                $this->attribute($key, $value);
             }
         }
 
@@ -228,6 +207,7 @@ class Fields
         $this->options = [];
         $this->append = [];
         $this->prepend = [];
+        $this->isRaw = false;
 
         $this->label('');
         $this->url(null);
@@ -248,7 +228,7 @@ class Fields
         $data = $this->toArray();
         $this->incrementFileInstanceCount();
 
-        $element = View::first(["form::$view.".$this->element, "form::{$view}.input"], $data)->render();
+        $element = View::first(["form::$view." . $this->element, "form::{$view}.input"], $data)->render();
         if ($this->isRaw || $this->element == 'hidden') {
             return $element;
         }
@@ -276,7 +256,6 @@ class Fields
         $array = (array) $this;
         $array['attributes'] = $this->prepapareAttribute();
         $array['isInputGroup'] = $this->isInputGroup();
-
         return $array;
     }
 
@@ -327,20 +306,6 @@ class Fields
     public function withFloatingLabel()
     {
         return $this->floatingLabel;
-    }
-
-    /**
-     * Adds a label to the group/field.
-     *
-     * @param bool $disabled is the field disabled or not
-     *
-     * @return object $this
-     */
-    public function multiple($multiple = true)
-    {
-        $this->isMultiple = $multiple;
-
-        return $this;
     }
 
     /**
@@ -480,7 +445,7 @@ class Fields
      */
     public function id($id)
     {
-        $this->id = $id;
+        $this->id = Str::slug($id);
 
         return $this;
     }
