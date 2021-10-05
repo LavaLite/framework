@@ -11,6 +11,12 @@ return [
     // The default form type
     'default_form_type' => 'horizontal',
 
+    // The default form type
+    'default_coordinates' => [
+        'lat' => '37.402473',
+        'lng' => '-122.3212843',
+    ],
+
     // Validation
     ////////////////////////////////////////////////////////////////////
 
