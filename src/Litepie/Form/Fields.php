@@ -481,7 +481,6 @@ class Fields
         if (!is_null($populate)) {
             return $populate;
         }
-
         return $fallback ?: $this->value;
     }
 
