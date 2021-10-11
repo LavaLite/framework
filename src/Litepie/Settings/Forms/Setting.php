@@ -39,6 +39,8 @@ class Setting extends FormInterpreter
                 'method' => 'DELETE',
             ],
         ];
+        self::$orderBy = [
+        ];
         self::$search = [
             'name' => [
                 'type'        => 'text',

@@ -42,6 +42,9 @@ class Menu extends FormInterpreter
 
         self::$search = [
         ];
+        self::$orderBy = [
+        ];
+
         self::$groups = [
             'main'     => trans('user.user.groups.main'),
             'details'  => trans('user.user.groups.details'),
