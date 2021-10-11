@@ -57,6 +57,11 @@ class Client extends FormInterpreter
             'images'   => trans('user.user.groups.images'),
             'settings' => trans('user.user.groups.settings'),
         ];
+        self::$orderBy = [
+            'name' => trans('user.client.label.name'),
+            'created_at' => trans('user.client.label.created_at'),
+            'status' => trans('user.client.label.status'),
+        ];
         self::$list = [
             [
                 'key'      => 'ref',

@@ -47,15 +47,16 @@ class Permission extends FormInterpreter
                 'rules'       => '',
                 'group'       => 'main',
                 'section'     => 'first',
-                'col'         => '4',
+                'col'         => '12',
                 'roles'       => [],
             ],
         ];
         self::$groups = [
-            'main'     => trans('role.role.groups.main'),
-            'details'  => trans('role.role.groups.details'),
-            'images'   => trans('role.role.groups.images'),
-            'settings' => trans('role.role.groups.settings'),
+            'main'     => trans('role.role.groups.main')
+        ];
+        self::$orderBy = [
+            'name' => trans('role.role.label.name'),
+            'created_at' => trans('role.role.label.created_at'),
         ];
         self::$list = [
             [
@@ -87,12 +88,12 @@ class Permission extends FormInterpreter
             'name' => [
                 'element'     => 'text',
                 'type'        => 'text',
-                'label'       => trans('role.permission.label.name'),
-                'placeholder' => trans('role.permission.placeholder.name'),
+                'label'       => trans('role.role.label.name'),
+                'placeholder' => trans('role.role.placeholder.name'),
                 'rules'       => '',
                 'group'       => 'main',
                 'section'     => 'first',
-                'col'         => '6',
+                'col'         => '12',
                 'append'      => null,
                 'prepend'     => null,
                 'roles'       => [],
@@ -104,14 +105,14 @@ class Permission extends FormInterpreter
                 ],
             ],
             'description' => [
-                'element'     => 'text',
+                'element'     => 'textarea',
                 'type'        => 'text',
-                'label'       => trans('role.permission.label.description'),
-                'placeholder' => trans('role.permission.placeholder.description'),
+                'label'       => trans('role.role.label.description'),
+                'placeholder' => trans('role.role.placeholder.description'),
                 'rules'       => '',
                 'group'       => 'main',
                 'section'     => 'first',
-                'col'         => '6',
+                'col'         => '12',
                 'append'      => null,
                 'prepend'     => null,
                 'roles'       => [],

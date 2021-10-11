@@ -3,9 +3,7 @@
 namespace Litepie\User;
 
 /*
- *
  * Part of the Litepie package.
- *
  *
  * @package    User
  * @version    5.1.0
@@ -186,7 +184,7 @@ class User
     /**
      * @return \Illuminate\Database\Eloquent\Collection
      */
-    public function roles($guard = null)
+    public function roles()
     {
         return $this->role->pluck('name', 'id')->all();
     }
@@ -194,7 +192,7 @@ class User
     /**
      * @return \Illuminate\Database\Eloquent\Collection
      */
-    public function teams($guard = null)
+    public function teams()
     {
         return $this->team->pluck('name', 'id')->all();
     }

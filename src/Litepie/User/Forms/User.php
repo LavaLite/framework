@@ -57,6 +57,11 @@ class User extends FormInterpreter
             'images'   => trans('user.user.groups.images'),
             'settings' => trans('user.user.groups.settings'),
         ];
+        self::$orderBy = [
+            'name' => trans('user::user.label.title'),
+            'created_at' => trans('user::user.label.created_at'),
+            'status' => trans('user::user.label.status'),
+        ];
         self::$list = [
             [
                 'key'      => 'ref',

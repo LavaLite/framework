@@ -57,6 +57,8 @@ class Master extends FormInterpreter
             'images'   => trans('master::master.groups.images'),
             'settings' => trans('master::master.groups.settings'),
         ];
+        self::$orderBy = [
+        ];
         self::$list = [
             [
                 'key'      => 'ref',

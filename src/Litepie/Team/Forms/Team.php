@@ -57,6 +57,11 @@ class Team extends FormInterpreter
             'images'   => trans('team::team.groups.images'),
             'settings' => trans('team::team.groups.settings'),
         ];
+        self::$orderBy = [
+            'created_at' => trans('team::team.label.created_at'),
+            'name' => trans('team::team.label.title'),
+            'status' => trans('team::team.label.status'),
+        ];
         self::$list = [
             [
                 'key'      => 'ref',
