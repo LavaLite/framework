@@ -208,7 +208,7 @@ abstract class BaseRepository implements RepositoryInterface
      *
      * @return array
      */
-    public function options($key = 'id', $value = 'name')
+    public function options($key = 'id', $value = 'name', $filter = [], $order = null)
     {
         $options = $this->all()->getModel();
         $ret = [];
@@ -439,6 +439,20 @@ abstract class BaseRepository implements RepositoryInterface
             } else {
                 $this->model = $this->model->where($field, '=', $value);
             }
+        }
+    }
+
+    /**
+     * Applies the given where conditions to the model.
+     *
+     * @param array $where
+     *
+     * @return void
+     */
+    protected function applySort(array $sort)
+    {
+        foreach ($sort as $field => $dir) {
+            $this->model = $this->model->orderBy($field, $dir);
         }
     }
 
