@@ -27,7 +27,7 @@ Files not uploaded.
 <!-- Start dropzone for {!!$name!!}_files -->
 <div class="upload-wraper">
 
-    <div class="dropzone  dropzone-previews" id="{!!$name!!}_files">
+    <div class="drop-zone  dropzone-previews" id="{!!$name!!}_files">
         <div class="dz-message" data-dz-message><span><i class="fas fa-cloud-upload-alt fa-w-20 fa-4x"></i></span></div>
     </div>
 
@@ -232,7 +232,7 @@ $(function () {
 });
 </script>
 <style type="text/css">
-.upload-wraper .dropzone {
+.upload-wraper .drop-zone {
     border-radius: 10px 10px 10px 10px;
     -moz-border-radius: 10px 10px 10px 10px;
     -webkit-border-radius: 10px 10px 10px 10px;
@@ -241,7 +241,7 @@ $(function () {
     float: left;
     min-height: auto;
 }
-.upload-wraper .dropzone{
+.upload-wraper .drop-zone{
     border-radius: 10px 10px 10px 10px;
     -moz-border-radius: 10px 10px 10px 10px;
     -webkit-border-radius: 10px 10px 10px 10px;
@@ -250,12 +250,12 @@ $(function () {
     width:100px;
     height:80px;
 }
-.upload-wraper .dropzone .dz-message {
+.upload-wraper .drop-zone .dz-message {
     text-align: center;
     margin: 1em 0;
 }
 
-.upload-wraper .dropzone .addfile {
+.upload-wraper .drop-zone .addfile {
     display: inline-block;
     background-color: #f44336;
     box-shadow: 0 12px 20px -10px rgba(244, 67, 54, 0.28), 0 4px 20px 0px rgba(0, 0, 0, 0.12), 0 7px 8px -5px rgba(244, 67, 54, 0.2);
@@ -266,12 +266,12 @@ $(function () {
     text-align: center;
     margin: 10px;
 }
-.upload-wraper .dropzone .addfile .add-file i {
+.upload-wraper .drop-zone .addfile .add-file i {
     font-size: 60px;
     color: #fff;
     line-height: 100px;
 }
-.upload-wraper .dropzone .addfile .add-file {
+.upload-wraper .drop-zone .addfile .add-file {
     margin: 0;
     display: inline-block;
 }
