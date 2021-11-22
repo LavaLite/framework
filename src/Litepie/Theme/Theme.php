@@ -11,6 +11,7 @@ use Illuminate\Support\Arr;
 use Illuminate\View\Compilers\BladeCompiler;
 use ReflectionClass;
 use Symfony\Component\HttpFoundation\Cookie;
+use Litepie\Theme\Exceptions\UnknownLayoutFileException;
 use Litepie\Theme\Exceptions\UnknownPartialFileException;
 use Litepie\Theme\Exceptions\UnknownThemeException;
 
