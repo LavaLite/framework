@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 use Litepie\Repository\Exceptions\RepositoryException;
+use Litepie\Repository\Exceptions\RepositoryModelException;
 use Litepie\Repository\Interfaces\FilterInterface;
 use Litepie\Repository\Interfaces\RepositoryInterface;
 use Litepie\Repository\Presenter\Presenter;
@@ -139,8 +140,13 @@ abstract class BaseRepository implements RepositoryInterface
      */
     public function makeModel()
     {
-        $model = $this->app->make($this->model());
+        $model = $this->model();
 
+        if (empty($model)) {
+            throw new RepositoryModelException('Model is not specified for the repository [' . get_class($this) . ']');
+        }
+
+        $model = $this->app->make($model);
         if (!$model instanceof Model) {
             throw new RepositoryException("Class {$this->model()} must be an instance of Illuminate\\Database\\Eloquent\\Model");
         }
