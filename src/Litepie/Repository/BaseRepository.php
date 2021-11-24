@@ -14,13 +14,14 @@ use Litepie\Repository\Exceptions\RepositoryModelException;
 use Litepie\Repository\Interfaces\FilterInterface;
 use Litepie\Repository\Interfaces\RepositoryInterface;
 use Litepie\Repository\Presenter\Presenter;
+use ArrayAccess;
 
 /**
  * Class BaseRepository.
  *
- * @author Renfos Technologies Pvt. Ltd. <info@info@renfos.com>
+ * @author Renfos Technologies Pvt. Ltd. <info@renfos.com>
  */
-abstract class BaseRepository implements RepositoryInterface
+abstract class BaseRepository implements RepositoryInterface, ArrayAccess
 {
     /**
      * @var Application
@@ -582,5 +583,54 @@ abstract class BaseRepository implements RepositoryInterface
         }
 
         return false;
+    }
+
+    /**
+     * Determine if the given attribute exists.
+     *
+     * @param  mixed  $offset
+     * @return bool
+     */
+    #[\ReturnTypeWillChange]
+    public function offsetExists($offset)
+    {
+        return ! is_null($this->model->getAttribute($offset));
+    }
+
+    /**
+     * Get the value for a given offset.
+     *
+     * @param  mixed  $offset
+     * @return mixed
+     */
+    #[\ReturnTypeWillChange]
+    public function offsetGet($offset)
+    {
+        return $this->model->getAttribute($offset);
+    }
+
+    /**
+     * Set the value for a given offset.
+     *
+     * @param  mixed  $offset
+     * @param  mixed  $value
+     * @return void
+     */
+    #[\ReturnTypeWillChange]
+    public function offsetSet($offset, $value)
+    {
+        $this->model->setAttribute($offset, $value);
+    }
+
+    /**
+     * Unset the value for a given offset.
+     *
+     * @param  mixed  $offset
+     * @return void
+     */
+    #[\ReturnTypeWillChange]
+    public function offsetUnset($offset)
+    {
+        unset($this->model->attributes[$offset], $this->relations[$offset]);
     }
 }

@@ -89,7 +89,7 @@ return [
             'class' => [
                 'default' => [
                     'element' => 'form-control',
-                    'label' => 'form-group',
+                    'label' => 'form-label',
                     'wrapper' => 'col-sm-6',
                 ],
                 'check' => [
