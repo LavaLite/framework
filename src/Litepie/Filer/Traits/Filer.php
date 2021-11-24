@@ -234,11 +234,23 @@ trait Filer
         $image = $this->$field;
 
         if (!is_array($image) || empty($image)) {
-            return ['img/default/'.$size.'.jpg'];
+            return [[
+                'caption' => "No Image",
+                'file' => $size.'.jpg',
+                'folder' => 'img/default',
+                'path' => 'img/default/'.$size.'.jpg',
+                'time' => date('Y-m-d h:i:s'),
+                'url' => url('img/default/'.$size.'.jpg')
+            ]];
         }
 
         foreach ($image as $key => $img) {
-            $image[$key] = url("image/{$size}/").'/'.($img['path']);
+            $image[$key]['url'] = url("image/{$size}/").'/'.($img['path']);
+            $image[$key]['caption'] = $img['caption'];
+            $image[$key]['folder'] = $img['folder'];
+            $image[$key]['file'] = $img['file'];
+            $image[$key]['time'] = $img['time'];
+            $image[$key]['path'] = $img['path'];
         }
 
         return $image;
