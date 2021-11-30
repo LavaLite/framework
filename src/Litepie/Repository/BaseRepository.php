@@ -537,7 +537,7 @@ abstract class BaseRepository implements RepositoryInterface, ArrayAccess
             return $this;
         }
 
-        return $this;
+        return $result;
     }
 
     /**
