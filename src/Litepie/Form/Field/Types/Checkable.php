@@ -80,17 +80,21 @@ trait Checkable
         $options = $this->prepareOptionsArray($options, $this->check_value, $this->check_text);
         data_fill($options, '*.checked', false);
         data_fill($options, '*.checked', false);
-        data_fill($options, '*.'.$this->check_value, '');
-        data_fill($options, '*.'.$this->check_text, '');
-        if (!is_array($this->value)) {
+        data_fill($options, '*.' . $this->check_value, '');
+        data_fill($options, '*.' . $this->check_text, '');
+
+        $value = $this->value;
+        if (empty($value)) {
             return $options;
         }
 
-        foreach ($options as $option) {
-            if ($option[$this->check_value] == $this->value) {
-                $options[$option]['checked'] = true;
-            } else {
-                $options[$option]['checked'] = false;
+        if (!is_array($value)) {
+            $value = [$value];
+        }
+
+        foreach ($options as $key => $option) {
+            if (in_array($option[$this->check_value], $value)) {
+                $options[$key]['checked'] = true;
             }
         }
 
