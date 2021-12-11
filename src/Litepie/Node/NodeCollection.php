@@ -2,7 +2,7 @@
 
 namespace Litepie\Node;
 
-use Illuminate\Database\Eloquent\Collection as CollectionBase;
+use Illuminate\Database\Eloquent\Collection as BaseCollection;
 use Request;
 
 /**
@@ -12,7 +12,7 @@ use Request;
  *
  *   $collection->toNested(); // Converts collection to an eager loaded one.
  */
-class NodeCollection extends CollectionBase
+class NodeCollection extends BaseCollection
 {
     /**
      * Converts a flat collection of nested set models to an set where
@@ -22,7 +22,7 @@ class NodeCollection extends CollectionBase
      *
      * @return Illuminate\Database\Eloquent\Collection
      */
-    public function toNested($removeOrphans = true, $rootKey = null)
+    public function toNested($removeOrphans = true)
     {
         /*
          * Set new collection for "children" relations
@@ -30,7 +30,7 @@ class NodeCollection extends CollectionBase
         $collection = $this->getDictionary();
 
         foreach ($collection as $key => $model) {
-            $model->setRelation('children', new CollectionBase());
+            $model->setRelation('children', new BaseCollection());
         }
 
         /*
@@ -58,7 +58,7 @@ class NodeCollection extends CollectionBase
             unset($collection[$key]);
         }
 
-        return new CollectionBase($collection);
+        return new BaseCollection($collection);
     }
 
     /**
@@ -141,7 +141,7 @@ class NodeCollection extends CollectionBase
 
         foreach ($collection as $key => $model) {
             $model->active = '';
-            $model->setRelation('children', new CollectionBase());
+            $model->setRelation('children', new BaseCollection());
         }
 
         if ($menu) {
@@ -171,6 +171,6 @@ class NodeCollection extends CollectionBase
             }
         }
 
-        return new CollectionBase($collection->where('key', $menu_key)->first()->getChildren());
+        return new BaseCollection($collection->where('key', $menu_key)->first()->getChildren());
     }
 }

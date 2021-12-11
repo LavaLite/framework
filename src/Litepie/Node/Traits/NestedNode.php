@@ -3,7 +3,8 @@
 namespace Litepie\Node\Traits;
 
 use Exception;
-use Illuminate\Database\Eloquent\Collection;
+// use Illuminate\Database\Eloquent\Collection;
+use Litepie\Node\NodeCollection as Collection;
 
 /**
  * Nested set model trait.
@@ -426,7 +427,7 @@ trait NestedNode
      *
      * @return array
      */
-    public function scopeListsNested($query, $column, $key = null, $indent = '&nbsp;&nbsp;&nbsp;')
+    public function scopeListsNested($query, $column, $key = null, $indent = '   ')
     {
         $columns = [$this->getDepthColumnName(), $column];
         if ($key !== null) {
@@ -434,26 +435,20 @@ trait NestedNode
         }
 
         $results = new Collection($query->getQuery()->get($columns));
-        $values = $results->fetch($columns[1])->all();
-        $indentation = $results->fetch($columns[0])->all();
+        $values = $results->pluck($columns[1])->all();
+        $indentation = $results->pluck($columns[0])->all();
         foreach ($values as $_key => $value) {
             $values[$_key] = str_repeat($indent, $indentation[$_key]).$value;
         }
 
         if ($key !== null && count($results) > 0) {
-            $keys = $results->fetch($key)->all();
+            $keys = $results->pluck($key)->all();
 
             return array_combine($keys, $values);
         }
 
         return $values;
     }
-
-//
-
-    // Getters
-
-//
 
     /**
      * Returns all nodes and children.
@@ -1038,5 +1033,13 @@ trait NestedNode
         }
 
         return $this;
+    }
+
+    /**
+     * Return a custom NodeCollection collection.
+     */
+    public function newCollection(array $models = [])
+    {
+        return new Collection($models);
     }
 }
