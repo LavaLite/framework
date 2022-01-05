@@ -60,6 +60,9 @@ class FormServiceProvider extends ServiceProvider
     {
         // Publish configuration file
         $this->publishes([__DIR__.'/config.php' => config_path('form.php')], 'config');
+
+        // Publish admin view
+        $this->publishes([__DIR__ . '/resources/views' => base_path('resources/views/vendor/form')], 'view');
     }
 
     /**

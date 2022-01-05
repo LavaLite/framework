@@ -58,41 +58,61 @@ abstract class FormInterpreter
 
     public static function fields()
     {
-        $item = collect(self::$fields);
+        $item = collect(self::$fields)->map(function ($val) {
+            $val['label'] = trans($val['label']);
+            $val['placeholder'] = trans($val['placeholder']);
+            return $val;
+        });
 
         return $item->groupBy(['group'], true);
     }
 
     public static function groups()
     {
+        foreach(self::$groups as $key => $val){
+            self::$groups[$key] = trans($val);
+        }
         return self::$groups;
     }
 
     public static function orderBy()
     {
+        foreach(self::$orderBy as $key => $val){
+            self::$orderBy[$key] = trans($val);
+        }
         return self::$orderBy;
     }
 
     public static function search()
     {
-        return self::$search;
+        return collect(self::$search)->map(function ($val) {
+            $val['label'] = trans($val['label']);
+            $val['placeholder'] = trans($val['placeholder']);
+            return $val;
+        })->toArray();
     }
 
-    public static function list()
-    {
-        return self::$list;
+    public static function  list() {
+
+        return collect(self::$list)->map(function ($val) {
+            $val['label'] = trans($val['label']);
+            return $val;
+        })->toArray();
     }
 
     public static function urls()
     {
-        return self::$urls;
+        return collect(self::$urls)->map(function ($val) {
+            $val['url'] = guard_url($val['url']);
+            return $val;
+        })->toArray();
     }
 
     public static function toArray()
     {
         return [
-            'urls'   => self::urls(),
-            'list'   => self::list(),
+            'urls' => self::urls(),
+            'list' => self::list(),
             'search' => self::search(),
             'groups' => self::groups(),
             'orderBy' => self::orderBy(),

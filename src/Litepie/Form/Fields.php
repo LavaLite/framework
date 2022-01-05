@@ -228,20 +228,25 @@ class Fields
         $data = $this->toArray();
         $this->incrementFileInstanceCount();
 
-        $element = View::first(["form::$view." . $this->element, "form::{$view}.input"], $data)->render();
+        $element = View::first([
+            "form::" . $this->element, 
+            "form::input", 
+            "form::$view." . $this->element, 
+            "form::{$view}.input"
+        ], $data)->render();
         if ($this->isRaw || $this->element == 'hidden') {
             return $element;
         }
 
         $data['element'] = $element;
-        $labeled = view("form::{$view}._label", $data)->render();
+        $labeled = View::first(["form::_label", "form::{$view}._label"], $data)->render();
 
         if (!$this->wrap) {
             return $labeled;
         }
         $data['labeled'] = $labeled;
 
-        return view("form::{$view}._wrapper", $data)->render();
+        return View::first(["form::_wrapper", "form::{$view}._wrapper"], $data)->render();
     }
 
     /**
