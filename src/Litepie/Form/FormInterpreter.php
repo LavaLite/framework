@@ -103,7 +103,8 @@ abstract class FormInterpreter
     public static function urls()
     {
         return collect(self::$urls)->map(function ($val) {
-            $val['url'] = guard_url($val['url']);
+            if (strpos($val['url'],'://')==false)
+                $val['url'] = guard_url($val['url']);
             return $val;
         })->toArray();
     }
