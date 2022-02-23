@@ -1,0 +1,2 @@
+<div class="media-img rounded-circle" style="background-image: url('{!!@$value['main']!!}')"></div>
+<div class="media-author rounded-circle position-absolute" style="background-image: url('{!!@$value['sub']!!}')"></div>

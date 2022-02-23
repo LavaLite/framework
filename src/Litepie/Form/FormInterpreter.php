@@ -15,46 +15,59 @@ abstract class FormInterpreter
     public static $form = [];
 
     /**
-     * Variable to store form elements.
+     * Variable determine whether to return group the form.
+     *
+     * @var array
+     */
+    protected static $grouped = true;
+
+    /**
+     * Variable to store groups.
      *
      * @var array
      */
     public static $groups;
 
     /**
-     * Variable to store form elements.
+     * Variable to store urls.
      *
      * @var array
      */
     public static $urls;
 
     /**
-     * Variable to store list items.
+     * Variable to store list.
      *
      * @var array
      */
     public static $list;
 
     /**
-     * Variable to store form configuration.
+     * Variable to store search fields.
      *
      * @var array
      */
     public static $search;
 
     /**
-     * Variable to store form configuration.
+     * Variable to store sort fields
      *
      * @var array
      */
     public static $orderBy;
 
     /**
-     * Variable to store form configuration.
+     * Variable to store field variables.
      *
      * @var array
      */
     public static $fields;
+
+    public static function grouped($grouped = true)
+    {
+        self::$grouped = $grouped;
+        return new static();
+    }
 
     public static function fields()
     {
@@ -64,12 +77,16 @@ abstract class FormInterpreter
             return $val;
         });
 
+        if (!self::$grouped) {
+            return $item;
+        }
+
         return $item->groupBy(['group'], true);
     }
 
     public static function groups()
     {
-        foreach(self::$groups as $key => $val){
+        foreach (self::$groups as $key => $val) {
             self::$groups[$key] = trans($val);
         }
         return self::$groups;
@@ -77,7 +94,7 @@ abstract class FormInterpreter
 
     public static function orderBy()
     {
-        foreach(self::$orderBy as $key => $val){
+        foreach (self::$orderBy as $key => $val) {
             self::$orderBy[$key] = trans($val);
         }
         return self::$orderBy;
@@ -92,7 +109,7 @@ abstract class FormInterpreter
         })->toArray();
     }
 
-    public static function  list() {
+    public static function list() {
 
         return collect(self::$list)->map(function ($val) {
             $val['label'] = trans($val['label']);
@@ -103,8 +120,10 @@ abstract class FormInterpreter
     public static function urls()
     {
         return collect(self::$urls)->map(function ($val) {
-            if (strpos($val['url'],'://')==false)
+            if (strpos($val['url'], '://') === false) {
                 $val['url'] = guard_url($val['url']);
+            }
+
             return $val;
         })->toArray();
     }
@@ -115,8 +134,9 @@ abstract class FormInterpreter
             'urls' => self::urls(),
             'list' => self::list(),
             'search' => self::search(),
-            'groups' => self::groups(),
             'orderBy' => self::orderBy(),
+
+            'groups' => self::groups(),
             'fields' => self::fields()->toArray(),
         ];
     }

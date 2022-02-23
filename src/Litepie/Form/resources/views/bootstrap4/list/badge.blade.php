@@ -1,0 +1,1 @@
+<span class="badge badge-primary">{{Arr::get($value, 'value', 'None')}}</span>

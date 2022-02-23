@@ -214,6 +214,17 @@ class Fields
         $this->mode(null);
         $this->initAttributes();
     }
+    
+    /**
+     * Returns the compiled string
+     *
+     * @return string
+     */
+    public function render()
+    {
+        return $this->__toString();
+    }
+
 
     /**
      * Prints out the field.
@@ -227,26 +238,31 @@ class Fields
         $view = strtolower($this->framework());
         $data = $this->toArray();
         $this->incrementFileInstanceCount();
-
         $element = View::first([
-            "form::" . $this->element, 
-            "form::input", 
-            "form::$view." . $this->element, 
-            "form::{$view}.input"
+            "form::form." . $this->element, 
+            "form::$view.form." . $this->element, 
+            "form::form.input", 
+            "form::{$view}.form.input"
         ], $data)->render();
         if ($this->isRaw || $this->element == 'hidden') {
             return $element;
         }
 
         $data['element'] = $element;
-        $labeled = View::first(["form::_label", "form::{$view}._label"], $data)->render();
+        $labeled = View::first([
+            "form:form._label", 
+            "form::{$view}.form._label"
+        ], $data)->render();
 
         if (!$this->wrap) {
             return $labeled;
         }
         $data['labeled'] = $labeled;
 
-        return View::first(["form::_wrapper", "form::{$view}._wrapper"], $data)->render();
+        return View::first([
+            "form::form._wrapper", 
+            "form::{$view}.form._wrapper"
+        ], $data)->render();
     }
 
     /**

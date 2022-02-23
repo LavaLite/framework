@@ -1,6 +1,6 @@
 <select class="{!!$attributes['element.class'] ?: 'form-control'!!} tags" id="{{$id}}" name="{{$name}}"
     {!!$attributes['element.attribute']!!}>
-    @if ($placeholder)
+    @if($placeholder)
     <option disabled>{{$placeholder}}</option>
     @endif
     @forelse ($options as $option)

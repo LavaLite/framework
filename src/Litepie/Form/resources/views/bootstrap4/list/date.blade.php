@@ -1,0 +1,1 @@
+<span class="d-inline-block" tabindex="0" data-toggle="tooltip" title="{{$value}}">{{format_date($value)}}</span>
