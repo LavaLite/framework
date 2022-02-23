@@ -15,27 +15,27 @@ class Team extends FormInterpreter
     {
         self::$urls = [
             'new' => [
-                'url'    => guard_url('team/team/new'),
+                'url'    => 'team/team/new',
                 'method' => 'GET',
             ],
             'create' => [
-                'url'    => guard_url('team/team/create'),
+                'url'    => 'team/team/create',
                 'method' => 'GET',
             ],
             'store' => [
-                'url'    => guard_url('team/team'),
+                'url'    => 'team/team',
                 'method' => 'POST',
             ],
             'update' => [
-                'url'    => guard_url('team/team'),
+                'url'    => 'team/team',
                 'method' => 'PUT',
             ],
             'list' => [
-                'url'    => guard_url('team/team'),
+                'url'    => 'team/team',
                 'method' => 'GET',
             ],
             'delete' => [
-                'url'    => guard_url('team/team'),
+                'url'    => 'team/team',
                 'method' => 'DELETE',
             ],
         ];

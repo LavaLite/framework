@@ -15,27 +15,27 @@ class Menu extends FormInterpreter
     {
         self::$urls = [
             'new' => [
-                'url'    => guard_url('menu/menu/new'),
+                'url'    => 'menu/menu/new',
                 'method' => 'GET',
             ],
             'create' => [
-                'url'    => guard_url('menu/menu/create'),
+                'url'    => 'menu/menu/create',
                 'method' => 'GET',
             ],
             'store' => [
-                'url'    => guard_url('menu/menu'),
+                'url'    => 'menu/menu',
                 'method' => 'POST',
             ],
             'update' => [
-                'url'    => guard_url('menu/menu'),
+                'url'    => 'menu/menu',
                 'method' => 'PUT',
             ],
             'list' => [
-                'url'    => guard_url('menu/menu'),
+                'url'    => 'menu/menu',
                 'method' => 'GET',
             ],
             'delete' => [
-                'url'    => guard_url('menu/menu'),
+                'url'    => 'menu/menu',
                 'method' => 'DELETE',
             ],
         ];

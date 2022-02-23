@@ -15,27 +15,27 @@ class User extends FormInterpreter
     {
         self::$urls = [
             'new' => [
-                'url'    => guard_url('user/user/new'),
+                'url'    => 'user/user/new',
                 'method' => 'GET',
             ],
             'create' => [
-                'url'    => guard_url('user/user/create'),
+                'url'    => 'user/user/create',
                 'method' => 'GET',
             ],
             'store' => [
-                'url'    => guard_url('user/user'),
+                'url'    => 'user/user',
                 'method' => 'POST',
             ],
             'update' => [
-                'url'    => guard_url('user/user'),
+                'url'    => 'user/user',
                 'method' => 'PUT',
             ],
             'list' => [
-                'url'    => guard_url('user/user'),
+                'url'    => 'user/user',
                 'method' => 'GET',
             ],
             'delete' => [
-                'url'    => guard_url('user/user'),
+                'url'    => 'user/user',
                 'method' => 'DELETE',
             ],
         ];

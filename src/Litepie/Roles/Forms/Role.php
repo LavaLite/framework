@@ -15,27 +15,27 @@ class Role extends FormInterpreter
     {
         self::$urls = [
             'new' => [
-                'url' => guard_url('role/role/new'),
+                'url' => 'role/role/new',
                 'method' => 'GET',
             ],
             'create' => [
-                'url' => guard_url('role/role/create'),
+                'url' => 'role/role/create',
                 'method' => 'GET',
             ],
             'store' => [
-                'url' => guard_url('role/role'),
+                'url' => 'role/role',
                 'method' => 'POST',
             ],
             'update' => [
-                'url' => guard_url('role/role'),
+                'url' => 'role/role',
                 'method' => 'PUT',
             ],
             'list' => [
-                'url' => guard_url('role/role'),
+                'url' => 'role/role',
                 'method' => 'GET',
             ],
             'delete' => [
-                'url' => guard_url('role/role'),
+                'url' => 'role/role',
                 'method' => 'DELETE',
             ],
         ];

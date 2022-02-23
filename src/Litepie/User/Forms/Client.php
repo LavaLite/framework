@@ -15,27 +15,27 @@ class Client extends FormInterpreter
     {
         self::$urls = [
             'new' => [
-                'url'    => guard_url('user/client/new'),
+                'url'    => 'user/client/new',
                 'method' => 'GET',
             ],
             'create' => [
-                'url'    => guard_url('user/client/create'),
+                'url'    => 'user/client/create',
                 'method' => 'GET',
             ],
             'store' => [
-                'url'    => guard_url('user/client'),
+                'url'    => 'user/client',
                 'method' => 'POST',
             ],
             'update' => [
-                'url'    => guard_url('user/client'),
+                'url'    => 'user/client',
                 'method' => 'PUT',
             ],
             'list' => [
-                'url'    => guard_url('user/client'),
+                'url'    => 'user/client',
                 'method' => 'GET',
             ],
             'delete' => [
-                'url'    => guard_url('user/client'),
+                'url'    => 'user/client',
                 'method' => 'DELETE',
             ],
         ];
