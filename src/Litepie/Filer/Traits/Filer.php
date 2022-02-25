@@ -56,14 +56,14 @@ trait Filer
             if (is_array(Request::file($field))) {
                 foreach (Request::file($field) as $file) {
                     if ($file instanceof UploadedFile) {
-                        $files[] = Uploader::upload($file, $rootFolder.'/'.$this->upload_folder.DIRECTORY_SEPARATOR.$field);
+                        $files[] = Uploader::upload($file, $rootFolder . '/' . $this->upload_folder . DIRECTORY_SEPARATOR . $field);
                     }
                 }
             } elseif (Request::hasFile($field)) {
                 $file = Request::file($field);
 
                 if ($file instanceof UploadedFile) {
-                    $files[] = Uploader::upload($file, $rootFolder.'/'.$this->upload_folder.DIRECTORY_SEPARATOR.$field);
+                    $files[] = Uploader::upload($file, $rootFolder . '/' . $this->upload_folder . DIRECTORY_SEPARATOR . $field);
                 }
             }
             if (!empty($files)) {
@@ -100,7 +100,7 @@ trait Filer
      */
     public function getUploadFolderConfigAttribute($value)
     {
-        return config($this->config.'.'.'upload_folder');
+        return config($this->config . '.' . 'upload_folder');
     }
 
     /**
@@ -113,7 +113,7 @@ trait Filer
      */
     public function getUploadURL($field, $file = 'file')
     {
-        return guard_url('upload/'.$this->config.'/'.($this->upload_folder).'/'.$field.'/'.$file);
+        return guard_url('upload/' . $this->config . '/' . ($this->upload_folder) . '/' . $field . '/' . $file);
     }
 
     /**
@@ -126,7 +126,7 @@ trait Filer
      */
     public function getCropURL($field, $file = 'file')
     {
-        return trans_url('crop/'.$this->config.'/'.($this->upload_folder).'/'.$field.'/'.$file);
+        return trans_url('crop/' . $this->config . '/' . ($this->upload_folder) . '/' . $field . '/' . $file);
     }
 
     /**
@@ -139,7 +139,7 @@ trait Filer
      */
     public function getFileURL($field, $file = 'file')
     {
-        return trans_url('file/'.$this->config.'/'.($this->upload_folder).'/'.$field.'/'.$file);
+        return trans_url('file/' . $this->config . '/' . ($this->upload_folder) . '/' . $field . '/' . $file);
     }
 
     /**
@@ -208,17 +208,17 @@ trait Filer
      *
      * @return string path
      */
-    public function defaultImage($field, $size = 'original', $pos = 0)
+    public function defaultImage($field, $size = 'md', $pos = 0)
     {
         $image = $this->$field;
 
         if (!is_array($image) || empty($image)) {
-            return 'img/default/'.$size.'.jpg';
+            return 'img/default/' . $size . '.jpg';
         }
 
         $image = Arr::pull($image, $pos, head($image));
 
-        return "image/{$size}/".($image['path']);
+        return "image/{$size}/" . ($image['path']);
     }
 
     /**
@@ -231,29 +231,22 @@ trait Filer
      */
     public function getImages($field, $size = 'sm')
     {
-        $image = $this->$field;
+        $images = $this->$field;
 
-        if (!is_array($image) || empty($image)) {
-            return [[
-                'caption' => "No Image",
-                'file' => $size.'.jpg',
-                'folder' => 'img/default',
-                'path' => 'img/default/'.$size.'.jpg',
-                'time' => date('Y-m-d h:i:s'),
-                'url' => url('img/default/'.$size.'.jpg')
-            ]];
+        if (empty($images) || !is_array($images)) {
+            return [];
         }
 
-        foreach ($image as $key => $img) {
-            $image[$key]['url'] = url("image/{$size}/").'/'.($img['path']);
-            $image[$key]['caption'] = $img['caption'];
-            $image[$key]['folder'] = $img['folder'];
-            $image[$key]['file'] = $img['file'];
-            $image[$key]['time'] = $img['time'];
-            $image[$key]['path'] = $img['path'];
+        foreach ($images as $key => $image) {
+            $images[$key]['url'] = url("image/{$size}/") . '/' . ($image['path']);
+            $images[$key]['caption'] = $image['caption'];
+            $images[$key]['folder'] = $image['folder'];
+            $images[$key]['file'] = $image['file'];
+            $images[$key]['time'] = $image['time'];
+            $images[$key]['path'] = $image['path'];
         }
 
-        return $image;
+        return $images;
     }
 
     /**
@@ -276,6 +269,11 @@ trait Filer
 
         foreach ($files as $key => $file) {
             $files[$key]['url'] = $this->getPublicUrl($file['folder'], $file['file'], $prefix);
+            $files[$key]['caption'] = $file['caption'];
+            $files[$key]['folder'] = $file['folder'];
+            $files[$key]['file'] = $file['file'];
+            $files[$key]['time'] = $file['time'];
+            $files[$key]['path'] = $file['path'];
         }
 
         return $files;
@@ -291,6 +289,6 @@ trait Filer
      */
     public function getPublicUrl($folder, $file, $prefix = 'download')
     {
-        return url("{$prefix}".'/'.$folder.'/'.$file);
+        return url("{$prefix}" . '/' . $folder . '/' . $file);
     }
 }

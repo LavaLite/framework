@@ -7,13 +7,7 @@ namespace Litepie\User\Traits;
  */
 trait User
 {
-    /**
-     * User morph to many relation.
-     */
-    public function user()
-    {
-        return $this->morphTo();
-    }
+
 
     /**
      * Returns the profile picture of the user.
@@ -33,20 +27,6 @@ trait User
         return asset('img/avatar/male.png');
     }
 
-    /**
-     * Returns the badge picture of the user.
-     *
-     * @return string image path
-     */
-    public function getBadgeAttribute($value)
-    {
-        return "<div class='user-badge'>
-        <a href='".trans_url('profile/'.$this->getRouteKey())."' >
-        <img alt=' width='45' height='45' src='{$this->picture}' title='{$this->name}' class='img-circle'>
-        <span class='name'>{$this->name}</span> <span class='joined'>Joined: {$this->joined}</span>
-        </a>
-        </div>";
-    }
 
     /**
      * Returns the joined date of the user.

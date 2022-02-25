@@ -122,6 +122,10 @@ abstract class BaseRepository implements RepositoryInterface, ArrayAccess
         return $this->model;
     }
 
+    public function __toString(){
+        return $this->result;
+    }
+
     /**
      * Return the result.
      *
@@ -579,6 +583,10 @@ abstract class BaseRepository implements RepositoryInterface, ArrayAccess
         }
 
         if (Str::startsWith($method, 'first')) {
+            return true;
+        }
+
+        if (Str::startsWith($method, 'get')) {
             return true;
         }
 
