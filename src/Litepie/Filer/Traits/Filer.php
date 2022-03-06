@@ -69,7 +69,6 @@ trait Filer
             if (!empty($files)) {
                 $this->setFiles($field, $files);
             }
-
         }
     }
 
@@ -209,7 +208,7 @@ trait Filer
      *
      * @return string path
      */
-    public function defaultImage($field, $size = 'original', $pos = 0)
+    public function defaultImage($field, $size = 'md', $pos = 0)
     {
         $image = $this->$field;
 
@@ -232,17 +231,22 @@ trait Filer
      */
     public function getImages($field, $size = 'sm')
     {
-        $image = $this->$field;
+        $images = $this->$field;
 
-        if (!is_array($image) || empty($image)) {
-            return ['img/default/' . $size . '.jpg'];
+        if (empty($images) || !is_array($images)) {
+            return [];
         }
 
-        foreach ($image as $key => $img) {
-            $image[$key] = url("image/{$size}/") . '/' . ($img['path']);
+        foreach ($images as $key => $image) {
+            $images[$key]['url'] = url("image/{$size}/") . '/' . ($image['path']);
+            $images[$key]['caption'] = $image['caption'];
+            $images[$key]['folder'] = $image['folder'];
+            $images[$key]['file'] = $image['file'];
+            $images[$key]['time'] = $image['time'];
+            $images[$key]['path'] = $image['path'];
         }
 
-        return $image;
+        return $images;
     }
 
     /**
@@ -265,6 +269,11 @@ trait Filer
 
         foreach ($files as $key => $file) {
             $files[$key]['url'] = $this->getPublicUrl($file['folder'], $file['file'], $prefix);
+            $files[$key]['caption'] = $file['caption'];
+            $files[$key]['folder'] = $file['folder'];
+            $files[$key]['file'] = $file['file'];
+            $files[$key]['time'] = $file['time'];
+            $files[$key]['path'] = $file['path'];
         }
 
         return $files;

@@ -15,7 +15,6 @@ class SubMenuResourceController extends ResourceController
         parent::__construct();
     }
 
-
     /**
      * Display a listing of the resource.
      *
@@ -23,8 +22,8 @@ class SubMenuResourceController extends ResourceController
      */
     public function index(MenuRequest $request, $id)
     {
-
         $menus = $this->repository->find($id)->getChildren();
+
         return $this->response->setMetaTitle(trans('menu::menu.names'))
                 ->view('litepie.menu.admin.menu.nestable')
                 ->data(compact('menus'))
@@ -41,7 +40,7 @@ class SubMenuResourceController extends ResourceController
      */
     public function show(MenuRequest $request, MenuRepositoryInterface $menu)
     {
-
+        $menu = $menu->getModel();
         Form::populate($menu);
 
         return view('litepie.menu.admin.sub.show', compact('menu'));
@@ -77,6 +76,7 @@ class SubMenuResourceController extends ResourceController
             $attributes = $request->all();
             $attributes['parent_id'] = hashids_decode($attributes['parent_id']);
             $menu = $this->repository->create($attributes);
+            $menu = $menu->getModel();
 
             return $this->response
                 ->message(trans('messages.success.created', ['Module' => trans('menu::menu.name')]))
@@ -104,6 +104,7 @@ class SubMenuResourceController extends ResourceController
      */
     public function edit(MenuRequest $request, MenuRepositoryInterface $menu)
     {
+        $menu = $menu->getModel();
 
         Form::populate($menu);
 
@@ -122,8 +123,9 @@ class SubMenuResourceController extends ResourceController
     {
         try {
             $attributes = $request->all();
-            
+
             $menu->update($attributes);
+
             return $this->response->message(trans('messages.success.updated', ['Module' => trans('menu::menu.name')]))
                 ->code(204)
                 ->status('success')

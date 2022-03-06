@@ -2,16 +2,15 @@
 
 namespace Litepie\Team\Policies;
 
-use Litepie\User\Interfaces\UserPolicyInterface;
 use Litepie\Team\Interfaces\TeamRepositoryInterface;
+use Litepie\User\Interfaces\UserPolicyInterface;
 
 class TeamPolicy
 {
-
     /**
      * Determine if the given user can view the team.
      *
-     * @param UserPolicyInterface $authUser
+     * @param UserPolicyInterface     $authUser
      * @param TeamRepositoryInterface $team
      *
      * @return bool
@@ -36,7 +35,7 @@ class TeamPolicy
     /**
      * Determine if the given user can update the given team.
      *
-     * @param UserPolicyInterface $authUser
+     * @param UserPolicyInterface     $authUser
      * @param TeamRepositoryInterface $team
      *
      * @return bool

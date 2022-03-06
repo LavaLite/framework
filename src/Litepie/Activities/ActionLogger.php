@@ -9,7 +9,6 @@ use Illuminate\Support\Arr;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Str;
 use Illuminate\Support\Traits\Macroable;
-use Litepie\Activities\ActivitiesServiceProvider;
 use Litepie\Activities\Contracts\Action as ActionContract;
 use Spatie\Activitylog\Exceptions\CouldNotLogActivity;
 
@@ -35,7 +34,6 @@ class ActionLogger
         $this->authDriver = $config['activitylog']['default_auth_driver'] ?? $auth->getDefaultDriver();
 
         $this->defaultLogName = $config['activitylog']['default_log_name'];
-
     }
 
     public function performedOn(Model $model)
@@ -194,6 +192,7 @@ class ActionLogger
                 ->withProperties([])
                 ->causedBy($this->auth->guard($this->authDriver)->user());
         }
+
         return $this->action;
     }
 }

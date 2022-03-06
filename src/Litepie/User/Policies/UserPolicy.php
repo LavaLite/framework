@@ -7,11 +7,10 @@ use Litepie\User\Interfaces\UserRepositoryInterface;
 
 class UserPolicy
 {
-
     /**
      * Determine if the given user can view the user.
      *
-     * @param UserPolicyInterface $authUser
+     * @param UserPolicyInterface     $authUser
      * @param UserRepositoryInterface $user
      *
      * @return bool
@@ -36,7 +35,7 @@ class UserPolicy
     /**
      * Determine if the given user can update the given user.
      *
-     * @param UserPolicyInterface $authUser
+     * @param UserPolicyInterface     $authUser
      * @param UserRepositoryInterface $user
      *
      * @return bool

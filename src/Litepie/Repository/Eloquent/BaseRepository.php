@@ -2,8 +2,8 @@
 
 namespace Litepie\Repository\Eloquent;
 
-use Prettus\Repository\Eloquent\BaseRepository as PrettusRepository;
 use Litepie\Repository\Contracts\CriteriaInterface;
+use Prettus\Repository\Eloquent\BaseRepository as PrettusRepository;
 use Prettus\Repository\Exceptions\RepositoryException;
 
 /**
@@ -13,29 +13,27 @@ use Prettus\Repository\Exceptions\RepositoryException;
  */
 abstract class BaseRepository extends PrettusRepository
 {
-
-
     /**
-     * Push Criteria for filter the query
+     * Push Criteria for filter the query.
      *
      * @param $criteria
      *
-     * @return $this
      * @throws \Prettus\Repository\Exceptions\RepositoryException
+     *
+     * @return $this
      */
     public function pushCriteria($criteria)
     {
         if (is_string($criteria)) {
-            $criteria = new $criteria;
+            $criteria = new $criteria();
         }
         if (!$criteria instanceof CriteriaInterface) {
-            throw new RepositoryException("Class " . get_class($criteria) . " must be an instance of Prettus\\Repository\\Contracts\\CriteriaInterface");
+            throw new RepositoryException('Class '.get_class($criteria).' must be an instance of Prettus\\Repository\\Contracts\\CriteriaInterface');
         }
         $this->criteria->push($criteria);
 
         return $this;
     }
-
 
     /**
      * Find data by id or return new if not exists.

@@ -3,7 +3,7 @@
 namespace Litepie\Node\Traits;
 
 use Exception;
-use Illuminate\Database\Eloquent\Collection;
+use Litepie\Node\NodeCollection as Collection;
 
 /**
  * Nested set model trait.
@@ -67,6 +67,8 @@ use Illuminate\Database\Eloquent\Collection;
  */
 trait NestedNode
 {
+    use SimpleNode;
+
     /**
      * @var int Indicates if the model should be aligned to new parent.
      */
@@ -175,12 +177,6 @@ trait NestedNode
         });
     }
 
-//
-
-    // Alignment
-
-//
-
     /**
      * Make this model a root node.
      *
@@ -240,12 +236,6 @@ trait NestedNode
     {
         return $this->moveTo($node, 'right');
     }
-
-//
-
-    // Checkers
-
-//
 
     /**
      * Returns true if this is a root node.
@@ -403,7 +393,7 @@ trait NestedNode
 
         return $query
             ->allChildren()
-            ->whereRaw($rightCol.' - '.$leftCol.' = 1');
+            ->whereRaw($rightCol . ' - ' . $leftCol . ' = 1');
     }
 
     /**
@@ -426,7 +416,7 @@ trait NestedNode
      *
      * @return array
      */
-    public function scopeListsNested($query, $column, $key = null, $indent = '&nbsp;&nbsp;&nbsp;')
+    public function scopeListsNested($query, $column, $key = null, $indent = '   ', $indentPrefix = ' ')
     {
         $columns = [$this->getDepthColumnName(), $column];
         if ($key !== null) {
@@ -434,26 +424,20 @@ trait NestedNode
         }
 
         $results = new Collection($query->getQuery()->get($columns));
-        $values = $results->fetch($columns[1])->all();
-        $indentation = $results->fetch($columns[0])->all();
+        $values = $results->pluck($columns[1])->all();
+        $indentation = $results->pluck($columns[0])->all();
         foreach ($values as $_key => $value) {
-            $values[$_key] = str_repeat($indent, $indentation[$_key]).$value;
+            $values[$_key] = $indentPrefix . $indent . str_repeat($indent, $indentation[$_key]) . $value;
         }
 
         if ($key !== null && count($results) > 0) {
-            $keys = $results->fetch($key)->all();
+            $keys = $results->pluck($key)->all();
 
             return array_combine($keys, $values);
         }
 
         return $values;
     }
-
-//
-
-    // Getters
-
-//
 
     /**
      * Returns all nodes and children.
@@ -555,16 +539,6 @@ trait NestedNode
     }
 
     /**
-     * Returns direct child nodes.
-     *
-     * @return Illuminate\Database\Eloquent\Collection
-     */
-    public function getChildren()
-    {
-        return $this->children;
-    }
-
-    /**
      * Returns direct child nodes, with ->children eager loaded.
      *
      * @return Illuminate\Database\Eloquent\Collection
@@ -649,12 +623,6 @@ trait NestedNode
         return ($this->getRight() - $this->getLeft() - 1) / 2;
     }
 
-//
-
-    // Setters
-
-//
-
     /**
      * Sets the depth attribute.
      *
@@ -696,42 +664,6 @@ trait NestedNode
         $this->setAttribute($this->getRightColumnName(), $maxRight + 2);
     }
 
-//
-
-    // Column getters
-
-//
-
-    /**
-     * Get parent column name.
-     *
-     * @return string
-     */
-    public function getParentColumnName()
-    {
-        return defined('static::PARENT_ID') ? static::PARENT_ID : 'parent_id';
-    }
-
-    /**
-     * Get fully qualified parent column name.
-     *
-     * @return string
-     */
-    public function getQualifiedParentColumnName()
-    {
-        return $this->getTable().'.'.$this->getParentColumnName();
-    }
-
-    /**
-     * Get value of the model parent_id column.
-     *
-     * @return int
-     */
-    public function getParentId()
-    {
-        return $this->getAttribute($this->getParentColumnName());
-    }
-
     /**
      * Get left column name.
      *
@@ -749,7 +681,7 @@ trait NestedNode
      */
     public function getQualifiedLeftColumnName()
     {
-        return $this->getTable().'.'.$this->getLeftColumnName();
+        return $this->getTable() . '.' . $this->getLeftColumnName();
     }
 
     /**
@@ -779,7 +711,7 @@ trait NestedNode
      */
     public function getQualifiedRightColumnName()
     {
-        return $this->getTable().'.'.$this->getRightColumnName();
+        return $this->getTable() . '.' . $this->getRightColumnName();
     }
 
     /**
@@ -809,7 +741,7 @@ trait NestedNode
      */
     public function getQualifiedDepthColumnName()
     {
-        return $this->getTable().'.'.$this->getDepthColumnName();
+        return $this->getTable() . '.' . $this->getDepthColumnName();
     }
 
     /**
@@ -840,8 +772,8 @@ trait NestedNode
     {
 
 /*
-         * Validate target
-         */
+ * Validate target
+ */
         if ($target instanceof \Litepie\Database\Model) {
             $target->reload();
         } else {
@@ -849,8 +781,8 @@ trait NestedNode
         }
 
         /*
-                 * Validate move
-                 */
+         * Validate move
+         */
         if (!$this->validateMove($this, $target, $position)) {
             return $this;
         }
@@ -923,8 +855,8 @@ trait NestedNode
                     ->orWhereBetween($rightColumn, [$a, $d]);
             })
             ->update([
-                $leftColumn   => $connection->raw($leftSql),
-                $rightColumn  => $connection->raw($rightSql),
+                $leftColumn => $connection->raw($leftSql),
+                $rightColumn => $connection->raw($rightSql),
                 $parentColumn => $connection->raw($parentSql),
             ]);
 
@@ -1039,4 +971,5 @@ trait NestedNode
 
         return $this;
     }
+
 }

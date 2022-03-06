@@ -12,6 +12,7 @@ trait Hashids
     public static function findOrFail($id, $columns = ['*'])
     {
         $id = hashids_decode($id);
+
         return parent::findOrFail($id, $columns);
     }
 
@@ -24,6 +25,7 @@ trait Hashids
     {
         $id = hashids_decode($id);
         $id = empty($id) ? 0 : $id;
+
         return parent::firstOrNew([['id', $id]]);
     }
 

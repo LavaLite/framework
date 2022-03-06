@@ -6,8 +6,6 @@ use Litepie\Settings\Interfaces\SettingRepositoryInterface;
 
 class Settings
 {
-    
-
     /**
      * Constructor.
      */

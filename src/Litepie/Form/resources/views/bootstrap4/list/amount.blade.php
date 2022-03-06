@@ -1,0 +1,1 @@
+{{Arr::get($value, 'value', '0.00')}}

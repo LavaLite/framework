@@ -20,5 +20,4 @@ class PermissionResourceFilter implements FilterInterface
     {
         return $this->onlyShowDeletedForAdmins($model);
     }
-
 }

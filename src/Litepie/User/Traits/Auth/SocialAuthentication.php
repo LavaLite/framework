@@ -21,7 +21,7 @@ trait SocialAuthentication
     public function redirectToProvider($provider)
     {
         if (!config("services.{$provider}.client_id")) {
-            abort(404, "Please configure the [{$provider}] ids.");
+            abort(404, "Please configure the [{$provider}] parameters.");
         }
 
         $this->setCallbackUrl($provider);

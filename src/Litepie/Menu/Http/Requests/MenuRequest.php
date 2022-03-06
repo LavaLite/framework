@@ -13,7 +13,6 @@ class MenuRequest extends AbstractRequest
      */
     public function authorize()
     {
-
         $this->model = $this->route('menu');
 
         if (is_null($this->model)) {

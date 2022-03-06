@@ -14,13 +14,14 @@ use Litepie\Repository\Exceptions\RepositoryModelException;
 use Litepie\Repository\Interfaces\FilterInterface;
 use Litepie\Repository\Interfaces\RepositoryInterface;
 use Litepie\Repository\Presenter\Presenter;
+use ArrayAccess;
 
 /**
  * Class BaseRepository.
  *
- * @author Renfos Technologies Pvt. Ltd. <info@info@renfos.com>
+ * @author Renfos Technologies Pvt. Ltd. <info@renfos.com>
  */
-abstract class BaseRepository implements RepositoryInterface
+abstract class BaseRepository implements RepositoryInterface, ArrayAccess
 {
     /**
      * @var Application
@@ -30,12 +31,12 @@ abstract class BaseRepository implements RepositoryInterface
     /**
      * @var Model
      */
-    public $model;
+    protected $model;
 
     /**
      * @var Collection
      */
-    public $result;
+    protected $result;
 
     /**
      * @var array
@@ -48,7 +49,7 @@ abstract class BaseRepository implements RepositoryInterface
     protected $presenter;
 
     /**
-     * Collection of Filter
+     * Collection of Filter.
      *
      * @var Collection
      */
@@ -70,15 +71,12 @@ abstract class BaseRepository implements RepositoryInterface
     public function __construct(Application $app)
     {
         $this->app = $app;
-        $this->filter = new Collection();
+        $this->filters = new Collection();
         $this->makeModel();
         $this->makePresenter();
         $this->boot();
     }
 
-    /**
-     *
-     */
     public function boot()
     {
         //
@@ -87,20 +85,25 @@ abstract class BaseRepository implements RepositoryInterface
     /**
      * @throws RepositoryException
      */
-    public function resetModel()
+    public function resetRepository()
     {
+        $this->result = null;
+        $this->makePresenter();
+        $this->filters = new Collection();
         $this->makeModel();
+
+        return $this;
     }
 
     /**
-     * Specify Model class name
+     * Specify Model class name.
      *
      * @return string
      */
     abstract public function model();
 
     /**
-     * Specify Presenter class name
+     * Specify Presenter class name.
      *
      * @return string
      */
@@ -110,7 +113,31 @@ abstract class BaseRepository implements RepositoryInterface
     }
 
     /**
-     * Specify Presenter class name
+     * Return the model.
+     *
+     * @return Model
+     */
+    public function getModel()
+    {
+        return $this->model;
+    }
+
+    public function __toString(){
+        return $this->result;
+    }
+
+    /**
+     * Return the result.
+     *
+     * @return Collection
+     */
+    public function getResult()
+    {
+        return $this->result;
+    }
+
+    /**
+     * Specify Presenter class name.
      *
      * @return string
      */
@@ -120,7 +147,7 @@ abstract class BaseRepository implements RepositoryInterface
     }
 
     /**
-     * Set Presenter
+     * Set Presenter.
      *
      * @param $presenter
      *
@@ -128,15 +155,15 @@ abstract class BaseRepository implements RepositoryInterface
      */
     public function setPresenter($presenter)
     {
-
         $this->makePresenter($presenter);
 
         return $this;
     }
 
     /**
-     * @return Model
      * @throws RepositoryException
+     *
+     * @return Model
      */
     public function makeModel()
     {
@@ -157,15 +184,14 @@ abstract class BaseRepository implements RepositoryInterface
     /**
      * @param null $presenter
      *
-     * @return Presenter
      * @throws RepositoryException
+     *
+     * @return Presenter
      */
     public function makePresenter($presenter = null)
     {
-
         $presenter = !is_null($presenter) ? $presenter : $this->presenter();
         if (!is_null($presenter)) {
-
             $this->presenter = $presenter;
 
             if (!is_subclass_of($this->presenter, Presenter::class)) {
@@ -179,7 +205,7 @@ abstract class BaseRepository implements RepositoryInterface
     }
 
     /**
-     * Get Searchable Fields
+     * Get Searchable Fields.
      *
      * @return array
      */
@@ -189,7 +215,26 @@ abstract class BaseRepository implements RepositoryInterface
     }
 
     /**
-     * Query Scope
+     * Return the array for dropdown and checkboxes.
+     *
+     * @return array
+     */
+    public function options($key = 'id', $value = 'name', $filter = [], $order = null)
+    {
+        $options = $this->all()->getModel();
+        $ret = [];
+        foreach ($options as $k => $option) {
+            $ret[$k] = [
+                'text' => $option[$value],
+                'value' => $option[$key],
+            ];
+        }
+
+        return $ret;
+    }
+
+    /**
+     * Query Scope.
      *
      * @param \Closure $scope
      *
@@ -203,9 +248,9 @@ abstract class BaseRepository implements RepositoryInterface
     }
 
     /**
-     * Retrieve all data of repository, simple paginated
+     * Retrieve all data of repository, simple paginated.
      *
-     * @param null $limit
+     * @param null  $limit
      * @param array $columns
      *
      * @return mixed
@@ -213,20 +258,19 @@ abstract class BaseRepository implements RepositoryInterface
     public function toArray()
     {
         if (is_null($this->result)) {
-            if (!($this->model instanceof Model)){
+            if (!($this->model instanceof Model)) {
                 return null;
             }
             $this->result = $this->model;
         }
-        $this->resetModel();
 
         return $this->parserResult($this->result)->toArray();
     }
 
     /**
-     * Retrieve all data of repository, simple paginated
+     * Retrieve all data of repository, simple paginated.
      *
-     * @param null $limit
+     * @param null  $limit
      * @param array $columns
      *
      * @return mixed
@@ -234,40 +278,40 @@ abstract class BaseRepository implements RepositoryInterface
     public function toJson()
     {
         if (is_null($this->result)) {
-            if (!($this->model instanceof Model)){
+            if (!($this->model instanceof Model)) {
                 return null;
             }
             $this->result = $this->model;
         }
-        $this->resetModel();
 
         return $this->parserResult($this->result)->toJson();
     }
 
     /**
-     * Push Filter for filter the query
+     * Push Filter for filter the query.
      *
      * @param $filter
      *
-     * @return $this
      * @throws \Prettus\Repository\Exceptions\RepositoryException
+     *
+     * @return $this
      */
     public function pushFilter($filter)
     {
         if (is_string($filter)) {
-            $filter = new $filter;
+            $filter = new $filter();
         }
         if (!$filter instanceof FilterInterface) {
-            throw new RepositoryException("Class " . $filter . " must be an instance of Litepie\\Repository\\Interfaces\\FilterInterface");
+            throw new RepositoryException('Class ' . $filter . ' must be an instance of Litepie\\Repository\\Interfaces\\FilterInterface');
         }
 
-        $this->filter->push($filter);
+        $this->filters->push($filter);
 
         return $this;
     }
 
     /**
-     * Pop Filter
+     * Pop Filter.
      *
      * @param $filter
      *
@@ -291,17 +335,17 @@ abstract class BaseRepository implements RepositoryInterface
     }
 
     /**
-     * Get Collection of Filter
+     * Get Collection of Filter.
      *
      * @return Collection
      */
     public function getFilter()
     {
-        return $this->filter;
+        return $this->filters;
     }
 
     /**
-     * Find data by Filter
+     * Find data by Filter.
      *
      * @param FilterInterface $filter
      *
@@ -311,11 +355,12 @@ abstract class BaseRepository implements RepositoryInterface
     {
         $this->model = $filter->apply($this->model, $this);
         $this->result = $this->model->get();
+
         return $this;
     }
 
     /**
-     * Skip Filter
+     * Skip Filter.
      *
      * @param bool $status
      *
@@ -329,7 +374,7 @@ abstract class BaseRepository implements RepositoryInterface
     }
 
     /**
-     * Reset all Filters
+     * Reset all Filters.
      *
      * @return $this
      */
@@ -341,7 +386,7 @@ abstract class BaseRepository implements RepositoryInterface
     }
 
     /**
-     * Reset Query Scope
+     * Reset Query Scope.
      *
      * @return $this
      */
@@ -353,7 +398,7 @@ abstract class BaseRepository implements RepositoryInterface
     }
 
     /**
-     * Apply scope in current Query
+     * Apply scope in current Query.
      *
      * @return $this
      */
@@ -368,13 +413,12 @@ abstract class BaseRepository implements RepositoryInterface
     }
 
     /**
-     * Apply filter in current Query
+     * Apply filter in current Query.
      *
      * @return $this
      */
     protected function applyFilter()
     {
-
         if ($this->skipFilter === true) {
             return $this;
         }
@@ -386,6 +430,7 @@ abstract class BaseRepository implements RepositoryInterface
                 }
             }
         }
+
         return $this;
     }
 
@@ -393,6 +438,7 @@ abstract class BaseRepository implements RepositoryInterface
      * Applies the given where conditions to the model.
      *
      * @param array $where
+     *
      * @return void
      */
     protected function applyConditions(array $where)
@@ -408,7 +454,21 @@ abstract class BaseRepository implements RepositoryInterface
     }
 
     /**
-     * Skip Presenter Wrapper
+     * Applies the given where conditions to the model.
+     *
+     * @param array $where
+     *
+     * @return void
+     */
+    protected function applySort(array $sort)
+    {
+        foreach ($sort as $field => $dir) {
+            $this->model = $this->model->orderBy($field, $dir);
+        }
+    }
+
+    /**
+     * Skip Presenter Wrapper.
      *
      * @param bool $status
      *
@@ -422,7 +482,7 @@ abstract class BaseRepository implements RepositoryInterface
     }
 
     /**
-     * Wrapper result data
+     * Wrapper result data.
      *
      * @param mixed $result
      *
@@ -433,14 +493,16 @@ abstract class BaseRepository implements RepositoryInterface
         if ($this->presenter && !$this->skipPresenter) {
             if (is_subclass_of($result, LengthAwarePaginator::class)) {
                 $result = $this->presenter::present($result);
-            }else if (is_subclass_of($result, Paginator::class)) {
+            } elseif (is_subclass_of($result, Paginator::class)) {
                 $result = $this->presenter::present($result);
-            }else if (is_a($result, Collection::class)) {
+            } elseif (is_a($result, Collection::class)) {
                 $result = $this->presenter::present($result);
-            }else if (is_a($result, Model::class)) {
+            } elseif (is_a($result, Model::class)) {
                 $result = $this->presenter::make($result);
             }
         }
+
+        $this->resetRepository();
 
         return $result;
     }
@@ -448,6 +510,7 @@ abstract class BaseRepository implements RepositoryInterface
     /**
      * @param $method
      * @param $args
+     *
      * @return mixed
      */
     public function __call($method, $args)
@@ -455,19 +518,29 @@ abstract class BaseRepository implements RepositoryInterface
         if ($this->isGetMethod($method)) {
             $this->applyFilter();
             $this->applyScope();
+
             $result = call_user_func_array([$this->model, $method], $args);
             $this->result = $result;
+
             if ($result instanceof Builder || $result instanceof Model) {
                 $this->model = $result;
             }
+
             return $this;
         }
 
-        $result = call_user_func_array([$this->model, $method], $args);
+        if (!empty($this->result)) {
+            $result = call_user_func_array([$this->result, $method], $args);
+        } else {
+            $result = call_user_func_array([$this->model, $method], $args);
+        }
+
         if ($result instanceof Builder || $result instanceof Model) {
             $this->model = $result;
+
             return $this;
         }
+
         return $result;
     }
 
@@ -480,7 +553,6 @@ abstract class BaseRepository implements RepositoryInterface
      */
     public function all($columns = ['*'])
     {
-
         $this->applyFilter();
         $this->applyScope();
         if ($this->model instanceof Builder) {
@@ -491,16 +563,18 @@ abstract class BaseRepository implements RepositoryInterface
         $this->model = $this->result;
 
         return $this;
-
     }
 
     /**
      * @param $method
+     *
      * @return mixed
      */
     public function isGetMethod($method)
     {
-        if (in_array($method, ['get', 'first', 'find', 'simplePaginate', 'paginate'])) {
+        $method = strtolower($method);
+
+        if (in_array($method, ['get', 'first', 'find', 'simplepaginate', 'paginate'])) {
             return true;
         }
 
@@ -512,7 +586,59 @@ abstract class BaseRepository implements RepositoryInterface
             return true;
         }
 
-        return false;
+        if (Str::startsWith($method, 'get')) {
+            return true;
+        }
 
+        return false;
+    }
+
+    /**
+     * Determine if the given attribute exists.
+     *
+     * @param  mixed  $offset
+     * @return bool
+     */
+    #[\ReturnTypeWillChange]
+    public function offsetExists($offset)
+    {
+        return ! is_null($this->model->getAttribute($offset));
+    }
+
+    /**
+     * Get the value for a given offset.
+     *
+     * @param  mixed  $offset
+     * @return mixed
+     */
+    #[\ReturnTypeWillChange]
+    public function offsetGet($offset)
+    {
+        return $this->model->getAttribute($offset);
+    }
+
+    /**
+     * Set the value for a given offset.
+     *
+     * @param  mixed  $offset
+     * @param  mixed  $value
+     * @return void
+     */
+    #[\ReturnTypeWillChange]
+    public function offsetSet($offset, $value)
+    {
+        $this->model->setAttribute($offset, $value);
+    }
+
+    /**
+     * Unset the value for a given offset.
+     *
+     * @param  mixed  $offset
+     * @return void
+     */
+    #[\ReturnTypeWillChange]
+    public function offsetUnset($offset)
+    {
+        unset($this->model->attributes[$offset], $this->relations[$offset]);
     }
 }

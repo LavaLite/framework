@@ -6,7 +6,6 @@ use Litepie\Master\Interfaces\MasterRepositoryInterface;
 
 class Master
 {
-
     /**
      * Constructor.
      */

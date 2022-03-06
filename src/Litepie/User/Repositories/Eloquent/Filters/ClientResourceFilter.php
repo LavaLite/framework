@@ -20,5 +20,4 @@ class ClientResourceFilter implements FilterInterface
     {
         return $this->onlyShowDeletedForAdmins($model);
     }
-
 }

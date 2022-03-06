@@ -4,26 +4,26 @@ namespace Litepie\Form\Field\Types;
 
 /**
  * Abstracts general fields parameters (type, value, name) and
- * reforms a correct form field depending on what was asked
+ * reforms a correct form field depending on what was asked.
  */
 trait InputGroup
 {
     /**
-     * Whether the Field is self-closing or not
+     * Whether the Field is self-closing or not.
      *
-     * @var boolean
+     * @var bool
      */
     public $append = null;
 
     /**
-     * Value name for the group field
+     * Value name for the group field.
      *
      * @var text
      */
     public $prepend = null;
 
     /**
-     * Sets attribute for the field
+     * Sets attribute for the field.
      *
      * @param  array options
      *
@@ -39,7 +39,7 @@ trait InputGroup
     }
 
     /**
-     * Sets attribute for the field
+     * Sets attribute for the field.
      *
      * @param  array options
      *
@@ -55,7 +55,7 @@ trait InputGroup
     }
 
     /**
-     * Sets attribute for the field
+     * Sets attribute for the field.
      *
      * @return array options
      */
@@ -66,7 +66,5 @@ trait InputGroup
         }
 
         return true;
-
     }
-
 }

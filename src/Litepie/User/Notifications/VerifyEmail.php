@@ -9,11 +9,11 @@ use Illuminate\Support\Facades\URL;
 
 class VerifyEmail extends IlluminateVerifyEmail
 {
-
     /**
      * Get the verification URL for the given notifiable.
      *
-     * @param  mixed  $notifiable
+     * @param mixed $notifiable
+     *
      * @return string
      */
     protected function verificationUrl($notifiable)
@@ -22,11 +22,10 @@ class VerifyEmail extends IlluminateVerifyEmail
             'guard.verification.verify',
             Carbon::now()->addMinutes(Config::get('auth.verification.expire', 60)),
             [
-                'id'    => $notifiable->getKey(),
+                'id'      => $notifiable->getKey(),
                 'hash'    => sha1($notifiable->getEmailForVerification()),
-                'guard' => current(explode('.', guard())),
+                'guard'   => current(explode('.', guard())),
             ]
         );
     }
-
 }

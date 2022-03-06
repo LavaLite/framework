@@ -4,21 +4,6 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Views
-    |--------------------------------------------------------------------------
-    |
-    | The default views that the filer will use.
-    |
-     */
-
-    'views' => [
-        'upload' => 'filer::upload',
-        'show' => 'filer::show',
-        'edit' => 'filer::edit',
-    ],
-
-    /*
-    |--------------------------------------------------------------------------
     | Upload Folder
     |--------------------------------------------------------------------------
     |
@@ -30,27 +15,49 @@ return [
     'folder' => env('UPLOAD_FOLDER', 'storage/uploads'),
     'storage' => env('UPLOAD_TARGET', 'local'),
     'folder_permission' => 0777, // Default 0777 - Other likely values 0775, 0755
+    'default_folder' => 'img/default/', // Default image folder
 
     /*
     |--------------------------------------------------------------------------
     | Upload Filer Configurations
     |--------------------------------------------------------------------------
     |
-    | Configuration items for uploaded filer.
+    | Configuration items for uploaded files.
     |
      */
 
     'allowed_types_check' => false,
     'allowed_types' => [
-        'image/png', 'image/gif', 'image/jpg', 'image/jpeg',
-        'application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
-        'application/pdf', 'application/zip', 'application/x-compressed-zip', 'text/plain',
+        'application/msword',
+        'application/pdf',
+        'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+        'application/x-compressed-zip',
+        'application/zip',
+        'image/gif',
+        'image/jpeg',
+        'image/jpg',
+        'image/png',
+        'text/plain',
     ],
 
     'allowed_extensions_check' => true,
     // Case insensitive
-    'allowed_extensions' => ['png', 'gif', 'jpg', 'jpeg', 'doc',
-        'docx', 'pdf', 'xls', 'xlsx', 'mp3', 'txt', 'zip', 'bmp', 'jpeg'],
+    'allowed_extensions' => [
+        'bmp',
+        'doc',
+        'docx',
+        'gif',
+        'jpeg',
+        'jpeg',
+        'jpg',
+        'mp3',
+        'pdf',
+        'png',
+        'txt',
+        'xls',
+        'xlsx',
+        'zip',
+    ],
 
     // Max upload size - In BYTES. 1GB = 1073741824 bytes, 10 MB = 10485760, 1 MB = 1048576
     'max_upload_size' => 10485760,
@@ -73,12 +80,25 @@ return [
 
     // Must be in the upload list as well.
     // Must also be supported by invention. http://intervention.olivervogel.net/image/formats/image
-    'image_types' => ['image/png', 'image/gif', 'image/jpg', 'image/jpeg'],
+    'image_types' => [
+        'image/png',
+        'image/gif',
+        'image/jpg',
+        'image/jpeg',
+    ],
 
-    'image_extensions' => ['png', 'gif', 'jpg', 'jpeg'], // Case insensitive
+    'image_extensions' => [
+        'png',
+        'gif',
+        'jpg',
+        'jpeg',
+    ], // Case insensitive
 
     'image_resize_on_upload' => false,
 
-    'image_max_size' => ['w' => 2000, 'h' => 2000],
+    'image_max_size' => [
+        'w' => 2000,
+        'h' => 2000,
+    ],
 
 ];

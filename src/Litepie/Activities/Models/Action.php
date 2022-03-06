@@ -19,11 +19,11 @@ class Action extends Model implements ActionContract
 
     public function __construct(array $attributes = [])
     {
-        if (! isset($this->connection)) {
+        if (!isset($this->connection)) {
             $this->setConnection(config('activitylog.database_connection'));
         }
 
-        if (! isset($this->table)) {
+        if (!isset($this->table)) {
             $this->setTable(config('activitylog.action_table_name'));
         }
 
@@ -51,7 +51,7 @@ class Action extends Model implements ActionContract
 
     public function changes(): Collection
     {
-        if (! $this->properties instanceof Collection) {
+        if (!$this->properties instanceof Collection) {
             return new Collection();
         }
 

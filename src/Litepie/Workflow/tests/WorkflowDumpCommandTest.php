@@ -1,4 +1,5 @@
 <?php
+
 namespace Tests {
 
     use Litepie\Workflow\Commands\WorkflowDumpCommand;
@@ -37,20 +38,20 @@ namespace {
     use Litepie\Workflow\WorkflowRegistry;
 
     $config = [
-    'straight'   => [
-        'supports'      => ['Tests\Fixtures\TestObject'],
-        'places'        => ['a', 'b', 'c'],
-        'transitions'   => [
-            't1' => [
-                'from' => 'a',
-                'to'   => 'b',
+        'straight'   => [
+            'supports'      => ['Tests\Fixtures\TestObject'],
+            'places'        => ['a', 'b', 'c'],
+            'transitions'   => [
+                't1' => [
+                    'from' => 'a',
+                    'to'   => 'b',
+                ],
+                't2' => [
+                    'from' => 'b',
+                    'to'   => 'c',
+                ],
             ],
-            't2' => [
-                'from' => 'b',
-                'to'   => 'c',
-            ]
         ],
-    ]
     ];
 
     class Workflow

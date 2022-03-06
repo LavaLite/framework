@@ -10,7 +10,7 @@ namespace Litepie\Repository\Contracts;
 interface CriteriaInterface
 {
     /**
-     * Apply criteria in query repository
+     * Apply criteria in query repository.
      *
      * @param                     $model
      * @param RepositoryInterface $repository
@@ -18,5 +18,4 @@ interface CriteriaInterface
      * @return mixed
      */
     public function apply($model, RepositoryInterface $repository);
-
 }

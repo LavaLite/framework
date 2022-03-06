@@ -11,7 +11,7 @@ class MenuPolicy
      * Determine if the given user can view the menu.
      *
      * @param UserPolicyInterface $authUser
-     * @param Menu       $menu
+     * @param Menu                $menu
      *
      * @return bool
      */
@@ -29,7 +29,7 @@ class MenuPolicy
      * Determine if the given user can create a menu.
      *
      * @param UserPolicyInterface $authUser
-     * @param Menu       $menu
+     * @param Menu                $menu
      *
      * @return bool
      */
@@ -42,7 +42,7 @@ class MenuPolicy
      * Determine if the given user can update the given menu.
      *
      * @param UserPolicyInterface $authUser
-     * @param Menu       $menu
+     * @param Menu                $menu
      *
      * @return bool
      */
@@ -55,7 +55,7 @@ class MenuPolicy
      * Determine if the given user can delete the given menu.
      *
      * @param UserPolicyInterface $authUser
-     * @param Menu       $menu
+     * @param Menu                $menu
      *
      * @return bool
      */
@@ -68,7 +68,7 @@ class MenuPolicy
      * Determine if the given user can verify the given menu.
      *
      * @param UserPolicyInterface $authUser
-     * @param Menu       $menu
+     * @param Menu                $menu
      *
      * @return bool
      */
@@ -81,7 +81,7 @@ class MenuPolicy
      * Determine if the given user can approve the given menu.
      *
      * @param UserPolicyInterface $authUser
-     * @param Menu       $menu
+     * @param Menu                $menu
      *
      * @return bool
      */

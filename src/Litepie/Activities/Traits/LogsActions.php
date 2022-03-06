@@ -10,7 +10,6 @@ use Litepie\Activities\ActivitiesServiceProvider;
 
 trait LogsActions
 {
-
     protected $enableActionsLogging = true;
 
     protected $actionAttributesForLogging = ['status', 'substatus', 'stage'];
@@ -20,7 +19,6 @@ trait LogsActions
     protected static function bootLogsActions()
     {
         return static::updated(function (Model $model) {
-
             if (!$model->isActionPerformedForLogging()) {
                 return;
             }
@@ -42,7 +40,6 @@ trait LogsActions
     public function isActionPerformedForLogging(): bool
     {
         return $this->isDirty($this->actionAttributeToTrackLogging);
-
     }
 
     public function attributeValuesForActions(): array
@@ -59,13 +56,13 @@ trait LogsActions
     {
         $attris = $this->only($this->actionAttributeToTrackLogging);
 
-        return trim(implode('-', $attris), "-");
+        return trim(implode('-', $attris), '-');
     }
 
     public function getActionLogName(): string
     {
         $attris = $this->only($this->actionAttributeToTrackLogging);
 
-        return trim(implode('-', $attris), "-");
+        return trim(implode('-', $attris), '-');
     }
 }

@@ -11,7 +11,7 @@ class MasterPolicy
      * Determine if the given user can view the master.
      *
      * @param UserPolicyInterface $authUser
-     * @param MasterRepository $master
+     * @param MasterRepository    $master
      *
      * @return bool
      */
@@ -36,7 +36,7 @@ class MasterPolicy
      * Determine if the given user can update the given master.
      *
      * @param UserPolicyInterface $authUser
-     * @param MasterRepository $master
+     * @param MasterRepository    $master
      *
      * @return bool
      */

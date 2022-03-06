@@ -3,7 +3,6 @@
 namespace Litepie\Install\Middleware;
 
 use Closure;
-use Redirect;
 
 class canInstall
 {

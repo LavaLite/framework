@@ -2,11 +2,12 @@
 
 namespace Litepie\Form\Field;
 
+use Closure;
 use Illuminate\Support\Str;
 
 /**
  * Abstracts general fields parameters (type, value, name) and
- * reforms a correct form field depending on what was asked
+ * reforms a correct form field depending on what was asked.
  */
 trait Attributes
 {
@@ -15,15 +16,15 @@ trait Attributes
      *
      * @var array
      */
-    public $attributes = [];
+    private $_attributes = [];
 
     /**
-     * Sets attribute for the field
+     * Sets attribute for the field.
      *
-     * @param  string $label A label
-     * @param  string $name  A field name
+     * @param string $label A label
+     * @param string $name  A field name
      *
-     * @return false|null         A label and a field name
+     * @return false|null A label and a field name
      */
     private function initAttributes()
     {
@@ -31,27 +32,49 @@ trait Attributes
         $attribute['element']['class'] = $attributes['element'];
         $attribute['label']['class'] = $attributes['label'];
         $attribute['wrapper']['class'] = $attributes['wrapper'];
-        $this->attributes = $attribute;
+        $this->_attributes = $attribute;
     }
 
     /**
-     * Ponders a label and a field name, and tries to get the best out of it
+     * Ponders a label and a field name, and tries to get the best out of it.
      *
-     * @param  string $label A label
-     * @param  string $name  A field name
+     * @param string $label A label
+     * @param string $name  A field name
      *
-     * @return false|null         A label and a field name
+     * @return false|null A label and a field name
      */
-    private function addAttribute($name, $value, $target = 'element')
+    private function attribute($name, $value, $target = 'element')
     {
         $attribute = Str::snake($name, '-');
+        if ($attribute == 'attributes') {
+            return $this->_attrubute($value);
+        }
         $target = empty($target) ? 'element' : $target;
-        $this->attributes[$target][$attribute] = $value;
+        $this->_attributes[$target][$attribute] = $value;
+
         return $this;
     }
 
     /**
-     * Ponders a label and a field name, and tries to get the best out of it
+     * Ponders a label and a field name, and tries to get the best out of it.
+     *
+     * @param string $label A label
+     * @param string $name  A field name
+     *
+     * @return false|null A label and a field name
+     */
+    private function _attribute($attributes)
+    {
+        foreach ($attributes as $key => $val) {
+            foreach ($val as $$k => $v) {
+                $this->_attributes[$key][$k] = $v;
+            }
+        }
+        return $this;
+    }
+
+    /**
+     * Ponders a label and a field name, and tries to get the best out of it.
      *
      * @return false|null A label and a field name
      */
@@ -66,7 +89,7 @@ trait Attributes
             'wrapper.class' => null,
         ];
 
-        $attr = @$this->attributes['element'];
+        $attr = @$this->_attributes['element'];
         if (!empty($attr)) {
             if (!empty($attr['class'])) {
                 $attributes['element.class'] = $attr['class'];
@@ -88,11 +111,12 @@ trait Attributes
 
                     return $k . '="' . htmlspecialchars($v) . '"';
                 },
-                array_keys($attr), $attr
+                array_keys($attr),
+                $attr
             ));
         }
 
-        $attr = @$this->attributes['label'];
+        $attr = @$this->_attributes['label'];
         if (!empty($attr)) {
             if (!empty($attr['class'])) {
                 $attributes['label.class'] = $attr['class'];
@@ -100,11 +124,12 @@ trait Attributes
             }
             $attributes['label.attribute'] = implode(' ', array_map(
                 function ($k, $v) {return $k . '="' . htmlspecialchars($v) . '"';},
-                array_keys($attr), $attr
+                array_keys($attr),
+                $attr
             ));
         }
 
-        $attr = @$this->attributes['wrapper'];
+        $attr = @$this->_attributes['wrapper'];
         if (!empty($attr)) {
             if (!empty($attr['class'])) {
                 $attributes['wrapper.class'] = $attr['class'];
@@ -112,28 +137,57 @@ trait Attributes
             }
             $attributes['wrapper.attribute'] = implode(' ', array_map(
                 function ($k, $v) {return $k . '="' . htmlspecialchars($v) . '"';},
-                array_keys($attr), $attr
+                array_keys($attr),
+                $attr
             ));
         }
+
         return $attributes;
     }
 
     /**
-     * Ponders a label and a field name, and tries to get the best out of it
+     * Ponders a label and a field name, and tries to get the best out of it.
      *
-     * @param  string $label A label
-     * @param  string $name  A field name
+     * @param string $label A label
+     * @param string $name  A field name
      *
-     * @return false|null         A label and a field name
+     * @return false|null A label and a field name
      */
     public function addClass($class, $target = 'element')
     {
-        if (!empty($this->attributes[$target]['class'])) {
+        if (!empty($this->_attributes[$target]['class'])) {
             $framework = strtolower(config('form.framework', 'bootstrap4') . '.');
-            $this->attributes[$target]['class'] = config('form.' . $framework);
+            $this->_attributes[$target]['class'] = config('form.' . $framework);
         }
-        $this->attributes[$target]['class'] = $class;
+        $this->_attributes[$target]['class'] = $class;
+
         return $this;
+    }
+
+    /**
+     * Process data attribute for the input.
+     *
+     * @param array $data for data attribute.
+     *
+     * @return null
+     */
+    public function data($data = [])
+    {
+        if (!empty($data) || !is_array($data)) {
+            return;
+        }
+
+        foreach ($data as $key => $val) {
+            if ($val instanceof Closure) {
+                $val = $val();
+            }
+            if (is_array($val)) {
+                $val = json_encode($val);
+            }
+            $this->_attributes['element']['data-' . $key] = $val;
+        }
+
+        return;
     }
 
 }

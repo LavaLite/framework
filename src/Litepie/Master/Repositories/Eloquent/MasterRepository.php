@@ -5,10 +5,8 @@ namespace Litepie\Master\Repositories\Eloquent;
 use Litepie\Master\Interfaces\MasterRepositoryInterface;
 use Litepie\Repository\BaseRepository;
 
-
 class MasterRepository extends BaseRepository implements MasterRepositoryInterface
 {
-
     public function boot()
     {
         $this->fieldSearchable = config('master.master.model.search');
@@ -29,12 +27,11 @@ class MasterRepository extends BaseRepository implements MasterRepositoryInterfa
      *
      * @return string
      */
-    public function options($type, $key = 'id', $value = 'name', $id = 0)
+    public function options($key = 'id', $value = 'name', $filter = [], $sort = [])
     {
-        return $this->model
-            ->where('parent_id', $id)
-            ->where('type', $type)
-            ->pluck($value, 'id');
+        $this->applyConditions($filter);
+        $this->applySort($sort);
+        return $this->pluck($value, $key);
     }
 
     /**

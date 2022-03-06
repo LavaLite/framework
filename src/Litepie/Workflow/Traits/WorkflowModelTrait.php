@@ -19,12 +19,11 @@ trait WorkflowModelTrait
         try {
             $this->workflow($workflowName)->apply($this, $transition);
             $this->save();
+
             return [$transition, 'Success'];
-        } 
-        catch(LogicException $e) 
-        {
+        } catch (LogicException $e) {
             return $e->getMessage();
-        }        
+        }
     }
 
     public function workflowAll()

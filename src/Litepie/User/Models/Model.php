@@ -10,6 +10,7 @@ use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
 use Illuminate\Foundation\Auth\Access\Authorizable;
 use Litepie\Database\Model as BaseModel;
 use Litepie\User\Traits\CanResetPassword;
+use Litepie\User\Traits\User;
 
 class Model extends BaseModel implements
 AuthenticatableContract,
@@ -19,6 +20,7 @@ CanResetPasswordContract
     use Authenticatable;
     use Authorizable;
     use CanResetPassword;
+    use User;
 
     /**
      * Encrypt user passwords.

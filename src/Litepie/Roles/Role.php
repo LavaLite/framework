@@ -2,12 +2,11 @@
 
 namespace Litepie\Roles;
 
-use Litepie\Roles\Interfaces\RoleRepositoryInterface;
 use Litepie\Roles\Interfaces\PermissionRepositoryInterface;
+use Litepie\Roles\Interfaces\RoleRepositoryInterface;
 
 class Role
 {
-
     /**
      * Constructor.
      */

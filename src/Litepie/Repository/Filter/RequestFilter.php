@@ -1,13 +1,13 @@
 <?php
+
 namespace Litepie\Repository\Filter;
+
 use Litepie\Repository\Interfaces\FilterInterface;
 use Litepie\Repository\Interfaces\RepositoryInterface;
 
 class RequestFilter implements FilterInterface
 {
-
     /**
-     *
      * Searchable fields array.
      *
      * @var array
@@ -15,7 +15,6 @@ class RequestFilter implements FilterInterface
     protected $searchFields = [];
 
     /**
-     *
      * Searchable fields array.
      *
      * @var array
@@ -31,6 +30,7 @@ class RequestFilter implements FilterInterface
 
         $this->searchFields = $this->searchFields();
         $this->prepareSearch($search);
+
         return $this->applyFilters($model);
     }
 
@@ -58,14 +58,14 @@ class RequestFilter implements FilterInterface
                         $query->orWhere($field, 'like', $value);
                     }
                 }
+
                 return $query;
             });
+
             return $model;
         }
         if (is_array($search)) {
-
             $model->where(function ($query) use ($search) {
-
                 foreach ($search as $sArray) {
                     $field = $sArray['field'];
                     $condition = $sArray['condition'];
@@ -93,11 +93,13 @@ class RequestFilter implements FilterInterface
                         $query->whereNotNull($field);
                     }
                 }
-                return $query;
 
+                return $query;
             });
+
             return $model;
         }
+
         return $model;
     }
 
@@ -157,10 +159,8 @@ class RequestFilter implements FilterInterface
                     $searches[$key]['condition'] = '<';
                     $searches[$key]['value'] = $searches[$key]['value'][1];
                 }
-
             } elseif ($searches[$key]['condition'] == 'IN' || $searches[$key]['condition'] == 'NOT IN') {
                 $searches[$key]['value'] = explode(',', $searches[$key]['value']);
-
             } elseif ($searches[$key]['condition'] == 'LIKE' || $searches[$key]['condition'] == 'NOT LIKE') {
                 $searches[$key]['value'] = str_replace('*', '%', $searches[$key]['value']);
             }
@@ -170,7 +170,6 @@ class RequestFilter implements FilterInterface
         } else {
             return $this->searchArray['q'] = $search;
         }
-
     }
 
     /**
@@ -187,6 +186,7 @@ class RequestFilter implements FilterInterface
                 unset($originalFields[$field]);
             }
         }
+
         return $originalFields;
     }
 }

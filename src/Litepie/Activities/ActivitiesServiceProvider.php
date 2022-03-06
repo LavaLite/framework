@@ -17,17 +17,17 @@ class ActivitiesServiceProvider extends ActivitylogServiceProvider
     public function boot()
     {
         $this->publishes([
-            __DIR__ . '/config/activities.php' => config_path('activities.php'),
+            __DIR__.'/config/activities.php' => config_path('activities.php'),
         ], 'config');
 
         $this->app['config']->set('activitylog', config('activities', []));
 
         $this->mergeConfigFrom(
-            __DIR__ . '/config/activities.php',
+            __DIR__.'/config/activities.php',
             'activitylog'
         );
         // Load migrations
-        $this->loadMigrationsFrom(__DIR__ . '/migrations');
+        $this->loadMigrationsFrom(__DIR__.'/migrations');
     }
 
     /**
@@ -62,6 +62,7 @@ class ActivitiesServiceProvider extends ActivitylogServiceProvider
             || !is_a($actionModel, Model::class, true)) {
             throw InvalidConfiguration::modelIsNotValid($actionModel);
         }
+
         return $actionModel;
     }
 

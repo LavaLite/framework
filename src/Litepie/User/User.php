@@ -2,21 +2,18 @@
 
 namespace Litepie\User;
 
-
 /*
- *
  * Part of the Litepie package.
- *
  *
  * @package    User
  * @version    5.1.0
  */
 
 use Illuminate\Contracts\Auth\Authenticatable;
+use Illuminate\Contracts\Foundation\Application;
 use Litepie\Roles\Interfaces\PermissionRepositoryInterface;
 use Litepie\Roles\Interfaces\RoleRepositoryInterface;
 use Litepie\User\Interfaces\UserRepositoryInterface;
-use Illuminate\Contracts\Foundation\Application;
 
 /**
  * User wrapper class.
@@ -42,7 +39,8 @@ class User
      * @var role repository variable
      */
     protected $role;
-        /**
+
+    /**
      *  Initialize User.
      *
      * @param \Litepie\Contracts\User\User                 $user
@@ -186,7 +184,7 @@ class User
     /**
      * @return \Illuminate\Database\Eloquent\Collection
      */
-    public function roles($guard = null)
+    public function roles()
     {
         return $this->role->pluck('name', 'id')->all();
     }
@@ -194,7 +192,7 @@ class User
     /**
      * @return \Illuminate\Database\Eloquent\Collection
      */
-    public function teams($guard = null)
+    public function teams()
     {
         return $this->team->pluck('name', 'id')->all();
     }
@@ -259,7 +257,7 @@ class User
         $guards = $this->guard();
         $prefix = current(explode('.', $guards));
 
-        return $prefix . '/' . trim($url, '/\\');
+        return $prefix.'/'.trim($url, '/\\');
     }
 
     /**

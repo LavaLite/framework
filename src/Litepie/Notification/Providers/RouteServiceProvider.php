@@ -3,8 +3,6 @@
 namespace Litepie\Notification\Providers;
 
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
-use Illuminate\Routing\Router;
-use Litepie\Notification\Models\Alerts;
 use Request;
 use Route;
 
@@ -22,7 +20,8 @@ class RouteServiceProvider extends ServiceProvider
     /**
      * Define your route model bindings, pattern filters, etc.
      *
-     * @param   \Illuminate\Routing\Router  $router
+     * @param \Illuminate\Routing\Router $router
+     *
      * @return void
      */
     public function boot()
@@ -32,10 +31,10 @@ class RouteServiceProvider extends ServiceProvider
         if (Request::is('*/alerts/notification/*')) {
             Route::bind('notification', function ($notification) {
                 $notificationrepo = $this->app->make(\Litepie\Notification\Interfaces\NotificationRepositoryInterface::class);
+
                 return $notificationrepo->findorNew($notification);
             });
         }
-
     }
 
     /**
@@ -63,10 +62,10 @@ class RouteServiceProvider extends ServiceProvider
     {
         Route::group([
             'middleware' => 'web',
-            'namespace' => $this->namespace,
-            'prefix' => trans_setlocale(),
+            'namespace'  => $this->namespace,
+            'prefix'     => trans_setlocale(),
         ], function ($router) {
-            require (__DIR__ . '/../routes/web.php');
+            require __DIR__.'/../routes/web.php';
         });
     }
 
@@ -81,10 +80,10 @@ class RouteServiceProvider extends ServiceProvider
     {
         Route::group([
             'middleware' => 'api',
-            'namespace' => $this->namespace . '\Api',
-            'prefix' => trans_setlocale() . '/api',
+            'namespace'  => $this->namespace.'\Api',
+            'prefix'     => trans_setlocale().'/api',
         ], function ($router) {
-            require (__DIR__ . '/../routes/api.php');
+            require __DIR__.'/../routes/api.php';
         });
     }
 }

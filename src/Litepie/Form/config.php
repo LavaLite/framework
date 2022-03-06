@@ -11,6 +11,12 @@ return [
     // The default form type
     'default_form_type' => 'horizontal',
 
+    // The default form type
+    'default_coordinates' => [
+        'lat' => '37.402473',
+        'lng' => '-122.3212843',
+    ],
+
     // Validation
     ////////////////////////////////////////////////////////////////////
 
@@ -44,6 +50,21 @@ return [
     // should be capitalized (ex: email => Email) automatically
     'capitalize_translations' => true,
 
+    // Attributes for the input and form elements
+    'attributes' => [
+        'accept', 'alt', 'autocomplete', 'autofocus', 'checked', 'dirname', 'disabled', 'form', 'formaction',
+        'formenctype', 'formmethod', 'formnovalidate', 'formtarget', 'height', 'list', 'max', 'maxlength',
+        'min', 'minlength', 'multiple', 'name', 'pattern', 'placeholder', 'readonly', 'required', 'size',
+        'src', 'step', 'type', 'value', 'width', 'data',
+    ],
+
+    // Input types for the form
+    'types' => [
+        'button', 'checkbox', 'color', 'date', 'datetime-local', 'email', 'file', 'hidden', 'image',
+        'month', 'number', 'password', 'radio', 'range', 'reset', 'search', 'submit', 'tel', 'text',
+        'time', 'url', 'week',
+    ],
+
     // Framework
     ////////////////////////////////////////////////////////////////////
 
@@ -68,7 +89,7 @@ return [
             'class' => [
                 'default' => [
                     'element' => 'form-control',
-                    'label' => 'form-group',
+                    'label' => 'form-label',
                     'wrapper' => 'col-sm-6',
                 ],
                 'check' => [
@@ -78,7 +99,7 @@ return [
                 ],
                 'select' => [
                     'element' => 'custom-select',
-                ]
+                ],
             ],
         ],
     ],
