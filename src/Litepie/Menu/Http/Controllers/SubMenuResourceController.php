@@ -6,6 +6,7 @@ use Form;
 use Litepie\Http\Controllers\ResourceController as ResourceController;
 use Litepie\Menu\Http\Requests\MenuRequest;
 use Litepie\Menu\Interfaces\MenuRepositoryInterface;
+use Exception;
 
 class SubMenuResourceController extends ResourceController
 {

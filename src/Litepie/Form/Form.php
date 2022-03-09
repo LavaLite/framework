@@ -119,8 +119,7 @@ class Form extends Fields
      *
      * @return Form A form opening tag
      */
-    public function list($array = [])
-    {
+    function list($array = []) {
         $this->element = 'lists';
 
         foreach ($array as $key => $value) {
@@ -158,14 +157,14 @@ class Form extends Fields
      */
     public function formOpen()
     {
-        return '<form '.
-        "class='form-".$this->orientation."' ".
-        "id='".$this->id."' ".
-        "method='POST' ".
-        "action='".$this->action."' ".
-        ($this->hasFile ? "enctype='multipart/form-data'" : '').">
-        <input type='hidden' name='_method' value='".$this->method."'>
-        <input type='hidden' name='_token' value='".csrf_token()."'>";
+        return '<form ' .
+        "class='form-" . $this->orientation . "' " .
+        "id='" . $this->id . "' " .
+        "method='POST' " .
+        "action='" . $this->action . "' " .
+        ($this->hasFile ? "enctype='multipart/form-data'" : '') . ">
+        <input type='hidden' name='_method' value='" . $this->method . "'>
+        <input type='hidden' name='_token' value='" . csrf_token() . "'>";
     }
 
     /**
@@ -175,7 +174,7 @@ class Form extends Fields
      */
     public function formClose()
     {
-        return "<input type='hidden' name='_token' value='".csrf_token()."' />
+        return "<input type='hidden' name='_token' value='" . csrf_token() . "' />
         </form>";
     }
 
@@ -285,7 +284,6 @@ class Form extends Fields
                 break;
             default:
                 return $this->fields->__toString();
-                return '';
 
         }
     }
