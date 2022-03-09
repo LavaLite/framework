@@ -14,7 +14,6 @@
     background-color: #f4f5f8 !important;
     opacity: 0.8 !important;
     background-clip: padding-box;
-    background-color: #f4f5f8;
     border: 1px solid #ced4da;
     color: #495057;
     display: block;
