@@ -20,8 +20,7 @@ abstract class BaseEvent
     }
 
     /**
-     * Return the original event.
-     *
+     * Return the original event
      * @return Event
      */
     public function getOriginalEvent()

@@ -2,45 +2,82 @@
 
 namespace Litepie\Workflow\Providers;
 
-use Illuminate\Support\Facades\Event;
 use Illuminate\Support\ServiceProvider;
+use Litepie\Workflow\WorkflowRegistry;
 
+/**
+ * @author Boris Koumondji <brexis@yahoo.fr>
+ */
 class WorkflowServiceProvider extends ServiceProvider
 {
-    /**
-     * The event handler mappings for the application.
-     *
-     * @var array
-     */
-    protected $workflow = [];
+    protected $commands = [
+        'Litepie\Workflow\Commands\WorkflowDumpCommand',
+    ];
 
     /**
-     * Register the application's policies.
+     * Bootstrap the application services...
      *
      * @return void
      */
-    public function registerWorkflows()
+    public function boot()
     {
-        foreach ($this->workflows() as $name => $value) {
-            $this->app['workflow']->addFromArray($name, $value);
-        }
+        $configPath = $this->configPath();
+
+        $this->publishes([
+            "${configPath}/workflow.php" => config_path('workflow.php'),
+            "${configPath}/workflow_registry.php" => config_path('workflow_registry.php')
+        ], 'config');
     }
 
     /**
-     * {@inheritdoc}
+     * Register the application services.
+     *
+     * @return void
      */
     public function register()
     {
-        //
+        $this->mergeConfigFrom(
+            $this->configPath() . '/workflow_registry.php',
+            'workflow_registry'
+        );
+        $this->mergeConfigFrom(
+            $this->configPath() . '/workflow.php',
+            'workflow'
+        );
+
+        $this->commands($this->commands);
+
+        $this->app->singleton('workflow', function ($app) {
+            $workflowConfigs = [];
+            $registryConfig = $app->make('config')->get('workflow_registry');
+            return new WorkflowRegistry($workflowConfigs, $registryConfig);
+        });
+    }
+
+    protected function configPath()
+    {
+        return __DIR__ . '/../../config';
     }
 
     /**
-     * Get the events and handlers.
+     * Get the services provided by the provider.
      *
      * @return array
      */
-    public function workflows()
+    public function provides()
     {
-        return $this->workflow;
+        return ['workflow'];
+    }
+
+    /**
+     * Register the application bindings.
+     *
+     * @return void
+     */
+    protected function registerWorkflows()
+    {
+        $this->app->bind('workflows', function($app) {
+            return new Workflows($app);
+        });
     }
 }
