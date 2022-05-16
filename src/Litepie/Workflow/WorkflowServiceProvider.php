@@ -1,6 +1,6 @@
 <?php
 
-namespace Litepie\Workflow\Providers;
+namespace Litepie\Workflow;
 
 use Illuminate\Support\ServiceProvider;
 use Litepie\Workflow\WorkflowRegistry;
@@ -56,7 +56,7 @@ class WorkflowServiceProvider extends ServiceProvider
 
     protected function configPath()
     {
-        return __DIR__ . '/../../config';
+        return __DIR__ . '/config';
     }
 
     /**

@@ -21,7 +21,8 @@ if (!function_exists('form_merge_values')) {
         if (!$grouped) {
             return $form;
         }
-        return collect($form)->groupBy('group')->toArray();
+
+        return collect($form)->groupBy('group', true)->toArray();
 
     }
 }
