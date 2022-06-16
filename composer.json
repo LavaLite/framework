@@ -15,7 +15,7 @@
         }
     ],
     "require": {
-        "php": "^7.3|^8.0",
+        "php": "^7.3|^8.0|^8.1",
         "hashids/hashids": "~4.1",
         "intervention/imagecache": "~2.5",
         "laravel/socialite": "~5.1",

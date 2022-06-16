@@ -123,7 +123,7 @@ class AssetContainer
     public function url($uri, $secure = null)
     {
         // If path is full, so we just return.
-        if (str_starts_with($uri, 'http')) {
+        if (preg_match('#^http|//:#', $uri)) {
             return $uri;
         }
 
@@ -264,6 +264,8 @@ class AssetContainer
      */
     public function writeContent($name, $source, $dependencies = [])
     {
+        $source = $source;
+
         return $this->write($name, 'script', $source, $dependencies);
     }
 

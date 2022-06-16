@@ -6,7 +6,6 @@ use Litepie\Http\Controllers\ResourceController;
 use Litepie\Notification\Http\Requests\NotificationRequest;
 use Litepie\Notification\Interfaces\NotificationRepositoryInterface;
 use Litepie\Notification\Models\Notification;
-use Exception;
 
 /**
  * Resource controller class for notification.

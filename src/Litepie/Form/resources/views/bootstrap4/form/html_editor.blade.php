@@ -9,14 +9,18 @@
 .html-control {
     border-radius: 6px;
     border-color: #dde2ec;
+    background-color: #fff;
     font-size: 14px;
     min-height: 35px;
     background-color: #f4f5f8 !important;
     opacity: 0.8 !important;
     background-clip: padding-box;
+    background-color: #f4f5f8;
     border: 1px solid #ced4da;
+    border-radius: .25rem;
     color: #495057;
     display: block;
+    font-size: 1rem;
     font-weight: 400;
     height: 300px;
     line-height: 1.5;

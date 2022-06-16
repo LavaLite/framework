@@ -16,7 +16,13 @@ class SetAppKey implements SetupScript
      */
     public function fire(Command $command)
     {
-        $command->info('Genarating application key...');
+        if ($command->option('verbose')) {
+            $command->info('Genarating application key...');
+            $command->call('key:generate', ['--force' => true]);
+
+            return;
+        }
+
         $command->call('key:generate', ['--force' => true]);
     }
 }
