@@ -15,27 +15,27 @@ class Master extends FormInterpreter
     {
         self::$urls = [
             'new' => [
-                'url'    => guard_url('masters/new'),
+                'url'    => 'masters/new',
                 'method' => 'GET',
             ],
             'create' => [
-                'url'    => guard_url('masters/create'),
+                'url'    => 'masters/create',
                 'method' => 'GET',
             ],
             'store' => [
-                'url'    => guard_url('masters'),
+                'url'    => 'masters',
                 'method' => 'POST',
             ],
             'update' => [
-                'url'    => guard_url('masters'),
+                'url'    => 'masters',
                 'method' => 'PUT',
             ],
             'list' => [
-                'url'    => guard_url('masters'),
+                'url'    => 'masters',
                 'method' => 'GET',
             ],
             'delete' => [
-                'url'    => guard_url('masters'),
+                'url'    => 'masters',
                 'method' => 'DELETE',
             ],
         ];

@@ -15,27 +15,27 @@ class Setting extends FormInterpreter
     {
         self::$urls = [
             'new' => [
-                'url'    => guard_url('settings/setting/new'),
+                'url'    => 'settings/setting/new',
                 'method' => 'GET',
             ],
             'create' => [
-                'url'    => guard_url('settings/setting/create'),
+                'url'    => 'settings/setting/create',
                 'method' => 'GET',
             ],
             'store' => [
-                'url'    => guard_url('settings/setting'),
+                'url'    => 'settings/setting',
                 'method' => 'POST',
             ],
             'update' => [
-                'url'    => guard_url('settings/setting'),
+                'url'    => 'settings/setting',
                 'method' => 'PUT',
             ],
             'list' => [
-                'url'    => guard_url('settings'),
+                'url'    => 'settings',
                 'method' => 'GET',
             ],
             'delete' => [
-                'url'    => guard_url('settings/setting'),
+                'url'    => 'settings/setting',
                 'method' => 'DELETE',
             ],
         ];

@@ -15,27 +15,27 @@ class Permission extends FormInterpreter
     {
         self::$urls = [
             'new' => [
-                'url'    => guard_url('role/permission/new'),
+                'url'    => 'role/permission/new',
                 'method' => 'GET',
             ],
             'create' => [
-                'url'    => guard_url('role/permission/create'),
+                'url'    => 'role/permission/create',
                 'method' => 'GET',
             ],
             'store' => [
-                'url'    => guard_url('role/permission'),
+                'url'    => 'role/permission',
                 'method' => 'POST',
             ],
             'update' => [
-                'url'    => guard_url('role/permission'),
+                'url'    => 'role/permission',
                 'method' => 'PUT',
             ],
             'list' => [
-                'url'    => guard_url('role/permission'),
+                'url'    => 'role/permission',
                 'method' => 'GET',
             ],
             'delete' => [
-                'url'    => guard_url('role/permission'),
+                'url'    => 'role/permission',
                 'method' => 'DELETE',
             ],
         ];
