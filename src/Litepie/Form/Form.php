@@ -78,11 +78,13 @@ class Form extends Fields
     public function __construct(
         Container $app,
         Populator $populator,
-        Fields $fields
+        Fields $fields,
+        Lists $lists
     ) {
         $this->app = $app;
         $this->populator = $populator;
         $this->fields = $fields;
+        $this->lists = $lists;
     }
 
     /**
@@ -105,6 +107,33 @@ class Form extends Fields
 
         if (isset($attr['files'])) {
             $this->files($attr['files']);
+        }
+
+        return $this;
+    }
+
+    /**
+     * Opens up magically a form.
+     *
+     * @param array $parameters Parameters passed
+     *
+     * @return Form A form opening tag
+     */
+    public function list($array = [])
+    {
+        $this->element = 'lists';
+
+        foreach ($array as $key => $value) {
+            if ($value instanceof Closure) {
+                $value = $value();
+            }
+            if (method_exists($this->lists, $key)) {
+                $this->lists->$key($value);
+            } elseif (property_exists($this->lists, $key)) {
+                $this->lists->$key = $value;
+            } else {
+                $this->lists->attribute($key, $value);
+            }
         }
 
         return $this;
@@ -244,17 +273,18 @@ class Form extends Fields
         switch ($this->element) {
             case 'form-open':
                 $this->element = null;
-
                 return $this->formOpen();
                 break;
             case 'form-close':
                 $this->element = null;
-
                 return $this->formClose();
+                break;
+            case 'lists':
+                $this->element = null;
+                return $this->lists->__toString();
                 break;
             default:
                 return $this->fields->__toString();
-
                 return '';
 
         }
@@ -270,6 +300,16 @@ class Form extends Fields
         $this->hasFile = $files;
 
         return $this;
+    }
+
+    /**
+     * Call toString specificaly for the form object.
+     *
+     * @return string html for the element
+     */
+    public function render()
+    {
+        return $this->__toString();
     }
 
     ////////////////////////////////////////////////////////////////////
