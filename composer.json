@@ -15,14 +15,14 @@
         }
     ],
     "require": {
-        "php": "^7.3|^8.0",
+        "php": "^7.3|^8.0|^8.1",
         "hashids/hashids": "~4.1",
         "intervention/imagecache": "~2.5",
         "laravel/socialite": "~5.1",
         "league/fractal": "~0.19",
         "mcamara/laravel-localization": "^1.6",
         "rachidlaasri/laravel-installer": "^4.0",
-        "spatie/laravel-activitylog": "~3.16"
+        "spatie/laravel-activitylog": "^4.0"
     },
     "replace": {
         "litepie/activities": "self.version",
@@ -53,12 +53,13 @@
         "phpunit/phpunit": "^8.5.8|^9.3.3",
         "predis/predis": "^1.1.2",
         "symfony/cache": "^5.1.4",
-        "laravel/framework": "^8.40"
+        "laravel/framework": "^9.0|^8.40"
     },
     "autoload": {
         "files": [
             "src/Litepie/Foundation/helpers.php",
             "src/Litepie/Settings/helpers.php",
+            "src/Litepie/Form/helpers.php",
             "src/Litepie/Theme/helpers.php"
         ],
         "psr-4": {

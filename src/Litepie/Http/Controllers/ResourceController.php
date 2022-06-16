@@ -48,7 +48,7 @@ class ResourceController extends Controller
         return $this->response->setMetaTitle(__('Dashboard'))
             ->view('user.home')
             ->data(compact('user'))
-            ->layout('user')
+            ->layout('home')
             ->output();
     }
 
