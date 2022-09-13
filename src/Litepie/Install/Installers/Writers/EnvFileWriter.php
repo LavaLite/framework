@@ -40,19 +40,19 @@ class EnvFileWriter
     }
 
     /**
-     * @param $name
+     * @param $database
      * @param $username
      * @param $password
      *
      * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
      */
-    public function write($name, $username, $password, $host)
+    public function write($database, $username, $password, $host)
     {
         $environmentFile = $this->finder->get($this->template);
 
         $replace = [
             "DB_HOST=$host",
-            "DB_DATABASE=$name",
+            "DB_DATABASE=$database",
             "DB_USERNAME=$username",
             "DB_PASSWORD=$password",
         ];
