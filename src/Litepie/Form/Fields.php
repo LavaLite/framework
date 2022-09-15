@@ -144,12 +144,6 @@ class Fields
         $this->id = @$parameters[0];
         $this->value = @$parameters[1];
         $this->element($method);
-        $this->setLabel(@$parameters[0], @$parameters[2]);
-
-        // Repopulate field
-        if (@$parameters['type'] != 'password' && @$parameters['name'] !== '_token') {
-            $this->value = $this->repopulate();
-        }
 
         return $this;
     }
@@ -214,7 +208,7 @@ class Fields
         $this->mode(null);
         $this->initAttributes();
     }
-    
+
     /**
      * Returns the compiled string
      *
@@ -224,7 +218,6 @@ class Fields
     {
         return $this->__toString();
     }
-
 
     /**
      * Prints out the field.
@@ -239,10 +232,10 @@ class Fields
         $data = $this->toArray();
         $this->incrementFileInstanceCount();
         $element = View::first([
-            "form::form." . $this->element, 
-            "form::$view.form." . $this->element, 
-            "form::form.input", 
-            "form::{$view}.form.input"
+            "form::form." . $this->element,
+            "form::$view.form." . $this->element,
+            "form::form.input",
+            "form::{$view}.form.input",
         ], $data)->render();
         if ($this->isRaw || $this->element == 'hidden') {
             return $element;
@@ -250,8 +243,8 @@ class Fields
 
         $data['element'] = $element;
         $labeled = View::first([
-            "form:form._label", 
-            "form::{$view}.form._label"
+            "form:form._label",
+            "form::{$view}.form._label",
         ], $data)->render();
 
         if (!$this->wrap) {
@@ -260,8 +253,8 @@ class Fields
         $data['labeled'] = $labeled;
 
         return View::first([
-            "form::form._wrapper", 
-            "form::{$view}.form._wrapper"
+            "form::form._wrapper",
+            "form::{$view}.form._wrapper",
         ], $data)->render();
     }
 
@@ -273,7 +266,6 @@ class Fields
     public function toArray()
     {
         $this->prepareOptions();
-        $this->setUrl();
         $array = (array) $this;
         $array['attributes'] = $this->prepapareAttribute();
         $array['isInputGroup'] = $this->isInputGroup();
@@ -427,18 +419,13 @@ class Fields
     }
 
     /**
-     * Classic setting of attribute, won't overwrite any populate() attempt.
+     * Classic setting of attribute.
      *
      * @param string $value A new value
      */
     public function value($value)
     {
-        // Check if we already have a value stored for this field or in POST data
-        $already = $this->repopulate();
-
-        if (!$already) {
-            $this->value = $value;
-        }
+        $this->value = $value;
 
         return $this;
     }
@@ -496,41 +483,12 @@ class Fields
             return $post;
         }
 
-        $populator = $this->form ? $this->form->getPopulator() : $this->app['form.populator'];
-        $populate = $populator->get($field);
-
-        if (!is_null($populate)) {
-            return $populate;
-        }
         return $fallback ?: $this->value;
     }
 
     ////////////////////////////////////////////////////////////////////
     //////////////////////////////// HELPERS ///////////////////////////
     ////////////////////////////////////////////////////////////////////
-
-    /**
-     * Use values stored in Former to populate the current field.
-     */
-    private function repopulate($fallback = null)
-    {
-        // Get values from POST, populated, and manually set value
-        $post = $this->getPost($this->name);
-
-        // Assign a priority to each
-        if (!is_null($post)) {
-            return $post;
-        }
-
-        $populator = $this->form ? $this->form->getPopulator() : $this->app['form.populator'];
-        $populate = $populator->get($this->name);
-
-        if (!is_null($populate)) {
-            return $populate;
-        }
-
-        return $fallback ?: $this->value;
-    }
 
     /**
      * Fetch a field value from both the new and old POST array.

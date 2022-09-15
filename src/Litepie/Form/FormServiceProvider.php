@@ -74,9 +74,7 @@ class FormServiceProvider extends ServiceProvider
      */
     public static function make($app = null)
     {
-        $app->singleton('form.populator', function ($app) {
-            return new Populator();
-        });
+
 
         $app->singleton('form.field', function ($app) {
             return new Fields($app);
@@ -87,7 +85,7 @@ class FormServiceProvider extends ServiceProvider
         });
 
         $app->singleton('form.form', function ($app) {
-            return new Form($app, $app->make('form.populator'), $app->make('form.field'), $app->make('form.lists'));
+            return new Form($app,  $app->make('form.field'), $app->make('form.lists'));
         });
 
         return $app;

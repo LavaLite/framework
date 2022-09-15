@@ -1,7 +1,6 @@
 <?php
-use Illuminate\Support\Arr;
 
-if (!function_exists('form_merge_values')) {
+if (!function_exists('form_merge_form')) {
     /**
      * Merge form array with values.
      *
@@ -13,14 +12,19 @@ if (!function_exists('form_merge_values')) {
      */
     function form_merge_form($form, $value, $grouped = true)
     {
+        $value = $value->toArray([]);
         array_walk($form, function (&$val, $key) use ($value) {
             if (isset($value[$key])) {
                 $val['value'] = $value[$key];
+            }
+            if ($val['element'] == 'file') {
+                $val['url'] = str_replace('//file', '/' . $key . '/file', $value['meta']['upload_url']);
             }
         });
         if (!$grouped) {
             return $form;
         }
+
         return collect($form)->groupBy('group', true)->toArray();
 
     }

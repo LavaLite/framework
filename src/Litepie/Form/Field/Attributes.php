@@ -19,23 +19,6 @@ trait Attributes
     private $_attributes = [];
 
     /**
-     * Sets attribute for the field.
-     *
-     * @param string $label A label
-     * @param string $name  A field name
-     *
-     * @return false|null A label and a field name
-     */
-    private function initAttributes()
-    {
-        $attributes = config('form.' . $this->framework() . '.attributes.class.default');
-        $attribute['element']['class'] = $attributes['element'];
-        $attribute['label']['class'] = $attributes['label'];
-        $attribute['wrapper']['class'] = $attributes['wrapper'];
-        $this->_attributes = $attribute;
-    }
-
-    /**
      * Ponders a label and a field name, and tries to get the best out of it.
      *
      * @param string $label A label

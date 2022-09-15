@@ -243,7 +243,7 @@ class Lists
     }
 
     /**
-     * Classic setting of attribute, won't overwrite any populate() attempt.
+     * Classic setting of attribute.
      *
      * @param string $value A new value
      */

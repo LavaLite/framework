@@ -54,7 +54,6 @@ trait Files
     public function url($url)
     {
         $this->url = $url;
-
         return $this;
     }
 
@@ -131,22 +130,5 @@ trait Files
 
         return $this;
     }
-
-    /**
-     * set the upload url for the file field.
-     *
-     * @param mixed $count the count
-     *
-     * @return self
-     */
-    public function setUrl()
-    {
-        if ($this->element != 'file' || $this->url != null) {
-            return;
-        }
-        $populator = $this->form ? $this->form->getPopulator() : $this->app['form.populator'];
-        $uploadUrl = @$populator->get('meta')['upload_url'];
-        $uploadUrl = str_replace('//file', '/'.$this->name.'/file', $uploadUrl);
-        $this->url($uploadUrl);
-    }
+    
 }
