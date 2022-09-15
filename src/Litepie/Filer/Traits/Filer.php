@@ -111,9 +111,10 @@ trait Filer
      *
      * @return null
      */
-    public function getUploadURL($field, $file = 'file')
+    public function getUploadURL($field, $disk = 'local', $file = 'file')
     {
-        return guard_url('upload/' . $this->config . '/' . ($this->upload_folder) . '/' . $field . '/' . $file);
+        return guard_url('upload/' . $this->config . '/' . ($this->upload_folder)
+            . '/' . $field . '/' . $file . '?disk=' . $disk);
     }
 
     /**

@@ -71,6 +71,7 @@ return [
         'md' => 'Litepie\Filer\Templates\Medium',
         'lg' => 'Litepie\Filer\Templates\Large',
         'xl' => 'Litepie\Filer\Templates\ExtraLarge',
+        'original' => 'Litepie\Filer\Templates\Original',
     ],
 
     /*
