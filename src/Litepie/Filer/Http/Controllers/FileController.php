@@ -2,6 +2,8 @@
 
 namespace Litepie\Filer\Http\Controllers;
 
+use Filer;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Image;
 use Litepie\Http\Controllers\Controller;
@@ -15,7 +17,7 @@ class FileController extends Controller
      */
     public function download($path)
     {
-        $file_path = base_path(config('filer.folder')).'/'.str_replace('..', '', $path);
+        $file_path = base_path(config('filer.folder')) . '/' . str_replace('..', '', $path);
 
         if (file_exists($file_path) && is_file($file_path)) {
             // file found
@@ -31,7 +33,7 @@ class FileController extends Controller
      */
     public function display($path)
     {
-        $file_path = base_path(config('filer.folder')).'/'.str_replace('..', '', $path);
+        $file_path = base_path(config('filer.folder')) . '/' . str_replace('..', '', $path);
 
         if (file_exists($file_path) && is_file($file_path)) {
             // file found
@@ -74,7 +76,7 @@ class FileController extends Controller
      */
     public function uploadFolder($config, $folder, $field)
     {
-        $path = config($config.'.upload_folder');
+        $path = config($config . '.upload_folder');
 
         if (empty($path)) {
             throw new FileNotFoundException('Invalid upload configuration value.');
@@ -93,10 +95,17 @@ class FileController extends Controller
      */
     public function image($disk, $template, $path)
     {
+        $saveTo = storage_path('app/public') . '/image/' . $disk . '/' . $template . '/' . $path;
         $template = $this->getTemplate($template);
         $image = Storage::disk($disk)->get($path);
+
+        if (empty($image)) {
+            abort(404);
+        }
+        @mkdir(dirname($saveTo), 0777, true);
         $image = Image::make($image);
         $image->filter($template);
+        $image->save($saveTo);
         return $image->response();
     }
 

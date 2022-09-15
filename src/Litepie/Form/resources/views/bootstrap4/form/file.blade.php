@@ -11,8 +11,8 @@ $name = Str::slug($name)
         $ext  = strtolower($info['extension']);
     @endphp
     @if (in_array($ext, ['jpg','jpeg', 'png', 'gif']) )
-        <a href="{!! url('/image') !!}/{!! $file['disk'] !!}/{!!$largeSize!!}/{!! $file['path'] !!} !!}" target="_blank">
-            <img src="{!! url('/image') !!}/{!! $file['disk'] !!}/{!!$thumbSize!!}/{!! $file['path'] !!} !!}" class="img-thumbnail image-responsive">
+        <a href="{!! url('/image') !!}/{!! $file['disk'] !!}/{!!$largeSize!!}/{!! $file['path'] !!}" target="_blank">
+            <img src="{!! url('/image') !!}/{!! $file['disk'] !!}/{!!$thumbSize!!}/{!! $file['path'] !!}" class="img-thumbnail image-responsive">
         </a>
     @else
         <a href="{!!url('/file/download')!!}/{!! $file['disk'] !!}/{!! $file['path'] !!}" target="_blank" class="show-file">{!!$file["file"]!!}</a><br/>
@@ -147,7 +147,7 @@ $(function () {
                     <div class="row">
                         <div class="col-sm-3">
                             <div id="main-img">
-                                <img src='{!!url("/image")!!}/@{{path}}/xs/@{{path}}' class="img-responsive" alt="">
+                                <img src='{!!url("/image")!!}/@{{disk}}/xs/@{{path}}' class="img-responsive" alt="">
                             </div>
                         </div>
                         <div class="col-sm-9">
