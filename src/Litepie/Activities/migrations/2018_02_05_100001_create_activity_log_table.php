@@ -10,7 +10,7 @@ class CreateActivityLogTable extends Migration
      */
     public function up()
     {
-        Schema::create('activity_log', function (Blueprint $table) {
+        Schema::create('log_activity', function (Blueprint $table) {
             $table->increments('id');
             $table->string('log_name', 100)->index();
             $table->text('description');
@@ -28,6 +28,6 @@ class CreateActivityLogTable extends Migration
      */
     public function down()
     {
-        Schema::drop('activity_log');
+        Schema::drop('log_activity');
     }
 }
