@@ -2,18 +2,29 @@
 
 namespace Litepie\Workflow\Traits;
 
-/**
- * @author Boris Koumondji <brexis@yahoo.fr>
- */
+
 trait WorkflowControllerTrait
 {
-    public function applyTransition($transition)
+
+    public function apply($transission, $workflow = null, $context = [])
     {
-        return app('workflow')->get($this, $workflowName);
+        $this->model->workflow($workflow)->apply($transission, $context);
+        $this->model->save();
+        return $this->model;
     }
 
-    public function getTransissions()
+    public function get($workflow = null)
     {
-        return $this->workflow($workflowName)->getEnabledTransitions($this);
+        return $this->model->workflow($workflow)->get();
+    }
+
+    public function can($transitions, $workflow = null)
+    {
+        return $this->model->workflow($workflow)->can($transitions);
+    }
+
+    public function transitions($workflow = null)
+    {
+        return $this->model->workflow($workflow)->transitions();
     }
 }

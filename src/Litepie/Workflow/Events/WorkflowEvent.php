@@ -2,7 +2,6 @@
 
 namespace Litepie\Workflow\Events;
 
-
-class LeaveEvent extends BaseEvent
+class WorkflowEvent extends BaseEvent
 {
 }
