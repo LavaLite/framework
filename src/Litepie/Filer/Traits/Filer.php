@@ -219,7 +219,8 @@ trait Filer
 
         $image = Arr::pull($image, $pos, head($image));
 
-        return "image/{$size}/" . ($image['path']);
+        $disk = $image['disk'];
+        return "image/{$disk}/{$size}/" . $image['path'];
     }
 
     /**
@@ -239,8 +240,9 @@ trait Filer
         }
 
         foreach ($images as $key => $image) {
-            $images[$key]['url'] = url("image/{$size}/") . '/' . ($image['path']);
+            $images[$key]['url'] = $this->getPublicUrl($image['disk'], $image['folder'], $image['file'], 'image');
             $images[$key]['caption'] = $image['caption'];
+            $images[$key]['disk'] = $image['disk'];
             $images[$key]['folder'] = $image['folder'];
             $images[$key]['file'] = $image['file'];
             $images[$key]['time'] = $image['time'];
@@ -269,8 +271,9 @@ trait Filer
         }
 
         foreach ($files as $key => $file) {
-            $files[$key]['url'] = $this->getPublicUrl($file['folder'], $file['file'], $prefix);
+            $files[$key]['url'] = $this->getPublicUrl($file['disk'], $file['folder'], $file['file'], $prefix);
             $files[$key]['caption'] = $file['caption'];
+            $files[$key]['disk'] = $file['disk'];
             $files[$key]['folder'] = $file['folder'];
             $files[$key]['file'] = $file['file'];
             $files[$key]['time'] = $file['time'];
@@ -288,8 +291,8 @@ trait Filer
      *
      * @return string path
      */
-    public function getPublicUrl($folder, $file, $prefix = 'download')
+    public function getPublicUrl($disk, $folder, $file, $prefix = 'filer/download')
     {
-        return url("{$prefix}" . '/' . $folder . '/' . $file);
+        return url("{$prefix}/{$disk}" . '/' . $folder . '/' . $file);
     }
 }

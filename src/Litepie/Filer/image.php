@@ -55,7 +55,7 @@ return [
         | Folder to which resized image is to be saved.
         |
          */
-        'folder' => base_path(env('UPLOAD_FOLDER', 'storage/uploads')),
+        'folder' => env('IMAGE_CACHE_FOLDER', 'cache'),
 
         /*
         |--------------------------------------------------------------------------
@@ -65,7 +65,7 @@ return [
         | Disk to which resized image is to be saved.
         |
          */
-        'disk' => 'local',
+        'disk' => env('IMAGE_CACHE_DISK', 'local'),
 
         /*
         |--------------------------------------------------------------------------
@@ -75,7 +75,7 @@ return [
         | Lifetime in minutes of the images handled by the imagecache route.
         |
          */
-        'lifetime' => 43200,
+        'lifetime' => env('IMAGE_CACHE_TIME', 43200),
 
     ],
 
