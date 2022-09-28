@@ -141,8 +141,8 @@ trait Sluggable
      *
      * @return string
      */
-    public function findBySlug($slug, $columns = ['*'])
+    public static function findBySlug($slug, $columns = ['*'])
     {
-        return $this->whereSlug($slug)->first($columns);
+        return self::whereSlug($slug)->first($columns);
     }
 }
