@@ -82,7 +82,7 @@ class ConfigureDatabase implements SetupScript
      */
     protected function askDatabaseName()
     {
-        $database = $this->command->ask('Enter your database name.', 'homestead');
+        $database = $this->command->ask('Enter your database name.', 'lavalite');
 
         return $database;
     }
@@ -94,7 +94,7 @@ class ConfigureDatabase implements SetupScript
      */
     protected function askDatabaseUsername()
     {
-        $username = $this->command->ask('Enter your database username.', 'homestead');
+        $username = $this->command->ask('Enter your database username.', 'root');
 
         return $username;
     }
