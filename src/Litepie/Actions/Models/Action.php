@@ -1,6 +1,6 @@
 <?php
 
-namespace Litepie\Activities\Models;
+namespace Litepie\Actions\Models;
 
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
@@ -63,13 +63,13 @@ class Action extends Model implements ActionContract
         return $this->changes();
     }
 
-    public function scopeInLog(Builder $query, ...$logNames): Builder
+    public function scopeInLog(Builder $query, ...$name): Builder
     {
-        if (is_array($logNames[0])) {
-            $logNames = $logNames[0];
+        if (is_array($name[0])) {
+            $name = $name[0];
         }
 
-        return $query->whereIn('log_name', $logNames);
+        return $query->whereIn('name', $name);
     }
 
     public function scopeCausedBy(Builder $query, Model $causer): Builder

@@ -1,6 +1,6 @@
 <?php
 
-namespace Litepie\Activities;
+namespace Litepie\Actions;
 
 use Illuminate\Auth\AuthManager;
 use Illuminate\Contracts\Config\Repository;

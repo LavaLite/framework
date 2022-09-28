@@ -5,7 +5,7 @@ return [
     /*
      * If set to false, no activities will be saved to the database.
      */
-    'enabled' => env('ACTIVITY_LOGGER_ENABLED', true),
+    'enabled' => env('ACTION_LOGGER_ENABLED', true),
 
     /*
      * When the clean-command is executed, all recording activities older than
@@ -26,17 +26,6 @@ return [
     'default_auth_driver' => null,
 
     /*
-     * If set to true, the subject returns soft deleted models.
-     */
-    'subject_returns_soft_deleted_models' => false,
-
-    /*
-     * This model will be used to log activity. The only requirement is that
-     * it should be or extend the Lavalit\Activities\Models\Activity model.
-     */
-    'activity_model' => \Litepie\Activities\Models\Activity::class,
-
-    /*
      * This model will be used to log action. The only requirement is that
      * it should be or extend the Lavalit\Activities\Models\Activity model.
      */
@@ -44,13 +33,7 @@ return [
 
     /*
      * This is the name of the table that will be created by the migration and
-     * used by the Activity model shipped with this package.
-     */
-    'table_name' => 'activity_log',
-
-    /*
-     * This is the name of the table that will be created by the migration and
      * used by the Action model shipped with this package.
      */
-    'action_table_name' => 'action_log',
+    'action_table_name' => 'log_action',
 ];

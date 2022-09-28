@@ -1,6 +1,6 @@
 <?php
 
-namespace Litepie\Activities\Traits;
+namespace Litepie\Actions\Traits;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
