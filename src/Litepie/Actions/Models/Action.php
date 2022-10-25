@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
-use Litepie\Activities\Contracts\Action as ActionContract;
+use Litepie\Actions\Contracts\Action as ActionContract;
 
 class Action extends Model implements ActionContract
 {
@@ -20,11 +20,11 @@ class Action extends Model implements ActionContract
     public function __construct(array $attributes = [])
     {
         if (!isset($this->connection)) {
-            $this->setConnection(config('activitylog.database_connection'));
+            $this->setConnection(config('actionlog.database_connection'));
         }
 
         if (!isset($this->table)) {
-            $this->setTable(config('activitylog.action_table_name'));
+            $this->setTable(config('actionlog.action_table_name'));
         }
 
         parent::__construct($attributes);
@@ -32,7 +32,7 @@ class Action extends Model implements ActionContract
 
     public function subject(): MorphTo
     {
-        if (config('activitylog.subject_returns_soft_deleted_models')) {
+        if (config('actionlog.subject_returns_soft_deleted_models')) {
             return $this->morphTo()->withTrashed();
         }
 

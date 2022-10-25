@@ -12,13 +12,14 @@ class ActionsServiceProvider extends ActivitylogServiceProvider
     public function boot()
     {
         $this->publishes([
-            __DIR__ . '/config/config.php' => config_path('actions.php'),
+            __DIR__ . '/config/config.php' => config_path('actionlog.php'),
         ], 'config');
 
         $this->mergeConfigFrom(
             __DIR__ . '/config/config.php',
-            'actions'
+            'actionlog'
         );
+
         // Load migrations
         $this->loadMigrationsFrom(__DIR__ . '/migrations');
     }
@@ -28,7 +29,9 @@ class ActionsServiceProvider extends ActivitylogServiceProvider
      */
     public function register()
     {
-        $this->app->register(\Lorisleiva\Actions\ActionServiceProvider::class);
+        $this->app->singleton('action', function ($app) {
+            return new Registry();
+        });
     }
 
 }
