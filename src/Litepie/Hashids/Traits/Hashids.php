@@ -12,8 +12,8 @@ trait Hashids
     public static function findOrFail($id, $columns = ['*'])
     {
         $id = hashids_decode($id);
-
-        return parent::findOrFail($id, $columns);
+        $id = !empty($id) ? $id : 0;
+        return parent::withTrashed()->find($id, $columns) ?: new self();
     }
 
     /**
@@ -24,9 +24,8 @@ trait Hashids
     public static function findOrNew($id, $columns = ['*'])
     {
         $id = hashids_decode($id);
-        $id = empty($id) ? 0 : $id;
-
-        return parent::firstOrNew([['id', $id]]);
+        $id = !empty($id) ? $id : 0;
+        return parent::withTrashed()->find($id, $columns) ?: new self();
     }
 
     /**
