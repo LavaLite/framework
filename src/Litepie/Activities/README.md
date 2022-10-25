@@ -1,12 +1,6 @@
-# Log activity inside your Laravel app
+# Log activity inside lavalite
 
-[![Latest Version on Packagist](https://img.shields.io/packagist/v/spatie/laravel-activitylog.svg?style=flat-square)](https://packagist.org/packages/spatie/laravel-activitylog)
-[![Build Status](https://img.shields.io/travis/spatie/laravel-activitylog/master.svg?style=flat-square)](https://travis-ci.org/spatie/laravel-activitylog)
-[![Quality Score](https://img.shields.io/scrutinizer/g/spatie/laravel-activitylog.svg?style=flat-square)](https://scrutinizer-ci.com/g/spatie/laravel-activitylog)
-[![StyleCI](https://styleci.io/repos/61802818/shield)](https://styleci.io/repos/61802818)
-[![Total Downloads](https://img.shields.io/packagist/dt/spatie/laravel-activitylog.svg?style=flat-square)](https://packagist.org/packages/spatie/laravel-activitylog)
-
-The `spatie/laravel-activitylog` package provides easy to use functions to log the activities of the users of your app. It can also automatically log model events. 
+The `litepie/activities` package provides easy to use functions to log the activities of the users of your app. It can also automatically log model events. 
 The Package stores all activity in the `activity_log` table.
 
 Here's a demo of how you can use it:
@@ -28,7 +22,7 @@ activity()
    ->causedBy($user)
    ->withProperties(['customProperty' => 'customValue'])
    ->log('Look, I logged something');
-   
+
 $lastLoggedActivity = Activity::all()->last();
 
 $lastLoggedActivity->subject; //returns an instance of an eloquent model
@@ -70,7 +64,7 @@ Calling `$activity->changes` will return this array:
 ## Documentation
 You'll find the documentation on [https://docs.spatie.be/laravel-activitylog/v2](https://docs.spatie.be/laravel-activitylog/v2).
 
-Find yourself stuck using the package? Found a bug? Do you have general questions or suggestions for improving the activity log? Feel free to [create an issue on GitHub](https://github.com/spatie/laravel-activitylog/issues), we'll try to address it as soon as possible.
+Find yourself stuck using the package? Found a bug? Do you have general questions or suggestions for improving the activity log? Feel free to [create an issue on GitHub](https://github.com/litepie/activities/issues), we'll try to address it as soon as possible.
 
 If you've found a security issue please mail [freek@spatie.be](mailto:freek@spatie.be) instead of using the issue tracker.
 
@@ -80,7 +74,7 @@ If you've found a security issue please mail [freek@spatie.be](mailto:freek@spat
 You can install the package via composer:
 
 ``` bash
-composer require spatie/laravel-activitylog
+composer require litepie/activities
 ```
 
 The package will automatically register itself.

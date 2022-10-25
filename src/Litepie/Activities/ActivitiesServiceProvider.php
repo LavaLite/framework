@@ -13,12 +13,12 @@ class ActivitiesServiceProvider extends ActivitylogServiceProvider
     public function boot()
     {
         $this->publishes([
-            __DIR__ . '/config/config.php' => config_path('activities.php'),
+            __DIR__ . '/config/config.php' => config_path('activitylog.php'),
         ], 'config');
 
         $this->mergeConfigFrom(
             __DIR__ . '/config/config.php',
-            'activities'
+            'activitylog'
         );
         // Load migrations
         $this->loadMigrationsFrom(__DIR__ . '/migrations');
@@ -35,11 +35,6 @@ class ActivitiesServiceProvider extends ActivitylogServiceProvider
             'command.activities:clean',
         ]);
 
-        // Bind ActivityLog to repository
-        $this->app->bind(
-            'Litepie\Activities\Repositories\ActivityLogRepositoryInterface',
-            \Litepie\Activities\Repositories\Eloquent\ActivityLogRepository::class
-        );
     }
 
 }
