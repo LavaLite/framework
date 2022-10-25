@@ -17,12 +17,20 @@
     "require": {
         "php": "^7.3|^8.0|^8.1",
         "hashids/hashids": "~4.1",
-        "intervention/imagecache": "~2.5",
+        "intervention/image": "~2.5",
         "laravel/socialite": "~5.1",
-        "league/fractal": "~0.19",
         "mcamara/laravel-localization": "^1.6",
         "rachidlaasri/laravel-installer": "^4.0",
-        "spatie/laravel-activitylog": "^4.0"
+        "spatie/laravel-activitylog": "^4.0",
+        "league/flysystem-aws-s3-v3": "^3.0",
+        "lorisleiva/laravel-actions": "^2.4",
+        "laravel/framework": "^9.3",
+        "symfony/workflow": "^6.0",
+        "symfony/process": "^6.0",
+        "symfony/event-dispatcher-contracts": "^2.4|^3.0",
+        "illuminate/console": "^8.0|^9.0",
+        "illuminate/support": "^8.0|^9.0",
+        "illuminate/contracts": "^8.0|^9.0"
     },
     "replace": {
         "litepie/activities": "self.version",
@@ -52,8 +60,7 @@
         "pda/pheanstalk": "^4.0",
         "phpunit/phpunit": "^8.5.8|^9.3.3",
         "predis/predis": "^1.1.2",
-        "symfony/cache": "^5.1.4",
-        "laravel/framework": "^9.0|^8.40"
+        "symfony/cache": "^5.1.4"
     },
     "autoload": {
         "files": [
@@ -75,7 +82,11 @@
         "laravel": {
             "dont-discover": [
                 "rachidlaasri/laravel-installer",
-                "intervention/imagecache"
+                "intervention/image",
+                "mcamara/laravel-localization",
+                "spatie/laravel-activitylog",
+                "spatie/laravel-ignition",
+                "spatie/laravel-ray"
             ]
         }
     },
