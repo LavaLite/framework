@@ -40,7 +40,7 @@ class WorkflowServiceProvider extends ServiceProvider
 
         $this->app->singleton('workflow', function ($app) {
             $registryConfig = $app->make('config')->get('workflow');
-            return new WorkflowRegistry([], $registryConfig, $app->make(Dispatcher::class));
+            return new WorkflowRegistry($registryConfig, $app->make(Dispatcher::class));
         });
     }
 
