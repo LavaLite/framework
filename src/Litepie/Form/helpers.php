@@ -12,21 +12,24 @@ if (!function_exists('form_merge_form')) {
      */
     function form_merge_form($form, $value, $grouped = true)
     {
-        $value = $value->toArray([]);
-        array_walk($form, function (&$val, $key) use ($value) {
-            if (isset($value[$key])) {
-                $val['value'] = $value[$key];
+        $data = json_decode(json_encode($value), true);
+
+        array_walk($form, function (&$val, $key) use ($data) {
+            if (isset($data['data'][$key])) {
+                $val['value'] = $data['data'][$key];
             }
             if ($val['element'] == 'file') {
-                $val['url'] = str_replace('//file', '/' . $key . '/file', $value['meta']['upload_url']);
+                $val['url'] = str_replace('//file', '/' . $key . '/file', $data['meta']['upload_url']);
             }
         });
+
         if (!$grouped) {
-            return $form;
+            $data['form'] = $form;
+            return $data;
         }
 
-        return collect($form)->groupBy('group', true)->toArray();
-
+        $data['form'] = collect($form)->groupBy('group', true)->toArray();
+        return $data;
     }
 }
 
