@@ -25,11 +25,12 @@ class Settings
             $val = $value[$key];
 
             return $this->setting->setForUser($key, $val);
-        } elseif (is_array($value)) {
-            $ret = $this->setting->getForUser($key);
+        } else {
+            $ret = $this->setting->getForUser($value);
             if (is_null($ret)) {
-                $ret = $this->setting->getValue($key, $default);
+                $ret = $this->setting->getValue($value, $default);
             }
+            return $ret;
         }
     }
 
