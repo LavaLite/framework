@@ -6,6 +6,7 @@ use Form;
 use Litepie\Http\Controllers\ResourceController as ResourceController;
 use Litepie\Menu\Http\Requests\MenuRequest;
 use Litepie\Menu\Interfaces\MenuRepositoryInterface;
+use Exception;
 
 class SubMenuResourceController extends ResourceController
 {
@@ -41,7 +42,6 @@ class SubMenuResourceController extends ResourceController
     public function show(MenuRequest $request, MenuRepositoryInterface $menu)
     {
         $menu = $menu->getModel();
-        Form::populate($menu);
 
         return view('litepie.menu.admin.sub.show', compact('menu'));
     }
@@ -58,7 +58,6 @@ class SubMenuResourceController extends ResourceController
         $menu = $this->repository->newInstance([]);
         $menu->parent_id = $request->get('parent_id', 0);
 
-        Form::populate($menu);
 
         return view('litepie.menu.admin.sub.create', compact('menu'));
     }
@@ -106,7 +105,6 @@ class SubMenuResourceController extends ResourceController
     {
         $menu = $menu->getModel();
 
-        Form::populate($menu);
 
         return view('litepie.menu.admin.sub.edit', compact('menu'));
     }

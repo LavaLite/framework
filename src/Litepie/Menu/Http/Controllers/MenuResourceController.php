@@ -4,12 +4,12 @@ namespace Litepie\Menu\Http\Controllers;
 
 namespace Litepie\Menu\Http\Controllers;
 
+use Exception;
 use Form;
 use Litepie\Http\Controllers\ResourceController as BaseController;
 use Litepie\Menu\Forms\Menu as MenuForm;
 use Litepie\Menu\Http\Requests\MenuRequest;
 use Litepie\Menu\Interfaces\MenuRepositoryInterface;
-use Litepie\Menu\Models\Menu;
 use Response;
 
 class MenuResourceController extends BaseController
@@ -63,8 +63,6 @@ class MenuResourceController extends BaseController
         if ($request->ajax()) {
             $menu = $parent->getModel();
 
-            Form::populate($menu);
-
             return view('litepie.menu.admin.show', compact('menu'));
         }
 
@@ -83,11 +81,10 @@ class MenuResourceController extends BaseController
      *
      * @return Response
      */
-    public function create(MenuRequest $request, MenuRepositoryInterface $menu)
+    public function create(MenuRequest $request)
     {
         $menu = $this->repository->newInstance([]);
 
-        Form::populate($menu);
 
         return view('litepie.menu.admin.create', compact('menu'));
     }
@@ -110,7 +107,7 @@ class MenuResourceController extends BaseController
                 ->message(trans('messages.success.created', ['Module' => trans('menu::menu.name')]))
                 ->code(204)
                 ->status('success')
-                ->url(guard_url('menu/menu/'.$menu->getRouteKey()))
+                ->url(guard_url('menu/menu/' . $menu->getRouteKey()))
                 ->redirect();
         } catch (Exception $e) {
             return $this->response
@@ -133,8 +130,6 @@ class MenuResourceController extends BaseController
     public function edit(MenuRequest $request, MenuRepositoryInterface $menu)
     {
         $data['menu'] = $menu->getModel();
-        Form::populate($data['menu']);
-
         return view('litepie.menu.admin.edit', $data);
     }
 
@@ -157,13 +152,13 @@ class MenuResourceController extends BaseController
             return $this->response->message(trans('messages.success.updated', ['Module' => trans('menu::menu.name')]))
                 ->code(204)
                 ->status('success')
-                ->url(guard_url('menu/menu/'.$menu->getRouteKey()))
+                ->url(guard_url('menu/menu/' . $menu->getRouteKey()))
                 ->redirect();
         } catch (Exception $e) {
             return $this->response->message($e->getMessage())
                 ->code(400)
                 ->status('error')
-                ->url(guard_url('menu/menu/'.$menu->getRouteKey()))
+                ->url(guard_url('menu/menu/' . $menu->getRouteKey()))
                 ->redirect();
         }
     }
@@ -182,8 +177,8 @@ class MenuResourceController extends BaseController
         if ($this->repository->where('parent_id', $cid)->count() > 0) {
             return response()->json([
                 'message' => 'Child menu exists.',
-                'type'    => 'warning',
-                'title'   => 'Warning',
+                'type' => 'warning',
+                'title' => 'Warning',
             ], 409);
         }
         $data = $menu->toArray();
@@ -194,13 +189,13 @@ class MenuResourceController extends BaseController
             return $this->response->message(trans('messages.success.deleted', ['Module' => trans('menu::menu.name')]))
                 ->code(202)
                 ->status('success')
-                ->url(guard_url('menu/menu/'.$data['id']))
+                ->url(guard_url('menu/menu/' . $data['id']))
                 ->redirect();
         } catch (Exception $e) {
             return $this->response->message($e->getMessage())
                 ->code(400)
                 ->status('error')
-                ->url(guard_url('menu/menu/'.$data['id']))
+                ->url(guard_url('menu/menu/' . $data['id']))
                 ->redirect();
         }
     }
@@ -216,15 +211,5 @@ class MenuResourceController extends BaseController
     public function tree(MenuRequest $request, $id)
     {
         $this->repository->updateTree($id, $request->get('tree'));
-    }
-
-    /**
-     * Display a listing of the resource.
-     *
-     * @return Response
-     */
-    public function nested(MenuRequest $request, $parent = 1)
-    {
-        $parent = $this->repository->all();
     }
 }
