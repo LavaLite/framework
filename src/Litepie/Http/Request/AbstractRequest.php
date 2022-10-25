@@ -10,7 +10,7 @@ abstract class AbstractRequest extends FormRequest
     /**
      * User for the current request.
      *
-     * @var array
+     * @var object|array
      */
     protected $formRequest;
 
@@ -62,7 +62,7 @@ abstract class AbstractRequest extends FormRequest
     protected function isWorkflow()
     {
         if ($this->formRequest->isMethod('PATCH')
-            && $this->formRequest->has(['status', 'stage'])) {
+            && $this->formRequest->transition !== '') {
             return true;
         }
 
@@ -70,18 +70,33 @@ abstract class AbstractRequest extends FormRequest
     }
 
     /**
-     * Check the proess is verify.
+     * Get transitions from the url
      *
-     * @return bool
-     **/
-    protected function getStep()
+     * @return string|null
+     */
+    protected function getTransition()
     {
-        if ($this->formRequest->isMethod('PATCH')
-            && $this->formRequest->has(['status', 'stage'])) {
-            return true;
-        }
+        return $this->formRequest->transition;
+    }
 
-        return false;
+    /**
+     * Get action from the url
+     *
+     * @return string|null
+     */
+    protected function getAction()
+    {
+        return $this->formRequest->action;
+    }
+
+    /**
+     * Get action from the url
+     *
+     * @return string|null
+     */
+    protected function getReport()
+    {
+        return $this->formRequest->report;
     }
 
     /**
@@ -106,6 +121,34 @@ abstract class AbstractRequest extends FormRequest
     protected function isStore()
     {
         if ($this->formRequest->isMethod('POST')) {
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
+     * Check the proess is store.
+     *
+     * @return bool
+     **/
+    protected function isExport()
+    {
+        if ($this->formRequest->is('*/export')) {
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
+     * Check the proess is store.
+     *
+     * @return bool
+     **/
+    protected function isImport()
+    {
+        if ($this->formRequest->is('*/import')) {
             return true;
         }
 
