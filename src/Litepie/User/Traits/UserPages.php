@@ -97,7 +97,6 @@ trait UserPages
     public function getProfile(Request $request)
     {
         $user = $request->user(guard());
-        Form::populate($user);
 
         return $this->response->setMetaTitle('Profile')
             ->layout('user')

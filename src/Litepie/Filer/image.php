@@ -15,7 +15,7 @@ return [
     |
      */
 
-    'driver'    => 'gd',
+    'driver' => 'gd',
 
     /*
     |--------------------------------------------------------------------------
@@ -31,7 +31,7 @@ return [
     |
      */
 
-    'route'     => 'image',
+    'route' => 'image',
 
     /*
     |--------------------------------------------------------------------------
@@ -45,8 +45,38 @@ return [
     |
      */
 
-    'paths'     => [
-        base_path(env('UPLOAD_FOLDER', 'storage/uploads')),
+    'cache' => [
+
+        /*
+        |--------------------------------------------------------------------------
+        | Image Cache Folder
+        |--------------------------------------------------------------------------
+        |
+        | Folder to which resized image is to be saved.
+        |
+         */
+        'folder' => env('IMAGE_CACHE_FOLDER', 'cache'),
+
+        /*
+        |--------------------------------------------------------------------------
+        | Image Cache Disk
+        |--------------------------------------------------------------------------
+        |
+        | Disk to which resized image is to be saved.
+        |
+         */
+        'disk' => env('IMAGE_CACHE_DISK', 'local'),
+
+        /*
+        |--------------------------------------------------------------------------
+        | Image Cache Lifetime
+        |--------------------------------------------------------------------------
+        |
+        | Lifetime in minutes of the images handled by the imagecache route.
+        |
+         */
+        'lifetime' => env('IMAGE_CACHE_TIME', 43200),
+
     ],
 
     /*
@@ -71,51 +101,41 @@ return [
         'md' => 'Litepie\Filer\Templates\Medium',
         'lg' => 'Litepie\Filer\Templates\Large',
         'xl' => 'Litepie\Filer\Templates\ExtraLarge',
+        'original' => 'Litepie\Filer\Templates\Original',
     ],
 
-    /*
-    |--------------------------------------------------------------------------
-    | Image Cache Lifetime
-    |--------------------------------------------------------------------------
-    |
-    | Lifetime in minutes of the images handled by the imagecache route.
-    |
-     */
-
-    'lifetime'  => 43200,
-
     // Image size
-    'size'      => [
+    'size' => [
         'xs' => [
-            'width'  => '100',
+            'width' => '100',
             'height' => '80',
             'action' => 'fit',
             // 'default'   => 'img/noimage.jpg',
             // 'watermark' => public_path('assets/img/watermark.png'),
         ],
         'sm' => [
-            'width'  => '400',
+            'width' => '400',
             'height' => '300',
             'action' => 'fit',
             //'default'   => 'img/noimage.jpg',
             //'watermark' => public_path('assets/img/watermark.png'),
         ],
         'md' => [
-            'width'  => '800',
+            'width' => '800',
             'height' => '600',
             'action' => 'fit',
             //'default'   => 'img/noimage.jpg',
             //'watermark' => public_path('assets/img/watermark.png'),
         ],
         'lg' => [
-            'width'  => '1000',
+            'width' => '1000',
             'height' => '750',
             'action' => 'fit',
             //'default'   => 'img/noimage.jpg',
             //'watermark' => public_path('assets/img/watermark.png'),
         ],
         'xl' => [
-            'width'  => '2000',
+            'width' => '2000',
             'height' => '1500',
             'action' => 'fit',
             //'default'   => 'img/noimage.jpg',

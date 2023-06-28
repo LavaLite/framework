@@ -2,7 +2,8 @@
 
 namespace Litepie\Http\Response;
 
-use Form;
+use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Http\Resources\Json\ResourceCollection;
 use Litepie\Http\Traits\RequestTrait;
 use Litepie\Http\Traits\ThemeTrait;
 use Litepie\Http\Traits\ViewTrait;
@@ -39,17 +40,16 @@ abstract class AbstractResponse
     protected $url = null;
 
     /**
-     * @var Url for the redirect response.
-     */
-    protected $populate = true;
-
-    /**
      * Return the type of response for the current request.
      *
      * @return string
      */
     protected function getType()
     {
+        if (request()->has('response_type')) {
+            return request()->get('response_type');
+        }
+
         if ($this->type) {
             return $this->type;
         }
@@ -72,7 +72,12 @@ abstract class AbstractResponse
      */
     protected function json()
     {
+        if ($this->data instanceof ResourceCollection || $this->data instanceof JsonResource) {
+            return $this->data;
+        }
+
         return response()->json($this->getData(), 200);
+
     }
 
     /**
@@ -82,15 +87,11 @@ abstract class AbstractResponse
      */
     protected function ajax()
     {
-        header('Last-Modified: '.gmdate('D, d M Y H:i:s').' GMT');
+        header('Last-Modified: ' . gmdate('D, d M Y H:i:s') . ' GMT');
         header('Cache-Control: no-store, no-cache, must-revalidate'); // HTTP/1.1
         header('Cache-Control: post-check=0, pre-check=0', false);
         header('Pragma: no-cache'); // HTTP/1.0
         header('Expires: Sat, 26 Jul 1997 05:00:00 GMT'); // Date in the past
-
-        if ($this->populate) {
-            Form::populate($this->getFormData());
-        }
 
         $view = $this->getView();
 
@@ -108,9 +109,6 @@ abstract class AbstractResponse
      */
     protected function http()
     {
-        if ($this->populate) {
-            Form::populate($this->getFormData());
-        }
 
         $this->theme->prependTitle($this->getTitle());
 
@@ -126,21 +124,21 @@ abstract class AbstractResponse
     {
         if ($this->typeIs('json')) {
             return response()->json([
-                'data'    => $this->getFormData(),
+                'data' => $this->getData(),
                 'message' => $this->getMessage(),
-                'code'    => $this->getCode(),
-                'status'  => $this->getStatus(),
-                'url'     => $this->getUrl(),
+                'code' => $this->getCode(),
+                'status' => $this->getStatus(),
+                'url' => $this->getUrl(),
             ], $this->getStatusCode());
         }
 
         if ($this->typeIs('ajax')) {
             return response()->json([
-                'data'    => $this->getFormData(),
+                'data' => $this->getData(),
                 'message' => $this->getMessage(),
-                'code'    => $this->getCode(),
-                'status'  => $this->getStatus(),
-                'url'     => $this->getUrl(),
+                'code' => $this->getCode(),
+                'status' => $this->getStatus(),
+                'url' => $this->getUrl(),
             ], $this->getStatusCode());
         }
 
@@ -167,6 +165,16 @@ abstract class AbstractResponse
         }
 
         return $this->http();
+    }
+
+    /**
+     * Return the output for the current response.
+     *
+     * @return theme page
+     */
+    public function __toString()
+    {
+        return $this->output();
     }
 
     /**
@@ -238,18 +246,6 @@ abstract class AbstractResponse
     }
 
     /**
-     * @param mixed $code
-     *
-     * @return self
-     */
-    public function populate($status)
-    {
-        $this->populate = $status;
-
-        return $this;
-    }
-
-    /**
      * @return View for the request
      */
     public function getUrl()
@@ -288,26 +284,16 @@ abstract class AbstractResponse
      */
     public function getData()
     {
+        if (isset($this->data['data']) && ($this->data['data'] instanceof ResourceCollection || $this->data['data'] instanceof JsonResource)) {
+            $data = json_decode(json_encode($this->data['data']->toResponse(request())->getData()), true);
+            foreach ($data as $key => $val) {
+                $this->data[$key] = $val;
+            }
+        }
+
         return is_array($this->data) ? $this->data : [];
     }
 
-    /**
-     * @param store the response data $data
-     *
-     * @return self
-     */
-    public function getFormData()
-    {
-        if (isset($this->data['data']) && is_array($this->data['data'])) {
-            return $this->data['data'];
-        }
-
-        if (is_array($this->data)) {
-            return $this->data;
-        }
-
-        return [];
-    }
 
     /**
      * Return auth guard for the current route.
@@ -332,7 +318,7 @@ abstract class AbstractResponse
         $callable = preg_split('|[A-Z]|', $method);
 
         if (in_array($callable[0], ['set', 'prepend', 'append', 'has', 'get'])) {
-            $value = lcfirst(preg_replace('|^'.$callable[0].'|', '', $method));
+            $value = lcfirst(preg_replace('|^' . $callable[0] . '|', '', $method));
             array_unshift($parameters, $value);
             call_user_func_array([$this->theme, $callable[0]], $parameters);
         }

@@ -2,30 +2,36 @@
 
 namespace Litepie\Notification\Http\Controllers;
 
-use Litepie\Http\Controllers\ResourceController;
-use Litepie\Notification\Http\Requests\NotificationRequest;
-use Litepie\Notification\Interfaces\NotificationRepositoryInterface;
+use Exception;
+use Litepie\Http\Controllers\ResourceController as BaseController;
+use Litepie\Database\RequestScope;
+use Litepie\Notification\Forms\Notification as NotificationForm;
+use Litepie\Notification\Http\Requests\NotificationResourceRequest;
+use Litepie\Notification\Http\Resources\NotificationResource;
+use Litepie\Notification\Http\Resources\NotificationsCollection;
 use Litepie\Notification\Models\Notification;
+use Litepie\Notification\Scopes\NotificationResourceScope;
+
 
 /**
  * Resource controller class for notification.
  */
-class NotificationResourceController extends ResourceController
+class NotificationResourceController extends BaseController
 {
+
     /**
      * Initialize notification resource controller.
      *
-     * @param type NotificationRepositoryInterface $notification
      *
      * @return null
      */
-    public function __construct(NotificationRepositoryInterface $notification)
+    public function __construct()
     {
         parent::__construct();
-        $this->repository = $notification;
-        $this->repository
-            ->pushCriteria(\Litepie\Repository\Criteria\RequestCriteria::class)
-            ->pushCriteria(\Litepie\Notification\Repositories\Criteria\NotificationResourceCriteria::class);
+        $this->form = NotificationForm::grouped(false)
+                        ->setAttributes()
+                        ->toArray();
+        $this->modules = $this->modules(config('notification.modules'), 'notification', guard_url('notification'));
     }
 
     /**
@@ -33,25 +39,24 @@ class NotificationResourceController extends ResourceController
      *
      * @return Response
      */
-    public function index(NotificationRequest $request)
+    public function index(NotificationResourceRequest $request)
     {
-        if ($this->response->typeIs('json')) {
-            $pageLimit = $request->input('pageLimit');
-            $data = $this->repository
-                ->setPresenter(\Litepie\Notification\Repositories\Presenter\NotificationListPresenter::class)
-                ->getDataTable($pageLimit);
 
-            return $this->response
-                ->data($data)
-                ->output();
-        }
+        $pageLimit = $request->input('pageLimit', config('database.pagination.limit'));
+        $page = Notification::pushScope(new RequestScope())
+            ->pushScope(new NotificationResourceScope())
+            ->paginate($pageLimit);
 
-        $notifications = $this->repository->paginate();
+        $data = new NotificationsCollection($page);
 
-        return $this->response->setMetaTitle(trans('alerts::notification.names'))
-            ->view('alerts::admin.notification.index')
-            ->data(compact('notifications'))
+        $form = $this->form;
+        $modules = $this->modules;
+
+        return $this->response->setMetaTitle(trans('notification::notification.names'))
+            ->view('notification::notification.index')
+            ->data(compact('data', 'modules', 'form'))
             ->output();
+
     }
 
     /**
@@ -62,17 +67,15 @@ class NotificationResourceController extends ResourceController
      *
      * @return Response
      */
-    public function show(NotificationRequest $request, Notification $notification)
+    public function show(NotificationResourceRequest $request, Notification $model)
     {
-        if ($notification->exists) {
-            $view = 'alerts::admin.notification.show';
-        } else {
-            $view = 'alerts::admin.notification.new';
-        }
-
-        return $this->response->setMetaTitle(trans('app.view').' '.trans('alerts::notification.name'))
-            ->data(compact('notification'))
-            ->view($view)
+        $form = $this->form;
+        $modules = $this->modules;
+        $data = new NotificationResource($model);
+        return $this->response
+            ->setMetaTitle(trans('app.view') . ' ' . trans('notification::notification.name'))
+            ->data(compact('data', 'form', 'modules'))
+            ->view('notification::notification.show')
             ->output();
     }
 
@@ -83,13 +86,16 @@ class NotificationResourceController extends ResourceController
      *
      * @return Response
      */
-    public function create(NotificationRequest $request)
+    public function create(NotificationResourceRequest $request, Notification $model)
     {
-        $notification = $this->repository->newInstance([]);
-        $this->response->setMetaTitle(trans('app.new').' '.trans('alerts::notification.name'))
-            ->view('alerts::admin.notification.create')
-            ->data(compact('notification'))
+        $form = $this->form;
+        $modules = $this->modules;
+        $data = new NotificationResource($model);
+        return $this->response->setMetaTitle(trans('app.new') . ' ' . trans('notification::notification.name'))
+            ->view('notification::notification.create')
+            ->data(compact('data', 'form', 'modules'))
             ->output();
+
     }
 
     /**
@@ -99,26 +105,28 @@ class NotificationResourceController extends ResourceController
      *
      * @return Response
      */
-    public function store(NotificationRequest $request)
+    public function store(NotificationResourceRequest $request, Notification $model)
     {
         try {
             $attributes = $request->all();
             $attributes['user_id'] = user_id();
             $attributes['user_type'] = user_type();
-            $notification = $this->repository->create($attributes);
-
-            return $this->response->message(trans('messages.success.created', ['Module' => trans('alerts::notification.name')]))
+            $model = $model->create($attributes);
+            $data = new NotificationResource($model);
+            return $this->response->message(trans('messages.success.created', ['Module' => trans('notification::notification.name')]))
                 ->code(204)
+                ->data(compact('data'))
                 ->status('success')
-                ->url(trans_url(guard_url('/alerts/notification/'.$notification->getRouteKey())))
+                ->url(guard_url('notification/notification/' . $model->getRouteKey()))
                 ->redirect();
         } catch (Exception $e) {
             return $this->response->message($e->getMessage())
                 ->code(400)
                 ->status('error')
-                ->url(trans_url(guard_url('/alerts/notification')))
+                ->url(guard_url('/notification/notification'))
                 ->redirect();
         }
+
     }
 
     /**
@@ -129,12 +137,18 @@ class NotificationResourceController extends ResourceController
      *
      * @return Response
      */
-    public function edit(NotificationRequest $request, Notification $notification)
+    public function edit(NotificationResourceRequest $request, Notification $model)
     {
-        return $this->response->setMetaTitle(trans('app.edit').' '.trans('alerts::notification.name'))
-            ->view('alerts::admin.notification.edit')
-            ->data(compact('notification'))
+        $form = $this->form;
+        $modules = $this->modules;
+        $data = new NotificationResource($model);
+        // return view('notification::notification.edit', compact('data', 'form', 'modules'));
+
+        return $this->response->setMetaTitle(trans('app.edit') . ' ' . trans('notification::notification.name'))
+            ->view('notification::notification.edit')
+            ->data(compact('data', 'form', 'modules'))
             ->output();
+
     }
 
     /**
@@ -145,109 +159,57 @@ class NotificationResourceController extends ResourceController
      *
      * @return Response
      */
-    public function update(NotificationRequest $request, Notification $notification)
+    public function update(NotificationResourceRequest $request, Notification $model)
     {
         try {
             $attributes = $request->all();
+            $model->update($attributes);
+            $data = new NotificationResource($model);
 
-            $notification->update($attributes);
-
-            return $this->response->message(trans('messages.success.updated', ['Module' => trans('alerts::notification.name')]))
+            return $this->response->message(trans('messages.success.updated', ['Module' => trans('notification::notification.name')]))
                 ->code(204)
                 ->status('success')
-                ->url(trans_url(guard_url('/alerts/notification/'.$notification->getRouteKey())))
+                ->data(compact('data'))
+                ->url(guard_url('notification/notification/' . $model->getRouteKey()))
                 ->redirect();
         } catch (Exception $e) {
             return $this->response->message($e->getMessage())
                 ->code(400)
                 ->status('error')
-                ->url(guard_url('/alerts/notification/'.$notification->getRouteKey()))
+                ->url(guard_url('notification/notification/' .  $model->getRouteKey()))
                 ->redirect();
         }
+
     }
 
     /**
      * Remove the notification.
      *
-     * @param Model $notification
+     * @param Model   $notification
      *
      * @return Response
      */
-    public function destroy(NotificationRequest $request, Notification $notification)
+    public function destroy(NotificationResourceRequest $request, Notification $model)
     {
         try {
-            $notification->delete();
+            $model->delete();
+            $data = new NotificationResource($model);
 
-            return $this->response->message(trans('messages.success.deleted', ['Module' => trans('alerts::notification.name')]))
+            return $this->response->message(trans('messages.success.deleted', ['Module' => trans('notification::notification.name')]))
                 ->code(202)
                 ->status('success')
-                ->url(trans_url(guard_url('/alerts/notification')))
+                ->data(compact('data'))
+                ->url(guard_url('notification/notification/0'))
                 ->redirect();
+
         } catch (Exception $e) {
+
             return $this->response->message($e->getMessage())
                 ->code(400)
                 ->status('error')
-                ->url(trans_url(guard_url('/alerts/notification/'.$notification->getRouteKey())))
+                ->url(guard_url('notification/notification/' .  $model->getRouteKey()))
                 ->redirect();
         }
-    }
 
-    /**
-     * Remove multiple notification.
-     *
-     * @param Model $notification
-     *
-     * @return Response
-     */
-    public function delete(NotificationRequest $request, $type)
-    {
-        try {
-            $ids = hashids_decode($request->input('ids'));
-
-            if ($type == 'purge') {
-                $this->repository->purge($ids);
-            } else {
-                $this->repository->delete($ids);
-            }
-
-            return $this->response->message(trans('messages.success.deleted', ['Module' => trans('alerts::notification.name')]))
-                ->status('success')
-                ->code(202)
-                ->url(trans_url(guard_url('/alerts/notification')))
-                ->redirect();
-        } catch (Exception $e) {
-            return $this->response->message($e->getMessage())
-                ->status('error')
-                ->code(400)
-                ->url(trans_url(guard_url('/alerts/notification')))
-                ->redirect();
-        }
-    }
-
-    /**
-     * Restore deleted notifications.
-     *
-     * @param Model $notification
-     *
-     * @return Response
-     */
-    public function restore(NotificationRequest $request)
-    {
-        try {
-            $ids = hashids_decode($request->input('ids'));
-            $this->repository->restore($ids);
-
-            return $this->response->message(trans('messages.success.restore', ['Module' => trans('alerts::notification.name')]))
-                ->status('success')
-                ->code(202)
-                ->url(trans_url(guard_url('/alerts/notification')))
-                ->redirect();
-        } catch (Exception $e) {
-            return $this->response->message($e->getMessage())
-                ->status('error')
-                ->code(400)
-                ->url(trans_url(guard_url('/alerts/notification/')))
-                ->redirect();
-        }
     }
 }

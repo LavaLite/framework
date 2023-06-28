@@ -2,17 +2,18 @@
 
 namespace Litepie\Master;
 
-use Litepie\Master\Interfaces\MasterRepositoryInterface;
+use Litepie\Master\Models\Master as ModelsMaster;
 
 class Master
 {
+    private $master;
+
     /**
-     * Constructor.
+     * Constructor .
      */
     public function __construct(
-        MasterRepositoryInterface $master
     ) {
-        $this->master = $master;
+        $this->master = app(ModelsMaster::class);
     }
 
     /**
@@ -22,8 +23,22 @@ class Master
      *
      * @return int
      */
-    public function count()
+    public function select(string | array $type, $value = 'code')
     {
-        return 0;
+        if (is_array($type)) {
+            $rows = $this->master->with('parent')->whereIn('type', $type)->get();
+        } else {
+            $rows = $this->master->with('parent')->where('type', $type)->get();
+        }
+        return $rows->map(function ($item, int $key) use ($value) {
+            return [
+                'value' => $item->$value,
+                'text' => $item->name,
+                'key' => $item->id,
+                'group' => $item->parent?->code,
+                'more' => $item->toArray(),
+            ];
+        })->toArray();
+
     }
 }

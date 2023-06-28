@@ -2,207 +2,214 @@
 
 namespace Litepie\Menu\Http\Controllers;
 
-namespace Litepie\Menu\Http\Controllers;
-
-use Form;
+use Exception;
 use Litepie\Http\Controllers\ResourceController as BaseController;
+use Litepie\Menu\Actions\MenuAction;
+use Litepie\Menu\Actions\MenuActions;
 use Litepie\Menu\Forms\Menu as MenuForm;
-use Litepie\Menu\Http\Requests\MenuRequest;
-use Litepie\Menu\Interfaces\MenuRepositoryInterface;
+use Litepie\Menu\Http\Requests\MenuResourceRequest;
+use Litepie\Menu\Http\Resources\MenuResource;
+use Litepie\Menu\Http\Resources\MenusCollection;
 use Litepie\Menu\Models\Menu;
-use Response;
 
+/**
+ * Resource controller class for menu.
+ */
 class MenuResourceController extends BaseController
 {
+
     /**
-     * Initialize page controller.
+     * Initialize menu resource controller.
      *
-     * @param type PageRepositoryInterface $page
      *
-     * @return type
+     * @return null
      */
-    public function __construct(MenuRepositoryInterface $menu)
+    public function __construct()
     {
         parent::__construct();
-        $this->form = MenuForm::setAttributes()->toArray();
-        $this->modules = $this->modules(config('menu.modules'), 'menu', guard_url('menu'));
-        $this->repository = $menu;
+
+        $this->middleware(function ($request, $next) {
+            $this->form = MenuForm::grouped(false)
+                ->setAttributes()
+                ->toArray();
+            $this->modules = $this->modules(config('menu.modules'), 'menu', guard_url('menu'));
+            return $next($request);
+        });
     }
 
     /**
-     * Display a listing of the resource.
+     * Display a list of menu.
      *
      * @return Response
      */
-    public function index(MenuRequest $request, $parent = 1)
+    public function index(MenuResourceRequest $request)
     {
-        $pageLimit = $request->input('pageLimit', 10);
+        $request = $request->all();
+        $page = MenuActions::run('paginate', $request);
 
-        $parent = $this->repository->find(hashids_encode($parent));
-        $rootMenu = $this->repository->rootMenues();
-
+        $data = new MenusCollection($page);
+        $rootMenu = app(Menu::class)->rootMenues();
         $form = $this->form;
         $modules = $this->modules;
 
         return $this->response->setMetaTitle(trans('menu::menu.names'))
-            ->view('litepie.menu.admin.list')
-            ->data(compact('rootMenu', 'parent', 'modules', 'form'))
+            ->view('menu::admin.index')
+            ->data(compact('rootMenu', 'data', 'modules', 'form'))
+            ->output();
+
+    }
+
+    /**
+     * Display menu.
+     *
+     * @param Request $request
+     * @param Model   $menu
+     *
+     * @return Response
+     */
+    public function show(MenuResourceRequest $request, Menu $model)
+    {
+        $form = $this->form;
+        $modules = $this->modules;
+        $menu = new MenuResource($model);
+        return $this->response
+            ->setMetaTitle(trans('app.view') . ' ' . trans('menu::menu.name'))
+            ->data(compact('menu', 'form', 'modules'))
+            ->view('menu::admin.show')
             ->output();
     }
 
     /**
-     * Display the specified resource.
+     * Show the form for creating a new menu.
      *
      * @param Request $request
-     * @param int     $id
      *
      * @return Response
      */
-    public function show(MenuRequest $request, $parent = 1)
+    public function create(MenuResourceRequest $request, Menu $model)
     {
-        if ($request->ajax()) {
-            $menu = $parent->getModel();
-
-            Form::populate($menu);
-
-            return view('litepie.menu.admin.show', compact('menu'));
-        }
-
-        $rootMenu = $this->repository->rootMenues();
-
-        return $this->response->setMetaTitle(trans('menu::menu.names'))
-            ->view('litepie.menu.admin.index')
-            ->data(compact('rootMenu', 'parent'))
+        $form = $this->form;
+        $modules = $this->modules;
+        $data = new MenuResource($model);
+        return $this->response->setMetaTitle(trans('app.new') . ' ' . trans('menu::menu.name'))
+            ->view('menu::admin.create')
+            ->data(compact('data', 'form', 'modules'))
             ->output();
+
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Create new menu.
      *
      * @param Request $request
      *
      * @return Response
      */
-    public function create(MenuRequest $request, MenuRepositoryInterface $menu)
-    {
-        $menu = $this->repository->newInstance([]);
-
-        Form::populate($menu);
-
-        return view('litepie.menu.admin.create', compact('menu'));
-    }
-
-    /**
-     * Create the specified resource.
-     *
-     * @param Request $request
-     *
-     * @return Response
-     */
-    public function store(MenuRequest $request)
+    public function store(MenuResourceRequest $request, Menu $model)
     {
         try {
-            $attributes = $request->all();
-            $menu = $this->repository->create($attributes);
-            $menu = $menu->getModel();
-
-            return $this->response
-                ->message(trans('messages.success.created', ['Module' => trans('menu::menu.name')]))
+            $request = $request->all();
+            $model = MenuAction::run('store', $model, $request);
+            $data = new MenuResource($model);
+            return $this->response->message(trans('messages.success.created', ['Module' => trans('menu::menu.name')]))
                 ->code(204)
+                ->data(compact('data'))
                 ->status('success')
-                ->url(guard_url('menu/menu/'.$menu->getRouteKey()))
+                ->url(guard_url('menu/menu/' . $model->getRouteKey()))
                 ->redirect();
         } catch (Exception $e) {
-            return $this->response
-                ->message($e->getMessage())
+            return $this->response->message($e->getMessage())
                 ->code(400)
                 ->status('error')
-                ->url(guard_url('menu/menu'))
+                ->url(guard_url('/menu/menu'))
                 ->redirect();
         }
+
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * Show menu for editing.
      *
      * @param Request $request
-     * @param int     $id
+     * @param Model   $menu
      *
      * @return Response
      */
-    public function edit(MenuRequest $request, MenuRepositoryInterface $menu)
+    public function edit(MenuResourceRequest $request, Menu $model)
     {
-        $data['menu'] = $menu->getModel();
-        Form::populate($data['menu']);
+        $form = $this->form;
+        $modules = $this->modules;
+        $data = new MenuResource($model);
+        // return view('menu::admin.edit', compact('data', 'form', 'modules'));
 
-        return view('litepie.menu.admin.edit', $data);
+        return $this->response->setMetaTitle(trans('app.edit') . ' ' . trans('menu::menu.name'))
+            ->view('menu::admin.edit')
+            ->data(compact('data', 'form', 'modules'))
+            ->output();
+
     }
 
     /**
-     * Update the specified resource.
+     * Update the menu.
      *
      * @param Request $request
-     * @param int     $id
+     * @param Model   $menu
      *
      * @return Response
      */
-    public function update(MenuRequest $request, MenuRepositoryInterface $menu)
+    public function update(MenuResourceRequest $request, Menu $model)
     {
         try {
-            $attributes = $request->all();
-
-            $menu->update($attributes);
-            $menu = $menu->getModel();
+            $request = $request->all();
+            $model = MenuAction::run('update', $model, $request);
+            $data = new MenuResource($model);
 
             return $this->response->message(trans('messages.success.updated', ['Module' => trans('menu::menu.name')]))
                 ->code(204)
                 ->status('success')
-                ->url(guard_url('menu/menu/'.$menu->getRouteKey()))
+                ->data(compact('data'))
+                ->url(guard_url('menu/menu/' . $model->getRouteKey()))
                 ->redirect();
         } catch (Exception $e) {
             return $this->response->message($e->getMessage())
                 ->code(400)
                 ->status('error')
-                ->url(guard_url('menu/menu/'.$menu->getRouteKey()))
+                ->url(guard_url('menu/menu/' . $model->getRouteKey()))
                 ->redirect();
         }
+
     }
 
     /**
-     * Remove the specified resource.
+     * Remove the menu.
      *
-     * @param int $id
+     * @param Model   $menu
      *
      * @return Response
      */
-    public function destroy(MenuRequest $request, MenuRepositoryInterface $menu)
+    public function destroy(MenuResourceRequest $request, Menu $model)
     {
-        $cid = $menu->id;
-
-        if ($this->repository->where('parent_id', $cid)->count() > 0) {
-            return response()->json([
-                'message' => 'Child menu exists.',
-                'type'    => 'warning',
-                'title'   => 'Warning',
-            ], 409);
-        }
-        $data = $menu->toArray();
-
         try {
-            $menu->delete();
+            $request = $request->all();
+            MenuAction::run('destroy', $model, $request);
+            $data = new MenuResource($model);
 
             return $this->response->message(trans('messages.success.deleted', ['Module' => trans('menu::menu.name')]))
                 ->code(202)
                 ->status('success')
-                ->url(guard_url('menu/menu/'.$data['id']))
+                ->data(compact('data'))
+                ->url(guard_url('menu/menu/0'))
                 ->redirect();
+
         } catch (Exception $e) {
+
             return $this->response->message($e->getMessage())
                 ->code(400)
                 ->status('error')
-                ->url(guard_url('menu/menu/'.$data['id']))
+                ->url(guard_url('menu/menu/' . $model->getRouteKey()))
                 ->redirect();
         }
+
     }
 
     /**
@@ -213,18 +220,9 @@ class MenuResourceController extends BaseController
      *
      * @return type
      */
-    public function tree(MenuRequest $request, $id)
+    public function tree(MenuResourceRequest $request, Menu $model)
     {
-        $this->repository->updateTree($id, $request->get('tree'));
-    }
-
-    /**
-     * Display a listing of the resource.
-     *
-     * @return Response
-     */
-    public function nested(MenuRequest $request, $parent = 1)
-    {
-        $parent = $this->repository->all();
+        $request = $request->all();
+        $model = MenuAction::run('updateTree', $model, $request);
     }
 }

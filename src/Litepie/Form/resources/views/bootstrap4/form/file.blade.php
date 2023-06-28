@@ -1,5 +1,6 @@
 @php
-$name = Str::slug($name)
+$input = $name;
+$name = Str::slug($name, '-');
 @endphp
 @if($mode == 'show')
 <!-- Start image display for {!!$name!!} -->
@@ -11,11 +12,11 @@ $name = Str::slug($name)
         $ext  = strtolower($info['extension']);
     @endphp
     @if (in_array($ext, ['jpg','jpeg', 'png', 'gif']) )
-        <a href='{!! url("/image/{$largeSize}/".$file["path"])!!}' target="_blank">
-            <img src='{!! url("/image/{$thumbSize}/".$file["path"])!!}' class="img-thumbnail image-responsive">
+        <a href="{!! url('/image') !!}/{!! $file['disk'] !!}/{!!$largeSize!!}/{!! $file['path'] !!}" target="_blank">
+            <img src="{!! url('/image') !!}/{!! $file['disk'] !!}/{!!$thumbSize!!}/{!! $file['path'] !!}" class="img-thumbnail image-responsive">
         </a>
     @else
-        <a href='{{url('/file/download')}}/{!!$file["path"]!!}' target="_blank" class="show-file">{!!$file["file"]!!}</a><br/>
+        <a href="{!!url('/file/download')!!}/{!! $file['disk'] !!}/{!! $file['path'] !!}" target="_blank" class="show-file">{!!$file["file"]!!}</a><br/>
     @endif
 @endforeach
 @else
@@ -100,17 +101,18 @@ $(function () {
 <script id="template_{!!$name!!}_file" type="x-tmpl-mustache">
     <div class="file-box" id="image_box_@{{i}}">
         <div class="file-container">
-            <a href="{!!url("/file/download")!!}/@{{path}}" target="_blank" >
+            <a href="{!!url("/file/download")!!}/@{{disk}}/@{{path}}" target="_blank" >
                 @{{file}}
             </a> 
             <a href="#" class="remove-file">
                 <i class="fa fa-times"></i>
             </a>
         </div>                
-        <input class="form-control" type="hidden" name="{!!$name!!}[@{{i}}][folder]" value="@{{folder}}">
-        <input class="form-control" type="hidden" name="{!!$name!!}[@{{i}}][time]" value="@{{time}}">
-        <input class="form-control" type="hidden" name="{!!$name!!}[@{{i}}][path]" value="@{{path}}">
-        <input class="form-control" type="hidden" name="{!!$name!!}[@{{i}}][file]" value="@{{file}}">
+        <input class="form-control" type="hidden" name="{!!$input!!}[@{{i}}][disk]" value="@{{disk}}">
+        <input class="form-control" type="hidden" name="{!!$input!!}[@{{i}}][folder]" value="@{{folder}}">
+        <input class="form-control" type="hidden" name="{!!$input!!}[@{{i}}][time]" value="@{{time}}">
+        <input class="form-control" type="hidden" name="{!!$input!!}[@{{i}}][path]" value="@{{path}}">
+        <input class="form-control" type="hidden" name="{!!$input!!}[@{{i}}][file]" value="@{{file}}">
     </div>
 </script>
 
@@ -118,8 +120,8 @@ $(function () {
 <script id="template_{!!$name!!}_imag" type="x-tmpl-mustache">
     <div class="img-box" id="image_box_@{{i}}">
         <div class="img-container">
-            <a href='{!!url("/image")!!}/{{$largeSize}}/@{{path}}' target="_blank" >
-                <img src='{!!url("/image")!!}/{{$thumbSize}}/@{{path}}' class="img-responsive" alt="">
+            <a href='{!!url("/image")!!}/@{{disk}}/{{$largeSize}}/@{{path}}' target="_blank" >
+                <img src='{!!url("/image")!!}/@{{disk}}/{{$thumbSize}}/@{{path}}' class="img-responsive" alt="">
             </a>
             <div class="btn-container">
                 <a href="#" class="move-image">
@@ -146,34 +148,35 @@ $(function () {
                     <div class="row">
                         <div class="col-sm-3">
                             <div id="main-img">
-                                <img src='{!!url("/image/xs")!!}/@{{path}}' class="img-responsive" alt="">
+                                <img src='{!!url("/image")!!}/@{{disk}}/xs/@{{path}}' class="img-responsive" alt="">
                             </div>
                         </div>
                         <div class="col-sm-9">
                             <div class="form-group">
                                 <label for="{!!$name!!}_@{{i}}_title">Title</label>
-                                <input type="text" class="form-control" id="{!!$name!!}_@{{i}}_title" type="text" name="{!!$name!!}[@{{i}}][title]" value="@{{title}}" placeholder="Image Title">
+                                <input type="text" class="form-control" id="{!!$name!!}_@{{i}}_title" type="text" name="{!!$input!!}[@{{i}}][title]" value="@{{title}}" placeholder="Image Title">
                             </div>
                             <div class="form-group">
                                 <label for="{!!$name!!}_@{{i}}_caption">Caption</label>
-                                <input type="text" class="form-control" id="{!!$name!!}_@{{i}}_caption" type="text" name="{!!$name!!}[@{{i}}][caption]" value="@{{caption}}" placeholder="Image Caption">
+                                <input type="text" class="form-control" id="{!!$name!!}_@{{i}}_caption" type="text" name="{!!$input!!}[@{{i}}][caption]" value="@{{caption}}" placeholder="Image Caption">
                             </div>
                             <div class="form-group">
                                 <label for="{!!$name!!}_@{{i}}_url">Url</label>
-                                <input type="text" class="form-control" id="{!!$name!!}_@{{i}}_url" type="text" name="{!!$name!!}[@{{i}}][url]" value="@{{url}}" placeholder="Image URL">
+                                <input type="text" class="form-control" id="{!!$name!!}_@{{i}}_url" type="text" name="{!!$input!!}[@{{i}}][url]" value="@{{url}}" placeholder="Image URL">
                             </div>
                             <div class="form-group">
                                 <label for="{!!$name!!}_@{{i}}_desc">Description</label>
-                                <textarea class="form-control" id="{!!$name!!}_@{{i}}_desc" type="text" name="{!!$name!!}[@{{i}}][desc]" placeholder="Image Description" rows="5">@{{desc}}</textarea>
+                                <textarea class="form-control" id="{!!$name!!}_@{{i}}_desc" type="text" name="{!!$input!!}[@{{i}}][desc]" placeholder="Image Description" rows="5">@{{desc}}</textarea>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <input class="form-control" type="hidden" name="{!!$name!!}[@{{i}}][folder]" value="@{{folder}}">
-                    <input class="form-control" type="hidden" name="{!!$name!!}[@{{i}}][time]" value="@{{time}}">
-                    <input class="form-control" type="hidden" name="{!!$name!!}[@{{i}}][path]" value="@{{path}}">
-                    <input class="form-control" type="hidden" name="{!!$name!!}[@{{i}}][file]" value="@{{file}}">
+                    <input type="hidden" name="{!!$input!!}[@{{i}}][disk]" value="@{{disk}}">
+                    <input type="hidden" name="{!!$input!!}[@{{i}}][folder]" value="@{{folder}}">
+                    <input type="hidden" name="{!!$input!!}[@{{i}}][time]" value="@{{time}}">
+                    <input type="hidden" name="{!!$input!!}[@{{i}}][path]" value="@{{path}}">
+                    <input type="hidden" name="{!!$input!!}[@{{i}}][file]" value="@{{file}}">
                     <button type="button" class="btn btn-primary"  data-dismiss="modal">Save &amp close</button>
                 </div>
                 </div>

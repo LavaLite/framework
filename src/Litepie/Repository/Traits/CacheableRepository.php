@@ -122,7 +122,7 @@ trait CacheableRepository
         $request = app('Illuminate\Http\Request');
         $args = serialize($args);
         $criteria = $this->serializeCriteria();
-        $key = sprintf('%s@%s-%s', get_called_class(), $method, md5($args.$criteria.$request->fullUrl()));
+        $key = sprintf('%s@%s-%s', get_called_class(), $method, md5($args . $criteria . $request->fullUrl()));
 
         CacheKeys::putKey(get_called_class(), $key);
 
@@ -157,9 +157,7 @@ trait CacheableRepository
     protected function serializeCriterion($criterion)
     {
         try {
-            serialize($criterion);
-
-            return $criterion;
+            return serialize($criterion);
         } catch (Exception $e) {
             // We want to take care of the closure serialization errors,
             // other than that we will simply re-throw the exception.
@@ -170,7 +168,7 @@ trait CacheableRepository
             $r = new ReflectionObject($criterion);
 
             return [
-                'hash'       => md5((string) $r),
+                'hash' => md5((string) $r),
                 'properties' => $r->getProperties(),
             ];
         }

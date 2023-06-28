@@ -74,6 +74,9 @@ abstract class FormInterpreter
         $item = collect(self::$fields)->map(function ($val) {
             $val['label'] = trans($val['label']);
             $val['placeholder'] = trans($val['placeholder']);
+            if (isset($val['options']) && is_callable($val['options'])) {
+                $val['options'] = call_user_func($val['options']);
+            }
             return $val;
         });
 
@@ -81,13 +84,21 @@ abstract class FormInterpreter
             return $item;
         }
 
-        return $item->groupBy(['group'], true);
+        if (self::$grouped === true || self::$grouped == 1) {
+            return $item->groupBy(['group'], true);
+        }
+
+        if (self::$grouped == 2) {
+            return $item->groupBy(['group', 'section'], true);
+        }
+
     }
 
     public static function groups()
     {
         foreach (self::$groups as $key => $val) {
-            self::$groups[$key] = trans($val);
+            self::$groups[$key]['name'] = trans($val['name']);
+            self::$groups[$key]['title'] = trans($val['title']);
         }
         return self::$groups;
     }
@@ -131,13 +142,13 @@ abstract class FormInterpreter
     public static function toArray()
     {
         return [
-            'urls' => self::urls(),
-            'list' => self::list(),
-            'search' => self::search(),
-            'orderBy' => self::orderBy(),
+            'urls' => static::urls(),
+            'list' => static::list(),
+            'search' => static::search(),
+            'orderBy' => static::orderBy(),
 
-            'groups' => self::groups(),
-            'fields' => self::fields()->toArray(),
+            'groups' => static::groups(),
+            'fields' => static::fields()->toArray(),
         ];
     }
 }

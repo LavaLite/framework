@@ -2,15 +2,15 @@
 
 namespace Litepie\Menu;
 
-use Litepie\Menu\Interfaces\MenuRepositoryInterface;
+use Litepie\Menu\Models\Menu as MenuModel;
 
 class Menu
 {
     protected $model;
 
-    public function __construct(MenuRepositoryInterface $menu)
+    public function __construct()
     {
-        $this->model = $menu;
+        $this->model = app(MenuModel::class);
     }
 
     public function model()
@@ -23,11 +23,11 @@ class Menu
         $menus = $this->model->getMenu($key);
 
         if (is_null($view)) {
-            $view = 'litepie.menu.menu.'.$key;
+            $view = 'menu::menu.'.$key;
         }
 
         if (!view()->exists($view)) {
-            $view = 'litepie.menu.menu.default';
+            $view = 'menu::menu.default';
         }
 
         return view($view, compact('menus'));

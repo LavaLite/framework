@@ -3,28 +3,49 @@
 namespace Litepie\Notification\Models;
 
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Litepie\Actions\Traits\Actionable;
 use Litepie\Database\Model;
+use Litepie\Database\Traits\Scopable;
+use Litepie\Database\Traits\Sluggable;
+use Litepie\Database\Traits\Sortable;
+use Litepie\Filer\Traits\Filer;
 use Litepie\Hashids\Traits\Hashids;
-use Litepie\Repository\Traits\PresentableTrait;
+use Litepie\Trans\Traits\Translatable;
+use Litepie\Workflow\Traits\Workflowable;
 
 class Notification extends Model
 {
-    use SoftDeletes;
+    use Filer;
     use Hashids;
-    use PresentableTrait;
+    use Sluggable;
+    use SoftDeletes;
+    use Sortable;
+    use Translatable;
+    use Scopable;
+    use Actionable;
+    use Workflowable;
 
     /**
      * Configuartion for the model.
      *
      * @var array
      */
-    protected $config = 'litepie.alerts.notification';
+     protected $config = 'litepie.notification.notification.model';
+
 
     /**
-     * Get the notifiable entity that the notification belongs to.
+     * The array of searchable fields.
+     * 
+     * @var array
      */
-    public function notifiable()
+    public $search = 'litepie.notification.notification.model.search';
+
+    /*
+     * Get the model that the creator belongs to.
+     */
+    public function owner()
     {
-        return $this->morphTo();
+        return $this->morphTo(__FUNCTION__, 'user_type', 'user_id');
     }
+
 }

@@ -3,6 +3,7 @@
 namespace Litepie\Filer;
 
 use Illuminate\Support\ServiceProvider;
+use Intervention\Image\ImageManager;
 
 class FilerServiceProvider extends ServiceProvider
 {
@@ -21,7 +22,6 @@ class FilerServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->loadViewsFrom(__DIR__.'/views', 'filer');
-        $this->app->register('\Litepie\Filer\ImageServiceProvider');
         $this->publishResources();
     }
 
@@ -33,12 +33,20 @@ class FilerServiceProvider extends ServiceProvider
     public function register()
     {
         $this->mergeConfigFrom(__DIR__.'/config.php', 'filer');
+        $this->mergeConfigFrom(__DIR__.'/image.php', 'image');
 
         $this->app->bind('filer', function ($app) {
             return new \Litepie\Filer\Filer();
         });
 
         $this->app->register(\Litepie\Filer\Providers\RouteServiceProvider::class);
+
+        // create image
+        $this->app->singleton('image', function ($app) {
+            return new ImageManager($app['config']->get('image'));
+        });
+
+        $this->app->alias('Image', 'Intervention\Image\ImageManager');
     }
 
     /**

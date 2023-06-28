@@ -47,7 +47,7 @@ trait InputGroup
      */
     public function prepend($prepend)
     {
-        if (!empty($append)) {
+        if (!empty($prepend)) {
             $this->prepend[] = $prepend;
         }
 

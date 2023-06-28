@@ -3,51 +3,133 @@
 return [
     /*
     |--------------------------------------------------------------------------
-    | Language files for Menus Module
+    | Language files for menu in menu package
     |--------------------------------------------------------------------------
     |
-    | The following language lines are the default for menus module,
-    | and it is used by the /view files in this module
+    | The following language lines are  for  menu module in menu package
+    | and it is used by the template/view files in this module
     |
+    */
+
+    /**
+     * Singlular and plural name of the module
      */
-    'name'        => 'Menu',
-    'names'       => 'Menus',
-    'subname'     => 'Sub Menu',
+    'name' => 'Menu',
+    'names' => 'Menus',
+    'icon' => 'las la-list',
 
-    'options'     => [
-        'status' => ['Hide' => 'Hide', 'Show' => 'Show'],
-        'target' => [
-            '_self'  => 'Same window',
-            '_blank' => 'New window',
-        ],
+    /**
+     * Singlular and plural name of the module
+     */
+    'title' => [
+        'main' => 'Menus',
+        'sub' => 'Menus'
+    ],
 
+    /**
+     * Singlular and plural name of the module
+     */
+    'groups'         => [
+        'main' => 'Main',
+        'images' => 'Images',
+        'details' => 'Details',
+        'settings' => 'Settings'
     ],
-    'placeholder' => [
-        'parent'      => 'Enter Parent',
-        'uname'       => 'Enter Uname',
-        'url'         => 'Enter url',
-        'status'      => 'Enter Status',
-        'role'        => 'Enter role required to access the menu',
-        'order'       => 'Enter Order',
-        'target'      => 'Select open in',
-        'name'        => 'Enter Name',
-        'description' => 'Enter Description',
-        'key'         => 'Enter Key',
-        'icon'        => 'Enter Icon Class',
+
+    /**
+     * Form sub section name for the module.
+     */
+    'sections' => [
+        'main' => 'Main',
+        'details' => 'Details',
     ],
-    'label'       => [
-        'parent_id'   => 'Parent',
-        'uname'       => 'Uname',
-        'url'         => 'Url',
-        'status'      => 'Status',
-        'role'        => 'Select role',
-        'order'       => 'Menu Order',
-        'target'      => 'Open in',
-        'name'        => 'Name',
-        'description' => 'Description',
-        'key'         => 'Key',
-        'has_sub'     => 'Has Sub',
-        'icon'        => 'Icon',
-        'submenu'     => 'Sub menu',
+
+    /**
+     * Options for select/radio/check.
+     */
+    'options'       => [
+        'target' => 
+            [
+                                
+                [
+                    'key'    => '_blank',
+                    'value'  => '_blank',
+                    'text'   => '_blank',
+                ],
+                                
+                [
+                    'key'    => '_self',
+                    'value'  => '_self',
+                    'text'   => '_self',
+                ],
+                                
+            ],
+
+        'status' => 
+            [
+                                
+                [
+                    'key'    => 'Show',
+                    'value'  => 'Show',
+                    'text'   => 'Show',
+                ],
+                                
+                [
+                    'key'    => 'Hide',
+                    'value'  => 'Hide',
+                    'text'   => 'Hide',
+                ],
+                                
+            ],
     ],
-];
+
+    /**
+     * Placeholder for inputs
+     */
+    'placeholder'   => [
+        'id'                         => 'Please enter id',
+        'parent_id'                  => 'Please enter parent id',
+        'key'                        => 'Please enter key',
+        'url'                        => 'Please enter url',
+        'icon'                       => 'Please enter icon',
+        'permission'                 => 'Please enter permission',
+        'role'                       => 'Please enter role',
+        'name'                       => 'Please enter name',
+        'description'                => 'Please enter description',
+        'target'                     => 'Please select target',
+        'order'                      => 'Please enter order',
+        'uload_folder'               => 'Please enter uload folder',
+        'slug'                       => 'Please enter slug',
+        'status'                     => 'Please select status',
+        'upload_folder'              => 'Please enter upload folder',
+        'deleted_at'                 => 'Please select deleted at',
+        'created_at'                 => 'Please select created at',
+        'updated_at'                 => 'Please select updated at',
+    ],
+
+    /**
+     * Labels for inputs.
+     */
+    'label'         => [
+        'id'                         => 'Id',
+        'parent_id'                  => 'Parent id',
+        'key'                        => 'Key',
+        'url'                        => 'Url',
+        'icon'                       => 'Icon',
+        'permission'                 => 'Permission',
+        'role'                       => 'Role',
+        'name'                       => 'Name',
+        'description'                => 'Description',
+        'target'                     => 'Target',
+        'order'                      => 'Order',
+        'uload_folder'               => 'Uload folder',
+        'slug'                       => 'Slug',
+        'status'                     => 'Status',
+        'upload_folder'              => 'Upload folder',
+        'deleted_at'                 => 'Deleted at',
+        'created_at'                 => 'Created at',
+        'updated_at'                 => 'Updated at',
+    ],
+
+    
+    ];

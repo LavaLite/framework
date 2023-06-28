@@ -26,7 +26,6 @@ class LocalizeRoutes extends LaravelLocalizationMiddlewareBase
         $app = app();
 
         $routeName = $app['trans']->getRouteNameFromAPath($request->getUri());
-
         $app['trans']->setRouteName($routeName);
 
         return $next($request);

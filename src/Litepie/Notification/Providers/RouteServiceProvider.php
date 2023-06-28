@@ -3,6 +3,9 @@
 namespace Litepie\Notification\Providers;
 
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
+
+use Litepie\Notification\Models\Notification;
+
 use Request;
 use Route;
 
@@ -20,21 +23,20 @@ class RouteServiceProvider extends ServiceProvider
     /**
      * Define your route model bindings, pattern filters, etc.
      *
-     * @param \Illuminate\Routing\Router $router
-     *
+     * @param   \Illuminate\Routing\Router  $router
      * @return void
      */
     public function boot()
     {
         parent::boot();
 
-        if (Request::is('*/alerts/notification/*')) {
+        
+        if (Request::is('*/notification/notification/*')) {
             Route::bind('notification', function ($notification) {
-                $notificationrepo = $this->app->make(\Litepie\Notification\Interfaces\NotificationRepositoryInterface::class);
-
-                return $notificationrepo->findorNew($notification);
+                return Notification::findorNew($notification);
             });
         }
+
     }
 
     /**
@@ -46,9 +48,7 @@ class RouteServiceProvider extends ServiceProvider
     {
         $this->mapWebRoutes();
 
-        // $this->mapApiRoutes();
-
-        //
+        $this->mapApiRoutes();
     }
 
     /**
@@ -59,13 +59,12 @@ class RouteServiceProvider extends ServiceProvider
      * @return void
      */
     protected function mapWebRoutes()
-    {
+    {   
         Route::group([
             'middleware' => 'web',
             'namespace'  => $this->namespace,
-            'prefix'     => trans_setlocale(),
         ], function ($router) {
-            require __DIR__.'/../routes/web.php';
+            require (__DIR__ . '/../routes/web.php');
         });
     }
 
@@ -80,10 +79,11 @@ class RouteServiceProvider extends ServiceProvider
     {
         Route::group([
             'middleware' => 'api',
-            'namespace'  => $this->namespace.'\Api',
-            'prefix'     => trans_setlocale().'/api',
+            'namespace'  => $this->namespace,
+            'prefix'     => 'api',
         ], function ($router) {
-            require __DIR__.'/../routes/api.php';
+            require (__DIR__ . '/../routes/api.php');
         });
     }
+
 }

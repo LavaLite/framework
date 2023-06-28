@@ -17,6 +17,7 @@
   </div>
   @endif
 </div>
+
 @else
 <input type="{{$type}}" class="{!!$attributes['element.class'] ?: 'form-control'!!}" id="{{$id}}" value="{{$value}}" name="{{$name}}" placeholder="{{$placeholder}}" {!!$attributes['element.attribute']!!}>
 @endif

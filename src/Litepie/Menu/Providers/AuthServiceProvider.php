@@ -2,6 +2,7 @@
 
 namespace Litepie\Menu\Providers;
 
+use Illuminate\Contracts\Auth\Access\Gate as GateContract;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 
 class AuthServiceProvider extends ServiceProvider
@@ -13,7 +14,8 @@ class AuthServiceProvider extends ServiceProvider
      */
     protected $policies = [
         // Bind Menu policy
-        \Litepie\Menu\Repositories\Eloquent\MenuRepository::class => \Litepie\Menu\Policies\MenuPolicy::class,
+        \Litepie\Menu\Models\Menu::class 
+        => \Litepie\Menu\Policies\MenuPolicy::class,
     ];
 
     /**
@@ -23,8 +25,8 @@ class AuthServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function boot()
+    public function boot(GateContract $gate)
     {
-        $this->registerPolicies();
+        parent::registerPolicies($gate);
     }
 }

@@ -2,86 +2,114 @@
 
 namespace Litepie\Notification\Policies;
 
+use Litepie\User\Interfaces\UserPolicyInterface;
 use Litepie\Notification\Models\Notification;
-use Litepie\User\Models\User;
 
 class NotificationPolicy
 {
+
+
     /**
      * Determine if the given user can view the notification.
      *
-     * @param User         $user
+     * @param UserPolicyInterface $authUser
      * @param Notification $notification
      *
      * @return bool
      */
-    public function view(User $user, Notification $notification)
+    public function view(UserPolicyInterface $authUser, Notification $notification)
     {
-        if ($user->canDo('alerts.notification.view') && $user->isAdmin()) {
+        if ($authUser->canDo('notification.notification.view') && $authUser->isAdmin()) {
             return true;
         }
 
-        return $user->id == $notification->user_id;
+        return $notification->user_id == user_id() && $notification->user_type == user_type();
     }
 
     /**
      * Determine if the given user can create a notification.
      *
-     * @param User         $user
-     * @param Notification $notification
+     * @param UserPolicyInterface $authUser
      *
      * @return bool
      */
-    public function create(User $user)
+    public function create(UserPolicyInterface $authUser)
     {
-        return $user->canDo('alerts.notification.create');
+        return  $authUser->canDo('notification.notification.create');
     }
 
     /**
      * Determine if the given user can update the given notification.
      *
-     * @param User         $user
+     * @param UserPolicyInterface $authUser
      * @param Notification $notification
      *
      * @return bool
      */
-    public function update(User $user, Notification $notification)
+    public function update(UserPolicyInterface $authUser, Notification $notification)
     {
-        if ($user->canDo('alerts.notification.update') && $user->isAdmin()) {
+        if ($authUser->canDo('notification.notification.edit') && $authUser->isAdmin()) {
             return true;
         }
 
-        return $user->id == $notification->user_id;
+        return $notification->user_id == user_id() && $notification->user_type == user_type();
     }
 
     /**
      * Determine if the given user can delete the given notification.
      *
-     * @param User         $user
-     * @param Notification $notification
+     * @param UserPolicyInterface $authUser
      *
      * @return bool
      */
-    public function destroy(User $user, Notification $notification)
+    public function destroy(UserPolicyInterface $authUser, Notification $notification)
     {
-        if ($user->canDo('alerts.notification.delete') && $user->isAdmin()) {
-            return true;
-        }
-
-        return $user->id == $notification->user_id;
+        return $notification->user_id == user_id() && $notification->user_type == user_type();
     }
 
     /**
-     * Determine if the user can perform a given alerts ve.
+     * Determine if the given user can verify the given notification.
      *
-     * @param [type] $user    [description]
+     * @param UserPolicyInterface $authUser
+     *
+     * @return bool
+     */
+    public function verify(UserPolicyInterface $authUser, Notification $notification)
+    {
+        if ($authUser->canDo('notification.notification.verify')) {
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
+     * Determine if the given user can approve the given notification.
+     *
+     * @param UserPolicyInterface $authUser
+     *
+     * @return bool
+     */
+    public function approve(UserPolicyInterface $authUser, Notification $notification)
+    {
+        if ($authUser->canDo('notification.notification.approve')) {
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
+     * Determine if the user can perform a given action ve.
+     *
+     * @param [type] $authUser    [description]
      * @param [type] $ability [description]
      *
      * @return [type] [description]
      */
-    public function before($user, $ability)
+    public function before($authUser, $ability)
     {
-        if ($user->isSuperuser()) {
+        if ($authUser->isSuperuser()) {
             return true;
         }
     }

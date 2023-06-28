@@ -3,10 +3,8 @@
 namespace Litepie\Workflow;
 
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Contracts\Events\Dispatcher;
 
-/**
- * @author Boris Koumondji <brexis@yahoo.fr>
- */
 class WorkflowServiceProvider extends ServiceProvider
 {
     protected $commands = [
@@ -20,9 +18,10 @@ class WorkflowServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        $configPath = __DIR__.'/../config/config.php';
 
-        $this->publishes([$configPath => config_path('workflow.php')], 'config');
+        $this->publishes([
+            __DIR__ . "/config/config.php" => config_path('workflow.php'),
+        ], 'config');
     }
 
     /**
@@ -32,14 +31,17 @@ class WorkflowServiceProvider extends ServiceProvider
      */
     public function register()
     {
+        $this->mergeConfigFrom(
+            __DIR__ . '/config/config.php',
+            'workflow'
+        );
+
         $this->commands($this->commands);
 
-        $this->app->singleton(
-            'workflow',
-            function ($app) {
-                return new WorkflowRegistry();
-            }
-        );
+        $this->app->singleton('workflow', function ($app) {
+            $registryConfig = $app->make('config')->get('workflow');
+            return new WorkflowRegistry($registryConfig, $app->make(Dispatcher::class));
+        });
     }
 
     /**

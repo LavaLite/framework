@@ -1,17 +1,17 @@
 <?php
 
-// Admin routes  for notification
-Route::group(['prefix' => set_route_guard('web').'/alerts'], function () {
-    Route::resource('notification', 'NotificationResourceController');
-});
+// API routes  for notification.
 
-// User routes for notification
-Route::group(['prefix' => 'user/alerts'], function () {
-    Route::resource('notification', 'NotificationUserController');
-});
+include('routes.php');
 
-// Public routes for notification
-Route::group(['prefix' => 'alerts'], function () {
-    Route::get('/', 'NotificationPublicController@index');
-    Route::get('/{slug?}', 'NotificationPublicController@show');
-});
+if (Trans::isMultilingual()) {
+    Route::group(
+        [
+            'prefix' => '{trans}',
+            'where'  => ['trans' => Trans::keys('|')],
+        ],
+        function () {
+            include('routes.php');
+        }
+    );
+}

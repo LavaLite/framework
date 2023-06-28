@@ -389,7 +389,6 @@ class Theme
     public function fire($event, $args)
     {
         $onEvent = $this->getConfig('events.'.$event);
-
         if ($onEvent instanceof Closure) {
             $onEvent($args);
         }
@@ -937,7 +936,6 @@ class Theme
     {
         // Layout.
         $layout = ucfirst($this->layout);
-
         // Fire event global assets.
         $this->fire('asset', $this->asset);
 

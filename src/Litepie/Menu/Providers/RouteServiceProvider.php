@@ -3,6 +3,9 @@
 namespace Litepie\Menu\Providers;
 
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
+
+use Litepie\Menu\Models\Menu;
+
 use Request;
 use Route;
 
@@ -20,29 +23,26 @@ class RouteServiceProvider extends ServiceProvider
     /**
      * Define your route model bindings, pattern filters, etc.
      *
-     * @param \Illuminate\Routing\Router $router
-     *
+     * @param   \Illuminate\Routing\Router  $router
      * @return void
      */
     public function boot()
     {
         parent::boot();
 
+        
         if (Request::is('*admin/menu/menu/*')) {
             Route::bind('menu', function ($menu) {
-                $menuRepo = $this->app->make('Litepie\Menu\Interfaces\MenuRepositoryInterface');
-
-                return $menuRepo->findorNew($menu);
+                return Menu::findorNew($menu);
             });
         }
-
+        
         if (Request::is('*admin/menu/submenu/*')) {
             Route::bind('submenu', function ($submenu) {
-                $menuRepo = $this->app->make('Litepie\Menu\Interfaces\MenuRepositoryInterface');
-
-                return $menuRepo->findorNew($submenu);
+                return Menu::findorNew($submenu);
             });
         }
+
     }
 
     /**
@@ -53,7 +53,8 @@ class RouteServiceProvider extends ServiceProvider
     public function map()
     {
         $this->mapWebRoutes();
-        // $this->mapApiRoutes();
+
+        $this->mapApiRoutes();
     }
 
     /**
@@ -64,19 +65,19 @@ class RouteServiceProvider extends ServiceProvider
      * @return void
      */
     protected function mapWebRoutes()
-    {
+    {   
         Route::group([
             'middleware' => 'web',
             'namespace'  => $this->namespace,
         ], function ($router) {
-            require __DIR__.'/../routes/web.php';
+            require (__DIR__ . '/../routes/web.php');
         });
     }
 
     /**
-     * Define the "web" routes for the package.
+     * Define the "api" routes for the package.
      *
-     * These routes all receive session state, CSRF protection, etc.
+     * These routes are typically stateless.
      *
      * @return void
      */
@@ -85,8 +86,10 @@ class RouteServiceProvider extends ServiceProvider
         Route::group([
             'middleware' => 'api',
             'namespace'  => $this->namespace,
+            'prefix'     => 'api',
         ], function ($router) {
-            require __DIR__.'/../routes/api.php';
+            require (__DIR__ . '/../routes/api.php');
         });
     }
+
 }

@@ -29,11 +29,16 @@ class ResourceController extends Controller
      */
     public function __construct()
     {
-        $this->setGuard();
-        $this->response = app(ResourceResponse::class);
-        $this->middleware('auth:'.guard());
-        $this->layout = 'app';
-        $this->setTheme();
+        $this->middleware('set.guard');
+        $this->middleware('auth');
+        $this->middleware('localize.route');
+        $this->middleware(function ($request, $next) {
+            $this->response = app(ResourceResponse::class);
+            $this->layout = 'app';
+            $this->setTheme();
+            return $next($request);
+        });
+
     }
 
     /**

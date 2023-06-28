@@ -2,22 +2,28 @@
 
 namespace Litepie\Team\Policies;
 
-use Litepie\Team\Interfaces\TeamRepositoryInterface;
 use Litepie\User\Interfaces\UserPolicyInterface;
+use Litepie\Team\Models\Team;
 
 class TeamPolicy
 {
+
+
     /**
      * Determine if the given user can view the team.
      *
-     * @param UserPolicyInterface     $authUser
-     * @param TeamRepositoryInterface $team
+     * @param UserPolicyInterface $authUser
+     * @param Team $team
      *
      * @return bool
      */
-    public function view(UserPolicyInterface $authUser, TeamRepositoryInterface $team)
+    public function view(UserPolicyInterface $authUser, Team $team)
     {
-        return false;
+        if ($authUser->canDo('team.team.view') && $authUser->isAdmin()) {
+            return true;
+        }
+
+        return $team->user_id == user_id() && $team->user_type == user_type();
     }
 
     /**
@@ -29,20 +35,24 @@ class TeamPolicy
      */
     public function create(UserPolicyInterface $authUser)
     {
-        return false;
+        return  $authUser->canDo('team.team.create');
     }
 
     /**
      * Determine if the given user can update the given team.
      *
-     * @param UserPolicyInterface     $authUser
-     * @param TeamRepositoryInterface $team
+     * @param UserPolicyInterface $authUser
+     * @param Team $team
      *
      * @return bool
      */
-    public function update(UserPolicyInterface $authUser, TeamRepositoryInterface $team)
+    public function update(UserPolicyInterface $authUser, Team $team)
     {
-        return false;
+        if ($authUser->canDo('team.team.edit') && $authUser->isAdmin()) {
+            return true;
+        }
+
+        return $team->user_id == user_id() && $team->user_type == user_type();
     }
 
     /**
@@ -52,8 +62,40 @@ class TeamPolicy
      *
      * @return bool
      */
-    public function destroy(UserPolicyInterface $authUser, TeamRepositoryInterface $team)
+    public function destroy(UserPolicyInterface $authUser, Team $team)
     {
+        return $team->user_id == user_id() && $team->user_type == user_type();
+    }
+
+    /**
+     * Determine if the given user can verify the given team.
+     *
+     * @param UserPolicyInterface $authUser
+     *
+     * @return bool
+     */
+    public function verify(UserPolicyInterface $authUser, Team $team)
+    {
+        if ($authUser->canDo('team.team.verify')) {
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
+     * Determine if the given user can approve the given team.
+     *
+     * @param UserPolicyInterface $authUser
+     *
+     * @return bool
+     */
+    public function approve(UserPolicyInterface $authUser, Team $team)
+    {
+        if ($authUser->canDo('team.team.approve')) {
+            return true;
+        }
+
         return false;
     }
 

@@ -11,9 +11,7 @@ namespace Litepie\User;
 
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Contracts\Foundation\Application;
-use Litepie\Roles\Interfaces\PermissionRepositoryInterface;
-use Litepie\Roles\Interfaces\RoleRepositoryInterface;
-use Litepie\User\Interfaces\UserRepositoryInterface;
+use Litepie\User\Models\User as ModelsUser;
 
 /**
  * User wrapper class.
@@ -29,6 +27,11 @@ class User
      * @var User repository variable
      */
     protected $user;
+    
+    /**
+     * @var User model 
+     */
+    protected $model;
 
     /**
      * @var permission repository variable
@@ -48,31 +51,11 @@ class User
      * @param \Litepie\Contracts\User\PermissionRepository $permission
      */
     public function __construct(
-        Application $app,
-        UserRepositoryInterface $user,
-        RoleRepositoryInterface $role,
-        PermissionRepositoryInterface $permission
+        Application $app
     ) {
         $this->app = $app;
-        $this->user = $user;
-        $this->role = $role;
-        $this->permission = $permission;
-    }
+        $this->model = app(ModelsUser::class);
 
-    /**
-     * Registers a user by giving the required credentials
-     * and an optional flag for whether to activate the user.
-     *
-     * @param array $credentials
-     * @param bool  $activate
-     *
-     * @return \Litepie\Contracts\User\User
-     */
-    public function create(array $credentials, $active = false)
-    {
-        $credentials = $credentials + ['active' => $active];
-
-        return $this->user->create($credentials);
     }
 
     /**
@@ -174,30 +157,6 @@ class User
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Collection
-     */
-    public function permissions()
-    {
-        return $this->permission->getList('name', 'id');
-    }
-
-    /**
-     * @return \Illuminate\Database\Eloquent\Collection
-     */
-    public function roles()
-    {
-        return $this->role->pluck('name', 'id')->all();
-    }
-
-    /**
-     * @return \Illuminate\Database\Eloquent\Collection
-     */
-    public function teams()
-    {
-        return $this->team->pluck('name', 'id')->all();
-    }
-
-    /**
      * Returns the specific details of current user.
      *
      * @return mixed
@@ -207,26 +166,6 @@ class User
         if (!is_null($this->user())) {
             return $this->user()->$field;
         }
-    }
-
-    /**
-     * Return all users.
-     *
-     * @return Collection
-     */
-    public function all()
-    {
-        return $this->user->all();
-    }
-
-    /**
-     * Activate a user with given id.
-     *
-     * @return bool
-     */
-    public function activate($id)
-    {
-        return $this->user->activate($id);
     }
 
     /**
@@ -257,7 +196,7 @@ class User
         $guards = $this->guard();
         $prefix = current(explode('.', $guards));
 
-        return $prefix.'/'.trim($url, '/\\');
+        return $prefix . '/' . trim($url, '/\\');
     }
 
     /**
@@ -268,15 +207,30 @@ class User
     public function guard($guard = null)
     {
         if (empty($guard)) {
-            return config('guard', config('auth.defaults.guard'));
+            return config('global.guard');
         } else {
-            config(['guard' => $guard]);
+            config(['global.guard' => $guard]);
             app('auth')->shouldUse($guard);
         }
     }
 
-    public function getUserByRole($role)
+    /**
+     * Returns of users.
+     *
+     * @param array $filter
+     *
+     * @return int
+     */
+    public function select()
     {
-        return $this->user->getUserByRole($role);
+        $rows = $this->model->all();
+        return $rows->map(function ($item, int $key) {
+            return [
+                'text' => $item->name,
+                'key' => $item->id,
+                'value' => $item->id,
+            ];
+        })->toArray();
+
     }
 }

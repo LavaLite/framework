@@ -14,10 +14,9 @@ class PackgeAssets implements SetupScript
         'Block'    => \Litepie\Block\BlockServiceProvider::class,
         'Calendar' => \Litepie\Calendar\CalendarServiceProvider::class,
         'Contact'  => \Litepie\Contact\ContactServiceProvider::class,
-        'Menu'     => \Litepie\Menu\MenuServiceProvider::class,
         'Message'  => \Litepie\Message\MessageServiceProvider::class,
         'Page'     => \Litepie\Page\PageServiceProvider::class,
-        'Settings' => \Litepie\Settings\SettingsServiceProvider::class,
+        'Settings' => \Litepie\Setting\SettingsServiceProvider::class,
         'Task'     => \Litepie\Task\TaskServiceProvider::class,
         'User'     => \Litepie\User\UserServiceProvider::class,
     ];

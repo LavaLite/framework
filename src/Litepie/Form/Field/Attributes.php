@@ -28,13 +28,8 @@ trait Attributes
      */
     private function initAttributes()
     {
-        $attributes = config('form.' . $this->framework() . '.attributes.class.default');
-        $attribute['element']['class'] = $attributes['element'];
-        $attribute['label']['class'] = $attributes['label'];
-        $attribute['wrapper']['class'] = $attributes['wrapper'];
-        $this->_attributes = $attribute;
+        $this->_attributes = [];
     }
-
     /**
      * Ponders a label and a field name, and tries to get the best out of it.
      *
@@ -47,7 +42,7 @@ trait Attributes
     {
         $attribute = Str::snake($name, '-');
         if ($attribute == 'attributes') {
-            return $this->_attrubute($value);
+            return $this->_attribute($value);
         }
         $target = empty($target) ? 'element' : $target;
         $this->_attributes[$target][$attribute] = $value;

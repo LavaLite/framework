@@ -1,7 +1,6 @@
 <?php
-use Illuminate\Support\Arr;
 
-if (!function_exists('form_merge_values')) {
+if (!function_exists('form_merge_form')) {
     /**
      * Merge form array with values.
      *
@@ -13,16 +12,54 @@ if (!function_exists('form_merge_values')) {
      */
     function form_merge_form($form, $value, $grouped = true)
     {
-        array_walk($form, function (&$val, $key) use ($value) {
-            if (isset($value[$key])) {
-                $val['value'] = $value[$key];
+        $data = json_decode(json_encode($value), true);
+
+        array_walk($form, function (&$val, $key) use ($data) {
+            $key = $val['key'];
+            if (isset($data['data'][$key])) {
+                $val['value'] = $data['data'][$key];
+            }
+            if ($val['element'] == 'file') {
+                $val['url'] = str_replace('//file', '/' . $key . '/file', $data['meta']['upload_url']);
             }
         });
-        if (!$grouped) {
-            return $form;
-        }
-        return collect($form)->groupBy('group', true)->toArray();
 
+        if (!$grouped) {
+            return  $form;
+        }
+
+        return collect($form)->groupBy('group', true)->toArray();
+    }
+}
+
+
+if (!function_exists('form_merge_list')) {
+    /**
+     * Merge form array with values.
+     *
+     * @param array $form
+     * @param array $values
+     * @param boolean $grouped
+     *
+     * @return array
+     */
+    function form_merge_list($form, $value)
+    {
+        $data = json_decode(json_encode($value), true);
+
+        foreach($form as  $key => $val){
+            $k = $val['key'];
+            if (isset($data[$k])) {
+                $val['value'] = $data[$k];
+            }
+
+            if ($val['type'] == 'file') {
+                $val['url'] = str_replace('//file', '/' . $k . '/file', $data['meta']['upload_url']);
+            }
+            $form[$k]  = $val;
+            unset($form[$key]);
+        }
+        return $form;
     }
 }
 

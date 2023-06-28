@@ -82,7 +82,7 @@ trait RoutesAndGuards
      */
     protected function setGuard()
     {
-        $guard = request()->route('guard');
+        $guard = request()->guard;
         $sub = request()->is('*api/*') ? 'api' : 'web';
         guard($guard.'.'.$sub);
     }

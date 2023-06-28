@@ -1,14 +1,9 @@
 <?php
 
-// Admin  routes  for menu.
-Route::prefix('{guard}/menu')->group(function () {
-    Route::post('menu/{id}/tree', 'MenuResourceController@tree');
-    // Route::get('menu/{id}/test', 'MenuResourceController@test');
-    Route::get('menu/{id}/submenu', 'SubMenuResourceController@index');
+// Web routes  for menu.
 
-    Route::resource('menu', 'MenuResourceController');
-    Route::resource('submenu', 'SubMenuResourceController');
-});
+include('routes.php');
+
 
 if (Trans::isMultilingual()) {
     Route::group(
@@ -17,14 +12,8 @@ if (Trans::isMultilingual()) {
             'where'  => ['trans' => Trans::keys('|')],
         ],
         function () {
-            Route::group(['prefix' => '{guard}/menu'], function () {
-                Route::post('menu/{id}/tree', 'MenuResourceController@tree');
-                // Route::get('menu/{id}/test', 'MenuResourceController@test');
-                Route::get('menu/{id}/nested', 'MenuResourceController@nested');
+            include('routes.php');
 
-                Route::resource('menu', 'MenuResourceController');
-                Route::resource('submenu', 'SubMenuResourceController');
-            });
         }
     );
 }

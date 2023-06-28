@@ -37,7 +37,7 @@ trait InstallCommands
         'Message'  => \Litepie\Message\MessageServiceProvider::class,
         'News'     => \Litepie\News\NewsServiceProvider::class,
         'Page'     => \Litepie\Page\PageServiceProvider::class,
-        'Settings' => \Litepie\Settings\SettingsServiceProvider::class,
+        'Settings' => \Litepie\Setting\SettingsServiceProvider::class,
         'Task'     => \Litepie\Task\TaskServiceProvider::class,
         'User'     => \Litepie\User\UserServiceProvider::class,
     ];
