@@ -5,33 +5,29 @@ namespace Litepie\User\Actions;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Str;
 use Litepie\Actions\Concerns\AsAction;
-use Litepie\Actions\Traits\LogsActions;
-use Litepie\Notification\Traits\SendNotification;
 use Litepie\User\Models\Client;
-
 
 class ClientAction
 {
     use AsAction;
-    use LogsActions;
-    use SendNotification;
 
-    private $model;
+    protected $model;
+    protected $namespace = 'litepie.user.client';
+    protected $eventClass = \Litepie\User\Events\ClientAction::class;
+    protected $action;
+    protected $function;
+    protected $request;
 
     public function handle(string $action, Client $client, array $request = [])
     {
+        $this->action = $action;
+        $this->request = $request;
         $this->model = $client;
+        $this->function = Str::camel($action);
+        $this->executeAction();
+        return $this->model;
 
-        $function = Str::camel($action);
-        event('user.client.action.' . $action . 'ing', [$client]);
-        $data =  $this->$function($client, $request);
-        event('user.client.action.' . $action . 'ed', [$client]);
-
-        $this->logsAction();
-        $this->notify();
-        return $data;
     }
-
 
     public function store(Client $client, array $request)
     {
@@ -74,6 +70,5 @@ class ClientAction
 
         return $client;
     }
-
 
 }

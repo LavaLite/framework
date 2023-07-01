@@ -36,12 +36,12 @@
             $mode = 'show';
             @endphp
 
-            @include('litepie.user.user.partials.form')
+            @include('user::user.partials.form')
 
             {!!Form::close()!!}
         </div>
 
-            @include('litepie.user.user.partials.aside')
+            @include('user::user.partials.aside')
         </div>
     </div>
 
