@@ -63,6 +63,13 @@ abstract class FormInterpreter
      */
     public static $fields;
 
+    /**
+     * Variable to filter field variables.
+     *
+     * @var array
+     */
+    public static $filters;
+
     public static function grouped($grouped = true)
     {
         self::$grouped = $grouped;
@@ -120,7 +127,7 @@ abstract class FormInterpreter
         })->toArray();
     }
 
-    public static function list() {
+    function list() {
 
         return collect(self::$list)->map(function ($val) {
             $val['label'] = trans($val['label']);
@@ -139,6 +146,19 @@ abstract class FormInterpreter
         })->toArray();
     }
 
+    public static function filters()
+    {
+        return collect(self::$filters)->map(function ($val) {
+            $val['name'] = trans($val['name']);
+            if (isset($val['sub_menus'])) {
+                foreach ($val['sub_menus'] as $key => $menu) {
+                    $val['sub_menus'][$key]['name'] = trans($menu['name']);
+                }
+            }
+            return $val;
+        })->toArray();
+    }
+
     public static function toArray()
     {
         return [
@@ -149,6 +169,8 @@ abstract class FormInterpreter
 
             'groups' => static::groups(),
             'fields' => static::fields()->toArray(),
+            'filters' => self::filters(),
+
         ];
     }
 }
