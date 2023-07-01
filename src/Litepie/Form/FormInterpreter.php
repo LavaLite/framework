@@ -127,7 +127,7 @@ abstract class FormInterpreter
         })->toArray();
     }
 
-    function list() {
+    public static function list() {
 
         return collect(self::$list)->map(function ($val) {
             $val['label'] = trans($val['label']);
