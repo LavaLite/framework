@@ -11,6 +11,8 @@ namespace Litepie\User;
 
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Contracts\Foundation\Application;
+use Litepie\User\Actions\ClientActions;
+use Litepie\User\Actions\UserActions;
 use Litepie\User\Models\User as ModelsUser;
 
 /**
@@ -214,23 +216,23 @@ class User
         }
     }
 
-    /**
-     * Returns of users.
+        /**
+     * Return select options user for the module.
      *
-     * @param array $filter
+     * @param string $module
+     * @param array $request
      *
-     * @return int
+     * @return array
      */
-    public function select()
+    public function options($module = 'user', $request = []) :array
     {
-        $rows = $this->model->all();
-        return $rows->map(function ($item, int $key) {
-            return [
-                'text' => $item->name,
-                'key' => $item->id,
-                'value' => $item->id,
-            ];
-        })->toArray();
+        if ($module == 'user') {
+            return UserActions::run('options', $request);
+        }
+
+        if ($module == 'user') {
+            return ClientActions::run('options', $request);
+        }
 
     }
 }

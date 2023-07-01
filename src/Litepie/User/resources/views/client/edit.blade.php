@@ -41,11 +41,11 @@
             $mode = 'edit';
             @endphp
 
-            @include('litepie.user.client.partials.form')
+            @include('user::client.partials.form')
             {!!Form::close()!!}
         </div>
 
-        @include('litepie.user.client.partials.aside')
+        @include('user::client.partials.aside')
         </div>
     </div>
 </div>
