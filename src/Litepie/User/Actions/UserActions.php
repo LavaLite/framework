@@ -3,28 +3,36 @@
 namespace Litepie\User\Actions;
 
 use Illuminate\Support\Str;
-use Litepie\User\Models\User;
-use Litepie\User\Scopes\UserResourceScope;
 use Litepie\Actions\Concerns\AsAction;
 use Litepie\Actions\Traits\LogsActions;
 use Litepie\Database\RequestScope;
+use Litepie\User\Models\User;
+use Litepie\User\Scopes\UserResourceScope;
 
 class UserActions
 {
     use AsAction;
     use LogsActions;
-    
-    private $model;
+
+    protected $model;
+    protected $namespace = 'litepie.user.user';
+    protected $eventClass = \Litepie\User\Events\UserAction::class;
+    protected $action;
+    protected $function;
+    protected $request;
 
     public function handle(string $action, array $request)
     {
         $this->model = app(User::class);
+        $this->action = $action;
+        $this->request = $request;
+        $this->function = Str::camel($action);
 
         $function = Str::camel($action);
 
-        event('user.user.action.' . $action . 'ing', [$request]);
+        $this->dispatchActionBeforeEvent();
         $data = $this->$function($request);
-        event('user.user.action.' . $action . 'ed', [$data]);
+        $this->dispatchActionAfterEvent();
 
         $this->logsAction();
         return $data;
@@ -57,7 +65,8 @@ class UserActions
         return $this->model->forceDelete();
     }
 
-    function restore(array $request) {
+    public function restore(array $request)
+    {
         return $this->model->restore();
     }
 
@@ -68,5 +77,20 @@ class UserActions
             return hashids_decode($id);
         });
         return $this->model->whereIn('id', $ids)->delete();
+    }
+
+    public function options(array $request)
+    {
+        return $this->model
+            ->pushScope(new RequestScope())
+            ->pushScope(new UserResourceScope())
+            ->take(30)->get()
+            ->map(function ($row) {
+                return [
+                    'key' => $row->id,
+                    'value' => $row->id,
+                    'text' => $row->name,
+                ];
+            })->toArray();
     }
 }
