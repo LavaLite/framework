@@ -1,311 +1,52 @@
 <?php
 
+return [
 
-return  
-    [
-        'model' => [
-            'model' => \Litepie\Log\Models\Activity::class,
-            'table' => 'litepie_log_activities',
-            'hidden'=> [],
-            'visible' => [],
-            'guarded' => ['*'],
-            'slugs' => ['slug' => 'name'],
-            'dates' => ['deleted_at', 'created_at', 'updated_at'],
-            'appends' => [],
-            'fillable' => ['name',  'description',  'subject_id',  'subject_type',  'causer_id',  'causer_type',  'properties'],
-            'translatables' => [],
-            'upload_folder' => 'log/activity',
-            'uploads' => [
-            /*
-                    'images' => [
-                        'count' => 10,
-                        'type'  => 'image',
-                    ],
-                    'file' => [
-                        'count' => 1,
-                        'type'  => 'file',
-                    ],
-            */
-            ],
+    /*
+     * If set to false, no activities will be saved to the database.
+     */
+    'enabled' => env('ACTIVITY_LOGGER_ENABLED', true),
 
-            'casts' => [
-            
-            /*
-                'images'    => 'array',
-                'file'      => 'array',
-            */
-            ],
+    /*
+     * When the clean-command is executed, all recording activities older than
+     * the number of days specified here will be deleted.
+     */
+    'delete_records_older_than_days' => 365,
 
-            'revision' => [],
-            'perPage' => '20',
-            'search'        => [
-                'name'  => 'like',
-                'status',
-            ]
-        ],
+    /*
+     * If no log name is passed to the activity() helper
+     * we use this default log name.
+     */
+    'default_log_name' => 'default',
 
-        'search' => [
-            
-        ],
+    /*
+     * You can specify an auth driver here that gets user models.
+     * If this is null we'll use the current Laravel auth driver.
+     */
+    'default_auth_driver' => null,
 
-        'list' => [
-            [
-                "key" => "name", 
-                "type" => "text", 
-                "label" => 'log::activity.label.name', 
-                'sort' => true,
-                'roles' => [],
-            ],
-            [
-                "key" => "description", 
-                "type" => "text", 
-                "label" => 'log::activity.label.description', 
-                'sort' => true,
-                'roles' => [],
-            ],
-            [
-                "key" => "subject_id", 
-                "type" => "text", 
-                "label" => 'log::activity.label.subject_id', 
-                'sort' => true,
-                'roles' => [],
-            ],
-            [
-                "key" => "subject_type", 
-                "type" => "text", 
-                "label" => 'log::activity.label.subject_type', 
-                'sort' => true,
-                'roles' => [],
-            ],
-            [
-                "key" => "causer_id", 
-                "type" => "text", 
-                "label" => 'log::activity.label.causer_id', 
-                'sort' => true,
-                'roles' => [],
-            ],
-            [
-                "key" => "causer_type", 
-                "type" => "text", 
-                "label" => 'log::activity.label.causer_type', 
-                'sort' => true,
-                'roles' => [],
-            ],
-            [
-                "key" => "properties", 
-                "type" => "text", 
-                "label" => 'log::activity.label.properties', 
-                'sort' => true,
-                'roles' => [],
-            ],
-        ],
+    /*
+     * If set to true, the subject returns soft deleted models.
+     */
+    'subject_returns_soft_deleted_models' => false,
 
-        'form' => [
-            [
-                "key" => 'name',
-                "element" => 'text',
-                "type" => 'text',
-                "label" => 'log::activity.label.name',
-                "placeholder" => 'log::activity.placeholder.name',
-                "rules" => '',
-                "group" => "main",
-                "section" => "first",
-                "col" => "6",
-                "append" => null,
-                "prepend" => null,
-                "roles" => [],
-                "attributes" => [
-                    'wrapper' => [],
-                    "label" => [],
-                    "element" => [],
+    /*
+     * This model will be used to log activity.
+     * It should implement the Spatie\Activitylog\Contracts\Activity interface
+     * and extend Illuminate\Database\Eloquent\Model.
+     */
+    'activity_model' => \Litepie\Log\Models\Activity::class,
 
-                ],
-            ],
-            [
-                "key" => 'description',
-                "element" => 'text',
-                "type" => 'text',
-                "label" => 'log::activity.label.description',
-                "placeholder" => 'log::activity.placeholder.description',
-                "rules" => '',
-                "group" => "main",
-                "section" => "first",
-                "col" => "6",
-                "append" => null,
-                "prepend" => null,
-                "roles" => [],
-                "attributes" => [
-                    'wrapper' => [],
-                    "label" => [],
-                    "element" => [],
+    /*
+     * This is the name of the table that will be created by the migration and
+     * used by the Activity model shipped with this package.
+     */
+    'table_name' => 'log_activities',
 
-                ],
-            ],
-            [
-                "key" => 'subject_id',
-                "element" => 'numeric',
-                "type" => 'numeric',
-                "label" => 'log::activity.label.subject_id',
-                "placeholder" => 'log::activity.placeholder.subject_id',
-                "rules" => '',
-                "group" => "main",
-                "section" => "first",
-                "col" => "6",
-                "append" => null,
-                "prepend" => null,
-                "roles" => [],
-                "attributes" => [
-                    'wrapper' => [],
-                    "label" => [],
-                    "element" => [],
-
-                ],
-            ],
-            [
-                "key" => 'subject_type',
-                "element" => 'text',
-                "type" => 'text',
-                "label" => 'log::activity.label.subject_type',
-                "placeholder" => 'log::activity.placeholder.subject_type',
-                "rules" => '',
-                "group" => "main",
-                "section" => "first",
-                "col" => "6",
-                "append" => null,
-                "prepend" => null,
-                "roles" => [],
-                "attributes" => [
-                    'wrapper' => [],
-                    "label" => [],
-                    "element" => [],
-
-                ],
-            ],
-            [
-                "key" => 'causer_id',
-                "element" => 'numeric',
-                "type" => 'numeric',
-                "label" => 'log::activity.label.causer_id',
-                "placeholder" => 'log::activity.placeholder.causer_id',
-                "rules" => '',
-                "group" => "main",
-                "section" => "first",
-                "col" => "6",
-                "append" => null,
-                "prepend" => null,
-                "roles" => [],
-                "attributes" => [
-                    'wrapper' => [],
-                    "label" => [],
-                    "element" => [],
-
-                ],
-            ],
-            [
-                "key" => 'causer_type',
-                "element" => 'text',
-                "type" => 'text',
-                "label" => 'log::activity.label.causer_type',
-                "placeholder" => 'log::activity.placeholder.causer_type',
-                "rules" => '',
-                "group" => "main",
-                "section" => "first",
-                "col" => "6",
-                "append" => null,
-                "prepend" => null,
-                "roles" => [],
-                "attributes" => [
-                    'wrapper' => [],
-                    "label" => [],
-                    "element" => [],
-
-                ],
-            ],
-            [
-                "key" => 'properties',
-                "element" => 'text',
-                "type" => 'text',
-                "label" => 'log::activity.label.properties',
-                "placeholder" => 'log::activity.placeholder.properties',
-                "rules" => '',
-                "group" => "main",
-                "section" => "first",
-                "col" => "6",
-                "append" => null,
-                "prepend" => null,
-                "roles" => [],
-                "attributes" => [
-                    'wrapper' => [],
-                    "label" => [],
-                    "element" => [],
-
-                ],
-            ],
-        ],
-
-        'urls' => [
-            'new' => [
-                'url' => 'log/activity/new',
-                'method' => 'GET',
-            ],
-            'create' => [
-                'url' => 'log/activity/create',
-                'method' => 'GET',
-            ],
-            'store' => [
-                'url' => 'log/activity',
-                'method' => 'POST',
-            ],
-            'update' => [
-                'url' => 'log/activity',
-                'method' => 'PUT',
-            ],
-            'list' => [
-                'url' => 'log/activity',
-                'method' => 'GET',
-            ],
-            'delete' => [
-                'url' => 'log/activity',
-                'method' => 'DELETE',
-            ],
-        ],
-        'order' => [
-            'created_at' => 'log::activity.label.created_at',
-            'name' => 'log::activity.label.name',
-            'status' => 'log::activity.label.status',
-        ],
-        'groups' => [
-            'main' => [
-                'icon' => "mdi:account-supervisor-outline",
-                'name' => "log::activity.groups.main",
-                'key' => "main",
-                'title' => "log::activity.groups.main",
-            ],
-            'details' => [
-                'icon' => "fe:home",
-                'name' => "log::activity.groups.details",
-                'key' => "documents",
-                'title' => "log::activity.groups.details",
-            ],
-            'images' => [
-                'icon' => "fe:home",
-                'name' => "log::activity.groups.images",
-                'key' => "documents",
-                'title' => "log::activity.groups.images",
-            ],
-            'settings' => [
-                'icon' => "fe:home",
-                'name' => "log::activity.groups.settings",
-                'key' => "documents",
-                'title' => "log::activity.groups.settings",
-            ]
-        ],
-        'controller' => [
-            'provider' => 'Litepie',
-            'package' => 'Log',
-            'module' => 'Activity',
-        ],
-
-        
-        
-    ];
+    /*
+     * This is the database connection that will be used by the migration and
+     * the Activity model shipped with this package. In case it's not set
+     * Laravel's database.default will be used instead.
+     */
+    'database_connection' => env('ACTIVITY_LOGGER_DB_CONNECTION'),
+];
