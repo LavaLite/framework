@@ -17,15 +17,17 @@ class CreateLogActivitiesTable extends Migration
         /*
          * Table: log_activities
          */
-        Schema::create('log_activities', function ($table) {
-            $table->id();
-            $table->string('name', 100)->nullable();
+        Schema::create('activity_log', function ($table) {
+            $table->bigIncrements('id');
+            $table->string('log_name', 100)->nullable();
             $table->string('description', 100)->nullable();
             $table->integer('subject_id')->nullable();
             $table->string('subject_type', 100)->nullable();
+            $table->string('event')->nullable();
             $table->integer('causer_id')->nullable();
             $table->string('causer_type', 100)->nullable();
             $table->text('properties')->nullable();
+            $table->uuid('batch_uuid')->nullable();
             $table->softDeletes();
             $table->nullableTimestamps();
         });
@@ -39,6 +41,6 @@ class CreateLogActivitiesTable extends Migration
 
     public function down()
     {
-        Schema::drop('log_activities');
+        Schema::drop('activity_log');
     }
 }
