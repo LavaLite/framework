@@ -28,7 +28,7 @@ class PermissionResourceController extends BaseController
     {
         parent::__construct();
         $this->middleware(function ($request, $next) {
-            $this->form = PermissionForm::grouped(false)
+            $this->form = PermissionForm::only('main')
                 ->setAttributes()
                 ->toArray();
             $this->modules = $this->modules(config('role.modules'), 'role', guard_url('role'));

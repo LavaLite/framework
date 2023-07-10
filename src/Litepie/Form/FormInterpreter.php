@@ -144,7 +144,7 @@ abstract class FormInterpreter
         }
         $fields = Arr::undot($fields);
         if (isset($fields[Self::$only])) {
-            return collect($fields[Self::$only])->toArray();
+            return collect(Arr::dot($fields[Self::$only]))->toArray();
         }
 
         return [];

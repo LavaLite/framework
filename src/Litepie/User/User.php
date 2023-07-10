@@ -29,9 +29,9 @@ class User
      * @var User repository variable
      */
     protected $user;
-    
+
     /**
-     * @var User model 
+     * @var User model
      */
     protected $model;
 
@@ -216,7 +216,7 @@ class User
         }
     }
 
-        /**
+    /**
      * Return select options user for the module.
      *
      * @param string $module
@@ -224,15 +224,15 @@ class User
      *
      * @return array
      */
-    public function options($module = 'user', $request = []) :array
+    public function options($module = 'user', $request = []): array
     {
         if ($module == 'user') {
             return UserActions::run('options', $request);
         }
 
-        if ($module == 'user') {
+        if ($module == 'client') {
             return ClientActions::run('options', $request);
         }
-
+        return [];
     }
 }

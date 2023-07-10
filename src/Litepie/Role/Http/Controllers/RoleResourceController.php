@@ -29,7 +29,7 @@ class RoleResourceController extends BaseController
     {
         parent::__construct();
         $this->middleware(function ($request, $next) {
-            $this->form = RoleForm::grouped(false)
+            $this->form = RoleForm::only('main')
                 ->setAttributes()
                 ->toArray();
             $this->modules = $this->modules(config('role.modules'), 'role', guard_url('role'));

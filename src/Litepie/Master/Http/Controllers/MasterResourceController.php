@@ -28,7 +28,7 @@ class MasterResourceController extends BaseController
     {
         parent::__construct();
         $this->middleware(function ($request, $next) {
-            $this->form = MasterForm::grouped(false)
+            $this->form = MasterForm::only('main')
                 ->setAttributes()
                 ->toArray();
 

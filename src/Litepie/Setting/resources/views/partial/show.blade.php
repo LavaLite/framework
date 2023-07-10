@@ -1,3 +1,7 @@
+@php
+$form['fields'] = Arr::undot($form['fields']);
+dd($form['fields']);
+@endphp
 <div class="app-entry-form-wrap">
     <div class="app-sec-title app-sec-title-with-icon app-sec-title-with-action">
         <i class="lab la-product-hunt app-sec-title-icon"></i>

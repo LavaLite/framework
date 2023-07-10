@@ -28,7 +28,7 @@ class UserResourceController extends BaseController
     {
         parent::__construct();
         $this->middleware(function ($request, $next) {
-            $this->form = UserForm::grouped(false)
+            $this->form = UserForm::only('main')
                 ->setAttributes()
                 ->toArray();
             $this->modules = $this->modules(config('user.modules'), 'user', guard_url('user'));

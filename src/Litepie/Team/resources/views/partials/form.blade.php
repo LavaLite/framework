@@ -1,6 +1,7 @@
+
 @foreach($form['fields'] as $key => $fields)
 <div class="app-entry-form-section mb-10 pb-20" id="{!!$key!!}">
-    <div class="section-title">{!!$form['groups'][$key]['name']!!}</div>
+    <div class="section-title">{!!trans('team::team.groups.'.$key)!!}</div>
     <div class="row">
         @foreach($fields as $key => $field)
         <div class="col-{!!$field['col'] ?? '12'!!}">
@@ -21,7 +22,7 @@
         <div class="row">
             <div class='col-4'>
                 {!! Form::select('user_id')
-                -> options(User::select())
+                -> options(User::options('user'))
                 -> label(trans('team::team.label.user'))
                 -> placeholder(trans('team::team.placeholder.user'))
                 !!}

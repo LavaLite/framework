@@ -24,7 +24,7 @@ class SettingResourceController extends BaseController
     {
         parent::__construct();
         $this->middleware(function ($request, $next) {
-            $this->form = SettingForm::grouped(2)
+            $this->form = SettingForm::only('main')
                 ->setAttributes()
                 ->toArray();
             $this->modules = $this->modules(config('setting.modules'), 'setting', guard_url('setting'));
@@ -41,6 +41,7 @@ class SettingResourceController extends BaseController
     {
 
         $form = $this->form;
+        dd($form);
         $modules = $this->modules;
         return $this->response->setMetaTitle(trans('setting::setting.names'))
             ->view('setting::index')
