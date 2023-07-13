@@ -69,4 +69,20 @@ class TeamActions
         });
         return $this->model->whereIn('id', $ids)->delete();
     }
+
+    
+    public function options(array $request)
+    {
+        return $this->model
+            ->pushScope(new RequestScope())
+            ->pushScope(new TeamResourceScope())
+            ->take(30)->get()
+            ->map(function ($row) {
+                return [
+                    'key' => $row->id,
+                    'value' => $row->id,
+                    'text' => $row->name,
+                ];
+            })->toArray();
+    }
 }
