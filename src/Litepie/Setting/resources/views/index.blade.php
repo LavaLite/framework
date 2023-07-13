@@ -8,7 +8,7 @@
         <div class="app-avatar">
             <div class="app-avatar-image bg-primary">{{trans('setting::setting.title.'. $k)[0]}}</div>
         </div>
-        <div class="app-info" data-action='SHOW' data-load-to="#app-entry" data-url="{{guard_url('setting/setting/' . $key)}}">
+        <div class="app-info" data-action='SHOW' data-load-to="#app-entry" data-url="{{guard_url('setting/setting/' . $key . '.' . $k)}}">
             {{trans('setting::setting.title.'  . $k)}}
             <div class="app-metas">
                 <span class="badge badge-status in-progress"></span>

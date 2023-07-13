@@ -2,7 +2,6 @@
 
 namespace Litepie\User\Models;
 
-use Illuminate\Contracts\Auth\MustVerifyEmail as ContractMustVerifyEmail;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Litepie\Database\Traits\Sluggable;
 use Litepie\Database\Traits\Sortable;
@@ -18,7 +17,7 @@ use Litepie\User\Traits\Auth\MustVerifyEmail;
 use Litepie\Role\Models\Role;
 use Illuminate\Notifications\Notifiable;
 
-class Client extends BaseModel implements ContractMustVerifyEmail, UserPolicyInterface
+class Client extends BaseModel implements  UserPolicyInterface
 {
     use MustVerifyEmail;
     use Filer;

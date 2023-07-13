@@ -2,10 +2,7 @@
 
 namespace Litepie\User\Models;
 
-use Illuminate\Contracts\Auth\MustVerifyEmail as ContractMustVerifyEmail;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Notifications\Notifiable;
-use Laravel\Sanctum\HasApiTokens;
 use Litepie\Actions\Traits\Actionable;
 use Litepie\Database\Traits\Scopable;
 use Litepie\Database\Traits\Searchable;
@@ -17,16 +14,13 @@ use Litepie\Role\Traits\HasRoleAndPermission;
 use Litepie\Trans\Traits\Translatable;
 use Litepie\User\Interfaces\UserPolicyInterface;
 use Litepie\User\Models\Model as BaseModel;
-use Litepie\User\Traits\Auth\MustVerifyEmail;
 use Litepie\Workflow\Traits\Workflowable;
 
-class User extends BaseModel implements ContractMustVerifyEmail, UserPolicyInterface
+class User extends BaseModel implements UserPolicyInterface
 {
     use Filer;
     use HasRoleAndPermission;
-    use HasApiTokens;
     use Hashids;
-    use MustVerifyEmail;
     use Sluggable;
     use SoftDeletes;
     use Sortable;
@@ -35,7 +29,7 @@ class User extends BaseModel implements ContractMustVerifyEmail, UserPolicyInter
     use Actionable;
     use Searchable;
     use Workflowable;
-    use Notifiable;
+
     /**
      * Configuartion for the model.
      *

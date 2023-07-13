@@ -3,11 +3,11 @@
 namespace Litepie\Setting\Http\Controllers;
 
 use Exception;
+use Illuminate\Support\Arr;
 use Litepie\Http\Controllers\ResourceController as BaseController;
 use Litepie\Setting\Actions\SettingActions;
 use Litepie\Setting\Forms\Setting as SettingForm;
 use Litepie\Setting\Http\Requests\SettingResourceRequest;
-use Litepie\Setting\Models\Setting;
 
 /**
  * Resource controller class for setting.
@@ -24,8 +24,7 @@ class SettingResourceController extends BaseController
     {
         parent::__construct();
         $this->middleware(function ($request, $next) {
-            $this->form = SettingForm::only('main')
-                ->setAttributes()
+            $this->form = SettingForm::setAttributes()
                 ->toArray();
             $this->modules = $this->modules(config('setting.modules'), 'setting', guard_url('setting'));
             return $next($request);
@@ -39,9 +38,7 @@ class SettingResourceController extends BaseController
      */
     public function index(SettingResourceRequest $request)
     {
-
         $form = $this->form;
-        dd($form);
         $modules = $this->modules;
         return $this->response->setMetaTitle(trans('setting::setting.names'))
             ->view('setting::index')
@@ -58,14 +55,15 @@ class SettingResourceController extends BaseController
      *
      * @return Response
      */
-    public function show($type)
+    public function show($group)
     {
-        $this->form['fields'] = $this->form['fields'][$type] ?? [];
+        $groups = str_replace('.', '.groups.', $group);
+        $this->form['groups'] = Arr::get($this->form['groups'], $groups);
+        $this->form['fields'] = Arr::get(Arr::undot($this->form['fields']), $group);
         $form = $this->form;
-
         return $this->response->setMetaTitle(trans('setting::setting.names'))
             ->view('setting::partial.show')
-            ->data(compact('form', 'type'))
+            ->data(compact('form', 'group'))
             ->output();
     }
 

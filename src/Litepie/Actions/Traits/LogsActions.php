@@ -54,7 +54,7 @@ trait LogsActions
             ->only($this->actionAttributes)
             ->toArray();
 
-            return trim(implode('-', $action), '-');
+        return trim(implode('-', $action), '-');
     }
 
     public function getLogTransition(): string
@@ -63,7 +63,7 @@ trait LogsActions
             ->only($this->actionAttributes)
             ->toArray();
 
-            return trim(implode('-', $action), '-');
+        return trim(implode('-', $action), '-');
     }
 
     public function description(): string
@@ -72,9 +72,8 @@ trait LogsActions
         return trim(implode(',', $attris), ',');
     }
 
-    public function property(): string
+    public function property(): array
     {
-        $attris = request()->except($this->actionExceptAttributes);
-        return json_encode($attris);
+        return request()->except($this->actionExceptAttributes);
     }
 }
