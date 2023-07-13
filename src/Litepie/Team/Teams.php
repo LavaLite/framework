@@ -39,6 +39,8 @@ class Teams
     {
         return  $this->team
             ->findBySlug($slug)
-            ->toArray();
+            ->toArrayi();
     }
+
+    
 }
