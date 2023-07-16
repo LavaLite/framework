@@ -57,7 +57,6 @@ class User
     ) {
         $this->app = $app;
         $this->model = app(ModelsUser::class);
-
     }
 
     /**
@@ -235,4 +234,14 @@ class User
         }
         return [];
     }
+
+    /**
+     *  Return users by role.
+     */
+    public function getUserByRole($role, $columns = '*')
+    {
+        return UserActions::run('getUserByRole', ['role'=> $role, 'columns'=> $columns]);
+    }
+
+
 }
