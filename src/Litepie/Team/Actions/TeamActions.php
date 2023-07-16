@@ -70,7 +70,6 @@ class TeamActions
         return $this->model->whereIn('id', $ids)->delete();
     }
 
-    
     public function options(array $request)
     {
         return $this->model

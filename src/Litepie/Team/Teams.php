@@ -2,43 +2,25 @@
 
 namespace Litepie\Team;
 
-
-use User;
+use Litepie\Team\Actions\TeamActions;
 
 class Teams
 {
-    
 
     /**
-     * Constructor.
+     * Return select options team for the module.
+     *
+     * @param string $module
+     * @param array $request
+     *
+     * @return array
      */
-    public function __construct()
+    public function options($module = 'team', $request = []): array
     {
-    }
+        if ($module == 'team') {
+            return TeamActions::run('options', $request);
+        }
+        return [];
 
-    /**
-     * Returns count of team.
-     *
-     * @param array $filter
-     *
-     * @return int
-     */
-    public function count()
-    {
-        return  0;
-    }
-
-    /**
-     * Find team by slug.
-     *
-     * @param array $filter
-     *
-     * @return int
-     */
-    public function team($slug)
-    {
-        return  $this->team
-            ->findBySlug($slug)
-            ->toArray();
     }
 }
