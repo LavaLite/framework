@@ -74,8 +74,8 @@ class Action
             return true;
         }
 
-        if (isset($this->roles['team'])
-            && Auth::user()->teams()->hasRole($this->roles['team'])) {
+        if (isset($this->roles['team']) && method_exists(Auth::user(), 'teams')
+            && Auth::user()->teams()?->hasRole($this->roles['team'])) {
             return true;
         }
 

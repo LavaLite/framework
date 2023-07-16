@@ -12,13 +12,15 @@ trait AsAction
     use WithAttributes;
     use LogsActions;
 
+    public $result = [];
+
     protected function executeAction()
     {
         // Dispatch the "before" event for the action.
         $this->dispatchActionBeforeEvent();
 
         // Execute the action function on the model with the request.
-        $this->model = $this->{$this->function}($this->model, $this->request);
+        $this->result = $this->{$this->function}($this->model, $this->request);
 
         // Dispatch the "after" event for the action.
         $this->dispatchActionAfterEvent();
@@ -36,7 +38,7 @@ trait AsAction
         $this->model->workflow()->apply($this->model, $this->transition);
 
         // Execute the action function on the model with the request.
-        $this->model = $this->{$this->function}($this->model, $this->request);
+        $this->result = $this->{$this->function}($this->model, $this->request);
 
         // Dispatch the "after" event for the workflow.
         $this->dispatchWorkflowAfterEvent();
