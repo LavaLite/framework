@@ -2,7 +2,7 @@
 
 namespace Litepie\Setting\Policies;
 
-use Litepie\User\Interfaces\UserPolicyInterface;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 use Litepie\Setting\Models\Setting;
 
 class SettingPolicy
@@ -12,14 +12,14 @@ class SettingPolicy
     /**
      * Determine if the given user can view the setting.
      *
-     * @param UserPolicyInterface $authUser
+     * @param Authenticatable $user
      * @param Setting $setting
      *
      * @return bool
      */
-    public function view(UserPolicyInterface $authUser, Setting $setting)
+    public function view(Authenticatable $user, Setting $setting)
     {
-        if ($authUser->canDo('setting.setting.view') && $authUser->isAdmin()) {
+        if ($user->canDo('setting.setting.view') && $user->isAdmin()) {
             return true;
         }
 
@@ -29,26 +29,26 @@ class SettingPolicy
     /**
      * Determine if the given user can create a setting.
      *
-     * @param UserPolicyInterface $authUser
+     * @param Authenticatable $user
      *
      * @return bool
      */
-    public function create(UserPolicyInterface $authUser)
+    public function create(Authenticatable $user)
     {
-        return  $authUser->canDo('setting.setting.create');
+        return  $user->canDo('setting.setting.create');
     }
 
     /**
      * Determine if the given user can update the given setting.
      *
-     * @param UserPolicyInterface $authUser
+     * @param Authenticatable $user
      * @param Setting $setting
      *
      * @return bool
      */
-    public function update(UserPolicyInterface $authUser, Setting $setting)
+    public function update(Authenticatable $user, Setting $setting)
     {
-        if ($authUser->canDo('setting.setting.edit') && $authUser->isAdmin()) {
+        if ($user->canDo('setting.setting.edit') && $user->isAdmin()) {
             return true;
         }
 
@@ -58,11 +58,11 @@ class SettingPolicy
     /**
      * Determine if the given user can delete the given setting.
      *
-     * @param UserPolicyInterface $authUser
+     * @param Authenticatable $user
      *
      * @return bool
      */
-    public function destroy(UserPolicyInterface $authUser, Setting $setting)
+    public function destroy(Authenticatable $user, Setting $setting)
     {
         return $setting->user_id == user_id() && $setting->user_type == user_type();
     }
@@ -70,13 +70,13 @@ class SettingPolicy
     /**
      * Determine if the given user can verify the given setting.
      *
-     * @param UserPolicyInterface $authUser
+     * @param Authenticatable $user
      *
      * @return bool
      */
-    public function verify(UserPolicyInterface $authUser, Setting $setting)
+    public function verify(Authenticatable $user, Setting $setting)
     {
-        if ($authUser->canDo('setting.setting.verify')) {
+        if ($user->canDo('setting.setting.verify')) {
             return true;
         }
 
@@ -86,13 +86,13 @@ class SettingPolicy
     /**
      * Determine if the given user can approve the given setting.
      *
-     * @param UserPolicyInterface $authUser
+     * @param Authenticatable $user
      *
      * @return bool
      */
-    public function approve(UserPolicyInterface $authUser, Setting $setting)
+    public function approve(Authenticatable $user, Setting $setting)
     {
-        if ($authUser->canDo('setting.setting.approve')) {
+        if ($user->canDo('setting.setting.approve')) {
             return true;
         }
 
@@ -102,14 +102,14 @@ class SettingPolicy
     /**
      * Determine if the user can perform a given action ve.
      *
-     * @param [type] $authUser    [description]
+     * @param [type] $user    [description]
      * @param [type] $ability [description]
      *
      * @return [type] [description]
      */
-    public function before($authUser, $ability)
+    public function before($user, $ability)
     {
-        if ($authUser->isSuperuser()) {
+        if ($user->isSuperuser()) {
             return true;
         }
     }
