@@ -2,7 +2,7 @@
 
 namespace Litepie\User\Policies;
 
-use Litepie\User\Interfaces\UserPolicyInterface;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 use Litepie\User\Models\User;
 
 class UserPolicy
@@ -12,14 +12,14 @@ class UserPolicy
     /**
      * Determine if the given user can view the user.
      *
-     * @param UserPolicyInterface $authUser
+     * @param Authenticatable $user
      * @param User $user
      *
      * @return bool
      */
-    public function view(UserPolicyInterface $authUser, User $user)
+    public function view(Authenticatable $user, User $user)
     {
-        if ($authUser->canDo('user.user.view') && $authUser->isAdmin()) {
+        if ($user->canDo('user.user.view') && $user->isAdmin()) {
             return true;
         }
 
@@ -29,26 +29,26 @@ class UserPolicy
     /**
      * Determine if the given user can create a user.
      *
-     * @param UserPolicyInterface $authUser
+     * @param Authenticatable $user
      *
      * @return bool
      */
-    public function create(UserPolicyInterface $authUser)
+    public function create(Authenticatable $user)
     {
-        return  $authUser->canDo('user.user.create');
+        return  $user->canDo('user.user.create');
     }
 
     /**
      * Determine if the given user can update the given user.
      *
-     * @param UserPolicyInterface $authUser
+     * @param Authenticatable $user
      * @param User $user
      *
      * @return bool
      */
-    public function update(UserPolicyInterface $authUser, User $user)
+    public function update(Authenticatable $user, User $user)
     {
-        if ($authUser->canDo('user.user.edit') && $authUser->isAdmin()) {
+        if ($user->canDo('user.user.edit') && $user->isAdmin()) {
             return true;
         }
 
@@ -58,11 +58,11 @@ class UserPolicy
     /**
      * Determine if the given user can delete the given user.
      *
-     * @param UserPolicyInterface $authUser
+     * @param Authenticatable $user
      *
      * @return bool
      */
-    public function destroy(UserPolicyInterface $authUser, User $user)
+    public function destroy(Authenticatable $user, User $user)
     {
         return $user->user_id == user_id() && $user->user_type == user_type();
     }
@@ -70,13 +70,13 @@ class UserPolicy
     /**
      * Determine if the given user can verify the given user.
      *
-     * @param UserPolicyInterface $authUser
+     * @param Authenticatable $user
      *
      * @return bool
      */
-    public function verify(UserPolicyInterface $authUser, User $user)
+    public function verify(Authenticatable $user, User $user)
     {
-        if ($authUser->canDo('user.user.verify')) {
+        if ($user->canDo('user.user.verify')) {
             return true;
         }
 
@@ -86,13 +86,13 @@ class UserPolicy
     /**
      * Determine if the given user can approve the given user.
      *
-     * @param UserPolicyInterface $authUser
+     * @param Authenticatable $user
      *
      * @return bool
      */
-    public function approve(UserPolicyInterface $authUser, User $user)
+    public function approve(Authenticatable $user, User $user)
     {
-        if ($authUser->canDo('user.user.approve')) {
+        if ($user->canDo('user.user.approve')) {
             return true;
         }
 
@@ -102,14 +102,14 @@ class UserPolicy
     /**
      * Determine if the user can perform a given action ve.
      *
-     * @param [type] $authUser    [description]
+     * @param [type] $user    [description]
      * @param [type] $ability [description]
      *
      * @return [type] [description]
      */
-    public function before($authUser, $ability)
+    public function before($user, $ability)
     {
-        if ($authUser->isSuperuser()) {
+        if ($user->isSuperuser()) {
             return true;
         }
     }

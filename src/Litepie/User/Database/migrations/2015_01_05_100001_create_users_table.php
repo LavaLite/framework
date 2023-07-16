@@ -40,6 +40,7 @@ class CreateUsersTable extends Migration
             $table->integer('country')->nullable();
             $table->string('photo', 500)->nullable();
             $table->string('web', 100)->nullable();
+            $table->string('slug', 50)->nullable();
             $table->longText('social_urls')->nullable();
             $table->enum('status', ['New', 'Active', 'Inactive'])->nullable();
             $table->dateTime('email_verified_at')->nullable();
