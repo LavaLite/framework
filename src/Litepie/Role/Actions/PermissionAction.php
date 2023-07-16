@@ -5,31 +5,29 @@ namespace Litepie\Role\Actions;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Str;
 use Litepie\Actions\Concerns\AsAction;
-use Litepie\Actions\Traits\LogsActions;
-use Litepie\Notification\Traits\SendNotification;
 use Litepie\Role\Models\Permission;
 
 
 class PermissionAction
 {
     use AsAction;
-    use LogsActions;
-    use SendNotification;
 
-    private $model;
+    protected $model;
+    protected $namespace = 'litepie.role.permission';
+    protected $eventClass = \Litepie\Role\Events\PermissionAction::class;
+    protected $action;
+    protected $function;
+    protected $request;
 
     public function handle(string $action, Permission $permission, array $request = [])
     {
+        $this->action = $action;
+        $this->request = $request;
         $this->model = $permission;
+        $this->function = Str::camel($action);
+        $this->executeAction();
+        return $this->model;
 
-        $function = Str::camel($action);
-        event('role.permission.action.' . $action . 'ing', [$permission]);
-        $data =  $this->$function($permission, $request);
-        event('role.permission.action.' . $action . 'ed', [$permission]);
-
-        $this->logsAction();
-        $this->notify();
-        return $data;
     }
 
 

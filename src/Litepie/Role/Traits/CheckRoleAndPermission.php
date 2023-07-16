@@ -3,21 +3,17 @@
 namespace Litepie\Role\Traits;
 
 use Illuminate\Support\Str;
+use Litepie\Role\Models\Role;
 
 trait CheckRoleAndPermission
 {
-    /**
-     * Property for caching role.
-     *
-     * @var \Illuminate\Database\Eloquent\Collection|null
-     */
+
     protected $role;
 
     /**
-     * Check if the user has at least one role.
+     * Check if the user has a specific role.
      *
-     * @param int|string|array $role
-     *
+     * @param  string  $role
      * @return bool
      */
     public function hasRole($role)
@@ -26,10 +22,9 @@ trait CheckRoleAndPermission
     }
 
     /**
-     * Check if the user has the permission.
+     * Check if the user has a specific permission.
      *
-     * @param int|string|array $permission
-     *
+     * @param  string  $permission
      * @return bool
      */
     public function canDo($permission)
@@ -38,11 +33,10 @@ trait CheckRoleAndPermission
     }
 
     /**
-     * Handle dynamic method calls.
+     * Dynamically handle calls to the class.
      *
-     * @param string $method
-     * @param array  $parameters
-     *
+     * @param  string  $method
+     * @param  array  $parameters
      * @return mixed
      */
     public function __call($method, $parameters)
@@ -52,5 +46,16 @@ trait CheckRoleAndPermission
         }
 
         return parent::__call($method, $parameters);
+    }
+
+    /**
+     * Set the user's role.
+     *
+     * @param  string  $role
+     * @return void
+     */
+    public function setRole($role)
+    {
+        $this->role = app(Role::class)->findBySlug($role);
     }
 }

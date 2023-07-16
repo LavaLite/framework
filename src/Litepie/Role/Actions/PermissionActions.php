@@ -14,17 +14,25 @@ class PermissionActions
     use AsAction;
     use LogsActions;
     
-    private $model;
+    protected $model;
+    protected $namespace = 'litepie.role.permission';
+    protected $eventClass = \Litepie\Role\Events\PermissionAction::class;
+    protected $action;
+    protected $function;
+    protected $request;
 
     public function handle(string $action, array $request)
     {
         $this->model = app(Permission::class);
+        $this->action = $action;
+        $this->request = $request;
+        $this->function = Str::camel($action);
 
         $function = Str::camel($action);
 
-        event('role.permission.action.' . $action . 'ing', [$request]);
+        $this->dispatchActionBeforeEvent();
         $data = $this->$function($request);
-        event('role.permission.action.' . $action . 'ed', [$data]);
+        $this->dispatchActionAfterEvent();
 
         $this->logsAction();
         return $data;
@@ -69,6 +77,22 @@ class PermissionActions
         });
         return $this->model->whereIn('id', $ids)->delete();
     }
+
+    public function options(array $request)
+    {
+        return $this->model
+            ->pushScope(new RequestScope())
+            ->pushScope(new PermissionResourceScope())
+            ->take(30)->get()
+            ->map(function ($row) {
+                return [
+                    'key' => $row->id,
+                    'value' => $row->id,
+                    'text' => $row->name,
+                ];
+            })->toArray();
+    }
+
 
     /**
      * Returns permissions as grouped array.

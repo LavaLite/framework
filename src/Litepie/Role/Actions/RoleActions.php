@@ -14,17 +14,25 @@ class RoleActions
     use AsAction;
     use LogsActions;
     
-    private $model;
+    protected $model;
+    protected $namespace = 'litepie.role.role';
+    protected $eventClass = \Litepie\Role\Events\RoleAction::class;
+    protected $action;
+    protected $function;
+    protected $request;
 
     public function handle(string $action, array $request)
     {
         $this->model = app(Role::class);
+        $this->action = $action;
+        $this->request = $request;
+        $this->function = Str::camel($action);
 
         $function = Str::camel($action);
 
-        event('role.role.action.' . $action . 'ing', [$request]);
+        $this->dispatchActionBeforeEvent();
         $data = $this->$function($request);
-        event('role.role.action.' . $action . 'ed', [$data]);
+        $this->dispatchActionAfterEvent();
 
         $this->logsAction();
         return $data;
@@ -69,8 +77,19 @@ class RoleActions
         });
         return $this->model->whereIn('id', $ids)->delete();
     }
-    private function select($request)
+
+    public function options(array $request)
     {
-        return $this->model->pluck('name', 'id')->all();
+        return $this->model
+            ->pushScope(new RequestScope())
+            ->pushScope(new RoleResourceScope())
+            ->take(30)->get()
+            ->map(function ($row) {
+                return [
+                    'key' => $row->id,
+                    'value' => $row->id,
+                    'text' => $row->name,
+                ];
+            })->toArray();
     }
 }
