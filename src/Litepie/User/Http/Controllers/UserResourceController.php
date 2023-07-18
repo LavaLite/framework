@@ -3,6 +3,7 @@
 namespace Litepie\User\Http\Controllers;
 
 use Exception;
+use Litecms\Location\Actions\CountryActions;
 use Litepie\Http\Controllers\ResourceController as BaseController;
 use Litepie\User\Actions\UserAction;
 use Litepie\User\Actions\UserActions;
@@ -28,8 +29,7 @@ class UserResourceController extends BaseController
     {
         parent::__construct();
         $this->middleware(function ($request, $next) {
-            $this->form = UserForm::only('main')
-                ->setAttributes()
+            $this->form = UserForm::setAttributes()
                 ->toArray();
             $this->modules = $this->modules(config('user.modules'), 'user', guard_url('user'));
             return $next($request);
@@ -55,7 +55,6 @@ class UserResourceController extends BaseController
             ->view('user::user.index')
             ->data(compact('data', 'modules', 'form'))
             ->output();
-
     }
 
     /**
@@ -94,7 +93,6 @@ class UserResourceController extends BaseController
             ->view('user::user.create')
             ->data(compact('data', 'form', 'modules'))
             ->output();
-
     }
 
     /**
@@ -123,7 +121,6 @@ class UserResourceController extends BaseController
                 ->url(guard_url('/user/user'))
                 ->redirect();
         }
-
     }
 
     /**
@@ -145,7 +142,6 @@ class UserResourceController extends BaseController
             ->view('user::user.edit')
             ->data(compact('data', 'form', 'modules'))
             ->output();
-
     }
 
     /**
@@ -176,7 +172,6 @@ class UserResourceController extends BaseController
                 ->url(guard_url('user/user/' . $model->getRouteKey()))
                 ->redirect();
         }
-
     }
 
     /**
@@ -200,7 +195,6 @@ class UserResourceController extends BaseController
                 ->data(compact('data'))
                 ->url(guard_url('user/user/0'))
                 ->redirect();
-
         } catch (Exception $e) {
 
             return $this->response->message($e->getMessage())
@@ -209,6 +203,20 @@ class UserResourceController extends BaseController
                 ->url(guard_url('user/user/' . $model->getRouteKey()))
                 ->redirect();
         }
+    }
 
+    public function masterDatas(UserResourceRequest $request)
+    {
+        $form = $this->form;
+        $data['data'] = [
+            'id_hashed' => hashids_encode(user()->id),
+        ];
+        $data['options'] = [
+            'country' => CountryActions::run($request, 'options'),
+            'sex'   => trans('setting.options.gender'),
+            'languages' => trans('setting.options.languages'),
+        ];
+        $data['fields'] = $form['fields'];
+        return $data;
     }
 }

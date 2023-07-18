@@ -34,4 +34,19 @@ class User extends Model
      */
     protected $config = 'user.user.model';
 
+    public function getSettings()
+    {
+        $settings = [
+            'groups' => [],
+            'fields' => [],
+        ];
+        $settings['groups']['login_details'] = ['show' => true, 'edit' => true];
+        $settings['groups']['main'] = ['show' => true, 'edit' => true];
+        $settings['groups']['details'] = ['show' => true, 'edit' => true];
+        $settings['groups']['photo'] = ['show' => true, 'edit' => true];
+        $settings['groups']['roles'] = ['show' => true, 'edit' => true];
+        $settings['fields']['password'] = ['show' => true, 'edit' => true, 'disabled' => !is_null($this->password)];
+        $settings['groups']['company'] = ['show' => true, 'edit' => true];
+        return $settings;
+    }
 }

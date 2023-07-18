@@ -28,8 +28,7 @@ class TeamResourceController extends BaseController
     {
         parent::__construct();
         $this->middleware(function ($request, $next) {
-            $this->form = TeamForm::only('main')
-                ->setAttributes()
+            $this->form = TeamForm::setAttributes()
                 ->toArray();
             $this->modules = $this->modules(config('team.modules'), 'team', guard_url('team'));
             return $next($request);

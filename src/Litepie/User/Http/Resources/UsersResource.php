@@ -23,26 +23,29 @@ class UsersResource extends JsonResource
         }
 
         return 'None';
-     }
+    }
 
     public function toArray($request)
     {
         return [
             'id' => $this->getRouteKey(),
             'title' => $this->title(),
+            'name'        => $this->name,
+            'email'        => $this->email,
             'description' => $this->description,
+            'status'      => $this->status,
+            'designation' => $this->designation,
             'image' => [
                 'main' => url($this->defaultImage('images', 'xs')),
                 'sub' => @$this->client->picture,
             ],
             'status' => $this->status,
-            'created_at' => !is_null($this->created_at) ? $this->created_at->format('Y-m-d H:i:s') : null,
-            'updated_at' => !is_null($this->updated_at) ? $this->updated_at->format('Y-m-d H:i:s') : null,
+            'created_at'  => format_date($this->created_at),
+            'updated_at'  => format_date($this->updated_at),
             'meta' => [
                 'exists' => $this->exists(),
                 'link' => $this->itemLink(),
             ],
         ];
     }
-
 }

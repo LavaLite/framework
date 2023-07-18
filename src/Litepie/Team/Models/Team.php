@@ -50,4 +50,53 @@ class Team extends Model
                 'id', 'role', 'level',
             ]);
     }
+    public function hasTeamRole($levels = [], $allowSuperuser = true)
+    {
+        // if ($allowSuperuser && user()->hasRole(['superuser'])) return true;
+        if ($levels == ['*']) return true;
+        $userLevels = $this->belongsToMany('App\Models\User')->where('users.id', user_id())
+            ->withPivot(['id', 'level'])->pluck('level')->toArray();
+        if (is_array($levels)) {
+            if (count(array_intersect(array_map('strtolower', $userLevels), array_map('strtolower', $levels))) > 0)
+                return true;
+        } else {
+            if (in_array($levels, $userLevels)) return true;
+        }
+        return false;
+    }
+    public function hasTeamAccess($levels = [], $allowSuperuser = true)
+    {
+        if ($allowSuperuser && user()->hasRole(['superuser'])) return true;
+        if ($levels == ['*']) return true;
+        $userLevels = $this->belongsToMany('App\Models\User')->where('users.id', user_id())
+            ->withPivot(['id', 'level'])->pluck('level')->toArray();
+
+        if (is_array($levels)) {
+            if (count(array_intersect(array_map('strtolower', $userLevels), array_map('strtolower', $levels))) > 0)
+                return true;
+        } else {
+            if ($userLevels) {
+                if (max(array_map(function ($element) use ($levels) {
+                    return $element >= $levels;
+                }, $userLevels))) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+    public function getSettings()
+    {
+        $settings = [
+            'groups' => [],
+            'fields' => [],
+        ];
+        $settings['groups']['main'] = ['show' => true, 'edit' => true];
+        $settings['groups']['details'] = ['show' => true, 'edit' => true];
+        $settings['groups']['users'] = ['show' => false, 'edit' => true];
+        if ($this->exists) {
+            $settings['groups']['users'] = ['show' => true, 'edit' => false];
+        }
+        return $settings;
+    }
 }

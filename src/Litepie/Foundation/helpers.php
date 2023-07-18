@@ -202,7 +202,13 @@ if (!function_exists('guard')) {
      */
     function guard($guard = null)
     {
-        return User::guard($guard);
+        if (empty($guard)) {
+            return config('global.guard');
+        } else {
+            config()->set('global.guard', $guard);
+            app('auth')->shouldUse($guard);
+
+        }
     }
 }
 

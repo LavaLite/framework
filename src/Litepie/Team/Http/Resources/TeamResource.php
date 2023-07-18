@@ -44,6 +44,9 @@ class TeamResource extends JsonResource
                 'link' => $this->itemLink(),
                 'upload_url' => $this->getUploadURL(''),
             ],
+            '_settings' => $this->getSettings(),
+            'team_users' => $this->teamUsers('Active'),
+            'preview_title' => 'Team',
         ];
     }
 
@@ -69,14 +72,39 @@ class TeamResource extends JsonResource
     private function workflows()
     {
         $arr = [];
-                return $arr;
-
+        return $arr;
     }
     private function actions()
     {
 
         $arr = [];
-        
+
         return $arr;
+    }
+    private function teamUsers($status = 'Active')
+    {
+        $results = $this->users()->where('team_user.status', $status)->get();
+        foreach ($results as $result) {
+            $result['id_org'] = hashids_encode(@$result['id']);
+            $result['p_level'] = @$result['pivot']['level'];
+            $result['p_level_name'] = $this->get_pname(@$result['pivot']['level']);
+            $result['p_user_id'] = @$result['pivot']['user_id'];
+            $result['p_status'] = @$result['pivot']['status'];
+            $result['p_created_at'] = @$result['pivot']['created_at'];
+            $result['p_updated_at'] = @$result['pivot']['updated_at'];
+        }
+        return $results;
+    }
+    private function get_pname($key)
+    {
+        $name = null;
+        $options = trans('team::team.options.level');
+        foreach ($options as $item) {
+            if ($item['key'] == $key) {
+                $name = $item['name'];
+                break;
+            }
+        }
+        return $name;
     }
 }

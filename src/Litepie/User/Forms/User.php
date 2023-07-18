@@ -13,7 +13,6 @@ class User extends FormInterpreter
      */
     public static function setAttributes()
     {
-
         self::$urls = config('user.user.urls');
 
         self::$search = config('user.user.search');
@@ -25,6 +24,8 @@ class User extends FormInterpreter
         self::$list =  config('user.user.list');
 
         self::$fields = config('user.user.form');
+
+        self::$filters =  config('user.user.filters');
 
         return new static();
     }

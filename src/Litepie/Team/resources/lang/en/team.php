@@ -34,6 +34,7 @@ return [
         'images' => 'Images',
         'details' => 'Details',
         'settings' => 'Settings',
+        'team_users' => 'Team Users',
     ],
 
     /**
@@ -55,29 +56,34 @@ return [
                 'key' => '1',
                 'value' => '1',
                 'text' => '1',
+                'name' => 'Guest',
             ],
 
             [
                 'key' => '2',
                 'value' => '2',
                 'text' => '2',
+                'name' => 'Admin',
             ],
 
             [
                 'key' => '3',
                 'value' => '3',
                 'text' => '3',
+                'name' => 'Manager',
             ],
 
             [
                 'key' => '4',
                 'value' => '4',
                 'text' => '4',
+                'name' => 'Administrator',
             ],
             [
                 'key' => '5',
                 'value' => '5',
                 'text' => '5',
+                'name' => 'Super User',
             ],
 
         ],

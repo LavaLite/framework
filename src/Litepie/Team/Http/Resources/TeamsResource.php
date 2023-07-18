@@ -23,13 +23,14 @@ class TeamsResource extends JsonResource
         }
 
         return 'None';
-     }
+    }
 
     public function toArray($request)
     {
         return [
             'id' => $this->getRouteKey(),
             'title' => $this->title(),
+            'name' => $this->name,
             'description' => $this->description,
             'image' => [
                 'main' => url($this->defaultImage('images', 'xs')),
@@ -44,5 +45,4 @@ class TeamsResource extends JsonResource
             ],
         ];
     }
-
 }

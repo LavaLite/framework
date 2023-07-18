@@ -87,10 +87,30 @@ trait Actionable
             ];
             $formattedLog['text'] = $formattedLog['label'] . ': ' . $formattedLog['value'];
 
-
             $formattedLogs[$key] = $formattedLog;
         }
 
         return $formattedLogs;
     }
+
+    public function canDoActions($roles = [])
+    {
+        if ($this->team && $this->team->hasTeamRole(@$roles['team'], true)) {
+            return true;
+        }
+        if (user()->hasRole(@$roles['user'])) {
+            return true;
+        }
+        
+        if (@$roles['model']) {
+            foreach ($roles['model'] as $model) {
+                if ($this->$model) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
+
 }

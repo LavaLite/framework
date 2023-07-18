@@ -13,30 +13,21 @@ class RoleActions
 {
     use AsAction;
     use LogsActions;
-    
-    protected $model;
-    protected $namespace = 'litepie.role.role';
-    protected $eventClass = \Litepie\Role\Events\RoleAction::class;
-    protected $action;
-    protected $function;
-    protected $request;
+
+    private $model;
 
     public function handle(string $action, array $request)
     {
         $this->model = app(Role::class);
-        $this->action = $action;
-        $this->request = $request;
-        $this->function = Str::camel($action);
 
         $function = Str::camel($action);
 
-        $this->dispatchActionBeforeEvent();
+        event('role.role.action.' . $action . 'ing', [$request]);
         $data = $this->$function($request);
-        $this->dispatchActionAfterEvent();
+        event('role.role.action.' . $action . 'ed', [$data]);
 
         $this->logsAction();
         return $data;
-
     }
 
     public function paginate(array $request)
@@ -61,11 +52,13 @@ class RoleActions
         return $role;
     }
 
-    function empty(array $request) {
+    function empty(array $request)
+    {
         return $this->model->forceDelete();
     }
 
-    function restore(array $request) {
+    function restore(array $request)
+    {
         return $this->model->restore();
     }
 
@@ -77,10 +70,13 @@ class RoleActions
         });
         return $this->model->whereIn('id', $ids)->delete();
     }
-
+    private function select($request)
+    {
+        return $this->model->pluck('name', 'id')->all();
+    }
     public function options(array $request)
     {
-        return $this->model
+        return  $this->model
             ->pushScope(new RequestScope())
             ->pushScope(new RoleResourceScope())
             ->take(30)->get()
@@ -89,6 +85,7 @@ class RoleActions
                     'key' => $row->id,
                     'value' => $row->id,
                     'text' => $row->name,
+                    'name' => $row->name,
                 ];
             })->toArray();
     }

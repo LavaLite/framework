@@ -13,7 +13,7 @@ class TeamActions
 {
     use AsAction;
     use LogsActions;
-    
+
     private $model;
 
     public function handle(string $action, array $request)
@@ -28,7 +28,6 @@ class TeamActions
 
         $this->logsAction();
         return $data;
-
     }
 
     public function paginate(array $request)
@@ -53,11 +52,13 @@ class TeamActions
         return $team;
     }
 
-    function empty(array $request) {
+    function empty(array $request)
+    {
         return $this->model->forceDelete();
     }
 
-    function restore(array $request) {
+    function restore(array $request)
+    {
         return $this->model->restore();
     }
 
@@ -81,6 +82,7 @@ class TeamActions
                     'key' => $row->id,
                     'value' => $row->id,
                     'text' => $row->name,
+                    'name' => $row->name,
                 ];
             })->toArray();
     }

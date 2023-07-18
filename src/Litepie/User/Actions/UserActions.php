@@ -90,10 +90,10 @@ class UserActions
                     'key' => $row->id,
                     'value' => $row->id,
                     'text' => $row->name,
+                    'name' => $row->name,
                 ];
             })->toArray();
     }
-    
     public function getUserByRole(array $request)
     {
         $role = @$request['role'];
@@ -111,6 +111,6 @@ class UserActions
                 $row['key'] = $row->eid;
                 $row['value'] = $row->eid;
                 return $row;
-            })->toArray();
+            });
     }
 }

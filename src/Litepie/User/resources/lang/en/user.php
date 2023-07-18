@@ -33,7 +33,12 @@ return [
         'main' => 'Main',
         'images' => 'Images',
         'details' => 'Details',
-        'settings' => 'Settings'
+        'settings' => 'Settings',
+        'contact'  => 'Contact',
+        'login'    => 'Login Details',
+        'company'  => 'Company',
+        'photo'    => 'Photo',
+        'roles'    => 'Roles'
     ],
 
     /**
@@ -48,96 +53,96 @@ return [
      * Options for select/radio/check.
      */
     'options'       => [
-        'team_id' => 
+        'team_id' =>
+        [
+
             [
-                                
-                [
-                    'key'    => 10,
-                    'value'  => 10,
-                    'text'   => 10,
-                ],
-                                
+                'key'    => 10,
+                'value'  => 10,
+                'text'   => 10,
             ],
 
-        'reporting_to' => 
+        ],
+
+        'reporting_to' =>
+        [
+
             [
-                                
-                [
-                    'key'    => 11,
-                    'value'  => 11,
-                    'text'   => 11,
-                ],
-                                
+                'key'    => 11,
+                'value'  => 11,
+                'text'   => 11,
             ],
 
-        'sex' => 
+        ],
+
+        'sex' =>
+        [
+
             [
-                                
-                [
-                    'key'    => '',
-                    'value'  => '',
-                    'text'   => '',
-                ],
-                                
-                [
-                    'key'    => 'Male',
-                    'value'  => 'Male',
-                    'text'   => 'Male',
-                ],
-                                
-                [
-                    'key'    => 'Female',
-                    'value'  => 'Female',
-                    'text'   => 'Female',
-                ],
-                                
+                'key'    => '',
+                'value'  => '',
+                'text'   => '',
             ],
 
-        'region' => 
             [
-                                
-                [
-                    'key'    => 'Yes',
-                    'value'  => 'Yes',
-                    'text'   => 'Yes',
-                ],
-                                
-                [
-                    'key'    =>  'No',
-                    'value'  =>  'No',
-                    'text'   =>  'No',
-                ],
-                                
+                'key'    => 'Male',
+                'value'  => 'Male',
+                'text'   => 'Male',
             ],
 
-        'status' => 
             [
-                                
-                [
-                    'key'    => 'New',
-                    'value'  => 'New',
-                    'text'   => 'New',
-                ],
-                                
-                [
-                    'key'    => 'Active',
-                    'value'  => 'Active',
-                    'text'   => 'Active',
-                ],
-                                
-                [
-                    'key'    => 'Suspended',
-                    'value'  => 'Suspended',
-                    'text'   => 'Suspended',
-                ],
-                                
-                [
-                    'key'    => 'Locked',
-                    'value'  => 'Locked',
-                    'text'   => 'Locked',
-                ],
-                                
+                'key'    => 'Female',
+                'value'  => 'Female',
+                'text'   => 'Female',
             ],
+
+        ],
+
+        'region' =>
+        [
+
+            [
+                'key'    => 'Yes',
+                'value'  => 'Yes',
+                'text'   => 'Yes',
+            ],
+
+            [
+                'key'    =>  'No',
+                'value'  =>  'No',
+                'text'   =>  'No',
+            ],
+
+        ],
+
+        'status' =>
+        [
+
+            [
+                'key'    => 'New',
+                'value'  => 'New',
+                'text'   => 'New',
+            ],
+
+            [
+                'key'    => 'Active',
+                'value'  => 'Active',
+                'text'   => 'Active',
+            ],
+
+            [
+                'key'    => 'Suspended',
+                'value'  => 'Suspended',
+                'text'   => 'Suspended',
+            ],
+
+            [
+                'key'    => 'Locked',
+                'value'  => 'Locked',
+                'text'   => 'Locked',
+            ],
+
+        ],
     ],
 
     /**
@@ -214,5 +219,5 @@ return [
         'updated_at'                 => 'Updated at',
     ],
 
-    
-    ];
+
+];
