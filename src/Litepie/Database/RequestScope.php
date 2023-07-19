@@ -253,7 +253,7 @@ class RequestScope implements Scope
      */
     private function getSearchFields(Model $model)
     {
-        $search = $model->search;
+        $search = $model->getSearchFields();
         foreach ($search as $field => $condition) {
             if (is_numeric($field)) {
                 $search[$condition] = '=';
