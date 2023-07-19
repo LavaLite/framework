@@ -8,108 +8,75 @@ use Litepie\User\Models\User;
 class UserPolicy
 {
 
-
     /**
      * Determine if the given user can view the user.
      *
-     * @param Authenticatable $user
-     * @param User $user
+     * @param Authenticatable $authUser
+     * @param User $authUser
      *
      * @return bool
      */
-    public function view(Authenticatable $user, User $user)
+    public function view(Authenticatable $authUser, User $user)
     {
-        if ($user->canDo('user.user.view') && $user->isAdmin()) {
+        if ($authUser->canDo('user.user.view')) {
             return true;
         }
 
-        return $user->user_id == user_id() && $user->user_type == user_type();
+        return $user->owner();
     }
 
     /**
      * Determine if the given user can create a user.
      *
-     * @param Authenticatable $user
+     * @param Authenticatable $authUser
      *
      * @return bool
      */
-    public function create(Authenticatable $user)
+    public function create(Authenticatable $authUser)
     {
-        return  $user->canDo('user.user.create');
+        return $authUser->canDo('user.user.create');
     }
 
     /**
      * Determine if the given user can update the given user.
      *
-     * @param Authenticatable $user
-     * @param User $user
+     * @param Authenticatable $authUser
+     * @param User $authUser
      *
      * @return bool
      */
-    public function update(Authenticatable $user, User $user)
+    public function update(Authenticatable $authUser, User $user)
     {
-        if ($user->canDo('user.user.edit') && $user->isAdmin()) {
+        if ($authUser->canDo('user.user.edit')) {
             return true;
         }
 
-        return $user->user_id == user_id() && $user->user_type == user_type();
+        return $user->owner();
     }
 
     /**
      * Determine if the given user can delete the given user.
      *
-     * @param Authenticatable $user
+     * @param Authenticatable $authUser
      *
      * @return bool
      */
-    public function destroy(Authenticatable $user, User $user)
+    public function destroy(Authenticatable $authUser, User $user)
     {
-        return $user->user_id == user_id() && $user->user_type == user_type();
-    }
-
-    /**
-     * Determine if the given user can verify the given user.
-     *
-     * @param Authenticatable $user
-     *
-     * @return bool
-     */
-    public function verify(Authenticatable $user, User $user)
-    {
-        if ($user->canDo('user.user.verify')) {
-            return true;
-        }
-
-        return false;
-    }
-
-    /**
-     * Determine if the given user can approve the given user.
-     *
-     * @param Authenticatable $user
-     *
-     * @return bool
-     */
-    public function approve(Authenticatable $user, User $user)
-    {
-        if ($user->canDo('user.user.approve')) {
-            return true;
-        }
-
         return false;
     }
 
     /**
      * Determine if the user can perform a given action ve.
      *
-     * @param [type] $user    [description]
+     * @param [type] $authUser    [description]
      * @param [type] $ability [description]
      *
      * @return [type] [description]
      */
-    public function before($user, $ability)
+    public function before($authUser, $ability)
     {
-        if ($user->isSuperuser()) {
+        if ($authUser->isSuperuser()) {
             return true;
         }
     }
