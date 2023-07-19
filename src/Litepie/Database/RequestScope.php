@@ -31,7 +31,7 @@ class RequestScope implements Scope
 
     public function applySort(Builder $builder, Model $model)
     {
-        $fields = $model->getSearchFields();
+        $fields = $this->getSearchFields($model);
         $sort = request()->input('sort', []);
 
         if (empty($sort)) {
@@ -246,4 +246,21 @@ class RequestScope implements Scope
         return $sorts;
     }
 
+    /**
+     * Returne the search fields for the model.
+     *
+     * @return array
+     */
+    private function getSearchFields(Model $model)
+    {
+        $search = $model->search;
+        foreach ($search as $field => $condition) {
+            if (is_numeric($field)) {
+                $search[$condition] = '=';
+                unset($search[$field]);
+            }
+        }
+
+        return $search;
+    }
 }
