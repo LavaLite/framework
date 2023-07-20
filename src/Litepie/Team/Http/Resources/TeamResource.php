@@ -6,7 +6,6 @@ use Illuminate\Http\Resources\Json\JsonResource;
 
 class TeamResource extends JsonResource
 {
-
     public function itemLink()
     {
         return guard_url('team/team') . '/' . $this->getRouteKey();
@@ -45,8 +44,7 @@ class TeamResource extends JsonResource
                 'upload_url' => $this->getUploadURL(''),
             ],
             '_settings' => $this->getSettings(),
-            'team_users' => $this->teamUsers('Active'),
-            'preview_title' => 'Team',
+            'users' => $this->getUsers(),
         ];
     }
 
@@ -76,35 +74,17 @@ class TeamResource extends JsonResource
     }
     private function actions()
     {
-
         $arr = [];
 
         return $arr;
     }
-    private function teamUsers($status = 'Active')
+    private function getUsers()
     {
-        $results = $this->users()->where('team_user.status', $status)->get();
-        foreach ($results as $result) {
-            $result['id_org'] = hashids_encode(@$result['id']);
-            $result['p_level'] = @$result['pivot']['level'];
-            $result['p_level_name'] = $this->get_pname(@$result['pivot']['level']);
-            $result['p_user_id'] = @$result['pivot']['user_id'];
-            $result['p_status'] = @$result['pivot']['status'];
-            $result['p_created_at'] = @$result['pivot']['created_at'];
-            $result['p_updated_at'] = @$result['pivot']['updated_at'];
+        $results = $this->users()->get();
+
+        foreach ($results as $key => $result) {
+            $results[$key]['level_name'] = trans('team::team.options.level.' . $result['pivot']['level'] . '.name');
         }
         return $results;
-    }
-    private function get_pname($key)
-    {
-        $name = null;
-        $options = trans('team::team.options.level');
-        foreach ($options as $item) {
-            if ($item['key'] == $key) {
-                $name = $item['name'];
-                break;
-            }
-        }
-        return $name;
     }
 }

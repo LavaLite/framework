@@ -46,39 +46,60 @@ class Team extends Model
     public function users()
     {
         return $this->belongsToMany('App\Models\User')
-            ->withPivot([
-                'id', 'role', 'level',
-            ]);
+
+            ->whereNull('team_user.deleted_at') // Table `group_user` has column `deleted_at`
+            ->withTimestamps()
+            ->withPivot(['id', 'role', 'level']);
     }
     public function hasTeamRole($levels = [], $allowSuperuser = true)
     {
         // if ($allowSuperuser && user()->hasRole(['superuser'])) return true;
-        if ($levels == ['*']) return true;
-        $userLevels = $this->belongsToMany('App\Models\User')->where('users.id', user_id())
-            ->withPivot(['id', 'level'])->pluck('level')->toArray();
+        if ($levels == ['*']) {
+            return true;
+        }
+        $userLevels = $this->belongsToMany('App\Models\User')
+            ->where('users.id', user_id())
+            ->withPivot(['id', 'level'])
+            ->pluck('level')
+            ->toArray();
         if (is_array($levels)) {
-            if (count(array_intersect(array_map('strtolower', $userLevels), array_map('strtolower', $levels))) > 0)
+            if (count(array_intersect(array_map('strtolower', $userLevels), array_map('strtolower', $levels))) > 0) {
                 return true;
+            }
         } else {
-            if (in_array($levels, $userLevels)) return true;
+            if (in_array($levels, $userLevels)) {
+                return true;
+            }
         }
         return false;
     }
     public function hasTeamAccess($levels = [], $allowSuperuser = true)
     {
-        if ($allowSuperuser && user()->hasRole(['superuser'])) return true;
-        if ($levels == ['*']) return true;
-        $userLevels = $this->belongsToMany('App\Models\User')->where('users.id', user_id())
-            ->withPivot(['id', 'level'])->pluck('level')->toArray();
+        if ($allowSuperuser && user()->hasRole(['superuser'])) {
+            return true;
+        }
+        if ($levels == ['*']) {
+            return true;
+        }
+        $userLevels = $this->belongsToMany('App\Models\User')
+            ->where('users.id', user_id())
+            ->withPivot(['id', 'level'])
+            ->pluck('level')
+            ->toArray();
 
         if (is_array($levels)) {
-            if (count(array_intersect(array_map('strtolower', $userLevels), array_map('strtolower', $levels))) > 0)
+            if (count(array_intersect(array_map('strtolower', $userLevels), array_map('strtolower', $levels))) > 0) {
                 return true;
+            }
         } else {
             if ($userLevels) {
-                if (max(array_map(function ($element) use ($levels) {
-                    return $element >= $levels;
-                }, $userLevels))) {
+                if (
+                    max(
+                        array_map(function ($element) use ($levels) {
+                            return $element >= $levels;
+                        }, $userLevels),
+                    )
+                ) {
                     return true;
                 }
             }

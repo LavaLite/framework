@@ -8,6 +8,4 @@
         </div>
     </aside>
     <br />
-    @if($mode == 'show')
-        @endif
 </div>

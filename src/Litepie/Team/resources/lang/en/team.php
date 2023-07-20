@@ -31,10 +31,7 @@ return [
      */
     'groups' => [
         'main' => 'Main',
-        'images' => 'Images',
-        'details' => 'Details',
-        'settings' => 'Settings',
-        'team_users' => 'Team Users',
+        'members' => 'Members',
     ],
 
     /**
@@ -49,101 +46,70 @@ return [
      * Options for select/radio/check.
      */
     'options' => [
-        'level' =>
-        [
-
-            [
+        'level' => [
+            '1' => [
                 'key' => '1',
                 'value' => '1',
-                'text' => '1',
-                'name' => 'Guest',
+                'text' => '1 - Guest',
+                'name' => '1 - Guest',
             ],
 
-            [
+            '2' => [
                 'key' => '2',
                 'value' => '2',
-                'text' => '2',
-                'name' => 'Admin',
+                'text' => '2 - Admin',
+                'name' => '2 - Admin',
             ],
-
-            [
+            '3' => [
                 'key' => '3',
                 'value' => '3',
-                'text' => '3',
-                'name' => 'Manager',
+                'text' => '3 - Manager',
+                'name' => '3 - Manager',
             ],
-
-            [
+            '4' => [
                 'key' => '4',
                 'value' => '4',
-                'text' => '4',
-                'name' => 'Administrator',
+                'text' => '4 - Administrator',
+                'name' => '4 - Administrator',
             ],
-            [
+            '5' => [
                 'key' => '5',
                 'value' => '5',
-                'text' => '5',
-                'name' => 'Super User',
+                'text' => '5 - Super User',
+                'name' => '5 - Super User',
             ],
-
         ],
-        'role' =>
-        [
-
+        'type' => [
             [
-                'key' => 'User',
-                'value' => 'User',
-                'text' => 'User',
+                'key' => 'Default',
+                'value' => 'Default',
+                'text' => 'Default',
             ],
-
-            [
-                'key' => 'Admin',
-                'value' => 'Admin',
-                'text' => 'Admin',
-            ],
-
-            [
-                'key' => 'Manager',
-                'value' => 'Manager',
-                'text' => 'Manager',
-            ],
-
-
-        ],
-        'type' =>
-        [
-
             [
                 'key' => 'Product',
                 'value' => 'Product',
                 'text' => 'Product',
             ],
-
             [
                 'key' => 'Lead',
                 'value' => 'Lead',
                 'text' => 'Lead',
             ],
-
             [
                 'key' => 'Oppertunity',
                 'value' => 'Oppertunity',
                 'text' => 'Oppertunity',
             ],
-
             [
                 'key' => 'Deal',
                 'value' => 'Deal',
                 'text' => 'Deal',
             ],
-
         ],
 
-        'status' =>
-        [
-
+        'status' => [
             [
-                'key' => 'Default',
+                'key' => '',
                 'value' => 'Default',
                 'text' => 'Default',
             ],
@@ -159,7 +125,6 @@ return [
                 'value' => 'Inactive',
                 'text' => 'Inactive',
             ],
-
         ],
     ],
 
@@ -202,5 +167,4 @@ return [
         'created_at' => 'Created at',
         'updated_at' => 'Updated at',
     ],
-
 ];

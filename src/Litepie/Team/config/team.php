@@ -117,7 +117,7 @@ return [
                 "placeholder" => 'team::team.placeholder.name',
                 "rules" => '',
                 "group" => "main.main",
-                "col" => "6",
+                "col" => "5",
                 "append" => null,
                 "prepend" => null,
                 "roles" => [],
@@ -136,7 +136,7 @@ return [
                 "placeholder" => 'team::team.placeholder.key',
                 "rules" => '',
                 "group" => "main.main",
-                "col" => "6",
+                "col" => "5",
                 "append" => null,
                 "prepend" => null,
                 "roles" => [],
@@ -158,7 +158,7 @@ return [
                     return trans('team::team.options.level');
                 },
                 "group" => "main.main",
-                "col" => "6",
+                "col" => "2",
                 "append" => null,
                 "prepend" => null,
                 "roles" => [],
@@ -221,7 +221,7 @@ return [
                 "placeholder" => 'team::team.placeholder.description',
                 "rules" => '',
                 "group" => "main.main",
-                "col" => "6",
+                "col" => "12",
                 "append" => null,
                 "prepend" => null,
                 "roles" => [],
@@ -234,13 +234,13 @@ return [
             ],
             [
                 "key" => 'settings',
-                "element" => 'text',
+                "element" => 'textarea',
                 "type" => 'text',
                 "label" => 'team::team.label.settings',
                 "placeholder" => 'team::team.placeholder.settings',
                 "rules" => '',
                 "group" => "main.main",
-                "col" => "6",
+                "col" => "12",
                 "append" => null,
                 "prepend" => null,
                 "roles" => [],
@@ -285,29 +285,17 @@ return [
             'status' => 'team::team.label.status',
         ],
         'groups' => [
-            'main' => [
+            [
                 'icon' => "mdi:account-supervisor-outline",
                 'name' => "team::team.groups.main",
-                'key' => "main.main",
+                'group' => "main.main",
                 'title' => "team::team.groups.main",
             ],
-            'details' => [
+            [
                 'icon' => "fe:home",
-                'name' => "team::team.groups.details",
-                'key' => "main.documents",
-                'title' => "team::team.groups.details",
-            ],
-            'images' => [
-                'icon' => "fe:home",
-                'name' => "team::team.groups.images",
-                'key' => "main.documents",
-                'title' => "team::team.groups.images",
-            ],
-            'settings' => [
-                'icon' => "fe:home",
-                'name' => "team::team.groups.settings",
-                'key' => "main.documents",
-                'title' => "team::team.groups.settings",
+                'name' => "team::team.groups.members",
+                'group' => "main.members",
+                'title' => "team::team.groups.members",
             ]
         ],
         'controller' => [

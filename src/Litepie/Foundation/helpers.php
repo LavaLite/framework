@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Request;
 use Litepie\Support\Facades\Hashids;
 use Litepie\Support\Facades\Trans;
+use Litepie\Support\Facades\User;
 
 if (!function_exists('hashids_encode')) {
     /**

@@ -9,7 +9,6 @@ use Litepie\Actions\Traits\LogsActions;
 use Litepie\Notification\Traits\SendNotification;
 use Litepie\Team\Models\Team;
 
-
 class TeamAction
 {
     use AsAction;
@@ -32,7 +31,6 @@ class TeamAction
         $this->executeAction();
         return $this->model;
     }
-
 
     public function store(Team $team, array $request)
     {
@@ -83,17 +81,8 @@ class TeamAction
      */
     public function attach(Team $team, array $data)
     {
-        $team->users()
-            ->sync(
-                [
-                    $data['user_id'] => [
-                        'role' => $data['role'],
-                        'level' => $data['level'],
-                    ],
-                ],
-                false
-            );
-
+        $this->detach($team, $data);
+        $team->users()->attach($data['user_id'], ['level' => $data['level']]);
         return $team;
     }
 
@@ -104,11 +93,8 @@ class TeamAction
      */
     public function detach(Team $team, array $data)
     {
-        $team->users()
-            ->detach($data['user_id']);
+        $team->users()->updateExistingPivot($data['user_id'], ['deleted_at' => now()]);
 
         return $team;
     }
-
-
 }
