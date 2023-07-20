@@ -5,7 +5,7 @@ namespace Litepie\User\Traits;
 /**
  * Trait HasPermission.
  */
-trait User
+trait UserProfile
 {
 
 
