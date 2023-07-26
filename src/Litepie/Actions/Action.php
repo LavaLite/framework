@@ -8,6 +8,7 @@ class Action
     protected $name = null;
     protected $roles = null;
     protected $type = [];
+    protected $meta = [];
     protected $form = [];
 
     public function __construct($name = null)
@@ -29,6 +30,14 @@ class Action
             $this->name = $name;
         }
         return $this->name;
+    }
+
+    public function meta(string $meta = null): string
+    {
+        if (!empty($meta)) {
+            $this->meta = $meta;
+        }
+        return $this->meta;
     }
 
     public function type(array $types = [])
