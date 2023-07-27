@@ -41,11 +41,12 @@ trait Workflowable
      * @param  array  $roles
      * @return bool
      */
-    public function canDoActions($roles)
+    public function canDoTransition($roles)
     {
         if ($this->team && $this->team->hasTeamRole($roles['team'] ?? null, true)) {
             return true;
         }
+
         if (user()->hasRole($roles['user'] ?? null)) {
             return true;
         }
