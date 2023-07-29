@@ -31,7 +31,6 @@ class TeamServiceProvider extends ServiceProvider
 
         // Call pblish redources function
         $this->publishResources();
-
     }
 
     /**
@@ -42,9 +41,22 @@ class TeamServiceProvider extends ServiceProvider
     public function register()
     {
         $this->mergeConfig();
+        $this->registerFacade();
 
         $this->app->register(\Litepie\Team\Providers\AuthServiceProvider::class);
         $this->app->register(\Litepie\Team\Providers\RouteServiceProvider::class);
+    }
+
+    /**
+     * Register the vault facade without the user having to add it to the app.php file.
+     *
+     * @return void
+     */
+    public function registerFacade()
+    {
+        $this->app->bind('litepie.team', function ($app) {
+            return $this->app->make(Teams::class);
+        });
     }
 
     /**
@@ -55,7 +67,8 @@ class TeamServiceProvider extends ServiceProvider
     protected function mergeConfig()
     {
         $this->mergeConfigFrom(
-            __DIR__ . '/config/team.php', 'team'
+            __DIR__ . '/config/team.php',
+            'team'
         );
     }
 

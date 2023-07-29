@@ -80,16 +80,28 @@ trait Actionable
             if (in_array($key, $this->log_action['exclude'])) {
                 continue;
             }
+            if (is_array($property)) {
+                foreach ($property as $row => $item) {
+                    $formattedLog = [
+                        'value' => $item,
+                        'label' => trans($this->log_action['label'] . $row),
+                    ];
 
+                    $formattedLog['text'] = $formattedLog['label'] . ': ' . $formattedLog['value'];
+
+                    $formattedLogs[$row] = $formattedLog;
+                }
+                continue;
+            }
             $formattedLog = [
                 'value' => $property,
                 'label' => trans($this->log_action['label'] . $key),
             ];
+
             $formattedLog['text'] = $formattedLog['label'] . ': ' . $formattedLog['value'];
 
             $formattedLogs[$key] = $formattedLog;
         }
-
         return $formattedLogs;
     }
 
@@ -101,7 +113,7 @@ trait Actionable
         if (user()->hasRole(@$roles['user'])) {
             return true;
         }
-        
+
         if (@$roles['model']) {
             foreach ($roles['model'] as $model) {
                 if ($this->$model) {
@@ -112,5 +124,4 @@ trait Actionable
 
         return false;
     }
-
 }
