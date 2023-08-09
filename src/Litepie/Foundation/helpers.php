@@ -1,5 +1,7 @@
 <?php
 
+use App\Models\User as ModelsUser;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Request;
 use Litepie\Support\Facades\Hashids;
 use Litepie\Support\Facades\Trans;
@@ -168,10 +170,7 @@ if (!function_exists('user_type')) {
      */
     function user_type($guard = null)
     {
-        $guard = is_null($guard) ? getenv('guard') : $guard;
-        $provider = config('auth.guards.'.$guard.'.provider', 'users');
-
-        return config("auth.providers.$provider.model", \Litepie\User\Models\User::class);
+        return get_class(user($guard)) ?? ModelsUser::class;
     }
 }
 
@@ -185,11 +184,7 @@ if (!function_exists('user_id')) {
      */
     function user_id($guard = null)
     {
-        $guard = is_null($guard) ? getenv('guard') : $guard;
-
-        if (Auth::guard($guard)->check()) {
-            return Auth::guard($guard)->user()->id;
-        }
+        return user($guard)->id;
     }
 }
 
