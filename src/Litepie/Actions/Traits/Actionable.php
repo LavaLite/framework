@@ -105,11 +105,16 @@ trait Actionable
         return $formattedLogs;
     }
 
-    public function canDoActions($roles = [])
+    public function canDoAction($roles = [])
     {
+        if (empty($roles) && !user()->isSuperUser()) {
+            return false;
+        }
+
         if ($this->team && $this->team->hasTeamRole(@$roles['team'], true)) {
             return true;
         }
+
         if (user()->hasRole(@$roles['user'])) {
             return true;
         }
