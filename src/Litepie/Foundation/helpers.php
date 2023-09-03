@@ -73,7 +73,7 @@ if (!function_exists('blade_compile')) {
      */
     function blade_compile($string, array $args = [])
     {
-        $compiled = \Blade::compileString($string);
+        $compiled = \Illuminate\Support\Facades\Blade::compileString($string);
         ob_start() and extract($args, EXTR_SKIP);
 
         // We'll include the view contents for parsing within a catcher
@@ -84,16 +84,16 @@ if (!function_exists('blade_compile')) {
             eval('?>'.$compiled);
         }
 
+        catch (Exception $e) {
         // If we caught an exception, we'll silently flush the output
 
         // buffer so that no partially rendered views get thrown out
         // to the client and confuse the user with junk.
-        catch (\Exception $e) {
-            ob_get_clean();
+        ob_get_clean();
 
             throw $e;
         }
-
+ 
         $content = ob_get_clean();
         $content = str_replace(['@param  ', '@return  ', '@var  ', '@throws  '], ['@param ', '@return ', '@var ', '@throws '], $content);
 
@@ -205,6 +205,25 @@ if (!function_exists('guard')) {
             app('auth')->shouldUse($guard);
 
         }
+    }
+}
+
+if (!function_exists('broker')) {
+    /**
+     * Set the broker .
+     *
+     * @param string $property
+     *
+     * @return mixed
+     */
+    function broker()
+    {
+        $guard = guard();
+        return config('auth.guards.' . $guard . '.provider', 
+                config('auth.guards.' . $guard . '.password', 
+                config('auth.defaults.passwords')
+            )
+        );
     }
 }
 
