@@ -17,7 +17,6 @@ class Team extends Model
 {
     use Filer;
     use Hashids;
-    // use Sluggable;
     use SoftDeletes;
     use Sortable;
     use Translatable;
@@ -40,72 +39,110 @@ class Team extends Model
     {
         return $this->morphTo(__FUNCTION__, 'user_type', 'user_id');
     }
+
     /**
      * The User that belong to the team.
      */
     public function users()
     {
-        return $this->belongsToMany('App\Models\User')
+        return $this->belongsToMany(config('user.user.model.model'))
+            ->using(TeamUser::class);
+    }
 
-            ->whereNull('team_user.deleted_at') // Table `group_user` has column `deleted_at`
-            ->withTimestamps()
-            ->withPivot(['id', 'role', 'level']);
-    }
-    public function hasTeamRole($levels = [], $allowSuperuser = true)
-    {
-        // if ($allowSuperuser && user()->hasRole(['superuser'])) return true;
-        if ($levels == ['*']) {
-            return true;
-        }
-        $userLevels = $this->belongsToMany('App\Models\User')
-            ->where('users.id', user_id())
-            ->withPivot(['id', 'level'])
-            ->pluck('level')
-            ->toArray();
-        if (is_array($levels)) {
-            if (count(array_intersect(array_map('strtolower', $userLevels), array_map('strtolower', $levels))) > 0) {
-                return true;
-            }
-        } else {
-            if (in_array($levels, $userLevels)) {
-                return true;
-            }
-        }
-        return false;
-    }
-    public function hasTeamAccess($levels = [], $allowSuperuser = true)
+    public function hasRole($role, $allowSuperuser = true)
     {
         if ($allowSuperuser && user()->hasRole(['superuser'])) {
             return true;
         }
-        if ($levels == ['*']) {
+
+        $userRoles = $this->users()
+            ->wherePivot('user_id', user_id())
+            ->withPivot(['roles'])->first();
+
+        if ($userRoles == null) {
+            return false;
+        }
+
+        if ($role == '*') {
             return true;
         }
-        $userLevels = $this->belongsToMany('App\Models\User')
-            ->where('users.id', user_id())
-            ->withPivot(['id', 'level'])
-            ->pluck('level')
-            ->toArray();
 
-        if (is_array($levels)) {
-            if (count(array_intersect(array_map('strtolower', $userLevels), array_map('strtolower', $levels))) > 0) {
-                return true;
-            }
-        } else {
-            if ($userLevels) {
-                if (
-                    max(
-                        array_map(function ($element) use ($levels) {
-                            return $element >= $levels;
-                        }, $userLevels),
-                    )
-                ) {
-                    return true;
-                }
-            }
+        if ($userRoles?->pivot?->roles == null) {
+            return false;
         }
-        return false;
+
+        return in_array($role, $userRoles->pivot->roles);
     }
+
+    public function hasAnyRole(array $roles, $allowSuperuser = true)
+    {
+        if ($allowSuperuser && user()->hasRole(['superuser'])) {
+            return true;
+        }
+
+        $userRoles = $this->users()
+            ->wherePivot('user_id', user_id())
+            ->withPivot(['roles'])->first();
+
+        if ($userRoles == null) {
+            return false;
+        }
+
+        if ($roles == ['*']) {
+            return true;
+        }
+
+        if ($userRoles?->pivot?->roles == null) {
+            return false;
+        }
+
+        return count(array_intersect($roles, $userRoles->pivot->roles)) > 0;
+    }
+
+    public function hasLevel($level, $allowSuperuser = true)
+    {
+        if ($allowSuperuser && user()->hasRole(['superuser'])) {
+            return true;
+        }
+
+        $userRoles = $this->users()
+            ->wherePivot('user_id', user_id())
+            ->withPivot(['level'])
+            ->first();
+
+        if ($userRoles == null) {
+            return false;
+        }
+
+        if ($userRoles?->pivot?->level == null) {
+            return false;
+        }
+
+        return $level <= $userRoles->pivot->level;
+    }
+
+    public function isLevel($level, $allowSuperuser = true)
+    {
+        if ($allowSuperuser && user()->hasRole(['superuser'])) {
+            return true;
+        }
+
+        $userRoles = $this->users()
+            ->wherePivot('user_id', user_id())
+            ->withPivot(['level'])
+            ->first();
+
+        if ($userRoles == null) {
+            return false;
+        }
+
+        if ($userRoles?->pivot?->level == null) {
+            return false;
+        }
+
+        return $level == $userRoles->pivot->level;
+    }
+
     public function getSettings()
     {
         $settings = [
