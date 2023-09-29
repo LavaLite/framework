@@ -379,10 +379,30 @@ return [
             'status' => 'notification::notification.label.status',
         ],
         'groups' => [
-            'main' => 'notification::notification.groups.main',
-            'details' => 'notification::notification.groups.details',
-            'images' => 'notification::notification.groups.images',
-            'settings' => 'notification::notification.groups.settings',
+            [
+                'icon' => "mdi:account-supervisor-outline",
+                'name' => "notification::notification.groups.main",
+                'group' => "main.main",
+                'title' => "notification::notification.groups.main",
+            ],
+            [
+                'icon' => "fe:home",
+                'name' => "notification::notification.groups.details",
+                'group' => "main.details",
+                'title' => "notification::notification.groups.details",
+            ],
+            'images' => [
+                'icon' => "fe:home",
+                'name' => "notification::notification.groups.images",
+                'group' => "main.images",
+                'title' => "notification::notification.groups.images",
+            ],
+            'settings' => [
+                'icon' => "fe:home",
+                'name' => "notification::notification.groups.settings",
+                'group' => "main.settings",
+                'title' => "notification::notification.groups.settings",
+            ]
         ],
         'controller' => [
             'provider' => 'Litepie',

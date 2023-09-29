@@ -3,7 +3,7 @@
         <i class="lab la-product-hunt app-sec-title-icon"></i>
         <h2>  {!! trans('app.manage') !!} {!! trans('setting::setting.names') !!}</h2>
         <div class="actions">
-            <button type="button" class="btn btn-with-icon btn-link  btn-outline"
+            <button group="button" class="btn btn-with-icon btn-link  btn-outline"
                 data-action='UPDATE'
                 data-form="#form-edit"
                 data-load-to="#app-entry" >
@@ -21,16 +21,16 @@
     ->id('form-edit')
     ->method('POST')
     ->files('true')
-    ->action(guard_url('setting/setting/'.$type))!!}
+    ->action(guard_url('setting/setting/'.$group))!!}
     <div class="container-fluid">
         <div class="row">
             <div class="col-12">
                 <div class="app-entry-form-section" id="basic">
-                    <div class="section-title">{{trans('setting::setting.title.'. $type)}} {!! trans('setting::setting.name') !!}</div>
+                    <div class="section-title">{{trans('setting::setting.title.'. $group)}} {!! trans('setting::setting.name') !!}</div>
                     <hr/>
                     <div class='row'>
                         <div class='col-md-12 col-sm-12'>
-                            @foreach($form['fields'] as $keySection => $fields)
+                            @foreach($form['groups'] as $group => $fields)
                             <br/>
                             <fieldset>
                                 <legend>{{trans('setting::setting.title.'.$keySection)}}</legend>

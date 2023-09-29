@@ -1,8 +1,11 @@
 <?php
 
+use App\Models\User as ModelsUser;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Request;
 use Litepie\Support\Facades\Hashids;
 use Litepie\Support\Facades\Trans;
+use Litepie\Support\Facades\User;
 
 if (!function_exists('hashids_encode')) {
     /**
@@ -70,7 +73,7 @@ if (!function_exists('blade_compile')) {
      */
     function blade_compile($string, array $args = [])
     {
-        $compiled = \Blade::compileString($string);
+        $compiled = \Illuminate\Support\Facades\Blade::compileString($string);
         ob_start() and extract($args, EXTR_SKIP);
 
         // We'll include the view contents for parsing within a catcher
@@ -81,16 +84,16 @@ if (!function_exists('blade_compile')) {
             eval('?>'.$compiled);
         }
 
+        catch (Exception $e) {
         // If we caught an exception, we'll silently flush the output
 
         // buffer so that no partially rendered views get thrown out
         // to the client and confuse the user with junk.
-        catch (\Exception $e) {
-            ob_get_clean();
+        ob_get_clean();
 
             throw $e;
         }
-
+ 
         $content = ob_get_clean();
         $content = str_replace(['@param  ', '@return  ', '@var  ', '@throws  '], ['@param ', '@return ', '@var ', '@throws '], $content);
 
@@ -167,10 +170,7 @@ if (!function_exists('user_type')) {
      */
     function user_type($guard = null)
     {
-        $guard = is_null($guard) ? getenv('guard') : $guard;
-        $provider = config('auth.guards.'.$guard.'.provider', 'users');
-
-        return config("auth.providers.$provider.model", \Litepie\User\Models\User::class);
+        return get_class(user($guard)) ?? ModelsUser::class;
     }
 }
 
@@ -184,11 +184,7 @@ if (!function_exists('user_id')) {
      */
     function user_id($guard = null)
     {
-        $guard = is_null($guard) ? getenv('guard') : $guard;
-
-        if (Auth::guard($guard)->check()) {
-            return Auth::guard($guard)->user()->id;
-        }
+        return user($guard)->id;
     }
 }
 
@@ -202,7 +198,32 @@ if (!function_exists('guard')) {
      */
     function guard($guard = null)
     {
-        return User::guard($guard);
+        if (empty($guard)) {
+            return config('global.guard');
+        } else {
+            config()->set('global.guard', $guard);
+            app('auth')->shouldUse($guard);
+
+        }
+    }
+}
+
+if (!function_exists('broker')) {
+    /**
+     * Set the broker .
+     *
+     * @param string $property
+     *
+     * @return mixed
+     */
+    function broker()
+    {
+        $guard = guard();
+        return config('auth.guards.' . $guard . '.provider', 
+                config('auth.guards.' . $guard . '.password', 
+                config('auth.defaults.passwords')
+            )
+        );
     }
 }
 

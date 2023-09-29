@@ -26,6 +26,10 @@ class Team extends FormInterpreter
 
         self::$fields = config('team.team.form');
 
+        self::$filters = config('team.team.filters');
+
+        self::$lists = config('team.team.lists');
+
         return new static();
     }
 }

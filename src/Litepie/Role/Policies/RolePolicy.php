@@ -2,7 +2,7 @@
 
 namespace Litepie\Role\Policies;
 
-use Litepie\User\Interfaces\UserPolicyInterface;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 use Litepie\Role\Models\Role;
 
 class RolePolicy
@@ -12,12 +12,12 @@ class RolePolicy
     /**
      * Determine if the given user can view the role.
      *
-     * @param UserPolicyInterface $authUser
+     * @param Authenticatable $user
      * @param Role $role
      *
      * @return bool
      */
-    public function view(UserPolicyInterface $authUser, Role $role)
+    public function view(Authenticatable $user, Role $role)
     {
         return false;
     }
@@ -25,11 +25,11 @@ class RolePolicy
     /**
      * Determine if the given user can create a role.
      *
-     * @param UserPolicyInterface $authUser
+     * @param Authenticatable $user
      *
      * @return bool
      */
-    public function create(UserPolicyInterface $authUser)
+    public function create(Authenticatable $user)
     {
         return false;
     }
@@ -37,12 +37,12 @@ class RolePolicy
     /**
      * Determine if the given user can update the given role.
      *
-     * @param UserPolicyInterface $authUser
+     * @param Authenticatable $user
      * @param Role $role
      *
      * @return bool
      */
-    public function update(UserPolicyInterface $authUser, Role $role)
+    public function update(Authenticatable $user, Role $role)
     {
         return false;
     }
@@ -50,11 +50,11 @@ class RolePolicy
     /**
      * Determine if the given user can delete the given role.
      *
-     * @param UserPolicyInterface $authUser
+     * @param Authenticatable $user
      *
      * @return bool
      */
-    public function destroy(UserPolicyInterface $authUser, Role $role)
+    public function destroy(Authenticatable $user, Role $role)
     {
         return false;
     }
@@ -62,14 +62,14 @@ class RolePolicy
     /**
      * Determine if the user can perform a given action ve.
      *
-     * @param [type] $authUser    [description]
+     * @param [type] $user    [description]
      * @param [type] $ability [description]
      *
      * @return [type] [description]
      */
-    public function before($authUser, $ability)
+    public function before($user, $ability)
     {
-        if ($authUser->isSuperuser()) {
+        if ($user->isSuperuser()) {
             return true;
         }
     }

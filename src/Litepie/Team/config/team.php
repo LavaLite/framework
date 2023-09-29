@@ -116,9 +116,8 @@ return [
                 "label" => 'team::team.label.name',
                 "placeholder" => 'team::team.placeholder.name',
                 "rules" => '',
-                "group" => "main",
-                "section" => "first",
-                "col" => "6",
+                "group" => "main.main",
+                "col" => "5",
                 "append" => null,
                 "prepend" => null,
                 "roles" => [],
@@ -136,9 +135,8 @@ return [
                 "label" => 'team::team.label.key',
                 "placeholder" => 'team::team.placeholder.key',
                 "rules" => '',
-                "group" => "main",
-                "section" => "first",
-                "col" => "6",
+                "group" => "main.main",
+                "col" => "5",
                 "append" => null,
                 "prepend" => null,
                 "roles" => [],
@@ -159,9 +157,8 @@ return [
                 "options" => function(){
                     return trans('team::team.options.level');
                 },
-                "group" => "main",
-                "section" => "first",
-                "col" => "6",
+                "group" => "main.main",
+                "col" => "2",
                 "append" => null,
                 "prepend" => null,
                 "roles" => [],
@@ -182,8 +179,7 @@ return [
                 "options" => function(){
                     return trans('team::team.options.type');
                 },
-                "group" => "main",
-                "section" => "first",
+                "group" => "main.main",
                 "col" => "6",
                 "append" => null,
                 "prepend" => null,
@@ -205,8 +201,7 @@ return [
                 "options" => function(){
                     return trans('team::team.options.status');
                 },
-                "group" => "main",
-                "section" => "first",
+                "group" => "main.main",
                 "col" => "6",
                 "append" => null,
                 "prepend" => null,
@@ -225,9 +220,8 @@ return [
                 "label" => 'team::team.label.description',
                 "placeholder" => 'team::team.placeholder.description',
                 "rules" => '',
-                "group" => "main",
-                "section" => "first",
-                "col" => "6",
+                "group" => "main.main",
+                "col" => "12",
                 "append" => null,
                 "prepend" => null,
                 "roles" => [],
@@ -240,14 +234,13 @@ return [
             ],
             [
                 "key" => 'settings',
-                "element" => 'text',
+                "element" => 'textarea',
                 "type" => 'text',
                 "label" => 'team::team.label.settings',
                 "placeholder" => 'team::team.placeholder.settings',
                 "rules" => '',
-                "group" => "main",
-                "section" => "first",
-                "col" => "6",
+                "group" => "main.main",
+                "col" => "12",
                 "append" => null,
                 "prepend" => null,
                 "roles" => [],
@@ -292,29 +285,17 @@ return [
             'status' => 'team::team.label.status',
         ],
         'groups' => [
-            'main' => [
+            [
                 'icon' => "mdi:account-supervisor-outline",
                 'name' => "team::team.groups.main",
-                'key' => "main",
+                'group' => "main.main",
                 'title' => "team::team.groups.main",
             ],
-            'details' => [
+            [
                 'icon' => "fe:home",
-                'name' => "team::team.groups.details",
-                'key' => "documents",
-                'title' => "team::team.groups.details",
-            ],
-            'images' => [
-                'icon' => "fe:home",
-                'name' => "team::team.groups.images",
-                'key' => "documents",
-                'title' => "team::team.groups.images",
-            ],
-            'settings' => [
-                'icon' => "fe:home",
-                'name' => "team::team.groups.settings",
-                'key' => "documents",
-                'title' => "team::team.groups.settings",
+                'name' => "team::team.groups.members",
+                'group' => "main.members",
+                'title' => "team::team.groups.members",
             ]
         ],
         'controller' => [

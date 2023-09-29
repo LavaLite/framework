@@ -1,10 +1,9 @@
 {
-    "name": "litepie/activities",
-    "description": "A very simple activity logger to monitor the users of your website or application",
-    "homepage": "https://github.com/litepie/activities",
+    "name": "litepie/actions",
+    "description": "Actions manager for the application",
+    "homepage": "https://github.com/litepie/Actions",
     "keywords": [
         "lavalite",
-        "log",
         "action",
         "laravel"
     ],
@@ -16,7 +15,7 @@
         "email": "george@renfos.com"
     }],
     "require": {
-        "php": "^7.3|^8.0|^8.1",
+        "php": "^8.1",
         "lorisleiva/laravel-actions": "^2.4"
     },
     "autoload": {

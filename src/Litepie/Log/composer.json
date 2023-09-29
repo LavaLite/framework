@@ -1,0 +1,25 @@
+{
+    "name": "litepie/log",
+    "description": "The Litepie Log package.",
+    "homepage": "https://github.com/Litepie/Log",
+    "keywords": [
+        "lavalite",
+        "litepie",
+        "log"
+    ],
+    "authors": [
+        {
+            "name": "Renfos Technologies Pvt. Ltd.",
+            "email": "info@renfos.com"
+        }
+    ],
+    "require": {
+        "php": "^8.1|^8.2"
+    },
+    "autoload": {
+        "psr-4": {
+            "Litepie\\Log\\": ""
+        }
+    },
+    "license": "MIT"
+}

@@ -13,7 +13,7 @@ class RoleActions
 {
     use AsAction;
     use LogsActions;
-    
+
     private $model;
 
     public function handle(string $action, array $request)
@@ -28,7 +28,6 @@ class RoleActions
 
         $this->logsAction();
         return $data;
-
     }
 
     public function paginate(array $request)
@@ -53,11 +52,13 @@ class RoleActions
         return $role;
     }
 
-    function empty(array $request) {
+    function empty(array $request)
+    {
         return $this->model->forceDelete();
     }
 
-    function restore(array $request) {
+    function restore(array $request)
+    {
         return $this->model->restore();
     }
 
@@ -72,5 +73,20 @@ class RoleActions
     private function select($request)
     {
         return $this->model->pluck('name', 'id')->all();
+    }
+    public function options(array $request)
+    {
+        return  $this->model
+            ->pushScope(new RequestScope())
+            ->pushScope(new RoleResourceScope())
+            ->take(30)->get()
+            ->map(function ($row) {
+                return [
+                    'key' => $row->id,
+                    'value' => $row->id,
+                    'text' => $row->name,
+                    'name' => $row->name,
+                ];
+            })->toArray();
     }
 }

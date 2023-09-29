@@ -28,7 +28,7 @@ class ClientResourceController extends BaseController
     {
         parent::__construct();
         $this->middleware(function ($request, $next) {
-            $this->form = ClientForm::grouped(false)
+            $this->form = ClientForm::only('main')
                 ->setAttributes()
                 ->toArray();
             $this->modules = $this->modules(config('user.modules'), 'user', guard_url('user'));

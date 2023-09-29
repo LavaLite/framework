@@ -6,7 +6,6 @@ use Illuminate\Http\Resources\Json\JsonResource;
 
 class TeamResource extends JsonResource
 {
-
     public function itemLink()
     {
         return guard_url('team/team') . '/' . $this->getRouteKey();
@@ -44,6 +43,8 @@ class TeamResource extends JsonResource
                 'link' => $this->itemLink(),
                 'upload_url' => $this->getUploadURL(''),
             ],
+            '_settings' => $this->getSettings(),
+            'users' => $this->getUsers(),
         ];
     }
 
@@ -69,14 +70,21 @@ class TeamResource extends JsonResource
     private function workflows()
     {
         $arr = [];
-                return $arr;
-
+        return $arr;
     }
     private function actions()
     {
-
         $arr = [];
-        
+
         return $arr;
+    }
+    private function getUsers()
+    {
+        $results = $this->users()->get();
+
+        foreach ($results as $key => $result) {
+            $results[$key]['level_name'] = trans('team::team.options.level.' . $result['pivot']['level'] . '.name');
+        }
+        return $results;
     }
 }

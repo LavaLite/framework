@@ -5,31 +5,29 @@ namespace Litepie\Role\Actions;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Str;
 use Litepie\Actions\Concerns\AsAction;
-use Litepie\Actions\Traits\LogsActions;
-use Litepie\Notification\Traits\SendNotification;
 use Litepie\Role\Models\Role;
 
 
 class RoleAction
 {
     use AsAction;
-    use LogsActions;
-    use SendNotification;
 
-    private $model;
+    protected $model;
+    protected $namespace = 'litepie.role.role';
+    protected $eventClass = \Litepie\Role\Events\RoleAction::class;
+    protected $action;
+    protected $function;
+    protected $request;
 
     public function handle(string $action, Role $role, array $request = [])
     {
+        $this->action = $action;
+        $this->request = $request;
         $this->model = $role;
+        $this->function = Str::camel($action);
+        $this->executeAction();
+        return $this->model;
 
-        $function = Str::camel($action);
-        event('role.role.action.' . $action . 'ing', [$role]);
-        $data =  $this->$function($role, $request);
-        event('role.role.action.' . $action . 'ed', [$role]);
-
-        $this->logsAction();
-        $this->notify();
-        return $data;
     }
 
 

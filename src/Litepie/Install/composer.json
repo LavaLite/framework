@@ -1,20 +1,25 @@
 {
     "name": "litepie/install",
-    "description": "Installer for Lavalite",
-    "keywords": ["lavalite", "install", "installer"],
-    "license": "MIT",
-    "homepage": "https://github.com/Litepie/Installer",
-    "authors": [{
-        "name": "Renfos Technologies Pvt. Ltd.",
-        "email": "info@renfos.com"
-    }],
+    "description": "The Litepie Install package.",
+    "homepage": "https://github.com/litepie/Install",
+    "keywords": [
+        "lavalite",
+        "litepie",
+        "install"
+    ],
+    "authors": [
+        {
+            "name": "Renfos Technologies Pvt. Ltd.",
+            "email": "info@renfos.com"
+        }
+    ],
     "require": {
-        "php": "^7.3|^8.0",
-        "rachidlaasri/laravel-installer": "^4.0"
+        "php": "^8.1|^8.2"
     },
     "autoload": {
         "psr-4": {
             "Litepie\\Install\\": ""
         }
-    }
+    },
+    "license": "MIT"
 }

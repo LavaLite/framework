@@ -4,8 +4,8 @@ namespace Litepie\User\Traits\Auth;
 
 use Illuminate\Foundation\Auth\AuthenticatesUsers as IlluminateAuthenticatesUsers;
 use Illuminate\Support\Str;
-use Socialite;
-use User;
+use Laravel\Socialite\Facades\Socialite;
+use Litepie\User\Facades\User;
 
 trait SocialAuthentication
 {

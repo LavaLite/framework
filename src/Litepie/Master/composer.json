@@ -1,0 +1,25 @@
+{
+    "name": "litepie/master",
+    "description": "The Litepie Master package.",
+    "homepage": "https://github.com/litepie/Master",
+    "keywords": [
+        "lavalite",
+        "litepie",
+        "master"
+    ],
+    "authors": [
+        {
+            "name": "Renfos Technologies Pvt. Ltd.",
+            "email": "info@renfos.com"
+        }
+    ],
+    "require": {
+        "php": "^8.1|^8.2"
+    },
+    "autoload": {
+        "psr-4": {
+            "Litepie\\Master\\": ""
+        }
+    },
+    "license": "MIT"
+}

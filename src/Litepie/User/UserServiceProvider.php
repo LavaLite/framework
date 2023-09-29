@@ -3,7 +3,7 @@
 namespace Litepie\User;
 
 use Illuminate\Support\ServiceProvider;
-use Litepie\User\Users;
+use Litepie\User\User;
 
 class UserServiceProvider extends ServiceProvider
 {
@@ -54,9 +54,9 @@ class UserServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function registerFacade() {
-        $this->app->bind('user', function($app)
-        {
+    public function registerFacade()
+    {
+        $this->app->bind('user', function ($app) {
             return $this->app->make(User::class);
         });
     }
@@ -73,7 +73,6 @@ class UserServiceProvider extends ServiceProvider
         );
     }
 
-
     /**
      * Get the services provided by the provider.
      *
@@ -81,7 +80,7 @@ class UserServiceProvider extends ServiceProvider
      */
     public function provides()
     {
-        return ['litepie.user'];
+        return ['user'];
     }
 
     /**

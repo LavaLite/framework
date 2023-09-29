@@ -1,7 +1,9 @@
 <?php
+
 namespace Litepie\Workflow;
 
 use Symfony\Component\Workflow\Workflow as SymfonyWorkflow;
+use Closure;
 
 class Workflow extends SymfonyWorkflow
 {
@@ -25,11 +27,10 @@ class Workflow extends SymfonyWorkflow
             if ($t->getName() == $transition) {
                 return $t;
             }
-
         }
         return null;
     }
-    
+
     public function form($transition)
     {
         $meta = $this->getMetadataStore()
@@ -43,6 +44,9 @@ class Workflow extends SymfonyWorkflow
         $item = collect($form)->map(function ($val) {
             $val['label'] = trans($val['label']);
             $val['placeholder'] = trans($val['placeholder']);
+            if (isset($val['options']) && is_callable($val['options']) && $val['options'] instanceof Closure) {
+                $val['options'] = call_user_func($val['options']);
+            }
             return $val;
         });
         return $item;
@@ -60,5 +64,4 @@ class Workflow extends SymfonyWorkflow
         }
         return $previousTransitions;
     }
-
 }

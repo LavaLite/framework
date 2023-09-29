@@ -2,12 +2,12 @@
 
 namespace Litepie\Filer\Http\Controllers;
 
-use Filer;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
-use Image;
-use Litepie\Http\Controllers\Controller;
+use Intervention\Image\Facades\Image;
 use Litepie\Filer\Exceptions\InvalidFileConfigException;
+use Litepie\Http\Controllers\Controller;
+use Litepie\Support\Facades\Filer;
 
 class FileController extends Controller
 {
@@ -16,15 +16,9 @@ class FileController extends Controller
      *
      * @param string $path
      */
-    public function download($path)
+    public function download($disk, $path)
     {
-        $file_path = base_path(config('filer.folder')) . '/' . str_replace('..', '', $path);
-
-        if (file_exists($file_path) && is_file($file_path)) {
-            // file found
-            return response()->download($file_path);
-        }
-        abort(404);
+        return Storage::disk($disk)->download($path);
     }
 
     /**
@@ -32,15 +26,9 @@ class FileController extends Controller
      *
      * @param type $path
      */
-    public function display($path)
+    public function display($disk, $path)
     {
-        $file_path = base_path(config('filer.folder')) . '/' . str_replace('..', '', $path);
-
-        if (file_exists($file_path) && is_file($file_path)) {
-            // file found
-            return response()->file($file_path);
-        }
-        abort(404);
+        return Storage::disk($disk)->download($path);
     }
 
     /**

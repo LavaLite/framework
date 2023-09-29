@@ -64,6 +64,7 @@ class UserResource extends JsonResource
                 'link' => $this->itemLink(),
                 'upload_url' => $this->getUploadURL(''),
             ],
+            '_settings' => $this->getSettings()
         ];
     }
 
@@ -89,14 +90,13 @@ class UserResource extends JsonResource
     private function workflows()
     {
         $arr = [];
-                return $arr;
-
+        return $arr;
     }
     private function actions()
     {
 
         $arr = [];
-        
+
         return $arr;
     }
 }

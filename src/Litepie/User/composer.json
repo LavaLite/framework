@@ -1,0 +1,26 @@
+{
+    "name": "litepie/user",
+    "description": "The Litepie User package.",
+    "homepage": "https://github.com/Litepie/User",
+    "keywords": [
+        "lavalite",
+        "litepie",
+        "user"
+    ],
+    "authors": [
+        {
+            "name": "Renfos Technologies Pvt. Ltd.",
+            "email": "info@renfos.com"
+        }
+    ],
+    "require": {
+        "php": "^8.1|^8.2"
+
+    },
+    "autoload": {
+        "psr-4": {
+            "Litepie\\User\\": ""
+        }
+    },
+    "license": "MIT"
+}

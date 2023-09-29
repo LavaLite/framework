@@ -1,0 +1,25 @@
+{
+    "name": "litepie/node",
+    "description": "The Litepie Node package.",
+    "homepage": "https://github.com/litepie/Node",
+    "keywords": [
+        "lavalite",
+        "litepie",
+        "node"
+    ],
+    "authors": [
+        {
+            "name": "Renfos Technologies Pvt. Ltd.",
+            "email": "info@renfos.com"
+        }
+    ],
+    "require": {
+        "php": "^8.1|^8.2"
+    },
+    "autoload": {
+        "psr-4": {
+            "Litepie\\Node\\": ""
+        }
+    },
+    "license": "MIT"
+}

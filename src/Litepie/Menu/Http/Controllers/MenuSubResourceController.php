@@ -15,7 +15,7 @@ class MenuSubResourceController extends ResourceController
     {
         parent::__construct();
         $this->middleware(function ($request, $next) {
-            $this->form = MenuForm::grouped(false)
+            $this->form = MenuForm::only('main')
                 ->setAttributes()
                 ->toArray();
             $this->modules = $this->modules(config('menu.modules'), 'menu', guard_url('menu'));

@@ -55,7 +55,7 @@ return [
                 "label" => 'setting::setting.label.name',
                 "placeholder" => 'setting::setting.placeholder.name',
                 "rules" => '',
-                "group" => "general",
+                "group" => "main.general.main",
                 "section" => "main",
                 "col" => "12",
                 "append" => null,
@@ -82,7 +82,7 @@ return [
                     return trans('setting::setting.options.dateformat');
                 },
                 "rules" => '',
-                "group" => "general",
+                "group" => "main.general.date",
                 "section" => "main",
                 "col" => "4",
                 "append" => null,
@@ -109,7 +109,7 @@ return [
                     return trans('setting::setting.options.timeformat');
                 },
                 "rules" => '',
-                "group" => "general",
+                "group" => "main.general.date",
                 "section" => "main",
                 "col" => "4",
                 "append" => null,
@@ -136,7 +136,7 @@ return [
                     return DateTimeZone::listIdentifiers(DateTimeZone::ALL);
                 },
                 "rules" => '',
-                "group" => "general",
+                "group" => "main.general.date",
                 "section" => "main",
                 "col" => "4",
                 "append" => null,
@@ -163,7 +163,7 @@ return [
                     return trans('setting::setting.options.currency.currency');
                 },
                 "rules" => '',
-                "group" => "general",
+                "group" => "main.general.currency",
                 "section" => "currency",
                 "col" => "6",
                 "append" => null,
@@ -190,7 +190,7 @@ return [
                     return trans('setting::setting.options.currency.position');
                 },
                 "rules" => '',
-                "group" => "general",
+                "group" => "main.general.currency",
                 "section" => "currency",
                 "col" => "6",
                 "append" => null,
@@ -214,7 +214,7 @@ return [
                 "label" => 'setting::setting.label.currency.thousandseperator',
                 "placeholder" => 'setting::setting.placeholder.currency.thousandseperator',
                 "rules" => '',
-                "group" => "general",
+                "group" => "main.general.currency",
                 "section" => "currency",
                 "col" => "6",
                 "append" => null,
@@ -238,7 +238,7 @@ return [
                 "label" => 'setting::setting.label.currency.decimalseperator',
                 "placeholder" => 'setting::setting.placeholder.currency.decimalseperator',
                 "rules" => '',
-                "group" => "general",
+                "group" => "main.general.currency",
                 "section" => "currency",
                 "col" => "6",
                 "append" => null,
@@ -266,7 +266,7 @@ return [
                 "url" => function () {
                     return guard_url('/upload/setting.setting.model/logo/file');
                 },
-                "group" => "company",
+                "group" => "main.company.logo",
                 "section" => "logo",
                 "col" => "4",
                 "append" => null,
@@ -291,7 +291,7 @@ return [
                 "label" => 'setting::setting.label.company.name',
                 "placeholder" => 'setting::setting.placeholder.company.name',
                 "rules" => '',
-                "group" => "company",
+                "group" => "main.company.contact",
                 "section" => "contact",
                 "col" => "4",
                 "append" => null,
@@ -316,7 +316,7 @@ return [
                 "label" => 'setting::setting.label.company.email',
                 "placeholder" => 'setting::setting.placeholder.company.email',
                 "rules" => '',
-                "group" => "company",
+                "group" => "main.company.contact",
                 "section" => "contact",
                 "col" => "4",
                 "append" => null,
@@ -341,7 +341,7 @@ return [
                 "label" => 'setting::setting.label.company.phone',
                 "placeholder" => 'setting::setting.placeholder.company.phone',
                 "rules" => '',
-                "group" => "company",
+                "group" => "main.company.contact",
                 "section" => "contact",
                 "col" => "4",
                 "append" => null,
@@ -366,7 +366,7 @@ return [
                 "label" => 'setting::setting.label.company.address',
                 "placeholder" => 'setting::setting.placeholder.company.address',
                 "rules" => '',
-                "group" => "company",
+                "group" => "main.company.contact",
                 "section" => "address",
                 "col" => "12",
                 "append" => null,
@@ -391,7 +391,7 @@ return [
                 "label" => 'setting::setting.label.company.city',
                 "placeholder" => 'setting::setting.placeholder.company.city',
                 "rules" => '',
-                "group" => "company",
+                "group" => "main.company.contact",
                 "section" => "address",
                 "col" => "4",
                 "append" => null,
@@ -416,7 +416,7 @@ return [
                 "label" => 'setting::setting.label.company.state',
                 "placeholder" => 'setting::setting.placeholder.company.state',
                 "rules" => '',
-                "group" => "company",
+                "group" => "main.company.contact",
                 "section" => "address",
                 "col" => "4",
                 "append" => null,
@@ -441,7 +441,7 @@ return [
                 "label" => 'setting::setting.label.company.country',
                 "placeholder" => 'setting::setting.placeholder.company.country',
                 "rules" => '',
-                "group" => "company",
+                "group" => "main.company.address",
                 "section" => "address",
                 "col" => "4",
                 "append" => null,
@@ -454,7 +454,6 @@ return [
 
                 ],
             ],
-
         ],
 
         'urls' => [
@@ -478,60 +477,64 @@ return [
         'order' => [],
 
         'groups' => [
-            'general' => [
+            [
+                'icon' => "mdi:account-supervisor-outline",
+                'name' => "setting::setting.title.main",
+                'group' => "main",
+                'title' => "setting::setting.title.main",
+            ],
+            [
                 'icon' => "mdi:account-supervisor-outline",
                 'name' => "setting::setting.title.general",
-                'key' => "general",
-                'group' => "general",
+                'group' => "main.general",
                 'title' => "setting::setting.title.general",
             ],
-            'company' => [
+            [
                 'icon' => "fe:home",
                 'name' => "setting::setting.title.company",
-                'key' => "documents",
-                'group' => "general",
+                'group' => "main.company",
                 'title' => "setting::setting.title.company",
             ],
-            'social' => [
+            [
+                'icon' => "fe:home",
+                'name' => "setting::setting.title.integration",
+                'group' => "integration",
+                'title' => "setting::setting.title.integration",
+            ],
+            [
                 'icon' => "fe:home",
                 'name' => "setting::setting.title.social",
-                'key' => "social",
-                'group' => "integration",
+                'group' => "integration.social",
                 'title' => "setting::setting.title.social",
             ],
-            'payment' => [
+            [
                 'icon' => "fe:home",
                 'name' => "setting::setting.title.payment",
-                'key' => "payment",
-                'group' => "integration",
+                'group' => "integration.payment",
                 'title' => "setting::setting.title.payment",
             ],
-            'email' => [
+            [
                 'icon' => "fe:home",
                 'name' => "setting::setting.title.email",
-                'key' => "email",
-                'group' => "integration",
+                'group' => "integration.email",
                 'title' => "setting::setting.title.email",
             ],
-            'sms' => [
+            [
                 'icon' => "fe:home",
                 'name' => "setting::setting.title.sms",
-                'key' => "sms",
-                'group' => "integration",
+                'group' => "integration.sms",
                 'title' => "setting::setting.title.sms",
             ],
-            'chat' => [
+            [
                 'icon' => "fe:home",
                 'name' => "setting::setting.title.chat",
-                'key' => "chat",
-                'group' => "integration",
+                'group' => "integration.chat",
                 'title' => "setting::setting.title.chat",
             ],
-            'google' => [
+            [
                 'icon' => "fe:home",
                 'name' => "setting::setting.title.google",
-                'key' => "google",
-                'group' => "integration",
+                'group' => "integration.google",
                 'title' => "setting::setting.title.google",
             ],
         ],

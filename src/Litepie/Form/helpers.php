@@ -10,28 +10,23 @@ if (!function_exists('form_merge_form')) {
      *
      * @return array
      */
-    function form_merge_form($form, $value, $grouped = true)
+    function form_merge_form($forms, $value, $grouped = true)
     {
         $data = json_decode(json_encode($value), true);
-
-        array_walk($form, function (&$val, $key) use ($data) {
-            $key = $val['key'];
-            if (isset($data['data'][$key])) {
-                $val['value'] = $data['data'][$key];
-            }
-            if ($val['element'] == 'file') {
-                $val['url'] = str_replace('//file', '/' . $key . '/file', $data['meta']['upload_url']);
-            }
-        });
-
-        if (!$grouped) {
-            return  $form;
+        foreach ($forms as $fkey => $form) {
+            foreach($form as $key => $val) {
+                $k = $val['key'];
+                if (isset($data['data'][$k])) {
+                    $forms[$fkey][$key]['value'] = $data['data'][$k];
+                }
+                if ($val['element'] == 'file') {
+                    $forms[$fkey][$key]['url'] = str_replace('//file', '/' . $k . '/file', $data['meta']['upload_url']);
+                }
+            };
         }
-
-        return collect($form)->groupBy('group', true)->toArray();
+        return $forms;
     }
 }
-
 
 if (!function_exists('form_merge_list')) {
     /**
@@ -47,7 +42,7 @@ if (!function_exists('form_merge_list')) {
     {
         $data = json_decode(json_encode($value), true);
 
-        foreach($form as  $key => $val){
+        foreach ($form as $key => $val) {
             $k = $val['key'];
             if (isset($data[$k])) {
                 $val['value'] = $data[$k];
@@ -56,7 +51,7 @@ if (!function_exists('form_merge_list')) {
             if ($val['type'] == 'file') {
                 $val['url'] = str_replace('//file', '/' . $k . '/file', $data['meta']['upload_url']);
             }
-            $form[$k]  = $val;
+            $form[$k] = $val;
             unset($form[$key]);
         }
         return $form;

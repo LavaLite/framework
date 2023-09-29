@@ -1,0 +1,29 @@
+{
+    "name": "litepie/theme",
+    "description": "The Litepie Role package.",
+    "homepage": "https://github.com/Litepie/Theme",
+    "keywords": [
+        "lavalite",
+        "litepie",
+        "theme"
+    ],
+    "authors": [
+        {
+            "name": "Renfos Technologies Pvt. Ltd.",
+            "email": "info@renfos.com"
+        }
+    ],
+    "require": {
+        "php": "^8.1|^8.2"
+
+    },
+    "autoload": {
+        "files": [
+            "helpers.php"
+        ],
+        "psr-4": { 
+            "Litepie\\Theme\\": "" 
+        }
+    },
+    "license": "MIT"
+}

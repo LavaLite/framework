@@ -36,7 +36,6 @@ class UserActions
 
         $this->logsAction();
         return $data;
-
     }
 
     public function paginate(array $request)
@@ -61,7 +60,8 @@ class UserActions
         return $user;
     }
 
-    function empty(array $request) {
+    function empty(array $request)
+    {
         return $this->model->forceDelete();
     }
 
@@ -90,7 +90,27 @@ class UserActions
                     'key' => $row->id,
                     'value' => $row->id,
                     'text' => $row->name,
+                    'name' => $row->name,
                 ];
             })->toArray();
+    }
+    public function getUserByRole(array $request)
+    {
+        $role = @$request['role'];
+        $select =  @$request['columns'];
+        return  $this->model
+            ->select($select)
+            ->whereHas(
+                'roles',
+                function ($q) use ($role) {
+                    $q->where('name', $role)->orWhere('slug', $role);
+                }
+            )
+            ->get()
+            ->map(function ($row) {
+                $row['key'] = $row->eid;
+                $row['value'] = $row->eid;
+                return $row;
+            });
     }
 }

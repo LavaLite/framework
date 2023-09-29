@@ -2,7 +2,7 @@
 
 namespace Litepie\Menu\Policies;
 
-use Litepie\User\Interfaces\UserPolicyInterface;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 use Litepie\Menu\Models\Menu;
 
 class MenuPolicy
@@ -12,14 +12,14 @@ class MenuPolicy
     /**
      * Determine if the given user can view the menu.
      *
-     * @param UserPolicyInterface $authUser
+     * @param Authenticatable $user
      * @param Menu $menu
      *
      * @return bool
      */
-    public function view(UserPolicyInterface $authUser, Menu $menu)
+    public function view(Authenticatable $user, Menu $menu)
     {
-        if ($authUser->canDo('menu.menu.view') && $authUser->isAdmin()) {
+        if ($user->canDo('menu.menu.view') && $user->isAdmin()) {
             return true;
         }
 
@@ -29,26 +29,26 @@ class MenuPolicy
     /**
      * Determine if the given user can create a menu.
      *
-     * @param UserPolicyInterface $authUser
+     * @param Authenticatable $user
      *
      * @return bool
      */
-    public function create(UserPolicyInterface $authUser)
+    public function create(Authenticatable $user)
     {
-        return  $authUser->canDo('menu.menu.create');
+        return  $user->canDo('menu.menu.create');
     }
 
     /**
      * Determine if the given user can update the given menu.
      *
-     * @param UserPolicyInterface $authUser
+     * @param Authenticatable $user
      * @param Menu $menu
      *
      * @return bool
      */
-    public function update(UserPolicyInterface $authUser, Menu $menu)
+    public function update(Authenticatable $user, Menu $menu)
     {
-        if ($authUser->canDo('menu.menu.edit') && $authUser->isAdmin()) {
+        if ($user->canDo('menu.menu.edit') && $user->isAdmin()) {
             return true;
         }
 
@@ -58,11 +58,11 @@ class MenuPolicy
     /**
      * Determine if the given user can delete the given menu.
      *
-     * @param UserPolicyInterface $authUser
+     * @param Authenticatable $user
      *
      * @return bool
      */
-    public function destroy(UserPolicyInterface $authUser, Menu $menu)
+    public function destroy(Authenticatable $user, Menu $menu)
     {
         return $menu->user_id == user_id() && $menu->user_type == user_type();
     }
@@ -70,13 +70,13 @@ class MenuPolicy
     /**
      * Determine if the given user can verify the given menu.
      *
-     * @param UserPolicyInterface $authUser
+     * @param Authenticatable $user
      *
      * @return bool
      */
-    public function verify(UserPolicyInterface $authUser, Menu $menu)
+    public function verify(Authenticatable $user, Menu $menu)
     {
-        if ($authUser->canDo('menu.menu.verify')) {
+        if ($user->canDo('menu.menu.verify')) {
             return true;
         }
 
@@ -86,13 +86,13 @@ class MenuPolicy
     /**
      * Determine if the given user can approve the given menu.
      *
-     * @param UserPolicyInterface $authUser
+     * @param Authenticatable $user
      *
      * @return bool
      */
-    public function approve(UserPolicyInterface $authUser, Menu $menu)
+    public function approve(Authenticatable $user, Menu $menu)
     {
-        if ($authUser->canDo('menu.menu.approve')) {
+        if ($user->canDo('menu.menu.approve')) {
             return true;
         }
 
@@ -102,14 +102,14 @@ class MenuPolicy
     /**
      * Determine if the user can perform a given action ve.
      *
-     * @param [type] $authUser    [description]
+     * @param [type] $user    [description]
      * @param [type] $ability [description]
      *
      * @return [type] [description]
      */
-    public function before($authUser, $ability)
+    public function before($user, $ability)
     {
-        if ($authUser->isSuperuser()) {
+        if ($user->isSuperuser()) {
             return true;
         }
     }

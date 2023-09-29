@@ -2,7 +2,7 @@
 
 namespace Litepie\Team\Policies;
 
-use Litepie\User\Interfaces\UserPolicyInterface;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 use Litepie\Team\Models\Team;
 
 class TeamPolicy
@@ -12,14 +12,14 @@ class TeamPolicy
     /**
      * Determine if the given user can view the team.
      *
-     * @param UserPolicyInterface $authUser
+     * @param Authenticatable $user
      * @param Team $team
      *
      * @return bool
      */
-    public function view(UserPolicyInterface $authUser, Team $team)
+    public function view(Authenticatable $user, Team $team)
     {
-        if ($authUser->canDo('team.team.view') && $authUser->isAdmin()) {
+        if ($user->canDo('team.team.view') && $user->isAdmin()) {
             return true;
         }
 
@@ -29,26 +29,26 @@ class TeamPolicy
     /**
      * Determine if the given user can create a team.
      *
-     * @param UserPolicyInterface $authUser
+     * @param Authenticatable $user
      *
      * @return bool
      */
-    public function create(UserPolicyInterface $authUser)
+    public function create(Authenticatable $user)
     {
-        return  $authUser->canDo('team.team.create');
+        return  $user->canDo('team.team.create');
     }
 
     /**
      * Determine if the given user can update the given team.
      *
-     * @param UserPolicyInterface $authUser
+     * @param Authenticatable $user
      * @param Team $team
      *
      * @return bool
      */
-    public function update(UserPolicyInterface $authUser, Team $team)
+    public function update(Authenticatable $user, Team $team)
     {
-        if ($authUser->canDo('team.team.edit') && $authUser->isAdmin()) {
+        if ($user->canDo('team.team.edit') && $user->isAdmin()) {
             return true;
         }
 
@@ -58,11 +58,11 @@ class TeamPolicy
     /**
      * Determine if the given user can delete the given team.
      *
-     * @param UserPolicyInterface $authUser
+     * @param Authenticatable $user
      *
      * @return bool
      */
-    public function destroy(UserPolicyInterface $authUser, Team $team)
+    public function destroy(Authenticatable $user, Team $team)
     {
         return $team->user_id == user_id() && $team->user_type == user_type();
     }
@@ -70,13 +70,13 @@ class TeamPolicy
     /**
      * Determine if the given user can verify the given team.
      *
-     * @param UserPolicyInterface $authUser
+     * @param Authenticatable $user
      *
      * @return bool
      */
-    public function verify(UserPolicyInterface $authUser, Team $team)
+    public function verify(Authenticatable $user, Team $team)
     {
-        if ($authUser->canDo('team.team.verify')) {
+        if ($user->canDo('team.team.verify')) {
             return true;
         }
 
@@ -86,13 +86,13 @@ class TeamPolicy
     /**
      * Determine if the given user can approve the given team.
      *
-     * @param UserPolicyInterface $authUser
+     * @param Authenticatable $user
      *
      * @return bool
      */
-    public function approve(UserPolicyInterface $authUser, Team $team)
+    public function approve(Authenticatable $user, Team $team)
     {
-        if ($authUser->canDo('team.team.approve')) {
+        if ($user->canDo('team.team.approve')) {
             return true;
         }
 
@@ -102,14 +102,14 @@ class TeamPolicy
     /**
      * Determine if the user can perform a given action ve.
      *
-     * @param [type] $authUser    [description]
+     * @param [type] $user    [description]
      * @param [type] $ability [description]
      *
      * @return [type] [description]
      */
-    public function before($authUser, $ability)
+    public function before($user, $ability)
     {
-        if ($authUser->isSuperuser()) {
+        if ($user->isSuperuser()) {
             return true;
         }
     }

@@ -28,7 +28,7 @@ class NotificationResourceController extends BaseController
     public function __construct()
     {
         parent::__construct();
-        $this->form = NotificationForm::grouped(false)
+        $this->form = NotificationForm::only('main')
                         ->setAttributes()
                         ->toArray();
         $this->modules = $this->modules(config('notification.modules'), 'notification', guard_url('notification'));
