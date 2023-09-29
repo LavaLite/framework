@@ -1,20 +1,25 @@
 {
     "name": "litepie/hashids",
-    "description": "Hashids bundle for Lavalite",
-    "keywords": ["lavalite", "hashids"],
-    "license": "MIT",
-    "homepage": "https://github.com/Litepie/Hashids",
-    "authors": [{
-        "name": "Renfos Technologies Pvt. Ltd.",
-        "email": "info@renfos.com"
-    }],
+    "description": "The Litepie Hashids package.",
+    "homepage": "https://github.com/litepie/Hashids",
+    "keywords": [
+        "lavalite",
+        "hashids"
+    ],
+    "authors": [
+        {
+            "name": "Renfos Technologies Pvt. Ltd.",
+            "email": "info@renfos.com"
+        }
+    ],
     "require": {
-        "php": "^7.3|^8.0",
+        "php": "^8.1|^8.2",
         "hashids/hashids": "~4.0"
     },
     "autoload": {
         "psr-4": {
             "Litepie\\Hashids\\": ""
         }
-    }
+    },
+    "license": "MIT"
 }

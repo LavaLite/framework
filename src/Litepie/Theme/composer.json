@@ -1,11 +1,11 @@
 {
-    "name": "litepie/install",
-    "description": "The Litepie Install package.",
-    "homepage": "https://github.com/litepie/Install",
+    "name": "litepie/theme",
+    "description": "The Litepie Role package.",
+    "homepage": "https://github.com/Litepie/Theme",
     "keywords": [
         "lavalite",
         "litepie",
-        "install"
+        "theme"
     ],
     "authors": [
         {
@@ -15,10 +15,14 @@
     ],
     "require": {
         "php": "^8.1|^8.2"
+
     },
     "autoload": {
-        "psr-4": {
-            "Litepie\\Install\\": ""
+        "files": [
+            "helpers.php"
+        ],
+        "psr-4": { 
+            "Litepie\\Theme\\": "" 
         }
     },
     "license": "MIT"

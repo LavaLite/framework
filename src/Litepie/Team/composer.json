@@ -1,10 +1,11 @@
 {
-    "name": "litepie/filer",
-    "description": "The Litepie Filer package.",
-    "homepage": "https://github.com/litepie/Filer",
+    "name": "litepie/team",
+    "description": "The Litepie Team package.",
+    "homepage": "https://github.com/Litepie/Team",
     "keywords": [
         "lavalite",
-        "filer"
+        "litepie",
+        "team"
     ],
     "authors": [
         {
@@ -14,11 +15,12 @@
     ],
     "require": {
         "php": "^8.1|^8.2",
-        "intervention/imagecache": "~2.6"
+        "league/fractal": "^0.20"
+
     },
     "autoload": {
         "psr-4": {
-            "Litepie\\Filer\\": ""
+            "Litepie\\Team\\": ""
         }
     },
     "license": "MIT"

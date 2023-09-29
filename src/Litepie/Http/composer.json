@@ -1,19 +1,25 @@
 {
     "name": "litepie/http",
-    "description": "Http package for Lavalite",
-    "keywords": ["lavalite", "http", "litepie"],
-    "license": "MIT",
-    "homepage": "https://github.com/Litepie/Http",
-    "authors": [{
-        "name": "Renfos Technologies Pvt. Ltd.",
-        "email": "info@renfos.com"
-    }],
+    "description": "The Litepie Http package.",
+    "homepage": "https://github.com/litepie/Http",
+    "keywords": [
+        "lavalite",
+        "litepie",
+        "http"
+    ],
+    "authors": [
+        {
+            "name": "Renfos Technologies Pvt. Ltd.",
+            "email": "info@renfos.com"
+        }
+    ],
     "require": {
-        "php": "^7.3|^8.0"
+        "php": "^8.1|^8.2"
     },
     "autoload": {
         "psr-4": {
             "Litepie\\Http\\": ""
         }
-    }
+    },
+    "license": "MIT"
 }

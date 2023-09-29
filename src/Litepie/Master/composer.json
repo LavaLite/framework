@@ -1,10 +1,11 @@
 {
-    "name": "litepie/filer",
-    "description": "The Litepie Filer package.",
-    "homepage": "https://github.com/litepie/Filer",
+    "name": "litepie/master",
+    "description": "The Litepie Master package.",
+    "homepage": "https://github.com/litepie/Master",
     "keywords": [
         "lavalite",
-        "filer"
+        "litepie",
+        "master"
     ],
     "authors": [
         {
@@ -13,12 +14,11 @@
         }
     ],
     "require": {
-        "php": "^8.1|^8.2",
-        "intervention/imagecache": "~2.6"
+        "php": "^8.1|^8.2"
     },
     "autoload": {
         "psr-4": {
-            "Litepie\\Filer\\": ""
+            "Litepie\\Master\\": ""
         }
     },
     "license": "MIT"
