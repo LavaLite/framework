@@ -70,6 +70,7 @@ class TeamResourceController extends BaseController
         $form = $this->form;
         $modules = $this->modules;
         $data = new TeamResource($model);
+        dd($data);
         return $this->response
             ->setMetaTitle(trans('app.view') . ' ' . trans('team::team.name'))
             ->data(compact('data', 'form', 'modules'))

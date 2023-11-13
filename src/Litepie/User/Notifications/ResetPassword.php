@@ -3,12 +3,10 @@
 namespace Litepie\User\Notifications;
 
 use Illuminate\Auth\Notifications\ResetPassword as IlluminateResetPassword;
-use Illuminate\Notifications\Messages\MailMessage;
-use Illuminate\Notifications\Notification;
 
 class ResetPassword extends IlluminateResetPassword
 {
-    
+
     /**
      * Get the reset URL for the given notifiable.
      *
@@ -24,7 +22,7 @@ class ResetPassword extends IlluminateResetPassword
         return url(route('guard.password.reset', [
             'token' => $this->token,
             'email' => $notifiable->getEmailForPasswordReset(),
-            'guard'   => current(explode('.', guard())),
+            'guard' => current(explode('.', guard())),
         ], false));
     }
 }

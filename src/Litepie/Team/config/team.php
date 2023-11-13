@@ -44,7 +44,7 @@ return [
             ],
 
             'casts' => [
-            
+            'roles' => 'array'
             /*
                 'images'    => 'array',
                 'file'      => 'array',
@@ -117,7 +117,7 @@ return [
                 "placeholder" => 'team::team.placeholder.name',
                 "rules" => '',
                 "group" => "main.main",
-                "col" => "5",
+                "col" => "6",
                 "append" => null,
                 "prepend" => null,
                 "roles" => [],
@@ -136,29 +136,7 @@ return [
                 "placeholder" => 'team::team.placeholder.key',
                 "rules" => '',
                 "group" => "main.main",
-                "col" => "5",
-                "append" => null,
-                "prepend" => null,
-                "roles" => [],
-                "attributes" => [
-                    'wrapper' => [],
-                    "label" => [],
-                    "element" => [],
-
-                ],
-            ],
-            [
-                "key" => 'level',
-                "element" => 'select',
-                "type" => 'select',
-                "label" => 'team::team.label.level',
-                "placeholder" => 'team::team.placeholder.level',
-                "rules" => '',
-                "options" => function(){
-                    return trans('team::team.options.level');
-                },
-                "group" => "main.main",
-                "col" => "2",
+                "col" => "6",
                 "append" => null,
                 "prepend" => null,
                 "roles" => [],

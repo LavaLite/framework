@@ -18,7 +18,7 @@ class Workflow extends SymfonyWorkflow
         return $ret;
     }
 
-    public function transition($transition, $workflow = null)
+    public function transition($transition)
     {
         $transitions = $this
             ->getDefinition()
@@ -51,6 +51,7 @@ class Workflow extends SymfonyWorkflow
         });
         return $item;
     }
+
     public function previous($transition, $workflow = null)
     {
         $previousTransitions = [];

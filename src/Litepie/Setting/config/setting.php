@@ -367,7 +367,6 @@ return [
                 "placeholder" => 'setting::setting.placeholder.company.address',
                 "rules" => '',
                 "group" => "main.company.contact",
-                "section" => "address",
                 "col" => "12",
                 "append" => null,
                 "prepend" => null,

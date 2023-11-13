@@ -30,23 +30,27 @@
                     <hr/>
                     <div class='row'>
                         <div class='col-md-12 col-sm-12'>
-                            @foreach($form['groups'] as $group => $fields)
-                            <br/>
-                            <fieldset>
-                                <legend>{{trans('setting::setting.title.'.$keySection)}}</legend>
-                                <div class="row clearfix">
-                                @foreach($fields as $key => $field)
-                                <div class="col-{!!$field['col'] ?? '12'!!}">
-                                    {!!
-                                    Form::input($field['key'])
-                                    ->apply($field)
-                                    ->mode('edit')
-                                    !!}
-                                </div>
+                            @if(is_array($form['fields']))
+                                @foreach($form['fields'] as $group => $fields)
+                                <br/>
+                                <fieldset>
+                                    <legend>{{dd($form)}}</legend>
+                                    <div class="row clearfix">
+                                    @foreach($fields as $key => $field)
+                                    <div class="col-{!!$field['col'] ?? '12'!!}">
+                                        {!!
+                                        Form::input($field['key'])
+                                        ->apply($field)
+                                        ->mode('edit')
+                                        !!}
+                                    </div>
+                                    @endforeach
+                                    </div>
+                                </fieldset>
                                 @endforeach
-                                </div>
-                            </fieldset>
-                            @endforeach
+                            @else
+                                <span class="text-center">Settings not found!</span>
+                            @endif
                         </div>
                     </div>
 
