@@ -1,6 +1,6 @@
 <?php
 
-namespace Litepie\Validators;
+namespace Litepie\Validator;
 
 use Illuminate\Support\ServiceProvider;
 use Validator;
