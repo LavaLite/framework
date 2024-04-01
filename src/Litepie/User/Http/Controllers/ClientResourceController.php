@@ -55,7 +55,6 @@ class ClientResourceController extends BaseController
             ->view('user::client.index')
             ->data(compact('data', 'modules', 'form'))
             ->output();
-
     }
 
     /**
@@ -94,7 +93,6 @@ class ClientResourceController extends BaseController
             ->view('user::client.create')
             ->data(compact('data', 'form', 'modules'))
             ->output();
-
     }
 
     /**
@@ -123,7 +121,6 @@ class ClientResourceController extends BaseController
                 ->url(guard_url('/user/client'))
                 ->redirect();
         }
-
     }
 
     /**
@@ -145,7 +142,6 @@ class ClientResourceController extends BaseController
             ->view('user::client.edit')
             ->data(compact('data', 'form', 'modules'))
             ->output();
-
     }
 
     /**
@@ -176,7 +172,6 @@ class ClientResourceController extends BaseController
                 ->url(guard_url('user/client/' . $model->getRouteKey()))
                 ->redirect();
         }
-
     }
 
     /**
@@ -200,7 +195,6 @@ class ClientResourceController extends BaseController
                 ->data(compact('data'))
                 ->url(guard_url('user/client/0'))
                 ->redirect();
-
         } catch (Exception $e) {
 
             return $this->response->message($e->getMessage())
@@ -209,6 +203,5 @@ class ClientResourceController extends BaseController
                 ->url(guard_url('user/client/' . $model->getRouteKey()))
                 ->redirect();
         }
-
     }
 }

@@ -72,11 +72,23 @@ class UserActions
 
     public function delete(array $request)
     {
-        $ids = $request['ids'];
+        $ids = $request['parent_id'];
         $ids = collect($ids)->map(function ($id) {
             return hashids_decode($id);
         });
-        return $this->model->whereIn('id', $ids)->delete();
+        $userWithProperty = $this->model->whereIn('id', $ids)->has('property')->count();
+        if($userWithProperty > 0){
+            throw new \Exception('Cannot delete user with associated property');
+        }
+        $userWithOpportunity = $this->model->whereIn('id', $ids)->has('opportunity')->count();
+        if($userWithOpportunity > 0){
+            throw new \Exception('Cannot delete user with associated opportunity');
+        }
+        $deleted = $this->model->whereIn('id', $ids)->delete();
+        if (!$deleted) {
+            throw new \Exception('Failed to delete user.');
+        }
+        return $deleted;
     }
 
     public function options(array $request)

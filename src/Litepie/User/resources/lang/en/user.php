@@ -39,6 +39,9 @@ return [
         'company' => 'Company',
         'photo' => 'Photo',
         'roles' => 'Roles',
+        'user_login_details' => 'Login details',
+        'user_details' => 'User details',
+        'photo_gallery' => 'Photo'
     ],
 
     /**
@@ -78,22 +81,20 @@ return [
         'sex' =>
         [
 
-            [
-                'key' => '',
-                'value' => '',
-                'text' => '',
-            ],
+
 
             [
                 'key' => 'Male',
                 'value' => 'Male',
                 'text' => 'Male',
+                'name' => 'Male'
             ],
 
             [
                 'key' => 'Female',
                 'value' => 'Female',
                 'text' => 'Female',
+                'name' => 'Female'
             ],
 
         ],
@@ -122,24 +123,137 @@ return [
                 'key' => 'New',
                 'value' => 'New',
                 'text' => 'New',
+                'name' => 'New'
             ],
 
             [
                 'key' => 'Active',
                 'value' => 'Active',
                 'text' => 'Active',
+                'name' => 'Active'
+            ],
+            [
+                'key' => 'Inactive',
+                'value' => 'Inactive',
+                'text' => 'Inactive',
+                'name' => 'Inactive'
+            ],
+        ],
+        'user_type' => [
+            [
+                'key' => 'Admin',
+                'value' => 'Admin',
+                'text' => 'Admin',
+                'name' => 'Admin'
+            ],
+            [
+                'key' => 'Agent',
+                'value' => 'Agent',
+                'text' => 'Agent',
+                'name' => 'Agent'
+            ],
+        ],
+        'status_all' =>
+        [
+            [
+                'key' => '',
+                'value' => '',
+                'text' => 'All status',
+                'name' => 'All status'
+            ],
+            [
+                'key' => 'New',
+                'value' => 'New',
+                'text' => 'New',
+                'name' => 'New'
             ],
 
             [
-                'key' => 'Suspended',
-                'value' => 'Suspended',
-                'text' => 'Suspended',
+                'key' => 'Active',
+                'value' => 'Active',
+                'text' => 'Active',
+                'name' => 'Active'
+            ],
+            [
+                'key' => 'Inactive',
+                'value' => 'Inactive',
+                'text' => 'Inactive',
+                'name' => 'Inactive'
             ],
 
+
+
+        ],
+        'roles' => [
             [
-                'key' => 'Locked',
-                'value' => 'Locked',
-                'text' => 'Locked',
+                'label' => '',
+                'options' => [
+                    [
+                        'key' => '1',
+                        'value' => '1',
+                        'text' => 'Super user',
+                        'name' => 'super user'
+                    ],
+                    [
+                        'key' => '2',
+                        'value' => '2',
+                        'text' => 'Admin',
+                        'name' => 'Admin'
+                    ],
+                    [
+                        'key' => '3',
+                        'value' => '3',
+                        'text' => 'Agent',
+                        'name' => 'Agent'
+                    ],
+                ]
+            ]
+        ],
+        'user_type_all' => [
+            [
+                'key' => '',
+                'value' => '',
+                'text' => 'All user type',
+                'name' => 'All user type'
+            ],
+            [
+                'key' => 'Admin',
+                'value' => 'Admin',
+                'text' => 'Admin',
+                'name' => 'Admin'
+            ],
+            [
+                'key' => 'Agent',
+                'value' => 'Agent',
+                'text' => 'Agent',
+                'name' => 'Agent'
+            ],
+        ],
+        'languages' => [
+            [
+                'key' => 'English',
+                'value' => 'English',
+                'name' => 'English',
+            ],
+            [
+                'key' => 'Hindi',
+                'value' => 'Hindi',
+                'name' => 'Hindi',
+            ],
+            [
+                'key' => 'Malayalam',
+                'value' => 'Malayalam',
+                'name' => 'Malayalam',
+            ],
+            [
+                'key' => 'French',
+                'value' => 'French',
+                'name' => 'French',
+            ],
+            [
+                'key' => 'Arabic',
+                'value' => 'Arabic',
+                'name' => 'Arabic',
             ],
 
         ],
@@ -200,8 +314,8 @@ return [
         'api_token' => 'Api token',
         'remember_token' => 'Remember token',
         'sex' => 'Sex',
-        'dob' => 'Dob',
-        'doj' => 'Doj',
+        'dob' => 'DOB',
+        'doj' => 'DOJ',
         'designation' => 'Designation',
         'mobile' => 'Mobile',
         'phone' => 'Phone',
@@ -223,6 +337,31 @@ return [
         'deleted_at' => 'Deleted at',
         'created_at' => 'Created at',
         'updated_at' => 'Updated at',
+        'languages' => 'Languages',
+        'type'      => 'Type',
+        'languages' => 'Languages',
+        'phone' => 'Phone',
+        'rera' => 'RERA BRN',
+        'education' => 'Education',
+        'experience' => 'Experience'
+
+    ],
+    'actions' => [
+        'create' => [
+            'label' => 'Create',
+            'icon' => 'material-symbols:add',
+            'varient' => 'outline',
+        ],
+        'list' => [
+            'label' => 'Refresh',
+            'icon' => 'tabler:refresh',
+            'varient' => 'outline',
+        ],
+        'delete' => [
+            'label' => 'Delete',
+            'icon' => 'material-symbols:delete-outline',
+            'varient' => 'outline',
+        ],
     ],
 
 ];

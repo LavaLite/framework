@@ -16,10 +16,10 @@ trait UserProfile
      */
     public function getPictureAttribute($value)
     {
+        
         if (!empty($this->photo)) {
-            return url($this->defaultImage('photo'));
+            return url($this->defaultImage('photos'));
         }
-
         if ($this->sex == 'female') {
             return asset('img/avatar/female.png');
         }

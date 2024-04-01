@@ -66,6 +66,7 @@ class UserResourceController extends BaseController
      * @return Response
      */
     public function show(UserResourceRequest $request, User $model)
+
     {
         $form = $this->form;
         $modules = $this->modules;
@@ -136,8 +137,6 @@ class UserResourceController extends BaseController
         $form = $this->form;
         $modules = $this->modules;
         $data = new UserResource($model);
-        // return view('user::user.edit', compact('data', 'form', 'modules'));
-
         return $this->response->setMetaTitle(trans('app.edit') . ' ' . trans('user::user.name'))
             ->view('user::user.edit')
             ->data(compact('data', 'form', 'modules'))
@@ -158,7 +157,6 @@ class UserResourceController extends BaseController
             $request = $request->all();
             $model = UserAction::run('update', $model, $request);
             $data = new UserResource($model);
-
             return $this->response->message(trans('messages.success.updated', ['Module' => trans('user::user.name')]))
                 ->code(204)
                 ->status('success')
@@ -184,15 +182,14 @@ class UserResourceController extends BaseController
     public function destroy(UserResourceRequest $request, User $model)
     {
         try {
-
             $request = $request->all();
-            $model = UserAction::run('destroy', $model, $request);
-            $data = new UserResource($model);
+            $model = UserAction::run('delete', $model, $request);
+            // $data = new UserResource($model);
 
             return $this->response->message(trans('messages.success.deleted', ['Module' => trans('user::user.name')]))
                 ->code(202)
                 ->status('success')
-                ->data(compact('data'))
+                ->data(compact('model'))
                 ->url(guard_url('user/user/0'))
                 ->redirect();
         } catch (Exception $e) {
