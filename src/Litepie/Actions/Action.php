@@ -32,7 +32,7 @@ class Action
         return $this->name;
     }
 
-    public function meta(string $meta = null): string
+    public function meta(array $meta = [])
     {
         if (!empty($meta)) {
             $this->meta = $meta;
