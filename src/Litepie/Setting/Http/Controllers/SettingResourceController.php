@@ -61,7 +61,7 @@ class SettingResourceController extends BaseController
         $groups = explode('.', $group)[0];
         $this->form['groups'] = Arr::get($this->form['groups'], $groups . '.groups' );
         $this->form['fields'] = Arr::get(Arr::undot($this->form['fields']), $group);
-        dd($this->form['fields'], $group . '.groups');
+//        dd($this->form['fields'], $group . '.groups');
         $form = $this->form;
         return $this->response->setMetaTitle(trans('setting::setting.names'))
             ->view('setting::partial.show')
