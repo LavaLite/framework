@@ -105,17 +105,11 @@ class PermissionActions
     public function grouped($request)
     {
         $result = $this->model->orderBy('slug')
-        ->get()
-        ->keyBy('slug')
-        ->toArray();
-
-        $array = [];
+            ->get()
+            ->keyBy('slug')
+            ->toArray();
         $result = Arr::undot($result);
-        foreach ($result as $key => $value) {
-            $key = explode('.', $key, 4);
-            @$array[$key[0]][$key[1]][$key[2]] = $value;
-        }
 
-        return $array;
+        return $result;
     }
 }

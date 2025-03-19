@@ -64,9 +64,8 @@ class SettingResourceController extends BaseController
     public function show($group)
     {
         $groups = explode('.', $group)[0];
-        $this->form['groups'] = Arr::get($this->form['groups'], $groups.'.groups');
-        $this->form['fields'] = Arr::get(Arr::undot($this->form['fields']), $group);
-        dd($this->form['fields'], $group.'.groups');
+        self::$form['groups'] = Arr::get(self::$form['groups'], $groups.'.groups');
+        self::$form['fields'] = Arr::get(Arr::undot(self::$form['fields']), $group);
         $form = self::$form;
 
         return self::$response->setMetaTitle(trans('setting::setting.names'))

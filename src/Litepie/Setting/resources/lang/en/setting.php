@@ -5,20 +5,22 @@ return [
     /*
      * Singlular and plural name of the module
      */
-    'name'  => 'Setting',
-    'names' => 'Settings',
+    'name'        => 'Setting',
+    'names'       => 'Settings',
 
-    'setting' => [
+    'setting'     => [
         /*
          * Singlular and plural name of the module
          */
         'name'  => 'Setting',
         'names' => 'Settings',
     ],
-    'title' => [
-        'main'          => 'Main',
-        'general'       => 'General',
-        'company'       => 'Company',
+    'title'       => [
+        'main'          => [
+            'label'   => 'Main',
+            'general' => 'General',
+            'company' => 'Company',
+        ],
         'currency'      => 'Currency',
         'theme'         => 'Theme',
         'integration'   => 'Integration',
@@ -29,13 +31,16 @@ return [
         'subscription'  => 'Subscription',
         'team'          => 'Team',
         'subscriptions' => 'Subscriptions',
-        'social'        => 'Social logins',
-        'payment'       => 'Payment',
-        'email'         => 'Email',
-        'mail'          => 'Email',
-        'sms'           => 'SMS',
-        'chat'          => 'Chat',
-        'google'        => 'Google',
+        'integration'   => [
+            'label'   => 'Integration',
+            'social'  => 'Social logins',
+            'payment' => 'Payment',
+            'email'   => 'Email',
+            'mail'    => 'Email',
+            'sms'     => 'SMS',
+            'chat'    => 'Chat',
+            'google'  => 'Google',
+        ],
         'user'          => 'My Settings',
         'admin'         => 'Settings',
         'calendar'      => 'Calendar',
@@ -48,7 +53,7 @@ return [
     /*
      * Options for select/radio/check.
      */
-    'options' => [
+    'options'     => [
         'dateformat' => [
             'd-m-Y' => 'd-m-Y',
             'd/m/Y' => 'd/m/Y',
@@ -62,7 +67,7 @@ return [
             'HH:mm'   => '24 Hr',
             'hh:mm A' => '12 Hr',
         ],
-        'theme' => [
+        'theme'      => [
             'blue'   => 'Blue',
             'black'  => 'Black',
             'purple' => 'Purple',
@@ -70,8 +75,8 @@ return [
             'red'    => 'Red',
             'yellow' => 'Yellow',
         ],
-        'mail' => [
-            'driver' => [
+        'mail'       => [
+            'driver'     => [
                 'mail' => 'Mail',
                 'smtp' => 'SMTP',
             ],
@@ -82,7 +87,7 @@ return [
             ],
         ],
 
-        'currency' => [
+        'currency'   => [
             'currency' => [
                 'ARS' => 'Argentine Peso',
                 'AUD' => 'Australian Dollar',
@@ -109,7 +114,7 @@ return [
                 'right' => 'Right',
             ],
         ],
-        'calendar' => [
+        'calendar'   => [
             'provider' => [
                 'google'  => 'Google',
                 'calandy' => 'Calanday',
@@ -121,8 +126,8 @@ return [
      * Placeholder for inputs
      */
     'placeholder' => [
-        'name'   => 'name',
-        'google' => [
+        'name'       => 'name',
+        'google'     => [
             'analytics' => 'Please enter google analytics code',
             'recaptcha' => 'Please enter google recaptcha code',
         ],
@@ -141,14 +146,14 @@ return [
             'state'    => 'Please enter company state',
             'country'  => 'Please enter company country',
         ],
-        'currency' => [
+        'currency'   => [
             'currency'          => 'Please select currency',
             'position'          => 'Please select currency position',
             'thousandseperator' => 'Please enter thousand seperator',
             'decimalseperator'  => 'Please enter decimal seperator',
             'decimal'           => 'Please enter decimeal places',
         ],
-        'mail' => [
+        'mail'       => [
             'driver'     => 'Please select driver',
             'host'       => 'Please enter email host',
             'port'       => 'Please enter email port',
@@ -156,7 +161,7 @@ return [
             'password'   => 'Please enter email password',
             'encryption' => 'Please enter email encryption',
         ],
-        'social' => [
+        'social'     => [
             'twitter_client_id'      => 'Please enter twitter client id',
             'twitter_client_secret'  => 'Please enter twitter secret key',
             'facebook_client_id'     => 'Please enter facebook client id',
@@ -166,34 +171,34 @@ return [
             'google_client_id'       => 'Please enter google client id',
             'google_client_secret'   => 'Please enter google secret key',
         ],
-        'payment' => [
+        'payment'    => [
             'paypal_client_id'     => 'Please enter paypal client id',
             'paypal_client_secret' => 'Please enter paypal secret key',
         ],
-        'google' => [
+        'google'     => [
             'analytics'    => 'Please enter analytics code',
             'recsitekey'   => 'Please enter recaptcha site key',
             'recsecretkey' => 'Please enter recaptcha secret key',
         ],
-        'chat' => [
+        'chat'       => [
             'twalkto'   => 'Please enter Twalk.to Code',
             'freshchat' => 'Please enter freshchat Code',
         ],
-        'sms' => [
+        'sms'        => [
             'url'    => 'Please enter SMS api URL',
             'code'   => 'Please enter SMS api Code',
             'secret' => 'Please enter SMS api secret',
         ],
-        'calendar' => [
+        'calendar'   => [
             'provider'    => 'Please select provider',
             'token'       => 'Please enter token',
             'credentials' => 'Please enter crediantials',
         ],
     ],
 
-    'help' => [
-        'name'   => 'Enter the name of the website or application.',
-        'google' => [
+    'help'        => [
+        'name'       => 'Enter the name of the website or application.',
+        'google'     => [
             'analytics' => 'Enter google analytics code',
             'recaptcha' => 'Enter google analytics code',
         ],
@@ -206,9 +211,9 @@ return [
     /*
      * Labels for inputs.
      */
-    'label' => [
-        'name'   => 'Name',
-        'google' => [
+    'label'       => [
+        'name'       => 'Name',
+        'google'     => [
             'analytics' => 'Google analytics code',
             'recaptcha' => 'Google recaptcha code',
         ],
@@ -226,7 +231,7 @@ return [
             'state'    => 'Company state',
             'country'  => 'Company country',
         ],
-        'currency' => [
+        'currency'   => [
             'heading'           => 'Currency',
             'currency'          => 'Currency',
             'position'          => 'Currency position',
@@ -234,7 +239,7 @@ return [
             'decimalseperator'  => 'Decimal seperator',
             'decimal'           => 'Decimeal places',
         ],
-        'mail' => [
+        'mail'       => [
             'driver'     => 'Email driver',
             'host'       => 'Host',
             'port'       => 'Port',
@@ -242,7 +247,7 @@ return [
             'password'   => 'Password',
             'encryption' => 'Encryption',
         ],
-        'social' => [
+        'social'     => [
             'twitter'                => 'Twitter',
             'twitter_client_id'      => 'Twitter client id',
             'twitter_client_secret'  => 'Twitter secret key',
@@ -259,33 +264,33 @@ return [
             'github_client_id'       => 'Git Hub client id',
             'github_client_secret'   => 'Git Hub secret key',
         ],
-        'payment' => [
+        'payment'    => [
             'paypal'               => 'Paypal',
             'paypal_client_id'     => 'Paypal client id',
             'paypal_client_secret' => 'Paypal secret key',
         ],
-        'google' => [
+        'google'     => [
             'analytics'    => 'Analytics Code',
             'recsitekey'   => 'Recaptcha Site Key',
             'recsecretkey' => 'Recaptcha Secret Key',
         ],
-        'chat' => [
+        'chat'       => [
             'twalkto'   => 'Twalk.to Code',
             'freshchat' => 'Freshchat Code',
         ],
-        'sms' => [
+        'sms'        => [
             'url'    => 'SMS api URL',
             'code'   => 'SMS api Code',
             'secret' => 'SMS api Secret',
         ],
-        'calendar' => [
+        'calendar'   => [
             'provider'    => 'Provider',
             'token'       => 'Token',
             'credentials' => 'Crediantials',
         ],
-        'theme' => [
-            'name'  => 'Theme',
-            'admin' => [
+        'theme'      => [
+            'name'   => 'Theme',
+            'admin'  => [
                 'name'  => 'Admin',
                 'color' => 'Color',
                 'logo'  => [
@@ -294,7 +299,7 @@ return [
                     'white' => 'White logo',
                 ],
             ],
-            'user' => [
+            'user'   => [
                 'name'  => 'User',
                 'color' => 'Color',
                 'logo'  => [
