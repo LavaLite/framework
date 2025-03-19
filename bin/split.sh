@@ -3,7 +3,7 @@
 set -e
 set -x
 
-CURRENT_BRANCH="10.x"
+CURRENT_BRANCH="12.x"
 
 function split()
 {
@@ -38,6 +38,7 @@ remote notification git@github.com:Litepie/Notification.git
 remote repository git@github.com:Litepie/Repository.git
 remote role git@github.com:Litepie/Role.git
 remote setting git@github.com:Litepie/Setting.git
+remote states git@github.com:Litepie/States.git
 remote team git@github.com:Litepie/Team.git
 remote theme git@github.com:Litepie/Theme.git
 remote trans git@github.com:Litepie/Trans.git
@@ -60,6 +61,7 @@ split './src/Litepie/Notification' notification
 split './src/Litepie/Repository' repository
 split './src/Litepie/Role' role
 split './src/Litepie/Setting' setting
+split './src/Litepie/States' States
 split './src/Litepie/Team' team
 split './src/Litepie/Theme' theme
 split './src/Litepie/Trans' trans
@@ -82,6 +84,7 @@ remove notification
 remove repository
 remove role
 remove setting
+remove states
 remove team
 remove theme
 remove trans
