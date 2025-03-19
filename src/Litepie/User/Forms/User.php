@@ -6,9 +6,9 @@ use Litepie\Form\FormInterpreter;
 
 class User extends FormInterpreter
 {
-
     /**
      * Sets the form and form elements.
+     *
      * @return null.
      */
     public static function setAttributes()
@@ -19,13 +19,13 @@ class User extends FormInterpreter
 
         self::$orderBy = config('user.user.order');
 
-        self::$groups =  config('user.user.groups');
+        self::$groups = config('user.user.groups');
 
-        self::$list =  config('user.user.list');
+        self::$list = config('user.user.list');
 
         self::$fields = config('user.user.form');
 
-        self::$filters =  config('user.user.filters');
+        self::$filters = config('user.user.filters');
 
         return new static();
     }

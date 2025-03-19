@@ -6,10 +6,9 @@ use Illuminate\Http\Resources\Json\JsonResource;
 
 class SettingResource extends JsonResource
 {
-
     public function itemLink()
     {
-        return guard_url('setting/setting') . '/' . $this->getRouteKey();
+        return guard_url('setting/setting').'/'.$this->getRouteKey();
     }
 
     public function title()
@@ -28,25 +27,25 @@ class SettingResource extends JsonResource
     public function toArray($request)
     {
         return [
-            'id' => $this->getRouteKey(),
-            'title' => $this->title(),
-            'key' => $this->key,
-            'package' => $this->package,
-            'module' => $this->module,
-            'name' => $this->name,
-            'value' => $this->value,
-            'file' => $this->file,
-            'control' => $this->control,
-            'type' => $this->type,
-            'slug' => $this->slug,
-            'user_id' => $this->user_id,
-            'user_type' => $this->user_type,
+            'id'            => $this->getRouteKey(),
+            'title'         => $this->title(),
+            'key'           => $this->key,
+            'package'       => $this->package,
+            'module'        => $this->module,
+            'name'          => $this->name,
+            'value'         => $this->value,
+            'file'          => $this->file,
+            'control'       => $this->control,
+            'type'          => $this->type,
+            'slug'          => $this->slug,
+            'user_id'       => $this->user_id,
+            'user_type'     => $this->user_type,
             'upload_folder' => $this->upload_folder,
-            'created_at' => !is_null($this->created_at) ? $this->created_at->format('Y-m-d H:i:s') : null,
-            'updated_at' => !is_null($this->updated_at) ? $this->updated_at->format('Y-m-d H:i:s') : null,
-            'meta' => [
-                'exists' => $this->exists(),
-                'link' => $this->itemLink(),
+            'created_at'    => !is_null($this->created_at) ? $this->created_at->format('Y-m-d H:i:s') : null,
+            'updated_at'    => !is_null($this->updated_at) ? $this->updated_at->format('Y-m-d H:i:s') : null,
+            'meta'          => [
+                'exists'     => $this->exists(),
+                'link'       => $this->itemLink(),
                 'upload_url' => $this->getUploadURL(''),
             ],
         ];
@@ -55,18 +54,19 @@ class SettingResource extends JsonResource
     /**
      * Get additional data that should be returned with the resource array.
      *
-     * @param   \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
+     *
      * @return array
      */
     public function with($request)
     {
         return [
             'meta' => [
-                'exists' => $this->exists(),
-                'link' => $this->itemLink(),
+                'exists'     => $this->exists(),
+                'link'       => $this->itemLink(),
                 'upload_url' => $this->getUploadURL(''),
-                'workflow' => $this->workflows(),
-                'actions' => $this->actions(),
+                'workflow'   => $this->workflows(),
+                'actions'    => $this->actions(),
             ],
         ];
     }
@@ -74,14 +74,14 @@ class SettingResource extends JsonResource
     private function workflows()
     {
         $arr = [];
-                return $arr;
 
+        return $arr;
     }
+
     private function actions()
     {
-
         $arr = [];
-        
+
         return $arr;
     }
 }

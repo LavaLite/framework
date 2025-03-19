@@ -21,17 +21,16 @@ class SettingServiceProvider extends ServiceProvider
     public function boot()
     {
         // Load view
-        $this->loadViewsFrom(__DIR__ . '/resources/views', 'setting');
+        $this->loadViewsFrom(__DIR__.'/resources/views', 'setting');
 
         // Load translation
-        $this->loadTranslationsFrom(__DIR__ . '/resources/lang', 'setting');
+        $this->loadTranslationsFrom(__DIR__.'/resources/lang', 'setting');
 
         // Load migrations
-        $this->loadMigrationsFrom(__DIR__ . '/database/migrations');
+        $this->loadMigrationsFrom(__DIR__.'/database/migrations');
 
         // Call pblish redources function
         $this->publishResources();
-
     }
 
     /**
@@ -43,7 +42,7 @@ class SettingServiceProvider extends ServiceProvider
     {
         $this->mergeConfig();
         $this->registerFacade();
-        
+
         // bind setting storage
         $this->app->bind(
             \Litepie\Setting\Stores\SettingStore::class,
@@ -59,9 +58,9 @@ class SettingServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function registerFacade() {
-        $this->app->bind('setting', function($app)
-        {
+    public function registerFacade()
+    {
+        $this->app->bind('setting', function ($app) {
             return $this->app->make(Setting::class);
         });
     }
@@ -74,7 +73,8 @@ class SettingServiceProvider extends ServiceProvider
     protected function mergeConfig()
     {
         $this->mergeConfigFrom(
-            __DIR__ . '/config/setting.php', 'setting'
+            __DIR__.'/config/setting.php',
+            'setting'
         );
     }
 
@@ -96,15 +96,15 @@ class SettingServiceProvider extends ServiceProvider
     private function publishResources()
     {
         // Publish configuration file
-        $this->publishes([__DIR__ . '/config/' => config_path('litepie/setting')], 'config');
+        $this->publishes([__DIR__.'/config/' => config_path('litepie/setting')], 'config');
 
         // Publish admin view
-        $this->publishes([__DIR__ . '/resources/views' => base_path('resources/views/vendor/setting')], 'view');
+        $this->publishes([__DIR__.'/resources/views' => base_path('resources/views/vendor/setting')], 'view');
 
         // Publish language files
-        $this->publishes([__DIR__ . '/resources/lang' => base_path('resources/lang/vendor/setting')], 'lang');
+        $this->publishes([__DIR__.'/resources/lang' => base_path('resources/lang/vendor/setting')], 'lang');
 
         // Publish public files and assets.
-        $this->publishes([__DIR__ . '/public/' => public_path('/')], 'public');
+        $this->publishes([__DIR__.'/public/' => public_path('/')], 'public');
     }
 }

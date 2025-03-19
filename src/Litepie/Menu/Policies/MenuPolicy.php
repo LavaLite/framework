@@ -7,13 +7,11 @@ use Litepie\Menu\Models\Menu;
 
 class MenuPolicy
 {
-
-
     /**
      * Determine if the given user can view the menu.
      *
      * @param Authenticatable $user
-     * @param Menu $menu
+     * @param Menu            $menu
      *
      * @return bool
      */
@@ -42,7 +40,7 @@ class MenuPolicy
      * Determine if the given user can update the given menu.
      *
      * @param Authenticatable $user
-     * @param Menu $menu
+     * @param Menu            $menu
      *
      * @return bool
      */

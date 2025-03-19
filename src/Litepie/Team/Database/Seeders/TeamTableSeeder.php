@@ -11,14 +11,13 @@ class TeamTableSeeder extends Seeder
     {
         DB::table('teams')->insert([
             [
-                'key' => 'default',
-                'level' => '1',
-                'name' => 'Default',
-                'type' => 'Default',
+                'key'         => 'default',
+                'level'       => '1',
+                'name'        => 'Default',
+                'type'        => 'Default',
                 'description' => 'Default Team',
-                'status' => 'Active',
+                'status'      => 'Active',
             ],
         ]);
-
     }
 }

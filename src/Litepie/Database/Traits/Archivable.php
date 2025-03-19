@@ -26,7 +26,7 @@ trait Archivable
      */
     public static function bootArchivable()
     {
-        static::addGlobalScope(new ArchivableScope);
+        static::addGlobalScope(new ArchivableScope());
     }
 
     /**
@@ -36,23 +36,23 @@ trait Archivable
      */
     public function initializeArchivable()
     {
-        if (! isset($this->casts[$this->getArchivedAtColumn()])) {
+        if (!isset($this->casts[$this->getArchivedAtColumn()])) {
             $this->casts[$this->getArchivedAtColumn()] = 'datetime';
         }
         $this->addObservableEvents([
             'archiving',
             'archived',
             'unArchiving',
-            'unArchived'
+            'unArchived',
         ]);
     }
 
     /**
      * Archive the model.
      *
-     * @return bool|null
-     *
      * @throws Exception
+     *
+     * @return bool|null
      */
     public function archive()
     {
@@ -63,7 +63,7 @@ trait Archivable
         }
 
         // If the model doesn't exist, there is nothing to archive.
-        if (! $this->exists) {
+        if (!$this->exists) {
             return;
         }
 
@@ -101,7 +101,7 @@ trait Archivable
 
         $this->{$this->getArchivedAtColumn()} = $time;
 
-        if ($this->usesTimestamps() && ! is_null($this->getUpdatedAtColumn())) {
+        if ($this->usesTimestamps() && !is_null($this->getUpdatedAtColumn())) {
             $this->{$this->getUpdatedAtColumn()} = $time;
 
             $columns[$this->getUpdatedAtColumn()] = $this->fromDateTime($time);
@@ -139,13 +139,14 @@ trait Archivable
      */
     public function isArchived()
     {
-        return ! is_null($this->{$this->getArchivedAtColumn()});
+        return !is_null($this->{$this->getArchivedAtColumn()});
     }
 
     /**
      * Register a "archiving" model event callback with the dispatcher.
      *
-     * @param  \Closure|string  $callback
+     * @param \Closure|string $callback
+     *
      * @return void
      */
     public static function archiving($callback)
@@ -156,7 +157,8 @@ trait Archivable
     /**
      * Register a "archived" model event callback with the dispatcher.
      *
-     * @param  \Closure|string  $callback
+     * @param \Closure|string $callback
+     *
      * @return void
      */
     public static function archived($callback)
@@ -167,7 +169,8 @@ trait Archivable
     /**
      * Register a "un-archiving" model event callback with the dispatcher.
      *
-     * @param  \Closure|string  $callback
+     * @param \Closure|string $callback
+     *
      * @return void
      */
     public static function unArchiving($callback)
@@ -178,7 +181,8 @@ trait Archivable
     /**
      * Register a "un-archived" model event callback with the dispatcher.
      *
-     * @param  \Closure|string  $callback
+     * @param \Closure|string $callback
+     *
      * @return void
      */
     public static function unArchived($callback)

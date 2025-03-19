@@ -24,13 +24,14 @@ class PermissionsChecker
     /**
      * Check for the folders permissions.
      *
-     * @param  array  $folders
+     * @param array $folders
+     *
      * @return array
      */
     public function check(array $folders)
     {
         foreach ($folders as $folder => $permission) {
-            if (! ($this->getPermission($folder) >= $permission)) {
+            if (!($this->getPermission($folder) >= $permission)) {
                 $this->addFileAndSetErrors($folder, $permission, false);
             } else {
                 $this->addFile($folder, $permission, true);
@@ -43,7 +44,8 @@ class PermissionsChecker
     /**
      * Get a folder permission.
      *
-     * @param  $folder
+     * @param $folder
+     *
      * @return string
      */
     private function getPermission($folder)
@@ -54,25 +56,25 @@ class PermissionsChecker
     /**
      * Add the file to the list of results.
      *
-     * @param  $folder
-     * @param  $permission
-     * @param  $isSet
+     * @param $folder
+     * @param $permission
+     * @param $isSet
      */
     private function addFile($folder, $permission, $isSet)
     {
         array_push($this->results['permissions'], [
-            'folder' => $folder,
+            'folder'     => $folder,
             'permission' => $permission,
-            'isSet' => $isSet,
+            'isSet'      => $isSet,
         ]);
     }
 
     /**
      * Add the file and set the errors.
      *
-     * @param  $folder
-     * @param  $permission
-     * @param  $isSet
+     * @param $folder
+     * @param $permission
+     * @param $isSet
      */
     private function addFileAndSetErrors($folder, $permission, $isSet)
     {

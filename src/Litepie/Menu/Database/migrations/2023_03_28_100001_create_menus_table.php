@@ -13,7 +13,6 @@ class CreateMenusTable extends Migration
 
     public function up()
     {
-
         /*
          * Table: menus
          */

@@ -18,8 +18,9 @@ class ArchivableScope implements Scope
     /**
      * Apply the scope to a given Eloquent query builder.
      *
-     * @param  \Illuminate\Database\Eloquent\Builder  $builder
-     * @param  \Illuminate\Database\Eloquent\Model  $model
+     * @param \Illuminate\Database\Eloquent\Builder $builder
+     * @param \Illuminate\Database\Eloquent\Model   $model
+     *
      * @return void
      */
     public function apply(Builder $builder, Model $model)
@@ -32,7 +33,8 @@ class ArchivableScope implements Scope
     /**
      * Extend the query builder with the needed functions.
      *
-     * @param  \Illuminate\Database\Eloquent\Builder  $builder
+     * @param \Illuminate\Database\Eloquent\Builder $builder
+     *
      * @return void
      */
     public function extend(Builder $builder)
@@ -45,7 +47,8 @@ class ArchivableScope implements Scope
     /**
      * Get the "archived at" column for the builder.
      *
-     * @param  \Illuminate\Database\Eloquent\Builder  $builder
+     * @param \Illuminate\Database\Eloquent\Builder $builder
+     *
      * @return string
      */
     protected function getArchivedAtColumn(Builder $builder)
@@ -60,7 +63,8 @@ class ArchivableScope implements Scope
     /**
      * Add the archive extension to the builder.
      *
-     * @param  \Illuminate\Database\Eloquent\Builder  $builder
+     * @param \Illuminate\Database\Eloquent\Builder $builder
+     *
      * @return void
      */
     protected function addArchive(Builder $builder)
@@ -77,7 +81,8 @@ class ArchivableScope implements Scope
     /**
      * Add the un-archive extension to the builder.
      *
-     * @param  \Illuminate\Database\Eloquent\Builder  $builder
+     * @param \Illuminate\Database\Eloquent\Builder $builder
+     *
      * @return void
      */
     protected function addUnArchive(Builder $builder)
@@ -96,13 +101,14 @@ class ArchivableScope implements Scope
     /**
      * Add the with-archive extension to the builder.
      *
-     * @param  \Illuminate\Database\Eloquent\Builder  $builder
+     * @param \Illuminate\Database\Eloquent\Builder $builder
+     *
      * @return void
      */
     protected function addWithArchived(Builder $builder)
     {
         $builder->macro('withArchived', function (Builder $builder, $withArchived = true) {
-            if (! $withArchived) {
+            if (!$withArchived) {
                 return $builder->withoutArchived();
             }
 
@@ -113,7 +119,8 @@ class ArchivableScope implements Scope
     /**
      * Add the without-archive extension to the builder.
      *
-     * @param  \Illuminate\Database\Eloquent\Builder  $builder
+     * @param \Illuminate\Database\Eloquent\Builder $builder
+     *
      * @return void
      */
     protected function addWithoutArchived(Builder $builder)
@@ -130,7 +137,8 @@ class ArchivableScope implements Scope
     /**
      * Add the only-archive extension to the builder.
      *
-     * @param  \Illuminate\Database\Eloquent\Builder  $builder
+     * @param \Illuminate\Database\Eloquent\Builder $builder
+     *
      * @return void
      */
     protected function addOnlyArchived(Builder $builder)

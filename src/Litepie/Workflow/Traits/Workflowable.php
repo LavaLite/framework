@@ -6,11 +6,11 @@ use Symfony\Component\Workflow\Transition;
 
 trait Workflowable
 {
-
     /**
      * Get the workflow instance for the model.
      *
-     * @param  string|null  $workflow
+     * @param string|null $workflow
+     *
      * @return \Litepie\Workflow\Workflow
      */
     public function workflow($workflow = null)
@@ -21,7 +21,8 @@ trait Workflowable
     /**
      * Get the available transitions for the model.
      *
-     * @param  string|null  $workflow
+     * @param string|null $workflow
+     *
      * @return array
      */
     public function transitions($workflow = null)
@@ -34,17 +35,19 @@ trait Workflowable
         foreach ($transitions as $key => $transition) {
             $transitions[$key]->form = $workflow->form($transition);
         }
+
         return $transitions;
     }
 
     /**
      * Get a specific transition for the model.
      *
-     * @param  string  $transition
-     * @param  string|null  $workflow
+     * @param string      $transition
+     * @param string|null $workflow
+     *
      * @return bool
      */
-    public function transition($transition, $workflow = null): Transition | null 
+    public function transition($transition, $workflow = null): Transition|null
     {
         return $this->workflow($workflow)->transition($transition);
     }
@@ -52,8 +55,9 @@ trait Workflowable
     /**
      * Get the metadata for a specific transition.
      *
-     * @param  string  $transition
-     * @param  string|null  $workflow
+     * @param string      $transition
+     * @param string|null $workflow
+     *
      * @return array
      */
     public function getTransitionMetadata($transition, $workflow = null)
@@ -62,6 +66,7 @@ trait Workflowable
         if (empty($transition)) {
             return [];
         }
+
         return $this->workflow($workflow)
             ->getMetadataStore()
             ->getTransitionMetadata($transition);
@@ -70,7 +75,8 @@ trait Workflowable
     /**
      * Check if the model can perform a specific transition.
      *
-     * @param  array  $roles
+     * @param array $roles
+     *
      * @return bool
      */
     public function canDoTransition($roles)

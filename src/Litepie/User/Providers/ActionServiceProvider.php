@@ -21,7 +21,7 @@ class ActionServiceProvider extends ServiceProvider
     public function actions()
     {
         return [
-            \Litepie\User\Models\User::class => config('user.user.actions')
+            \Litepie\User\Models\User::class => config('user.user.actions'),
         ];
     }
 }

@@ -2,7 +2,6 @@
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 
 class CreateClientsTable extends Migration
 {
@@ -14,7 +13,6 @@ class CreateClientsTable extends Migration
 
     public function up()
     {
-
         /*
          * Table: litepie_user_clients
          */
@@ -25,7 +23,7 @@ class CreateClientsTable extends Migration
             $table->string('password', 100)->nullable();
             $table->string('api_token', 60)->nullable();
             $table->string('remember_token', 255)->nullable();
-            $table->enum('sex', [null,'Male', 'Female'])->nullable();
+            $table->enum('sex', [null, 'Male', 'Female'])->nullable();
             $table->date('dob')->nullable();
             $table->string('designation', 50)->nullable();
             $table->string('mobile', 100)->nullable();

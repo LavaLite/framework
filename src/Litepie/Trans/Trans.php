@@ -565,8 +565,8 @@ class Trans
     /**
      * Change route attributes for the ones in the $attributes array.
      *
-     * @param $attributes array Array of attributes
-     * @param string $route string route to substitute
+     * @param        $attributes array Array of attributes
+     * @param string $route      string route to substitute
      *
      * @return string route with attributes changed
      */

@@ -14,8 +14,7 @@ class AuthServiceProvider extends ServiceProvider
      */
     protected $policies = [
         // Bind Team policy
-        \Litepie\Team\Models\Team::class 
-        => \Litepie\Team\Policies\TeamPolicy::class
+        \Litepie\Team\Models\Team::class => \Litepie\Team\Policies\TeamPolicy::class,
     ];
 
     /**

@@ -29,6 +29,7 @@ class TeamAction
         $this->model = $team;
         $this->function = Str::camel($action);
         $this->executeAction();
+
         return $this->model;
     }
 
@@ -38,6 +39,7 @@ class TeamAction
         $attributes['user_id'] = user_id();
         $attributes['user_type'] = user_type();
         $team = $team->create($attributes);
+
         return $team;
     }
 
@@ -45,12 +47,14 @@ class TeamAction
     {
         $attributes = $request;
         $team->update($attributes);
+
         return $team;
     }
 
     public function destroy(Team $team, array $request)
     {
         $team->delete();
+
         return $team;
     }
 
@@ -62,6 +66,7 @@ class TeamAction
             $team = $team->replicate();
             $team->created_at = Carbon::now();
             $team->save();
+
             return $team;
         }
 
@@ -83,6 +88,7 @@ class TeamAction
     {
         $this->detach($team, $data);
         $team->users()->attach($data['user_id'], ['level' => $data['level']]);
+
         return $team;
     }
 

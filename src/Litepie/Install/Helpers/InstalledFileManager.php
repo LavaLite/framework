@@ -15,7 +15,7 @@ class InstalledFileManager
 
         $dateStamp = date('Y/m/d h:i:sa');
 
-        if (! file_exists($installedLogFile)) {
+        if (!file_exists($installedLogFile)) {
             $message = trans('installer_messages.installed.success_log_message').$dateStamp."\n";
 
             file_put_contents($installedLogFile, $message);

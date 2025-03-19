@@ -12,35 +12,35 @@ return [
     */
 
     /**
-     * Singlular and plural name of the module
+     * Singlular and plural name of the module.
      */
-    'name' => 'Role',
+    'name'  => 'Role',
     'names' => 'Roles',
-    'icon' => 'las la-list',
+    'icon'  => 'las la-list',
 
     /**
-     * Singlular and plural name of the module
+     * Singlular and plural name of the module.
      */
     'title' => [
         'main' => 'Roles',
-        'sub' => 'Roles'
+        'sub'  => 'Roles',
     ],
 
     /**
-     * Singlular and plural name of the module
+     * Singlular and plural name of the module.
      */
     'groups'         => [
-        'main' => 'Main',
-        'images' => 'Images',
-        'details' => 'Details',
-        'settings' => 'Settings'
+        'main'     => 'Main',
+        'images'   => 'Images',
+        'details'  => 'Details',
+        'settings' => 'Settings',
     ],
 
     /**
      * Form sub section name for the module.
      */
     'sections' => [
-        'main' => 'Main',
+        'main'    => 'Main',
         'details' => 'Details',
     ],
 
@@ -48,20 +48,19 @@ return [
      * Options for select/radio/check.
      */
     'options'       => [
-        'level' => 
+        'level' => [
+
             [
-                                
-                [
-                    'key'    => 11,
-                    'value'  => 11,
-                    'text'   => 11,
-                ],
-                                
+                'key'    => 11,
+                'value'  => 11,
+                'text'   => 11,
             ],
+
+        ],
     ],
 
     /**
-     * Placeholder for inputs
+     * Placeholder for inputs.
      */
     'placeholder'   => [
         'id'                         => 'Please enter id',
@@ -88,5 +87,4 @@ return [
         'updated_at'                 => 'Updated at',
     ],
 
-    
     ];

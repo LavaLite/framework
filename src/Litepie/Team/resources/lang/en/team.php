@@ -12,25 +12,25 @@ return [
      */
 
     /**
-     * Singlular and plural name of the module
+     * Singlular and plural name of the module.
      */
-    'name' => 'Team',
+    'name'  => 'Team',
     'names' => 'Teams',
-    'icon' => 'las la-list',
+    'icon'  => 'las la-list',
 
     /**
-     * Singlular and plural name of the module
+     * Singlular and plural name of the module.
      */
     'title' => [
         'main' => 'Teams',
-        'sub' => 'Teams',
+        'sub'  => 'Teams',
     ],
 
     /**
-     * Singlular and plural name of the module
+     * Singlular and plural name of the module.
      */
     'groups' => [
-        'main' => 'Main',
+        'main'    => 'Main',
         'members' => 'Members',
     ],
 
@@ -38,7 +38,7 @@ return [
      * Form sub section name for the module.
      */
     'sections' => [
-        'main' => 'Main',
+        'main'    => 'Main',
         'details' => 'Details',
     ],
 
@@ -48,123 +48,123 @@ return [
     'options' => [
         'level' => [
             '1' => [
-                'key' => '1',
+                'key'   => '1',
                 'value' => '1',
-                'text' => '1 - Guest',
-                'name' => '1 - Guest',
+                'text'  => '1 - Guest',
+                'name'  => '1 - Guest',
             ],
 
             '2' => [
-                'key' => '2',
+                'key'   => '2',
                 'value' => '2',
-                'text' => '2 - Admin',
-                'name' => '2 - Admin',
+                'text'  => '2 - Admin',
+                'name'  => '2 - Admin',
             ],
             '3' => [
-                'key' => '3',
+                'key'   => '3',
                 'value' => '3',
-                'text' => '3 - Manager',
-                'name' => '3 - Manager',
+                'text'  => '3 - Manager',
+                'name'  => '3 - Manager',
             ],
             '4' => [
-                'key' => '4',
+                'key'   => '4',
                 'value' => '4',
-                'text' => '4 - Administrator',
-                'name' => '4 - Administrator',
+                'text'  => '4 - Administrator',
+                'name'  => '4 - Administrator',
             ],
             '5' => [
-                'key' => '5',
+                'key'   => '5',
                 'value' => '5',
-                'text' => '5 - Super User',
-                'name' => '5 - Super User',
+                'text'  => '5 - Super User',
+                'name'  => '5 - Super User',
             ],
         ],
         'type' => [
             [
-                'key' => 'Default',
+                'key'   => 'Default',
                 'value' => 'Default',
-                'text' => 'Default',
+                'text'  => 'Default',
             ],
             [
-                'key' => 'Product',
+                'key'   => 'Product',
                 'value' => 'Product',
-                'text' => 'Product',
+                'text'  => 'Product',
             ],
             [
-                'key' => 'Lead',
+                'key'   => 'Lead',
                 'value' => 'Lead',
-                'text' => 'Lead',
+                'text'  => 'Lead',
             ],
             [
-                'key' => 'Oppertunity',
+                'key'   => 'Oppertunity',
                 'value' => 'Oppertunity',
-                'text' => 'Oppertunity',
+                'text'  => 'Oppertunity',
             ],
             [
-                'key' => 'Deal',
+                'key'   => 'Deal',
                 'value' => 'Deal',
-                'text' => 'Deal',
+                'text'  => 'Deal',
             ],
         ],
 
         'status' => [
             [
-                'key' => '',
+                'key'   => '',
                 'value' => 'Default',
-                'text' => 'Default',
+                'text'  => 'Default',
             ],
 
             [
-                'key' => 'Active',
+                'key'   => 'Active',
                 'value' => 'Active',
-                'text' => 'Active',
+                'text'  => 'Active',
             ],
 
             [
-                'key' => 'Inactive',
+                'key'   => 'Inactive',
                 'value' => 'Inactive',
-                'text' => 'Inactive',
+                'text'  => 'Inactive',
             ],
         ],
     ],
 
     /**
-     * Placeholder for inputs
+     * Placeholder for inputs.
      */
     'placeholder' => [
-        'id' => 'Please enter id',
-        'name' => 'Please enter name',
-        'key' => 'Please enter key',
-        'level' => 'Please select level',
-        'type' => 'Please select type',
-        'status' => 'Please select status',
+        'id'          => 'Please enter id',
+        'name'        => 'Please enter name',
+        'key'         => 'Please enter key',
+        'level'       => 'Please select level',
+        'type'        => 'Please select type',
+        'status'      => 'Please select status',
         'description' => 'Please enter description',
-        'user' => 'Please enter user',
-        'role' => 'Please enter role',
-        'level' => 'Please enter level',
-        'settings' => 'Please enter settings',
-        'deleted_at' => 'Please select deleted at',
-        'created_at' => 'Please select created at',
-        'updated_at' => 'Please select updated at',
+        'user'        => 'Please enter user',
+        'role'        => 'Please enter role',
+        'level'       => 'Please enter level',
+        'settings'    => 'Please enter settings',
+        'deleted_at'  => 'Please select deleted at',
+        'created_at'  => 'Please select created at',
+        'updated_at'  => 'Please select updated at',
     ],
 
     /**
      * Labels for inputs.
      */
     'label' => [
-        'id' => 'Id',
-        'name' => 'Name',
-        'key' => 'Key',
-        'level' => 'Level',
-        'type' => 'Type',
-        'status' => 'Status',
+        'id'          => 'Id',
+        'name'        => 'Name',
+        'key'         => 'Key',
+        'level'       => 'Level',
+        'type'        => 'Type',
+        'status'      => 'Status',
         'description' => 'Description',
-        'user' => 'User',
-        'role' => 'Role',
-        'level' => 'Level',
-        'settings' => 'Settings',
-        'deleted_at' => 'Deleted at',
-        'created_at' => 'Created at',
-        'updated_at' => 'Updated at',
+        'user'        => 'User',
+        'role'        => 'Role',
+        'level'       => 'Level',
+        'settings'    => 'Settings',
+        'deleted_at'  => 'Deleted at',
+        'created_at'  => 'Created at',
+        'updated_at'  => 'Updated at',
     ],
 ];

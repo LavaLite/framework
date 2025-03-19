@@ -7,13 +7,11 @@ use Litepie\Master\Models\Master;
 
 class MasterPolicy
 {
-
-
     /**
      * Determine if the given user can view the master.
      *
      * @param Authenticatable $user
-     * @param Master $master
+     * @param Master          $master
      *
      * @return bool
      */
@@ -42,7 +40,7 @@ class MasterPolicy
      * Determine if the given user can update the given master.
      *
      * @param Authenticatable $user
-     * @param Master $master
+     * @param Master          $master
      *
      * @return bool
      */

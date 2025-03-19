@@ -2,18 +2,17 @@
 
 namespace Litepie\States\Traits;
 
-use Litepie\States\Models\PendingTransition;
-use Litepie\States\Models\StateHistory;
-use Litepie\States\StateMachines\State;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 use Litepie\Database\Facades\ModelMacro;
-
+use Litepie\States\Models\PendingTransition;
+use Litepie\States\Models\StateHistory;
+use Litepie\States\StateMachines\State;
 
 /**
- * Trait HasState
- * @package Litepie\States\Traits
+ * Trait HasState.
+ *
  * @property array $stateMachines
  */
 trait HasStateMachines
@@ -23,9 +22,10 @@ trait HasStateMachines
         $model = new static();
 
         collect($model->stateMachines)
-            ->each(function ($_, $field) use ($model) {
+            ->each(function ($_, $field) {
                 ModelMacro::addMacro(static::class, $field, function () use ($field) {
                     $stateMachine = new $this->stateMachines[$field]($field, $this);
+
                     return new State($this->{$stateMachine->field}, $stateMachine);
                 });
 
@@ -33,6 +33,7 @@ trait HasStateMachines
 
                 ModelMacro::addMacro(static::class, $camelField, function () use ($field) {
                     $stateMachine = new $this->stateMachines[$field]($field, $this);
+
                     return new State($this->{$stateMachine->field}, $stateMachine);
                 });
 
@@ -50,12 +51,13 @@ trait HasStateMachines
                         if ($callable !== null) {
                             $callable($query);
                         }
+
                         return $query;
                     });
                 });
             });
 
-            self::creating(function (Model $model) {
+        self::creating(function (Model $model) {
             $model->initStates();
         });
 
@@ -82,7 +84,7 @@ trait HasStateMachines
         });
     }
 
-    public function getChangedAttributes() : array
+    public function getChangedAttributes(): array
     {
         return collect($this->getDirty())
             ->mapWithKeys(function ($_, $attribute) {
@@ -119,10 +121,10 @@ trait HasStateMachines
     public function recordState($field, $from, $to, $customProperties = [], $responsible = null, $changedAttributes = [])
     {
         $stateHistory = StateHistory::make([
-            'field' => $field,
-            'from' => $from,
-            'to' => $to,
-            'custom_properties' => $customProperties,
+            'field'              => $field,
+            'from'               => $from,
+            'to'                 => $to,
+            'custom_properties'  => $customProperties,
             'changed_attributes' => $changedAttributes,
         ]);
 
@@ -133,16 +135,15 @@ trait HasStateMachines
         $this->stateHistory()->save($stateHistory);
     }
 
-    public function recordPendingTransition($field, $from, $to, $when, $customProperties = [], $responsible = null) : PendingTransition
+    public function recordPendingTransition($field, $from, $to, $when, $customProperties = [], $responsible = null): PendingTransition
     {
-
         /** @var PendingTransition $pendingTransition */
         $pendingTransition = PendingTransition::make([
-            'field' => $field,
-            'from' => $from,
-            'to' => $to,
-            'transition_at' => $when,
-            'custom_properties' => $customProperties
+            'field'             => $field,
+            'from'              => $from,
+            'to'                => $to,
+            'transition_at'     => $when,
+            'custom_properties' => $customProperties,
         ]);
 
         if ($responsible !== null) {
@@ -158,5 +159,4 @@ trait HasStateMachines
     {
         return [];
     }
-
 }

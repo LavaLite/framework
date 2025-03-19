@@ -20,7 +20,6 @@ use Litepie\Role\Models\Role;
  */
 class RoleResourceController extends BaseController
 {
-
     /**
      * Initialize role resource controller.
      *
@@ -33,11 +32,12 @@ class RoleResourceController extends BaseController
             parent::middleware(),
             [
                 function (Request $request, Closure $next) {
-            self::$form = RoleForm::only('main')
-                ->setAttributes()
-                ->toArray();
-            self::$modules = self::modules(config('role.modules'), 'role', guard_url('role'));
-            return $next($request);
+                    self::$form = RoleForm::only('main')
+                        ->setAttributes()
+                        ->toArray();
+                    self::$modules = self::modules(config('role.modules'), 'role', guard_url('role'));
+
+                    return $next($request);
                 },
             ]
         );
@@ -62,7 +62,6 @@ class RoleResourceController extends BaseController
             ->view('role::role.index')
             ->data(compact('data', 'modules', 'form'))
             ->output();
-
     }
 
     /**
@@ -81,7 +80,7 @@ class RoleResourceController extends BaseController
         $permissions = PermissionActions::run('grouped', []);
 
         return self::$response
-            ->setMetaTitle(trans('app.view') . ' ' . trans('role.role.name'))
+            ->setMetaTitle(trans('app.view').' '.trans('role.role.name'))
             ->data(compact('data', 'form', 'modules', 'permissions'))
             ->view('role::role.show')
             ->output();
@@ -101,11 +100,10 @@ class RoleResourceController extends BaseController
         $data = new RoleResource($model);
         $permissions = PermissionActions::run('grouped', []);
 
-        return self::$response->setMetaTitle(trans('app.new') . ' ' . trans('role::role.name'))
+        return self::$response->setMetaTitle(trans('app.new').' '.trans('role::role.name'))
             ->view('role::role.create')
             ->data(compact('data', 'form', 'modules', 'permissions'))
             ->output();
-
     }
 
     /**
@@ -121,11 +119,12 @@ class RoleResourceController extends BaseController
             $request = $request->all();
             $model = RoleAction::run('store', $model, $request);
             $data = new RoleResource($model);
+
             return self::$response->message(trans('messages.success.created', ['Module' => trans('role::role.name')]))
                 ->code(204)
                 ->data(compact('data'))
                 ->status('success')
-                ->url(guard_url('role/role/' . $model->getRouteKey()))
+                ->url(guard_url('role/role/'.$model->getRouteKey()))
                 ->redirect();
         } catch (Exception $e) {
             return self::$response->message($e->getMessage())
@@ -134,7 +133,6 @@ class RoleResourceController extends BaseController
                 ->url(guard_url('/role/role'))
                 ->redirect();
         }
-
     }
 
     /**
@@ -152,11 +150,10 @@ class RoleResourceController extends BaseController
         $data = new RoleResource($model);
         $permissions = PermissionActions::run('grouped', []);
 
-        return self::$response->setMetaTitle(trans('app.edit') . ' ' . trans('role::role.name'))
+        return self::$response->setMetaTitle(trans('app.edit').' '.trans('role::role.name'))
             ->view('role::role.edit')
             ->data(compact('data', 'form', 'modules', 'permissions'))
             ->output();
-
     }
 
     /**
@@ -178,29 +175,27 @@ class RoleResourceController extends BaseController
                 ->code(204)
                 ->status('success')
                 ->data(compact('data'))
-                ->url(guard_url('role/role/' . $model->getRouteKey()))
+                ->url(guard_url('role/role/'.$model->getRouteKey()))
                 ->redirect();
         } catch (Exception $e) {
             return self::$response->message($e->getMessage())
                 ->code(400)
                 ->status('error')
-                ->url(guard_url('role/role/' . $model->getRouteKey()))
+                ->url(guard_url('role/role/'.$model->getRouteKey()))
                 ->redirect();
         }
-
     }
 
     /**
      * Remove the role.
      *
-     * @param Model   $role
+     * @param Model $role
      *
      * @return Response
      */
     public function destroy(RoleResourceRequest $request, Role $model)
     {
         try {
-
             $request = $request->all();
             $model = RoleAction::run('destroy', $model, $request);
             $data = new RoleResource($model);
@@ -211,15 +206,12 @@ class RoleResourceController extends BaseController
                 ->data(compact('data'))
                 ->url(guard_url('role/role/0'))
                 ->redirect();
-
         } catch (Exception $e) {
-
             return self::$response->message($e->getMessage())
                 ->code(400)
                 ->status('error')
-                ->url(guard_url('role/role/' . $model->getRouteKey()))
+                ->url(guard_url('role/role/'.$model->getRouteKey()))
                 ->redirect();
         }
-
     }
 }

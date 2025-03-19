@@ -3,7 +3,6 @@
 namespace Litepie\Menu;
 
 use Illuminate\Support\ServiceProvider;
-use Litepie\Menu\Menus;
 
 class MenuServiceProvider extends ServiceProvider
 {
@@ -22,17 +21,16 @@ class MenuServiceProvider extends ServiceProvider
     public function boot()
     {
         // Load view
-        $this->loadViewsFrom(__DIR__ . '/resources/views', 'menu');
+        $this->loadViewsFrom(__DIR__.'/resources/views', 'menu');
 
         // Load translation
-        $this->loadTranslationsFrom(__DIR__ . '/resources/lang', 'menu');
+        $this->loadTranslationsFrom(__DIR__.'/resources/lang', 'menu');
 
         // Load migrations
-        $this->loadMigrationsFrom(__DIR__ . '/database/migrations');
+        $this->loadMigrationsFrom(__DIR__.'/database/migrations');
 
         // Call pblish redources function
         $this->publishResources();
-
     }
 
     /**
@@ -54,9 +52,9 @@ class MenuServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function registerFacade() {
-        $this->app->bind('menu', function($app)
-        {
+    public function registerFacade()
+    {
+        $this->app->bind('menu', function ($app) {
             return $this->app->make(Menu::class);
         });
     }
@@ -69,15 +67,15 @@ class MenuServiceProvider extends ServiceProvider
     protected function mergeConfig()
     {
         $this->mergeConfigFrom(
-            __DIR__ . '/config/menu.php', 'menu'
+            __DIR__.'/config/menu.php',
+            'menu'
         );
-        
-        
+
         $this->mergeConfigFrom(
-            __DIR__ . '/config/menu.php', 'litepie.menu.menu'
+            __DIR__.'/config/menu.php',
+            'litepie.menu.menu'
         );
     }
-
 
     /**
      * Get the services provided by the provider.
@@ -97,15 +95,15 @@ class MenuServiceProvider extends ServiceProvider
     private function publishResources()
     {
         // Publish configuration file
-        $this->publishes([__DIR__ . '/config/' => config_path('litepie/menu')], 'config');
+        $this->publishes([__DIR__.'/config/' => config_path('litepie/menu')], 'config');
 
         // Publish admin view
-        $this->publishes([__DIR__ . '/resources/views' => base_path('resources/views/vendor/menu')], 'view');
+        $this->publishes([__DIR__.'/resources/views' => base_path('resources/views/vendor/menu')], 'view');
 
         // Publish language files
-        $this->publishes([__DIR__ . '/resources/lang' => base_path('resources/lang/vendor/menu')], 'lang');
+        $this->publishes([__DIR__.'/resources/lang' => base_path('resources/lang/vendor/menu')], 'lang');
 
         // Publish public files and assets.
-        $this->publishes([__DIR__ . '/public/' => public_path('/')], 'public');
+        $this->publishes([__DIR__.'/public/' => public_path('/')], 'public');
     }
 }

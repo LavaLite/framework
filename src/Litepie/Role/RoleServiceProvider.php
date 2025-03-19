@@ -21,17 +21,16 @@ class RoleServiceProvider extends ServiceProvider
     public function boot()
     {
         // Load view
-        $this->loadViewsFrom(__DIR__ . '/resources/views', 'role');
+        $this->loadViewsFrom(__DIR__.'/resources/views', 'role');
 
         // Load translation
-        $this->loadTranslationsFrom(__DIR__ . '/resources/lang', 'role');
+        $this->loadTranslationsFrom(__DIR__.'/resources/lang', 'role');
 
         // Load migrations
-        $this->loadMigrationsFrom(__DIR__ . '/database/migrations');
+        $this->loadMigrationsFrom(__DIR__.'/database/migrations');
 
         // Call pblish redources function
         $this->publishResources();
-
     }
 
     /**
@@ -56,9 +55,9 @@ class RoleServiceProvider extends ServiceProvider
     protected function mergeConfig()
     {
         $this->mergeConfigFrom(
-            __DIR__ . '/config/role.php', 'role'
+            __DIR__.'/config/role.php',
+            'role'
         );
-
     }
 
     /**
@@ -66,9 +65,9 @@ class RoleServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function registerFacade() {
-        $this->app->bind('role', function($app)
-        {
+    public function registerFacade()
+    {
+        $this->app->bind('role', function ($app) {
             return $this->app->make(Role::class);
         });
     }
@@ -91,15 +90,15 @@ class RoleServiceProvider extends ServiceProvider
     private function publishResources()
     {
         // Publish configuration file
-        $this->publishes([__DIR__ . '/config/' => config_path('/')], 'config');
+        $this->publishes([__DIR__.'/config/' => config_path('/')], 'config');
 
         // Publish admin view
-        $this->publishes([__DIR__ . '/resources/views' => base_path('resources/views/vendor/role')], 'view');
+        $this->publishes([__DIR__.'/resources/views' => base_path('resources/views/vendor/role')], 'view');
 
         // Publish language files
-        $this->publishes([__DIR__ . '/resources/lang' => base_path('resources/lang/vendor/role')], 'lang');
+        $this->publishes([__DIR__.'/resources/lang' => base_path('resources/lang/vendor/role')], 'lang');
 
         // Publish public files and assets.
-        $this->publishes([__DIR__ . '/public/' => public_path('/')], 'public');
+        $this->publishes([__DIR__.'/public/' => public_path('/')], 'public');
     }
 }

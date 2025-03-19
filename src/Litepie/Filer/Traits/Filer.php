@@ -61,14 +61,14 @@ trait Filer
             if (is_array(Request::file($field))) {
                 foreach (Request::file($field) as $file) {
                     if ($file instanceof UploadedFile) {
-                        $files[] = Uploader::upload($file, $rootFolder . '/' . $this->upload_folder . DIRECTORY_SEPARATOR . $field);
+                        $files[] = Uploader::upload($file, $rootFolder.'/'.$this->upload_folder.DIRECTORY_SEPARATOR.$field);
                     }
                 }
             } elseif (Request::hasFile($field)) {
                 $file = Request::file($field);
 
                 if ($file instanceof UploadedFile) {
-                    $files[] = Uploader::upload($file, $rootFolder . '/' . $this->upload_folder . DIRECTORY_SEPARATOR . $field);
+                    $files[] = Uploader::upload($file, $rootFolder.'/'.$this->upload_folder.DIRECTORY_SEPARATOR.$field);
                 }
             }
             if (!empty($files)) {
@@ -105,7 +105,7 @@ trait Filer
      */
     public function getUploadFolderConfigAttribute($value)
     {
-        return config($this->config . '.' . 'upload_folder');
+        return config($this->config.'.'.'upload_folder');
     }
 
     /**
@@ -118,8 +118,8 @@ trait Filer
      */
     public function getUploadURL($field, $disk = 'local', $file = 'file')
     {
-        return guard_url('upload/' . $this->config . '/' . ($this->upload_folder)
-            . '/' . $field . '/' . $file . '?disk=' . $disk);
+        return guard_url('upload/'.$this->config.'/'.$this->upload_folder
+            .'/'.$field.'/'.$file.'?disk='.$disk);
     }
 
     /**
@@ -132,7 +132,7 @@ trait Filer
      */
     public function getCropURL($field, $file = 'file')
     {
-        return trans_url('crop/' . $this->config . '/' . ($this->upload_folder) . '/' . $field . '/' . $file);
+        return trans_url('crop/'.$this->config.'/'.$this->upload_folder.'/'.$field.'/'.$file);
     }
 
     /**
@@ -145,7 +145,7 @@ trait Filer
      */
     public function getFileURL($field, $file = 'file')
     {
-        return trans_url('file/' . $this->config . '/' . ($this->upload_folder) . '/' . $field . '/' . $file);
+        return trans_url('file/'.$this->config.'/'.$this->upload_folder.'/'.$field.'/'.$file);
     }
 
     /**
@@ -219,13 +219,14 @@ trait Filer
         $image = $this->$field;
 
         if (!is_array($image) || empty($image)) {
-            return 'img/default/' . $size . '.jpg';
+            return 'img/default/'.$size.'.jpg';
         }
 
         $image = Arr::pull($image, $pos, head($image));
 
         $disk = $image['disk'];
-        return "image/{$disk}/{$size}/" . $image['path'];
+
+        return "image/{$disk}/{$size}/".$image['path'];
     }
 
     /**
@@ -298,6 +299,6 @@ trait Filer
      */
     public function getPublicUrl($disk, $folder, $file, $prefix = 'filer/download')
     {
-        return url("{$prefix}/{$disk}" . '/' . $folder . '/' . $file);
+        return url("{$prefix}/{$disk}".'/'.$folder.'/'.$file);
     }
 }

@@ -1,11 +1,11 @@
 <?php
 
 namespace Litepie\Foundation\Providers;
+
 use Illuminate\Support\ServiceProvider;
 
 abstract class WorkflowServiceProvider extends ServiceProvider
 {
-
     /**
      * The workflow mappings for the application.
      *
@@ -30,5 +30,5 @@ abstract class WorkflowServiceProvider extends ServiceProvider
      *
      * @return array<class-string, class-string>
      */
-     public abstract function workflows();
+    abstract public function workflows();
 }

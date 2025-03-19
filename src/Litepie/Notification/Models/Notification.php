@@ -30,12 +30,11 @@ class Notification extends Model
      *
      * @var array
      */
-     protected $config = 'litepie.notification.notification.model';
-
+    protected $config = 'litepie.notification.notification.model';
 
     /**
      * The array of searchable fields.
-     * 
+     *
      * @var array
      */
     public $search = 'litepie.notification.notification.model.search';
@@ -47,5 +46,4 @@ class Notification extends Model
     {
         return $this->morphTo(__FUNCTION__, 'user_type', 'user_id');
     }
-
 }

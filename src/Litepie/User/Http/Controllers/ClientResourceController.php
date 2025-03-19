@@ -1,4 +1,5 @@
 <?php
+
 namespace Litepie\User\Http\Controllers;
 
 use Closure;
@@ -18,7 +19,6 @@ use Litepie\User\Models\Client;
  */
 class ClientResourceController extends BaseController
 {
-
     /**
      * Initialize client resource controller.
      *
@@ -35,6 +35,7 @@ class ClientResourceController extends BaseController
                         ->setAttributes()
                         ->toArray();
                     self::$modules = self::modules(config('user.modules'), 'user', guard_url('user'));
+
                     return $next($request);
                 },
             ]
@@ -49,11 +50,11 @@ class ClientResourceController extends BaseController
     public function index(ClientResourceRequest $request)
     {
         $request = $request->all();
-        $page    = ClientActions::run('paginate', $request);
+        $page = ClientActions::run('paginate', $request);
 
         $data = new ClientsCollection($page);
 
-        $form    = self::$form;
+        $form = self::$form;
         $modules = self::$modules;
 
         return self::$response->setMetaTitle(trans('user::client.names'))
@@ -72,11 +73,12 @@ class ClientResourceController extends BaseController
      */
     public function show(ClientResourceRequest $request, Client $model)
     {
-        $form    = self::$form;
+        $form = self::$form;
         $modules = self::$modules;
-        $data    = new ClientResource($model);
+        $data = new ClientResource($model);
+
         return self::$response
-            ->setMetaTitle(trans('app.view') . ' ' . trans('user::client.name'))
+            ->setMetaTitle(trans('app.view').' '.trans('user::client.name'))
             ->data(compact('data', 'form', 'modules'))
             ->view('user::client.show')
             ->output();
@@ -91,10 +93,11 @@ class ClientResourceController extends BaseController
      */
     public function create(ClientResourceRequest $request, Client $model)
     {
-        $form    = self::$form;
+        $form = self::$form;
         $modules = self::$modules;
-        $data    = new ClientResource($model);
-        return self::$response->setMetaTitle(trans('app.new') . ' ' . trans('user::client.name'))
+        $data = new ClientResource($model);
+
+        return self::$response->setMetaTitle(trans('app.new').' '.trans('user::client.name'))
             ->view('user::client.create')
             ->data(compact('data', 'form', 'modules'))
             ->output();
@@ -111,13 +114,14 @@ class ClientResourceController extends BaseController
     {
         try {
             $request = $request->all();
-            $model   = ClientAction::run('store', $model, $request);
-            $data    = new ClientResource($model);
+            $model = ClientAction::run('store', $model, $request);
+            $data = new ClientResource($model);
+
             return self::$response->message(trans('messages.success.created', ['Module' => trans('user::client.name')]))
                 ->code(204)
                 ->data(compact('data'))
                 ->status('success')
-                ->url(guard_url('user/client/' . $model->getRouteKey()))
+                ->url(guard_url('user/client/'.$model->getRouteKey()))
                 ->redirect();
         } catch (Exception $e) {
             return self::$response->message($e->getMessage())
@@ -138,12 +142,12 @@ class ClientResourceController extends BaseController
      */
     public function edit(ClientResourceRequest $request, Client $model)
     {
-        $form    = self::$form;
+        $form = self::$form;
         $modules = self::$modules;
-        $data    = new ClientResource($model);
+        $data = new ClientResource($model);
         // return view('user::client.edit', compact('data', 'form', 'modules'));
 
-        return self::$response->setMetaTitle(trans('app.edit') . ' ' . trans('user::client.name'))
+        return self::$response->setMetaTitle(trans('app.edit').' '.trans('user::client.name'))
             ->view('user::client.edit')
             ->data(compact('data', 'form', 'modules'))
             ->output();
@@ -161,20 +165,20 @@ class ClientResourceController extends BaseController
     {
         try {
             $request = $request->all();
-            $model   = ClientAction::run('update', $model, $request);
-            $data    = new ClientResource($model);
+            $model = ClientAction::run('update', $model, $request);
+            $data = new ClientResource($model);
 
             return self::$response->message(trans('messages.success.updated', ['Module' => trans('user::client.name')]))
                 ->code(204)
                 ->status('success')
                 ->data(compact('data'))
-                ->url(guard_url('user/client/' . $model->getRouteKey()))
+                ->url(guard_url('user/client/'.$model->getRouteKey()))
                 ->redirect();
         } catch (Exception $e) {
             return self::$response->message($e->getMessage())
                 ->code(400)
                 ->status('error')
-                ->url(guard_url('user/client/' . $model->getRouteKey()))
+                ->url(guard_url('user/client/'.$model->getRouteKey()))
                 ->redirect();
         }
     }
@@ -182,17 +186,16 @@ class ClientResourceController extends BaseController
     /**
      * Remove the client.
      *
-     * @param Model   $client
+     * @param Model $client
      *
      * @return Response
      */
     public function destroy(ClientResourceRequest $request, Client $model)
     {
         try {
-
             $request = $request->all();
-            $model   = ClientAction::run('destroy', $model, $request);
-            $data    = new ClientResource($model);
+            $model = ClientAction::run('destroy', $model, $request);
+            $data = new ClientResource($model);
 
             return self::$response->message(trans('messages.success.deleted', ['Module' => trans('user::client.name')]))
                 ->code(202)
@@ -201,11 +204,10 @@ class ClientResourceController extends BaseController
                 ->url(guard_url('user/client/0'))
                 ->redirect();
         } catch (Exception $e) {
-
             return self::$response->message($e->getMessage())
                 ->code(400)
                 ->status('error')
-                ->url(guard_url('user/client/' . $model->getRouteKey()))
+                ->url(guard_url('user/client/'.$model->getRouteKey()))
                 ->redirect();
         }
     }

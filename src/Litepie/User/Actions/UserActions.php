@@ -1,4 +1,5 @@
 <?php
+
 namespace Litepie\User\Actions;
 
 use Illuminate\Support\Str;
@@ -14,7 +15,7 @@ class UserActions
     use LogsActions;
 
     protected $model;
-    protected $namespace  = 'litepie.user.user';
+    protected $namespace = 'litepie.user.user';
     protected $eventClass = \Litepie\User\Events\UserAction::class;
     protected $action;
     protected $function;
@@ -22,9 +23,9 @@ class UserActions
 
     public function handle(string $action, array $request)
     {
-        $this->model    = app(User::class);
-        $this->action   = $action;
-        $this->request  = $request;
+        $this->model = app(User::class);
+        $this->action = $action;
+        $this->request = $request;
         $this->function = Str::camel($action);
 
         $function = Str::camel($action);
@@ -34,13 +35,14 @@ class UserActions
         $this->dispatchActionAfterEvent();
 
         $this->logsAction();
+
         return $data;
     }
 
     public function paginate(array $request)
     {
         $pageLimit = isset($request['pageLimit']) ?: config('database.pagination.limit');
-        $user      = $this->model
+        $user = $this->model
             ->pushScope(new RequestScope())
             ->pushScope(new UserResourceScope())
             ->paginate($pageLimit);
@@ -51,7 +53,7 @@ class UserActions
     public function simplePaginate(array $request)
     {
         $pageLimit = isset($request['pageLimit']) ?: config('database.pagination.limit');
-        $user      = $this->model
+        $user = $this->model
             ->pushScope(new RequestScope())
             ->pushScope(new UserResourceScope())
             ->simplePaginate($pageLimit);
@@ -59,7 +61,7 @@ class UserActions
         return $user;
     }
 
-    function empty(array $request)
+    public function empty(array $request)
     {
         return $this->model->forceDelete();
     }
@@ -77,7 +79,7 @@ class UserActions
         });
 
         $deleted = $this->model->whereIn('id', $ids)->delete();
-        if (! $deleted) {
+        if (!$deleted) {
             throw new \Exception('Failed to delete user.');
         }
 
@@ -99,10 +101,12 @@ class UserActions
                 ];
             })->toArray();
     }
+
     public function getUserByRole(array $request)
     {
-        $role   = @$request['role'];
+        $role = @$request['role'];
         $select = @$request['columns'];
+
         return $this->model
             ->select($select)
             ->whereHas(
@@ -113,8 +117,9 @@ class UserActions
             )
             ->get()
             ->map(function ($row) {
-                $row['key']   = $row->eid;
+                $row['key'] = $row->eid;
                 $row['value'] = $row->eid;
+
                 return $row;
             });
     }

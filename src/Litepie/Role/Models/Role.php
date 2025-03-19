@@ -46,5 +46,4 @@ class Role extends Model
     {
         $query->where('type', $type);
     }
-
 }

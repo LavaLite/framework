@@ -2,7 +2,6 @@
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 
 class CreateMastersTable extends Migration
 {
@@ -14,7 +13,6 @@ class CreateMastersTable extends Migration
 
     public function up()
     {
-
         /*
          * Table: masters
          */
@@ -24,7 +22,7 @@ class CreateMastersTable extends Migration
             $table->string('type', 50)->nullable();
             $table->string('name', 50)->nullable();
             $table->string('code', 20)->nullable();
-            $table->double('amount', 10,2)->nullable();
+            $table->double('amount', 10, 2)->nullable();
             $table->string('abbr', 50)->nullable();
             $table->text('description')->nullable();
             $table->string('icon', 50)->nullable();

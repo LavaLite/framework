@@ -3,7 +3,6 @@
 namespace Litepie\User;
 
 use Illuminate\Support\ServiceProvider;
-use Litepie\User\User;
 
 class UserServiceProvider extends ServiceProvider
 {
@@ -22,13 +21,13 @@ class UserServiceProvider extends ServiceProvider
     public function boot()
     {
         // Load view
-        $this->loadViewsFrom(__DIR__ . '/resources/views', 'user');
+        $this->loadViewsFrom(__DIR__.'/resources/views', 'user');
 
         // Load translation
-        $this->loadTranslationsFrom(__DIR__ . '/resources/lang', 'user');
+        $this->loadTranslationsFrom(__DIR__.'/resources/lang', 'user');
 
         // Load migrations
-        $this->loadMigrationsFrom(__DIR__ . '/database/migrations');
+        $this->loadMigrationsFrom(__DIR__.'/database/migrations');
 
         // Call pblish redources function
         $this->publishResources();
@@ -69,7 +68,7 @@ class UserServiceProvider extends ServiceProvider
     protected function mergeConfig()
     {
         $this->mergeConfigFrom(
-            __DIR__ . '/config/user.php',
+            __DIR__.'/config/user.php',
             'user'
         );
     }
@@ -92,15 +91,15 @@ class UserServiceProvider extends ServiceProvider
     private function publishResources()
     {
         // Publish configuration file
-        $this->publishes([__DIR__ . '/config/' => config_path('litepie/user')], 'config');
+        $this->publishes([__DIR__.'/config/' => config_path('litepie/user')], 'config');
 
         // Publish admin view
-        $this->publishes([__DIR__ . '/resources/views' => base_path('resources/views/vendor/user')], 'view');
+        $this->publishes([__DIR__.'/resources/views' => base_path('resources/views/vendor/user')], 'view');
 
         // Publish language files
-        $this->publishes([__DIR__ . '/resources/lang' => base_path('resources/lang/vendor/user')], 'lang');
+        $this->publishes([__DIR__.'/resources/lang' => base_path('resources/lang/vendor/user')], 'lang');
 
         // Publish public files and assets.
-        $this->publishes([__DIR__ . '/public/' => public_path('/')], 'public');
+        $this->publishes([__DIR__.'/public/' => public_path('/')], 'public');
     }
 }

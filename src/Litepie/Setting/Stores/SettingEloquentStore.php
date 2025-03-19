@@ -62,7 +62,6 @@ class SettingEloquentStore implements SettingStore
         if ($this->casts[$key] == 'array') {
             return json_decode($this->all($fresh)->get($key, $default));
         }
-
     }
 
     /**
@@ -75,11 +74,12 @@ class SettingEloquentStore implements SettingStore
             foreach ($key as $name => $value) {
                 $this->set($name, $value);
             }
+
             return true;
         }
 
         $setting = $this->getSettingModel()->firstOrNew([
-            'name' => $key,
+            'name'  => $key,
             'group' => $this->settingsGroupName,
         ]);
         $setting->value = $val;
@@ -129,7 +129,7 @@ class SettingEloquentStore implements SettingStore
      */
     protected function getSettingsCacheKey()
     {
-        return $this->settingsCacheKey . '.' . $this->settingsGroupName;
+        return $this->settingsCacheKey.'.'.$this->settingsGroupName;
     }
 
     /**
@@ -155,7 +155,8 @@ class SettingEloquentStore implements SettingStore
     /**
      * Set the group name for settings.
      *
-     * @param  string  $groupName
+     * @param string $groupName
+     *
      * @return $this
      */
     public function group($groupName)

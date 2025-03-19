@@ -21,13 +21,13 @@ class TeamServiceProvider extends ServiceProvider
     public function boot()
     {
         // Load view
-        $this->loadViewsFrom(__DIR__ . '/resources/views', 'team');
+        $this->loadViewsFrom(__DIR__.'/resources/views', 'team');
 
         // Load translation
-        $this->loadTranslationsFrom(__DIR__ . '/resources/lang', 'team');
+        $this->loadTranslationsFrom(__DIR__.'/resources/lang', 'team');
 
         // Load migrations
-        $this->loadMigrationsFrom(__DIR__ . '/database/migrations');
+        $this->loadMigrationsFrom(__DIR__.'/database/migrations');
 
         // Call pblish redources function
         $this->publishResources();
@@ -67,7 +67,7 @@ class TeamServiceProvider extends ServiceProvider
     protected function mergeConfig()
     {
         $this->mergeConfigFrom(
-            __DIR__ . '/config/team.php',
+            __DIR__.'/config/team.php',
             'team'
         );
     }
@@ -90,15 +90,15 @@ class TeamServiceProvider extends ServiceProvider
     private function publishResources()
     {
         // Publish configuration file
-        $this->publishes([__DIR__ . '/config/' => config_path('/')], 'config');
+        $this->publishes([__DIR__.'/config/' => config_path('/')], 'config');
 
         // Publish admin view
-        $this->publishes([__DIR__ . '/resources/views' => base_path('resources/views/vendor/team')], 'view');
+        $this->publishes([__DIR__.'/resources/views' => base_path('resources/views/vendor/team')], 'view');
 
         // Publish language files
-        $this->publishes([__DIR__ . '/resources/lang' => base_path('resources/lang/vendor/team')], 'lang');
+        $this->publishes([__DIR__.'/resources/lang' => base_path('resources/lang/vendor/team')], 'lang');
 
         // Publish public files and assets.
-        $this->publishes([__DIR__ . '/public/' => public_path('/')], 'public');
+        $this->publishes([__DIR__.'/public/' => public_path('/')], 'public');
     }
 }

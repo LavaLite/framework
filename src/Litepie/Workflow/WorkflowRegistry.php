@@ -42,17 +42,17 @@ class WorkflowRegistry
 
     /**
      * Keeps track of loaded workflows
-     * (Useful when loading workflows after the config load)
+     * (Useful when loading workflows after the config load).
      *
      * @var array
      */
     protected $loadedWorkflows = [];
 
     /**
-     * WorkflowRegistry constructor
+     * WorkflowRegistry constructor.
      *
-     * @param  array $config
-     * @param  array $registryConfig
+     * @param array $config
+     * @param array $registryConfig
      *
      * @throws \ReflectionException
      */
@@ -64,10 +64,10 @@ class WorkflowRegistry
     }
 
     /**
-     * Return the $subject workflow
+     * Return the $subject workflow.
      *
-     * @param  object $subject
-     * @param  string $workflowName
+     * @param object $subject
+     * @param string $workflowName
      *
      * @return Workflow
      */
@@ -79,7 +79,7 @@ class WorkflowRegistry
     }
 
     /**
-     * Returns all workflows for the given subject
+     * Returns all workflows for the given subject.
      *
      * @param object $subject
      *
@@ -91,7 +91,7 @@ class WorkflowRegistry
     }
 
     /**
-     * Add a workflow to the subject
+     * Add a workflow to the subject.
      *
      * @param Workflow $workflow
      * @param string   $supportStrategy
@@ -107,7 +107,7 @@ class WorkflowRegistry
     }
 
     /**
-     * Gets the loaded workflows
+     * Gets the loaded workflows.
      *
      * @param string $supportStrategy
      *
@@ -129,10 +129,10 @@ class WorkflowRegistry
     }
 
     /**
-     * Add a workflow to the registry from array
+     * Add a workflow to the registry from array.
      *
-     * @param  string $name
-     * @param  array  $workflowData
+     * @param string $name
+     * @param array  $workflowData
      *
      * @throws \ReflectionException
      *
@@ -187,7 +187,7 @@ class WorkflowRegistry
     }
 
     /**
-     * Parses events to dispatch data from config
+     * Parses events to dispatch data from config.
      */
     protected function parseEventsToDispatch(array $workflowData)
     {
@@ -200,20 +200,20 @@ class WorkflowRegistry
     }
 
     /**
-     * Gets the default registry config
+     * Gets the default registry config.
      *
      * @return array
      */
     protected function getDefaultRegistryConfig()
     {
         return [
-            'track_loaded' => false,
+            'track_loaded'      => false,
             'ignore_duplicates' => true,
         ];
     }
 
     /**
-     * Checks if the workflow is already loaded for this supported class
+     * Checks if the workflow is already loaded for this supported class.
      *
      * @param string $workflowName
      * @param string $supportStrategy
@@ -240,7 +240,7 @@ class WorkflowRegistry
     }
 
     /**
-     * Sets the workflow as loaded
+     * Sets the workflow as loaded.
      *
      * @param string $workflowName
      * @param string $supportStrategy
@@ -261,12 +261,12 @@ class WorkflowRegistry
     }
 
     /**
-     * Return the workflow instance
+     * Return the workflow instance.
      *
-     * @param  string                $name
-     * @param  array                 $workflowData
-     * @param  Definition            $definition
-     * @param  MarkingStoreInterface $markingStore
+     * @param string                $name
+     * @param array                 $workflowData
+     * @param Definition            $definition
+     * @param MarkingStoreInterface $markingStore
      *
      * @return Workflow
      */
@@ -275,7 +275,7 @@ class WorkflowRegistry
         array $workflowData,
         Definition $definition,
         MarkingStoreInterface $markingStore,
-        ? array $eventsToDispatch = null
+        ?array $eventsToDispatch = null
     ) {
         if (isset($workflowData['class'])) {
             $className = $workflowData['class'];
@@ -289,9 +289,9 @@ class WorkflowRegistry
     }
 
     /**
-     * Return the making store instance
+     * Return the making store instance.
      *
-     * @param  array $workflowData
+     * @param array $workflowData
      *
      * @throws \ReflectionException
      *
@@ -312,7 +312,7 @@ class WorkflowRegistry
         $markingStoreClass = $markingStoreData['class'] ?? EloquentMarkingStore::class;
 
         return new $markingStoreClass(
-            ($type === 'single_state'),
+            $type === 'single_state',
             $property
         );
     }
@@ -328,9 +328,9 @@ class WorkflowRegistry
     protected function extractWorkflowPlacesMetaData(array &$workflowData)
     {
         $metadata = [
-            'workflow' => [],
-            'places' => [],
-            'transitions' => new \SplObjectStorage (),
+            'workflow'    => [],
+            'places'      => [],
+            'transitions' => new \SplObjectStorage(),
         ];
 
         if (isset($workflowData['metadata'])) {

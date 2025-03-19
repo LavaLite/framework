@@ -2,6 +2,7 @@
 
 namespace Litepie\Repository;
 
+use ArrayAccess;
 use Illuminate\Container\Container as Application;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Contracts\Pagination\Paginator;
@@ -14,7 +15,6 @@ use Litepie\Repository\Exceptions\RepositoryModelException;
 use Litepie\Repository\Interfaces\FilterInterface;
 use Litepie\Repository\Interfaces\RepositoryInterface;
 use Litepie\Repository\Presenter\Presenter;
-use ArrayAccess;
 
 /**
  * Class BaseRepository.
@@ -122,7 +122,8 @@ abstract class BaseRepository implements RepositoryInterface, ArrayAccess
         return $this->model;
     }
 
-    public function __toString(){
+    public function __toString()
+    {
         return $this->result;
     }
 
@@ -170,7 +171,7 @@ abstract class BaseRepository implements RepositoryInterface, ArrayAccess
         $model = $this->model();
 
         if (empty($model)) {
-            throw new RepositoryModelException('Model is not specified for the repository [' . get_class($this) . ']');
+            throw new RepositoryModelException('Model is not specified for the repository ['.get_class($this).']');
         }
 
         $model = $this->app->make($model);
@@ -225,7 +226,7 @@ abstract class BaseRepository implements RepositoryInterface, ArrayAccess
         $ret = [];
         foreach ($options as $k => $option) {
             $ret[$k] = [
-                'text' => $option[$value],
+                'text'  => $option[$value],
                 'value' => $option[$key],
             ];
         }
@@ -302,7 +303,7 @@ abstract class BaseRepository implements RepositoryInterface, ArrayAccess
             $filter = new $filter();
         }
         if (!$filter instanceof FilterInterface) {
-            throw new RepositoryException('Class ' . $filter . ' must be an instance of Litepie\\Repository\\Interfaces\\FilterInterface');
+            throw new RepositoryException('Class '.$filter.' must be an instance of Litepie\\Repository\\Interfaces\\FilterInterface');
         }
 
         $this->filters->push($filter);
@@ -596,19 +597,21 @@ abstract class BaseRepository implements RepositoryInterface, ArrayAccess
     /**
      * Determine if the given attribute exists.
      *
-     * @param  mixed  $offset
+     * @param mixed $offset
+     *
      * @return bool
      */
     #[\ReturnTypeWillChange]
     public function offsetExists($offset)
     {
-        return ! is_null($this->model->getAttribute($offset));
+        return !is_null($this->model->getAttribute($offset));
     }
 
     /**
      * Get the value for a given offset.
      *
-     * @param  mixed  $offset
+     * @param mixed $offset
+     *
      * @return mixed
      */
     #[\ReturnTypeWillChange]
@@ -620,8 +623,9 @@ abstract class BaseRepository implements RepositoryInterface, ArrayAccess
     /**
      * Set the value for a given offset.
      *
-     * @param  mixed  $offset
-     * @param  mixed  $value
+     * @param mixed $offset
+     * @param mixed $value
+     *
      * @return void
      */
     #[\ReturnTypeWillChange]
@@ -633,7 +637,8 @@ abstract class BaseRepository implements RepositoryInterface, ArrayAccess
     /**
      * Unset the value for a given offset.
      *
-     * @param  mixed  $offset
+     * @param mixed $offset
+     *
      * @return void
      */
     #[\ReturnTypeWillChange]

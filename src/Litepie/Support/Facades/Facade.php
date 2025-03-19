@@ -2,7 +2,6 @@
 
 namespace Litepie\Support\Facades;
 
-
 class Facade
 {
     /**
@@ -20,7 +19,7 @@ class Facade
             // 'Trans' => \Litepie\Support\Facades\Trans::class,
             // 'Alerts' => \Litepie\Notification\Facades\Notification::class,
             // 'Workflow' => \Litepie\Workflow\Workflow::class,
-    
+
             // 'Role' => \Litepie\Role\Facades\Role::class,
             // 'User' => \Litepie\User\Facades\User::class,
             // 'Settings' => \Litepie\Setting\Facades\Setting::class,

@@ -2,17 +2,13 @@
 
 namespace Litepie\Setting\Models;
 
-use Illuminate\Database\Eloquent\SoftDeletes;
-use Litepie\Actions\Traits\Actionable;
 use Litepie\Database\Model;
 use Litepie\Database\Traits\Scopable;
 use Litepie\Database\Traits\Searchable;
-use Litepie\Database\Traits\Sluggable;
 use Litepie\Database\Traits\Sortable;
 use Litepie\Filer\Traits\Filer;
 use Litepie\Hashids\Traits\Hashids;
 use Litepie\Trans\Traits\Translatable;
-use Litepie\Workflow\Traits\Workflowable;
 
 class Setting extends Model
 {
@@ -28,8 +24,7 @@ class Setting extends Model
      *
      * @var array
      */
-     protected $config = 'setting.setting.model';
-
+    protected $config = 'setting.setting.model';
 
     public function scopeGroup($query, $groupName)
     {

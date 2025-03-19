@@ -7,13 +7,13 @@ use Litepie\Role\Models\Role;
 
 trait CheckRoleAndPermission
 {
-
     protected $role;
 
     /**
      * Check if the user has a specific role.
      *
-     * @param  string  $role
+     * @param string $role
+     *
      * @return bool
      */
     public function hasRole($role)
@@ -24,7 +24,8 @@ trait CheckRoleAndPermission
     /**
      * Check if the user has a specific permission.
      *
-     * @param  string  $permission
+     * @param string $permission
+     *
      * @return bool
      */
     public function canDo($permission)
@@ -35,8 +36,9 @@ trait CheckRoleAndPermission
     /**
      * Dynamically handle calls to the class.
      *
-     * @param  string  $method
-     * @param  array  $parameters
+     * @param string $method
+     * @param array  $parameters
+     *
      * @return mixed
      */
     public function __call($method, $parameters)
@@ -51,7 +53,8 @@ trait CheckRoleAndPermission
     /**
      * Set the user's role.
      *
-     * @param  string  $role
+     * @param string $role
+     *
      * @return void
      */
     public function setRole($role)

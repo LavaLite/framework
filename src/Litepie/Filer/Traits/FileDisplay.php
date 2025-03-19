@@ -52,7 +52,6 @@ trait FileDisplay
      */
     public function fit($folder, $file, $size)
     {
-
         // pass calls to picture cache
         return $this->image->cache(function ($picture) use ($folder, $file, $size) {
             $file = public_path().'/'.$folder.'/'.$file;
@@ -70,7 +69,6 @@ trait FileDisplay
      */
     public function watermark($folder, $file, $size)
     {
-
         // pass calls to picture cache
         return $this->image->cache(function ($picture) use ($folder, $file, $size) {
             $file = public_path().'/'.$folder.'/'.$file;

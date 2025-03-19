@@ -9,14 +9,17 @@ use Illuminate\Queue\SerializesModels;
 
 class EnvironmentSaved
 {
-    use Dispatchable, InteractsWithSockets, SerializesModels;
+    use Dispatchable;
+    use InteractsWithSockets;
+    use SerializesModels;
 
     private $request;
 
     /**
      * Create a new event instance.
      *
-     * @param  Request  $request
+     * @param Request $request
+     *
      * @return void
      */
     public function __construct(Request $request)

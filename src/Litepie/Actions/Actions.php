@@ -1,4 +1,5 @@
 <?php
+
 namespace Litepie\Actions;
 
 use Illuminate\Support\Arr;
@@ -28,13 +29,15 @@ final class Actions implements ActionsContract
         return $this->actions;
     }
 
-    function list() {
+    public function list()
+    {
         $actions = [];
         foreach ($this->actions() as $action) {
             if ($action->authorized() && $action->isType(ActionType::List)) {
                 $actions[] = $action;
             }
         }
+
         return $actions;
     }
 
@@ -46,6 +49,7 @@ final class Actions implements ActionsContract
                 $actions[] = $action;
             }
         }
+
         return $actions;
     }
 
@@ -54,6 +58,7 @@ final class Actions implements ActionsContract
         if (isset($this->actions[$name])) {
             return true;
         }
+
         return false;
     }
 

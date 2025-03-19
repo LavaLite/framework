@@ -14,8 +14,7 @@ class AuthServiceProvider extends ServiceProvider
      */
     protected $policies = [
         // Bind Notification policy
-        \Litepie\Notification\Repositories\Eloquent\NotificationRepository::class 
-        => \Litepie\Notification\Policies\NotificationPolicy::class,
+        \Litepie\Notification\Repositories\Eloquent\NotificationRepository::class => \Litepie\Notification\Policies\NotificationPolicy::class,
     ];
 
     /**

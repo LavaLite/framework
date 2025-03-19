@@ -12,35 +12,35 @@ return [
     */
 
     /**
-     * Singlular and plural name of the module
+     * Singlular and plural name of the module.
      */
-    'name' => 'Client',
+    'name'  => 'Client',
     'names' => 'Clients',
-    'icon' => 'las la-list',
+    'icon'  => 'las la-list',
 
     /**
-     * Singlular and plural name of the module
+     * Singlular and plural name of the module.
      */
     'title' => [
         'main' => 'Clients',
-        'sub' => 'Clients'
+        'sub'  => 'Clients',
     ],
 
     /**
-     * Singlular and plural name of the module
+     * Singlular and plural name of the module.
      */
     'groups'         => [
-        'main' => 'Main',
-        'images' => 'Images',
-        'details' => 'Details',
-        'settings' => 'Settings'
+        'main'     => 'Main',
+        'images'   => 'Images',
+        'details'  => 'Details',
+        'settings' => 'Settings',
     ],
 
     /**
      * Form sub section name for the module.
      */
     'sections' => [
-        'main' => 'Main',
+        'main'    => 'Main',
         'details' => 'Details',
     ],
 
@@ -48,61 +48,59 @@ return [
      * Options for select/radio/check.
      */
     'options'       => [
-        'sex' => 
+        'sex' => [
+
             [
-                                
-                [
-                    'key'    => '',
-                    'value'  => '',
-                    'text'   => '',
-                ],
-                                
-                [
-                    'key'    => 'Male',
-                    'value'  => 'Male',
-                    'text'   => 'Male',
-                ],
-                                
-                [
-                    'key'    => 'Female',
-                    'value'  => 'Female',
-                    'text'   => 'Female',
-                ],
-                                
+                'key'    => '',
+                'value'  => '',
+                'text'   => '',
             ],
 
-        'status' => 
             [
-                                
-                [
-                    'key'    => 'New',
-                    'value'  => 'New',
-                    'text'   => 'New',
-                ],
-                                
-                [
-                    'key'    => 'Active',
-                    'value'  => 'Active',
-                    'text'   => 'Active',
-                ],
-                                
-                [
-                    'key'    => 'Suspended',
-                    'value'  => 'Suspended',
-                    'text'   => 'Suspended',
-                ],
-                                
-                [
-                    'key'    => 'Locked',
-                    'value'  => 'Locked',
-                    'text'   => 'Locked',
-                ],
-                                
+                'key'    => 'Male',
+                'value'  => 'Male',
+                'text'   => 'Male',
             ],
+
+            [
+                'key'    => 'Female',
+                'value'  => 'Female',
+                'text'   => 'Female',
+            ],
+
+        ],
+
+        'status' => [
+
+            [
+                'key'    => 'New',
+                'value'  => 'New',
+                'text'   => 'New',
+            ],
+
+            [
+                'key'    => 'Active',
+                'value'  => 'Active',
+                'text'   => 'Active',
+            ],
+
+            [
+                'key'    => 'Suspended',
+                'value'  => 'Suspended',
+                'text'   => 'Suspended',
+            ],
+
+            [
+                'key'    => 'Locked',
+                'value'  => 'Locked',
+                'text'   => 'Locked',
+            ],
+
+        ],
     ],
 
     /**
-     * Placeholder for inputs
+     * Placeholder for inputs.
      */
     'placeholder'   => [
         'id'                         => 'Please enter id',
@@ -167,5 +165,4 @@ return [
         'updated_at'                 => 'Updated at',
     ],
 
-    
     ];

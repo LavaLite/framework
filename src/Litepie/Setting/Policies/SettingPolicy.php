@@ -7,13 +7,11 @@ use Litepie\Setting\Models\Setting;
 
 class SettingPolicy
 {
-
-
     /**
      * Determine if the given user can view the setting.
      *
      * @param Authenticatable $user
-     * @param Setting $setting
+     * @param Setting         $setting
      *
      * @return bool
      */
@@ -42,7 +40,7 @@ class SettingPolicy
      * Determine if the given user can update the given setting.
      *
      * @param Authenticatable $user
-     * @param Setting $setting
+     * @param Setting         $setting
      *
      * @return bool
      */

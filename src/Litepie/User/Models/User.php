@@ -1,4 +1,5 @@
 <?php
+
 namespace Litepie\User\Models;
 
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -50,18 +51,19 @@ class User extends Model
         if (is_null($this->id)) {
             $show_state = false;
         }
-        $settings['groups']['login_details']      = ['show' => true, 'edit' => true];
-        $settings['groups']['main']               = ['show' => true, 'edit' => true];
-        $settings['groups']['details']            = ['show' => true, 'edit' => true];
-        $settings['groups']['photo']              = ['show' => true, 'edit' => true];
-        $settings['groups']['roles']              = ['show' => true, 'edit' => true];
-        $settings['fields']['password']           = ['show' => true, 'edit' => true];
-        $settings['groups']['company']            = ['show' => true, 'edit' => true];
-        $settings['groups']['details']            = ['show' => is_null($this->id) ? true : false, 'edit' => true];
-        $settings['groups']['user_details']       = ['show' => true, 'edit' => true];
+        $settings['groups']['login_details'] = ['show' => true, 'edit' => true];
+        $settings['groups']['main'] = ['show' => true, 'edit' => true];
+        $settings['groups']['details'] = ['show' => true, 'edit' => true];
+        $settings['groups']['photo'] = ['show' => true, 'edit' => true];
+        $settings['groups']['roles'] = ['show' => true, 'edit' => true];
+        $settings['fields']['password'] = ['show' => true, 'edit' => true];
+        $settings['groups']['company'] = ['show' => true, 'edit' => true];
+        $settings['groups']['details'] = ['show' => is_null($this->id) ? true : false, 'edit' => true];
+        $settings['groups']['user_details'] = ['show' => true, 'edit' => true];
         $settings['groups']['user_login_details'] = ['show' => true, 'edit' => true];
-        $settings['groups']['photo_gallery']      = ['show' => true, 'edit' => true];
-        $settings['groups']['roles']              = ['show' => true, 'edit' => true];
+        $settings['groups']['photo_gallery'] = ['show' => true, 'edit' => true];
+        $settings['groups']['roles'] = ['show' => true, 'edit' => true];
+
         return $settings;
     }
 }

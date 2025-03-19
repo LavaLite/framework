@@ -3,8 +3,8 @@
 Route::group(
     [
         'prefix' => '{guard}/master',
-        'as' => 'guard.',
-        'where' => ['guard' => implode('|', array_keys(config('auth.guards')))],
+        'as'     => 'guard.',
+        'where'  => ['guard' => implode('|', array_keys(config('auth.guards')))],
     ],
     function () {
         Route::get('/', 'MasterResourceController@index');

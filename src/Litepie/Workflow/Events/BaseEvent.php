@@ -2,16 +2,16 @@
 
 namespace Litepie\Workflow\Events;
 
-use Workflow;
 use Symfony\Component\Workflow\Event\Event;
+use Workflow;
 
 /**
- * @method \Symfony\Component\Workflow\Marking getMarking()
- * @method object getSubject()
- * @method \Symfony\Component\Workflow\Transition getTransition()
+ * @method \Symfony\Component\Workflow\Marking           getMarking()
+ * @method object                                        getSubject()
+ * @method \Symfony\Component\Workflow\Transition        getTransition()
  * @method \Symfony\Component\Workflow\WorkflowInterface getWorkflow()
- * @method string getWorkflowName()
- * @method mixed getMetadata(string $key, $subject)
+ * @method string                                        getWorkflowName()
+ * @method mixed                                         getMetadata(string $key, $subject)
  */
 abstract class BaseEvent extends Event
 {
@@ -19,10 +19,10 @@ abstract class BaseEvent extends Event
     {
         return [
             'base_event_class' => get_class($this),
-            'subject' => $this->getSubject(),
-            'marking' => $this->getMarking(),
-            'transition' => $this->getTransition(),
-            'workflow' => [
+            'subject'          => $this->getSubject(),
+            'marking'          => $this->getMarking(),
+            'transition'       => $this->getTransition(),
+            'workflow'         => [
                 'name' => $this->getWorkflowName(),
             ],
         ];
@@ -40,7 +40,7 @@ abstract class BaseEvent extends Event
     }
 
     /**
-     * Creates a new instance from the base Symfony event
+     * Creates a new instance from the base Symfony event.
      */
     public static function newFromBase(Event $symfonyEvent)
     {

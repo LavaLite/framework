@@ -16,6 +16,7 @@ trait LogsActivity
     public function getActivitylogOptions(): LogOptions
     {
         $fields = array_merge($this->fillable, $this->log_activity['fields']);
+
         return LogOptions::defaults()
             ->logOnly($fields)
             ->logOnlyDirty();
@@ -35,6 +36,7 @@ trait LogsActivity
      *
      * @param int $count
      * @param int $offset
+     *
      * @return array
      */
     public function getActivities($count = 10, $offset = 0)
@@ -51,12 +53,12 @@ trait LogsActivity
 
         foreach ($logs as $key => $log) {
             $logs[$key] = [
-                'id' => $log->getRouteKey(),
-                'name' => trans($log->log_name),
+                'id'          => $log->getRouteKey(),
+                'name'        => trans($log->log_name),
                 'description' => __($log->description),
-                'causer' => [
-                    'id' => $log->causer ? $log->causer->getRouteKey() : '1',
-                    'name' => $log->causer ? $log->causer->name : 'System User',
+                'causer'      => [
+                    'id'      => $log->causer ? $log->causer->getRouteKey() : '1',
+                    'name'    => $log->causer ? $log->causer->name : 'System User',
                     'picture' => $log->causer ? $log->causer->picture : url('/assets/img/avatar/male.png'),
                 ],
                 'properties' => $this->formatActivityLog($log->properties),
@@ -72,6 +74,7 @@ trait LogsActivity
      * Format the log properties.
      *
      * @param array $properties
+     *
      * @return array
      */
     public function formatActivityLog($properties)
@@ -88,10 +91,10 @@ trait LogsActivity
             }
 
             $formattedLog = [
-                'old' => @$properties['old'][$key],
-                'new' => $attributes,
-                'type' => 'text',
-                'label' => trans($this->log_activity['label'] . $key),
+                'old'   => @$properties['old'][$key],
+                'new'   => $attributes,
+                'type'  => 'text',
+                'label' => trans($this->log_activity['label'].$key),
             ];
 
             if (array_key_exists($key, $this->log_activity['casts'])) {

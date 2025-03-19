@@ -1,13 +1,14 @@
 <?php
+
 namespace Litepie\Http\Controllers;
 
 use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Controllers\Middleware;
 use Litepie\Http\Response\ResourceResponse;
 use Litepie\Theme\ThemeAndViews;
 use Litepie\User\Traits\RoutesAndGuards;
-use Illuminate\Routing\Controllers\Middleware;
 
 class AuthController implements HasMiddleware
 {
@@ -19,7 +20,6 @@ class AuthController implements HasMiddleware
      */
     public static $response;
 
-
     /**
      * Get the middleware that should be assigned to the controller.
      */
@@ -30,8 +30,9 @@ class AuthController implements HasMiddleware
             new Middleware('localize.route'),
             function (Request $request, Closure $next) {
                 self::$response = app(ResourceResponse::class);
-                self::$layout   = 'app';
+                self::$layout = 'app';
                 self::setTheme();
+
                 return $next($request);
             },
         ];
