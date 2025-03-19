@@ -4,7 +4,6 @@ namespace Litepie\Workflow\Traits;
 
 use Workflow;
 
-
 trait WorkflowTrait
 {
     public function workflow_apply($transition, $workflow = null, array $context = [])
@@ -34,8 +33,11 @@ trait WorkflowTrait
             ->getDefinition()
             ->getTransitions($this);
         foreach ($transitions as $t) {
-            if ($t->getName() == $transition) return $t;
+            if ($t->getName() == $transition) {
+                return $t;
+            }
         }
+
         return null;
     }
 
@@ -45,11 +47,13 @@ trait WorkflowTrait
         $workflow = Workflow::get($this, $workflow);
         $froms = $transition->getFroms();
         $transitions = $workflow->getDefinition()->getTransitions();
-        foreach($transitions as $transition){
+        foreach ($transitions as $transition) {
             $tos = $transition->getTos();
-            if(count(array_intersect($froms, $tos)) > 0)
+            if (count(array_intersect($froms, $tos)) > 0) {
                 $previousTransitions[] = $transition;
+            }
         }
+
         return $previousTransitions;
     }
 }

@@ -393,7 +393,7 @@ trait NestedNode
 
         return $query
             ->allChildren()
-            ->whereRaw($rightCol . ' - ' . $leftCol . ' = 1');
+            ->whereRaw($rightCol.' - '.$leftCol.' = 1');
     }
 
     /**
@@ -427,7 +427,7 @@ trait NestedNode
         $values = $results->pluck($columns[1])->all();
         $indentation = $results->pluck($columns[0])->all();
         foreach ($values as $_key => $value) {
-            $values[$_key] = $indentPrefix . $indent . str_repeat($indent, $indentation[$_key]) . $value;
+            $values[$_key] = $indentPrefix.$indent.str_repeat($indent, $indentation[$_key]).$value;
         }
 
         if ($key !== null && count($results) > 0) {
@@ -681,7 +681,7 @@ trait NestedNode
      */
     public function getQualifiedLeftColumnName()
     {
-        return $this->getTable() . '.' . $this->getLeftColumnName();
+        return $this->getTable().'.'.$this->getLeftColumnName();
     }
 
     /**
@@ -711,7 +711,7 @@ trait NestedNode
      */
     public function getQualifiedRightColumnName()
     {
-        return $this->getTable() . '.' . $this->getRightColumnName();
+        return $this->getTable().'.'.$this->getRightColumnName();
     }
 
     /**
@@ -741,7 +741,7 @@ trait NestedNode
      */
     public function getQualifiedDepthColumnName()
     {
-        return $this->getTable() . '.' . $this->getDepthColumnName();
+        return $this->getTable().'.'.$this->getDepthColumnName();
     }
 
     /**
@@ -770,10 +770,9 @@ trait NestedNode
      */
     protected function moveTo($target, $position)
     {
-
-/*
- * Validate target
- */
+        /*
+         * Validate target
+         */
         if ($target instanceof \Litepie\Database\Model) {
             $target->reload();
         } else {
@@ -855,8 +854,8 @@ trait NestedNode
                     ->orWhereBetween($rightColumn, [$a, $d]);
             })
             ->update([
-                $leftColumn => $connection->raw($leftSql),
-                $rightColumn => $connection->raw($rightSql),
+                $leftColumn   => $connection->raw($leftSql),
+                $rightColumn  => $connection->raw($rightSql),
                 $parentColumn => $connection->raw($parentSql),
             ]);
 
@@ -971,5 +970,4 @@ trait NestedNode
 
         return $this;
     }
-
 }

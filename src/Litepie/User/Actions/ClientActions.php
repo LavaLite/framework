@@ -35,8 +35,8 @@ class ClientActions
         $this->dispatchActionAfterEvent();
 
         $this->logsAction();
-        return $data;
 
+        return $data;
     }
 
     public function paginate(array $request)
@@ -61,7 +61,8 @@ class ClientActions
         return $client;
     }
 
-    function empty(array $request) {
+    public function empty(array $request)
+    {
         return $this->model->forceDelete();
     }
 
@@ -76,6 +77,7 @@ class ClientActions
         $ids = collect($ids)->map(function ($id) {
             return hashids_decode($id);
         });
+
         return $this->model->whereIn('id', $ids)->delete();
     }
 
@@ -87,9 +89,9 @@ class ClientActions
             ->take(30)->get()
             ->map(function ($row) {
                 return [
-                    'key' => $row->id,
+                    'key'   => $row->id,
                     'value' => $row->id,
-                    'text' => $row->name,
+                    'text'  => $row->name,
                 ];
             })->toArray();
     }

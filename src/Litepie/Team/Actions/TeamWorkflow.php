@@ -2,7 +2,6 @@
 
 namespace Litecms\Advert\Actions;
 
-use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Litecms\Advert\Models\Advert;
 use Litepie\Actions\Concerns\AsAction;
@@ -25,6 +24,7 @@ class AdvertWorkflow
         $this->transition = $transition;
         $this->function = Str::camel($transition);
         $this->executeWorkflow();
+
         return $this->model;
     }
 
@@ -32,6 +32,7 @@ class AdvertWorkflow
     {
         $this->model->status = 'Active';
         $this->model->save();
+
         return $this->model;
     }
 
@@ -39,7 +40,7 @@ class AdvertWorkflow
     {
         $this->model->status = 'Inactive';
         $this->model->save();
+
         return $this->model;
     }
-
 }

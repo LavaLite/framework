@@ -49,6 +49,7 @@ class FileController extends Controller
             $disk = $request->get('disk', config('filesystems.default'));
             $ufolder = $this->uploadFolder($config, $folder, $field);
             $array = Filer::upload($request->file($file), $disk, $ufolder);
+
             return response()->json($array)
                 ->setStatusCode(203, 'UPLOAD_SUCCESS');
         }
@@ -65,7 +66,7 @@ class FileController extends Controller
      */
     public function uploadFolder($config, $folder, $field)
     {
-        $path = config($config . '.upload_folder');
+        $path = config($config.'.upload_folder');
 
         if (empty($path)) {
             throw new InvalidFileConfigException('Invalid upload configuration value.');
@@ -73,6 +74,7 @@ class FileController extends Controller
 
         return "{$path}/{$folder}/{$field}";
     }
+
     /**
      * Get HTTP response of either original image file or
      * template applied file.
@@ -84,7 +86,7 @@ class FileController extends Controller
      */
     public function image($disk, $template, $path)
     {
-        $saveTo = storage_path('app/public') . '/image/' . $disk . '/' . $template . '/' . $path;
+        $saveTo = storage_path('app/public').'/image/'.$disk.'/'.$template.'/'.$path;
         $template = $this->getTemplate($template);
         $image = Storage::disk($disk)->get($path);
 
@@ -95,6 +97,7 @@ class FileController extends Controller
         $image = Image::make($image);
         $image->filter($template);
         $image->save($saveTo);
+
         return $image->response();
     }
 
@@ -114,7 +117,7 @@ class FileController extends Controller
             case is_callable($template):
                 return $template;
 
-            // filter template found
+                // filter template found
             case class_exists($template):
                 return new $template();
 
@@ -124,5 +127,4 @@ class FileController extends Controller
                 break;
         }
     }
-
 }

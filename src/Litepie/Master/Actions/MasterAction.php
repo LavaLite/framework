@@ -2,10 +2,9 @@
 
 namespace Litepie\Master\Actions;
 
-use Illuminate\Http\Request;
 use Illuminate\Support\Str;
-use Litepie\Master\Models\Master;
 use Litepie\Actions\Concerns\AsAction;
+use Litepie\Master\Models\Master;
 
 class MasterAction
 {
@@ -18,15 +17,15 @@ class MasterAction
         $this->model = $master;
 
         $function = Str::camel($action);
-        event('master.master.action.' . $action . 'ing', [$master]);
-        $data =  $this->$function($master, $request);
-        event('master.master.action.' . $action . 'ed', [$master]);
+        event('master.master.action.'.$action.'ing', [$master]);
+        $data = $this->$function($master, $request);
+        event('master.master.action.'.$action.'ed', [$master]);
 
         $this->logsAction();
         $this->notify();
+
         return $data;
     }
-
 
     public function store(array $request, Master $master)
     {
@@ -34,6 +33,7 @@ class MasterAction
         $attributes['user_id'] = user_id();
         $attributes['user_type'] = user_type();
         $master = $master->create($attributes);
+
         return $master;
     }
 
@@ -41,12 +41,14 @@ class MasterAction
     {
         $attributes = $request;
         $master->update($attributes);
+
         return $master;
     }
 
     public function delete(array $request, Master $master)
     {
         $master->delete();
+
         return $master;
     }
 
@@ -58,6 +60,7 @@ class MasterAction
             $master = $master->replicate();
             $master->created_at = Carbon::now();
             $master->save();
+
             return $master;
         }
 
@@ -69,6 +72,4 @@ class MasterAction
 
         return $master;
     }
-
-
 }

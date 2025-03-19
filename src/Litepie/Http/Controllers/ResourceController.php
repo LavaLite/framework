@@ -1,4 +1,5 @@
 <?php
+
 namespace Litepie\Http\Controllers;
 
 use Closure;
@@ -18,7 +19,7 @@ class ResourceController implements HasMiddleware
      * @var store response object
      */
     public static $response;
-    
+
     /**
      * @var store form for the module
      */
@@ -28,7 +29,6 @@ class ResourceController implements HasMiddleware
      * @var store other modules in the package
      */
     public static $modules;
-
 
     /**
      * Get the middleware that should be assigned to the controller.
@@ -41,12 +41,14 @@ class ResourceController implements HasMiddleware
             new Middleware('localize.route'),
             function (Request $request, Closure $next) {
                 self::$response = app(ResourceResponse::class);
-                self::$layout   = 'app';
+                self::$layout = 'app';
                 self::setTheme();
+
                 return $next($request);
             },
         ];
     }
+
     /**
      * Show dashboard for each user.
      *
@@ -73,20 +75,18 @@ class ResourceController implements HasMiddleware
      */
     public static function modules($modules, $ns, $url = null, $seperator = '::')
     {
-        $arr  = [];
+        $arr = [];
         $rUrl = request()->fullUrl();
         if (is_array($modules)) {
             foreach ($modules as $key => $module) {
                 $arr[$key]['module'] = $module;
-                $arr[$key]['name']   = trans("{$ns}{$seperator}{$module}.names");
-                $arr[$key]['url']    = $url . '/' . $module;
+                $arr[$key]['name'] = trans("{$ns}{$seperator}{$module}.names");
+                $arr[$key]['url'] = $url.'/'.$module;
                 $arr[$key]['status'] = strpos($rUrl, $arr[$key]['url']) !== false ? 'active' : '';
-                $arr[$key]['icon']   = trans("{$ns}{$seperator}{$module}.icon");
+                $arr[$key]['icon'] = trans("{$ns}{$seperator}{$module}.icon");
             }
         }
 
         return $arr;
     }
- 
 }
-

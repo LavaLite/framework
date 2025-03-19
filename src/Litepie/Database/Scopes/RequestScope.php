@@ -8,7 +8,6 @@ use Illuminate\Database\Eloquent\Scope;
 
 class RequestScope implements Scope
 {
-
     /**
      * Searchable fields array.
      *
@@ -19,8 +18,9 @@ class RequestScope implements Scope
     /**
      * Apply the scope to a given Eloquent query builder.
      *
-     * @param  \Illuminate\Database\Eloquent\Builder  $builder
-     * @param  \Illuminate\Database\Eloquent\Model  $builder
+     * @param \Illuminate\Database\Eloquent\Builder $builder
+     * @param \Illuminate\Database\Eloquent\Model   $builder
+     *
      * @return void
      */
     public function apply(Builder $builder, Model $model)
@@ -47,6 +47,7 @@ class RequestScope implements Scope
         foreach ($sorts as $sort) {
             $builder->orderBy($sort['field'], $sort['order']);
         }
+
         return $builder;
     }
 
@@ -64,7 +65,7 @@ class RequestScope implements Scope
                 $isFirstField = true;
 
                 foreach ($fields as $field => $condition) {
-                    if (!in_array($condition,  ['like', '=', 'in'])) {
+                    if (!in_array($condition, ['like', '=', 'in'])) {
                         continue;
                     }
                     $value = "%{$search}%";
@@ -131,14 +132,11 @@ class RequestScope implements Scope
         $searches = explode(';', $search);
 
         foreach ($searches as $key => $search) {
-
             $searches[$key] = explode(':', $search);
 
             if (!in_array($searches[$key][0], $fields)) {
-
                 unset($searches[$key]);
                 continue;
-
             }
 
             $searches[$key]['field'] = $searches[$key][0];
@@ -147,13 +145,10 @@ class RequestScope implements Scope
 
             $searches[$key][1] = explode(',', $value, 2);
             if (count($searches[$key][1]) == 1) {
-
                 $searches[$key]['value'] = trim($searches[$key][1][0]);
 
                 if (in_array(strtoupper($searches[$key]['value']), ['NULL', 'NOT NULL'])) {
-
                     $searches[$key]['condition'] = strtoupper($searches[$key]['value']);
-
                 }
 
                 unset($searches[$key][0]);
@@ -168,45 +163,32 @@ class RequestScope implements Scope
             unset($searches[$key][1]);
 
             if (in_array(strtoupper($searches[$key]['value']), ['NULL', 'NOT NULL'])) {
-
                 $searches[$key]['condition'] = strtoupper($searches[$key]['value']);
-
             }
 
             if ($condition == 'BETWEEN') {
-
                 $searches[$key]['value'] = explode(',', $searches[$key]['value']);
                 $searches[$key]['value'][0] = trim(@$searches[$key]['value'][0]);
                 $searches[$key]['value'][1] = trim(@$searches[$key]['value'][1]);
 
                 if (empty($searches[$key]['value'][1]) && empty($searches[$key]['value'][0])) {
-
                     unset($searches[$key]);
                     continue;
-
                 }
-                if (($searches[$key]['value'][1]) == '') {
-
+                if ($searches[$key]['value'][1] == '') {
                     $searches[$key]['condition'] = '>';
                     $searches[$key]['value'] = $searches[$key]['value'][0];
-
-                } elseif (($searches[$key]['value'][0]) == '') {
-
+                } elseif ($searches[$key]['value'][0] == '') {
                     $searches[$key]['condition'] = '<';
                     $searches[$key]['value'] = $searches[$key]['value'][1];
-
                 }
-
             } elseif (in_array($condition, ['IN', 'NOT IN'])) {
-
                 $searches[$key]['value'] = explode(',', $searches[$key]['value']);
-
             } elseif (in_array($condition, ['LIKE', 'NOT LIKE'])) {
-
                 $searches[$key]['value'] = str_replace('*', '%', $searches[$key]['value']);
-
             }
         }
+
         return $searches;
     }
 
@@ -223,14 +205,11 @@ class RequestScope implements Scope
         $sorts = explode(';', $sort);
 
         foreach ($sorts as $key => $sort) {
-
             $sorts[$key] = explode(':', $sort);
 
             if (!in_array($sorts[$key][0], $fields)) {
-
                 unset($sorts[$key]);
                 continue;
-
             }
 
             $sorts[$key]['field'] = $sorts[$key][0];
@@ -241,8 +220,8 @@ class RequestScope implements Scope
             }
             unset($sorts[$key][0]);
             unset($sorts[$key][1]);
-
         }
+
         return $sorts;
     }
 

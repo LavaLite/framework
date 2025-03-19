@@ -1,4 +1,5 @@
 <?php
+
 namespace Litepie\Form;
 
 use Closure;
@@ -52,7 +53,7 @@ abstract class FormInterpreter
     public static $search;
 
     /**
-     * Variable to store sort fields
+     * Variable to store sort fields.
      *
      * @var array
      */
@@ -89,12 +90,14 @@ abstract class FormInterpreter
     /**
      * Set the only property to filter the form elements.
      *
-     * @param  string|null  $only
+     * @param string|null $only
+     *
      * @return static
      */
     public static function only($only = null)
     {
         self::$only = $only;
+
         return new static();
     }
 
@@ -107,16 +110,18 @@ abstract class FormInterpreter
     {
         $lists = collect(self::$lists)->map(function ($val) {
             $val['label'] = trans($val['label']);
+
             return $val;
         })->groupBy('group');
 
-        if (empty(Self::$only)) {
+        if (empty(self::$only)) {
             return $lists->toArray();
         }
 
-        if (isset($lists[Self::$only])) {
-            return collect($lists[Self::$only])->toArray();
+        if (isset($lists[self::$only])) {
+            return collect($lists[self::$only])->toArray();
         }
+
         return [];
     }
 
@@ -128,21 +133,22 @@ abstract class FormInterpreter
     public static function fields()
     {
         $fields = collect(self::$fields)->map(function ($val) {
-            $val['label']       = trans($val['label']);
+            $val['label'] = trans($val['label']);
             $val['placeholder'] = trans($val['placeholder']);
             if (isset($val['options']) && is_callable($val['options']) && $val['options'] instanceof Closure) {
                 $val['options'] = call_user_func($val['options']);
             }
+
             return $val;
         })
             ->groupBy(['group']);
 
-        if (empty(Self::$only)) {
+        if (empty(self::$only)) {
             return $fields->toArray();
         }
         $fields = Arr::undot($fields);
-        if (isset($fields[Self::$only])) {
-            return collect(Arr::dot($fields[Self::$only]))->toArray();
+        if (isset($fields[self::$only])) {
+            return collect(Arr::dot($fields[self::$only]))->toArray();
         }
 
         return [];
@@ -156,34 +162,34 @@ abstract class FormInterpreter
     public static function groups()
     {
         $groups = collect(self::$groups)->map(function ($val) {
-            $val['name']  = trans($val['name']);
+            $val['name'] = trans($val['name']);
             $val['title'] = trans($val['title']);
+
             return $val;
         })->keyBy(['group']);
 
         foreach ($groups as $key => $group) {
             unset($groups[$key]);
-            $key          = str_replace('.', '.groups.', $key) . '';
+            $key = str_replace('.', '.groups.', $key).'';
             $groups[$key] = $group;
         }
         $groups = Arr::undot($groups);
 
-        if (empty(Self::$only)) {
+        if (empty(self::$only)) {
             return $groups;
         }
 
-        if (isset($groups[Self::$only])) {
-            if (isset($groups[Self::$only]['groups'])) {
-                return $groups[Self::$only]['groups'];
+        if (isset($groups[self::$only])) {
+            if (isset($groups[self::$only]['groups'])) {
+                return $groups[self::$only]['groups'];
             } else {
-                $groups[Self::$only];
+                $groups[self::$only];
             }
-
         }
 
         return [];
-
     }
+
     /**
      * Translates the values in the $orderBy array using the trans() function.
      *
@@ -194,6 +200,7 @@ abstract class FormInterpreter
         foreach (self::$orderBy as $key => $val) {
             self::$orderBy[$key] = trans($val);
         }
+
         return self::$orderBy;
     }
 
@@ -206,11 +213,12 @@ abstract class FormInterpreter
     public static function search()
     {
         return collect(self::$search)->map(function ($val) {
-            $val['label']       = trans($val['label']);
+            $val['label'] = trans($val['label']);
             $val['placeholder'] = trans($val['placeholder']);
             if (isset($val['options']) && is_callable($val['options']) && $val['options'] instanceof Closure) {
                 $val['options'] = call_user_func($val['options']);
             }
+
             return $val;
         })->toArray();
     }
@@ -224,6 +232,7 @@ abstract class FormInterpreter
     {
         return collect(self::$list)->map(function ($val) {
             $val['label'] = trans($val['label']);
+
             return $val;
         })->toArray();
     }
@@ -260,6 +269,7 @@ abstract class FormInterpreter
                     $val['sub_menus'][$key]['name'] = trans($menu['name']);
                 }
             }
+
             return $val;
         })->toArray();
     }
@@ -278,18 +288,18 @@ abstract class FormInterpreter
         });
         $actions = $actions->map(function ($action) {
             $action['label'] = trans($action['label']);
+
             return $action;
         })->groupBy('group');
 
-        if (empty(Self::$only)) {
+        if (empty(self::$only)) {
             return $actions->toArray();
         }
-        if (isset($actions[Self::$only])) {
-            return collect($actions[Self::$only])->toArray();
+        if (isset($actions[self::$only])) {
+            return collect($actions[self::$only])->toArray();
         }
 
         return [];
-
     }
 
     /**

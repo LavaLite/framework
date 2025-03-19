@@ -2,7 +2,6 @@
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 
 class CreateTeamsTable extends Migration
 {
@@ -14,7 +13,6 @@ class CreateTeamsTable extends Migration
 
     public function up()
     {
-
         /*
          * Table: teams
          */
@@ -24,7 +22,7 @@ class CreateTeamsTable extends Migration
             $table->string('key', 30)->nullable();
             $table->integer('level')->nullable();
             $table->string('type')->nullable();
-            $table->enum('status', ['','Active','Inactive'])->nullable();
+            $table->enum('status', ['', 'Active', 'Inactive'])->nullable();
             $table->text('description')->nullable();
             $table->text('settings')->nullable();
             $table->softDeletes();

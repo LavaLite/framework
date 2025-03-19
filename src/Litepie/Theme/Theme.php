@@ -9,11 +9,11 @@ use Illuminate\Filesystem\Filesystem;
 use Illuminate\Http\Response;
 use Illuminate\Support\Arr;
 use Illuminate\View\Compilers\BladeCompiler;
-use ReflectionClass;
-use Symfony\Component\HttpFoundation\Cookie;
 use Litepie\Theme\Exceptions\UnknownLayoutFileException;
 use Litepie\Theme\Exceptions\UnknownPartialFileException;
 use Litepie\Theme\Exceptions\UnknownThemeException;
+use ReflectionClass;
+use Symfony\Component\HttpFoundation\Cookie;
 
 class Theme
 {
@@ -277,7 +277,6 @@ class Theme
      */
     public function getConfig($key = null)
     {
-
         // Main package config.
         if (!$this->themeConfig) {
             $this->themeConfig = config('theme');
@@ -405,8 +404,7 @@ class Theme
      */
     public function theme($theme = null)
     {
-
-// If theme name is not set, so use default from config.
+        // If theme name is not set, so use default from config.
         if ($theme != false) {
             $this->theme = $theme;
         }
@@ -452,8 +450,7 @@ class Theme
      */
     public function layout($layout)
     {
-
-// If layout name is not set, so use default from config.
+        // If layout name is not set, so use default from config.
         if ($layout != false) {
             $this->layout = $layout;
         }
@@ -491,7 +488,6 @@ class Theme
      */
     public function set($region, $value)
     {
-
         // Content is reserve region for render sub-view.
         if ($region == 'content') {
             return;
@@ -539,8 +535,7 @@ class Theme
      */
     protected function appendOrPrepend($region, $value, $type = 'append')
     {
-
-// If region not found, create a new region.
+        // If region not found, create a new region.
         if (isset($this->regions[$region])) {
             switch ($type) {
                 case 'prepend':

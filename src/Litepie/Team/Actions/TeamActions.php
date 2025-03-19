@@ -3,11 +3,11 @@
 namespace Litepie\Team\Actions;
 
 use Illuminate\Support\Str;
-use Litepie\Team\Models\Team;
-use Litepie\Team\Scopes\TeamResourceScope;
 use Litepie\Actions\Concerns\AsAction;
 use Litepie\Actions\Traits\LogsActions;
 use Litepie\Database\Scopes\RequestScope;
+use Litepie\Team\Models\Team;
+use Litepie\Team\Scopes\TeamResourceScope;
 
 class TeamActions
 {
@@ -22,11 +22,12 @@ class TeamActions
 
         $function = Str::camel($action);
 
-        event('team.team.action.' . $action . 'ing', [$request]);
+        event('team.team.action.'.$action.'ing', [$request]);
         $data = $this->$function($request);
-        event('team.team.action.' . $action . 'ed', [$data]);
+        event('team.team.action.'.$action.'ed', [$data]);
 
         $this->logsAction();
+
         return $data;
     }
 
@@ -52,12 +53,12 @@ class TeamActions
         return $team;
     }
 
-    function empty(array $request)
+    public function empty(array $request)
     {
         return $this->model->forceDelete();
     }
 
-    function restore(array $request)
+    public function restore(array $request)
     {
         return $this->model->restore();
     }
@@ -68,6 +69,7 @@ class TeamActions
         $ids = collect($ids)->map(function ($id) {
             return hashids_decode($id);
         });
+
         return $this->model->whereIn('id', $ids)->delete();
     }
 
@@ -79,10 +81,10 @@ class TeamActions
             ->take(30)->get()
             ->map(function ($row) {
                 return [
-                    'key' => $row->id,
+                    'key'   => $row->id,
                     'value' => $row->id,
-                    'text' => $row->name,
-                    'name' => $row->name,
+                    'text'  => $row->name,
+                    'name'  => $row->name,
                 ];
             })->toArray();
     }

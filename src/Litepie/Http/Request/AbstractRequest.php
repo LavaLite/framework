@@ -70,7 +70,7 @@ abstract class AbstractRequest extends FormRequest
     }
 
     /**
-     * Get transitions from the url
+     * Get transitions from the url.
      *
      * @return string|null
      */
@@ -80,7 +80,7 @@ abstract class AbstractRequest extends FormRequest
     }
 
     /**
-     * Get action from the url
+     * Get action from the url.
      *
      * @return string|null
      */
@@ -90,7 +90,7 @@ abstract class AbstractRequest extends FormRequest
     }
 
     /**
-     * Get action from the url
+     * Get action from the url.
      *
      * @return string|null
      */

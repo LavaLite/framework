@@ -17,8 +17,8 @@ class EloquentMarkingStore implements MarkingStoreInterface
     private $property;
 
     /**
-     * @param bool $singleState Used to determine Single/Multi place marking
-     * @param string $property Used to determine methods to call
+     * @param bool   $singleState Used to determine Single/Multi place marking
+     * @param string $property    Used to determine methods to call
      */
     public function __construct(bool $singleState = false, string $property = 'marking')
     {
@@ -47,7 +47,7 @@ class EloquentMarkingStore implements MarkingStoreInterface
     /**
      * {@inheritdoc}
      */
-    public function setMarking(object $subject, Marking $marking, array $context = []) :void
+    public function setMarking(object $subject, Marking $marking, array $context = []): void
     {
         $marking = $marking->getPlaces();
 
@@ -56,7 +56,7 @@ class EloquentMarkingStore implements MarkingStoreInterface
         }
 
         // We'll check for the mutator first, and use that with the context.
-        $method = 'set' . ucfirst($this->property) . 'Attribute';
+        $method = 'set'.ucfirst($this->property).'Attribute';
 
         if (method_exists($subject, $method)) {
             $subject->{$method}($marking, $context);

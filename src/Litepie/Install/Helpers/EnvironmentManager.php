@@ -4,7 +4,6 @@ namespace Litepie\Install\Helpers;
 
 use Exception;
 use Illuminate\Http\Request;
-use Illuminate\Support\Str;
 
 class EnvironmentManager
 {
@@ -34,7 +33,7 @@ class EnvironmentManager
      */
     public function getEnvContent()
     {
-        if (! file_exists($this->envPath)) {
+        if (!file_exists($this->envPath)) {
             if (file_exists($this->envExamplePath)) {
                 copy($this->envExamplePath, $this->envPath);
             } else {
@@ -68,7 +67,8 @@ class EnvironmentManager
     /**
      * Save the edited content to the .env file.
      *
-     * @param  Request  $input
+     * @param Request $input
+     *
      * @return string
      */
     public function saveFileClassic(Request $input)

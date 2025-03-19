@@ -40,7 +40,7 @@ class UpdateController extends Controller
      */
     public function database()
     {
-        $databaseManager = new DatabaseManager;
+        $databaseManager = new DatabaseManager();
         $response = $databaseManager->migrateAndSeed();
 
         return redirect()->route('LaravelUpdater::final')
@@ -50,7 +50,8 @@ class UpdateController extends Controller
     /**
      * Update installed file and display finished view.
      *
-     * @param  InstalledFileManager  $fileManager
+     * @param InstalledFileManager $fileManager
+     *
      * @return \Illuminate\View\View
      */
     public function finish(InstalledFileManager $fileManager)

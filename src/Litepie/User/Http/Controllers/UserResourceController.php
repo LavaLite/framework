@@ -1,4 +1,5 @@
 <?php
+
 namespace Litepie\User\Http\Controllers;
 
 use Closure;
@@ -19,7 +20,6 @@ use Litepie\User\Models\User;
  */
 class UserResourceController extends BaseController
 {
-
     /**
      * Initialize user resource controller.
      *
@@ -36,6 +36,7 @@ class UserResourceController extends BaseController
                         ->setAttributes()
                         ->toArray();
                     self::$modules = self::modules(config('user.modules'), 'user', guard_url('user'));
+
                     return $next($request);
                 },
             ]
@@ -50,11 +51,11 @@ class UserResourceController extends BaseController
     public function index(UserResourceRequest $request)
     {
         $request = $request->all();
-        $page    = UserActions::run('paginate', $request);
+        $page = UserActions::run('paginate', $request);
 
         $data = new UsersCollection($page);
 
-        $form    = self::$form;
+        $form = self::$form;
         $modules = self::$modules;
 
         return self::$response->setMetaTitle(trans('user::user.names'))
@@ -73,11 +74,12 @@ class UserResourceController extends BaseController
      */
     public function show(UserResourceRequest $request, User $model)
     {
-        $form    = self::$form;
+        $form = self::$form;
         $modules = self::$modules;
-        $data    = new UserResource($model);
+        $data = new UserResource($model);
+
         return self::$response
-            ->setMetaTitle(trans('app.view') . ' ' . trans('user::user.name'))
+            ->setMetaTitle(trans('app.view').' '.trans('user::user.name'))
             ->data(compact('data', 'form', 'modules'))
             ->view('user::user.show')
             ->output();
@@ -92,10 +94,11 @@ class UserResourceController extends BaseController
      */
     public function create(UserResourceRequest $request, User $model)
     {
-        $form    = self::$form;
+        $form = self::$form;
         $modules = self::$modules;
-        $data    = new UserResource($model);
-        return self::$response->setMetaTitle(trans('app.new') . ' ' . trans('user::user.name'))
+        $data = new UserResource($model);
+
+        return self::$response->setMetaTitle(trans('app.new').' '.trans('user::user.name'))
             ->view('user::user.create')
             ->data(compact('data', 'form', 'modules'))
             ->output();
@@ -112,13 +115,14 @@ class UserResourceController extends BaseController
     {
         try {
             $request = $request->all();
-            $model   = UserAction::run('store', $model, $request);
-            $data    = new UserResource($model);
+            $model = UserAction::run('store', $model, $request);
+            $data = new UserResource($model);
+
             return self::$response->message(trans('messages.success.created', ['Module' => trans('user::user.name')]))
                 ->code(204)
                 ->data(compact('data'))
                 ->status('success')
-                ->url(guard_url('user/user/' . $model->getRouteKey()))
+                ->url(guard_url('user/user/'.$model->getRouteKey()))
                 ->redirect();
         } catch (Exception $e) {
             return self::$response->message($e->getMessage())
@@ -139,10 +143,11 @@ class UserResourceController extends BaseController
      */
     public function edit(UserResourceRequest $request, User $model)
     {
-        $form    = self::$form;
+        $form = self::$form;
         $modules = self::$modules;
-        $data    = new UserResource($model);
-        return self::$response->setMetaTitle(trans('app.edit') . ' ' . trans('user::user.name'))
+        $data = new UserResource($model);
+
+        return self::$response->setMetaTitle(trans('app.edit').' '.trans('user::user.name'))
             ->view('user::user.edit')
             ->data(compact('data', 'form', 'modules'))
             ->output();
@@ -160,19 +165,20 @@ class UserResourceController extends BaseController
     {
         try {
             $request = $request->all();
-            $model   = UserAction::run('update', $model, $request);
-            $data    = new UserResource($model);
+            $model = UserAction::run('update', $model, $request);
+            $data = new UserResource($model);
+
             return self::$response->message(trans('messages.success.updated', ['Module' => trans('user::user.name')]))
                 ->code(204)
                 ->status('success')
                 ->data(compact('data'))
-                ->url(guard_url('user/user/' . $model->getRouteKey()))
+                ->url(guard_url('user/user/'.$model->getRouteKey()))
                 ->redirect();
         } catch (Exception $e) {
             return self::$response->message($e->getMessage())
                 ->code(400)
                 ->status('error')
-                ->url(guard_url('user/user/' . $model->getRouteKey()))
+                ->url(guard_url('user/user/'.$model->getRouteKey()))
                 ->redirect();
         }
     }
@@ -180,7 +186,7 @@ class UserResourceController extends BaseController
     /**
      * Remove the user.
      *
-     * @param Model   $user
+     * @param Model $user
      *
      * @return Response
      */
@@ -188,7 +194,7 @@ class UserResourceController extends BaseController
     {
         try {
             $request = $request->all();
-            $model   = UserAction::run('delete', $model, $request);
+            $model = UserAction::run('delete', $model, $request);
             // $data = new UserResource($model);
 
             return self::$response->message(trans('messages.success.deleted', ['Module' => trans('user::user.name')]))
@@ -198,18 +204,17 @@ class UserResourceController extends BaseController
                 ->url(guard_url('user/user/0'))
                 ->redirect();
         } catch (Exception $e) {
-
             return self::$response->message($e->getMessage())
                 ->code(400)
                 ->status('error')
-                ->url(guard_url('user/user/' . $model->getRouteKey()))
+                ->url(guard_url('user/user/'.$model->getRouteKey()))
                 ->redirect();
         }
     }
 
     public function masterDatas(UserResourceRequest $request)
     {
-        $form         = $this->form;
+        $form = $this->form;
         $data['data'] = [
             'id_hashed' => hashids_encode(user()->id),
         ];
@@ -219,6 +224,7 @@ class UserResourceController extends BaseController
             'languages' => trans('setting.options.languages'),
         ];
         $data['fields'] = $form['fields'];
+
         return $data;
     }
 }

@@ -20,5 +20,4 @@ class PermissionResourceScope implements Scope
     {
         return $this->onlyShowDeletedForAdmins($duilder);
     }
-
 }

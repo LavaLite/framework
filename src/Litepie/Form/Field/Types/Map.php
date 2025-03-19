@@ -33,5 +33,4 @@ trait Map
         $this->latitude = $this->getValue($this->latField, config('form.default_coordinates.lat'));
         $this->longitude = $this->getValue($this->lngField, config('form.default_coordinates.lng'));
     }
-
 }

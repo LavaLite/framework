@@ -22,7 +22,6 @@ class canInstall
             $installedRedirect = config('installer.installedAlreadyAction');
 
             switch ($installedRedirect) {
-
                 case 'route':
                     $routeName = config('installer.installed.redirectOptions.route.name');
                     $data = config('installer.installed.redirectOptions.route.message');

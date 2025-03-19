@@ -1,20 +1,21 @@
 <?php
 
-
 namespace Litepie\States\Jobs;
 
-
-use Litepie\States\Exceptions\InvalidStartingStateException;
-use Litepie\States\Models\PendingTransition;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
+use Litepie\States\Exceptions\InvalidStartingStateException;
+use Litepie\States\Models\PendingTransition;
 
 class PendingTransitionExecutor implements ShouldQueue
 {
-    use InteractsWithQueue, Queueable, Dispatchable, SerializesModels;
+    use InteractsWithQueue;
+    use Queueable;
+    use Dispatchable;
+    use SerializesModels;
 
     public $pendingTransition;
 
@@ -39,6 +40,7 @@ class PendingTransitionExecutor implements ShouldQueue
             );
 
             $this->fail($exception);
+
             return;
         }
 

@@ -2,7 +2,6 @@
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 
 class CreateSettingsTable extends Migration
 {
@@ -14,7 +13,6 @@ class CreateSettingsTable extends Migration
 
     public function up()
     {
-
         /*
          * Table: litepie_setting_settings
          */

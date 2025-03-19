@@ -25,8 +25,8 @@ class ClientAction
         $this->model = $client;
         $this->function = Str::camel($action);
         $this->executeAction();
-        return $this->model;
 
+        return $this->model;
     }
 
     public function store(Client $client, array $request)
@@ -35,6 +35,7 @@ class ClientAction
         $attributes['user_id'] = user_id();
         $attributes['user_type'] = user_type();
         $client = $client->create($attributes);
+
         return $client;
     }
 
@@ -42,12 +43,14 @@ class ClientAction
     {
         $attributes = $request;
         $client->update($attributes);
+
         return $client;
     }
 
     public function destroy(Client $client, array $request)
     {
         $client->delete();
+
         return $client;
     }
 
@@ -59,6 +62,7 @@ class ClientAction
             $client = $client->replicate();
             $client->created_at = Carbon::now();
             $client->save();
+
             return $client;
         }
 
@@ -70,5 +74,4 @@ class ClientAction
 
         return $client;
     }
-
 }

@@ -8,8 +8,8 @@ use Litepie\States\Models\PendingTransition;
 use Litepie\States\Models\StatseHistory;
 
 /**
- * Class State
- * @package Litepie\States\States
+ * Class State.
+ *
  * @property string $state
  * @property States $stateMachine
  */
@@ -100,12 +100,14 @@ class State
     }
 
     /**
-     * @param $state
+     * @param        $state
      * @param Carbon $when
-     * @param array $customProperties
-     * @param null $responsible
-     * @return null|PendingTransition
+     * @param array  $customProperties
+     * @param null   $responsible
+     *
      * @throws TransitionNotAllowedException
+     *
+     * @return null|PendingTransition
      */
     public function postponeTransitionTo($state, Carbon $when, $customProperties = [], $responsible = null): ?PendingTransition
     {
@@ -141,6 +143,5 @@ class State
     public function nextTransitions(): array
     {
         return $this->stateMachine()->nextTransitions();
-       
     }
 }

@@ -7,7 +7,6 @@ use Illuminate\Support\Str;
 use Litepie\Actions\Concerns\AsAction;
 use Litepie\Role\Models\Permission;
 
-
 class PermissionAction
 {
     use AsAction;
@@ -26,10 +25,9 @@ class PermissionAction
         $this->model = $permission;
         $this->function = Str::camel($action);
         $this->executeAction();
+
         return $this->model;
-
     }
-
 
     public function store(Permission $permission, array $request)
     {
@@ -37,6 +35,7 @@ class PermissionAction
         $attributes['user_id'] = user_id();
         $attributes['user_type'] = user_type();
         $permission = $permission->create($attributes);
+
         return $permission;
     }
 
@@ -44,12 +43,14 @@ class PermissionAction
     {
         $attributes = $request;
         $permission->update($attributes);
+
         return $permission;
     }
 
     public function destroy(Permission $permission, array $request)
     {
         $permission->delete();
+
         return $permission;
     }
 
@@ -61,6 +62,7 @@ class PermissionAction
             $permission = $permission->replicate();
             $permission->created_at = Carbon::now();
             $permission->save();
+
             return $permission;
         }
 
@@ -72,6 +74,4 @@ class PermissionAction
 
         return $permission;
     }
-
-
 }

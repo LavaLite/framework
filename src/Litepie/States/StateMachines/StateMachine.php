@@ -4,8 +4,6 @@ namespace Litepie\States\StateMachines;
 
 use Carbon\Carbon;
 use Illuminate\Contracts\Validation\Validator;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 use Illuminate\Validation\ValidationException;
 use Litepie\States\Exceptions\TransitionNotAllowedException;
@@ -85,10 +83,11 @@ abstract class StateMachine
     }
 
     /**
-     * @param $from
-     * @param $to
-     * @param array $customProperties
+     * @param            $from
+     * @param            $to
+     * @param array      $customProperties
      * @param null|mixed $responsible
+     *
      * @throws TransitionNotAllowedException
      * @throws ValidationException
      */
@@ -138,13 +137,15 @@ abstract class StateMachine
     }
 
     /**
-     * @param $from
-     * @param $to
+     * @param        $from
+     * @param        $to
      * @param Carbon $when
-     * @param array $customProperties
-     * @param null $responsible
-     * @return null|PendingTransition
+     * @param array  $customProperties
+     * @param null   $responsible
+     *
      * @throws TransitionNotAllowedException
+     *
+     * @return null|PendingTransition
      */
     public function postponeTransitionTo($from, $to, Carbon $when, $customProperties = [], $responsible = null): ?PendingTransition
     {

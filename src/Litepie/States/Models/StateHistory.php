@@ -6,17 +6,17 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * Class StatseHistory
- * @package Litepie\States\Models
+ * Class StatseHistory.
+ *
  * @property string $field
  * @property string $from
  * @property string $to
- * @property array $custom_properties
- * @property int $responsible_id
+ * @property array  $custom_properties
+ * @property int    $responsible_id
  * @property string $responsible_type
- * @property mixed $responsible
+ * @property mixed  $responsible
  * @property Carbon $created_at
- * @property array $changed_attributes
+ * @property array  $changed_attributes
  */
 class StateHistory extends Model
 {
@@ -24,7 +24,7 @@ class StateHistory extends Model
     protected $table = 'states_histories';
 
     protected $casts = [
-        'custom_properties' => 'array',
+        'custom_properties'  => 'array',
         'changed_attributes' => 'array',
     ];
 
@@ -106,8 +106,7 @@ class StateHistory extends Model
         if ($responsible instanceof Model) {
             return $query
                 ->where('responsible_id', $responsible->getKey())
-                ->where('responsible_type', get_class($responsible))
-            ;
+                ->where('responsible_type', get_class($responsible));
         }
 
         return $query->where('responsible_id', $responsible);

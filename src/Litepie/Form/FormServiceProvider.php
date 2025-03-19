@@ -24,7 +24,7 @@ class FormServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        $this->loadViewsFrom(__DIR__ . '/resources/views/', 'form');
+        $this->loadViewsFrom(__DIR__.'/resources/views/', 'form');
 
         $this->publishResources();
     }
@@ -36,7 +36,7 @@ class FormServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->mergeConfigFrom(__DIR__ . '/config.php', 'form');
+        $this->mergeConfigFrom(__DIR__.'/config.php', 'form');
 
         $this->app = static::make($this->app);
     }
@@ -59,10 +59,10 @@ class FormServiceProvider extends ServiceProvider
     private function publishResources()
     {
         // Publish configuration file
-        $this->publishes([__DIR__ . '/config.php' => config_path('form.php')], 'config');
+        $this->publishes([__DIR__.'/config.php' => config_path('form.php')], 'config');
 
         // Publish admin view
-        $this->publishes([__DIR__ . '/resources/views' => base_path('resources/views/vendor/form')], 'view');
+        $this->publishes([__DIR__.'/resources/views' => base_path('resources/views/vendor/form')], 'view');
     }
 
     /**
@@ -74,8 +74,6 @@ class FormServiceProvider extends ServiceProvider
      */
     public static function make($app = null)
     {
-
-
         $app->singleton('form.field', function ($app) {
             return new Fields($app);
         });
@@ -85,7 +83,7 @@ class FormServiceProvider extends ServiceProvider
         });
 
         $app->singleton('form', function ($app) {
-            return new Form($app,  $app->make('form.field'), $app->make('form.lists'));
+            return new Form($app, $app->make('form.field'), $app->make('form.lists'));
         });
 
         return $app;

@@ -6,12 +6,11 @@ use Litepie\Team\Actions\TeamActions;
 
 class Teams
 {
-
     /**
      * Return select options team for the module.
      *
      * @param string $module
-     * @param array $request
+     * @param array  $request
      *
      * @return array
      */
@@ -20,7 +19,7 @@ class Teams
         if ($module == 'team') {
             return TeamActions::run('options', $request);
         }
-        return [];
 
+        return [];
     }
 }

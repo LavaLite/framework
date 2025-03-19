@@ -197,7 +197,7 @@ class User
         $guards = $this->guard();
         $prefix = current(explode('.', $guards));
 
-        return $prefix . '/' . trim($url, '/\\');
+        return $prefix.'/'.trim($url, '/\\');
     }
 
     /**
@@ -219,7 +219,7 @@ class User
      * Return select options user for the module.
      *
      * @param string $module
-     * @param array $request
+     * @param array  $request
      *
      * @return array
      */
@@ -232,6 +232,7 @@ class User
         if ($module == 'client') {
             return ClientActions::run('options', $request);
         }
+
         return [];
     }
 

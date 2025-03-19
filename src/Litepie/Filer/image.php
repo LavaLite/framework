@@ -96,46 +96,46 @@ return [
      */
 
     'templates' => [
-        'xs' => 'Litepie\Filer\Templates\ExtraSmall',
-        'sm' => 'Litepie\Filer\Templates\Small',
-        'md' => 'Litepie\Filer\Templates\Medium',
-        'lg' => 'Litepie\Filer\Templates\Large',
-        'xl' => 'Litepie\Filer\Templates\ExtraLarge',
+        'xs'       => 'Litepie\Filer\Templates\ExtraSmall',
+        'sm'       => 'Litepie\Filer\Templates\Small',
+        'md'       => 'Litepie\Filer\Templates\Medium',
+        'lg'       => 'Litepie\Filer\Templates\Large',
+        'xl'       => 'Litepie\Filer\Templates\ExtraLarge',
         'original' => 'Litepie\Filer\Templates\Original',
     ],
 
     // Image size
     'size' => [
         'xs' => [
-            'width' => '100',
+            'width'  => '100',
             'height' => '80',
             'action' => 'fit',
             // 'default'   => 'img/noimage.jpg',
             // 'watermark' => public_path('assets/img/watermark.png'),
         ],
         'sm' => [
-            'width' => '400',
+            'width'  => '400',
             'height' => '300',
             'action' => 'fit',
             //'default'   => 'img/noimage.jpg',
             //'watermark' => public_path('assets/img/watermark.png'),
         ],
         'md' => [
-            'width' => '800',
+            'width'  => '800',
             'height' => '600',
             'action' => 'fit',
             //'default'   => 'img/noimage.jpg',
             //'watermark' => public_path('assets/img/watermark.png'),
         ],
         'lg' => [
-            'width' => '1000',
+            'width'  => '1000',
             'height' => '750',
             'action' => 'fit',
             //'default'   => 'img/noimage.jpg',
             //'watermark' => public_path('assets/img/watermark.png'),
         ],
         'xl' => [
-            'width' => '2000',
+            'width'  => '2000',
             'height' => '1500',
             'action' => 'fit',
             //'default'   => 'img/noimage.jpg',

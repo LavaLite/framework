@@ -1,11 +1,11 @@
 <?php
 
 namespace Litepie\Foundation\Providers;
+
 use Illuminate\Support\ServiceProvider;
 
 abstract class ActionServiceProvider extends ServiceProvider
 {
-
     /**
      * The action mappings for the application.
      *
@@ -30,5 +30,5 @@ abstract class ActionServiceProvider extends ServiceProvider
      *
      * @return array<class-string, class-string>
      */
-     public abstract function actions();
+    abstract public function actions();
 }

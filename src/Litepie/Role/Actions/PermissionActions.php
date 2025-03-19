@@ -4,17 +4,17 @@ namespace Litepie\Role\Actions;
 
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
-use Litepie\Role\Models\Permission;
-use Litepie\Role\Scopes\PermissionResourceScope;
 use Litepie\Actions\Concerns\AsAction;
 use Litepie\Actions\Traits\LogsActions;
 use Litepie\Database\Scopes\RequestScope;
+use Litepie\Role\Models\Permission;
+use Litepie\Role\Scopes\PermissionResourceScope;
 
 class PermissionActions
 {
     use AsAction;
     use LogsActions;
-    
+
     protected $model;
     protected $namespace = 'litepie.role.permission';
     protected $eventClass = \Litepie\Role\Events\PermissionAction::class;
@@ -36,8 +36,8 @@ class PermissionActions
         $this->dispatchActionAfterEvent();
 
         $this->logsAction();
-        return $data;
 
+        return $data;
     }
 
     public function paginate(array $request)
@@ -62,11 +62,13 @@ class PermissionActions
         return $permission;
     }
 
-    function empty(array $request) {
+    public function empty(array $request)
+    {
         return $this->model->forceDelete();
     }
 
-    function restore(array $request) {
+    public function restore(array $request)
+    {
         return $this->model->restore();
     }
 
@@ -76,6 +78,7 @@ class PermissionActions
         $ids = collect($ids)->map(function ($id) {
             return hashids_decode($id);
         });
+
         return $this->model->whereIn('id', $ids)->delete();
     }
 
@@ -87,13 +90,12 @@ class PermissionActions
             ->take(30)->get()
             ->map(function ($row) {
                 return [
-                    'key' => $row->id,
+                    'key'   => $row->id,
                     'value' => $row->id,
-                    'text' => $row->name,
+                    'text'  => $row->name,
                 ];
             })->toArray();
     }
-
 
     /**
      * Returns permissions as grouped array.

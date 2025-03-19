@@ -32,7 +32,7 @@ trait Types
      *
      * @param  array options
      *
-     * @return object|this This object instance
+     * @return object|$this This object instance
      */
     public function options($options = [], $value = null)
     {
@@ -51,7 +51,6 @@ trait Types
      */
     public function prepareOptions()
     {
-
         if (empty($this->options) || !is_array($this->options)) {
             $this->options = [];
 
@@ -65,7 +64,7 @@ trait Types
         if (in_array($this->element, $this->checkElements)) {
             $this->options = $this->prepareChecks($this->options);
         }
-        return;
+
     }
 
     protected function prepareOptionsArray($options, $value, $text)
@@ -74,7 +73,7 @@ trait Types
             foreach ($options as $key => $val) {
                 $options[$key] = [
                     $value => $key,
-                    $text => $val,
+                    $text  => $val,
                 ];
             }
         }

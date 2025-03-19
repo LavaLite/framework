@@ -16,7 +16,6 @@ use Litepie\Setting\Http\Requests\SettingResourceRequest;
  */
 class SettingResourceController extends BaseController
 {
-
     /**
      * Initialize setting resource controller.
      *
@@ -28,10 +27,11 @@ class SettingResourceController extends BaseController
             parent::middleware(),
             [
                 function (Request $request, Closure $next) {
-            self::$form = SettingForm::setAttributes()
-                ->toArray();
-            self::$modules = self::modules(config('setting.modules'), 'setting', guard_url('setting'));
-            return $next($request);
+                    self::$form = SettingForm::setAttributes()
+                        ->toArray();
+                    self::$modules = self::modules(config('setting.modules'), 'setting', guard_url('setting'));
+
+                    return $next($request);
                 },
             ]
         );
@@ -46,11 +46,11 @@ class SettingResourceController extends BaseController
     {
         $form = self::$form;
         $modules = self::$modules;
+
         return self::$response->setMetaTitle(trans('setting::setting.names'))
             ->view('setting::index')
             ->data(compact('modules', 'form'))
             ->output();
-
     }
 
     /**
@@ -63,12 +63,12 @@ class SettingResourceController extends BaseController
      */
     public function show($group)
     {
-
         $groups = explode('.', $group)[0];
-        $this->form['groups'] = Arr::get($this->form['groups'], $groups . '.groups' );
+        $this->form['groups'] = Arr::get($this->form['groups'], $groups.'.groups');
         $this->form['fields'] = Arr::get(Arr::undot($this->form['fields']), $group);
-        dd($this->form['fields'], $group . '.groups');
+        dd($this->form['fields'], $group.'.groups');
         $form = self::$form;
+
         return self::$response->setMetaTitle(trans('setting::setting.names'))
             ->view('setting::partial.show')
             ->data(compact('form', 'group'))
@@ -122,7 +122,6 @@ class SettingResourceController extends BaseController
                 ->url(guard_url("/setting/setting/$type"))
                 ->redirect();
         }
-
     }
 
     /**

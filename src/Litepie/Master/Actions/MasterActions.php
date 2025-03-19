@@ -3,11 +3,11 @@
 namespace Litepie\Master\Actions;
 
 use Illuminate\Support\Str;
-use Litepie\Master\Models\Master;
-use Litepie\Master\Scopes\MasterResourceScope;
 use Litepie\Actions\Concerns\AsAction;
 use Litepie\Actions\Traits\LogsActions;
 use Litepie\Database\Scopes\RequestScope;
+use Litepie\Master\Models\Master;
+use Litepie\Master\Scopes\MasterResourceScope;
 
 class MasterActions
 {
@@ -22,13 +22,13 @@ class MasterActions
 
         $function = Str::camel($action);
 
-        event('master.master.action.' . $action . 'ing', [$request]);
+        event('master.master.action.'.$action.'ing', [$request]);
         $data = $this->$function($request);
-        event('master.master.action.' . $action . 'ed', [$data]);
+        event('master.master.action.'.$action.'ed', [$data]);
 
         $this->logsAction();
-        return $data;
 
+        return $data;
     }
 
     public function paginate(array $request)
@@ -53,11 +53,13 @@ class MasterActions
         return $master;
     }
 
-    function empty(array $request) {
+    public function empty(array $request)
+    {
         return $this->model->forceDelete();
     }
 
-    function restore(array $request) {
+    public function restore(array $request)
+    {
         return $this->model->restore();
     }
 
@@ -67,6 +69,7 @@ class MasterActions
         $ids = collect($ids)->map(function ($id) {
             return hashids_decode($id);
         });
+
         return $this->model->whereIn('id', $ids)->delete();
     }
 
@@ -92,16 +95,17 @@ class MasterActions
     public function groups()
     {
         return collect(config('master.masters'))
-        ->map(function($arr, $key){
+        ->map(function ($arr, $key) {
             $arr['label'] = trans("master::master.masters.$key");
+
             return $arr;
         })
         ->groupBy('group')
-        ->map(function($arr, $key){
+        ->map(function ($arr, $key) {
             $ar['items'] = $arr->toArray();
             $ar['label'] = trans("master::master.groups.$key");
+
             return $ar;
         })->toArray();
     }
-
 }

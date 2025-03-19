@@ -25,6 +25,7 @@ class UserAction
         $this->model = $user;
         $this->function = Str::camel($action);
         $this->executeAction();
+
         // return $this->model;
         return $this->result;
     }
@@ -35,6 +36,7 @@ class UserAction
         $attributes['user_id'] = user_id();
         $attributes['password'] = bcrypt($request['password']);
         $user = $user->create($attributes);
+
         return $user;
     }
 
@@ -48,6 +50,7 @@ class UserAction
             $attributes['password'] = bcrypt($request['password']);
         }
         $user->update($attributes);
+
         return $user;
     }
 
@@ -66,6 +69,7 @@ class UserAction
         if (!$deleted) {
             throw new \Exception('Failed to delete user.');
         }
+
         return $deleted;
     }
 
@@ -77,6 +81,7 @@ class UserAction
             $user = $user->replicate();
             $user->created_at = Carbon::now();
             $user->save();
+
             return $user;
         }
 

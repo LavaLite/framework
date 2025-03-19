@@ -1,4 +1,5 @@
 <?php
+
 namespace Litepie\Http\Controllers;
 
 use Closure;
@@ -29,11 +30,11 @@ class ActionController implements HasMiddleware
             'localize.route',
             function (Request $request, Closure $next) {
                 self::$response = app(ResourceResponse::class);
-                self::$layout   = 'app';
+                self::$layout = 'app';
                 self::setTheme();
+
                 return $next($request);
             },
         ];
     }
-
 }

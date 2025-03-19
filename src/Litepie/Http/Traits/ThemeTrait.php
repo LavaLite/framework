@@ -2,8 +2,6 @@
 
 namespace Litepie\Http\Traits;
 
-use Theme as BaseTheme;
-
 trait ThemeTrait
 {
     /**

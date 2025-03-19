@@ -97,7 +97,7 @@ class LanguageNegotiator
     {
         $matches = $this->getMatchesFromAcceptedLanguages();
         foreach ($matches as $key => $q) {
-            $key = ($this->configRepository->get('laravellocalization.localesMapping')[$key]) ?? $key;
+            $key = $this->configRepository->get('laravellocalization.localesMapping')[$key] ?? $key;
 
             if (!empty($this->supportedLanguages[$key])) {
                 return $key;

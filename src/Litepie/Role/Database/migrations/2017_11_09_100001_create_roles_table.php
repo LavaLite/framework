@@ -14,7 +14,6 @@ class CreateRolesTable extends Migration
 
     public function up()
     {
-
         /*
          * Table: roles
          */

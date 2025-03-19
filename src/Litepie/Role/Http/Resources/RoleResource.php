@@ -6,10 +6,9 @@ use Illuminate\Http\Resources\Json\JsonResource;
 
 class RoleResource extends JsonResource
 {
-
     public function itemLink()
     {
-        return guard_url('role/role') . '/' . $this->getRouteKey();
+        return guard_url('role/role').'/'.$this->getRouteKey();
     }
 
     public function title()
@@ -28,18 +27,18 @@ class RoleResource extends JsonResource
     public function toArray($request)
     {
         return [
-            'id' => $this->getRouteKey(),
-            'title' => $this->title(),
-            'name' => $this->name,
-            'slug' => $this->slug,
+            'id'          => $this->getRouteKey(),
+            'title'       => $this->title(),
+            'name'        => $this->name,
+            'slug'        => $this->slug,
             'description' => $this->description,
-            'level' => $this->level,
+            'level'       => $this->level,
             'permissions' => $this->permissions->pluck('slug', 'id'),
-            'created_at' => !is_null($this->created_at) ? $this->created_at->format('Y-m-d H:i:s') : null,
-            'updated_at' => !is_null($this->updated_at) ? $this->updated_at->format('Y-m-d H:i:s') : null,
-            'meta' => [
+            'created_at'  => !is_null($this->created_at) ? $this->created_at->format('Y-m-d H:i:s') : null,
+            'updated_at'  => !is_null($this->updated_at) ? $this->updated_at->format('Y-m-d H:i:s') : null,
+            'meta'        => [
                 'exists' => $this->exists(),
-                'link' => $this->itemLink(),
+                'link'   => $this->itemLink(),
             ],
         ];
     }
@@ -47,7 +46,8 @@ class RoleResource extends JsonResource
     /**
      * Get additional data that should be returned with the resource array.
      *
-     * @param   \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
+     *
      * @return array
      */
     public function with($request)
@@ -55,9 +55,8 @@ class RoleResource extends JsonResource
         return [
             'meta' => [
                 'exists' => $this->exists(),
-                'link' => $this->itemLink(),
+                'link'   => $this->itemLink(),
             ],
         ];
     }
-
 }

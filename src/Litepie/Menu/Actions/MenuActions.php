@@ -3,17 +3,17 @@
 namespace Litepie\Menu\Actions;
 
 use Illuminate\Support\Str;
-use Litepie\Menu\Models\Menu;
-use Litepie\Menu\Scopes\MenuResourceScope;
 use Litepie\Actions\Concerns\AsAction;
 use Litepie\Actions\Traits\LogsActions;
 use Litepie\Database\Scopes\RequestScope;
+use Litepie\Menu\Models\Menu;
+use Litepie\Menu\Scopes\MenuResourceScope;
 
 class MenuActions
 {
     use AsAction;
     use LogsActions;
-    
+
     private $model;
 
     public function handle(string $action, array $request)
@@ -22,13 +22,13 @@ class MenuActions
 
         $function = Str::camel($action);
 
-        event('menu.menu.action.' . $action . 'ing', [$request]);
+        event('menu.menu.action.'.$action.'ing', [$request]);
         $data = $this->$function($request);
-        event('menu.menu.action.' . $action . 'ed', [$data]);
+        event('menu.menu.action.'.$action.'ed', [$data]);
 
         $this->logsAction();
-        return $data;
 
+        return $data;
     }
 
     public function paginate(array $request)
@@ -53,11 +53,13 @@ class MenuActions
         return $menu;
     }
 
-    function empty(array $request) {
+    public function empty(array $request)
+    {
         return $this->model->forceDelete();
     }
 
-    function restore(array $request) {
+    public function restore(array $request)
+    {
         return $this->model->restore();
     }
 
@@ -67,6 +69,7 @@ class MenuActions
         $ids = collect($ids)->map(function ($id) {
             return hashids_decode($id);
         });
+
         return $this->model->whereIn('id', $ids)->delete();
     }
 }

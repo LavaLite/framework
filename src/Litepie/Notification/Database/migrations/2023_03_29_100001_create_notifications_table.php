@@ -2,7 +2,6 @@
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 
 class CreateNotificationsTable extends Migration
 {
@@ -14,7 +13,6 @@ class CreateNotificationsTable extends Migration
 
     public function up()
     {
-
         /*
          * Table: notifications
          */

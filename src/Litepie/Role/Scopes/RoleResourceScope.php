@@ -20,5 +20,4 @@ class RoleResourceScope implements Scope
     {
         return $this->onlyShowDeletedForAdmins($duilder);
     }
-
 }

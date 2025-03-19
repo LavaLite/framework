@@ -4,7 +4,6 @@ namespace Litepie\Filer\Traits;
 
 use File;
 use Illuminate\Http\UploadedFile;
-use Illuminate\Support\Str;
 use Litepie\Filer\Exceptions\InvalidFileSizeException;
 use Litepie\Filer\Exceptions\InvalidFileTypeException;
 
@@ -20,7 +19,6 @@ trait Uploader
      */
     public function upload(UploadedFile $file, $disk, $path)
     {
-
         // Check the upload type is valid by extension and mimetype
         $this->verifyFile($file);
 
@@ -39,14 +37,14 @@ trait Uploader
 
         // If it returns an array it's a successful upload. Otherwise an exception will be thrown.
         $array = [
-            'folder' => $path,
-            'file' => $hashed,
-            'path' => $path . '/' . $hashed,
-            'disk' => $disk,
+            'folder'   => $path,
+            'file'     => $hashed,
+            'path'     => $path.'/'.$hashed,
+            'disk'     => $disk,
             'original' => $original,
-            'title' => $name,
-            'caption' => $name,
-            'time' => date('Y-m-d H:i:s'),
+            'title'    => $name,
+            'caption'  => $name,
+            'time'     => date('Y-m-d H:i:s'),
         ];
 
         return $array;
@@ -80,11 +78,10 @@ trait Uploader
     public function getName($file)
     {
         // Get the file bits
-        $basename = basename($file->getClientOriginalName(), '.' . $file->getClientOriginalExtension());
+        $basename = basename($file->getClientOriginalName(), '.'.$file->getClientOriginalExtension());
         // Remove trailing period
         $name = ucfirst(strtolower(preg_replace('/[^A-Za-z0-9]/', ' ', $basename)));
 
         return $name;
     }
-
 }

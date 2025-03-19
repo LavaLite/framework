@@ -8,6 +8,5 @@ class NotificationTableSeeder extends Seeder
 {
     public function run()
     {
-
     }
 }

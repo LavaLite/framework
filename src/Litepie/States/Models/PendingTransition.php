@@ -6,20 +6,20 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * Class PendingTransition
- * @package Litepie\States\Models
+ * Class PendingTransition.
+ *
  * @property string $field
  * @property string $from
  * @property string $to
  * @property Carbon $transition_at
  * @property Carbon $applied_at
  * @property string $custom_properties
- * @property int $model_id
+ * @property int    $model_id
  * @property string $model_type
- * @property Model $model
- * @property int $responsible_id
+ * @property Model  $model
+ * @property int    $responsible_id
  * @property string $responsible_type
- * @property Model $responsible
+ * @property Model  $responsible
  */
 class PendingTransition extends Model
 {
@@ -32,7 +32,7 @@ class PendingTransition extends Model
 
     protected $dates = [
         'transition_at' => 'date',
-        'applied_at' => 'date',
+        'applied_at'    => 'date',
     ];
 
     public function model()

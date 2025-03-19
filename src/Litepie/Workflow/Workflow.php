@@ -2,12 +2,11 @@
 
 namespace Litepie\Workflow;
 
-use Symfony\Component\Workflow\Workflow as SymfonyWorkflow;
 use Closure;
+use Symfony\Component\Workflow\Workflow as SymfonyWorkflow;
 
 class Workflow extends SymfonyWorkflow
 {
-
     public function transitions(object $subject, $workflow = null)
     {
         $transitions = $this->getEnabledTransitions($subject, $workflow);
@@ -15,6 +14,7 @@ class Workflow extends SymfonyWorkflow
         foreach ($transitions as $t) {
             $ret[$t->getName()] = $t;
         }
+
         return $ret;
     }
 
@@ -28,6 +28,7 @@ class Workflow extends SymfonyWorkflow
                 return $t;
             }
         }
+
         return null;
     }
 
@@ -47,8 +48,10 @@ class Workflow extends SymfonyWorkflow
             if (isset($val['options']) && is_callable($val['options']) && $val['options'] instanceof Closure) {
                 $val['options'] = call_user_func($val['options']);
             }
+
             return $val;
         });
+
         return $item;
     }
 
@@ -63,6 +66,7 @@ class Workflow extends SymfonyWorkflow
                 $previousTransitions[] = $transition;
             }
         }
+
         return $previousTransitions;
     }
 }

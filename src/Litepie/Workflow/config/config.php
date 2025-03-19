@@ -10,7 +10,7 @@ return [
     'track_loaded' => false,
 
     /**
-     * Only used when track_loaded = true
+     * Only used when track_loaded = true.
      *
      * When set to true, a registering a duplicate workflow will be ignored (will not load the new definition)
      * When set to false, a duplicate workflow will throw a DuplicateWorkflowException

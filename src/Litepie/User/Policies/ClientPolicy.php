@@ -7,13 +7,11 @@ use Litepie\User\Models\Client;
 
 class ClientPolicy
 {
-
-
     /**
      * Determine if the given user can view the client.
      *
      * @param Authenticatable $user
-     * @param Client $client
+     * @param Client          $client
      *
      * @return bool
      */
@@ -42,7 +40,7 @@ class ClientPolicy
      * Determine if the given user can update the given client.
      *
      * @param Authenticatable $user
-     * @param Client $client
+     * @param Client          $client
      *
      * @return bool
      */

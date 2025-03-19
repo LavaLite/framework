@@ -6,7 +6,6 @@ use Litepie\Actions\ActionLogger;
 
 trait LogsActions
 {
-
     protected $actionDescriptionAttributes = ['comment', 'description'];
     protected $actionAttributes = ['action', 'transition', 'actions', 'report', 'exim'];
     protected $actionExceptAttributes = ['_method'];
@@ -69,6 +68,7 @@ trait LogsActions
     public function description(): string
     {
         $attris = request()->only($this->actionDescriptionAttributes);
+
         return trim(implode(',', $attris), ',');
     }
 

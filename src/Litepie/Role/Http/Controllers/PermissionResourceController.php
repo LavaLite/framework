@@ -1,4 +1,5 @@
 <?php
+
 namespace Litepie\Role\Http\Controllers;
 
 use Closure;
@@ -18,7 +19,6 @@ use Litepie\Role\Models\Permission;
  */
 class PermissionResourceController extends BaseController
 {
-
     /**
      * Initialize permission resource controller.
      *
@@ -35,6 +35,7 @@ class PermissionResourceController extends BaseController
                         ->setAttributes()
                         ->toArray();
                     self::$modules = self::modules(config('role.modules'), 'role', guard_url('role'));
+
                     return $next($request);
                 },
             ]
@@ -49,18 +50,17 @@ class PermissionResourceController extends BaseController
     public function index(PermissionResourceRequest $request)
     {
         $request = $request->all();
-        $page    = PermissionActions::run('paginate', $request);
+        $page = PermissionActions::run('paginate', $request);
 
         $data = new PermissionsCollection($page);
 
-        $form    = self::$form;
+        $form = self::$form;
         $modules = self::$modules;
 
         return self::$response->setMetaTitle(trans('role::permission.names'))
             ->view('role::permission.index')
             ->data(compact('data', 'modules', 'form'))
             ->output();
-
     }
 
     /**
@@ -73,11 +73,12 @@ class PermissionResourceController extends BaseController
      */
     public function show(PermissionResourceRequest $request, Permission $model)
     {
-        $form    = self::$form;
+        $form = self::$form;
         $modules = self::$modules;
-        $data    = new PermissionResource($model);
+        $data = new PermissionResource($model);
+
         return self::$response
-            ->setMetaTitle(trans('app.view') . ' ' . trans('role::permission.name'))
+            ->setMetaTitle(trans('app.view').' '.trans('role::permission.name'))
             ->data(compact('data', 'form', 'modules'))
             ->view('role::permission.show')
             ->output();
@@ -92,14 +93,14 @@ class PermissionResourceController extends BaseController
      */
     public function create(PermissionResourceRequest $request, Permission $model)
     {
-        $form    = self::$form;
+        $form = self::$form;
         $modules = self::$modules;
-        $data    = new PermissionResource($model);
-        return self::$response->setMetaTitle(trans('app.new') . ' ' . trans('role::permission.name'))
+        $data = new PermissionResource($model);
+
+        return self::$response->setMetaTitle(trans('app.new').' '.trans('role::permission.name'))
             ->view('role::permission.create')
             ->data(compact('data', 'form', 'modules'))
             ->output();
-
     }
 
     /**
@@ -113,13 +114,14 @@ class PermissionResourceController extends BaseController
     {
         try {
             $request = $request->all();
-            $model   = PermissionAction::run('store', $model, $request);
-            $data    = new PermissionResource($model);
+            $model = PermissionAction::run('store', $model, $request);
+            $data = new PermissionResource($model);
+
             return self::$response->message(trans('messages.success.created', ['Module' => trans('role::permission.name')]))
                 ->code(204)
                 ->data(compact('data'))
                 ->status('success')
-                ->url(guard_url('role/permission/' . $model->getRouteKey()))
+                ->url(guard_url('role/permission/'.$model->getRouteKey()))
                 ->redirect();
         } catch (Exception $e) {
             return self::$response->message($e->getMessage())
@@ -128,7 +130,6 @@ class PermissionResourceController extends BaseController
                 ->url(guard_url('/role/permission'))
                 ->redirect();
         }
-
     }
 
     /**
@@ -141,16 +142,15 @@ class PermissionResourceController extends BaseController
      */
     public function edit(PermissionResourceRequest $request, Permission $model)
     {
-        $form    = self::$form;
+        $form = self::$form;
         $modules = self::$modules;
-        $data    = new PermissionResource($model);
+        $data = new PermissionResource($model);
         // return view('role::permission.edit', compact('data', 'form', 'modules'));
 
-        return self::$response->setMetaTitle(trans('app.edit') . ' ' . trans('role::permission.name'))
+        return self::$response->setMetaTitle(trans('app.edit').' '.trans('role::permission.name'))
             ->view('role::permission.edit')
             ->data(compact('data', 'form', 'modules'))
             ->output();
-
     }
 
     /**
@@ -165,39 +165,37 @@ class PermissionResourceController extends BaseController
     {
         try {
             $request = $request->all();
-            $model   = PermissionAction::run('update', $model, $request);
-            $data    = new PermissionResource($model);
+            $model = PermissionAction::run('update', $model, $request);
+            $data = new PermissionResource($model);
 
             return self::$response->message(trans('messages.success.updated', ['Module' => trans('role::permission.name')]))
                 ->code(204)
                 ->status('success')
                 ->data(compact('data'))
-                ->url(guard_url('role/permission/' . $model->getRouteKey()))
+                ->url(guard_url('role/permission/'.$model->getRouteKey()))
                 ->redirect();
         } catch (Exception $e) {
             return self::$response->message($e->getMessage())
                 ->code(400)
                 ->status('error')
-                ->url(guard_url('role/permission/' . $model->getRouteKey()))
+                ->url(guard_url('role/permission/'.$model->getRouteKey()))
                 ->redirect();
         }
-
     }
 
     /**
      * Remove the permission.
      *
-     * @param Model   $permission
+     * @param Model $permission
      *
      * @return Response
      */
     public function destroy(PermissionResourceRequest $request, Permission $model)
     {
         try {
-
             $request = $request->all();
-            $model   = PermissionAction::run('destroy', $model, $request);
-            $data    = new PermissionResource($model);
+            $model = PermissionAction::run('destroy', $model, $request);
+            $data = new PermissionResource($model);
 
             return self::$response->message(trans('messages.success.deleted', ['Module' => trans('role::permission.name')]))
                 ->code(202)
@@ -205,15 +203,12 @@ class PermissionResourceController extends BaseController
                 ->data(compact('data'))
                 ->url(guard_url('role/permission/0'))
                 ->redirect();
-
         } catch (Exception $e) {
-
             return self::$response->message($e->getMessage())
                 ->code(400)
                 ->status('error')
-                ->url(guard_url('role/permission/' . $model->getRouteKey()))
+                ->url(guard_url('role/permission/'.$model->getRouteKey()))
                 ->redirect();
         }
-
     }
 }

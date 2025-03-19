@@ -7,7 +7,6 @@ use Litepie\Actions\Models\Action;
 
 trait Actionable
 {
-
     public $log_action = [];
 
     public function actions()
@@ -29,6 +28,7 @@ trait Actionable
      *
      * @param int $count
      * @param int $offset
+     *
      * @return array
      */
     public function getActions($count = 10, $offset = 0)
@@ -45,12 +45,12 @@ trait Actionable
 
         foreach ($logs as $key => $log) {
             $logs[$key] = [
-                'id' => $log->getRouteKey(),
-                'name' => __($log->action),
+                'id'          => $log->getRouteKey(),
+                'name'        => __($log->action),
                 'description' => __($log->description),
-                'causer' => [
-                    'id' => $log->causer ? $log->causer->getRouteKey() : '1',
-                    'name' => $log->causer ? $log->causer->name : 'System User',
+                'causer'      => [
+                    'id'      => $log->causer ? $log->causer->getRouteKey() : '1',
+                    'name'    => $log->causer ? $log->causer->name : 'System User',
                     'picture' => $log->causer ? $log->causer->picture : url('/assets/img/avatar/male.png'),
                 ],
                 'properties' => $this->formatActionLog($log->properties),
@@ -66,6 +66,7 @@ trait Actionable
      * Format the log properties.
      *
      * @param array $properties
+     *
      * @return array
      */
     public function formatActionLog($properties)
@@ -84,10 +85,10 @@ trait Actionable
                 foreach ($property as $row => $item) {
                     $formattedLog = [
                         'value' => $item,
-                        'label' => trans($this->log_action['label'] . $row),
+                        'label' => trans($this->log_action['label'].$row),
                     ];
 
-                    $formattedLog['text'] = $formattedLog['label'] . ': ' . $formattedLog['value'];
+                    $formattedLog['text'] = $formattedLog['label'].': '.$formattedLog['value'];
 
                     $formattedLogs[$row] = $formattedLog;
                 }
@@ -95,13 +96,14 @@ trait Actionable
             }
             $formattedLog = [
                 'value' => $property,
-                'label' => trans($this->log_action['label'] . $key),
+                'label' => trans($this->log_action['label'].$key),
             ];
 
-            $formattedLog['text'] = $formattedLog['label'] . ': ' . $formattedLog['value'];
+            $formattedLog['text'] = $formattedLog['label'].': '.$formattedLog['value'];
 
             $formattedLogs[$key] = $formattedLog;
         }
+
         return $formattedLogs;
     }
 

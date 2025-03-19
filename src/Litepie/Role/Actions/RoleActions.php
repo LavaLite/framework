@@ -3,11 +3,11 @@
 namespace Litepie\Role\Actions;
 
 use Illuminate\Support\Str;
-use Litepie\Role\Models\Role;
-use Litepie\Role\Scopes\RoleResourceScope;
 use Litepie\Actions\Concerns\AsAction;
 use Litepie\Actions\Traits\LogsActions;
 use Litepie\Database\Scopes\RequestScope;
+use Litepie\Role\Models\Role;
+use Litepie\Role\Scopes\RoleResourceScope;
 
 class RoleActions
 {
@@ -22,11 +22,12 @@ class RoleActions
 
         $function = Str::camel($action);
 
-        event('role.role.action.' . $action . 'ing', [$request]);
+        event('role.role.action.'.$action.'ing', [$request]);
         $data = $this->$function($request);
-        event('role.role.action.' . $action . 'ed', [$data]);
+        event('role.role.action.'.$action.'ed', [$data]);
 
         $this->logsAction();
+
         return $data;
     }
 
@@ -52,12 +53,12 @@ class RoleActions
         return $role;
     }
 
-    function empty(array $request)
+    public function empty(array $request)
     {
         return $this->model->forceDelete();
     }
 
-    function restore(array $request)
+    public function restore(array $request)
     {
         return $this->model->restore();
     }
@@ -68,12 +69,15 @@ class RoleActions
         $ids = collect($ids)->map(function ($id) {
             return hashids_decode($id);
         });
+
         return $this->model->whereIn('id', $ids)->delete();
     }
+
     private function select($request)
     {
         return $this->model->pluck('name', 'id')->all();
     }
+
     public function options(array $request)
     {
         return  $this->model
@@ -82,10 +86,10 @@ class RoleActions
             ->take(30)->get()
             ->map(function ($row) {
                 return [
-                    'key' => $row->id,
+                    'key'   => $row->id,
                     'value' => $row->id,
-                    'text' => $row->name,
-                    'name' => $row->name,
+                    'text'  => $row->name,
+                    'name'  => $row->name,
                 ];
             })->toArray();
     }

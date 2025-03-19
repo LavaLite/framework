@@ -2,8 +2,7 @@
 
 // Web routes  for user.
 
-include('routes.php');
-
+include 'routes.php';
 
 if (app('trans')->isMultilingual()) {
     Route::group(
@@ -12,8 +11,7 @@ if (app('trans')->isMultilingual()) {
             'where'  => ['trans' => app('trans')->keys('|')],
         ],
         function () {
-            include('routes.php');
-
+            include 'routes.php';
         }
     );
 }

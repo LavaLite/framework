@@ -7,7 +7,6 @@ use Illuminate\Support\Str;
 use Litepie\Actions\Concerns\AsAction;
 use Litepie\Role\Models\Role;
 
-
 class RoleAction
 {
     use AsAction;
@@ -26,10 +25,9 @@ class RoleAction
         $this->model = $role;
         $this->function = Str::camel($action);
         $this->executeAction();
+
         return $this->model;
-
     }
-
 
     public function store(Role $role, array $request)
     {
@@ -37,6 +35,7 @@ class RoleAction
         $attributes['user_id'] = user_id();
         $attributes['user_type'] = user_type();
         $role = $role->create($attributes);
+
         return $role;
     }
 
@@ -44,12 +43,14 @@ class RoleAction
     {
         $attributes = $request;
         $role->update($attributes);
+
         return $role;
     }
 
     public function destroy(Role $role, array $request)
     {
         $role->delete();
+
         return $role;
     }
 
@@ -61,6 +62,7 @@ class RoleAction
             $role = $role->replicate();
             $role->created_at = Carbon::now();
             $role->save();
+
             return $role;
         }
 
@@ -72,6 +74,4 @@ class RoleAction
 
         return $role;
     }
-
-
 }

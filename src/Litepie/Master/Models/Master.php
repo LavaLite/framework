@@ -32,7 +32,7 @@ class Master extends Model
      *
      * @var array
      */
-     protected $config = 'master.master.model';
+    protected $config = 'master.master.model';
 
     /*
      * Get the model that the creator belongs to.
@@ -41,5 +41,4 @@ class Master extends Model
     {
         return $this->morphTo(__FUNCTION__, 'user_type', 'user_id');
     }
-
 }

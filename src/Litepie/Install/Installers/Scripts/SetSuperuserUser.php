@@ -28,7 +28,7 @@ class SetSuperuserUser implements SetupScript
         $this->command = $command;
 
         config(['litepie.user.user' => [
-            'table' => 'users',
+            'table'    => 'users',
             'fillable' => ['password', 'email'],
         ]]);
 
@@ -49,7 +49,7 @@ class SetSuperuserUser implements SetupScript
         if (empty($this->domain)) {
             $this->askDomain();
         }
-        $email = 'superuser@' . $this->domain;
+        $email = 'superuser@'.$this->domain;
         do {
             $data['email'] = $this->command->ask('Please enter email for superuser', $email);
             $validator = Validator::make($data, ['email' => 'required|email']);
@@ -80,7 +80,6 @@ class SetSuperuserUser implements SetupScript
         } while (!$isValid);
 
         return $this->domain = $domain;
-
     }
 
     /**
@@ -107,9 +106,8 @@ class SetSuperuserUser implements SetupScript
 
     public function isDomainValid($domain)
     {
-        return (preg_match("/^([a-z\d](-*[a-z\d])*)(\.([a-z\d](-*[a-z\d])*))*$/i", $domain) //valid chars check
-            && preg_match("/^.{1,253}$/", $domain) //overall length check
-            && preg_match("/^[^\.]{1,63}(\.[^\.]{1,63})*$/", $domain)); //length of each label
+        return preg_match("/^([a-z\d](-*[a-z\d])*)(\.([a-z\d](-*[a-z\d])*))*$/i", $domain) //valid chars check
+            && preg_match('/^.{1,253}$/', $domain) //overall length check
+            && preg_match("/^[^\.]{1,63}(\.[^\.]{1,63})*$/", $domain); //length of each label
     }
-
 }

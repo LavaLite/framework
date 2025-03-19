@@ -19,7 +19,7 @@ class EnvironmentController extends Controller
     protected $EnvironmentManager;
 
     /**
-     * @param  EnvironmentManager  $environmentManager
+     * @param EnvironmentManager $environmentManager
      */
     public function __construct(EnvironmentManager $environmentManager)
     {
@@ -63,8 +63,9 @@ class EnvironmentController extends Controller
     /**
      * Processes the newly saved environment configuration (Classic).
      *
-     * @param  Request  $input
-     * @param  Redirector  $redirect
+     * @param Request    $input
+     * @param Redirector $redirect
+     *
      * @return \Illuminate\Http\RedirectResponse
      */
     public function saveClassic(Request $input, Redirector $redirect)
@@ -80,8 +81,9 @@ class EnvironmentController extends Controller
     /**
      * Processes the newly saved environment configuration (Form Wizard).
      *
-     * @param  Request  $request
-     * @param  Redirector  $redirect
+     * @param Request    $request
+     * @param Redirector $redirect
+     *
      * @return \Illuminate\Http\RedirectResponse
      */
     public function saveWizard(Request $request, Redirector $redirect)
@@ -97,7 +99,7 @@ class EnvironmentController extends Controller
             return $redirect->route('LaravelInstaller::environmentWizard')->withInput()->withErrors($validator->errors());
         }
 
-        if (! $this->checkDatabaseConnection($request)) {
+        if (!$this->checkDatabaseConnection($request)) {
             return $redirect->route('LaravelInstaller::environmentWizard')->withInput()->withErrors([
                 'database_connection' => trans('installer_messages.environment.wizard.form.db_connection_failed'),
             ]);
@@ -115,7 +117,8 @@ class EnvironmentController extends Controller
      * TODO: We can remove this code if PR will be merged: https://github.com/RachidLaasri/LaravelInstaller/pull/162
      * Validate database connection with user credentials (Form Wizard).
      *
-     * @param  Request  $request
+     * @param Request $request
+     *
      * @return bool
      */
     private function checkDatabaseConnection(Request $request)
@@ -126,12 +129,12 @@ class EnvironmentController extends Controller
 
         config([
             'database' => [
-                'default' => $connection,
+                'default'     => $connection,
                 'connections' => [
                     $connection => array_merge($settings, [
-                        'driver' => $connection,
-                        'host' => $request->input('database_hostname'),
-                        'port' => $request->input('database_port'),
+                        'driver'   => $connection,
+                        'host'     => $request->input('database_hostname'),
+                        'port'     => $request->input('database_port'),
                         'database' => $request->input('database_name'),
                         'username' => $request->input('database_username'),
                         'password' => $request->input('database_password'),

@@ -2,13 +2,10 @@
 
 namespace Litepie\Role;
 
-use Litepie\Role\Actions\RoleAction;
 use Litepie\Role\Actions\RoleActions;
 
 class Role
 {
-
-
     /**
      * Constructor.
      */
@@ -32,7 +29,7 @@ class Role
      * Return select options role for the module.
      *
      * @param string $module
-     * @param array $request
+     * @param array  $request
      *
      * @return array
      */

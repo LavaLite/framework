@@ -6,7 +6,6 @@ use Litepie\Database\Scopes\RequestScope;
 
 trait Requestable
 {
-
     /**
      * Boot the request scope for a model.
      *
@@ -14,6 +13,6 @@ trait Requestable
      */
     public static function bootRequestable()
     {
-        static::addGlobalScope(new RequestScope);
+        static::addGlobalScope(new RequestScope());
     }
 }

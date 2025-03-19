@@ -54,6 +54,7 @@ trait Files
     public function url($url)
     {
         $this->url = $url;
+
         return $this;
     }
 
@@ -130,5 +131,4 @@ trait Files
 
         return $this;
     }
-    
 }

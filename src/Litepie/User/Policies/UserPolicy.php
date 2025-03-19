@@ -7,12 +7,11 @@ use Litepie\User\Models\User;
 
 class UserPolicy
 {
-
     /**
      * Determine if the given user can view the user.
      *
      * @param Authenticatable $authUser
-     * @param User $authUser
+     * @param User            $authUser
      *
      * @return bool
      */
@@ -41,7 +40,7 @@ class UserPolicy
      * Determine if the given user can update the given user.
      *
      * @param Authenticatable $authUser
-     * @param User $authUser
+     * @param User            $authUser
      *
      * @return bool
      */

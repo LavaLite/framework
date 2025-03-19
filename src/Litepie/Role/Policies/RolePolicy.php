@@ -7,13 +7,11 @@ use Litepie\Role\Models\Role;
 
 class RolePolicy
 {
-
-
     /**
      * Determine if the given user can view the role.
      *
      * @param Authenticatable $user
-     * @param Role $role
+     * @param Role            $role
      *
      * @return bool
      */
@@ -38,7 +36,7 @@ class RolePolicy
      * Determine if the given user can update the given role.
      *
      * @param Authenticatable $user
-     * @param Role $role
+     * @param Role            $role
      *
      * @return bool
      */

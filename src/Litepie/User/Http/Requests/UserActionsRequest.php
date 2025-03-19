@@ -7,7 +7,6 @@ use Litepie\user\Models\User;
 
 class UserActionsRequest extends AbstractRequest
 {
-
     /* Model for the current request.
      *
      * @var array
@@ -23,11 +22,13 @@ class UserActionsRequest extends AbstractRequest
     {
         $this->model = app(User::class);
         $this->action = $this->getAction();
+
         // Determine if the user is authorized to perform the action.
         return $this->model->canDoAction($this->rules());
     }
+
     public function rules()
     {
-        return config('user.user.actions.' . $this->action . '.roles', []);
+        return config('user.user.actions.'.$this->action.'.roles', []);
     }
 }
