@@ -7,18 +7,17 @@ use Litepie\User\Models\User;
 
 class UserPolicy
 {
-
     /**
      * Determine if the given user can view the user.
      *
      * @param Authenticatable $authUser
-     * @param User $authUser
+     * @param User            $authUser
      *
      * @return bool
      */
     public function view(Authenticatable $authUser, User $user)
     {
-        if ($authUser->canDo('user.user.view')) {
+        if ($authUser->isAdministrator()) {
             return true;
         }
 
@@ -34,20 +33,20 @@ class UserPolicy
      */
     public function create(Authenticatable $authUser)
     {
-        return $authUser->canDo('user.user.create');
+        return $authUser->isAdministrator();
     }
 
     /**
      * Determine if the given user can update the given user.
      *
      * @param Authenticatable $authUser
-     * @param User $authUser
+     * @param User            $authUser
      *
      * @return bool
      */
     public function update(Authenticatable $authUser, User $user)
     {
-        if ($authUser->canDo('user.user.edit')) {
+        if ($authUser->isAdministrator()) {
             return true;
         }
 

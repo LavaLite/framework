@@ -5,7 +5,6 @@ namespace Litepie\Actions;
 use Illuminate\Auth\AuthManager;
 use Illuminate\Contracts\Config\Repository;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Str;
 use Illuminate\Support\Traits\Macroable;
 use Litepie\Actions\Contracts\Action as ActionContract;
 use Litepie\Actions\Models\Action;
@@ -124,18 +123,21 @@ class ActionLogger
     public function action($action = null)
     {
         $this->getAction()->action = $action;
+
         return $this;
     }
 
     public function description($description = null)
     {
         $this->getAction()->description = $description;
+
         return $this;
     }
 
     public function property($property = null)
     {
         $this->getAction()->properties = $property;
+
         return $this;
     }
 }

@@ -7,27 +7,27 @@ trait ThemeAndViews
     /*
      * Store theme
      */
-    public $theme;
+    public static $theme;
 
     /*
      * Store layout
      */
-    public $layout;
+    public static $layout;
 
     /* Setup theme for the controller.
      *
      */
-    public function setTheme($theme = null, $layout = null)
+    public static function setTheme($theme = null, $layout = null)
     {
         if (empty($theme)) {
-            $theme = $this->getTheme();
+            $theme = static::getTheme();
         }
 
         if (empty($layout)) {
-            $layout = $this->getLayout();
+            $layout = static::getLayout();
         }
 
-        $this->response
+        static::$response
             ->theme($theme)
             ->layout($layout);
     }
@@ -37,10 +37,10 @@ trait ThemeAndViews
      *
      * @return string
      */
-    protected function getTheme()
+    protected static function getTheme()
     {
         return config(
-            'theme.themes.'.$this->getViewFolder().'.theme',
+            'theme.themes.'.static::getViewFolder().'.theme',
             config('theme.themes.default.theme')
         );
     }
@@ -51,9 +51,9 @@ trait ThemeAndViews
      *
      * @return string
      */
-    protected function getLayout()
+    protected static function getLayout()
     {
-        return $this->layout ?: 'default';
+        return static::$layout ?: 'default';
     }
 
     /**
@@ -61,7 +61,7 @@ trait ThemeAndViews
      *
      * @return type
      */
-    protected function getViewFolder()
+    protected static function getViewFolder()
     {
         return substr(guard(), 0, strpos(guard(), '.'));
     }

@@ -2,10 +2,10 @@
 
 namespace Litepie\User\Scopes;
 
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Scope;
+use Illuminate\Support\Facades\Auth;
 
 class ClientResourceScope implements Scope
 {
@@ -21,5 +21,4 @@ class ClientResourceScope implements Scope
     {
         return $this->onlyShowDeletedForAdmins($duilder);
     }
-
 }

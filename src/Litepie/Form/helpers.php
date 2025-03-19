@@ -6,7 +6,7 @@ if (!function_exists('form_merge_form')) {
      *
      * @param array $form
      * @param array $values
-     * @param boolean $grouped
+     * @param bool  $grouped
      *
      * @return array
      */
@@ -14,16 +14,17 @@ if (!function_exists('form_merge_form')) {
     {
         $data = json_decode(json_encode($value), true);
         foreach ($forms as $fkey => $form) {
-            foreach($form as $key => $val) {
+            foreach ($form as $key => $val) {
                 $k = $val['key'];
                 if (isset($data['data'][$k])) {
                     $forms[$fkey][$key]['value'] = $data['data'][$k];
                 }
                 if ($val['element'] == 'file') {
-                    $forms[$fkey][$key]['url'] = str_replace('//file', '/' . $k . '/file', $data['meta']['upload_url']);
+                    $forms[$fkey][$key]['url'] = str_replace('//file', '/'.$k.'/file', $data['meta']['upload_url']);
                 }
-            };
+            }
         }
+
         return $forms;
     }
 }
@@ -34,7 +35,7 @@ if (!function_exists('form_merge_list')) {
      *
      * @param array $form
      * @param array $values
-     * @param boolean $grouped
+     * @param bool  $grouped
      *
      * @return array
      */
@@ -49,11 +50,12 @@ if (!function_exists('form_merge_list')) {
             }
 
             if ($val['type'] == 'file') {
-                $val['url'] = str_replace('//file', '/' . $k . '/file', $data['meta']['upload_url']);
+                $val['url'] = str_replace('//file', '/'.$k.'/file', $data['meta']['upload_url']);
             }
             $form[$k] = $val;
             unset($form[$key]);
         }
+
         return $form;
     }
 }
@@ -64,7 +66,7 @@ if (!function_exists('form_list_html')) {
      *
      * @param array $form
      * @param array $values
-     * @param boolean $grouped
+     * @param bool  $grouped
      *
      * @return array
      */
@@ -73,6 +75,20 @@ if (!function_exists('form_list_html')) {
         foreach ($form as $key => $val) {
             $list[$key] = Form::list($val)->render();
         }
+
         return implode($seperator, $list);
+    }
+
+    if (!function_exists('form')) {
+        /**
+         * Return the form object.
+         *
+         *
+         * @return object
+         */
+        function form()
+        {
+            return app('form');
+        }
     }
 }

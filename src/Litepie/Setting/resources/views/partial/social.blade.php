@@ -18,7 +18,7 @@
             </button>
         </div>
     </div>
-    {!!Form::vertical_open()
+    {!!form()->vertical_open()
     ->id('form-edit')
     ->method('POST')
     ->files('true')
@@ -36,14 +36,14 @@
                                         <legend>{{trans('setting::setting.label.social.twitter')}}</legend>
                                         <div class="row">
                                             <div class="col-md-6 col-sm-12">
-                                                {!! Form::text('env[TWITTER_CLIENT_ID]')
+                                                {!!form()->text('env[TWITTER_CLIENT_ID]')
                                                 -> label(trans('setting::setting.label.social.twitter_client_id'))
                                                 -> value(env('TWITTER_CLIENT_ID'))
                                                 ->
                                                 placeholder(trans('setting::setting.placeholder.social.twitter_client_id'))!!}
                                             </div>
                                             <div class="col-md-6 col-sm-12">
-                                                {!! Form::password('env[TWITTER_CLIENT_SECRET]')
+                                                {!!form()->password('env[TWITTER_CLIENT_SECRET]')
                                                 -> label(trans('setting::setting.label.social.twitter_client_secret'))
                                                 -> value(env('TWITTER_CLIENT_SECRET'))
                                                 ->
@@ -55,14 +55,14 @@
                                         <legend>{{trans('setting::setting.label.social.facebook')}}</legend>
                                         <div class="row">
                                             <div class="col-md-6 col-sm-12">
-                                                {!! Form::text('env[FACEBOOK_CLIENT_ID]')
+                                                {!!form()->text('env[FACEBOOK_CLIENT_ID]')
                                                 -> label(trans('setting::setting.label.social.facebook_client_id'))
                                                 -> value(env('FACEBOOK_CLIENT_ID'))
                                                 ->
                                                 placeholder(trans('setting::setting.placeholder.social.facebook_client_id'))!!}
                                             </div>
                                             <div class="col-md-6 col-sm-12">
-                                                {!! Form::password('env[FACEBOOK_CLIENT_SECRET]')
+                                                {!!form()->password('env[FACEBOOK_CLIENT_SECRET]')
                                                 -> label(trans('setting::setting.label.social.facebook_client_secret'))
                                                 -> value(env('FACEBOOK_CLIENT_SECRET'))
                                                 ->
@@ -74,14 +74,14 @@
                                         <legend>{{trans('setting::setting.label.social.google')}}</legend>
                                         <div class="row">
                                             <div class="col-md-6 col-sm-12">
-                                                {!! Form::text('env[GOOGLE_CLIENT_ID]')
+                                                {!!form()->text('env[GOOGLE_CLIENT_ID]')
                                                 -> label(trans('setting::setting.label.social.google_client_id'))
                                                 -> value(env('GOOGLE_CLIENT_ID'))
                                                 ->
                                                 placeholder(trans('setting::setting.placeholder.social.google_client_id'))!!}
                                             </div>
                                             <div class="col-md-6 col-sm-12">
-                                                {!! Form::password('env[GOOGLE_CLIENT_SECRET]')
+                                                {!!form()->password('env[GOOGLE_CLIENT_SECRET]')
                                                 -> label(trans('setting::setting.label.social.google_client_secret'))
                                                 -> value(env('GOOGLE_CLIENT_SECRET'))
                                                 ->
@@ -93,14 +93,14 @@
                                         <legend>{{trans('setting::setting.label.social.linkedin')}}</legend>
                                         <div class="row">
                                             <div class="col-md-6 col-sm-12">
-                                                {!! Form::text('env[LINKEDIN_CLIENT_ID]')
+                                                {!!form()->text('env[LINKEDIN_CLIENT_ID]')
                                                 -> label(trans('setting::setting.label.social.linkedin_client_id'))
                                                 -> value(env('LINKEDIN_CLIENT_ID'))
                                                 ->
                                                 placeholder(trans('setting::setting.placeholder.social.linkedin_client_id'))!!}
                                             </div>
                                             <div class="col-md-6 col-sm-12">
-                                                {!! Form::password('env[LINKEDIN_CLIENT_SECRET]')
+                                                {!!form()->password('env[LINKEDIN_CLIENT_SECRET]')
                                                 -> label(trans('setting::setting.label.social.linkedin_client_secret'))
                                                 -> value(env('LINKEDIN_CLIENT_SECRET'))
                                                 ->
@@ -112,14 +112,14 @@
                                         <legend>{{trans('setting::setting.label.social.github')}}</legend>
                                         <div class="row">
                                             <div class="col-md-6 col-sm-12">
-                                                {!! Form::text('env[LINKEDIN_CLIENT_ID]')
+                                                {!!form()->text('env[LINKEDIN_CLIENT_ID]')
                                                 -> label(trans('setting::setting.label.social.github_client_id'))
                                                 -> value(env('LINKEDIN_CLIENT_ID'))
                                                 ->
                                                 placeholder(trans('setting::setting.placeholder.social.github_client_id'))!!}
                                             </div>
                                             <div class="col-md-6 col-sm-12">
-                                                {!! Form::password('env[LINKEDIN_CLIENT_SECRET]')
+                                                {!!form()->password('env[LINKEDIN_CLIENT_SECRET]')
                                                 -> label(trans('setting::setting.label.social.github_client_secret'))
                                                 -> value(env('LINKEDIN_CLIENT_SECRET'))
                                                 ->
@@ -136,5 +136,5 @@
             </div>
         </div>
     </div>
-    {!! Form::close() !!}
+    {!!form()->close() !!}
 </div>

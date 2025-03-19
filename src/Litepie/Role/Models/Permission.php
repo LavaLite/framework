@@ -3,7 +3,6 @@
 namespace Litepie\Role\Models;
 
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Litepie\Actions\Traits\Actionable;
 use Litepie\Database\Model;
 use Litepie\Database\Traits\Scopable;
 use Litepie\Database\Traits\Searchable;
@@ -36,5 +35,4 @@ class Permission extends Model
     {
         return $this->morphTo(__FUNCTION__, 'user_type', 'user_id');
     }
-
 }

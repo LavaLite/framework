@@ -184,6 +184,7 @@ trait SimpleNode
 
         return $result;
     }
+
     /**
      * Get parent column name.
      *

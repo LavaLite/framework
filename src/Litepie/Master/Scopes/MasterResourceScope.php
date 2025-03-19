@@ -2,10 +2,10 @@
 
 namespace Litepie\Master\Scopes;
 
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Scope;
+use Illuminate\Support\Facades\Auth;
 
 class MasterResourceScope implements Scope
 {
@@ -21,7 +21,7 @@ class MasterResourceScope implements Scope
     {
         $type = request()->type;
         $duilder->where('type', $type);
+
         return $this->onlyShowDeletedForAdmins($duilder);
     }
-
 }

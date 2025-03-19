@@ -6,7 +6,7 @@ use Litepie\Setting\Models\Setting as ModelSetting;
 
 class Setting
 {
-    var $setting = null;
+    public $setting = null;
 
     /**
      * Constructor.
@@ -31,6 +31,7 @@ class Setting
             if (is_null($ret)) {
                 $ret = $this->getValue($value, $default);
             }
+
             return $ret;
         }
     }
@@ -45,7 +46,6 @@ class Setting
         return $this->setValue($key, $value);
     }
 
-
     public function user($key, $default = null)
     {
         if (is_array($key)) {
@@ -57,8 +57,6 @@ class Setting
         return $this->getForuser($key, $default);
     }
 
-
-
     public function getValue($key, $default = null)
     {
         $row = $this->setting->where('key', $key)
@@ -66,6 +64,7 @@ class Setting
 
         if (!empty($row)) {
             $row = $row->toArray();
+
             return $row['value'];
         }
 
@@ -135,7 +134,7 @@ class Setting
         if ($request->hasFile($key.'[file]')) {
             $path = $request->get($key."['path']");
             $folder = substr("$path", 0, strrpos($path, '/'));
-            $file = substr("$path", (strrpos($path, '_') + 1));
+            $file = substr("$path", strrpos($path, '_') + 1);
             $res = $request->file($key['file'])->storeAs($folder, $file);
         }
     }

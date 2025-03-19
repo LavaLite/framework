@@ -3,7 +3,6 @@
 namespace Litepie\Form;
 
 use Closure;
-use Illuminate\Support\Str;
 use View;
 
 /**
@@ -94,7 +93,7 @@ class Lists
     }
 
     /**
-     * Returns the compiled string
+     * Returns the compiled string.
      *
      * @return string
      */
@@ -114,9 +113,9 @@ class Lists
         $data = $this->toArray();
         $view = strtolower($this->framework());
         $element = View::first([
-            "form::list." . $this->type,
-            "form::list.text",
-            "form::{$view}.list." . $this->type,
+            'form::list.'.$this->type,
+            'form::list.text',
+            "form::{$view}.list.".$this->type,
             "form::{$view}.list.text",
         ], $data)->render();
 
@@ -127,7 +126,7 @@ class Lists
         $data['element'] = $element;
 
         $labeled = View::first([
-            "form::list._label",
+            'form::list._label',
             "form::{$view}.list._label",
         ], $data)->render();
 
@@ -137,7 +136,7 @@ class Lists
         $data['labeled'] = $labeled;
 
         return View::first([
-            "form::list._wrapper",
+            'form::list._wrapper',
             "form::{$view}.list._wrapper",
         ], $data)->render();
     }
@@ -149,8 +148,8 @@ class Lists
      */
     public function toArray()
     {
-
         $array = (array) $this;
+
         return $array;
     }
 
@@ -176,6 +175,7 @@ class Lists
     public function raw($raw = true)
     {
         $this->isRaw = $raw;
+
         return $this;
     }
 
@@ -187,6 +187,7 @@ class Lists
     public function attribute($name, $value)
     {
         $this->attribute[$name] = $value;
+
         return $this;
     }
 
@@ -200,6 +201,7 @@ class Lists
     public function label($label)
     {
         $this->label = $label;
+
         return $this;
     }
 
@@ -213,6 +215,7 @@ class Lists
     public function type($type)
     {
         $this->type = $type;
+
         return $this;
     }
 
@@ -226,6 +229,7 @@ class Lists
     public function wrap($wrap = true)
     {
         $this->wrap = $wrap;
+
         return $this;
     }
 
@@ -239,6 +243,7 @@ class Lists
     public function col($column)
     {
         $this->column = $column;
+
         return $this;
     }
 
@@ -250,6 +255,7 @@ class Lists
     public function value($value)
     {
         $this->value = $value;
+
         return $this;
     }
 
@@ -261,7 +267,7 @@ class Lists
     public function name($name)
     {
         $this->name = $name;
+
         return $this;
     }
-
 }

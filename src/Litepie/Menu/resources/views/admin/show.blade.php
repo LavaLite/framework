@@ -17,7 +17,7 @@
         <div class="row">
             <div class="col-md-6">
                 <div id="item-menu-list" data-url="{!! guard_url('menu/menu/'.$menu['eid']) !!}">
-                    {!!Menu::menu($menu->key, 'menu::admin.menu.nestable')!!}
+                    {!!menu()->menu($menu->key, 'menu::admin.menu.nestable')!!}
                 </div>
             </div>
             <div class="col-md-6" id="sub-menu-edit" data-url="{!! guard_url('menu/menu/'.$menu['eid']) !!}">

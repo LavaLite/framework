@@ -77,7 +77,6 @@ abstract class AbstractResponse
         }
 
         return response()->json($this->getData(), 200);
-
     }
 
     /**
@@ -87,7 +86,7 @@ abstract class AbstractResponse
      */
     protected function ajax()
     {
-        header('Last-Modified: ' . gmdate('D, d M Y H:i:s') . ' GMT');
+        header('Last-Modified: '.gmdate('D, d M Y H:i:s').' GMT');
         header('Cache-Control: no-store, no-cache, must-revalidate'); // HTTP/1.1
         header('Cache-Control: post-check=0, pre-check=0', false);
         header('Pragma: no-cache'); // HTTP/1.0
@@ -109,7 +108,6 @@ abstract class AbstractResponse
      */
     protected function http()
     {
-
         $this->theme->prependTitle($this->getTitle());
 
         return $this->theme->of($this->getView(), $this->getData())->render();
@@ -124,21 +122,21 @@ abstract class AbstractResponse
     {
         if ($this->typeIs('json')) {
             return response()->json([
-                'data' => $this->getData(),
+                'data'    => $this->getData(),
                 'message' => $this->getMessage(),
-                'code' => $this->getCode(),
-                'status' => $this->getStatus(),
-                'url' => $this->getUrl(),
+                'code'    => $this->getCode(),
+                'status'  => $this->getStatus(),
+                'url'     => $this->getUrl(),
             ], $this->getStatusCode());
         }
 
         if ($this->typeIs('ajax')) {
             return response()->json([
-                'data' => $this->getData(),
+                'data'    => $this->getData(),
                 'message' => $this->getMessage(),
-                'code' => $this->getCode(),
-                'status' => $this->getStatus(),
-                'url' => $this->getUrl(),
+                'code'    => $this->getCode(),
+                'status'  => $this->getStatus(),
+                'url'     => $this->getUrl(),
             ], $this->getStatusCode());
         }
 
@@ -294,7 +292,6 @@ abstract class AbstractResponse
         return is_array($this->data) ? $this->data : [];
     }
 
-
     /**
      * Return auth guard for the current route.
      *
@@ -318,7 +315,7 @@ abstract class AbstractResponse
         $callable = preg_split('|[A-Z]|', $method);
 
         if (in_array($callable[0], ['set', 'prepend', 'append', 'has', 'get'])) {
-            $value = lcfirst(preg_replace('|^' . $callable[0] . '|', '', $method));
+            $value = lcfirst(preg_replace('|^'.$callable[0].'|', '', $method));
             array_unshift($parameters, $value);
             call_user_func_array([$this->theme, $callable[0]], $parameters);
         }

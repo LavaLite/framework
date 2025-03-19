@@ -155,6 +155,7 @@ class Team extends Model
         if ($this->exists) {
             $settings['groups']['users'] = ['show' => true, 'edit' => false];
         }
+
         return $settings;
     }
 }

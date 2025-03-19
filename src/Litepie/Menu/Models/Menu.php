@@ -3,6 +3,7 @@
 namespace Litepie\Menu\Models;
 
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Arr;
 use Litepie\Database\Model;
 use Litepie\Database\Traits\Scopable;
 use Litepie\Database\Traits\Searchable;
@@ -11,7 +12,6 @@ use Litepie\Filer\Traits\Filer;
 use Litepie\Hashids\Traits\Hashids;
 use Litepie\Node\Traits\SimpleNode;
 use Litepie\Trans\Traits\Translatable;
-use Illuminate\Support\Arr;
 
 class Menu extends Model
 {
@@ -69,7 +69,6 @@ class Menu extends Model
         return $this
             ->whereParentId(0)
             ->get();
-
     }
 
     public function updateTree($id, $json)

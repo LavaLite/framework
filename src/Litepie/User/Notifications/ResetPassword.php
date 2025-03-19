@@ -6,11 +6,11 @@ use Illuminate\Auth\Notifications\ResetPassword as IlluminateResetPassword;
 
 class ResetPassword extends IlluminateResetPassword
 {
-
     /**
      * Get the reset URL for the given notifiable.
      *
-     * @param  mixed  $notifiable
+     * @param mixed $notifiable
+     *
      * @return string
      */
     protected function resetUrl($notifiable)

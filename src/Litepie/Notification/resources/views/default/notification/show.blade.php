@@ -25,7 +25,7 @@
     <div class="container-fluid">
         <div class="row">
         <div class="col-lg-8 entry-form">
-            {!!Form::vertical_open()
+            {!!form()->vertical_open()
             ->id('app-form-show')
             ->class('app-form-show')
             ->method('PUT')
@@ -39,7 +39,7 @@
 
             @include('notification::notification.partials.form')
 
-            {!!Form::close()!!}
+            {!!form()->close()!!}
         </div>
 
             @include('notification::notification.partials.aside')

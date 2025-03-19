@@ -7,13 +7,11 @@ use Litepie\Role\Models\Permission;
 
 class PermissionPolicy
 {
-
-
     /**
      * Determine if the given user can view the permission.
      *
      * @param Authenticatable $user
-     * @param Permission $permission
+     * @param Permission      $permission
      *
      * @return bool
      */
@@ -38,7 +36,7 @@ class PermissionPolicy
      * Determine if the given user can update the given permission.
      *
      * @param Authenticatable $user
-     * @param Permission $permission
+     * @param Permission      $permission
      *
      * @return bool
      */

@@ -14,8 +14,7 @@ class AuthServiceProvider extends ServiceProvider
      */
     protected $policies = [
         // Bind Setting policy
-        \Litepie\Setting\Models\Setting::class 
-        => \Litepie\Setting\Policies\SettingPolicy::class,
+        \Litepie\Setting\Models\Setting::class => \Litepie\Setting\Policies\SettingPolicy::class,
     ];
 
     /**

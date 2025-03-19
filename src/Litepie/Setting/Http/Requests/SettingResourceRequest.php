@@ -19,7 +19,6 @@ class SettingResourceRequest extends AbstractRequest
             // Determine if the user is authorized to access setting module,
             return $this->user()->can('view', app(config('setting.setting.model.model')));
         }
-
     }
 
     /**
@@ -48,5 +47,4 @@ class SettingResourceRequest extends AbstractRequest
 
         ];
     }
-
 }

@@ -19,7 +19,7 @@
         </div>
     </div>
 
-    {!!Form::vertical_open()
+    {!!form()->vertical_open()
     ->method('PUT')
     ->id('form-edit')
     ->enctype('multipart/form-data')
@@ -27,5 +27,5 @@
 
     @include('setting::partial.entry', ['mode' => 'edit'])
 
-    {!!Form::close()!!}
+    {!!form()->close()!!}
 </div>

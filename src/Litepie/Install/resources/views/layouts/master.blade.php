@@ -1,4 +1,23 @@
-
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="csrf-token" content="{{ csrf_token() }}">
+        <title>@if (trim($__env->yieldContent('template_title')))@yield('template_title') | @endif {{ trans('installer_messages.title') }}</title>
+        <link rel="icon" type="image/png" href="{{ asset('installer/img/favicon/favicon-16x16.png') }}" sizes="16x16"/>
+        <link rel="icon" type="image/png" href="{{ asset('installer/img/favicon/favicon-32x32.png') }}" sizes="32x32"/>
+        <link rel="icon" type="image/png" href="{{ asset('installer/img/favicon/favicon-96x96.png') }}" sizes="96x96"/>
+        <link href="{{ asset('installer/css/style.min.css') }}" rel="stylesheet"/>
+        @yield('style')
+        <script>
+            window.Laravel = <?php echo json_encode([
+                'csrfToken' => csrf_token(),
+            ]); ?>
+        </script>
+    </head>
+    <body>
         <div class="master">
             <div class="box">
                 <div class="header">
@@ -7,7 +26,7 @@
                 <ul class="step">
                     <li class="step__divider"></li>
                     <li class="step__item {{ isActive('LaravelInstaller::final') }}">
-                        <i class="step__icon fa fa-flag-checkered" aria-hidden="true"></i>
+                        <i class="step__icon fa fa-server" aria-hidden="true"></i>
                     </li>
                     <li class="step__divider"></li>
                     <li class="step__item {{ isActive('LaravelInstaller::environment')}} {{ isActive('LaravelInstaller::environmentWizard')}} {{ isActive('LaravelInstaller::environmentClassic')}}">
@@ -70,7 +89,7 @@
                             </button>
                             <h4>
                                 <i class="fa fa-fw fa-exclamation-triangle" aria-hidden="true"></i>
-                                {{ trans('install::messages.forms.errorTitle') }}
+                                {{ trans('installer_messages.forms.errorTitle') }}
                             </h4>
                             <ul>
                                 @foreach($errors->all() as $error)
@@ -91,3 +110,5 @@
                 x.style.display = "none";
             };
         </script>
+    </body>
+</html>

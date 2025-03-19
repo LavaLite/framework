@@ -2,10 +2,12 @@
 
 return [
 
-    /**
+    /*
+     *
      * Shared translations.
+     *
      */
-    'title'  => 'Lavalite Installer',
+    'title'  => 'Laravel Installer',
     'next'   => 'Next Step',
     'back'   => 'Previous',
     'finish' => 'Install',
@@ -13,18 +15,22 @@ return [
         'errorTitle' => 'The Following errors occurred:',
     ],
 
-    /**
+    /*
+     *
      * Home page translations.
+     *
      */
     'welcome' => [
         'templateTitle' => 'Welcome',
-        'title'         => 'Lavalite Installer',
+        'title'         => 'Laravel Installer',
         'message'       => 'Easy Installation and Setup Wizard.',
         'next'          => 'Check Requirements',
     ],
 
-    /**
+    /*
+     *
      * Requirements page translations.
+     *
      */
     'requirements' => [
         'templateTitle' => 'Step 1 | Server Requirements',
@@ -32,8 +38,10 @@ return [
         'next'          => 'Check Permissions',
     ],
 
-    /**
+    /*
+     *
      * Permissions page translations.
+     *
      */
     'permissions' => [
         'templateTitle' => 'Step 2 | Permissions',
@@ -41,8 +49,10 @@ return [
         'next'          => 'Configure Environment',
     ],
 
-    /**
+    /*
+     *
      * Environment page translations.
+     *
      */
     'environment' => [
         'menu' => [
@@ -56,7 +66,7 @@ return [
             'templateTitle' => 'Step 3 | Environment Settings | Guided Wizard',
             'title'         => 'Guided <code>.env</code> Wizard',
             'tabs'          => [
-                'environment' => 'Enviornment',
+                'environment' => 'Environment',
                 'database'    => 'Database',
                 'application' => 'Application',
             ],
@@ -85,6 +95,7 @@ return [
                 'app_log_level_label_emergency'      => 'emergency',
                 'app_url_label'                      => 'App Url',
                 'app_url_placeholder'                => 'App Url',
+                'db_connection_failed'               => 'Could not connect to the database.',
                 'db_connection_label'                => 'Database Connection',
                 'db_connection_label_mysql'          => 'mysql',
                 'db_connection_label_sqlite'         => 'sqlite',
@@ -100,13 +111,6 @@ return [
                 'db_username_placeholder'            => 'Database User Name',
                 'db_password_label'                  => 'Database Password',
                 'db_password_placeholder'            => 'Database Password',
-                'user_details'                       => 'User details',
-                'user_details_label_admin'           => 'Admin user email',
-                'user_details_label_client'          => 'Client user email',
-                'user_details_label_user'            => 'User email',
-                'user_details_label_admin_password'  => 'Admin password',
-                'user_details_label_client_password' => 'Client password',
-                'user_details_label_user_password'   => 'User password',
 
                 'app_tabs' => [
                     'more_info'                => 'More Info',
@@ -148,7 +152,6 @@ return [
                 ],
                 'buttons' => [
                     'setup_database'    => 'Setup Database',
-                    'setup_users'       => 'Setup Application',
                     'setup_application' => 'Setup Application',
                     'install'           => 'Install',
                 ],
@@ -167,15 +170,19 @@ return [
 
     'install' => 'Install',
 
-    /**
+    /*
+     *
      * Installed Log translations.
+     *
      */
     'installed' => [
-        'success_log_message' => 'Lavalite Installer successfully INSTALLED on ',
+        'success_log_message' => 'Laravel Installer successfully INSTALLED on ',
     ],
 
-    /**
+    /*
+     *
      * Final page translations.
+     *
      */
     'final' => [
         'title'         => 'Installation Finished',
@@ -183,31 +190,38 @@ return [
         'finished'      => 'Application has been successfully installed.',
         'migration'     => 'Migration &amp; Seed Console Output:',
         'console'       => 'Application Console Output:',
-        'user'          => 'User login credentials:',
         'log'           => 'Installation Log Entry:',
         'env'           => 'Final .env File:',
         'exit'          => 'Click here to exit',
     ],
 
-    /**
-     * Update specific translations.
+    /*
+     *
+     * Update specific translations
+     *
      */
     'updater' => [
-        /**
+        /*
+         *
          * Shared translations.
+         *
          */
-        'title' => 'Lavalite Updater',
+        'title' => 'Laravel Updater',
 
-        /**
+        /*
+         *
          * Welcome page translations for update feature.
+         *
          */
         'welcome' => [
             'title'   => 'Welcome To The Updater',
             'message' => 'Welcome to the update wizard.',
         ],
 
-        /**
+        /*
+         *
          * Welcome page translations for update feature.
+         *
          */
         'overview' => [
             'title'           => 'Overview',
@@ -215,8 +229,10 @@ return [
             'install_updates' => 'Install Updates',
         ],
 
-        /**
+        /*
+         *
          * Final page translations.
+         *
          */
         'final' => [
             'title'    => 'Finished',
@@ -225,7 +241,7 @@ return [
         ],
 
         'log' => [
-            'success_message' => 'Lavalite Installer successfully UPDATED on ',
+            'success_message' => 'Laravel Installer successfully UPDATED on ',
         ],
     ],
 ];

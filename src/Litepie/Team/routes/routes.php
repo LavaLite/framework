@@ -5,8 +5,8 @@
 Route::group(
     [
         'prefix' => '{guard}/team',
-        'as' => 'guard.',
-        'where' => ['guard' => implode('|', array_keys(config('auth.guards')))],
+        'as'     => 'guard.',
+        'where'  => ['guard' => implode('|', array_keys(config('auth.guards')))],
     ],
     function () {
         Route::post('team/attach/{team}', 'TeamResourceController@attach');

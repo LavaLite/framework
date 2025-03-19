@@ -4,10 +4,10 @@ namespace Litepie\Form;
 
 use Closure;
 use Illuminate\Container\Container;
+use Illuminate\Support\Facades\View;
 use Illuminate\Support\Str;
 use Litepie\Form\Field\Attributes;
 use Litepie\Form\Field\Types;
-use Illuminate\Support\Facades\View;
 
 /**
  * Abstracts general fields parameters (type, value, name) and
@@ -210,7 +210,7 @@ class Fields
     }
 
     /**
-     * Returns the compiled string
+     * Returns the compiled string.
      *
      * @return string
      */
@@ -232,9 +232,9 @@ class Fields
         $data = $this->toArray();
         $this->incrementFileInstanceCount();
         $element = View::first([
-            "form::form." . $this->element,
-            "form::$view.form." . $this->element,
-            "form::form.input",
+            'form::form.'.$this->element,
+            "form::$view.form.".$this->element,
+            'form::form.input',
             "form::{$view}.form.input",
         ], $data)->render();
         if ($this->isRaw || $this->element == 'hidden') {
@@ -243,7 +243,7 @@ class Fields
 
         $data['element'] = $element;
         $labeled = View::first([
-            "form:form._label",
+            'form:form._label',
             "form::{$view}.form._label",
         ], $data)->render();
 
@@ -253,7 +253,7 @@ class Fields
         $data['labeled'] = $labeled;
 
         return View::first([
-            "form::form._wrapper",
+            'form::form._wrapper',
             "form::{$view}.form._wrapper",
         ], $data)->render();
     }
@@ -269,6 +269,7 @@ class Fields
         $array = (array) $this;
         $array['attributes'] = $this->prepapareAttribute();
         $array['isInputGroup'] = $this->isInputGroup();
+
         return $array;
     }
 

@@ -6,5 +6,4 @@ use Spatie\Activitylog\LogOptions as SpatieLogOptions;
 
 class LogOptions extends SpatieLogOptions
 {
-
 }

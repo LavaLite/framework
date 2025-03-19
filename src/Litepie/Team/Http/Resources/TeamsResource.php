@@ -6,10 +6,9 @@ use Illuminate\Http\Resources\Json\JsonResource;
 
 class TeamsResource extends JsonResource
 {
-
     public function itemLink()
     {
-        return guard_url('team/team') . '/' . $this->getRouteKey();
+        return guard_url('team/team').'/'.$this->getRouteKey();
     }
 
     public function title()
@@ -28,20 +27,20 @@ class TeamsResource extends JsonResource
     public function toArray($request)
     {
         return [
-            'id' => $this->getRouteKey(),
-            'title' => $this->title(),
-            'name' => $this->name,
+            'id'          => $this->getRouteKey(),
+            'title'       => $this->title(),
+            'name'        => $this->name,
             'description' => $this->description,
-            'image' => [
+            'image'       => [
                 'main' => url($this->defaultImage('images', 'xs')),
-                'sub' => @$this->client->picture,
+                'sub'  => @$this->client->picture,
             ],
-            'status' => $this->status,
+            'status'     => $this->status,
             'created_at' => !is_null($this->created_at) ? $this->created_at->format('Y-m-d H:i:s') : null,
             'updated_at' => !is_null($this->updated_at) ? $this->updated_at->format('Y-m-d H:i:s') : null,
-            'meta' => [
+            'meta'       => [
                 'exists' => $this->exists(),
-                'link' => $this->itemLink(),
+                'link'   => $this->itemLink(),
             ],
         ];
     }

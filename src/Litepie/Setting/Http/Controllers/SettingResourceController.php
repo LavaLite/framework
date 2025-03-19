@@ -2,7 +2,9 @@
 
 namespace Litepie\Setting\Http\Controllers;
 
+use Closure;
 use Exception;
+use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Litepie\Http\Controllers\ResourceController as BaseController;
 use Litepie\Setting\Actions\SettingActions;
@@ -14,21 +16,25 @@ use Litepie\Setting\Http\Requests\SettingResourceRequest;
  */
 class SettingResourceController extends BaseController
 {
-
     /**
      * Initialize setting resource controller.
      *
      * @return null
      */
-    public function __construct()
+    public static function middleware(): array
     {
-        parent::__construct();
-        $this->middleware(function ($request, $next) {
-            $this->form = SettingForm::setAttributes()
-                ->toArray();
-            $this->modules = $this->modules(config('setting.modules'), 'setting', guard_url('setting'));
-            return $next($request);
-        });
+        return array_merge(
+            parent::middleware(),
+            [
+                function (Request $request, Closure $next) {
+                    self::$form = SettingForm::setAttributes()
+                        ->toArray();
+                    self::$modules = self::modules(config('setting.modules'), 'setting', guard_url('setting'));
+
+                    return $next($request);
+                },
+            ]
+        );
     }
 
     /**
@@ -38,13 +44,13 @@ class SettingResourceController extends BaseController
      */
     public function index(SettingResourceRequest $request)
     {
-        $form = $this->form;
-        $modules = $this->modules;
-        return $this->response->setMetaTitle(trans('setting::setting.names'))
+        $form = self::$form;
+        $modules = self::$modules;
+
+        return self::$response->setMetaTitle(trans('setting::setting.names'))
             ->view('setting::index')
             ->data(compact('modules', 'form'))
             ->output();
-
     }
 
     /**
@@ -57,13 +63,13 @@ class SettingResourceController extends BaseController
      */
     public function show($group)
     {
-
         $groups = explode('.', $group)[0];
-        $this->form['groups'] = Arr::get($this->form['groups'], $groups . '.groups' );
+        $this->form['groups'] = Arr::get($this->form['groups'], $groups.'.groups');
         $this->form['fields'] = Arr::get(Arr::undot($this->form['fields']), $group);
-        dd($this->form['fields'], $group . '.groups');
-        $form = $this->form;
-        return $this->response->setMetaTitle(trans('setting::setting.names'))
+        dd($this->form['fields'], $group.'.groups');
+        $form = self::$form;
+
+        return self::$response->setMetaTitle(trans('setting::setting.names'))
             ->view('setting::partial.show')
             ->data(compact('form', 'group'))
             ->output();
@@ -104,19 +110,18 @@ class SettingResourceController extends BaseController
                 }
             }
 
-            return $this->response->message(trans('messages.success.updated', ['Module' => trans('setting::setting.name')]))
+            return self::$response->message(trans('messages.success.updated', ['Module' => trans('setting::setting.name')]))
                 ->code(204)
                 ->status('success')
                 ->url(guard_url("/setting/setting/$type"))
                 ->redirect();
         } catch (Exception $e) {
-            return $this->response->message($e->getMessage())
+            return self::$response->message($e->getMessage())
                 ->code(400)
                 ->status('error')
                 ->url(guard_url("/setting/setting/$type"))
                 ->redirect();
         }
-
     }
 
     /**

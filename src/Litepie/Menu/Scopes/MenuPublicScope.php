@@ -8,7 +8,6 @@ use Illuminate\Database\Eloquent\Scope;
 
 class MenuPublicScope implements Scope
 {
-    
     public function onlyPublished($duilder)
     {
         return $duilder->where('status', 'Published');

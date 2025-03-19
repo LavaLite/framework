@@ -46,8 +46,8 @@ trait Selectable
         $options = $this->prepareOptionsArray($options, $this->select_value, $this->select_text);
         data_fill($options, '*.selected', false);
         data_fill($options, '*.selected', false);
-        data_fill($options, '*.' . $this->select_value, '');
-        data_fill($options, '*.' . $this->select_text, '');
+        data_fill($options, '*.'.$this->select_value, '');
+        data_fill($options, '*.'.$this->select_text, '');
 
         $value = $this->value;
         if (empty($value)) {

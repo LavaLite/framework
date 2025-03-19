@@ -18,7 +18,7 @@
             </button>
         </div>
     </div>
-    {!!Form::vertical_open()
+    {!!form()->vertical_open()
     ->id('form-edit')
     ->method('POST')
     ->files('true')
@@ -35,19 +35,19 @@
                                     <fieldset>
                                         <div class="row">
                                             <div class="col-md-12">
-                                                {!! Form::text('env[GOOGLE_ANALYTICS]')
+                                                {!!form()->text('env[GOOGLE_ANALYTICS]')
                                                 ->label(trans('setting::setting.label.google.analytics'))
                                                 ->value(env('GOOGLE_ANALYTICS'))
                                                 ->placeholder(trans('setting::setting.placeholder.google.analytics'))!!}
                                             </div>
                                             <div class="col-md-6">
-                                                {!! Form::text('env[RECAPTCHA_SITE_KEY]')
+                                                {!!form()->text('env[RECAPTCHA_SITE_KEY]')
                                                 ->label(trans('setting::setting.label.google.recsitekey'))
                                                 ->value(env('RECAPTCHA_SITE_KEY'))
                                                 ->placeholder(trans('setting::setting.placeholder.google.recsitekey'))!!}
                                             </div>
                                             <div class="col-md-6">
-                                                {!! Form::text('env[RECAPTCHA_SECRET_KEY]')
+                                                {!!form()->text('env[RECAPTCHA_SECRET_KEY]')
                                                 ->label(trans('setting::setting.label.google.recsecretkey'))
                                                 ->value(env('RECAPTCHA_SECRET_KEY'))
                                                 ->placeholder(trans('setting::setting.placeholder.google.recsecretkey'))!!}
@@ -63,5 +63,5 @@
             </div>
         </div>
     </div>
-    {!! Form::close() !!}
+    {!!form()->close() !!}
 </div>

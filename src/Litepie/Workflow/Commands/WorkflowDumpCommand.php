@@ -3,13 +3,11 @@
 namespace Litepie\Workflow\Commands;
 
 use Config;
-use Workflow;
 use Exception;
 use Illuminate\Console\Command;
 use Symfony\Component\Process\Process;
 use Symfony\Component\Workflow\Dumper\GraphvizDumper;
-use Symfony\Component\Workflow\Workflow as SymfonyWorkflow;
-
+use Workflow;
 
 class WorkflowDumpCommand extends Command
 {
@@ -38,10 +36,10 @@ class WorkflowDumpCommand extends Command
      */
     public function handle()
     {
-        $workflowName   = $this->argument('workflow');
-        $format         = $this->option('format');
-        $class          = $this->option('class');
-        $config         = Config::get('workflow');
+        $workflowName = $this->argument('workflow');
+        $format = $this->option('format');
+        $class = $this->option('class');
+        $config = Config::get('workflow');
 
         if (!isset($config[$workflowName])) {
             throw new Exception("Workflow $workflowName is not configured.");
@@ -52,8 +50,8 @@ class WorkflowDumpCommand extends Command
             ' Please specify a valid support class with the --class option.');
         }
 
-        $subject    = new $class;
-        $workflow   = Workflow::get($subject, $workflowName);
+        $subject = new $class();
+        $workflow = Workflow::get($subject, $workflowName);
         $definition = $workflow->getDefinition();
 
         $dumper = new GraphvizDumper();

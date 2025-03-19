@@ -8,13 +8,13 @@ use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 class DispatcherAdapter implements EventDispatcherInterface
 {
     private const EVENT_MAP = [
-        'guard' => GuardEvent::class,
-        'leave' => LeaveEvent::class,
+        'guard'      => GuardEvent::class,
+        'leave'      => LeaveEvent::class,
         'transition' => TransitionEvent::class,
-        'enter' => EnterEvent::class,
-        'entered' => EnteredEvent::class,
-        'completed' => CompletedEvent::class,
-        'announce' => AnnounceEvent::class,
+        'enter'      => EnterEvent::class,
+        'entered'    => EnteredEvent::class,
+        'completed'  => CompletedEvent::class,
+        'announce'   => AnnounceEvent::class,
     ];
 
     protected $dispatcher;
@@ -57,7 +57,7 @@ class DispatcherAdapter implements EventDispatcherInterface
 
     private function shouldDispatchPlainClassEvent(?string $eventName = null)
     {
-        if (! $eventName) {
+        if (!$eventName) {
             return false;
         }
 
@@ -72,7 +72,7 @@ class DispatcherAdapter implements EventDispatcherInterface
 
         $event = $this->parseWorkflowEventFromEventName($eventName);
 
-        if (! $event) {
+        if (!$event) {
             return WorkflowEvent::newFromBase($symfonyEvent);
         }
 
@@ -83,15 +83,15 @@ class DispatcherAdapter implements EventDispatcherInterface
 
     private function parseWorkflowEventFromEventName(string $eventName)
     {
-        $eventSearch = preg_match('/\.(?P<event>' . implode('|', array_keys(static::EVENT_MAP)) . ')(\.|$)/i', $eventName, $eventMatches);
+        $eventSearch = preg_match('/\.(?P<event>'.implode('|', array_keys(static::EVENT_MAP)).')(\.|$)/i', $eventName, $eventMatches);
 
-        if (! $eventSearch) {
+        if (!$eventSearch) {
             // no results or error
             return false;
         }
         $event = $eventMatches['event'] ?? false;
 
-        if (! array_key_exists($event, static::EVENT_MAP)) {
+        if (!array_key_exists($event, static::EVENT_MAP)) {
             // fallback for no mapped event known
             return false;
         }

@@ -19,7 +19,7 @@
                         </button>
                     </div>
                 </div>
-                {!!Form::vertical_open()
+                {!!form()->vertical_open()
                 ->method('PUT')
                 ->id('form-edit')
                 ->enctype('multipart/form-menu')
@@ -27,7 +27,7 @@
 
                 @include('menu::admin.partial.submenu', ['mode' => 'edit'])
 
-                {!!Form::close()!!}
+                {!!form()->close()!!}
             </div>
         </div>
     </div>

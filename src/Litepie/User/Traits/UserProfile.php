@@ -7,8 +7,6 @@ namespace Litepie\User\Traits;
  */
 trait UserProfile
 {
-
-
     /**
      * Returns the profile picture of the user.
      *
@@ -17,16 +15,14 @@ trait UserProfile
     public function getPictureAttribute($value)
     {
         if (!empty($this->photo)) {
-            return url($this->defaultImage('photo'));
+            return url($this->defaultImage('photos'));
         }
-
         if ($this->sex == 'female') {
             return asset('img/avatar/female.png');
         }
 
         return asset('img/avatar/male.png');
     }
-
 
     /**
      * Returns the joined date of the user.

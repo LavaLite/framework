@@ -7,13 +7,11 @@ use Litepie\Notification\Models\Notification;
 
 class NotificationPolicy
 {
-
-
     /**
      * Determine if the given user can view the notification.
      *
      * @param Authenticatable $user
-     * @param Notification $notification
+     * @param Notification    $notification
      *
      * @return bool
      */
@@ -42,7 +40,7 @@ class NotificationPolicy
      * Determine if the given user can update the given notification.
      *
      * @param Authenticatable $user
-     * @param Notification $notification
+     * @param Notification    $notification
      *
      * @return bool
      */

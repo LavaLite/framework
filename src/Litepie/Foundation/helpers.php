@@ -82,18 +82,16 @@ if (!function_exists('blade_compile')) {
         // will throw it out to the exception handler.
         try {
             eval('?>'.$compiled);
-        }
+        } catch (Exception $e) {
+            // If we caught an exception, we'll silently flush the output
 
-        catch (Exception $e) {
-        // If we caught an exception, we'll silently flush the output
-
-        // buffer so that no partially rendered views get thrown out
-        // to the client and confuse the user with junk.
-        ob_get_clean();
+            // buffer so that no partially rendered views get thrown out
+            // to the client and confuse the user with junk.
+            ob_get_clean();
 
             throw $e;
         }
- 
+
         $content = ob_get_clean();
         $content = str_replace(['@param  ', '@return  ', '@var  ', '@throws  '], ['@param ', '@return ', '@var ', '@throws '], $content);
 
@@ -203,7 +201,6 @@ if (!function_exists('guard')) {
         } else {
             config()->set('global.guard', $guard);
             app('auth')->shouldUse($guard);
-
         }
     }
 }
@@ -219,8 +216,11 @@ if (!function_exists('broker')) {
     function broker()
     {
         $guard = guard();
-        return config('auth.guards.' . $guard . '.provider', 
-                config('auth.guards.' . $guard . '.password', 
+
+        return config(
+            'auth.guards.'.$guard.'.provider',
+            config(
+                'auth.guards.'.$guard.'.password',
                 config('auth.defaults.passwords')
             )
         );
@@ -340,5 +340,29 @@ if (!function_exists('format_time')) {
     function format_time($time, $format = 'h:i A')
     {
         return date($format, strtotime($time));
+    }
+
+    if (!function_exists('menu')) {
+        /**
+         * Return Menu..
+         *
+         * @return Menu
+         */
+        function menu()
+        {
+            return app('menu');
+        }
+    }
+
+    if (!function_exists('role')) {
+        /**
+         * Return role..
+         *
+         * @return role
+         */
+        function role()
+        {
+            return app('role');
+        }
     }
 }

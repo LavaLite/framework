@@ -2,8 +2,6 @@
 
 namespace Litepie\Notification;
 
-use User;
-
 class Notifications
 {
     /**

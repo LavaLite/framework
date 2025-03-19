@@ -2,10 +2,10 @@
 
 namespace Litepie\User\Scopes;
 
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Scope;
+use Illuminate\Support\Facades\Auth;
 
 class UserResourceScope implements Scope
 {
@@ -22,12 +22,13 @@ class UserResourceScope implements Scope
         $status = request()->status;
         switch ($status) {
             case 'active':
-                $builder =  $builder->where('status', 'Active');
+                $builder = $builder->where('status', 'Active');
                 break;
             case 'inactive':
-                $builder =  $builder->where('status', '!=', 'Active');
+                $builder = $builder->where('status', '!=', 'Active');
                 break;
         }
+
         return $builder;
     }
 }

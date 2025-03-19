@@ -7,13 +7,11 @@ use Litepie\Team\Models\Team;
 
 class TeamPolicy
 {
-
-
     /**
      * Determine if the given user can view the team.
      *
      * @param Authenticatable $user
-     * @param Team $team
+     * @param Team            $team
      *
      * @return bool
      */
@@ -42,7 +40,7 @@ class TeamPolicy
      * Determine if the given user can update the given team.
      *
      * @param Authenticatable $user
-     * @param Team $team
+     * @param Team            $team
      *
      * @return bool
      */

@@ -5,7 +5,7 @@ namespace Litepie\Setting\Actions;
 use Illuminate\Support\Str;
 use Litepie\Actions\Concerns\AsAction;
 use Litepie\Actions\Traits\LogsActions;
-use Litepie\Database\RequestScope;
+use Litepie\Database\Scopes\RequestScope;
 use Litepie\Setting\Models\Setting;
 use Litepie\Setting\Scopes\SettingResourceScope;
 
@@ -22,13 +22,13 @@ class SettingActions
 
         $function = Str::camel($action);
 
-        event('setting.setting.action.' . $action . 'ing', [$request]);
+        event('setting.setting.action.'.$action.'ing', [$request]);
         $data = $this->$function($request);
-        event('setting.setting.action.' . $action . 'ed', [$data]);
+        event('setting.setting.action.'.$action.'ed', [$data]);
 
         $this->logsAction();
-        return $data;
 
+        return $data;
     }
 
     public function paginate(array $request)
@@ -53,11 +53,13 @@ class SettingActions
         return $setting;
     }
 
-    function empty(array $request) {
+    public function empty(array $request)
+    {
         return $this->model->forceDelete();
     }
 
-    function restore(array $request) {
+    public function restore(array $request)
+    {
         return $this->model->restore();
     }
 
@@ -67,9 +69,10 @@ class SettingActions
         $ids = collect($ids)->map(function ($id) {
             return hashids_decode($id);
         });
+
         return $this->model->whereIn('id', $ids)->delete();
     }
-    
+
     public function get($key, $default = null)
     {
         return settings()->get($key, $default);
@@ -99,18 +102,17 @@ class SettingActions
     {
         return $this->model->updateOrCreate(
             [
-                'key' => $arr['key'],
-                'user_id' => user_id(),
+                'key'       => $arr['key'],
+                'user_id'   => user_id(),
                 'user_type' => user_type(),
             ],
             [
-                'key' => $arr['key'],
-                'user_id' => user_id(),
+                'key'       => $arr['key'],
+                'user_id'   => user_id(),
                 'user_type' => user_type(),
-                'value' => $arr['value'],
+                'value'     => $arr['value'],
             ]
         );
-
     }
 
     /**
@@ -123,10 +125,10 @@ class SettingActions
      */
     public function upload($arr)
     {
-        if (isset($arr['request']) && $arr['request']->hasFile($arr['key'] . '[file]')) {
-            $path = $arr['request']->get($arr['key'] . "['path']");
+        if (isset($arr['request']) && $arr['request']->hasFile($arr['key'].'[file]')) {
+            $path = $arr['request']->get($arr['key']."['path']");
             $folder = substr("$path", 0, strrpos($path, '/'));
-            $file = substr("$path", (strrpos($path, '_') + 1));
+            $file = substr("$path", strrpos($path, '_') + 1);
             $res = $arr['request']->file($arr['key']['file'])->storeAs($folder, $file);
         }
     }

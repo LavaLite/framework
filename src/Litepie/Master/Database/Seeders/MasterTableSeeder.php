@@ -10,7 +10,7 @@ class MasterTableSeeder extends Seeder
     public function run()
     {
         DB::table('litepie_master_masters')->insert([
-            
+
         ]);
 
         DB::table('permissions')->insert([
@@ -33,7 +33,7 @@ class MasterTableSeeder extends Seeder
         ]);
 
         DB::table('menus')->insert([
-        
+
             // Admin menu
             [
                 'parent_id'   => 1,
@@ -46,7 +46,7 @@ class MasterTableSeeder extends Seeder
                 'order'       => 190,
                 'status'      => 1,
             ],
-            
+
             // User menu.
             [
                 'parent_id'   => 2,
@@ -76,7 +76,7 @@ class MasterTableSeeder extends Seeder
         ]);
 
         DB::table('settings')->insert([
-            
+
         ]);
     }
 }

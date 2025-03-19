@@ -14,7 +14,7 @@ trait SendNotification
             return;
         }
 
-        foreach($params as $param) {
+        foreach ($params as $param) {
             app(Notifier::class)
                 ->model($this->getNotificationModel())
                 ->initiate($param)
@@ -28,7 +28,7 @@ trait SendNotification
         if (empty($params)) {
             return;
         }
-        foreach($params as $param) {
+        foreach ($params as $param) {
             app(Notifier::class)
                 ->model($this->getNotificationModel())
                 ->initiate($param)
@@ -39,10 +39,11 @@ trait SendNotification
     private function getNotificationParameters($type = 'action')
     {
         if ($type == 'action') {
-            $config = $this->namespace . '.actions.' . $this->action . '.notify';
+            $config = $this->namespace.'.actions.'.$this->action.'.notify';
         } elseif ($type == 'workflow') {
-            $config = $this->namespace . '.workflow.' . $this->transition . '.notify';
+            $config = $this->namespace.'.workflow.'.$this->transition.'.notify';
         }
+
         return config($config, []);
     }
 
@@ -50,5 +51,4 @@ trait SendNotification
     {
         return $this->model;
     }
-
 }

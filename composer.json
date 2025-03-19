@@ -15,22 +15,21 @@
         }
     ],
     "require": {
-        "php": "^8.1",
-        "hashids/hashids": "~4.1",
-        "intervention/imagecache": "~2.5",
-        "laravel/socialite": "~5.1",
-        "league/fractal": "~0.19",
-        "mcamara/laravel-localization": "^1.8",
-        "rachidlaasri/laravel-installer": "^4.0",
-        "spatie/laravel-activitylog": "^4.7",
-        "league/flysystem-aws-s3-v3": "^3.0",
-        "lorisleiva/laravel-actions": "^2.4",
-        "symfony/workflow": "^6.0",
-        "symfony/process": "^6.0",
-        "symfony/event-dispatcher-contracts": "^2.4|^3.0",
-        "illuminate/console": "^9.0|^10.0",
-        "illuminate/support": "^9.0|^10.0",
-        "illuminate/contracts": "^9.0|^10.0"
+        "php": "^8.2",
+        "hashids/hashids": "^4.1",
+        "intervention/image": "^3.11",
+        "laravel/socialite": "^5.9",
+        "league/fractal": "^0.20",
+        "mcamara/laravel-localization": "^2.3",
+        "spatie/laravel-activitylog": "^4.9",
+        "league/flysystem-aws-s3-v3": "^3.27",
+        "lorisleiva/laravel-actions": "^2.6",
+        "symfony/workflow": "^7.2",
+        "symfony/process": "^7.2",
+        "symfony/event-dispatcher-contracts": "^3.3",
+        "illuminate/console": "^12.0",
+        "illuminate/support": "^12.0",
+        "illuminate/contracts": "^12.0"
     },
     "replace": {
         "litepie/activities": "self.version",
@@ -50,18 +49,18 @@
         "litepie/user": "self.version"
     },
     "require-dev": {
-        "aws/aws-sdk-php": "^3.155",
-        "doctrine/dbal": "^2.6|^3.0",
-        "filp/whoops": "^2.8",
-        "guzzlehttp/guzzle": "^6.5.5|^7.0.1",
-        "league/flysystem-cached-adapter": "^1.1",
-        "mockery/mockery": "^1.4.2",
-        "orchestra/testbench-core": "^6.23",
-        "pda/pheanstalk": "^4.0",
-        "phpunit/phpunit": "^8.5.8|^9.3.3",
-        "predis/predis": "^1.1.2",
-        "symfony/cache": "^5.1.4",
-        "laravel/framework": "^10.4"
+        "aws/aws-sdk-php": "^3.329",
+        "doctrine/dbal": "^3.7",
+        "filp/whoops": "^2.15",
+        "guzzlehttp/guzzle": "^7.8",
+        "league/flysystem-cached-adapter": "^1.2",
+        "mockery/mockery": "^1.6",
+        "orchestra/testbench-core": "^8.0",
+        "pda/pheanstalk": "^5.0",
+        "phpunit/phpunit": "^10.3",
+        "predis/predis": "^2.2",
+        "symfony/cache": "^7.3",
+        "laravel/framework": "^12.5"
     },
     "autoload": {
         "files": [

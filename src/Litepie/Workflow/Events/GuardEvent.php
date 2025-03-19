@@ -2,18 +2,18 @@
 
 namespace Litepie\Workflow\Events;
 
+use Symfony\Component\Workflow\Event\Event;
+use Symfony\Component\Workflow\Event\GuardEvent as SymfonyGuardEvent;
 use Symfony\Component\Workflow\Marking;
 use Symfony\Component\Workflow\Transition;
-use Symfony\Component\Workflow\Event\Event;
 use Symfony\Component\Workflow\WorkflowInterface;
-use Symfony\Component\Workflow\Event\GuardEvent as SymfonyGuardEvent;
 
 /**
- * @method bool isBlocked()
- * @method void setBlocked(bool $blocked, string $message = null)
- * @method Transition getTransition()
+ * @method bool                  isBlocked()
+ * @method void                  setBlocked(bool $blocked, string $message = null)
+ * @method Transition            getTransition()
  * @method TransitionBlockerList getTransitionBlockerList()
- * @method void addTransitionBlocker(TransitionBlocker $transitionBlocker)
+ * @method void                  addTransitionBlocker(TransitionBlocker $transitionBlocker)
  */
 class GuardEvent extends BaseEvent
 {
@@ -29,7 +29,7 @@ class GuardEvent extends BaseEvent
     public function __call($name, $arguments)
     {
         if (method_exists($this->symfonyProxyEvent, $name)) {
-            return call_user_func_array([$this->symfonyProxyEvent,$name], $arguments);
+            return call_user_func_array([$this->symfonyProxyEvent, $name], $arguments);
         }
     }
 
@@ -47,7 +47,7 @@ class GuardEvent extends BaseEvent
     }
 
     /**
-     * Creates a new instance from the base Symfony event
+     * Creates a new instance from the base Symfony event.
      */
     public static function newFromBase(Event $symfonyEvent)
     {

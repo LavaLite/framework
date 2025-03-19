@@ -1,25 +1,25 @@
-@extends('install::layouts.master')
+@extends('vendor.installer.layouts.master')
 
 @section('template_title')
-    {{ trans('install::messages.environment.menu.templateTitle') }}
+    {{ trans('installer_messages.environment.menu.templateTitle') }}
 @endsection
 
 @section('title')
     <i class="fa fa-cog fa-fw" aria-hidden="true"></i>
-    {!! trans('install::messages.environment.menu.title') !!}
+    {!! trans('installer_messages.environment.menu.title') !!}
 @endsection
 
 @section('container')
 
     <p class="text-center">
-        {!! trans('install::messages.environment.menu.desc') !!}
+        {!! trans('installer_messages.environment.menu.desc') !!}
     </p>
     <div class="buttons">
         <a href="{{ route('LaravelInstaller::environmentWizard') }}" class="button button-wizard">
-            <i class="fa fa-sliders fa-fw" aria-hidden="true"></i> {{ trans('install::messages.environment.menu.wizard-button') }}
+            <i class="fa fa-sliders fa-fw" aria-hidden="true"></i> {{ trans('installer_messages.environment.menu.wizard-button') }}
         </a>
         <a href="{{ route('LaravelInstaller::environmentClassic') }}" class="button button-classic">
-            <i class="fa fa-code fa-fw" aria-hidden="true"></i> {{ trans('install::messages.environment.menu.classic-button') }}
+            <i class="fa fa-code fa-fw" aria-hidden="true"></i> {{ trans('installer_messages.environment.menu.classic-button') }}
         </a>
     </div>
 

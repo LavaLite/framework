@@ -27,7 +27,7 @@ trait InputGroup
      *
      * @param  array options
      *
-     * @return object|this This object instance
+     * @return object|$this This object instance
      */
     public function append($append)
     {
@@ -43,7 +43,7 @@ trait InputGroup
      *
      * @param  array options
      *
-     * @return object|this This object instance
+     * @return object|$this This object instance
      */
     public function prepend($prepend)
     {

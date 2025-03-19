@@ -41,7 +41,7 @@ trait Checkable
      *
      * @param  array options
      *
-     * @return object|this This object instance
+     * @return object|$this This object instance
      */
     public function inline($inline = true)
     {
@@ -80,8 +80,8 @@ trait Checkable
         $options = $this->prepareOptionsArray($options, $this->check_value, $this->check_text);
         data_fill($options, '*.checked', false);
         data_fill($options, '*.checked', false);
-        data_fill($options, '*.' . $this->check_value, '');
-        data_fill($options, '*.' . $this->check_text, '');
+        data_fill($options, '*.'.$this->check_value, '');
+        data_fill($options, '*.'.$this->check_text, '');
 
         $value = $this->value;
         if (empty($value)) {

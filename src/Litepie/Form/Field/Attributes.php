@@ -30,6 +30,7 @@ trait Attributes
     {
         $this->_attributes = [];
     }
+
     /**
      * Ponders a label and a field name, and tries to get the best out of it.
      *
@@ -65,6 +66,7 @@ trait Attributes
                 $this->_attributes[$key][$k] = $v;
             }
         }
+
         return $this;
     }
 
@@ -77,11 +79,11 @@ trait Attributes
     {
         $attributes = [
             'element.attribute' => null,
-            'element.class' => null,
-            'label.attribute' => null,
-            'label.class' => null,
+            'element.class'     => null,
+            'label.attribute'   => null,
+            'label.class'       => null,
             'wrapper.attribute' => null,
-            'wrapper.class' => null,
+            'wrapper.class'     => null,
         ];
 
         $attr = @$this->_attributes['element'];
@@ -104,7 +106,7 @@ trait Attributes
                         return;
                     }
 
-                    return $k . '="' . htmlspecialchars($v) . '"';
+                    return $k.'="'.htmlspecialchars($v).'"';
                 },
                 array_keys($attr),
                 $attr
@@ -118,7 +120,7 @@ trait Attributes
                 unset($attr['class']);
             }
             $attributes['label.attribute'] = implode(' ', array_map(
-                function ($k, $v) {return $k . '="' . htmlspecialchars($v) . '"';},
+                function ($k, $v) {return $k.'="'.htmlspecialchars($v).'"'; },
                 array_keys($attr),
                 $attr
             ));
@@ -131,7 +133,7 @@ trait Attributes
                 unset($attr['class']);
             }
             $attributes['wrapper.attribute'] = implode(' ', array_map(
-                function ($k, $v) {return $k . '="' . htmlspecialchars($v) . '"';},
+                function ($k, $v) {return $k.'="'.htmlspecialchars($v).'"'; },
                 array_keys($attr),
                 $attr
             ));
@@ -151,8 +153,8 @@ trait Attributes
     public function addClass($class, $target = 'element')
     {
         if (!empty($this->_attributes[$target]['class'])) {
-            $framework = strtolower(config('form.framework', 'bootstrap4') . '.');
-            $this->_attributes[$target]['class'] = config('form.' . $framework);
+            $framework = strtolower(config('form.framework', 'bootstrap4').'.');
+            $this->_attributes[$target]['class'] = config('form.'.$framework);
         }
         $this->_attributes[$target]['class'] = $class;
 
@@ -179,10 +181,8 @@ trait Attributes
             if (is_array($val)) {
                 $val = json_encode($val);
             }
-            $this->_attributes['element']['data-' . $key] = $val;
+            $this->_attributes['element']['data-'.$key] = $val;
         }
 
-        return;
     }
-
 }

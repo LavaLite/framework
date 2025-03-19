@@ -4,7 +4,7 @@
         <div class="row">
             @foreach ($fields as $key => $field)
                 <div class="col-{!! $field['col'] ?? '12' !!}">
-                    {!! Form::input($field['key'])->apply($field)->mode($mode) !!}
+                    {!!form()->input($field['key'])->apply($field)->mode($mode) !!}
                 </div>
             @endforeach
         </div>
@@ -17,10 +17,10 @@
         @if($mode=='edit')
         <div class="row">
             <div class='col-7'>
-                {!! Form::select('user_id')->options(User::options('user'))->label(trans('team::team.label.user'))->placeholder(trans('team::team.placeholder.user')) !!}
+                {!!form()->select('user_id')->options(app('user')->options('user'))->label(trans('team::team.label.user'))->placeholder(trans('team::team.placeholder.user')) !!}
             </div>
             <div class='col-3'>
-                {!! Form::select('level')->options(trans('team::team.options.level'))->label(trans('team::team.label.level'))->placeholder(trans('team::team.placeholder.level')) !!}
+                {!!form()->select('level')->options(trans('team::team.options.level'))->label(trans('team::team.label.level'))->placeholder(trans('team::team.placeholder.level')) !!}
             </div>
             <div class='col-2'>
                 <label class="mt-5">&nbsp;</label>

@@ -14,7 +14,6 @@ class CreatePermissionsTable extends Migration
 
     public function up()
     {
-
         /*
          * Table: permissions
          */

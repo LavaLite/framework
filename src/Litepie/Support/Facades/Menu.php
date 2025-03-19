@@ -13,6 +13,6 @@ class Menu extends Facade
      */
     protected static function getFacadeAccessor()
     {
-        return 'litepie.menu';
+        return 'menu';
     }
 }

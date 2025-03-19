@@ -25,7 +25,7 @@
     <div class="container-fluid">
         <div class="row">
         <div class="col-lg-8 entry-form">
-            {!!Form::vertical_open()
+            {!!form()->vertical_open()
             ->id('form-create')
             ->method('POST')
             ->files('true')
@@ -37,7 +37,7 @@
 
             @include('user::client.partials.form')
 
-            {!! Form::close() !!}
+            {!!form()->close() !!}
         </div>
 
             @include('user::client.partials.aside')

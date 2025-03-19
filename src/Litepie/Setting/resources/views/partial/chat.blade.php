@@ -18,7 +18,7 @@
             </button>
         </div>
     </div>
-    {!!Form::vertical_open()
+    {!!form()->vertical_open()
     ->id('form-edit')
     ->method('POST')
     ->files('true')
@@ -35,13 +35,13 @@
                                     <fieldset>
                                         <div class="row">
                                             <div class="col-md-12">
-                                                {!! Form::textarea('settings[main.chat.twalkto]')
+                                                {!!form()->textarea('settings[main.chat.twalkto]')
                                                 -> label(trans('setting::setting.label.chat.twalkto'))
                                                 -> value(setting('main.chat.twalkto'))
                                                 -> placeholder(trans('setting::setting.placeholder.chat.twalkto'))!!}
                                             </div>
                                             <div class="col-md-12">
-                                                {!! Form::textarea('settings[main.chat.freshchat]')
+                                                {!!form()->textarea('settings[main.chat.freshchat]')
                                                 -> label(trans('setting::setting.label.chat.freshchat'))
                                                 -> value(setting('main.chat.freshchat'))
                                                 -> placeholder(trans('setting::setting.placeholder.chat.freshchat'))!!}
@@ -57,5 +57,5 @@
             </div>
         </div>
     </div>
-    {!! Form::close() !!}
+    {!!form()->close() !!}
 </div>

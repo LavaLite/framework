@@ -18,7 +18,7 @@
             </button>
         </div>
     </div>
-    {!!Form::vertical_open()
+    {!!form()->vertical_open()
     ->id('form-edit')
     ->method('POST')
     ->files('true')
@@ -36,14 +36,14 @@
                                         <legend>{{trans('setting::setting.label.payment.paypal')}}</legend>
                                         <div class="row">
                                             <div class="col-md-12">
-                                                {!! Form::text('env[PAYPAL_CLIENT_ID]')
+                                                {!!form()->text('env[PAYPAL_CLIENT_ID]')
                                                 -> label(trans('setting::setting.label.payment.paypal_client_id'))
                                                 -> value(env('PAYPAL_CLIENT_ID'))
                                                 ->
                                                 placeholder(trans('setting::setting.placeholder.payment.paypal_client_id'))!!}
                                             </div>
                                             <div class="col-md-12">
-                                                {!! Form::text('env[PAYPAL_SECRET]')
+                                                {!!form()->text('env[PAYPAL_SECRET]')
                                                 -> label(trans('setting::setting.label.payment.paypal_client_secret'))
                                                 -> value(env('PAYPAL_SECRET'))
                                                 ->
@@ -60,5 +60,5 @@
             </div>
         </div>
     </div>
-    {!! Form::close() !!}
+    {!!form()->close() !!}
 </div>

@@ -33,5 +33,4 @@ class Client extends Model
      * @var array
      */
     protected $config = 'user.client.model';
-
 }

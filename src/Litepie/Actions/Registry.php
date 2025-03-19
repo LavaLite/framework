@@ -22,14 +22,16 @@ class Registry
         if (isset($this->actions[$subject])) {
             return true;
         }
+
         return false;
     }
 
-    public function get(string $subject): Actions | null
+    public function get(string $subject): Actions|null
     {
         if (isset($this->actions[$subject])) {
             return $this->actions[$subject];
         }
+
         return null;
     }
 

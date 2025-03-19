@@ -2,16 +2,16 @@
 
 // API routes  for menu.
 
-include('routes.php');
+include 'routes.php';
 
-if (Trans::isMultilingual()) {
+if (app('trans')->isMultilingual()) {
     Route::group(
         [
             'prefix' => '{trans}',
-            'where'  => ['trans' => Trans::keys('|')],
+            'where'  => ['trans' => app('trans')->keys('|')],
         ],
         function () {
-            include('routes.php');
+            include 'routes.php';
         }
     );
 }

@@ -13,7 +13,6 @@ class CreateNotificationTemplatesTable extends Migration
 
     public function up()
     {
-
         /*
          * Table: notifications
          */

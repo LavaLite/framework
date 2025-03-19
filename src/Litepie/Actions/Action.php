@@ -1,4 +1,5 @@
 <?php
+
 namespace Litepie\Actions;
 
 use Illuminate\Support\Facades\Auth;
@@ -21,6 +22,7 @@ class Action
         if (!empty($roles)) {
             $this->roles = $roles;
         }
+
         return $this->roles;
     }
 
@@ -29,14 +31,16 @@ class Action
         if (!empty($name)) {
             $this->name = $name;
         }
+
         return $this->name;
     }
 
-    public function meta(string $meta = null): string
+    public function meta(array $meta = [])
     {
         if (!empty($meta)) {
             $this->meta = $meta;
         }
+
         return $this->meta;
     }
 
@@ -47,6 +51,7 @@ class Action
                 $this->type[] = ActionType::tryFrom($type);
             }
         }
+
         return $this->type;
     }
 
@@ -99,5 +104,4 @@ class Action
 
         return false;
     }
-
 }

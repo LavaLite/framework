@@ -38,7 +38,7 @@ abstract class BaseRepository extends PrettusRepository
     /**
      * Find data by id or return new if not exists.
      *
-     * @param $id
+     * @param       $id
      * @param array $columns
      *
      * @return mixed
@@ -120,7 +120,7 @@ abstract class BaseRepository extends PrettusRepository
     /**
      * Find data by slug.
      *
-     * @param $value
+     * @param       $value
      * @param array $columns
      *
      * @return mixed
@@ -138,7 +138,7 @@ abstract class BaseRepository extends PrettusRepository
     /**
      * Find data by slug.
      *
-     * @param $value
+     * @param       $value
      * @param array $columns
      *
      * @return mixed

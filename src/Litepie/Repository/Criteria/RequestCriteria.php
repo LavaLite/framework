@@ -13,7 +13,7 @@ class RequestCriteria implements CriteriaInterface
     /**
      * Apply criteria in query repository.
      *
-     * @param $model
+     * @param            $model
      * @param Repository $repository
      *
      * @return mixed

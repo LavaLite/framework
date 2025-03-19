@@ -5,8 +5,8 @@
 Route::group(
     [
         'prefix' => '{guard}/role',
-        'as' => 'guard.',
-        'where' => ['guard' => implode('|', array_keys(config('auth.guards')))],
+        'as'     => 'guard.',
+        'where'  => ['guard' => implode('|', array_keys(config('auth.guards')))],
     ],
     function () {
         Route::resource('role', 'RoleResourceController');

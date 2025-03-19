@@ -22,12 +22,13 @@ class MenuAction
         $this->model = $menu;
 
         $function = Str::camel($action);
-        event('menu.menu.action.' . $action . 'ing', [$menu]);
+        event('menu.menu.action.'.$action.'ing', [$menu]);
         $data = $this->$function($menu, $request);
-        event('menu.menu.action.' . $action . 'ed', [$menu]);
+        event('menu.menu.action.'.$action.'ed', [$menu]);
 
         $this->logsAction();
         $this->notify();
+
         return $data;
     }
 
@@ -37,6 +38,7 @@ class MenuAction
         $attributes['user_id'] = user_id();
         $attributes['user_type'] = user_type();
         $menu = $menu->create($attributes);
+
         return $menu;
     }
 
@@ -44,6 +46,7 @@ class MenuAction
     {
         $attributes = $request;
         $menu->update($attributes);
+
         return $menu;
     }
 
@@ -60,6 +63,7 @@ class MenuAction
         }
 
         $menu->delete();
+
         return $menu;
     }
 
@@ -71,6 +75,7 @@ class MenuAction
             $menu = $menu->replicate();
             $menu->created_at = Carbon::now();
             $menu->save();
+
             return $menu;
         }
 
@@ -94,7 +99,7 @@ class MenuAction
                 Menu::findOrFail($val)
                     ->update([
                         'parent_id' => $parent ?: $parent_id,
-                        'order' => $key,
+                        'order'     => $key,
                     ]);
             }
         }

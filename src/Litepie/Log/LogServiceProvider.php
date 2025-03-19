@@ -21,8 +21,7 @@ class LogServiceProvider extends ServiceProvider
     public function boot()
     {
         // Load migrations
-        $this->loadMigrationsFrom(__DIR__ . '/database/migrations');
-
+        $this->loadMigrationsFrom(__DIR__.'/database/migrations');
     }
 
     /**
@@ -33,7 +32,6 @@ class LogServiceProvider extends ServiceProvider
     public function register()
     {
         $this->mergeConfig();
-
     }
 
     /**
@@ -43,9 +41,9 @@ class LogServiceProvider extends ServiceProvider
      */
     protected function mergeConfig()
     {
-
         $this->mergeConfigFrom(
-            __DIR__ . '/config/activity.php', 'activitylog'
+            __DIR__.'/config/activity.php',
+            'activitylog'
         );
     }
 }

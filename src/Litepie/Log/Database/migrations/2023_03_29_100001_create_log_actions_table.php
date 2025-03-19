@@ -13,7 +13,6 @@ class CreateLogActionsTable extends Migration
 
     public function up()
     {
-
         /*
          * Table: log_actions
          */

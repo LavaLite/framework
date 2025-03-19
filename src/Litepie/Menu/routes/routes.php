@@ -5,8 +5,8 @@
 Route::group(
     [
         'prefix' => '{guard}/menu',
-        'as' => 'guard.',
-        'where' => ['guard' => implode('|', array_keys(config('auth.guards')))],
+        'as'     => 'guard.',
+        'where'  => ['guard' => implode('|', array_keys(config('auth.guards')))],
     ],
     function () {
         Route::post('menu/{id}/tree', 'MenuResourceController@tree');
