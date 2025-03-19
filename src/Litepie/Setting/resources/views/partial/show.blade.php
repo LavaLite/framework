@@ -34,7 +34,7 @@
                                 @foreach($form['fields'] as $group => $fields)
                                 <br/>
                                 <fieldset>
-                                    <legend>{{dd($form)}}</legend>
+                                    <legend></legend>
                                     <div class="row clearfix">
                                     @foreach($fields as $key => $field)
                                     <div class="col-{!!$field['col'] ?? '12'!!}">
