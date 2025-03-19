@@ -1,12 +1,10 @@
-
-{{dd($permissions)}}
 @foreach ($form['fields'] as $key => $fields)
     <div class="app-entry-form-section mb-10 pb-20" id="{!! $key !!}">
         <div class="section-title">{!! $form['groups'][$key]['name'] !!}</div>
         <div class="row">
             @foreach ($fields as $key => $field)
                 <div class="col-{!! $field['col'] ?? '12' !!}">
-                    {!!form()->input($field['key'])->apply($field)->mode($mode) !!}
+                    {!! form()->input($field['key'])->apply($field)->mode($mode) !!}
                 </div>
             @endforeach
         </div>
@@ -18,46 +16,70 @@
     <div class="section-title">Permissions</div>
     <div class="row">
         <div class="col-12">
-            <div class="treeview" style="height:250px;overflow:auto;">
-                <ul>
-                    @foreach ($permissions as $provider => $packages)
-                        <li class="custom-control custom-checkbox" ">
-                        <input name="main[{{ $package }}]" class="custom-control-input" id="permissions_{{ $package }}" type="checkbox" {{ @array_key_exists($package, $data['permissions']) ? 'checked' : '' }} value='1'>
-                        <label class="custom-control-label" for="permissions_{{ $package }}">{{ ucfirst($package) }}</label>
-                         @if (!empty($modules))
-                            <ul>
-                                @foreach ($packages as $package => $modules)
-                                    <li class="custom-control custom-checkbox" style="margin-left:-40px;">
-                                        <input name="sub[{{ $package }}.{{ $module }}]"
-                                            class="custom-control-input"
-                                            id="permissions_{{ $package }}_{{ $module }}" type="checkbox"
-                                            {{ @array_key_exists($package . '.' . $module, $data['permissions']) ? 'checked' : '' }}
+            <div class="treeview">
+
+                @foreach ($permissions as $provider => $packages)
+                    <div class="custom-control custom-checkbox">
+                        <div class="form-check">
+                            <input name="main[{{ $provider }}]" class="form-check-input"
+                                id="permissions_{{ $provider }}" type="checkbox"
+                                {{ @array_key_exists($provider, $data['permissions']) ? 'checked' : '' }}
+                                value='1'>
+                            <label class="form-check-label"
+                                for="permissions_{{ $provider }}">{{ ucfirst($provider) }}</label>
+                        </div>
+                        @if (!empty($packages))
+                            @foreach ($packages as $package => $modules)
+                                <div class="custom-control custom-checkbox" style="padding-left:25px;">
+                                    <div class="form-check">
+                                        <input name="sub[{{ $provider }}.{{ $package }}]"
+                                            class="form-check-input"
+                                            id="permissions_{{ $provider }}_{{ $package }}" type="checkbox"
+                                            {{ @array_key_exists($provider . '.' . $package, $data['permissions']) ? 'checked' : '' }}
                                             value='1'>
-                                        <label class="custom-control-label"
-                                            for="permissions_{{ $package }}_{{ $module }}">{{ ucfirst($module) }}</label>
-                                        @if (!empty($permissions))
-                                            <ul class="clearfix" style="padding-left:0px;">
-                                                @foreach ($permissions as $permission => $value)
-                                                    <li class="custom-control custom-checkbox"
-                                                        style="float:left; margin-right: 10px;">
-                                                        <input name="permissions[]" class="custom-control-input"
-                                                            id="permissions_{{ $package }}_{{ $module }}_{{ $permission }}"
-                                                            type="checkbox"
-                                                            {{ @array_key_exists($value, $data['permissions']) ? 'checked' : '' }}
-                                                            value='{{ $value }}'>
-                                                        <label class="custom-control-label"
-                                                            for="permissions_{{ $package }}_{{ $module }}_{{ $permission }}">{{ ucfirst($permission) }}</label>
-                                                    </li>
-                                                @endforeach
-                                            </ul>
-                                        @endif
-                                    </li>
-                                @endforeach
-                            </ul>
-                    @endif
-                    <hr />
-                    </li>
-                    @endforeach
+                                        <label class="form-check-label"
+                                            for="permissions_{{ $provider }}_{{ $package }}">{{ ucfirst($package) }}</label>
+                                    </div>
+
+                                    @if (!empty($modules))
+                                        @foreach ($modules as $module => $perms)
+                                            <div class="custom-control custom-checkbox" style="padding-left: 25px;">
+                                                <div class="form-check">
+                                                    <input
+                                                        name="sub[{{ $provider }}.{{ $package }}.{{ $module }}]"
+                                                        class="form-check-input"
+                                                        id="permissions_{{ $provider }}_{{ $package }}_{{ $module }}"
+                                                        type="checkbox"
+                                                        {{ @array_key_exists(@$value['slug'], $data['permissions']) ? 'checked' : '' }}
+                                                        value='{{ @$value['slug'] }}'>
+                                                    <label class="form-check-label"
+                                                        for="permissions_{{ $provider }}_{{ $package }}_{{ $module }}">{{ ucfirst($module) }}</label>
+                                                </div>
+                                                @if (!empty($perms))
+                                                    <div class="custom-control custom-checkbox" style="padding-left: 25px;">
+                                                        @foreach ($perms as $p => $value)
+                                                            <div class="form-check form-check-inline">
+                                                                <input name="permissions[]" class="form-check-input"
+                                                                    id="permissions_{{ @$value['slug'] }}"
+                                                                    type="checkbox"
+                                                                    {{ @array_key_exists(@$value['slug'], $data['permissions']) ? 'checked' : '' }}
+                                                                    value='{{ @$value['slug'] }}'>
+                                                                <label class="form-check-label"
+                                                                    for="permissions_{{ @$value['slug'] }}">{{ @$value['name'] }}</label>
+                                                            </div>
+                                                        @endforeach
+                                                    </div>
+                                                @endif
+                                            </div>
+                                        @endforeach
+                                    @endif
+                                </div>
+                            @endforeach
+                        @endif
+                        <hr />
+                    </div>
+                @endforeach
+
                 </ul>
             </div>
         </div>
@@ -65,64 +87,69 @@
 </div>
 <style type="text/css">
     .treeview {
-        margin: 10px 0 0 20px;
     }
 
     .treeview ul {
-        list-style: none;
-    }
 
-    .treeview li label {
-        font-weight: 500;
-        margin-bottom: 2px;
     }
 
     .treeview hr {
         margin-top: 2px;
     }
-
-    .treeview>ul>li>label {
-        font-weight: 700;
-    }
 </style>
 
 <script type="text/javascript">
-    $(function() {
-        $('input[type="checkbox"]').change(function(e) {
-            var checked = $(this).prop("checked"),
-                container = $(this).parent(),
-                siblings = container.siblings();
-            container.find('input[type="checkbox"]').prop({
-                indeterminate: false,
-                checked: checked
+$(document).ready(function() {
+    $('input[type="checkbox"]').change(function() {
+        var checked = $(this).prop("checked"),
+            container = $(this).closest(".custom-control"),
+            children = container.find('input[type="checkbox"]');
+
+        // Toggle all child checkboxes
+        children.prop({
+            indeterminate: false,
+            checked: checked
+        });
+
+        function checkSiblings(el) {
+            var parentContainer = el.closest(".custom-control").parent().closest(".custom-control"),
+                parentCheckbox = parentContainer.children('.form-check').find('input[type="checkbox"]'),
+                allChecked = true,
+                allUnchecked = true;
+
+            el.siblings(".custom-control").each(function() {
+                var siblingCheckbox = $(this).children('.form-check').find('input[type="checkbox"]');
+                if (siblingCheckbox.prop("checked")) {
+                    allUnchecked = false;
+                } else {
+                    allChecked = false;
+                }
             });
 
-            function checkSiblings(el) {
-                var parent = el.parent().parent(),
-                    all = true;
-                el.siblings().each(function() {
-                    return all = ($(this).children('input[type="checkbox"]').prop("checked") ===
-                        checked);
+            if (allChecked) {
+                parentCheckbox.prop({
+                    indeterminate: false,
+                    checked: true
                 });
-                if (all && checked) {
-                    parent.children('input[type="checkbox"]').prop({
-                        indeterminate: false,
-                        checked: checked
-                    });
-                    checkSiblings(parent);
-                } else if (all && !checked) {
-                    parent.children('input[type="checkbox"]').prop("checked", checked);
-                    parent.children('input[type="checkbox"]').prop("indeterminate", (parent.find(
-                        'input[type="checkbox"]:checked').length > 0));
-                    checkSiblings(parent);
-                } else {
-                    el.parents("li").children('input[type="checkbox"]').prop({
-                        indeterminate: true,
-                        checked: false
-                    });
-                }
+            } else if (allUnchecked) {
+                parentCheckbox.prop({
+                    indeterminate: false,
+                    checked: false
+                });
+            } else {
+                parentCheckbox.prop({
+                    indeterminate: true,
+                    checked: false
+                });
             }
-            checkSiblings(container);
-        });
+
+            if (parentContainer.length) {
+                checkSiblings(parentContainer);
+            }
+        }
+
+        checkSiblings(container);
     });
+});
+
 </script>

@@ -1,5 +1,4 @@
 <?php
-
 namespace Litepie\Role\Actions;
 
 use Illuminate\Support\Arr;
@@ -16,7 +15,7 @@ class PermissionActions
     use LogsActions;
 
     protected $model;
-    protected $namespace = 'litepie.role.permission';
+    protected $namespace  = 'litepie.role.permission';
     protected $eventClass = \Litepie\Role\Events\PermissionAction::class;
     protected $action;
     protected $function;
@@ -24,9 +23,9 @@ class PermissionActions
 
     public function handle(string $action, array $request)
     {
-        $this->model = app(Permission::class);
-        $this->action = $action;
-        $this->request = $request;
+        $this->model    = app(Permission::class);
+        $this->action   = $action;
+        $this->request  = $request;
         $this->function = Str::camel($action);
 
         $function = Str::camel($action);
@@ -42,7 +41,7 @@ class PermissionActions
 
     public function paginate(array $request)
     {
-        $pageLimit = isset($request['pageLimit']) ?: config('database.pagination.limit');
+        $pageLimit  = isset($request['pageLimit']) ?: config('database.pagination.limit');
         $permission = $this->model
             ->pushScope(new RequestScope())
             ->pushScope(new PermissionResourceScope())
@@ -53,7 +52,7 @@ class PermissionActions
 
     public function simplePaginate(array $request)
     {
-        $pageLimit = isset($request['pageLimit']) ?: config('database.pagination.limit');
+        $pageLimit  = isset($request['pageLimit']) ?: config('database.pagination.limit');
         $permission = $this->model
             ->pushScope(new RequestScope())
             ->pushScope(new PermissionResourceScope())
@@ -105,17 +104,10 @@ class PermissionActions
     public function grouped($request)
     {
         $result = $this->model->orderBy('slug')
-        ->get()
-        ->keyBy('slug')
-        ->toArray();
-
-        $array = [];
+            ->get()
+            ->keyBy('slug')
+            ->toArray();
         $result = Arr::undot($result);
-        foreach ($result as $key => $value) {
-            $key = explode('.', $key, 4);
-            @$array[$key[0]][$key[1]][$key[2]] = $value;
-        }
-
-        return $array;
+        return $result;
     }
 }
