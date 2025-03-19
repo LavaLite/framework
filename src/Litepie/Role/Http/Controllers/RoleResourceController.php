@@ -78,6 +78,7 @@ class RoleResourceController extends BaseController
         $modules = self::$modules;
         $data = new RoleResource($model);
         $permissions = PermissionActions::run('grouped', []);
+
         return self::$response
             ->setMetaTitle(trans('app.view').' '.trans('role.role.name'))
             ->data(compact('data', 'form', 'modules', 'permissions'))
