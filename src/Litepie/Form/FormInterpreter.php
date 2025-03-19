@@ -1,5 +1,4 @@
 <?php
-
 namespace Litepie\Form;
 
 use Closure;
@@ -115,7 +114,6 @@ abstract class FormInterpreter
             return $lists->toArray();
         }
 
-
         if (isset($lists[Self::$only])) {
             return collect($lists[Self::$only])->toArray();
         }
@@ -130,7 +128,7 @@ abstract class FormInterpreter
     public static function fields()
     {
         $fields = collect(self::$fields)->map(function ($val) {
-            $val['label'] = trans($val['label']);
+            $val['label']       = trans($val['label']);
             $val['placeholder'] = trans($val['placeholder']);
             if (isset($val['options']) && is_callable($val['options']) && $val['options'] instanceof Closure) {
                 $val['options'] = call_user_func($val['options']);
@@ -158,14 +156,14 @@ abstract class FormInterpreter
     public static function groups()
     {
         $groups = collect(self::$groups)->map(function ($val) {
-            $val['name'] = trans($val['name']);
+            $val['name']  = trans($val['name']);
             $val['title'] = trans($val['title']);
             return $val;
         })->keyBy(['group']);
 
         foreach ($groups as $key => $group) {
             unset($groups[$key]);
-            $key = str_replace('.', '.groups.', $key) . '';
+            $key          = str_replace('.', '.groups.', $key) . '';
             $groups[$key] = $group;
         }
         $groups = Arr::undot($groups);
@@ -208,7 +206,7 @@ abstract class FormInterpreter
     public static function search()
     {
         return collect(self::$search)->map(function ($val) {
-            $val['label'] = trans($val['label']);
+            $val['label']       = trans($val['label']);
             $val['placeholder'] = trans($val['placeholder']);
             if (isset($val['options']) && is_callable($val['options']) && $val['options'] instanceof Closure) {
                 $val['options'] = call_user_func($val['options']);
@@ -302,16 +300,16 @@ abstract class FormInterpreter
     public static function toArray()
     {
         return [
-            'urls' => self::urls(),
-            'list' => self::ilist(),
-            'search' => self::search(),
+            'urls'    => self::urls(),
+            'list'    => self::ilist(),
+            'search'  => self::search(),
             'orderBy' => self::orderBy(),
             'filters' => self::filters(),
 
-            'groups' => self::groups(),
-            'fields' => self::fields(),
+            'groups'  => self::groups(),
+            'fields'  => self::fields(),
             'actions' => self::actions(),
-            'lists' => self::lists(),
+            'lists'   => self::lists(),
         ];
     }
 }

@@ -56,7 +56,7 @@ class MasterServiceProvider extends ServiceProvider
      * @return void
      */
     public function registerFacade() {
-        $this->app->bind('master', function($app)
+        $this->app->bind('litepie.master', function($app)
         {
             return $this->app->make(Master::class);
         });
@@ -72,7 +72,6 @@ class MasterServiceProvider extends ServiceProvider
         $this->mergeConfigFrom(
             __DIR__ . '/config/master.php', 'master'
         );
-        
     }
 
 
@@ -83,7 +82,7 @@ class MasterServiceProvider extends ServiceProvider
      */
     public function provides()
     {
-        return ['master'];
+        return ['litepie.master'];
     }
 
     /**

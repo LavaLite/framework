@@ -84,7 +84,7 @@ class FormServiceProvider extends ServiceProvider
             return new Lists();
         });
 
-        $app->singleton('form.form', function ($app) {
+        $app->singleton('form', function ($app) {
             return new Form($app,  $app->make('form.field'), $app->make('form.lists'));
         });
 

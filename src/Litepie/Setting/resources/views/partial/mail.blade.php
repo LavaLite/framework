@@ -18,7 +18,7 @@
             </button>
         </div>
     </div>
-    {!!Form::vertical_open()
+    {!!form()->vertical_open()
     ->id('form-edit')
     ->method('POST')
     ->files('true')
@@ -36,49 +36,49 @@
                                         <div class="row">
 
                                             <div class="col-md-12">
-                                                {!! Form::select('env[MAIL_DRIVER]')
+                                                {!!form()->select('env[MAIL_DRIVER]')
                                                 -> label(trans('setting::setting.label.mail.driver'))
                                                 -> options(__('settings::setting.options.mail.driver'),
                                                 env('MAIL_MAILER'))!!}
                                             </div>
                                             <div class="col-md-12">
-                                                {!! Form::text('env[MAIL_HOST]')
+                                                {!!form()->text('env[MAIL_HOST]')
                                                 -> label(trans('setting::setting.label.mail.host'))
                                                 -> value(env('MAIL_HOST'))
                                                 -> placeholder(trans('setting::setting.placeholder.mail.host'))!!}
                                             </div>
                                             <div class="col-md-12">
-                                                {!! Form::text('env[MAIL_PORT]')
+                                                {!!form()->text('env[MAIL_PORT]')
                                                 -> label(trans('setting::setting.label.mail.port'))
                                                 -> value(env('MAIL_PORT'))
                                                 -> placeholder(trans('setting::setting.placeholder.mail.port'))!!}
                                             </div>
                                             <div class="col-md-12">
-                                                {!! Form::text('env[MAIL_USERNAME]')
+                                                {!!form()->text('env[MAIL_USERNAME]')
                                                 -> label(trans('setting::setting.label.mail.user'))
                                                 -> value(env('MAIL_USERNAME'))
                                                 -> placeholder(trans('setting::setting.placeholder.mail.user'))!!}
                                             </div>
                                             <div class="col-md-12">
-                                                {!! Form::text('env[MAIL_PASSWORD]')
+                                                {!!form()->text('env[MAIL_PASSWORD]')
                                                 -> label(trans('setting::setting.label.mail.password'))
                                                 -> value(env('MAIL_PASSWORD'))
                                                 -> placeholder(trans('setting::setting.placeholder.mail.password'))!!}
                                             </div>
                                             <div class="col-md-12">
-                                                {!! Form::select('env[MAIL_ENCRYPTION]')
+                                                {!!form()->select('env[MAIL_ENCRYPTION]')
                                                 -> label(trans('setting::setting.label.mail.encryption'))
                                                 -> options(__('settings::setting.options.mail.encryption'),
                                                 env('MAIL_ENCRYPTION'))!!}
                                             </div>
                                             <div class="col-md-12">
-                                                {!! Form::select('env[MAIL_FROM_ADDRESS]')
+                                                {!!form()->select('env[MAIL_FROM_ADDRESS]')
                                                 -> label(trans('setting::setting.label.mail.from_address'))
                                                 -> options(__('settings::setting.options.mail.from_address'),
                                                 env('MAIL_FROM_ADDRESS'))!!}
                                             </div>
                                             <div class="col-md-12">
-                                                {!! Form::select('env[MAIL_FROM_NAME]')
+                                                {!!form()->select('env[MAIL_FROM_NAME]')
                                                 -> label(trans('setting::setting.label.mail.from_name'))
                                                 -> options(__('settings::setting.options.mail.from_name'),
                                                 env('MAIL_FROM_NAME'))!!}
@@ -94,5 +94,5 @@
             </div>
         </div>
     </div>
-    {!! Form::close() !!}
+    {!!form()->close() !!}
 </div>

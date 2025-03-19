@@ -15,7 +15,7 @@
                                 class="las la-trash"></i>{{__('Delete')}}</button>
                     </div>
                 </div>
-                {!!Form::vertical_open()
+                {!!form()->vertical_open()
                 ->id('app-form-show')
                 ->class('app-form-show')
                 ->method('PUT')
@@ -23,7 +23,7 @@
 
                 @include('menu::admin.partial.submenu', ['mode' => 'show'])
 
-                {!!Form::close()!!}
+                {!!form()->close()!!}
             </div>
         </div>
     </div>

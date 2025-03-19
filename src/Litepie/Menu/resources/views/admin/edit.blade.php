@@ -15,7 +15,7 @@
         </div>
     </div>
 
-    {!!Form::vertical_open()
+    {!!form()->vertical_open()
     ->method('PUT')
     ->id('form-edit')
     ->enctype('multipart/form-menu')
@@ -23,7 +23,7 @@
 
     @include('menu::admin.partial.menu', ['mode' => 'edit'])
 
-    {!!Form::close()!!}
+    {!!form()->close()!!}
 </div>
 <script>
 $(document).ready(function() {

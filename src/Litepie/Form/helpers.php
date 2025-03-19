@@ -1,6 +1,6 @@
 <?php
 
-if (!function_exists('form_merge_form')) {
+if (! function_exists('form_merge_form')) {
     /**
      * Merge form array with values.
      *
@@ -14,7 +14,7 @@ if (!function_exists('form_merge_form')) {
     {
         $data = json_decode(json_encode($value), true);
         foreach ($forms as $fkey => $form) {
-            foreach($form as $key => $val) {
+            foreach ($form as $key => $val) {
                 $k = $val['key'];
                 if (isset($data['data'][$k])) {
                     $forms[$fkey][$key]['value'] = $data['data'][$k];
@@ -22,13 +22,13 @@ if (!function_exists('form_merge_form')) {
                 if ($val['element'] == 'file') {
                     $forms[$fkey][$key]['url'] = str_replace('//file', '/' . $k . '/file', $data['meta']['upload_url']);
                 }
-            };
+            }
         }
         return $forms;
     }
 }
 
-if (!function_exists('form_merge_list')) {
+if (! function_exists('form_merge_list')) {
     /**
      * Merge form array with values.
      *
@@ -58,7 +58,7 @@ if (!function_exists('form_merge_list')) {
     }
 }
 
-if (!function_exists('form_list_html')) {
+if (! function_exists('form_list_html')) {
     /**
      * Merge form array with list values.
      *
@@ -74,5 +74,18 @@ if (!function_exists('form_list_html')) {
             $list[$key] = Form::list($val)->render();
         }
         return implode($seperator, $list);
+    }
+
+    if (! function_exists('form')) {
+        /**
+         * Return the form object.
+
+         *
+         * @return object
+         */
+        function form()
+        {
+            return app('form');
+        }
     }
 }

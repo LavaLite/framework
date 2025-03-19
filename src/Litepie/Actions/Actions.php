@@ -64,6 +64,7 @@ final class Actions implements ActionsContract
             $objAction->roles(Arr::get($action, 'roles', []));
             $objAction->form(Arr::get($action, 'form', []));
             $objAction->type(Arr::get($action, 'type', []));
+            $objAction->meta(Arr::get($action, 'meta', []));
 
             $this->add($objAction, $key);
         }

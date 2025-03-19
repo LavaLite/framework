@@ -1,32 +1,39 @@
 <?php
-
 namespace Litepie\Http\Controllers;
 
-use Litepie\Http\Response\ActionResponse;
+use Closure;
+use Illuminate\Http\Request;
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Litepie\Http\Response\ResourceResponse;
 use Litepie\Theme\ThemeAndViews;
 use Litepie\User\Traits\RoutesAndGuards;
 
-class ActionController extends Controller
+class ActionController implements HasMiddleware
 {
     use RoutesAndGuards;
     use ThemeAndViews;
 
     /**
-     * Initialize public controller.
-     *
-     * @return null
+     * @var store response object
      */
-    public function __construct()
+    public $response;
+
+    /**
+     * Get the middleware that should be assigned to the controller.
+     */
+    public static function middleware(): array
     {
-        $this->middleware('set.guard');
-        $this->middleware('auth')->except(['get', 'post']);
-        $this->middleware('localize.route');
-        $this->middleware(function ($request, $next) {
-            $this->response = app(ActionResponse::class);
-            $this->layout = 'app';
-            $this->setTheme();
-            return $next($request);
-        });
+        return [
+            'set.guard',
+            'auth',
+            'localize.route',
+            function (Request $request, Closure $next) {
+                self::$response = app(ResourceResponse::class);
+                self::$layout   = 'app';
+                self::setTheme();
+                return $next($request);
+            },
+        ];
     }
 
 }

@@ -5,7 +5,7 @@ namespace Litepie\User\Actions;
 use Illuminate\Support\Str;
 use Litepie\Actions\Concerns\AsAction;
 use Litepie\Actions\Traits\LogsActions;
-use Litepie\Database\RequestScope;
+use Litepie\Database\Scopes\RequestScope;
 use Litepie\User\Models\Client;
 use Litepie\User\Scopes\ClientResourceScope;
 

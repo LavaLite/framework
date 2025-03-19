@@ -2,7 +2,7 @@
 
 namespace Litepie\Database\Traits;
 
-use Litepie\Database\RequestScope;
+use Litepie\Database\Scopes\RequestScope;
 
 trait Requestable
 {

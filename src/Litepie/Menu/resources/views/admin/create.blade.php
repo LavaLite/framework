@@ -13,12 +13,12 @@
                 </button>
             </div>
         </div>
-        {!!Form::vertical_open()
+        {!!form()->vertical_open()
         ->id('form-create')
         ->method('POST')
         ->files('true')
         ->action(guard_url('menu/menu'))!!}
         @include('menu::admin.partial.menu', ['mode' => 'create'])
 
-        {!! Form::close() !!}
+        {!!form()->close() !!}
     </div>

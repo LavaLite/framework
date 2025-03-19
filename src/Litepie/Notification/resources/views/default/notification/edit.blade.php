@@ -30,7 +30,7 @@
     <div class="container-fluid">
         <div class="row">
         <div class="col-lg-8 entry-form">
-            {!!Form::vertical_open()
+            {!!form()->vertical_open()
             ->method('PUT')
             ->id('form-edit')
             ->enctype('multipart/form-data')
@@ -43,7 +43,7 @@
             @endphp
 
             @include('notification::notification.partials.form')
-            {!!Form::close()!!}
+            {!!form()->close()!!}
         </div>
 
         @include('notification::notification.partials.aside')

@@ -7,7 +7,7 @@ use Litepie\Support\Facades\Hashids;
 use Litepie\Support\Facades\Trans;
 use Litepie\Support\Facades\User;
 
-if (!function_exists('hashids_encode')) {
+if (! function_exists('hashids_encode')) {
     /**
      * Encode the given id.
      *
@@ -21,7 +21,7 @@ if (!function_exists('hashids_encode')) {
     }
 }
 
-if (!function_exists('hashids_decode')) {
+if (! function_exists('hashids_decode')) {
     /**
      * Decode the given value.
      *
@@ -45,7 +45,7 @@ if (!function_exists('hashids_decode')) {
     }
 }
 
-if (!function_exists('folder_new')) {
+if (! function_exists('folder_new')) {
     /**
      * Get new upload folder pathes.
      *
@@ -56,13 +56,13 @@ if (!function_exists('folder_new')) {
      */
     function folder_new($prefix = null, $sufix = null)
     {
-        $folder = date('Y/m/d/His').rand(100, 999);
+        $folder = date('Y/m/d/His') . rand(100, 999);
 
         return $folder;
     }
 }
 
-if (!function_exists('blade_compile')) {
+if (! function_exists('blade_compile')) {
     /**
      * Get new upload folder pathes.
      *
@@ -81,19 +81,17 @@ if (!function_exists('blade_compile')) {
         // so we can avoid any WSOD errors. If an exception occurs we
         // will throw it out to the exception handler.
         try {
-            eval('?>'.$compiled);
-        }
+            eval('?>' . $compiled);
+        } catch (Exception $e) {
+            // If we caught an exception, we'll silently flush the output
 
-        catch (Exception $e) {
-        // If we caught an exception, we'll silently flush the output
-
-        // buffer so that no partially rendered views get thrown out
-        // to the client and confuse the user with junk.
-        ob_get_clean();
+            // buffer so that no partially rendered views get thrown out
+            // to the client and confuse the user with junk.
+            ob_get_clean();
 
             throw $e;
         }
- 
+
         $content = ob_get_clean();
         $content = str_replace(['@param  ', '@return  ', '@var  ', '@throws  '], ['@param ', '@return ', '@var ', '@throws '], $content);
 
@@ -101,7 +99,7 @@ if (!function_exists('blade_compile')) {
     }
 }
 
-if (!function_exists('trans_url')) {
+if (! function_exists('trans_url')) {
     /**
      * Get translated url.
      *
@@ -115,7 +113,7 @@ if (!function_exists('trans_url')) {
     }
 }
 
-if (!function_exists('trans_dir')) {
+if (! function_exists('trans_dir')) {
     /**
      * Return the direction of current language.
      *
@@ -127,7 +125,7 @@ if (!function_exists('trans_dir')) {
     }
 }
 
-if (!function_exists('trans_setlocale')) {
+if (! function_exists('trans_setlocale')) {
     /**
      * Set local for the translation.
      *
@@ -141,7 +139,7 @@ if (!function_exists('trans_setlocale')) {
     }
 }
 
-if (!function_exists('pager_array')) {
+if (! function_exists('pager_array')) {
     /**
      * Return request values to be used in paginator.
      *
@@ -160,7 +158,7 @@ if (!function_exists('pager_array')) {
     }
 }
 
-if (!function_exists('user_type')) {
+if (! function_exists('user_type')) {
     /**
      * Get user id.
      *
@@ -174,7 +172,7 @@ if (!function_exists('user_type')) {
     }
 }
 
-if (!function_exists('user_id')) {
+if (! function_exists('user_id')) {
     /**
      * Get user id.
      *
@@ -188,7 +186,7 @@ if (!function_exists('user_id')) {
     }
 }
 
-if (!function_exists('guard')) {
+if (! function_exists('guard')) {
     /**
      * Set the guard .
      *
@@ -208,7 +206,7 @@ if (!function_exists('guard')) {
     }
 }
 
-if (!function_exists('broker')) {
+if (! function_exists('broker')) {
     /**
      * Set the broker .
      *
@@ -219,15 +217,15 @@ if (!function_exists('broker')) {
     function broker()
     {
         $guard = guard();
-        return config('auth.guards.' . $guard . '.provider', 
-                config('auth.guards.' . $guard . '.password', 
+        return config('auth.guards.' . $guard . '.provider',
+            config('auth.guards.' . $guard . '.password',
                 config('auth.defaults.passwords')
             )
         );
     }
 }
 
-if (!function_exists('guard_url')) {
+if (! function_exists('guard_url')) {
     /**
      * Return thr property of the guard for current request.
      *
@@ -245,7 +243,7 @@ if (!function_exists('guard_url')) {
     }
 }
 
-if (!function_exists('set_route_guard')) {
+if (! function_exists('set_route_guard')) {
     /**
      * Set local for the translation.
      *
@@ -259,7 +257,7 @@ if (!function_exists('set_route_guard')) {
     }
 }
 
-if (!function_exists('users')) {
+if (! function_exists('users')) {
     /**
      * Get upload folder.
      *
@@ -277,7 +275,7 @@ if (!function_exists('users')) {
     }
 }
 
-if (!function_exists('user')) {
+if (! function_exists('user')) {
     /**
      * Return the user model.
      *
@@ -294,7 +292,7 @@ if (!function_exists('user')) {
     }
 }
 
-if (!function_exists('format_date')) {
+if (! function_exists('format_date')) {
     /**
      * Format date.
      *
@@ -313,7 +311,7 @@ if (!function_exists('format_date')) {
     }
 }
 
-if (!function_exists('format_date_time')) {
+if (! function_exists('format_date_time')) {
     /**
      * Format datetime.
      *
@@ -328,7 +326,7 @@ if (!function_exists('format_date_time')) {
     }
 }
 
-if (!function_exists('format_time')) {
+if (! function_exists('format_time')) {
     /**
      * Format time.
      *
@@ -340,5 +338,31 @@ if (!function_exists('format_time')) {
     function format_time($time, $format = 'h:i A')
     {
         return date($format, strtotime($time));
+    }
+
+
+    if (! function_exists('menu')) {
+        /**
+         * Return Menu..
+         *
+         * @return Menu
+         */
+        function menu()
+        {
+            return app('menu');
+        }
+    }
+
+
+    if (! function_exists('role')) {
+        /**
+         * Return role..
+         *
+         * @return role
+         */
+        function role()
+        {
+            return app('role');
+        }
     }
 }

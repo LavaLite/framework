@@ -1,11 +1,11 @@
-@extends('install::layouts.master-update')
+@extends('vendor.installer.layouts.master-update')
 
-@section('title', trans('install::messages.updater.welcome.title'))
+@section('title', trans('installer_messages.updater.welcome.title'))
 @section('container')
     <p class="paragraph text-center">
-    	{{ trans('install::messages.updater.welcome.message') }}
+    	{{ trans('installer_messages.updater.welcome.message') }}
     </p>
     <div class="buttons">
-        <a href="{{ route('LaravelUpdater::overview') }}" class="button">{{ trans('install::messages.next') }}</a>
+        <a href="{{ route('LaravelUpdater::overview') }}" class="button">{{ trans('installer_messages.next') }}</a>
     </div>
 @stop

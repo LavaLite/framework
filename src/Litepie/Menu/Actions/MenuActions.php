@@ -7,7 +7,7 @@ use Litepie\Menu\Models\Menu;
 use Litepie\Menu\Scopes\MenuResourceScope;
 use Litepie\Actions\Concerns\AsAction;
 use Litepie\Actions\Traits\LogsActions;
-use Litepie\Database\RequestScope;
+use Litepie\Database\Scopes\RequestScope;
 
 class MenuActions
 {

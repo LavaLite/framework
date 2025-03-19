@@ -25,15 +25,15 @@ class UserAction
         $this->model = $user;
         $this->function = Str::camel($action);
         $this->executeAction();
-        return $this->model;
-
+        // return $this->model;
+        return $this->result;
     }
 
     public function store(User $user, array $request)
     {
         $attributes = $request;
         $attributes['user_id'] = user_id();
-        $attributes['user_type'] = user_type();
+        $attributes['password'] = bcrypt($request['password']);
         $user = $user->create($attributes);
         return $user;
     }
@@ -41,14 +41,32 @@ class UserAction
     public function update(User $user, array $request)
     {
         $attributes = $request;
+        if (isset($attributes['roles'])) {
+            $user->roles()->sync($attributes['roles']);
+        }
+        if (isset($attributes['password'])) {
+            $attributes['password'] = bcrypt($request['password']);
+        }
         $user->update($attributes);
         return $user;
     }
 
-    public function destroy(User $user, array $request)
+    public function delete(User $user, array $request)
     {
-        $user->delete();
-        return $user;
+        $id = hashids_decode($request['parent_id']);
+        $userWithProperty = $this->model->where('id', $id)->has('property')->count();
+        if ($userWithProperty > 0) {
+            throw new \Exception('Cannot delete user with associated property');
+        }
+        $userWithOpportunity = $this->model->where('id', $id)->has('opportunity')->count();
+        if ($userWithOpportunity > 0) {
+            throw new \Exception('Cannot delete user with associated opportunity');
+        }
+        $deleted = $this->model->where('id', $id)->delete();
+        if (!$deleted) {
+            throw new \Exception('Failed to delete user.');
+        }
+        return $deleted;
     }
 
     public function copy(User $user, array $request)
@@ -70,5 +88,4 @@ class UserAction
 
         return $user;
     }
-
 }

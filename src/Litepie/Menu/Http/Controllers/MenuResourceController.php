@@ -1,8 +1,9 @@
 <?php
-
 namespace Litepie\Menu\Http\Controllers;
 
+use Closure;
 use Exception;
+use Illuminate\Http\Request;
 use Litepie\Http\Controllers\ResourceController as BaseController;
 use Litepie\Menu\Actions\MenuAction;
 use Litepie\Menu\Actions\MenuActions;
@@ -19,22 +20,22 @@ class MenuResourceController extends BaseController
 {
 
     /**
-     * Initialize menu resource controller.
-     *
-     *
-     * @return null
+     * Get the middleware that should be assigned to the controller.
      */
-    public function __construct()
+    public static function middleware(): array
     {
-        parent::__construct();
-
-        $this->middleware(function ($request, $next) {
-            $this->form = MenuForm::only('main')
-                ->setAttributes()
-                ->toArray();
-            $this->modules = $this->modules(config('menu.modules'), 'menu', guard_url('menu'));
-            return $next($request);
-        });
+        return array_merge(
+            parent::middleware(),
+            [
+                function (Request $request, Closure $next) {
+                    self::$form = MenuForm::only('main')
+                        ->setAttributes()
+                        ->toArray();
+                    self::$modules = self::modules(config('menu.modules'), 'menu', guard_url('menu'));
+                    return $next($request);
+                },
+            ]
+        );
     }
 
     /**
@@ -45,14 +46,14 @@ class MenuResourceController extends BaseController
     public function index(MenuResourceRequest $request)
     {
         $request = $request->all();
-        $page = MenuActions::run('paginate', $request);
+        $page    = MenuActions::run('paginate', $request);
 
-        $data = new MenusCollection($page);
+        $data     = new MenusCollection($page);
         $rootMenu = app(Menu::class)->rootMenues();
-        $form = $this->form;
-        $modules = $this->modules;
+        $form     = self::$form;
+        $modules  = self::$modules;
 
-        return $this->response->setMetaTitle(trans('menu::menu.names'))
+        return self::$response->setMetaTitle(trans('menu::menu.names'))
             ->view('menu::admin.index')
             ->data(compact('rootMenu', 'data', 'modules', 'form'))
             ->output();
@@ -69,10 +70,10 @@ class MenuResourceController extends BaseController
      */
     public function show(MenuResourceRequest $request, Menu $model)
     {
-        $form = $this->form;
-        $modules = $this->modules;
-        $menu = new MenuResource($model);
-        return $this->response
+        $form    = self::$form;
+        $modules = self::$modules;
+        $menu    = new MenuResource($model);
+        return self::$response
             ->setMetaTitle(trans('app.view') . ' ' . trans('menu::menu.name'))
             ->data(compact('menu', 'form', 'modules'))
             ->view('menu::admin.show')
@@ -88,10 +89,10 @@ class MenuResourceController extends BaseController
      */
     public function create(MenuResourceRequest $request, Menu $model)
     {
-        $form = $this->form;
-        $modules = $this->modules;
-        $data = new MenuResource($model);
-        return $this->response->setMetaTitle(trans('app.new') . ' ' . trans('menu::menu.name'))
+        $form    = self::$form;
+        $modules = self::$modules;
+        $data    = new MenuResource($model);
+        return self::$response->setMetaTitle(trans('app.new') . ' ' . trans('menu::menu.name'))
             ->view('menu::admin.create')
             ->data(compact('data', 'form', 'modules'))
             ->output();
@@ -109,16 +110,16 @@ class MenuResourceController extends BaseController
     {
         try {
             $request = $request->all();
-            $model = MenuAction::run('store', $model, $request);
-            $data = new MenuResource($model);
-            return $this->response->message(trans('messages.success.created', ['Module' => trans('menu::menu.name')]))
+            $model   = MenuAction::run('store', $model, $request);
+            $data    = new MenuResource($model);
+            return self::$response->message(trans('messages.success.created', ['Module' => trans('menu::menu.name')]))
                 ->code(204)
                 ->data(compact('data'))
                 ->status('success')
                 ->url(guard_url('menu/menu/' . $model->getRouteKey()))
                 ->redirect();
         } catch (Exception $e) {
-            return $this->response->message($e->getMessage())
+            return self::$response->message($e->getMessage())
                 ->code(400)
                 ->status('error')
                 ->url(guard_url('/menu/menu'))
@@ -137,12 +138,12 @@ class MenuResourceController extends BaseController
      */
     public function edit(MenuResourceRequest $request, Menu $model)
     {
-        $form = $this->form;
-        $modules = $this->modules;
-        $data = new MenuResource($model);
+        $form    = self::$form;
+        $modules = self::$modules;
+        $data    = new MenuResource($model);
         // return view('menu::admin.edit', compact('data', 'form', 'modules'));
 
-        return $this->response->setMetaTitle(trans('app.edit') . ' ' . trans('menu::menu.name'))
+        return self::$response->setMetaTitle(trans('app.edit') . ' ' . trans('menu::menu.name'))
             ->view('menu::admin.edit')
             ->data(compact('data', 'form', 'modules'))
             ->output();
@@ -161,17 +162,17 @@ class MenuResourceController extends BaseController
     {
         try {
             $request = $request->all();
-            $model = MenuAction::run('update', $model, $request);
-            $data = new MenuResource($model);
+            $model   = MenuAction::run('update', $model, $request);
+            $data    = new MenuResource($model);
 
-            return $this->response->message(trans('messages.success.updated', ['Module' => trans('menu::menu.name')]))
+            return self::$response->message(trans('messages.success.updated', ['Module' => trans('menu::menu.name')]))
                 ->code(204)
                 ->status('success')
                 ->data(compact('data'))
                 ->url(guard_url('menu/menu/' . $model->getRouteKey()))
                 ->redirect();
         } catch (Exception $e) {
-            return $this->response->message($e->getMessage())
+            return self::$response->message($e->getMessage())
                 ->code(400)
                 ->status('error')
                 ->url(guard_url('menu/menu/' . $model->getRouteKey()))
@@ -194,7 +195,7 @@ class MenuResourceController extends BaseController
             MenuAction::run('destroy', $model, $request);
             $data = new MenuResource($model);
 
-            return $this->response->message(trans('messages.success.deleted', ['Module' => trans('menu::menu.name')]))
+            return self::$response->message(trans('messages.success.deleted', ['Module' => trans('menu::menu.name')]))
                 ->code(202)
                 ->status('success')
                 ->data(compact('data'))
@@ -203,7 +204,7 @@ class MenuResourceController extends BaseController
 
         } catch (Exception $e) {
 
-            return $this->response->message($e->getMessage())
+            return self::$response->message($e->getMessage())
                 ->code(400)
                 ->status('error')
                 ->url(guard_url('menu/menu/' . $model->getRouteKey()))
@@ -223,6 +224,6 @@ class MenuResourceController extends BaseController
     public function tree(MenuResourceRequest $request, Menu $model)
     {
         $request = $request->all();
-        $model = MenuAction::run('updateTree', $model, $request);
+        $model   = MenuAction::run('updateTree', $model, $request);
     }
 }

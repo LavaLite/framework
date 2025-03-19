@@ -7,7 +7,7 @@ use Litepie\Master\Models\Master;
 use Litepie\Master\Scopes\MasterResourceScope;
 use Litepie\Actions\Concerns\AsAction;
 use Litepie\Actions\Traits\LogsActions;
-use Litepie\Database\RequestScope;
+use Litepie\Database\Scopes\RequestScope;
 
 class MasterActions
 {

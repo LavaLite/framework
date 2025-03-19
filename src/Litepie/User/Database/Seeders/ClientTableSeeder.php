@@ -19,11 +19,10 @@ class ClientTableSeeder extends Seeder
                 'name' => 'Client',
                 'sex' => 'Male',
                 'dob' => '2014-05-15',
-                'api_token' => Str::random(60),
                 'designation' => 'Super User',
                 'email_verified_at' => '2019-04-15 00:00:00',
                 'web' => 'http://litepie.org',
-                'created_at' => '2015-09-15',
+                'created_at' => '2015-09-15 00:00:00',
             ],
         ]);
     }

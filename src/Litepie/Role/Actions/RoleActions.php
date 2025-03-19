@@ -7,7 +7,7 @@ use Litepie\Role\Models\Role;
 use Litepie\Role\Scopes\RoleResourceScope;
 use Litepie\Actions\Concerns\AsAction;
 use Litepie\Actions\Traits\LogsActions;
-use Litepie\Database\RequestScope;
+use Litepie\Database\Scopes\RequestScope;
 
 class RoleActions
 {

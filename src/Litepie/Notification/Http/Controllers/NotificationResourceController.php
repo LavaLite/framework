@@ -1,17 +1,17 @@
 <?php
-
 namespace Litepie\Notification\Http\Controllers;
 
+use Closure;
 use Exception;
+use Illuminate\Http\Request;
+use Litepie\Database\Scopes\RequestScope;
 use Litepie\Http\Controllers\ResourceController as BaseController;
-use Litepie\Database\RequestScope;
 use Litepie\Notification\Forms\Notification as NotificationForm;
 use Litepie\Notification\Http\Requests\NotificationResourceRequest;
 use Litepie\Notification\Http\Resources\NotificationResource;
 use Litepie\Notification\Http\Resources\NotificationsCollection;
 use Litepie\Notification\Models\Notification;
 use Litepie\Notification\Scopes\NotificationResourceScope;
-
 
 /**
  * Resource controller class for notification.
@@ -20,18 +20,22 @@ class NotificationResourceController extends BaseController
 {
 
     /**
-     * Initialize notification resource controller.
-     *
-     *
-     * @return null
+     * Get the middleware that should be assigned to the controller.
      */
-    public function __construct()
+    public static function middleware(): array
     {
-        parent::__construct();
-        $this->form = NotificationForm::only('main')
+        return array_merge(
+            parent::middleware(),
+            [
+                function (Request $request, Closure $next) {
+                    self::$form = NotificationForm::only('main')
                         ->setAttributes()
                         ->toArray();
-        $this->modules = $this->modules(config('notification.modules'), 'notification', guard_url('notification'));
+                    self::$modules = self::modules(config('notification.modules'), 'notification', guard_url('notification'));
+                    return $next($request);
+                },
+            ]
+        );
     }
 
     /**
@@ -43,16 +47,16 @@ class NotificationResourceController extends BaseController
     {
 
         $pageLimit = $request->input('pageLimit', config('database.pagination.limit'));
-        $page = Notification::pushScope(new RequestScope())
+        $page      = Notification::pushScope(new RequestScope())
             ->pushScope(new NotificationResourceScope())
             ->paginate($pageLimit);
 
         $data = new NotificationsCollection($page);
 
-        $form = $this->form;
-        $modules = $this->modules;
+        $form    = self::$form;
+        $modules = self::$modules;
 
-        return $this->response->setMetaTitle(trans('notification::notification.names'))
+        return self::$response->setMetaTitle(trans('notification::notification.names'))
             ->view('notification::notification.index')
             ->data(compact('data', 'modules', 'form'))
             ->output();
@@ -69,10 +73,10 @@ class NotificationResourceController extends BaseController
      */
     public function show(NotificationResourceRequest $request, Notification $model)
     {
-        $form = $this->form;
-        $modules = $this->modules;
-        $data = new NotificationResource($model);
-        return $this->response
+        $form    = self::$form;
+        $modules = self::$modules;
+        $data    = new NotificationResource($model);
+        return self::$response
             ->setMetaTitle(trans('app.view') . ' ' . trans('notification::notification.name'))
             ->data(compact('data', 'form', 'modules'))
             ->view('notification::notification.show')
@@ -88,10 +92,10 @@ class NotificationResourceController extends BaseController
      */
     public function create(NotificationResourceRequest $request, Notification $model)
     {
-        $form = $this->form;
-        $modules = $this->modules;
-        $data = new NotificationResource($model);
-        return $this->response->setMetaTitle(trans('app.new') . ' ' . trans('notification::notification.name'))
+        $form    = self::$form;
+        $modules = self::$modules;
+        $data    = new NotificationResource($model);
+        return self::$response->setMetaTitle(trans('app.new') . ' ' . trans('notification::notification.name'))
             ->view('notification::notification.create')
             ->data(compact('data', 'form', 'modules'))
             ->output();
@@ -108,19 +112,19 @@ class NotificationResourceController extends BaseController
     public function store(NotificationResourceRequest $request, Notification $model)
     {
         try {
-            $attributes = $request->all();
-            $attributes['user_id'] = user_id();
+            $attributes              = $request->all();
+            $attributes['user_id']   = user_id();
             $attributes['user_type'] = user_type();
-            $model = $model->create($attributes);
-            $data = new NotificationResource($model);
-            return $this->response->message(trans('messages.success.created', ['Module' => trans('notification::notification.name')]))
+            $model                   = $model->create($attributes);
+            $data                    = new NotificationResource($model);
+            return self::$response->message(trans('messages.success.created', ['Module' => trans('notification::notification.name')]))
                 ->code(204)
                 ->data(compact('data'))
                 ->status('success')
                 ->url(guard_url('notification/notification/' . $model->getRouteKey()))
                 ->redirect();
         } catch (Exception $e) {
-            return $this->response->message($e->getMessage())
+            return self::$response->message($e->getMessage())
                 ->code(400)
                 ->status('error')
                 ->url(guard_url('/notification/notification'))
@@ -139,12 +143,12 @@ class NotificationResourceController extends BaseController
      */
     public function edit(NotificationResourceRequest $request, Notification $model)
     {
-        $form = $this->form;
-        $modules = $this->modules;
-        $data = new NotificationResource($model);
+        $form    = self::$form;
+        $modules = self::$modules;
+        $data    = new NotificationResource($model);
         // return view('notification::notification.edit', compact('data', 'form', 'modules'));
 
-        return $this->response->setMetaTitle(trans('app.edit') . ' ' . trans('notification::notification.name'))
+        return self::$response->setMetaTitle(trans('app.edit') . ' ' . trans('notification::notification.name'))
             ->view('notification::notification.edit')
             ->data(compact('data', 'form', 'modules'))
             ->output();
@@ -166,17 +170,17 @@ class NotificationResourceController extends BaseController
             $model->update($attributes);
             $data = new NotificationResource($model);
 
-            return $this->response->message(trans('messages.success.updated', ['Module' => trans('notification::notification.name')]))
+            return self::$response->message(trans('messages.success.updated', ['Module' => trans('notification::notification.name')]))
                 ->code(204)
                 ->status('success')
                 ->data(compact('data'))
                 ->url(guard_url('notification/notification/' . $model->getRouteKey()))
                 ->redirect();
         } catch (Exception $e) {
-            return $this->response->message($e->getMessage())
+            return self::$response->message($e->getMessage())
                 ->code(400)
                 ->status('error')
-                ->url(guard_url('notification/notification/' .  $model->getRouteKey()))
+                ->url(guard_url('notification/notification/' . $model->getRouteKey()))
                 ->redirect();
         }
 
@@ -195,7 +199,7 @@ class NotificationResourceController extends BaseController
             $model->delete();
             $data = new NotificationResource($model);
 
-            return $this->response->message(trans('messages.success.deleted', ['Module' => trans('notification::notification.name')]))
+            return self::$response->message(trans('messages.success.deleted', ['Module' => trans('notification::notification.name')]))
                 ->code(202)
                 ->status('success')
                 ->data(compact('data'))
@@ -204,10 +208,10 @@ class NotificationResourceController extends BaseController
 
         } catch (Exception $e) {
 
-            return $this->response->message($e->getMessage())
+            return self::$response->message($e->getMessage())
                 ->code(400)
                 ->status('error')
-                ->url(guard_url('notification/notification/' .  $model->getRouteKey()))
+                ->url(guard_url('notification/notification/' . $model->getRouteKey()))
                 ->redirect();
         }
 

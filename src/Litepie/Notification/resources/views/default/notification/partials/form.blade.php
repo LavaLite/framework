@@ -5,7 +5,7 @@
         @foreach($fields as $key => $field)
         <div class="col-{!!$field['col'] ?? '12'!!}">
             {!!
-            Form::input($key)
+           form()->input($key)
             ->apply($field)
             ->mode($mode)
             !!}

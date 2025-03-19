@@ -1,11 +1,10 @@
 <?php
-
 namespace Litepie\User\Actions;
 
 use Illuminate\Support\Str;
 use Litepie\Actions\Concerns\AsAction;
 use Litepie\Actions\Traits\LogsActions;
-use Litepie\Database\RequestScope;
+use Litepie\Database\Scopes\RequestScope;
 use Litepie\User\Models\User;
 use Litepie\User\Scopes\UserResourceScope;
 
@@ -15,7 +14,7 @@ class UserActions
     use LogsActions;
 
     protected $model;
-    protected $namespace = 'litepie.user.user';
+    protected $namespace  = 'litepie.user.user';
     protected $eventClass = \Litepie\User\Events\UserAction::class;
     protected $action;
     protected $function;
@@ -23,9 +22,9 @@ class UserActions
 
     public function handle(string $action, array $request)
     {
-        $this->model = app(User::class);
-        $this->action = $action;
-        $this->request = $request;
+        $this->model    = app(User::class);
+        $this->action   = $action;
+        $this->request  = $request;
         $this->function = Str::camel($action);
 
         $function = Str::camel($action);
@@ -41,7 +40,7 @@ class UserActions
     public function paginate(array $request)
     {
         $pageLimit = isset($request['pageLimit']) ?: config('database.pagination.limit');
-        $user = $this->model
+        $user      = $this->model
             ->pushScope(new RequestScope())
             ->pushScope(new UserResourceScope())
             ->paginate($pageLimit);
@@ -52,7 +51,7 @@ class UserActions
     public function simplePaginate(array $request)
     {
         $pageLimit = isset($request['pageLimit']) ?: config('database.pagination.limit');
-        $user = $this->model
+        $user      = $this->model
             ->pushScope(new RequestScope())
             ->pushScope(new UserResourceScope())
             ->simplePaginate($pageLimit);
@@ -72,11 +71,17 @@ class UserActions
 
     public function delete(array $request)
     {
-        $ids = $request['ids'];
+        $ids = $request['parent_id'];
         $ids = collect($ids)->map(function ($id) {
             return hashids_decode($id);
         });
-        return $this->model->whereIn('id', $ids)->delete();
+
+        $deleted = $this->model->whereIn('id', $ids)->delete();
+        if (! $deleted) {
+            throw new \Exception('Failed to delete user.');
+        }
+
+        return $deleted;
     }
 
     public function options(array $request)
@@ -87,18 +92,18 @@ class UserActions
             ->take(30)->get()
             ->map(function ($row) {
                 return [
-                    'key' => $row->id,
+                    'key'   => $row->id,
                     'value' => $row->id,
-                    'text' => $row->name,
-                    'name' => $row->name,
+                    'text'  => $row->name,
+                    'name'  => $row->name,
                 ];
             })->toArray();
     }
     public function getUserByRole(array $request)
     {
-        $role = @$request['role'];
-        $select =  @$request['columns'];
-        return  $this->model
+        $role   = @$request['role'];
+        $select = @$request['columns'];
+        return $this->model
             ->select($select)
             ->whereHas(
                 'roles',
@@ -108,7 +113,7 @@ class UserActions
             )
             ->get()
             ->map(function ($row) {
-                $row['key'] = $row->eid;
+                $row['key']   = $row->eid;
                 $row['value'] = $row->eid;
                 return $row;
             });

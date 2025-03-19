@@ -48,7 +48,7 @@ trait ThemeTrait
      */
     public function theme($theme)
     {
-        $this->theme = BaseTheme::uses($theme);
+        $this->theme = theme()->uses($theme);
 
         return $this;
     }

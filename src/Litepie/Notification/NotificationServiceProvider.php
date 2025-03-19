@@ -56,7 +56,7 @@ class NotificationServiceProvider extends ServiceProvider
      * @return void
      */
     public function registerFacade() {
-        $this->app->bind('notification', function($app)
+        $this->app->bind('litepie.notification', function($app)
         {
             return $this->app->make(Notifications::class);
         });
@@ -93,7 +93,7 @@ class NotificationServiceProvider extends ServiceProvider
      */
     public function provides()
     {
-        return ['notification'];
+        return ['litepie.notification'];
     }
 
     /**

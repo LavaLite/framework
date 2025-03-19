@@ -55,7 +55,7 @@ class MenuServiceProvider extends ServiceProvider
      * @return void
      */
     public function registerFacade() {
-        $this->app->bind('litepie.menu', function($app)
+        $this->app->bind('menu', function($app)
         {
             return $this->app->make(Menu::class);
         });
@@ -86,7 +86,7 @@ class MenuServiceProvider extends ServiceProvider
      */
     public function provides()
     {
-        return ['litepie.menu'];
+        return ['menu'];
     }
 
     /**

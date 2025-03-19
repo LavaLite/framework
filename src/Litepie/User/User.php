@@ -240,8 +240,6 @@ class User
      */
     public function getUserByRole($role, $columns = '*')
     {
-        return UserActions::run('getUserByRole', ['role'=> $role, 'columns'=> $columns]);
+        return UserActions::run('getUserByRole', ['role' => $role, 'columns' => $columns]);
     }
-
-
 }

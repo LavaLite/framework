@@ -8,7 +8,7 @@ use Litepie\Role\Models\Permission;
 use Litepie\Role\Scopes\PermissionResourceScope;
 use Litepie\Actions\Concerns\AsAction;
 use Litepie\Actions\Traits\LogsActions;
-use Litepie\Database\RequestScope;
+use Litepie\Database\Scopes\RequestScope;
 
 class PermissionActions
 {

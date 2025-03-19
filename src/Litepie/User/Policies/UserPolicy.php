@@ -18,7 +18,7 @@ class UserPolicy
      */
     public function view(Authenticatable $authUser, User $user)
     {
-        if ($authUser->canDo('user.user.view')) {
+        if ($authUser->isAdministrator()) {
             return true;
         }
 
@@ -34,7 +34,7 @@ class UserPolicy
      */
     public function create(Authenticatable $authUser)
     {
-        return $authUser->canDo('user.user.create');
+        return $authUser->isAdministrator();
     }
 
     /**
@@ -47,7 +47,7 @@ class UserPolicy
      */
     public function update(Authenticatable $authUser, User $user)
     {
-        if ($authUser->canDo('user.user.edit')) {
+        if ($authUser->isAdministrator()) {
             return true;
         }
 

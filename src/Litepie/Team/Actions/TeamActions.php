@@ -7,7 +7,7 @@ use Litepie\Team\Models\Team;
 use Litepie\Team\Scopes\TeamResourceScope;
 use Litepie\Actions\Concerns\AsAction;
 use Litepie\Actions\Traits\LogsActions;
-use Litepie\Database\RequestScope;
+use Litepie\Database\Scopes\RequestScope;
 
 class TeamActions
 {

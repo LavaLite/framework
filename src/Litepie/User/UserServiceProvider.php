@@ -32,7 +32,6 @@ class UserServiceProvider extends ServiceProvider
 
         // Call pblish redources function
         $this->publishResources();
-
     }
 
     /**
@@ -47,6 +46,7 @@ class UserServiceProvider extends ServiceProvider
 
         $this->app->register(\Litepie\User\Providers\AuthServiceProvider::class);
         $this->app->register(\Litepie\User\Providers\RouteServiceProvider::class);
+        $this->app->register(\Litepie\User\Providers\ActionServiceProvider::class);
     }
 
     /**
@@ -69,7 +69,8 @@ class UserServiceProvider extends ServiceProvider
     protected function mergeConfig()
     {
         $this->mergeConfigFrom(
-            __DIR__ . '/config/user.php', 'user'
+            __DIR__ . '/config/user.php',
+            'user'
         );
     }
 

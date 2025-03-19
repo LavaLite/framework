@@ -1,8 +1,9 @@
 <?php
-
 namespace Litepie\Team\Http\Controllers;
 
+use Closure;
 use Exception;
+use Illuminate\Http\Request;
 use Litepie\Http\Controllers\ResourceController as BaseController;
 use Litepie\Team\Actions\TeamAction;
 use Litepie\Team\Actions\TeamActions;
@@ -24,15 +25,19 @@ class TeamResourceController extends BaseController
      *
      * @return null
      */
-    public function __construct()
+    public static function middleware(): array
     {
-        parent::__construct();
-        $this->middleware(function ($request, $next) {
-            $this->form = TeamForm::only('main')->setAttributes()
-                ->toArray();
-            $this->modules = $this->modules(config('team.modules'), 'team', guard_url('team'));
-            return $next($request);
-        });
+        return array_merge(
+            parent::middleware(),
+            [
+                function (Request $request, Closure $next) {
+                    self::$form = TeamForm::only('main')->setAttributes()
+                        ->toArray();
+                    self::$modules = self::modules(config('team.modules'), 'team', guard_url('team'));
+                    return $next($request);
+                },
+            ]
+        );
     }
 
     /**
@@ -43,14 +48,14 @@ class TeamResourceController extends BaseController
     public function index(TeamResourceRequest $request)
     {
         $request = $request->all();
-        $page = TeamActions::run('paginate', $request);
+        $page    = TeamActions::run('paginate', $request);
 
         $data = new TeamsCollection($page);
 
-        $form = $this->form;
-        $modules = $this->modules;
+        $form    = self::$form;
+        $modules = self::$modules;
 
-        return $this->response->setMetaTitle(trans('team::team.names'))
+        return self::$response->setMetaTitle(trans('team::team.names'))
             ->view('team::index')
             ->data(compact('data', 'modules', 'form'))
             ->output();
@@ -67,11 +72,10 @@ class TeamResourceController extends BaseController
      */
     public function show(TeamResourceRequest $request, Team $model)
     {
-        $form = $this->form;
-        $modules = $this->modules;
-        $data = new TeamResource($model);
-        dd($data);
-        return $this->response
+        $form    = self::$form;
+        $modules = self::$modules;
+        $data    = new TeamResource($model);
+        return self::$response
             ->setMetaTitle(trans('app.view') . ' ' . trans('team::team.name'))
             ->data(compact('data', 'form', 'modules'))
             ->view('team::show')
@@ -87,10 +91,10 @@ class TeamResourceController extends BaseController
      */
     public function create(TeamResourceRequest $request, Team $model)
     {
-        $form = $this->form;
-        $modules = $this->modules;
-        $data = new TeamResource($model);
-        return $this->response->setMetaTitle(trans('app.new') . ' ' . trans('team::team.name'))
+        $form    = self::$form;
+        $modules = self::$modules;
+        $data    = new TeamResource($model);
+        return self::$response->setMetaTitle(trans('app.new') . ' ' . trans('team::team.name'))
             ->view('team::create')
             ->data(compact('data', 'form', 'modules'))
             ->output();
@@ -108,16 +112,16 @@ class TeamResourceController extends BaseController
     {
         try {
             $request = $request->all();
-            $model = TeamAction::run('store', $model, $request);
-            $data = new TeamResource($model);
-            return $this->response->message(trans('messages.success.created', ['Module' => trans('team::team.name')]))
+            $model   = TeamAction::run('store', $model, $request);
+            $data    = new TeamResource($model);
+            return self::$response->message(trans('messages.success.created', ['Module' => trans('team::team.name')]))
                 ->code(204)
                 ->data(compact('data'))
                 ->status('success')
                 ->url(guard_url('team/team/' . $model->getRouteKey()))
                 ->redirect();
         } catch (Exception $e) {
-            return $this->response->message($e->getMessage())
+            return self::$response->message($e->getMessage())
                 ->code(400)
                 ->status('error')
                 ->url(guard_url('/team/team'))
@@ -136,12 +140,12 @@ class TeamResourceController extends BaseController
      */
     public function edit(TeamResourceRequest $request, Team $model)
     {
-        $form = $this->form;
-        $modules = $this->modules;
-        $data = new TeamResource($model);
+        $form    = self::$form;
+        $modules = self::$modules;
+        $data    = new TeamResource($model);
         // return view('team::edit', compact('data', 'form', 'modules'));
 
-        return $this->response->setMetaTitle(trans('app.edit') . ' ' . trans('team::team.name'))
+        return self::$response->setMetaTitle(trans('app.edit') . ' ' . trans('team::team.name'))
             ->view('team::edit')
             ->data(compact('data', 'form', 'modules'))
             ->output();
@@ -160,17 +164,17 @@ class TeamResourceController extends BaseController
     {
         try {
             $request = $request->all();
-            $model = TeamAction::run('update', $model, $request);
-            $data = new TeamResource($model);
+            $model   = TeamAction::run('update', $model, $request);
+            $data    = new TeamResource($model);
 
-            return $this->response->message(trans('messages.success.updated', ['Module' => trans('team::team.name')]))
+            return self::$response->message(trans('messages.success.updated', ['Module' => trans('team::team.name')]))
                 ->code(204)
                 ->status('success')
                 ->data(compact('data'))
                 ->url(guard_url('team/team/' . $model->getRouteKey()))
                 ->redirect();
         } catch (Exception $e) {
-            return $this->response->message($e->getMessage())
+            return self::$response->message($e->getMessage())
                 ->code(400)
                 ->status('error')
                 ->url(guard_url('team/team/' . $model->getRouteKey()))
@@ -191,10 +195,10 @@ class TeamResourceController extends BaseController
         try {
 
             $request = $request->all();
-            $model = TeamAction::run('destroy', $model, $request);
-            $data = new TeamResource($model);
+            $model   = TeamAction::run('destroy', $model, $request);
+            $data    = new TeamResource($model);
 
-            return $this->response->message(trans('messages.success.deleted', ['Module' => trans('team::team.name')]))
+            return self::$response->message(trans('messages.success.deleted', ['Module' => trans('team::team.name')]))
                 ->code(202)
                 ->status('success')
                 ->data(compact('data'))
@@ -203,7 +207,7 @@ class TeamResourceController extends BaseController
 
         } catch (Exception $e) {
 
-            return $this->response->message($e->getMessage())
+            return self::$response->message($e->getMessage())
                 ->code(400)
                 ->status('error')
                 ->url(guard_url('team/team/' . $model->getRouteKey()))
@@ -226,15 +230,15 @@ class TeamResourceController extends BaseController
             $request = $request->all();
 
             $model = TeamAction::run('attach', $model, $request);
-            $data = new TeamResource($model);
+            $data  = new TeamResource($model);
 
-            return $this->response->message(trans('messages.success.attached', ['Module' => trans('team::team.name')]))
+            return self::$response->message(trans('messages.success.attached', ['Module' => trans('team::team.name')]))
                 ->code(204)
                 ->status('success')
                 ->url(guard_url('teams/team/' . $model->getRouteKey()))
                 ->redirect();
         } catch (Exception $e) {
-            return $this->response->message($e->getMessage())
+            return self::$response->message($e->getMessage())
                 ->code(400)
                 ->status('error')
                 ->url(guard_url('teams/team/' . $model->getRouteKey()))
@@ -254,16 +258,16 @@ class TeamResourceController extends BaseController
     {
         try {
             $request = $request->all();
-            $model = TeamAction::run('detach', $model, $request);
-            $data = new TeamResource($model);
+            $model   = TeamAction::run('detach', $model, $request);
+            $data    = new TeamResource($model);
 
-            return $this->response->message(trans('messages.success.detached', ['Module' => trans('team::team.name')]))
+            return self::$response->message(trans('messages.success.detached', ['Module' => trans('team::team.name')]))
                 ->code(204)
                 ->status('success')
                 ->url(guard_url('teams/team/' . $model->getRouteKey()))
                 ->redirect();
         } catch (Exception $e) {
-            return $this->response->message($e->getMessage())
+            return self::$response->message($e->getMessage())
                 ->code(400)
                 ->status('error')
                 ->url(guard_url('teams/team/' . $model->getRouteKey()))

@@ -13,7 +13,7 @@ class WelcomeController extends PublicController
      */
     public function welcome()
     {
-        return $this->response->metaTitle('Dashboard')
+        return self::$response->metaTitle('Dashboard')
             ->layout('blank')
             ->view('install::welcome')
             ->output();

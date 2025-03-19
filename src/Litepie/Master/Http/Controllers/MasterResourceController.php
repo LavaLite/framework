@@ -1,8 +1,9 @@
 <?php
-
 namespace Litepie\Master\Http\Controllers;
 
+use Closure;
 use Exception;
+use Illuminate\Http\Request;
 use Litepie\Http\Controllers\ResourceController as BaseController;
 use Litepie\Master\Actions\MasterAction;
 use Litepie\Master\Actions\MasterActions;
@@ -24,17 +25,21 @@ class MasterResourceController extends BaseController
      *
      * @return null
      */
-    public function __construct()
+    public static function middleware(): array
     {
-        parent::__construct();
-        $this->middleware(function ($request, $next) {
-            $this->form = MasterForm::only('main')
-                ->setAttributes()
-                ->toArray();
+        return array_merge(
+            parent::middleware(),
+            [
+                function (Request $request, Closure $next) {
+                    self::$form = MasterForm::only('main')
+                        ->setAttributes()
+                        ->toArray();
 
-            $this->modules = $this->modules(config('master.modules'), 'master', guard_url('master'));
-            return $next($request);
-        });
+                    self::$modules = self::modules(config('master.modules'), 'master', guard_url('master'));
+                    return $next($request);
+                },
+            ]
+        );
     }
 
     /**
@@ -45,8 +50,8 @@ class MasterResourceController extends BaseController
     public function index(MasterResourceRequest $request, $type = null)
     {
         $request = $request->all();
-        $page = MasterActions::run('paginate', $request);
-        $data = new MastersCollection($page);
+        $page    = MasterActions::run('paginate', $request);
+        $data    = new MastersCollection($page);
 
         if ($type == null) {
             $view = 'master::master.index';
@@ -54,11 +59,11 @@ class MasterResourceController extends BaseController
             $view = 'master::master.masters';
         }
 
-        $form = $this->form;
-        $modules = $this->modules;
-        $count = MasterActions::run('groupcount', $request);
-        $groups = MasterActions::run('groups', $request);
-        return $this->response->setMetaTitle(trans('master::master.names'))
+        $form    = self::$form;
+        $modules = self::$modules;
+        $count   = MasterActions::run('groupcount', $request);
+        $groups  = MasterActions::run('groups', $request);
+        return self::$response->setMetaTitle(trans('master::master.names'))
             ->view($view)
             ->data(compact('type', 'data', 'modules', 'form', 'count', 'groups'))
             ->output();
@@ -74,10 +79,10 @@ class MasterResourceController extends BaseController
      */
     public function show(MasterResourceRequest $request, Master $model)
     {
-        $form = $this->form;
-        $modules = $this->modules;
-        $data = new MasterResource($model);
-        return $this->response
+        $form    = self::$form;
+        $modules = self::$modules;
+        $data    = new MasterResource($model);
+        return self::$response
             ->setMetaTitle(trans('app.view') . ' ' . trans('master.master.name'))
             ->data(compact('data', 'form', 'modules'))
             ->view('master::master.show')
@@ -93,10 +98,10 @@ class MasterResourceController extends BaseController
      */
     public function create(MasterResourceRequest $request, Master $model)
     {
-        $form = $this->form;
-        $modules = $this->modules;
-        $data = new MasterResource($model);
-        return $this->response->setMetaTitle(trans('app.new') . ' ' . trans('master.master.name'))
+        $form    = self::$form;
+        $modules = self::$modules;
+        $data    = new MasterResource($model);
+        return self::$response->setMetaTitle(trans('app.new') . ' ' . trans('master.master.name'))
             ->view('master::master.create')
             ->data(compact('data', 'form', 'modules'))
             ->output();
@@ -114,16 +119,16 @@ class MasterResourceController extends BaseController
     {
         try {
             $request = $request->all();
-            $model = MasterAction::run('store', $model, $request);
-            $data = new MasterResource($model);
-            return $this->response->message(trans('messages.success.created', ['Module' => trans('master.master.name')]))
+            $model   = MasterAction::run('store', $model, $request);
+            $data    = new MasterResource($model);
+            return self::$response->message(trans('messages.success.created', ['Module' => trans('master.master.name')]))
                 ->code(204)
                 ->data(compact('data'))
                 ->status('success')
                 ->url(guard_url('master/master/' . $model->getRouteKey()))
                 ->redirect();
         } catch (Exception $e) {
-            return $this->response->message($e->getMessage())
+            return self::$response->message($e->getMessage())
                 ->code(400)
                 ->status('error')
                 ->url(guard_url('/master/master'))
@@ -142,12 +147,12 @@ class MasterResourceController extends BaseController
      */
     public function edit(MasterResourceRequest $request, Master $model)
     {
-        $form = $this->form;
-        $modules = $this->modules;
-        $data = new MasterResource($model);
+        $form    = self::$form;
+        $modules = self::$modules;
+        $data    = new MasterResource($model);
         // return view('master::master.edit', compact('data', 'form', 'modules'));
 
-        return $this->response->setMetaTitle(trans('app.edit') . ' ' . trans('master.master.name'))
+        return self::$response->setMetaTitle(trans('app.edit') . ' ' . trans('master.master.name'))
             ->view('master::master.edit')
             ->data(compact('data', 'form', 'modules'))
             ->output();
@@ -166,17 +171,17 @@ class MasterResourceController extends BaseController
     {
         try {
             $request = $request->all();
-            $model = MasterAction::run('update', $model, $request);
-            $data = new MasterResource($model);
+            $model   = MasterAction::run('update', $model, $request);
+            $data    = new MasterResource($model);
 
-            return $this->response->message(trans('messages.success.updated', ['Module' => trans('master.master.name')]))
+            return self::$response->message(trans('messages.success.updated', ['Module' => trans('master.master.name')]))
                 ->code(204)
                 ->status('success')
                 ->data(compact('data'))
                 ->url(guard_url('master/master/' . $model->getRouteKey()))
                 ->redirect();
         } catch (Exception $e) {
-            return $this->response->message($e->getMessage())
+            return self::$response->message($e->getMessage())
                 ->code(400)
                 ->status('error')
                 ->url(guard_url('master/master/' . $model->getRouteKey()))
@@ -197,10 +202,10 @@ class MasterResourceController extends BaseController
         try {
 
             $request = $request->all();
-            $model = MasterAction::run('delete', $model, $request);
-            $data = new MasterResource($model);
+            $model   = MasterAction::run('delete', $model, $request);
+            $data    = new MasterResource($model);
 
-            return $this->response->message(trans('messages.success.deleted', ['Module' => trans('master.master.name')]))
+            return self::$response->message(trans('messages.success.deleted', ['Module' => trans('master.master.name')]))
                 ->code(202)
                 ->status('success')
                 ->data(compact('data'))
@@ -209,7 +214,7 @@ class MasterResourceController extends BaseController
 
         } catch (Exception $e) {
 
-            return $this->response->message($e->getMessage())
+            return self::$response->message($e->getMessage())
                 ->code(400)
                 ->status('error')
                 ->url(guard_url('master/master/' . $model->getRouteKey()))

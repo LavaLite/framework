@@ -29,8 +29,16 @@ class UsersCollection extends ResourceCollection
 
     private function actions()
     {
-
         $arr = [];
-                return $arr;
+        $actions = app(User::class)->actions()->list();
+        foreach ($actions as $key => $action) {
+            $name = $action->name();
+            $arr[$key]['url'] = guard_url('user/user/actions/' . $action->name());
+            $arr[$key]['name'] = $name;
+            $arr[$key]['key'] = $name;
+            $arr[$key]['form'] = $action->form();
+            $arr[$key]['label'] = trans('user::user.actions.' . $name);
+        }
+        return $arr;
     }
 }

@@ -18,7 +18,7 @@
             </button>
         </div>
     </div>
-    {!!Form::vertical_open()
+    {!!form()->vertical_open()
     ->id('form-edit')
     ->method('POST')
     ->files('true')
@@ -35,19 +35,19 @@
                                     <fieldset>
                                         <div class="row">
                                             <div class="col-md-12">
-                                                {!! Form::url('settings[main.sms.url]')
+                                                {!!form()->url('settings[main.sms.url]')
                                                 -> label(trans('setting::setting.label.sms.url'))
                                                 -> value(setting('main.sms.url'))
                                                 -> placeholder(trans('setting::setting.placeholder.sms.url'))!!}
                                             </div>
                                             <div class="col-md-6">
-                                                {!! Form::text('settings[main.sms.code]')
+                                                {!!form()->text('settings[main.sms.code]')
                                                 -> label(trans('setting::setting.label.sms.code'))
                                                 -> value(setting('main.sms.code'))
                                                 -> placeholder(trans('setting::setting.placeholder.sms.code'))!!}
                                             </div>
                                             <div class="col-md-6">
-                                                {!! Form::text('settings[main.sms.secret]')
+                                                {!!form()->text('settings[main.sms.secret]')
                                                 -> label(trans('setting::setting.label.sms.secret'))
                                                 -> value(setting('main.sms.secret'))
                                                 -> placeholder(trans('setting::setting.placeholder.sms.secret'))!!}
@@ -63,5 +63,5 @@
             </div>
         </div>
     </div>
-    {!! Form::close() !!}
+    {!!form()->close() !!}
 </div>

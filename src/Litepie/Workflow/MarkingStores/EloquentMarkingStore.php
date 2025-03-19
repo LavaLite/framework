@@ -47,7 +47,7 @@ class EloquentMarkingStore implements MarkingStoreInterface
     /**
      * {@inheritdoc}
      */
-    public function setMarking(object $subject, Marking $marking, array $context = [])
+    public function setMarking(object $subject, Marking $marking, array $context = []) :void
     {
         $marking = $marking->getPlaces();
 

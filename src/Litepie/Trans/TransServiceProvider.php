@@ -42,7 +42,7 @@ class TransServiceProvider extends ServiceProvider
         $this->mergeConfigFrom(__DIR__.'/config.php', 'trans');
 
         $this->app->bind('trans', function ($app) {
-            return $this->app->make('\Litepie\Trans\Trans');
+            return $this->app->make(Trans::class);
         });
     }
 }

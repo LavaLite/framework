@@ -1,7 +1,6 @@
 <?php
 
 // Routes for user.
-
 Route::group(
     [
         'prefix' => '{guard}/user',
@@ -13,5 +12,6 @@ Route::group(
         Route::get('users/{status?}', 'UserResourceController@index');
         Route::resource('user', 'UserResourceController');
         Route::resource('client', 'ClientResourceController');
+        Route::patch('user/actions/{action}','UserActionsController');
     }
 );

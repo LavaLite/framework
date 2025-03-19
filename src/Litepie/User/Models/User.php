@@ -1,5 +1,4 @@
 <?php
-
 namespace Litepie\User\Models;
 
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -11,6 +10,8 @@ use Litepie\Database\Traits\Sluggable;
 use Litepie\Database\Traits\Sortable;
 use Litepie\Filer\Traits\Filer;
 use Litepie\Hashids\Traits\Hashids;
+use Litepie\Log\Traits\LogsActivity;
+use Litepie\Role\Models\Role;
 use Litepie\Trans\Traits\Translatable;
 use Litepie\Workflow\Traits\Workflowable;
 
@@ -26,6 +27,7 @@ class User extends Model
     use Actionable;
     use Searchable;
     use Workflowable;
+    use LogsActivity;
 
     /**
      * Configuartion for the model.
@@ -34,19 +36,32 @@ class User extends Model
      */
     protected $config = 'user.user.model';
 
+    public function roles()
+    {
+        return $this->belongsToMany(Role::class);
+    }
+
     public function getSettings()
     {
         $settings = [
             'groups' => [],
-            'fields' => [],
         ];
-        $settings['groups']['login_details'] = ['show' => true, 'edit' => true];
-        $settings['groups']['main'] = ['show' => true, 'edit' => true];
-        $settings['groups']['details'] = ['show' => true, 'edit' => true];
-        $settings['groups']['photo'] = ['show' => true, 'edit' => true];
-        $settings['groups']['roles'] = ['show' => true, 'edit' => true];
-        $settings['fields']['password'] = ['show' => true, 'edit' => true, 'disabled' => !is_null($this->password)];
-        $settings['groups']['company'] = ['show' => true, 'edit' => true];
+        $show_state = true;
+        if (is_null($this->id)) {
+            $show_state = false;
+        }
+        $settings['groups']['login_details']      = ['show' => true, 'edit' => true];
+        $settings['groups']['main']               = ['show' => true, 'edit' => true];
+        $settings['groups']['details']            = ['show' => true, 'edit' => true];
+        $settings['groups']['photo']              = ['show' => true, 'edit' => true];
+        $settings['groups']['roles']              = ['show' => true, 'edit' => true];
+        $settings['fields']['password']           = ['show' => true, 'edit' => true];
+        $settings['groups']['company']            = ['show' => true, 'edit' => true];
+        $settings['groups']['details']            = ['show' => is_null($this->id) ? true : false, 'edit' => true];
+        $settings['groups']['user_details']       = ['show' => true, 'edit' => true];
+        $settings['groups']['user_login_details'] = ['show' => true, 'edit' => true];
+        $settings['groups']['photo_gallery']      = ['show' => true, 'edit' => true];
+        $settings['groups']['roles']              = ['show' => true, 'edit' => true];
         return $settings;
     }
 }

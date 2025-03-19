@@ -1,8 +1,9 @@
 <?php
-
 namespace Litepie\User\Http\Controllers;
 
+use Closure;
 use Exception;
+use Illuminate\Http\Request;
 use Litecms\Location\Actions\CountryActions;
 use Litepie\Http\Controllers\ResourceController as BaseController;
 use Litepie\User\Actions\UserAction;
@@ -25,15 +26,20 @@ class UserResourceController extends BaseController
      *
      * @return null
      */
-    public function __construct()
+    public static function middleware(): array
     {
-        parent::__construct();
-        $this->middleware(function ($request, $next) {
-            $this->form = UserForm::setAttributes()
-                ->toArray();
-            $this->modules = $this->modules(config('user.modules'), 'user', guard_url('user'));
-            return $next($request);
-        });
+        return array_merge(
+            parent::middleware(),
+            [
+                function (Request $request, Closure $next) {
+                    self::$form = UserForm::only('main')
+                        ->setAttributes()
+                        ->toArray();
+                    self::$modules = self::modules(config('user.modules'), 'user', guard_url('user'));
+                    return $next($request);
+                },
+            ]
+        );
     }
 
     /**
@@ -44,14 +50,14 @@ class UserResourceController extends BaseController
     public function index(UserResourceRequest $request)
     {
         $request = $request->all();
-        $page = UserActions::run('paginate', $request);
+        $page    = UserActions::run('paginate', $request);
 
         $data = new UsersCollection($page);
 
-        $form = $this->form;
-        $modules = $this->modules;
+        $form    = self::$form;
+        $modules = self::$modules;
 
-        return $this->response->setMetaTitle(trans('user::user.names'))
+        return self::$response->setMetaTitle(trans('user::user.names'))
             ->view('user::user.index')
             ->data(compact('data', 'modules', 'form'))
             ->output();
@@ -67,10 +73,10 @@ class UserResourceController extends BaseController
      */
     public function show(UserResourceRequest $request, User $model)
     {
-        $form = $this->form;
-        $modules = $this->modules;
-        $data = new UserResource($model);
-        return $this->response
+        $form    = self::$form;
+        $modules = self::$modules;
+        $data    = new UserResource($model);
+        return self::$response
             ->setMetaTitle(trans('app.view') . ' ' . trans('user::user.name'))
             ->data(compact('data', 'form', 'modules'))
             ->view('user::user.show')
@@ -86,10 +92,10 @@ class UserResourceController extends BaseController
      */
     public function create(UserResourceRequest $request, User $model)
     {
-        $form = $this->form;
-        $modules = $this->modules;
-        $data = new UserResource($model);
-        return $this->response->setMetaTitle(trans('app.new') . ' ' . trans('user::user.name'))
+        $form    = self::$form;
+        $modules = self::$modules;
+        $data    = new UserResource($model);
+        return self::$response->setMetaTitle(trans('app.new') . ' ' . trans('user::user.name'))
             ->view('user::user.create')
             ->data(compact('data', 'form', 'modules'))
             ->output();
@@ -106,16 +112,16 @@ class UserResourceController extends BaseController
     {
         try {
             $request = $request->all();
-            $model = UserAction::run('store', $model, $request);
-            $data = new UserResource($model);
-            return $this->response->message(trans('messages.success.created', ['Module' => trans('user::user.name')]))
+            $model   = UserAction::run('store', $model, $request);
+            $data    = new UserResource($model);
+            return self::$response->message(trans('messages.success.created', ['Module' => trans('user::user.name')]))
                 ->code(204)
                 ->data(compact('data'))
                 ->status('success')
                 ->url(guard_url('user/user/' . $model->getRouteKey()))
                 ->redirect();
         } catch (Exception $e) {
-            return $this->response->message($e->getMessage())
+            return self::$response->message($e->getMessage())
                 ->code(400)
                 ->status('error')
                 ->url(guard_url('/user/user'))
@@ -133,12 +139,10 @@ class UserResourceController extends BaseController
      */
     public function edit(UserResourceRequest $request, User $model)
     {
-        $form = $this->form;
-        $modules = $this->modules;
-        $data = new UserResource($model);
-        // return view('user::user.edit', compact('data', 'form', 'modules'));
-
-        return $this->response->setMetaTitle(trans('app.edit') . ' ' . trans('user::user.name'))
+        $form    = self::$form;
+        $modules = self::$modules;
+        $data    = new UserResource($model);
+        return self::$response->setMetaTitle(trans('app.edit') . ' ' . trans('user::user.name'))
             ->view('user::user.edit')
             ->data(compact('data', 'form', 'modules'))
             ->output();
@@ -156,17 +160,16 @@ class UserResourceController extends BaseController
     {
         try {
             $request = $request->all();
-            $model = UserAction::run('update', $model, $request);
-            $data = new UserResource($model);
-
-            return $this->response->message(trans('messages.success.updated', ['Module' => trans('user::user.name')]))
+            $model   = UserAction::run('update', $model, $request);
+            $data    = new UserResource($model);
+            return self::$response->message(trans('messages.success.updated', ['Module' => trans('user::user.name')]))
                 ->code(204)
                 ->status('success')
                 ->data(compact('data'))
                 ->url(guard_url('user/user/' . $model->getRouteKey()))
                 ->redirect();
         } catch (Exception $e) {
-            return $this->response->message($e->getMessage())
+            return self::$response->message($e->getMessage())
                 ->code(400)
                 ->status('error')
                 ->url(guard_url('user/user/' . $model->getRouteKey()))
@@ -184,20 +187,19 @@ class UserResourceController extends BaseController
     public function destroy(UserResourceRequest $request, User $model)
     {
         try {
-
             $request = $request->all();
-            $model = UserAction::run('destroy', $model, $request);
-            $data = new UserResource($model);
+            $model   = UserAction::run('delete', $model, $request);
+            // $data = new UserResource($model);
 
-            return $this->response->message(trans('messages.success.deleted', ['Module' => trans('user::user.name')]))
+            return self::$response->message(trans('messages.success.deleted', ['Module' => trans('user::user.name')]))
                 ->code(202)
                 ->status('success')
-                ->data(compact('data'))
+                ->data(compact('model'))
                 ->url(guard_url('user/user/0'))
                 ->redirect();
         } catch (Exception $e) {
 
-            return $this->response->message($e->getMessage())
+            return self::$response->message($e->getMessage())
                 ->code(400)
                 ->status('error')
                 ->url(guard_url('user/user/' . $model->getRouteKey()))
@@ -207,13 +209,13 @@ class UserResourceController extends BaseController
 
     public function masterDatas(UserResourceRequest $request)
     {
-        $form = $this->form;
+        $form         = $this->form;
         $data['data'] = [
             'id_hashed' => hashids_encode(user()->id),
         ];
         $data['options'] = [
-            'country' => CountryActions::run($request, 'options'),
-            'sex'   => trans('setting.options.gender'),
+            'country'   => CountryActions::run($request, 'options'),
+            'sex'       => trans('setting.options.gender'),
             'languages' => trans('setting.options.languages'),
         ];
         $data['fields'] = $form['fields'];
