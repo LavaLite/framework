@@ -2,11 +2,9 @@
 
 set -e
 
-# Make sure the release tag is provided.
-if (( "$#" != 1 ))
-then
-    echo "Tag has to be provided."
-
+# Ensure a release tag is provided.
+if (( "$#" != 1 )); then
+    echo "Tag must be provided."
     exit 1
 fi
 
@@ -14,63 +12,77 @@ RELEASE_BRANCH="12.x"
 CURRENT_BRANCH=$(git rev-parse --abbrev-ref HEAD)
 VERSION=$1
 
-# Make sure current branch and release branch match.
-if [[ "$RELEASE_BRANCH" != "$CURRENT_BRANCH" ]]
-then
-    echo "Release branch ($RELEASE_BRANCH) does not match the current active branch ($CURRENT_BRANCH)."
-
+# Ensure current branch matches release branch.
+if [[ "$RELEASE_BRANCH" != "$CURRENT_BRANCH" ]]; then
+    echo "Release branch ($RELEASE_BRANCH) does not match current branch ($CURRENT_BRANCH)."
     exit 1
 fi
 
-# Make sure the working directory is clear.
-if [[ ! -z "$(git status --porcelain)" ]]
-then
-    echo "Your working directory is dirty. Did you forget to commit your changes?"
-
+# Ensure working directory is clean.
+if [[ -n "$(git status --porcelain)" ]]; then
+    echo "Working directory is dirty. Commit your changes before releasing."
     exit 1
 fi
 
-# Make sure latest changes are fetched first.
+# Fetch latest changes.
 git fetch origin
 
-# Make sure that release branch is in sync with origin.
-if [[ $(git rev-parse HEAD) != $(git rev-parse origin/$RELEASE_BRANCH) ]]
-then
-    echo "Your branch is out of date with its upstream. Did you forget to pull or push any changes before releasing?"
-
+# Ensure release branch is in sync with origin.
+if [[ $(git rev-parse HEAD) != $(git rev-parse origin/$RELEASE_BRANCH) ]]; then
+    echo "Branch is out of date with upstream. Pull or push latest changes before releasing."
     exit 1
 fi
 
-# Always prepend with "v"
-if [[ $VERSION != v*  ]]
-then
+# Ensure version tag starts with "v"
+if [[ $VERSION != v* ]]; then
     VERSION="v$VERSION"
 fi
 
-# Tag Framework
+# Tag and push main framework repo
 git tag $VERSION
 git push origin --tags
 
-# Tag Components
-for REMOTE in Actions Database Filer Foremove Hashids Http Install Log Master Menu Node Notification Repository Role Setting Team Theme Trans User Validator Workflow
-do
-    echo ""
-    echo ""
-    echo "Releasing $REMOTE";
+# Define repositories
+REPOSITORIES=(
+    "Actions:Litepie/Actions.git"
+    "Database:Litepie/Database.git"
+    "Filer:Litepie/Filer.git"
+    "Form:Litepie/Form.git"
+    "Hashids:Litepie/Hashids.git"
+    "Http:Litepie/Http.git"
+    "Install:Litepie/Install.git"
+    "Log:Litepie/Log.git"
+    "Master:Litepie/Master.git"
+    "Menu:Litepie/Menu.git"
+    "Node:Litepie/Node.git"
+    "Notification:Litepie/Notification.git"
+    "Repository:Litepie/Repository.git"
+    "Role:Litepie/Role.git"
+    "Setting:Litepie/Setting.git"
+    "States:Litepie/States.git"
+    "Team:Litepie/Team.git"
+    "Theme:Litepie/Theme.git"
+    "Trans:Litepie/Trans.git"
+    "User:Litepie/User.git"
+    "Validator:Litepie/Validator.git"
+    "Workflow:Litepie/Workflow.git"
+)
 
-    TMP_DIR="/tmp/litepie-split"
-    REMOTE_URL="git@github.com:Litepie/$REMOTE.git"
-
-    rm -rf $TMP_DIR;
-    mkdir $TMP_DIR;
+# Process each repository
+for REPO in "${REPOSITORIES[@]}"; do
+    IFS=":" read -r NAME URL <<< "$REPO"
+    echo "\n\nReleasing $NAME ($URL)"
+    
+    TMP_DIR="/tmp/litepie-$NAME"
+    rm -rf $TMP_DIR
+    mkdir -p $TMP_DIR
 
     (
-        cd $TMP_DIR;
-
-        git clone $REMOTE_URL .
-        git checkout "$RELEASE_BRANCH";
-
+        cd $TMP_DIR
+        git clone "git@github.com:$URL" .
+        git checkout "$RELEASE_BRANCH"
         git tag $VERSION
         git push origin --tags
     )
+
 done
