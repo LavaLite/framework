@@ -27,10 +27,10 @@ fi
 # Fetch latest changes.
 git fetch origin
 
-# Ensure release branch is in sync with origin.
+echo "Checking if the branch is up to date with upstream..."
 if [[ $(git rev-parse HEAD) != $(git rev-parse origin/$RELEASE_BRANCH) ]]; then
-    echo "Branch is out of date with upstream. Pull or push latest changes before releasing."
-    exit 1
+    echo "Branch is out of date with upstream. Pulling latest changes..."
+    git pull origin $RELEASE_BRANCH
 fi
 
 # Ensure version tag starts with "v"
