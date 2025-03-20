@@ -13,6 +13,8 @@ CURRENT_BRANCH="12.x"
 MAIN_REPO_URL="https://github.com/LavaLite/framework.git"
 MAIN_REPO_NAME="framework"
 
+rm -rf "$MAIN_REPO_NAME"
+
 # Clone the main repository if it does not exist
 if [ ! -d "$MAIN_REPO_NAME" ]; then
     echo "Cloning main repository: $MAIN_REPO_URL"
