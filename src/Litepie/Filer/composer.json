@@ -14,7 +14,7 @@
     ],
     "require": {
         "php": "^8.1|^8.2",
-        "intervention/imagecache": "~2.6"
+        "intervention/image": "^3.11"
     },
     "autoload": {
         "psr-4": {
