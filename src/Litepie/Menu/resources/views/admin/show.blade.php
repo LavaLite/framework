@@ -5,7 +5,7 @@
     <div class="app-sec-title app-sec-title-with-icon app-sec-title-with-action">
         <i class="lab la-product-hunt app-sec-title-icon"></i>
 
-        <h2>{!!$menu->name!!} </h2>
+        <h2>{{ $menu->name }} </h2>
 
         <div class="actions">
             <button type="button" class="btn btn-success btn-sm app-submenu-create" data_val="{{$menu['eid']}}"

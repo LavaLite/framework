@@ -2,7 +2,7 @@
     <div class="app-sec-title app-sec-title-with-icon app-sec-title-with-action">
         <a href="#" class="mobile-back-btn"><i class="las la-arrow-left"></i></a>
         <i class="las la-list app-sec-title-icon"></i>
-        <h2>{!!__('Edit')!!} {!!$data['title']!!}</h2>
+        <h2>{!!__('Edit')!!} {{ $data['title'] }}</h2>
         <div class="actions">
             <div class="action-buttons">
                 <button type="button" class="btn btn-with-icon btn-link  btn-outline" 
