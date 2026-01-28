@@ -8,7 +8,7 @@
                 <a href="#" class="app-submenu-edit" data-action="LOAD" data-load-to='#sub-menu-edit'
                     data_val="{!!$menu['eid']!!}"
                     data-href="{{guard_url('menu/submenu')}}/{!!$menu['eid']!!}">
-                    <span><i class="{!! !empty($menu->icon) ?  $menu->icon : '' !!}"></i> {!!$menu->name!!}</span>
+                    <span><i class="{!! !empty($menu->icon) ?  $menu->icon : '' !!}"></i> {{ $menu->name }}</span>
                 </a>
             </div>
             <div class="actions">
@@ -28,7 +28,7 @@
                 <a href="#" class="app-submenu-edit" data-action="LOAD" data-load-to='#sub-menu-edit'
                     data_val="{!!$menu['eid']!!}"
                     data-href="{{guard_url('menu/submenu')}}/{!!$menu['eid']!!}">
-                    <span><i class="{!! !empty($menu->icon) ?  $menu->icon : '' !!}"></i> {!!$menu->name!!}</span>
+                    <span><i class="{!! !empty($menu->icon) ?  $menu->icon : '' !!}"></i> {{ $menu->name }}</span>
                 </a>
             </div>
             <div class="actions">
